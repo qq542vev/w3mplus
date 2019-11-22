@@ -35,7 +35,7 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]...
 				Change w3m image_scale.
 
-				 -c, --config  w3m config file
+				 -c, --config  w3m configuration file
 				 -n, --number  image scale
 				 -h, --help    display this help and exit
 			EOF

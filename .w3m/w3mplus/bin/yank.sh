@@ -40,7 +40,12 @@ while [ 1 -le "${#}" ]; do
 				 -H, --header  header text
 				 -h, --help    display this help and exit
 			EOF
+
 			exit
+			;;
+		'-')
+			args="${args} $(sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			shift
 			;;
 		'-'[!-]* | '--'?*)
 			cat <<- EOF 1>&2
@@ -70,12 +75,7 @@ mkdir -p "$(dirname "${yankFile}")"
 eval set -- "${args}"
 
 if [ "${#}" -eq 0 ]; then
-	cat <<- EOF 1>&2
-		${0}: not enough arguments
-		Try '${0} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE
+	set -- "$(cat)"
 fi
 
 number=$(for yankText in ${@+"${@}"}; do

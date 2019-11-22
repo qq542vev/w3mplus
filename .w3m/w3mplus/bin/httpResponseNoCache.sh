@@ -31,7 +31,7 @@ httpHeader.sh <<- EOF
 	Pragma: no-cache
 	Last-Modified: ${date}
 	Server: ${SERVER_SOFTWARE:-w3m}
-	Link: <https://github.com/qq542vev>; rel="author"; title="qq542vev · GitHub", <file://${W3MPLUS_PATH}/doc/index.html>; rel="help"; title="w3mplus Document", <https://creativecommons.org/licenses/by-nc/4.0/>; rel="license"; title="Creative Commons License"
+	Link: <https://github.com/qq542vev>; rel="author"; title="qq542vev - GitHub", <file://${W3MPLUS_PATH}/doc/index.html>; rel="help"; title="w3mplus Document", <https://creativecommons.org/licenses/by-nc/4.0/>; rel="license"; title="Creative Commons License"
 	${header}
 EOF
 

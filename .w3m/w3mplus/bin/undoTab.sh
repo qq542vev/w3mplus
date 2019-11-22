@@ -88,7 +88,7 @@ while [ -n "${restoreData}" ] && [ 1 -le "${count}" ]; do
 	restoreDate=$(printf '%s' "${restore}" | cut -d ' ' -f 2 | tr -d 'TZ:-' | utconv)
 
 	if [ "${date}" -lt "${restoreDate}" ]; then
-		printf 'W3m-control: TAB_GOTO %s\n' "${restoreUri}")
+		printf 'W3m-control: TAB_GOTO %s\n' "${restoreUri}"
 		count=$((count - 1))
 		restoreData=$(printf '%s' "${restoreData}" | sed -e '$d')
 	else

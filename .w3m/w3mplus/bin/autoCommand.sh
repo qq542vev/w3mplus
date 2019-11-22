@@ -25,7 +25,7 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... [CALL] [URI]3]
 				Execute the command according to the site.
 
-				 -c, --config  config file
+				 -c, --config  configuration file
 				 -h, --help    display this help and exit
 			EOF
 

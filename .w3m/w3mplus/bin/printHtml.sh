@@ -37,7 +37,7 @@ httpResponseNoCache.sh - "${header}" "${statusCode}" <<- EOF
 
 			<title property="dcterms:title">${title}</title>
 
-			<link rel="author" title="qq542vev · GitHub" href="https://github.com/qq542vev" />
+			<link rel="author" title="qq542vev - GitHub" href="https://github.com/qq542vev" />
 			<link rel="help" title="w3mplus Document" href="file://${W3MPLUS_PATH}/doc/index.html" />
 			<link rel="license" title="Creative Commons License" href="https://creativecommons.org/licenses/by-nc/4.0/" />
 		</head>

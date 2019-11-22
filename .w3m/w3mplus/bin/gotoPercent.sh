@@ -36,6 +36,7 @@ while [ 1 -le "${#}" ]; do
 				 -n, --number  percent 0 - 100
 				 -h, --help    display this help and exit
 			EOF
+
 			exit
 			;;
 		'-'[!-]* | '--'?*)
@@ -65,7 +66,7 @@ eval set -- "${args}"
 
 if [ 1 -lt "${#}" ]; then
 	cat <<- EOF 1>&2
-		${0}: not enough arguments
+		${0}: too many arguments
 		Try '${0} --help' for more information.
 	EOF
 

@@ -1,53 +1,108 @@
 #!/usr/bin/env sh
 
+##
+# Start visual mode.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-11-07
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
 set -eu
 
-url=$(printf '%s' "${1-${W3M_URL-}}" | cut -d '#' -f 1)
-line="${2-${W3M_CURRENT_LINE-1}}"
+config="${W3MPLUS_PATH}/visualStart"
+line='1'
+args=''
 
-if [ -n "${url}" ] && [ -n "${line}" ]; then
-	visualStart="${W3MPLUS_PATH}/visualStart"
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-c' | '--config')
+			config="${2}"
+			shift 2
+			;;
+		'-l' | '--line')
+			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+				exit 64 # EX_USAGE
+			fi
 
-	[ -e "${visualStart}" ] || echo '  0' >"${visualStart}"
+			line="${2}"
+			shift 2
+			;;
+		'-h' | '--help')
+			cat <<- EOF
+				Usage: ${0} [OPTION]... FILE
+				Start visual mode.
 
-	startUrl=$(cut -d ' ' -f 1 "${visualStart}")
-	startLine=$(cut -d ' ' -f 2 "${visualStart}")
-	startTime=$(cut -d ' ' -f 3 "${visualStart}" | tr -d 'TZ:-' | utconv)
+				 -c, --config  configuration file
+				 -l, --line    line number
+				 -h, --help    display this help and exit
+			EOF
 
-	if [ "${url}" = "${startUrl}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | utconv)" -lt "$((startTime + W3MPLUS_VISUAL_TIMEOUT))" ]; then
-		if [ "${startLine}" -le "${line}" ]; then
-			endLine="${line}"
-		else
-			endLine="${startLine}"
-			startLine="${line}"
-		fi
+			exit
+			;;
+		'-'[!-]* | '--'?*)
+			cat <<- EOF 1>&2
+				${0}: invalid option -- '${1}'
+				Try '${0} --help' for more information.
+			EOF
 
-		tmpDir=$(mktemp -d)
-		tmpFile="${tmpDir}/print"
-		yankFile=$(date "+${W3MPLUS_YANK_FILE}")
-		mkdir -p "$(dirname "${yankFile}")"
+			exit 64 # EX_USAGE
+			;;
+		'--')
+			shift
 
-		httpResponseW3mBack.sh - <<- EOF
-			W3m-control: PRINT ${tmpFile}
-			W3m-control: EXEC_SHELL $(
-				tr '\n' ' ' <<- SHELL_EOF
-					sed -n -e '${startLine},${endLine}p' '${tmpFile}' | tee -a '${yankFile}';
-					printf 'Add to: %s' '${yankFile}';
-					rm -fr '${tmpDir}';
-				SHELL_EOF
-			)
-		EOF
+			while [ 1 -le "${#}" ]; do
+				args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				shift
+			done
+			;;
+		*)
+			args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			shift
+			;;
+	esac
+done
 
-		: >"${visualStart}"
+mkdir -p "$(dirname "${config}")"
+: >>"${config}"
 
-		exit 0
-	else
-		printf '%s %d %s\n' "${url}" "${line}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >"${visualStart}"
+eval set -- "${args}"
 
-		httpResponseW3mBack.sh "W3m-control: EXEC_SHELL echo 'Start visual mode from line ${line}'"
+if [ 1 -lt "${#}" ]; then
+	cat <<- EOF 1>&2
+		${0}: too many arguments
+		Try '${0} --help' for more information.
+	EOF
 
-		exit 0
-	fi
+	exit 64 # EX_USAGE
 fi
 
-httpResponseW3mBack.sh
+file="${1}"
+checksum=$(cksum "${file}" | cut -d " " -f '1-2' | tr ' ' '-')
+
+[ -e "${config}" ] || printf '  0\n' >"${config}"
+
+startChecksum=$(cut -d ' ' -f 1 "${config}")
+startLine=$(cut -d ' ' -f 2 "${config}")
+startTime=$(cut -d ' ' -f 3 "${config}" | tr -d 'TZ:-' | utconv)
+
+if [ "${checksum}" = "${startChecksum}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | utconv)" -lt "$((startTime + W3MPLUS_VISUAL_TIMEOUT))" ]; then
+	if [ "${startLine}" -le "${line}" ]; then
+		endLine="${line}"
+	else
+		endLine="${startLine}"
+		startLine="${line}"
+	fi
+
+	sed -n -e "${startLine},${endLine}p" "${file}" | yank.sh
+
+	: >"${config}"
+else
+	printf '%s %d %s\n' "${checksum}" "${line}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >"${config}"
+
+	httpResponseW3mBack.sh "W3m-control: EXEC_SHELL echo 'Start visual mode from line ${line}'"
+fi
+
+rm -f "${file}"
