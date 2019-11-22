@@ -76,7 +76,7 @@ cgi_bin ~/.w3m/w3mplus/bin/cgi-bin:~/.w3m/cgi-bin
 index_file 
 mime_types ~/.w3m/mime.types, /etc/mime.types
 mailcap ~/.w3m/mailcap, /etc/w3m/mailcap, /etc/mailcap
-urimethodmap ~/.w3m/w3mplus/urimethodmap, ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
+urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
 editor sensible-editor
 mailto_options 2
 mailer xdg-open mailto:%s

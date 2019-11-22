@@ -1,0 +1,5 @@
+about: file:///cgi-bin/w3mplus?action=aboutURI&uri=%s
+tp: ht%s
+tps: ht%s
+ttp: h%s
+ttps: h%s
