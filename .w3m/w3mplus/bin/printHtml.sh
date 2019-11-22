@@ -3,7 +3,7 @@
 set -eu
 
 case "${LANG:-C}" in 'C')
-	LANG='en_US.ASCII'
+	LANG='en_US.UTF-8'
 	;;
 esac
 
@@ -31,11 +31,14 @@ httpResponseNoCache.sh - "${header}" "${statusCode}" <<- EOF
 	>
 		<head>
 			<meta charset="${charset}" />
+			<meta name="copyright" property="dc11:rights" content="Copyright © 2019 qq542vev. Some rights reserved." />
+			<meta name="generator" content="w3mplus" />
 			<meta name="referrer" content="no-referrer" />
-			<meta name="generator" content="w3m plus" />
 
 			<title property="dcterms:title">${title}</title>
 
+			<link rel="author" title="qq542vev · GitHub" href="https://github.com/qq542vev" />
+			<link rel="help" title="w3mplus Document" href="file://${W3MPLUS_PATH}/doc/index.html" />
 			<link rel="license" title="Creative Commons License" href="https://creativecommons.org/licenses/by-nc/4.0/" />
 		</head>
 		<body>

@@ -1,15 +1,15 @@
 #!/usr/bin/env sh
 
-set -eu
-
 ##
 # Restore w3m tabs.
 #
 # @author qq542vev
 # @version 1.0.0
-# @date 2019-11-07
+# @date 2019-11-22
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
+
+set -eu
 
 file="${W3MPLUS_PATH}/tabRestore"
 count='1'

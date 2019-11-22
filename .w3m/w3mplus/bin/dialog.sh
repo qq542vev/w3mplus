@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 
+##
+# Display w3m dialog.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-11-07
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
 set -eu
 
 case "${1}" in

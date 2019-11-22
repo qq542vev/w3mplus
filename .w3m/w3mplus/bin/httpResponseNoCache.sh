@@ -5,6 +5,7 @@ set -eu
 LC_ALL='C'
 LANG='C'
 export 'LC_ALL' 'LANG'
+
 date=$(date -u '+%a, %d %b %Y %H:%M:%S GMT')
 
 body="${1-}"
@@ -30,6 +31,7 @@ httpHeader.sh <<- EOF
 	Pragma: no-cache
 	Last-Modified: ${date}
 	Server: ${SERVER_SOFTWARE:-w3m}
+	Link: <https://github.com/qq542vev>; rel="author"; title="qq542vev · GitHub", <file://${W3MPLUS_PATH}/doc/index.html>; rel="help"; title="w3mplus Document", <https://creativecommons.org/licenses/by-nc/4.0/>; rel="license"; title="Creative Commons License"
 	${header}
 EOF
 
