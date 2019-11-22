@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 ##
-#	Access the parent directory.
+# Access the parent directory.
 #
 # @author qq542vev
 # @version 1.0.0

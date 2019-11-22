@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Increments the URI.
+# Increments the URI.
 #
 # @author qq542vev
 # @version 1.0.0

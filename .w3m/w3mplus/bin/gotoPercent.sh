@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Display HTTP Response that moves to n% with w3m.
+# Display HTTP Response that moves to n% with w3m.
 #
 # @author qq542vev
 # @version 1.0.0

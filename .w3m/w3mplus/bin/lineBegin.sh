@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Move to the beginning of the line.
+# Move to the beginning of the line.
 #
 # @author qq542vev
 # @version 1.0.0

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Call OperatorFunc.
+# Call OperatorFunc.
 #
 # @author qq542vev
 # @version 1.0.0

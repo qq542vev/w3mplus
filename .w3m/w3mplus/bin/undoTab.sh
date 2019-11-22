@@ -3,7 +3,7 @@
 set -eu
 
 ##
-#	Restore w3m tabs.
+# Restore w3m tabs.
 #
 # @author qq542vev
 # @version 1.0.0

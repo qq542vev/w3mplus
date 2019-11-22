@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Displays a page about w3m.
+# Displays a page about w3m.
 #
 # @author qq542vev
 # @version 1.0.0

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Move to the next paragraph.
+# Move to the next paragraph.
 #
 # @author qq542vev
 # @version 1.0.0

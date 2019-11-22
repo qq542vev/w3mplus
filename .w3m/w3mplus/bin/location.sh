@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Access the resource and execute the command.
+# Access the resource and execute the command.
 #
 # @author qq542vev
 # @version 1.0.0

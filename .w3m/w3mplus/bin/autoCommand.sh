@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Execute the command according to the site.
+# Execute the command according to the site.
 #
 # @author qq542vev
 # @version 1.0.0

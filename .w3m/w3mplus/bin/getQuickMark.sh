@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Get a quick mark.
+# Get a quick mark.
 #
 # @author qq542vev
 # @version 1.0.0

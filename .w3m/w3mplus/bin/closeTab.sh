@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Close the tab and record the URI.
+# Close the tab and record the URI.
 #
 # @author qq542vev
 # @version 1.0.0

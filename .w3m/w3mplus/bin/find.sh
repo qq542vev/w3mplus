@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Search for a word.
+# Search for a word.
 #
 # @author qq542vev
 # @version 1.0.0

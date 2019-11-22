@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-#	Change w3m image_scale.
+# Change w3m image_scale.
 #
 # @author qq542vev
 # @version 1.0.0
