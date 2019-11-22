@@ -1,0 +1,139 @@
+#!/usr/bin/env sh
+
+set -eu
+
+##
+# Update the blacklist for w3m.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-11-08
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
+endcall () {
+	rm -fr "${tmpDir}"
+}
+
+config="${HOME}/.w3m/siteconf"
+redirect="file:///cgi-bin/blocking?"
+beginMessage='# BEGIN - Blacklist - '
+endMessage='# END - Blacklist'
+
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-b' | '--begin')
+			beginMessage="${2}"
+			shift 2
+			;;
+		'-c' | '--config')
+			config="${2}"
+			shift 2
+			;;
+		'-e' | '--end')
+			endMessage="${2}"
+			shift 2
+			;;
+		'-r' | '--redirect')
+			redirect="${2}"
+			shift 2
+			;;
+		'-h' | '--help')
+			cat <<- EOF
+				Usage: ${0} [OPTION]...
+				Update the blacklist for w3m.
+
+				 -b, --begin     begin message
+				 -c, --config    config file
+				 -e, --end       end message
+				 -r, --redirect  redirect page
+				 -h, --help      display this help and exit
+			EOF
+
+			exit
+			;;
+		'-'[!-]* | '--'?*)
+			cat <<- EOF 1>&2
+				${0}: invalid option -- '${1}'
+				Try '${0} --help' for more information.
+			EOF
+
+			exit 64 # EX_USAGE
+			;;
+		'--')
+			shift
+
+			while [ 1 -le "${#}" ]; do
+				args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				shift
+			done
+			;;
+		*)
+			args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			shift
+			;;
+	esac
+done
+
+eval set -- "${args}"
+
+if [ 0 -lt "${#}" ]; then
+	cat <<- EOF 1>&2
+		${0}: too many arguments
+		Try '${0} --help' for more information.
+	EOF
+
+	exit 64 # EX_USAGE
+fi
+
+tmpDir=$(mktemp -d)
+
+trap 'endcall' 0 # EXIT
+trap 'exit 129' 1 # SIGHUP
+trap 'exit 130' 2 # SIGINT
+trap 'exit 131' 3 # SIGQUIT
+trap 'exit 143' 15 # SIGTERM
+
+readonly 'beginMessage' 'endMessage' 'config' 'tmpDir'
+
+sed -n -e "/^${beginMessage}/p" "${config}" | while read -r 'message'; do
+	url="${message#${beginMessage}}"
+
+	printf 'Downloading... %s\n' "${url}" 1>&2
+
+	w3m -dump_source -o 'auto_uncompress=1' "${url}" >"${tmpDir}/blacklist"
+
+	if [ ! -s "${tmpDir}/blacklist" ]; then
+		printf 'Download failed.\n' 1>&2
+		exit 69 # EX_UNAVAILABLE
+	fi
+
+	printf 'Converting...\n' 1>&2
+
+	while read -r 'address'; do
+		if [ "${address}" = "${address#*://}" ]; then
+			for protocol in 'http' 'https'; do
+				blockURL="${protocol}://${address}/"
+
+				printf 'url "%s"\n' "${blockURL}"
+				printf 'substitute_url "%s%s"\n' "${redirect}" "${blockURL}"
+				printf '\n'
+			done
+		else
+			printf 'url "%s"\n' "${address}"
+			printf 'substitute_url "%s%s"\n' "${redirect}" "${address}"
+			printf '\n'
+		fi
+	done <"${tmpDir}/blacklist" >"${tmpDir}/urls"
+
+	printf 'Data Writing...\n' 1>&2
+
+	pattern=$(printf '%s' "${message}" | sed -e 's/\([].\*/[]\)/\\\1/g; 1s/^^/\\^/; $s/$$/\\$/')
+
+	sed -e "/^${pattern}/{p; :loop; /${endMessage}\$/{D}; g; N; b loop}" "${config}" | sed -e "/^${pattern}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
+
+	mv -f "${tmpDir}/siteconf" "${config}"
+	rm -fr "${tmpDir:?}/"*
+done
+
+printf 'Done\n' 1>&2

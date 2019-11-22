@@ -1,0 +1,562 @@
+# A sample of ~/.w3m/keymap (default)
+#
+# Ctrl  : C-, ^
+# Escape: ESC-, M-, ^[
+# Space : SPC, ' '
+# Tab   : TAB, ^i, ^I
+# Delete: DEL, ^?
+# Up    : UP, ^[[A
+# Down  : DOWN, ^[[B
+# Right : RIGHT, ^[[C
+# Left  : LEFT, ^[[D
+
+keymap "C-@" NULL
+keymap "C-a" NULL
+keymap "C-b" NULL
+keymap "C-e" NULL
+keymap "C-f" NULL
+keymap "C-g" NULL
+keymap "C-h" NULL
+keymap "TAB" NULL
+keymap "C-j" GOTO_LINK
+keymap "C-k" NULL
+keymap "C-l" NULL
+keymap "C-m" NULL
+keymap "C-n" NULL
+keymap "C-p" NULL
+keymap "C-q" NULL
+keymap "C-r" NULL
+keymap "C-s" NULL
+keymap "C-t" NULL
+keymap "C-u" NULL
+keymap "C-v" NULL
+keymap "C-w" NULL
+keymap "C-z" SUSPEND
+
+keymap "SPC" NULL
+keymap "!" NULL
+keymap \" NULL
+keymap "#" NULL
+keymap "$" NULL
+keymap "(" NULL
+keymap ")" NULL
+keymap "+" NULL
+keymap "," NULL
+keymap "-" NULL
+keymap "." NULL
+keymap "/" NULL
+keymap ":" NULL
+keymap ";" NULL
+keymap "<" NULL
+keymap "=" NULL
+keymap ">" NULL
+keymap "?" NULL
+keymap "@" NULL
+keymap "B" NULL
+keymap "D" NULL
+keymap "E" NULL
+keymap "F" NULL
+keymap "G" NULL
+keymap "H" NULL
+keymap "I" NULL
+keymap "J" NULL
+keymap "K" NULL
+keymap "L" NULL
+keymap "M" NULL
+keymap "N" NULL
+keymap "Q" NULL
+keymap "R" NULL
+keymap "S" NULL
+keymap "T" NULL
+keymap "U" NULL
+keymap "V" NULL
+keymap "W" NULL
+keymap "Z" NULL
+keymap "[" NULL
+keymap "]" NULL
+keymap "\^" NULL
+keymap "a" NULL
+keymap "b" NULL
+keymap "c" NULL
+keymap "g" NULL
+keymap "h" NULL
+keymap "i" NULL
+keymap "j" NULL
+keymap "k" NULL
+keymap "l" NULL
+keymap "m" NULL
+keymap "n" NULL
+keymap "o" NULL
+keymap "q" NULL
+keymap "r" NULL
+keymap "s" NULL
+keymap "u" NULL
+keymap "v" NULL
+keymap "w" NULL
+keymap "z" NULL
+keymap "{" NULL
+keymap "|" NULL
+keymap "}" NULL
+
+keymap "M-TAB" NULL
+keymap "M-C-j" NULL
+keymap "M-C-m" NULL
+
+keymap "M-:" NULL
+keymap "M-<" NULL
+keymap "M->" NULL
+keymap "M-I" NULL
+keymap "M-M" NULL
+keymap "M-W" NULL
+keymap "M-a" NULL
+keymap "M-b" NULL
+keymap "M-c" NULL
+keymap "M-e" NULL
+keymap "M-g" NULL
+keymap "M-k" NULL
+keymap "M-l" NULL
+keymap "M-m" NULL
+keymap "M-n" NULL
+keymap "M-o" NULL
+keymap "M-p" NULL
+keymap "M-s" NULL
+keymap "M-t" NULL
+keymap "M-u" NULL
+keymap "M-v" NULL
+keymap "M-w" NULL
+
+keymap "UP" NULL
+keymap "DOWN" NULL
+keymap "RIGHT" NULL
+keymap "LEFT" NULL
+
+keymap "M-[E" NULL
+keymap "M-[L" NULL
+keymap "M-[Z" NULL
+
+keymap "M-[1~" NULL
+keymap "M-[2~" NULL
+keymap "M-[4~" NULL
+keymap "M-[5~" NULL
+keymap "M-[6~" NULL
+keymap "M-[28~" NULL
+
+# Pentadactyl Key Map #
+
+## Browsing ##
+
+### Bypass ###
+
+keymap "C-v" MOUSE_TOGGLE
+
+### Opening web pages ###
+
+keymap "o" COMMAND "SET_OPTION default_url=0; GOTO"
+keymap ":o" COMMAND "SET_OPTION default_url=0; GOTO"
+
+keymap "t" COMMAND "SET_OPTION default_url=0; TAB_GOTO"
+keymap ":t" COMMAND "SET_OPTION default_url=0; TAB_GOTO"
+
+keymap "C-td" NEW_TAB
+
+keymap "O" COMMAND "SET_OPTION default_url=1; GOTO"
+keymap "T" COMMAND "SET_OPTION default_url=1; TAB_GOTO"
+
+keymap "w" EXEC_SHELL "w3m"
+keymap "W" EXTERN
+
+keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
+keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD_AT"
+
+keymap "C-x" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=incrementURI&uri=%24%7BW3M_URL%7D"
+keymap "C-a" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=decrementURI&uri=%24%7BW3M_URL%7D"
+
+### History ###
+
+keymap "C-o" UNDO
+keymap "C-i" REDO
+
+keymap ":j" SELECT_MENU
+
+keymap "H" PREV
+#keymap ^[^[[D PREV
+
+keymap "L" NEXT
+#keymap ^[^[[C NEXT
+
+keymap ":B" COMMAND "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
+keymap ":F" COMMAND "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
+
+keymap ":H" HISTORY
+
+### Navigating ###
+
+keymap "~" LOAD "~"
+keymap "gh" GOTO "file:///cgi-bin/w3mplus?action=homepage"
+keymap "gH" GOTO "file:///cgi-bin/w3mplus?action=homepage&redirect=1"
+
+keymap "gu" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=parentPath&uri=%24%7BW3M_URL%7D"
+keymap "gU" GOTO_RELATIVE "/"
+
+### Reloading ###
+
+keymap "C-l" REDRAW
+keymap "r" RELOAD
+
+### Stopping ###
+
+keymap "C-c" STOP_IMAGE
+
+### Writing ###
+
+keymap ":w" DOWNLOAD
+keymap ":W" PRINT
+
+### Quitting ###
+
+keymap "ZQ" EXIT
+keymap ":x" EXIT
+
+keymap "ZZ" QUIT
+keymap ":q" QUIT
+
+### The current directory ###
+
+keymap ":P" EXEC_SHELL pwd
+
+## Buffer ##
+
+### Buffer information ###
+
+keymap "C-g" LINE_INFO
+keymap "gC-g" INFO
+
+keymap "gf" VIEW
+keymap "gF" COMMAND "VIEW; EDIT_SCREEN; VIEW"
+
+### Motion commands ###
+
+keymap "0" LINE_BEGIN
+keymap "^" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=lineBegin&file=/tmp/w3mplus_view_cache"
+keymap "$" LINE_END
+
+keymap "gg" BEGIN
+keymap "G" END
+
+keymap "%" MENU Percents
+
+keymap "h" MOVE_LEFT1
+keymap "LEFT" MOVE_LEFT1
+
+keymap "j" MOVE_DOWN1
+keymap "DOWN" MOVE_DOWN1
+
+keymap "l" MOVE_RIGHT1
+keymap "RIGHT" MOVE_RIGHT1
+
+keymap "k" MOVE_UP1
+keymap "UP" MOVE_UP1
+
+keymap "C-e" DOWN
+keymap "C-y" UP
+
+keymap "C-d" NEXT_HALF_PAGE
+keymap "C-u" PREV_HALF_PAGE
+
+keymap "C-b" PREV_PAGE
+keymap "M-SP"C PREV_PAGE
+keymap "^[[5~" PREV_PAGE
+
+keymap "C-f" NEXT_PAGE
+keymap "SPC" NEXT_PAGE
+keymap "^[[6~" NEXT_PAGE
+
+### Jumping to elements ###
+
+keymap "gi" COMMAND "SEARCH '\[..* \]'; MOVE_RIGHT1"
+
+keymap "[[" SEARCH "[Pp][Rr][Ee][Vv]|<<|«|前へ"
+keymap "]]" SEARCH "[Nn][Ee][Xx][Tt]|>>|»|次へ"
+
+keymap "{" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=prevParagraph&file=/tmp/w3mplus_view_cache"
+keymap "}" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=nextParagraph&file=/tmp/w3mplus_view_cache"
+
+### Zooming ###
+
+keymap "zi" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B20"
+keymap "+" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B20"
+keymap "zm" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B60"
+
+keymap "zo" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-20"
+keymap "-" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-20"
+keymap "zr" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-60"
+
+keymap "zz" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
+
+### Working with frames ###
+
+keymap ":f" FRAME
+
+### Copying text ###
+
+keymap "y" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=yank&uri=%24%7BW3M_URL%7D"
+keymap "Y" GOTO "file:///cgi-bin/w3mplus?action=yankSelection"
+
+## Options ##
+
+### Setting options ###
+
+keymap ":s" SET_OPTION
+keymap ":S" SETENV
+
+## Setting w3m options ##
+
+keymap ":p" OPTIONS
+
+## Text find commands ##
+
+keymap "/" ISEARCH
+keymap "?" ISEARCH_BACK
+keymap "n" SEARCH_NEXT
+keymap "N" SEARCH_PREV
+
+## Tabs and buffers ##
+
+### Listing tabs ###
+
+keymap "B" TAB_MENU
+
+### Changing tabs ###
+
+keymap "gt" NEXT_TAB
+keymap "C-n" NEXT_TAB
+
+keymap "gT" PREV_TAB
+keymap "C-p" PREV_TAB
+
+### Closing tabs ###
+
+keymap "d" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
+keymap "D" GOTO "file:///cgi-bin/w3mplus?action=closeTab"
+
+keymap "u" GOTO "file:///cgi-bin/w3mplus?action=undoTab&count=1"
+keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undoTab&count=1000"
+
+keymap ":u" GOTO "file:///cgi-bin/w3mplus?action=undoTabs"
+
+## Hints ##
+
+keymap "f" LIST_MENU
+keymap "F" COMMAND "NEW_TAB; LIST_MENU"
+
+keymap ";?" LINE_INFO
+keymap ";s" SAVE_LINK
+keymap ";o" GOTO_LINK
+keymap ";t" TAB_LINK
+keymap ";b" TAB_GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=prevTab&uri=%24%7BW3M_CURRENT_LINK%7D&redirect=2"
+keymap ";w" EXTERN_LINK "w3m %s"
+keymap ";O" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=open&uri=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";T" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=tabopen&uri=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";W" EXTERN_LINK
+keymap ";a" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=addBookmark&uri=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";v" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=viewSource&uri=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";V" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=viewSourceExternally&uri=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";y" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=yank&uri=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";c" GOTO "file:///cgi-bin/w3mplus?action=contextMenu"
+keymap ";i" VIEW_IMAGE
+keymap ";I" SAVE_IMAGE
+
+keymap "g;" MENU ExtendedHints
+keymap ";TAB" MENU ExtendedHints
+
+## Keyboard shortcuts and commands ##
+
+### Key mapping ###
+
+keymap ":M" DEFINE_KEY
+
+## Marks ##
+
+### Bookmarks ###
+
+keymap "a" ADD_BOOKMARK
+keymap ":b" VIEW_BOOKMARK
+
+### QuickMarks ###
+
+keymap "M0" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=0"
+keymap "M1" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=1"
+keymap "M2" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=2"
+keymap "M3" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=3"
+keymap "M4" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=4"
+keymap "M5" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=5"
+keymap "M6" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=6"
+keymap "M7" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=7"
+keymap "M8" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=8"
+keymap "M9" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=9"
+keymap "MA" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=A"
+keymap "MB" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=B"
+keymap "MC" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=C"
+keymap "MD" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=D"
+keymap "ME" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=E"
+keymap "MF" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=F"
+keymap "MG" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=G"
+keymap "MH" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=H"
+keymap "MI" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=I"
+keymap "MJ" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=J"
+keymap "MK" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=K"
+keymap "ML" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=L"
+keymap "MM" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=M"
+keymap "MN" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=N"
+keymap "MO" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=O"
+keymap "MP" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=P"
+keymap "MQ" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=Q"
+keymap "MR" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=R"
+keymap "MS" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=S"
+keymap "MT" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=T"
+keymap "MU" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=U"
+keymap "MV" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=V"
+keymap "MW" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=W"
+keymap "MX" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=X"
+keymap "MY" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=Y"
+keymap "MZ" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=Z"
+keymap "Ma" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=a"
+keymap "Mb" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=b"
+keymap "Mc" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=c"
+keymap "Md" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=d"
+keymap "Me" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=e"
+keymap "Mf" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=f"
+keymap "Mg" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=g"
+keymap "Mh" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=h"
+keymap "Mi" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=i"
+keymap "Mj" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=j"
+keymap "Mk" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=k"
+keymap "Ml" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=l"
+keymap "Mm" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=m"
+keymap "Mn" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=n"
+keymap "Mo" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=o"
+keymap "Mp" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=p"
+keymap "Mq" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=q"
+keymap "Mr" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=r"
+keymap "Ms" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=s"
+keymap "Mt" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=t"
+keymap "Mu" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=u"
+keymap "Mv" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=v"
+keymap "Mw" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=w"
+keymap "Mx" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=x"
+keymap "My" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=y"
+keymap "Mz" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=z"
+
+keymap "go" SET_OPTION "keymap_file=keymap-quickmark"
+keymap "gn" SET_OPTION "keymap_file=keymap-newquickmark"
+
+keymap ":Q" GOTO "file:///cgi-bin/w3mplus?action=qmarks"
+
+### Local marks ###
+
+keymap "m" MARK
+
+keymap "['" COMMAND "MOVE_UP1; PREV_MARK; LINE_BEGIN"
+keymap "]'" COMMAND "MOVE_DOWN; NEXT_MARK; LINE_BEGIN"
+
+keymap "[`" PREV_MARK
+keymap "]`" NEXT_MARK
+
+## Automatic commands ##
+
+keymap ":D" GOTO "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
+
+## UI ##
+
+## Menus ##
+
+keymap ":e" MENU Menu
+
+### Dialogs ###
+
+keymap ":d" DOWNLOAD_LIST
+
+## Error and informational messages ##
+
+keymap ":m" MSGS
+
+## Privacy and sensitive information ##
+
+### Cookie settings ###
+
+keymap ":c" COOKIE
+
+## Other ##
+
+### Various commands ###
+
+keymap ":!" EXEC_SHELL
+keymap ":v" VERSION
+
+## Online help ##
+
+keymap ":h" HELP
+
+### Uncategorized ###
+
+keymap "i" EDIT_SCREEN
+keymap "^[[2~" EDIT_SCREEN
+
+keymap "::" COMMAND
+keymap ":TAB" MENU Commands
+
+# Vim Key Map #
+
+keymap "z." CENTER_V
+
+keymap "zh" LEFT
+keymap "zLEFT" LEFT
+keymap "zl" RIGHT
+keymap "zRIGHT" RIGHT
+
+keymap "gx" COMMAND "MARK_URL; GOTO_LINK"
+
+keymap "C-tL" TAB_RIGHT
+keymap "C-tH" TAB_LEFT
+
+keymap "C-to" COMMAND "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; PREV_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB;"
+
+keymap "!!" PIPE_BUF
+
+keymap "#" GOTO "file:///cgi-bin/w3mplus?action=wordFindBack"
+keymap "*" GOTO "file:///cgi-bin/w3mplus?action=wordFindFore"
+
+keymap "g#" GOTO "file:///cgi-bin/w3mplus?action=stringFindBack"
+keymap "g*" GOTO "file:///cgi-bin/w3mplus?action=stringFindFore"
+
+keymap "V" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=lineVisualMode&file=/tmp/w3mplus_view_cache"
+
+keymap ":r" PIPE_SHELL
+
+keymap "g~" PIPE_BUF "tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'"
+
+keymap "g?" PIPE_BUF "tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'"
+
+# Firefox Key Map #
+
+keymap "^[OP" HELP
+keymap "M-^[OS" EXIT
+keymap "^[[15~" RELOAD
+keymap "^[[18~" EDIT_SCREEN
+
+keymap "M-f" MENU MenuFile
+keymap "M-e" MENU MenuEdit
+keymap "M-v" MENU MenuView
+keymap "M-s" HISTORY
+keymap "M-b" MENU MenuBookmarks
+keymap "M-t" MENU MenuTools
+keymap "M-h" MENU MenuHelp
+
+keymap "TAB" NEXT_LINK
+keymap "M-TAB" PREV_LINK
+keymap "DEL" PREV
+
+keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
+keymap "g_" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=lineEnd&file=/tmp/w3mplus_view_cache"
+keymap "g@" MENU "callOperatorFunc"

@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+##
+# Display blocked information.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-11-08
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
+set -eu
+
+: ${W3MPLUS_PATH:="${HOME}/.w3m/w3mplus"}
+
+PATH="${W3MPLUS_PATH}/bin${PATH:+:}${PATH:-}"
+
+export 'W3MPLUS_PATH' 'PATH'
+
+url="${QUERY_STRING}"
+
+printHtml.sh 'Blocking' - <<- EOF
+	<p><strong><a href="$(printf '%s' "${url}" | htmlEscape.sh)">${url}</a></strong></p>
+
+	<p><a href="about:permissions">siteconf</a></p>
+EOF

@@ -1,0 +1,63 @@
+url /^bing:/
+substitute_url "https://www.bing.com/search?q="
+
+url /^bing-image:/
+substitute_url "https://www.bing.com/images/search?q=
+
+url /^bing-video:/
+substitute_url "https://www.bing.com/videos/search?q=
+
+url /^bing-news:/
+substitute_url "https://www.bing.com/news/search?q="
+
+url /^duckduckgo:/
+substitute_url "https://duckduckgo.com/?q="
+
+url /^github:/
+substitute_url "https://github.com/search?q="
+
+url /^google:/
+substitute_url "https://www.google.com/search?ie=UTF-8&oe=UTF-8&q="
+
+url /^google-image:/
+substitute_url "https://www.google.com/search?tbm=isch&ie=UTF-8&oe=UTF-8&q="
+
+url /^google-video:/
+substitute_url "https://www.google.com/search?tbm=vid&ie=UTF-8&oe=UTF-8&q="
+
+url /^google-news:/
+substitute_url "https://news.google.com/search?q="
+
+url /^pkgs.org:/
+substitute_url "https://pkgs.org/download/"
+
+url /^startpage:/
+substitute_url "https://www.startpage.com/do/search?query="
+
+url /^twitter:/
+substitute_url "https://twitter.com/search?q="
+
+url /^wikipedia-en:/
+substitute_url "https://en.wikipedia.org/w/index.php?search="
+
+url /^wikipedia-ja:/
+substitute_url "https://ja.wikipedia.org/w/index.php?search="
+
+url /^youtube:/
+substitute_url "https://www.youtube.com/results?search_query="
+
+url /^view-source:/
+substitute_url "file:///cgi-bin/w3mplus?redirect=2&action=uri&subaction=viewSource&uri="
+
+# HTTPS Everywhere
+# url m@^http://@
+# substitute_url "https://"
+
+# BEGIN - Blacklist - https://openphish.com/feed.txt
+# END - Blacklist
+
+# BEGIN - Blacklist - https://mirror1.malwaredomains.com/files/justdomains
+# END - Blacklist
+
+# BEGIN - Preloading HSTS
+# END - Preloading HSTS

@@ -1,0 +1,257 @@
+#!/usr/bin/env sh
+
+set -eu
+
+: ${W3MPLUS_PATH:="${HOME}/.w3m/w3mplus"}
+: ${W3MPLUS_YANK_FILE:="${HOME}/w3mplusyank"}
+: ${W3MPLUS_YANK_HEADER:='[%Y-%m-%d]'}
+: ${W3MPLUS_YANK_FOOTER:='END [%Y-%m-%d]'}
+: ${W3MPLUS_UNDO_TIMEOUT:='7200'}
+: ${W3MPLUS_VISUAL_TIMEOUT:='600'}
+: ${W3MPLUS_SEARCH_URI:='google:'}
+: ${W3MPLUS_OPERATORFUNC:='cat'}
+: ${W3MPLUS_ZOOM_MAX:='300'}
+: ${W3MPLUS_ZOOM_MIN:='30'}
+
+PATH="${W3MPLUS_PATH}/bin${PATH:+:}${PATH:-}"
+
+export 'W3MPLUS_PATH' 'W3MPLUS_YANK_FILE' 'W3MPLUS_YANK_HEADER' 'W3MPLUS_YANK_FOOTER' 'W3MPLUS_UNDO_TIMEOUT' 'W3MPLUS_VISUAL_TIMEOUT' 'W3MPLUS_SEARCH_URI' 'W3MPLUS_OPERATORFUNC' 'W3MPLUS_ZOOM_MAX' 'W3MPLUS_ZOOM_MIN' 'PATH'
+
+eval 'set' '--' "$(printf '%s' "${QUERY_STRING-}" | parseQuery.sh)"
+
+while [ 1 -le "${#}" ]; do
+	if expr "${1}" ':' '[_A-Za-z][_0-9A-Za-z]*$' >'/dev/null'; then
+		eval "query_${1}='${2-}'"
+	fi
+
+	shift 2
+done
+
+if [ -n "${query_redirect-}" ]; then
+	W3MPLUS_REDIRECT_TYPE="${query_redirect}"
+	export 'W3MPLUS_REDIRECT_TYPE'
+fi
+
+if result=$(
+	case "${query_action-}" in
+		'autoCommand')
+			: ${query_call:=manual}
+
+			autoCommand.sh "${query_call-}" "${W3M_URL}"
+			;;
+		'closeTab')
+			closeTab.sh "${W3M_URL}"
+			;;
+		'undoTab')
+			undoTab.sh ${query_count+'-n' "${query_count}"}
+			;;
+		'undoTabs')
+			: >>"${W3MPLUS_PATH}/tabRestore"
+
+			printRedirect.sh "file://${W3MPLUS_PATH}/tabRestore"
+			;;
+		'homepage')
+			printRedirect.sh "${WWW_HOME-about:home}"
+			;;
+		'dialog')
+			dialog.sh ${query_page+"${query_page}"}
+			;;
+		'aboutURI')
+			aboutURI.sh ${query_uri+"${query_uri-}"}
+			;;
+		'lineBegin')
+			lineBegin.sh -l "${W3M_CURRENT_LINE-}" "${query_file}"
+			;;
+		'lineEnd')
+			lineBegin.sh -e -l "${W3M_CURRENT_LINE-}" "${query_file}"
+			;;
+		'prevParagraph')
+			nextParagraph.sh -l "${W3M_CURRENT_LINE}" -p "${query_file}"
+			;;
+		'nextParagraph')
+			nextParagraph.sh -l "${W3M_CURRENT_LINE}" "${query_file}"
+			;;
+		'qmarks')
+			: >>"${W3MPLUS_PATH}/quickmark"
+
+			printRedirect.sh "file://${W3MPLUS_PATH}/quickmark"
+			;;
+		'getQuickMark')
+			getQuickMark.sh "${query_key-}"
+			;;
+		'setQuickMark')
+			setQuickMark.sh -l "${W3M_CURRENT_LINE-}" "${query_key-}" "${W3M_URL-}"
+			;;
+		'contextMenu')
+			contextMenu.sh
+			;;
+		'yankSelection')
+			yank.sh "${W3M_CURRENT_WORD-}"
+			;;
+		'uri')
+			case "${query_uri}" in
+				'${W3M_'*'}')
+					uri=$(eval 'printf' '%s' "\"${query_uri}\"")
+
+					if [ "${query_uri}" = '${W3M_CURRENT_LINK}' ] && [ -n "${uri}" ]; then
+						if [ "${query_subaction}" = 'open' ]; then
+							cat <<- 'EOF' | httpResponseW3mBack.sh -
+								W3m-control: SET_OPTION default_url=2
+								W3m-control: GOTO
+							EOF
+							exit
+						elif [ "${query_subaction-}" = 'tabopen' ]; then
+							cat <<- 'EOF' | httpResponseW3mBack.sh -
+								W3m-control: SET_OPTION default_url=2
+								W3m-control: TAB_GOTO
+							EOF
+							exit
+						fi
+					fi
+					;;
+				*)
+					uri="${query_uri-}"
+					;;
+			esac
+
+			location.sh "${query_subaction}" "${uri}"
+			;;
+		'lineVisualMode')
+			lineVisualMode.sh "${W3M_URL-}" "${W3M_CURRENT_LINE-}"
+			;;
+		'zoom')
+			zoom.sh ${query_zoom+'-n' "${query_zoom}"}
+			;;
+		'search')
+			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"
+			;;
+		'stringFindBack')
+			find.sh -b "${W3M_CURRENT_WORD}"
+			;;
+		'stringFindFore')
+			find.sh "${W3M_CURRENT_WORD}"
+			;;
+		'wordFindBack')
+			find.sh -b -e "${W3M_CURRENT_WORD}"
+			;;
+		'wordFindFore')
+			find.sh -e "${W3M_CURRENT_WORD}"
+			;;
+		'dictWordSearch')
+			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query#?}"
+			;;
+		'gotoPercent')
+			gotoPercent.sh ${query_percent+'-n' "${query_percent}"} "${query_file}"
+			;;
+		'callOperatorFunc')
+			: ${query_line:="${W3M_CURRENT_LINE}"}
+
+			callOperatorFunc.sh -l "${query_line}" ${query_number+'-n' "${query_number}"} "${query_file}"
+			;;
+		*)
+			printHtml.sh 'Bad Request' - '400 Bad Request' <<- EOF
+	<dl>
+		<dt>autoCommand</dt>
+		<dd>file://${SCRIPT_NAME}?action=autoCommand&amp;call={type}</dd>
+
+		<dt>closeTab</dt>
+		<dd>file://${SCRIPT_NAME}?action=closeTab</dd>
+
+		<dt>undoTab</dt>
+		<dd>file://${SCRIPT_NAME}?action=undoTab&amp;count={number}</dd>
+
+		<dt>undoTabs</dt>
+		<dd>file://${SCRIPT_NAME}?action=undoTabs</dd>
+
+		<dt>homepage</dt>
+		<dd>file://${SCRIPT_NAME}?action=homepage</dd>
+
+		<dt>dialog</dt>
+		<dd>file://${SCRIPT_NAME}?action=dialog&amp;page={page}</dd>
+
+		<dt>aboutURI</dt>
+		<dd>file://${SCRIPT_NAME}?action=aboutURI&amp;uri={about-uri}</dd>
+
+		<dt>incrementURI</dt>
+		<dd>file://${SCRIPT_NAME}?action=incrementURI&amp;number={number}</dd>
+
+		<dt>lineBegin</dt>
+		<dd>file://${SCRIPT_NAME}?action=lineBegin</dd>
+
+		<dt>lineEnd</dt>
+		<dd>file://${SCRIPT_NAME}?action=lineEnd</dd>
+
+		<dt>prevParagraph</dt>
+		<dd>file://${SCRIPT_NAME}?action=prevParagraph</dd>
+		<dt>nextParagraph</dt>
+		<dd>file://${SCRIPT_NAME}?action=nextParagraph</dd>
+		<dt>qmarks</dt>
+		<dd>file://${SCRIPT_NAME}?action=qmarks</dd>
+
+		<dt>getQuickMark</dt>
+		<dd>file://${SCRIPT_NAME}?action=getQuickMark&amp;key={key}</dd>
+
+		<dt>setQuickMark</dt>
+		<dd>file://${SCRIPT_NAME}?action=setQuickMark&amp;key={key}</dd>
+
+		<dt>contextMenu</dt>
+		<dd>file://${SCRIPT_NAME}?action=contextMenu</dd>
+
+		<dt>yankSelection</dt>
+		<dd>file://${SCRIPT_NAME}?action=yankSelection</dd>
+		<dt>location</dt>
+		<dd>file://${SCRIPT_NAME}?action=location&subaction={addBookmark|parentPath|prevTab|sendEmail|viewSource|viewSourceExternally|yank}</dd>
+
+		<dt>lineVisualMode</dt>
+		<dd>file://${SCRIPT_NAME}?action=lineVisualMode</dd>
+		<dt>zoom</dt>
+		<dd>file://${SCRIPT_NAME}?action=zoom&amp;zoom={number}</dd>
+
+		<dt>viewSourceURI</dt>
+		<dd>file://${SCRIPT_NAME}?action=viewSource&amp;uri={uri}</dd>
+
+		<dt>search</dt>
+		<dd>file://${SCRIPT_NAME}?action=search&amp;query={query}</dd>
+
+		<dt>stringFindBack</dt>
+		<dd>file://${SCRIPT_NAME}?action=stringFindBack</dd>
+
+		<dt>stringFindFore</dt>
+		<dd>file://${SCRIPT_NAME}?action=stringFindFore</dd>
+
+		<dt>wordFindBack</dt>
+		<dd>file://${SCRIPT_NAME}?action=wordFindBack</dd>
+		<dt>wordFindFore</dt>
+		<dd>file://${SCRIPT_NAME}?action=wordFindFore</dd>
+
+		<dt>dictWordSearch</dt>
+		<dd>file://${SCRIPT_NAME}?action=dictWordSearch&amp;query={query}</dd>
+
+		<dt>gotoPercent</dt>
+		<dd>file://${SCRIPT_NAME}?action=gotoPercent&amp;percent={number}</dd>
+
+		<dt>callOperatorFunc</dt>
+		<dd>file://${SCRIPT_NAME}?action=callOperatorFunc&amp;number={number}&amp;file={file}</dd>
+	</dl>
+EOF
+			;;
+	esac 2>&1
+); then
+	printf '%s' "${result}"
+else
+	printHtml.sh '500 Internal Server Error' - '' '500 Internal Server Error' <<- EOF
+	<p>An unexpected error occurred during request processing.</p>
+
+	<section id="error-message">
+		<h1>Error message</h1>
+
+		<pre title="Error Message"><samp>$(printf '%s' "${result}" | htmlEscape.sh)</samp></pre>
+	</section>
+
+	<section id="environment-variable">
+		<h1>Environment variable</h1>
+
+		<pre title="Environment variable"><code><samp>$(env | htmlEscape.sh)</samp></code></pre>
+	</section>
+	EOF
+fi

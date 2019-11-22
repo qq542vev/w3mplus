@@ -1,0 +1,79 @@
+#!/usr/bin/env sh
+
+##
+# Cleanup the w3m config directory.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-11-21
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
+set -eu
+
+cookie='0'
+history='0'
+args=''
+
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'--cookie')
+			cookie='1'
+			shift
+			;;
+		'--history')
+			history='1'
+			shift
+			;;
+		'-h' | '--help')
+			cat <<- EOF
+				Usage: ${0} [OPTION]... [DIRECTORY]...
+				Cleanup the w3m config directory.
+
+				 --cookie    delete cookies
+				 --history   delete histories
+				 -h, --help  display this help and exit
+			EOF
+
+			exit
+			;;
+		'-'[!-]* | '--'?*)
+			cat <<- EOF 1>&2
+				${0}: invalid option -- '${1}'
+				Try '${0} --help' for more information.
+			EOF
+
+			exit 64 # EX_USAGE
+			;;
+		'--')
+			shift
+
+			while [ 1 -le "${#}" ]; do
+				args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				shift
+			done
+			;;
+		*)
+			args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			shift
+			;;
+	esac
+done
+
+eval set -- "${args}"
+
+if [ "${#}" -eq 0 ]; then
+	set -- "${HOME}/.w3m"
+fi
+
+for directory in ${@+"${@}"}; do
+	rm -fr "${directory}/w3mcache"* "${directory}/w3msrc"* "${directory}/w3mtmp"*
+
+	if [ "${cookie}" -eq 1 ]; then
+		rm -fr "${directory}/cookie" "${directory}/w3mcookie"*
+	fi
+
+	if [ "${history}" -eq 1 ]; then
+		rm -fr "${directory}/history" "${directory}/request.log"
+	fi
+done

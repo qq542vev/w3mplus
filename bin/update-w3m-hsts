@@ -1,0 +1,127 @@
+#!/usr/bin/env sh
+
+##
+# Update the HSTS list for w3m.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-11-08
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
+set -eu
+
+endcall () {
+	rm -fr "${tmpDir}"
+}
+
+config="${1-${HOME}/.w3m/siteconf}"
+url='https://hg.mozilla.org/mozilla-central/raw-file/tip/security/manager/ssl/nsSTSPreloadList.inc'
+beginMessage='# BEGIN - Preloading HSTS'
+endMessage='# END - Preloading HSTS'
+
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-b' | '--begin')
+			beginMessage="${2}"
+			shift 2
+			;;
+		'-c' | '--config')
+			config="${2}"
+			shift 2
+			;;
+		'-e' | '--end')
+			endMessage="${2}"
+			shift 2
+			;;
+		'-l' | '--list')
+			url="${2}"
+			shift 2
+			;;
+		'-h' | '--help')
+			cat <<- EOF
+				Usage: ${0} [OPTION]...
+				Update the blacklist for w3m.
+
+				 -b, --begin   begin message
+				 -c, --config  config file
+				 -e, --end     end message
+				 -l, --list    list url
+				 -h, --help    display this help and exit
+			EOF
+
+			exit
+			;;
+		'-'[!-]* | '--'?*)
+			cat <<- EOF 1>&2
+				${0}: invalid option -- '${1}'
+				Try '${0} --help' for more information.
+			EOF
+
+			exit 64 # EX_USAGE
+			;;
+		'--')
+			shift
+
+			while [ 1 -le "${#}" ]; do
+				args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				shift
+			done
+			;;
+		*)
+			args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			shift
+			;;
+	esac
+done
+
+eval set -- "${args}"
+
+if [ 0 -lt "${#}" ]; then
+	cat <<- EOF 1>&2
+		${0}: too many arguments
+		Try '${0} --help' for more information.
+	EOF
+
+	exit 64 # EX_USAGE
+fi
+
+tmpDir=$(mktemp -d)
+
+trap 'endcall' 0 # EXIT
+trap 'exit 129' 1 # SIGHUP
+trap 'exit 130' 2 # SIGINT
+trap 'exit 131' 3 # SIGQUIT
+trap 'exit 143' 15 # SIGTERM
+
+readonly 'url' 'beginMessage' 'endMessage' 'config' 'tmpDir'
+
+printf 'Downloading... %s\n' "${url}" 1>&2
+
+w3m -dump_source -o 'auto_uncompress=1' "${url}" >"${tmpDir}/preloadList"
+
+if [ ! -s "${tmpDir}/preloadList" ]; then
+		printf 'Download failed.\n' 1>&2
+		exit 69 # EX_UNAVAILABLE
+fi
+
+printf 'Converting...\n' 1>&2
+
+sed -n -e '/^%%$/,/^%%$/p' "${tmpDir}/preloadList" | sed -e '/^%%$/d' | awk -F ',' '{
+		printf "url \"http://%s/\"\n",$1
+		printf "substitute_url \"https://%s/\"\n",$1
+		printf "\n"
+}' >"${tmpDir}/urls"
+
+if [ ! -s "${tmpDir}/urls" ]; then
+		printf 'Convert failed.\n' 1>&2
+		exit 69 # EX_UNAVAILABLE
+fi
+
+printf 'Data Writing...\n' 1>&2
+
+sed -e "/^${beginMessage}\$/{p; :loop; /${endMessage}\$/{D}; g; N; b loop}" "${config}" | sed -e "/^${beginMessage}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
+
+mv -f "${tmpDir}/siteconf" "${config}"
+
+printf 'Done\n' 1>&2
