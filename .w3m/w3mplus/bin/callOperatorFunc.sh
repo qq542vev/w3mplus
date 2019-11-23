@@ -20,7 +20,7 @@ while [ 1 -le "${#}" ]; do
 		'-l' | '--line')
 			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
-				exit 64 # EX_USAGE
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
 
 			line="${2}"
@@ -29,7 +29,7 @@ while [ 1 -le "${#}" ]; do
 		'-n' | '--number')
 			if [ "${2}" != '$' ] && [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
-				exit 64 # EX_USAGE
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
 
 			number="${2}"
@@ -53,7 +53,7 @@ while [ 1 -le "${#}" ]; do
 				Try '${0} --help' for more information.
 			EOF
 
-			exit 64 # EX_USAGE
+			exit 64 # EX_USAGE </usr/include/sysexits.h>
 			;;
 		'--')
 			shift
@@ -80,7 +80,7 @@ if [ 1 -lt "${#}" ]; then
 		Try '${0} --help' for more information.
 	EOF
 
-	exit 64 # EX_USAGE
+	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
 tmpFile=$(mktemp)
