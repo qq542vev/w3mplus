@@ -38,7 +38,7 @@ while [ 1 -le "${#}" ]; do
 			exit
 			;;
 		'-')
-			args="${args}$(tr '\t ' '\n\n' | while IFS= read -r uri; do
+			args="${args}$(tr '[:space:]' '\n' | while IFS= read -r uri; do
 				printf ' '
 				printf '%s' "${uri}" | sed -e "s/./'&'/g; s/'''/\"'\"/g"
 			done)"
@@ -55,12 +55,12 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
 				shift
 			done
 			;;
 		*)
-			args="${args} $(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
 			shift
 			;;
 	esac
