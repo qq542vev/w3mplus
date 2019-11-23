@@ -81,6 +81,7 @@ fi
 
 restoreData=$(cat "${file}")
 date=$(($(date -u '+%Y%m%d%H%M%S' | utconv) - W3MPLUS_UNDO_TIMEOUT))
+header=''
 
 while [ -n "${restoreData}" ] && [ 1 -le "${count}" ]; do
 	restore=$(printf '%s' "${restoreData}" | sed -n -e '$p')
@@ -88,12 +89,14 @@ while [ -n "${restoreData}" ] && [ 1 -le "${count}" ]; do
 	restoreDate=$(printf '%s' "${restore}" | cut -d ' ' -f 2 | tr -d 'TZ:-' | utconv)
 
 	if [ "${date}" -lt "${restoreDate}" ]; then
-		printf 'W3m-control: TAB_GOTO %s\n' "${restoreUri}"
+		header=$(printf '%s\nW3m-control: TAB_GOTO %s\n' "${header}" "${restoreUri}")
 		count=$((count - 1))
 		restoreData=$(printf '%s' "${restoreData}" | sed -e '$d')
 	else
 		restoreData=''
 	fi
-done | httpResponseW3mBack.sh -
+done
 
 printf '%s\n' "${restoreData}" | sed -e '/^$/d' >"${file}"
+
+printf '%s\n' "${header}" | httpResponseW3mBack.sh -
