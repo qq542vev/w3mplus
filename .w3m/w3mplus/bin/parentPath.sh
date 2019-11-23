@@ -38,10 +38,11 @@ while [ 1 -le "${#}" ]; do
 			exit
 			;;
 		'-')
-			for uri in $(cat); do
-				args="${args} $(printf '%s' "${uri}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
-			done
-			;;
+			args="${args}$(tr '\t ' '\n\n' | while IFS= read -r uri; do
+				printf ' '
+				printf '%s' "${uri}" | sed -e "s/./'&'/g; s/'''/\"'\"/g"
+			done)"
+				;;
 		'-'[!-]* | '--'?*)
 			cat <<- EOF 1>&2
 				${0}: invalid option -- '${1}'

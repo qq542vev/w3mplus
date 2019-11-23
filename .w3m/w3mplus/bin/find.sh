@@ -12,7 +12,7 @@
 set -eu
 
 command='SEARCH'
-format='W3m-control: %s %s\n'
+exactFlag='0'
 args=''
 
 while [ 1 -le "${#}" ]; do
@@ -22,7 +22,7 @@ while [ 1 -le "${#}" ]; do
 			shift
 			;;
 		'-e' | '--exact')
-			format='W3m-control: %s (^|[^0-9A-Za-z])%s([^0-9A-Za-Z]|$)\n'
+			exactFlag='1'
 			shift
 			;;
 		'-h' | '--help')
@@ -81,5 +81,9 @@ for word in ${@+"${@}"}; do
 done
 
 if [ -n "${keyword}" ]; then
-	printf "${format}" "${command}" "${keyword}"
+	if [ "${exactFlag}" -eq 1 ]; then
+		keyword="(^|[	 ])${keyword}([	 ]|\$)"
+	fi
+
+	printf 'W3m-control: %s %s' "${command}" "${keyword}"
 fi | httpResponseW3mBack.sh -
