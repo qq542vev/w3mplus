@@ -152,10 +152,10 @@ if result=$(
 		'gotoPercent')
 			gotoPercent.sh ${query_percent+'-n' "${query_percent}"} "${query_file}"
 			;;
-		'callOperatorFunc')
+		'selectLine')
 			: ${query_line:="${W3M_CURRENT_LINE}"}
 
-			callOperatorFunc.sh -l "${query_line}" ${query_number+'-n' "${query_number}"} "${query_file}"
+			selectLine.sh -l "${query_line}" ${query_number+'-n' "${query_number}"} "${query_subaction}" "${query_file}"
 			;;
 		*)
 			printHtml.sh 'Bad Request' - '400 Bad Request' <<- EOF

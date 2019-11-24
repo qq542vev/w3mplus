@@ -521,8 +521,6 @@ keymap "C-tH" TAB_LEFT
 
 keymap "C-to" COMMAND "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; PREV_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB;"
 
-keymap "!!" PIPE_BUF
-
 keymap "#" GOTO "file:///cgi-bin/w3mplus?action=wordFindBack"
 keymap "*" GOTO "file:///cgi-bin/w3mplus?action=wordFindFore"
 
@@ -533,9 +531,10 @@ keymap "V" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?
 
 keymap ":r" PIPE_SHELL
 
-keymap "g~" PIPE_BUF "tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'"
-
-keymap "g?" PIPE_BUF "tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'"
+keymap "!" MENU "filter"
+keymap "g~" MENU "switchcase"
+keymap "g?" MENU "rot13"
+keymap "g@" MENU "operatorFunc"
 
 # Firefox Key Map #
 
@@ -559,4 +558,3 @@ keymap "DEL" PREV
 keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
 keymap "g_" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=lineEnd&file=/tmp/w3mplus_view_cache"
-keymap "g@" MENU "callOperatorFunc"

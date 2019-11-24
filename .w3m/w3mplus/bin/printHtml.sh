@@ -3,7 +3,7 @@
 set -eu
 
 case "${LANG:-C}" in 'C')
-	LANG='en_US.UTF-8'
+	LANG='en_US.US-ASCII'
 	;;
 esac
 

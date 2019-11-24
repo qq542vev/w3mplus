@@ -11,6 +11,17 @@
 
 set -eu
 
+printText () (
+	case "${LANG:-C}" in 'C')
+		LANG='en_US.US-ASCII'
+		;;
+	esac
+
+	charset="${LANG#*.}"
+
+	cat | httpResponseNoCache.sh - "$(printf 'Content-Type: text/plain; charset=%s\n%s' "${charset}" "${1-}")"
+)
+
 # 各変数に既定値を代入する
 number='$'
 line='1'
@@ -93,10 +104,11 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-file="${1}"
+action="${1}"
+file="${2}"
 
 # 引数の個数が過大である
-if [ 1 -lt "${#}" ]; then
+if [ 2 -lt "${#}" ]; then
 	cat <<- EOF 1>&2
 		${0}: too many arguments
 		Try '${0} --help' for more information.
@@ -123,8 +135,30 @@ else
 	endLine="${line}"
 fi
 
-sed -e "${startLine},${endLine}!d" "${file}" >"${tmpFile}"
+case "${action}" in
+	'operatorFunc')
+		sed -e "${startLine},${endLine}!d" "${file}" >"${tmpFile}"
 
-httpResponseW3mBack.sh "W3m-control: EXEC_SHELL cat ${tmpFile} | ${W3MPLUS_OPERATORFUNC}; rm -f ${tmpFile}"
+		printf "W3m-control: EXEC_SHELL cat '%s' | %s; rm -f '%s'\n" "${tmpFile}" "${W3MPLUS_OPERATORFUNC}" "${tmpFile}" | httpResponseW3mBack.sh -
+		;;
+	'filter')
+		sed -e "${startLine},${endLine}!d" "${file}" | printText 'W3m-control: PIPE_BUF'
+		;;
+	'uppercase')
+		sed -e "${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText
+		;;
+	'lowercase')
+		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/" "${file}" | printText
+		;;
+	'switchcase')
+		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText
+		;;
+	'rot13')
+		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/" | printText
+	;;
+	'yank')
+		sed -e "${startLine},${endLine}!d" | yank.sh
+	;;
+esac
 
 rm -f "${file}"
