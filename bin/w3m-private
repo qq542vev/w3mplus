@@ -2,6 +2,7 @@
 
 set -eu
 
+# 終了時に一時ディレクトリを削除する
 endcall () {
 	rm -fr "${tmpDir}"
 }
@@ -15,6 +16,7 @@ fi
 
 tmpDir=$(mktemp -d)
 
+# 終了時の動作を設定する
 trap 'endcall' 0 # EXIT
 trap 'exit 129' 1 # SIGHUP
 trap 'exit 130' 2 # SIGINT

@@ -31,7 +31,7 @@ while [ 1 -le "${#}" ]; do
 				Try '${0} --help' for more information.
 			EOF
 
-			exit 64 # EX_USAGE
+			exit 64 # EX_USAGE </usr/include/sysexits.h>
 			;;
 		'--')
 			shift
