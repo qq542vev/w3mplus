@@ -83,6 +83,7 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
+# 引数の個数が過小である
 if [ "${#}" -eq 0 ]; then
 	cat <<- EOF 1>&2
 		${0}: not enough arguments
