@@ -99,6 +99,7 @@ menu MenuFile
 	nop  "----------------------"
 	func "Print              (p)" PRINT "Pp"
 	nop  "----------------------"
+	func "Reinitialize       (r)" REINIT "Rr"
 	func "Suspend            (s)" SUSPEND "Ss"
 	func "Quit               (q)" EXIT "Qq"
 end
@@ -342,37 +343,230 @@ menu 90Percents
 end
 
 menu operatorFunc
-	func "@,h,l  Current line" COMMAND "@hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=0&file=/tmp/w3mplus_view_cache"
-	func "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1&file=/tmp/w3mplus_view_cache
-	func "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1&file=/tmp/w3mplus_view_cache
-	func "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1&file=/tmp/w3mplus_view_cache
-	func "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=$&file=/tmp/w3mplus_view_cache
-	func "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=$&file=/tmp/w3mplus_view_cache
+	func  "@,h,l  Current line" COMMAND "@hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=0&file=/tmp/w3mplus_view_cache"
+	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1&file=/tmp/w3mplus_view_cache"
+	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1&file=/tmp/w3mplus_view_cache"
+	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=$&file=/tmp/w3mplus_view_cache"
+	func  "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=$&file=/tmp/w3mplus_view_cache"
+	nop  "--------------------"
+	popup "1      1 line" operatorFunc1Line "1"
+	popup "2      2 line" operatorFunc2Line "2"
+	popup "3      3 line" operatorFunc3Line "3"
+	popup "4      4 line" operatorFunc4Line "4"
+	popup "5      5 line" operatorFunc5Line "5"
+	popup "6      6 line" operatorFunc6Line "6"
+	popup "7      7 line" operatorFunc7Line "7"
+	popup "8      8 line" operatorFunc8Line "8"
+	popup "9      9 line" operatorFunc9Line "9"
 end
+
+menu operatorFunc1Line
+	func "j  Down one line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func "k  Up one line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-1&file=/tmp/w3mplus_view_cache"
+end
+
+menu operatorFunc2Line
+	func "j  Down two line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B2&file=/tmp/w3mplus_view_cache"
+	func "k  Up two line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-2&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-2&file=/tmp/w3mplus_view_cache"
+end
+
+menu operatorFunc3Line
+	func "j  Down three line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B3&file=/tmp/w3mplus_view_cache"
+	func "k  Up three line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-3&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-3&file=/tmp/w3mplus_view_cache"
+end
+
+menu operatorFunc4Line
+	func "j  Down four line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B4&file=/tmp/w3mplus_view_cache"
+	func "k  Up four line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-4&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-4&file=/tmp/w3mplus_view_cache"
+end
+
+menu operatorFunc5Line
+	func "j  Down five line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B5&file=/tmp/w3mplus_view_cache"
+	func "k  Up five line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-5&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-5&file=/tmp/w3mplus_view_cache"
+end
+
+menu operatorFunc6Line
+	func "j  Down six line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B6&file=/tmp/w3mplus_view_cache"
+	func "k  Up six line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-6&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-6&file=/tmp/w3mplus_view_cache"
+end
+
+menu operatorFunc7Line
+	func "j  Down seven line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B7&file=/tmp/w3mplus_view_cache"
+	func "k  Up seven line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-7&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-7&file=/tmp/w3mplus_view_cache"
+end
+
+menu operatorFunc8Line
+	func "j  Down eight line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B8&file=/tmp/w3mplus_view_cache"
+	func "k  Up eight line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-8&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-8&file=/tmp/w3mplus_view_cache"
+end
+
+menu operatorFunc9Line
+	func "j  Down nine line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B9&file=/tmp/w3mplus_view_cache"
+	func "k  Up nine line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-9&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-9&file=/tmp/w3mplus_view_cache"
+end
+
 
 menu filter
 	func "!,h,l  Current line" COMMAND "!hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=0&file=/tmp/w3mplus_view_cache"
-	func "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1&file=/tmp/w3mplus_view_cache
-	func "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1&file=/tmp/w3mplus_view_cache
-	func "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1&file=/tmp/w3mplus_view_cache
-	func "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=$&file=/tmp/w3mplus_view_cache
-	func "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&line=1&number=$&file=/tmp/w3mplus_view_cache
+	func "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1&file=/tmp/w3mplus_view_cache"
+	func "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1&file=/tmp/w3mplus_view_cache"
+	func "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=$&file=/tmp/w3mplus_view_cache"
+	func "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&line=1&number=$&file=/tmp/w3mplus_view_cache"
 end
 
 menu switchcase
-	func "~,h,l  Current line" COMMAND "~hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=0&file=/tmp/w3mplus_view_cache"
-	func "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1&file=/tmp/w3mplus_view_cache
-	func "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1&file=/tmp/w3mplus_view_cache
-	func "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1&file=/tmp/w3mplus_view_cache
-	func "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=$&file=/tmp/w3mplus_view_cache
-	func "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=$&file=/tmp/w3mplus_view_cache
+	func  "~,h,l  Current line" COMMAND "~hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=0&file=/tmp/w3mplus_view_cache"
+	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1&file=/tmp/w3mplus_view_cache"
+	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1&file=/tmp/w3mplus_view_cache"
+	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=$&file=/tmp/w3mplus_view_cache"
+	func  "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=$&file=/tmp/w3mplus_view_cache"
+	nop  "--------------------"
+	popup "1      1 line" switchcase1Line "1"
+	popup "2      2 line" switchcase2Line "2"
+	popup "3      3 line" switchcase3Line "3"
+	popup "4      4 line" switchcase4Line "4"
+	popup "5      5 line" switchcase5Line "5"
+	popup "6      6 line" switchcase6Line "6"
+	popup "7      7 line" switchcase7Line "7"
+	popup "8      8 line" switchcase8Line "8"
+	popup "9      9 line" switchcase9Line "9"
+end
+
+menu switchcase1Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-1&file=/tmp/w3mplus_view_cache"
+end
+
+menu switchcase2Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B2&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-2&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-2&file=/tmp/w3mplus_view_cache"
+end
+
+menu switchcase3Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B3&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-3&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-3&file=/tmp/w3mplus_view_cache"
+end
+
+menu switchcase4Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B4&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-4&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-4&file=/tmp/w3mplus_view_cache"
+end
+
+menu switchcase5Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B5&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-5&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-5&file=/tmp/w3mplus_view_cache"
+end
+
+menu switchcase6Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B6&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-6&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-6&file=/tmp/w3mplus_view_cache"
+end
+
+menu switchcase7Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B7&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-7&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-7&file=/tmp/w3mplus_view_cache"
+end
+
+menu switchcase8Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B8&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-8&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-8&file=/tmp/w3mplus_view_cache"
+end
+
+menu switchcase9Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B9&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-9&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-9&file=/tmp/w3mplus_view_cache"
 end
 
 menu rot13
-	func "?,h,l  Current line" COMMAND "?hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=0&file=/tmp/w3mplus_view_cache"
-	func "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1&file=/tmp/w3mplus_view_cache
-	func "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1&file=/tmp/w3mplus_view_cache
-	func "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1&file=/tmp/w3mplus_view_cache
-	func "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=$&file=/tmp/w3mplus_view_cache
-	func "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=$&file=/tmp/w3mplus_view_cache
+	func  "?,h,l  Current line" COMMAND "?hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=0&file=/tmp/w3mplus_view_cache"
+	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1&file=/tmp/w3mplus_view_cache"
+	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1&file=/tmp/w3mplus_view_cache"
+	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=$&file=/tmp/w3mplus_view_cache"
+	func  "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=$&file=/tmp/w3mplus_view_cache"
+	nop  "--------------------"
+	popup "1      1 line" switchcase1Line "1"
+	popup "2      2 line" switchcase2Line "2"
+	popup "3      3 line" switchcase3Line "3"
+	popup "4      4 line" switchcase4Line "4"
+	popup "5      5 line" switchcase5Line "5"
+	popup "6      6 line" switchcase6Line "6"
+	popup "7      7 line" switchcase7Line "7"
+	popup "8      8 line" switchcase8Line "8"
+	popup "9      9 line" switchcase9Line "9"
+end
+
+menu rot13-1Line
+	func "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-1&file=/tmp/w3mplus_view_cache"
+end
+
+menu rot13-2Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B2&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-2&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-2&file=/tmp/w3mplus_view_cache"
+end
+
+menu rot13-3Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B3&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-3&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-3&file=/tmp/w3mplus_view_cache"
+end
+
+menu rot13-4Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B4&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-4&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-4&file=/tmp/w3mplus_view_cache"
+end
+
+menu rot13-5Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B5&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-5&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-5&file=/tmp/w3mplus_view_cache"
+end
+
+menu rot13-6Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B6&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-6&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-6&file=/tmp/w3mplus_view_cache"
+end
+
+menu rot13-7Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B7&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-7&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-7&file=/tmp/w3mplus_view_cache"
+end
+
+menu rot13-8Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B8&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-8&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-8&file=/tmp/w3mplus_view_cache"
+end
+
+menu rot13-9Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B9&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-9&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-9&file=/tmp/w3mplus_view_cache"
 end

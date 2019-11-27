@@ -40,7 +40,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-n' | '--number')
-			if [ "${2}" != '$' ] && [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "${2}" != '$' ] && [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$')" -eq 0 ] && [ "$(expr "${2}" ':' '+-[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -117,9 +117,13 @@ if [ 2 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-tmpFile=$(mktemp)
-
 if expr "${number}" ':' '[0+-]' >'/dev/null'; then
+	if expr "${number}" ':' '+-' >'/dev/null'; then
+		number="${number#+-}"
+		line=$((line + number))
+		number="$((number * -2))"
+	fi
+
 	number=$((line + number))
 
 	if [ "${number}" -lt 1 ]; then
@@ -137,24 +141,27 @@ fi
 
 case "${action}" in
 	'operatorFunc')
+		tmpFile=$(mktemp)
+
 		sed -e "${startLine},${endLine}!d" "${file}" >"${tmpFile}"
 
-		printf "W3m-control: EXEC_SHELL cat '%s' | %s; rm -f '%s'\n" "${tmpFile}" "${W3MPLUS_OPERATORFUNC}" "${tmpFile}" | httpResponseW3mBack.sh -
+		printf "W3m-control: EXEC_SHELL cat '%s' | %s; rm -f '%s'\\n" "${tmpFile}" "${W3MPLUS_OPERATORFUNC}" "${tmpFile}" | httpResponseW3mBack.sh -
 		;;
 	'filter')
 		sed -e "${startLine},${endLine}!d" "${file}" | printText 'W3m-control: PIPE_BUF'
 		;;
 	'uppercase')
-		sed -e "${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText
+		sed -e "${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText "W3m-control: GOTO_LINE ${startLine}"
 		;;
 	'lowercase')
-		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/" "${file}" | printText
+		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/" "${file}" | printText "W3m-control: GOTO_LINE ${startLine}"
 		;;
 	'switchcase')
-		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText
+		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText "W3m-control: GOTO_LINE ${startLine}"
 		;;
 	'rot13')
-		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/" | printText
+		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/" "${file}"| printText "W3m-control: GOTO_LINE ${startLine}"
+
 	;;
 	'yank')
 		sed -e "${startLine},${endLine}!d" | yank.sh
