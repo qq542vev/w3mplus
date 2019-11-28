@@ -531,6 +531,36 @@ menu filter4Line
 	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-4&file=/tmp/w3mplus_view_cache"
 end
 
+menu filter5Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B5&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-5&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-5&file=/tmp/w3mplus_view_cache"
+end
+
+menu filter6Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B6&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-6&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-6&file=/tmp/w3mplus_view_cache"
+end
+
+menu filter7Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B7&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-7&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-7&file=/tmp/w3mplus_view_cache"
+end
+
+menu filter8Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B8&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-8&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-8&file=/tmp/w3mplus_view_cache"
+end
+
+menu filter9Line
+	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B9&file=/tmp/w3mplus_view_cache"
+	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-9&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-9&file=/tmp/w3mplus_view_cache"
+end
+
 menu switchcase
 	func  "~,h,l  Current line" COMMAND "~hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=0&file=/tmp/w3mplus_view_cache"
 	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1&file=/tmp/w3mplus_view_cache"

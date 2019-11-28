@@ -117,7 +117,11 @@ if [ 2 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-if expr "${number}" ':' '[0+-]' >'/dev/null'; then
+lineCount=$(cat "${file}" | grep -c '^')
+
+if [ "${number}" = '$' ]; then
+	number="${lineCount}"
+elif expr "${number}" ':' '[0+-]' >'/dev/null'; then
 	if expr "${number}" ':' '+-' >'/dev/null'; then
 		number="${number#+-}"
 		line=$((line + number))
@@ -131,7 +135,7 @@ if expr "${number}" ':' '[0+-]' >'/dev/null'; then
 	fi
 fi
 
-if [ "${number}" = '$' ] || [ "${line}" -le "${number}" ]; then
+if [ "${line}" -le "${number}" ]; then
 	startLine="${line}"
 	endLine="${number}"
 else
@@ -154,37 +158,35 @@ case "${action}" in
 			fi
 
 			sed -e "${startLine},${endLine}!d" "${file}" | ${W3MPLUS_FORMATPRG}
-			if [ "${endLine}" != '$' ]; then
-				sed -e "$((endLine + 1)),\$!d" "${file}"
-			fi
+			sed -e "$((endLine + 1)),\$!d" "${file}"
 		} | printText "W3m-control: GOTO_LINE ${startLine}"
 		;;
 	'filter')
-		tmpFile=$(mktemp)
-		cat "${file}" >"${tmpFile}"
+		if [ "${startLine}" -eq 1 ] && [ "${lineCount}" -le "${endLine}" ]; then
+			httpResponseW3mBack.sh 'W3m-control: PIPE_BUF'
+		else
+			tmpFile=$(mktemp)
+			cp -f "${file}" "${tmpFile}"
 
-		head=$(
-			if [ 2 -le "${startLine}" ]; then
-				printf "sed -e '1,%s!d' '%s';" "$((startLine - 1))" "${tmpFile}"
-			fi
+			commands=$(
+				if [ 2 -le "${startLine}" ]; then
+					printf "sed -e '1,%s!d' '%s';" "$((startLine - 1))" "${tmpFile}"
+				fi
 
-			printf "cat %%s;"
-
-			if [ "${endLine}" != '$' ]; then
+				printf "cat %%s;"
 				printf "sed -e '%s,\$!d' '%s';" "$((endLine + 1))" "${tmpFile}"
-			fi
+				printf "rm -f '%s';" "${tmpFile}"
+			)
 
-			printf "rm -f '%s';" "${tmpFile}"
-		)
-
-		sed -e "${startLine},${endLine}!d" "${file}" | printText "$(
-			cat <<- EOF
-				W3m-control: PIPE_BUF
-				W3m-control: PIPE_BUF ${head}
-				W3m-control: DELETE_PREVBUF
-				W3m-control: GOTO_LINE ${startLine}
-			EOF
-		)"
+			sed -e "${startLine},${endLine}!d" "${file}" | printText "$(
+				cat <<- EOF
+					W3m-control: PIPE_BUF
+					W3m-control: PIPE_BUF ${commands}
+					W3m-control: DELETE_PREVBUF
+					W3m-control: GOTO_LINE ${startLine}
+				EOF
+			)"
+		fi
 		;;
 	'uppercase')
 		sed -e "${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText "W3m-control: GOTO_LINE ${startLine}"
