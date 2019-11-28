@@ -147,6 +147,18 @@ case "${action}" in
 
 		printf "W3m-control: EXEC_SHELL cat '%s' | %s; rm -f '%s'\\n" "${tmpFile}" "${W3MPLUS_OPERATORFUNC}" "${tmpFile}" | httpResponseW3mBack.sh -
 		;;
+	'formatPrg')
+		n=$((startLine - 1))
+
+		{
+			if [ 1 -le "${n}" ]; then
+				sed -e "1,${n}!d" "${file}"
+			fi
+
+			sed -e "${startLine},${endLine}!d" "${file}" | ${W3MPLUS_FORMATPRG}
+			sed -e "$((endLine + 1)),\$!d" "${file}"
+		} | printText "W3m-control: GOTO_LINE ${startLine}"
+		;;
 	'filter')
 		sed -e "${startLine},${endLine}!d" "${file}" | printText 'W3m-control: PIPE_BUF'
 		;;

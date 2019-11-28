@@ -535,6 +535,7 @@ keymap "!" MENU "filter"
 keymap "g~" MENU "switchcase"
 keymap "g?" MENU "rot13"
 keymap "g@" MENU "operatorFunc"
+keymap "gq" MENU "formatPrg"
 
 # Firefox Key Map #
 

@@ -415,6 +415,78 @@ menu operatorFunc9Line
 	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-9&file=/tmp/w3mplus_view_cache"
 end
 
+menu formatPrg
+	func  "@,h,l  Current line" COMMAND "@hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=0&file=/tmp/w3mplus_view_cache"
+	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1&file=/tmp/w3mplus_view_cache"
+	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=1&file=/tmp/w3mplus_view_cache"
+	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=$&file=/tmp/w3mplus_view_cache"
+	func  "*      All line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=$&file=/tmp/w3mplus_view_cache"
+	nop  "--------------------"
+	popup "1      1 line" formatPrg1Line "1"
+	popup "2      2 line" formatPrg2Line "2"
+	popup "3      3 line" formatPrg3Line "3"
+	popup "4      4 line" formatPrg4Line "4"
+	popup "5      5 line" formatPrg5Line "5"
+	popup "6      6 line" formatPrg6Line "6"
+	popup "7      7 line" formatPrg7Line "7"
+	popup "8      8 line" formatPrg8Line "8"
+	popup "9      9 line" formatPrg9Line "9"
+end
+
+menu formatPrg1Line
+	func "j  Down one line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1&file=/tmp/w3mplus_view_cache"
+	func "k  Up one line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-1&file=/tmp/w3mplus_view_cache"
+end
+
+menu formatPrg2Line
+	func "j  Down two line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B2&file=/tmp/w3mplus_view_cache"
+	func "k  Up two line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-2&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-2&file=/tmp/w3mplus_view_cache"
+end
+
+menu formatPrg3Line
+	func "j  Down three line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B3&file=/tmp/w3mplus_view_cache"
+	func "k  Up three line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-3&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-3&file=/tmp/w3mplus_view_cache"
+end
+
+menu formatPrg4Line
+	func "j  Down four line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B4&file=/tmp/w3mplus_view_cache"
+	func "k  Up four line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-4&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-4&file=/tmp/w3mplus_view_cache"
+end
+
+menu formatPrg5Line
+	func "j  Down five line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B5&file=/tmp/w3mplus_view_cache"
+	func "k  Up five line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-5&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-5&file=/tmp/w3mplus_view_cache"
+end
+
+menu formatPrg6Line
+	func "j  Down six line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B6&file=/tmp/w3mplus_view_cache"
+	func "k  Up six line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-6&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-6&file=/tmp/w3mplus_view_cache"
+end
+
+menu formatPrg7Line
+	func "j  Down seven line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B7&file=/tmp/w3mplus_view_cache"
+	func "k  Up seven line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-7&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-7&file=/tmp/w3mplus_view_cache"
+end
+
+menu formatPrg8Line
+	func "j  Down eight line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B8&file=/tmp/w3mplus_view_cache"
+	func "k  Up eight line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-8&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-8&file=/tmp/w3mplus_view_cache"
+end
+
+menu formatPrg9Line
+	func "j  Down nine line" COMMAND "j" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B9&file=/tmp/w3mplus_view_cache"
+	func "k  Up nine line" COMMAND "k" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-9&file=/tmp/w3mplus_view_cache"
+	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-9&file=/tmp/w3mplus_view_cache"
+end
 
 menu filter
 	func "!,h,l  Current line" COMMAND "!hl" "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=0&file=/tmp/w3mplus_view_cache"
