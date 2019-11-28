@@ -20,12 +20,13 @@ set -eu
 : ${W3MPLUS_SEARCH_URI:='google:'}
 : ${W3MPLUS_OPERATORFUNC:='cat'}
 : ${W3MPLUS_FORMATPRG:='cat'}
+: ${W3MPLUS_EQUALPRG:=''}
 : ${W3MPLUS_ZOOM_MAX:='300'}
 : ${W3MPLUS_ZOOM_MIN:='30'}
 
 PATH="${W3MPLUS_PATH}/bin${PATH:+:}${PATH:-}"
 
-export 'W3MPLUS_PATH' 'W3MPLUS_YANK_FILE' 'W3MPLUS_YANK_HEADER' 'W3MPLUS_YANK_FOOTER' 'W3MPLUS_UNDO_TIMEOUT' 'W3MPLUS_VISUAL_TIMEOUT' 'W3MPLUS_SEARCH_URI' 'W3MPLUS_OPERATORFUNC' 'W3MPLUS_FORMATPRG' 'W3MPLUS_ZOOM_MAX' 'W3MPLUS_ZOOM_MIN' 'PATH'
+export 'W3MPLUS_PATH' 'W3MPLUS_YANK_FILE' 'W3MPLUS_YANK_HEADER' 'W3MPLUS_YANK_FOOTER' 'W3MPLUS_UNDO_TIMEOUT' 'W3MPLUS_VISUAL_TIMEOUT' 'W3MPLUS_SEARCH_URI' 'W3MPLUS_OPERATORFUNC' 'W3MPLUS_FORMATPRG' 'W3MPLUS_EQUALPRG' 'W3MPLUS_ZOOM_MAX' 'W3MPLUS_ZOOM_MIN' 'PATH'
 
 eval 'set' '--' "$(printf '%s' "${QUERY_STRING-}" | parseQuery.sh)"
 
@@ -246,8 +247,10 @@ if result=$(
 EOF
 			;;
 	esac 2>&1
+
+	printf '_'
 ); then
-	printf '%s' "${result}"
+	printf '%s' "${result%_}"
 else
 	printHtml.sh '500 Internal Server Error' - '' '500 Internal Server Error' <<- EOF
 	<p>An unexpected error occurred during request processing.</p>

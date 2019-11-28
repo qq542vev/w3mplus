@@ -537,6 +537,8 @@ keymap "g?" MENU "rot13"
 keymap "g@" MENU "operatorFunc"
 keymap "gq" MENU "formatPrg"
 
+keymap "g:" GOTO_LINE
+
 # Firefox Key Map #
 
 keymap "^[OP" HELP

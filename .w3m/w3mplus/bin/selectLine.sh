@@ -19,12 +19,12 @@ printText () (
 
 	charset="${LANG#*.}"
 
-	cat | httpResponseNoCache.sh - "$(printf 'Content-Type: text/plain; charset=%s\n%s' "${charset}" "${1-}")"
+	httpResponseNoCache.sh - "$(printf 'Content-Type: text/plain; charset=%s\n%s' "${charset}" "${1-}")"
 )
 
 # 各変数に既定値を代入する
-number='$'
 line='1'
+number='$'
 args=''
 
 # コマンドライン引数の解析する
@@ -148,19 +148,43 @@ case "${action}" in
 		printf "W3m-control: EXEC_SHELL cat '%s' | %s; rm -f '%s'\\n" "${tmpFile}" "${W3MPLUS_OPERATORFUNC}" "${tmpFile}" | httpResponseW3mBack.sh -
 		;;
 	'formatPrg')
-		n=$((startLine - 1))
-
 		{
-			if [ 1 -le "${n}" ]; then
-				sed -e "1,${n}!d" "${file}"
+			if [ 2 -le "${startLine}" ]; then
+				sed -e "1,$((startLine - 1))!d" "${file}"
 			fi
 
 			sed -e "${startLine},${endLine}!d" "${file}" | ${W3MPLUS_FORMATPRG}
-			sed -e "$((endLine + 1)),\$!d" "${file}"
+			if [ "${endLine}" != '$' ]; then
+				sed -e "$((endLine + 1)),\$!d" "${file}"
+			fi
 		} | printText "W3m-control: GOTO_LINE ${startLine}"
 		;;
 	'filter')
-		sed -e "${startLine},${endLine}!d" "${file}" | printText 'W3m-control: PIPE_BUF'
+		tmpFile=$(mktemp)
+		cat "${file}" >"${tmpFile}"
+
+		head=$(
+			if [ 2 -le "${startLine}" ]; then
+				printf "sed -e '1,%s!d' '%s';" "$((startLine - 1))" "${tmpFile}"
+			fi
+
+			printf "cat %%s;"
+
+			if [ "${endLine}" != '$' ]; then
+				printf "sed -e '%s,\$!d' '%s';" "$((endLine + 1))" "${tmpFile}"
+			fi
+
+			printf "rm -f '%s';" "${tmpFile}"
+		)
+
+		sed -e "${startLine},${endLine}!d" "${file}" | printText "$(
+			cat <<- EOF
+				W3m-control: PIPE_BUF
+				W3m-control: PIPE_BUF ${head}
+				W3m-control: DELETE_PREVBUF
+				W3m-control: GOTO_LINE ${startLine}
+			EOF
+		)"
 		;;
 	'uppercase')
 		sed -e "${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText "W3m-control: GOTO_LINE ${startLine}"
@@ -173,7 +197,6 @@ case "${action}" in
 		;;
 	'rot13')
 		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/" "${file}"| printText "W3m-control: GOTO_LINE ${startLine}"
-
 	;;
 	'yank')
 		sed -e "${startLine},${endLine}!d" | yank.sh

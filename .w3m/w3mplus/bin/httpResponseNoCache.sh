@@ -13,12 +13,14 @@ header="${2-}"
 statusCode="${3-200 Ok}"
 
 case "${body}" in '-')
-	body=$(cat)
+	body=$(cat; printf '_');
+	body="${body%_}"
 	;;
 esac
 
 case "${header}" in '-')
-	header=$(cat)
+	header=$(cat; printf '_')
+	header="${header%_}"
 	;;
 esac
 
