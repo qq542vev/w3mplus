@@ -539,6 +539,8 @@ keymap "gq" MENU "formatPrg"
 
 keymap "g:" GOTO_LINE
 
+keymap "=" GOTO "file:///cgi-bin/w3mplus?action=equalPrg"
+
 # Firefox Key Map #
 
 keymap "^[OP" HELP

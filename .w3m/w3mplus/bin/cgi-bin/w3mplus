@@ -5,7 +5,7 @@
 #
 # @author qq542vev
 # @version 1.0.0
-# @date 2019-11-23
+# @date 2019-12-01
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -158,6 +158,17 @@ if result=$(
 			: ${query_line:="${W3M_CURRENT_LINE}"}
 
 			selectLine.sh -l "${query_line}" ${query_number+'-n' "${query_number}"} "${query_subaction}" "${query_file}"
+			;;
+		'equalPrg')
+			if [ -n "${W3MPLUS_EQUALPRG}" ]; then
+				if [ -f "${W3M_SOURCEFILE}" ]; then
+					w3m -dump "${W3M_SOURCEFILE}" | eval "${W3MPLUS_EQUALPRG}"
+				else
+					httpResponseW3mBack.sh
+				fi
+			else
+				printHtml.sh 'Bad Request' '<p>The value of the environment variable <strong><var>W3MPLUS_EQUALPRG</var></strong> is empty.</p>' '400 Bad Request'
+			fi
 			;;
 		*)
 			printHtml.sh 'Bad Request' - '400 Bad Request' <<- EOF

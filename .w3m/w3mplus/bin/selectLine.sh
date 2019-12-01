@@ -157,7 +157,7 @@ case "${action}" in
 				sed -e "1,$((startLine - 1))!d" "${file}"
 			fi
 
-			sed -e "${startLine},${endLine}!d" "${file}" | ${W3MPLUS_FORMATPRG}
+			sed -e "${startLine},${endLine}!d" "${file}" | eval "${W3MPLUS_FORMATPRG}"
 			sed -e "$((endLine + 1)),\$!d" "${file}"
 		} | printText "W3m-control: GOTO_LINE ${startLine}"
 		;;
