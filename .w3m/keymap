@@ -257,8 +257,8 @@ keymap "RIGHT" MOVE_RIGHT1
 keymap "k" MOVE_UP1
 keymap "UP" MOVE_UP1
 
-keymap "C-e" DOWN
-keymap "C-y" UP
+keymap "C-e" UP
+keymap "C-y" DOWN
 
 keymap "C-d" NEXT_HALF_PAGE
 keymap "C-u" PREV_HALF_PAGE
