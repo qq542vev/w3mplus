@@ -77,11 +77,8 @@ if result=$(
 		'lineEnd')
 			lineBegin.sh -e -l "${W3M_CURRENT_LINE-}" "${query_file}"
 			;;
-		'prevParagraph')
-			nextParagraph.sh -l "${W3M_CURRENT_LINE}" -n '-1' "${query_file}"
-			;;
-		'nextParagraph')
-			nextParagraph.sh -l "${W3M_CURRENT_LINE}" -n '+1' "${query_file}"
+		'moveParagraph')
+			moveParagraph.sh -l "${W3M_CURRENT_LINE}" ${query_number:+-n "${query_number}"} "${query_file}"
 			;;
 		'qmarks')
 			: >>"${W3MPLUS_PATH}/quickmark"

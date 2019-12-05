@@ -278,8 +278,8 @@ keymap "gi" COMMAND "SEARCH '\[..* \]'; MOVE_RIGHT1"
 keymap "[[" SEARCH "[Pp][Rr][Ee][Vv]|<<|«|前へ"
 keymap "]]" SEARCH "[Nn][Ee][Xx][Tt]|>>|»|次へ"
 
-keymap "{" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=prevParagraph&file=/tmp/w3mplusPrintCache"
-keymap "}" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=nextParagraph&file=/tmp/w3mplusPrintCache"
+keymap "{" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=moveParagraph&number=-1&file=/tmp/w3mplusPrintCache"
+keymap "}" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=moveParagraph&number=%2B1&file=/tmp/w3mplusPrintCache"
 
 ### Zooming ###
 
