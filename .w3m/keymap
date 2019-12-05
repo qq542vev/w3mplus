@@ -237,7 +237,7 @@ keymap "gF" COMMAND "VIEW; EDIT_SCREEN; VIEW"
 ### Motion commands ###
 
 keymap "0" LINE_BEGIN
-keymap "^" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=lineBegin&file=/tmp/w3mplus_view_cache"
+keymap "^" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=lineBegin&file=/tmp/w3mplusPrintCache"
 keymap "$" LINE_END
 
 keymap "gg" BEGIN
@@ -278,8 +278,8 @@ keymap "gi" COMMAND "SEARCH '\[..* \]'; MOVE_RIGHT1"
 keymap "[[" SEARCH "[Pp][Rr][Ee][Vv]|<<|«|前へ"
 keymap "]]" SEARCH "[Nn][Ee][Xx][Tt]|>>|»|次へ"
 
-keymap "{" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=prevParagraph&file=/tmp/w3mplus_view_cache"
-keymap "}" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=nextParagraph&file=/tmp/w3mplus_view_cache"
+keymap "{" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=prevParagraph&file=/tmp/w3mplusPrintCache"
+keymap "}" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=nextParagraph&file=/tmp/w3mplusPrintCache"
 
 ### Zooming ###
 
@@ -527,7 +527,7 @@ keymap "*" GOTO "file:///cgi-bin/w3mplus?action=wordFindFore"
 keymap "g#" GOTO "file:///cgi-bin/w3mplus?action=stringFindBack"
 keymap "g*" GOTO "file:///cgi-bin/w3mplus?action=stringFindFore"
 
-keymap "V" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=lineVisualMode&file=/tmp/w3mplus_view_cache"
+keymap "V" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=lineVisualMode&file=/tmp/w3mplusPrintCache"
 
 keymap ":r" PIPE_SHELL
 
@@ -562,4 +562,4 @@ keymap "DEL" PREV
 
 keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
-keymap "g_" COMMAND "PRINT /tmp/w3mplus_view_cache; GOTO file:///cgi-bin/w3mplus?action=lineEnd&file=/tmp/w3mplus_view_cache"
+keymap "g_" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=lineEnd&file=/tmp/w3mplusPrintCache"

@@ -40,6 +40,12 @@ while [ 1 -le "${#}" ]; do
 
 			exit
 			;;
+		# 標準入力を処理する
+		'-')
+			arg=$( (cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+:
+			args="${args}${args:+ }'${arg%?_}'"
+			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
 			option="${1}"
@@ -52,16 +58,20 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+
+				args="${args}${args:+ }'${arg%?_}'"
 				shift
 			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option="${1}"
+			option=$(printf '%s' "${1}" | cut -c '2'; printf '_')
+			options=$(printf '%s' "${1}" | cut -c '3-'; printf '_')
+
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-$(printf '%s' "${option}" | cut -c 2)" "-$(printf '%s' "${option}" | cut -c 3-)" ${@+"${@}"}
+			set -- "-${option%_}" "-${options%_}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
@@ -74,7 +84,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+
+			args="${args}${args:+ }'${arg%?_}'"
 			shift
 			;;
 	esac
@@ -82,6 +94,10 @@ done
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
+
+if [ "${#}" -eq 0 ]; then
+	set -- "$(cat)"
+fi
 
 # 引数の個数が過小である
 if [ "${#}" -eq 0 ]; then
@@ -97,15 +113,22 @@ keyword=''
 
 for word in ${@+"${@}"}; do
 	if [ -n "${word}" ]; then
-		keyword="${keyword}${keyword:+|}$(printf '%s' "${word}" | sed -e 's/[].\*+?|(){}[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')
-"
+		keyword="${keyword}${keyword:+|}$(printf '%s' "${word}" | tr '\n' ' ' | sed -e 's/[].\*+?|(){}[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')"
 	fi
 done
 
 if [ -n "${keyword}" ]; then
 	if [ "${exactFlag}" -eq 1 ]; then
-		keyword="(^|[	 ])${keyword}([	 ]|\$)"
+		keyword="(^|[	 ])(${keyword})([	 ]|\$)"
 	fi
 
-	printf 'W3m-control: %s %s' "${command}" "${keyword}"
+	if [ "${exactFlag}" -eq 1 ] && [ "${command}" = 'SEARCH_BACK' ]; then
+		printf 'W3m-control: MOVE_LEFT1\n'
+	fi
+
+	printf 'W3m-control: %s %s\n' "${command}" "${keyword}"
+
+	if [ "${exactFlag}" -eq 1 ]; then
+		printf 'W3m-control: MOVE_RIGHT1\n'
+	fi
 fi | httpResponseW3mBack.sh -

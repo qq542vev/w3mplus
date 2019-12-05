@@ -13,7 +13,7 @@ set -eu
 
 # 各変数に既定値を代入する
 line='1'
-prevFlag='0'
+number='+1'
 args=''
 
 # コマンドライン引数の解析する
@@ -28,9 +28,13 @@ while [ 1 -le "${#}" ]; do
 			line="${2}"
 			shift 2
 			;;
-		'-p' | '--previous')
-			prevFlag='1'
-			shift
+		'-n' | '--number')
+			if [ "$(expr "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
+			fi
+
+			number="${2}"
+			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -38,9 +42,9 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... FILE
 				Move to the next paragraph.
 
-				 -l, --line      line number
-				 -p, --previous  previous paragraph
-				 -h, --help      display this help and exit
+				 -l, --line    line number
+				 -n, --number  number of paragraph moves
+				 -h, --help    display this help and exit
 			EOF
 
 			exit
@@ -57,16 +61,20 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+
+				args="${args}${args:+ }'${arg%?_}'"
 				shift
 			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option="${1}"
+			option=$(printf '%s' "${1}" | cut -c '2'; printf '_')
+			options=$(printf '%s' "${1}" | cut -c '3-'; printf '_')
+
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-$(printf '%s' "${option}" | cut -c 2)" "-$(printf '%s' "${option}" | cut -c 3-)" ${@+"${@}"}
+			set -- "-${option%_}" "-${options%_}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
@@ -79,7 +87,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+
+			args="${args}${args:+ }'${arg%?_}'"
 			shift
 			;;
 	esac
@@ -100,16 +110,28 @@ if [ 1 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-if [ "${prevFlag}" -eq 1 ]; then
-	gotoLine=$(sed -n "1{/./=}; ${line}Q; /^\$/{N; ${line}Q; /^\\n*\$/D; =}" "${file}" | tail -n '1')
-else
-	gotoLine=$(sed -n -e "${line},\$!d; /^\$/{N; /^\\n$/D; =; Q}" "${file}")
-fi
+while [ "${number}" -ne 0 ]; do
+	if [ 0 -lt "${number}" ]; then
+		line=$(sed -n -e "${line},\$!d; /^\$/{N; /^\\n$/D; =; Q}" "${file}")
 
-if [ -n "${gotoLine}" ]; then
-	lineBegin.sh -l "${gotoLine}" "${file}"
-else
-	httpResponseW3mBack.sh
-fi
+		if [ -z "${line}" ]; then
+			line=$(grep -c -e '^' "${file}")
+			break
+		fi
+
+		number=$((number - 1))
+	else
+		line=$(sed -n "1{/./=}; ${line}Q; /^\$/{N; ${line}Q; /^\\n*\$/D; =}" "${file}" | tail -n '1')
+
+		if [ -z "${line}" ]; then
+			line='1'
+			break
+		fi
+
+		number=$((number + 1))
+	fi
+done
+
+lineBegin.sh -l "${line}" "${file}"
 
 rm -f "${file}"

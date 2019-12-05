@@ -25,7 +25,7 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION]... [CALL] [URI]3]
+				Usage: ${0} [OPTION]... [CALL] [URI]
 				Execute the command according to the site.
 
 				 -c, --config  configuration file
@@ -35,7 +35,7 @@ while [ 1 -le "${#}" ]; do
 			exit
 			;;
 		# `--name=value` 形式のロングオプション
-	 '--'[!-]*'='*)
+		'--'[!-]*'='*)
 			option="${1}"
 			shift
 			# `--name value` に変換して再セットする
@@ -46,16 +46,20 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+
+				args="${args}${args:+ }'${arg%?_}'"
 				shift
 			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option="${1}"
+			option=$(printf '%s' "${1}" | cut -c '2'; printf '_')
+			options=$(printf '%s' "${1}" | cut -c '3-'; printf '_')
+
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-$(printf '%s' "${option}" | cut -c 2)" "-$(printf '%s' "${option}" | cut -c 3-)" ${@+"${@}"}
+			set -- "-${option%_}" "-${options%_}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
@@ -68,19 +72,22 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+
+			args="${args}${args:+ }'${arg%?_}'"
 			shift
 			;;
 	esac
 done
 
-mkdir -p "$(dirname "${config}")"
+directory=$(dirname "${config}"; printf '_')
+mkdir -p "${directory%?_}"
 : >>"${config}"
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-call="${1-manual}"
+operatorCall="${1-manual}"
 uri="${2-${W3M_URL}}"
 
 # 引数の個数が過大である
@@ -93,12 +100,12 @@ if [ 2 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-while read -r 'autoCall' 'autoRegType' 'autoPattern' 'autoCommand'; do
-	if [ "${call}" = "${autoCall}" ] && expr "${autoRegType}" : '^!\{0,1\}[EFG]$'; then
-		grepOption=$(printf '%s' "${autoRegType}" | sed -E -e 's/!/ -v/; s/[FEG]/ -&/g')
+while read -r 'call' 'regType' 'pattern' 'command'; do
+	if [ "${operatorCall}" = "${call}" ] && expr "${regType}" ':' '!\{0,1\}[EFG]$' >'/dev/null'; then
+		grepOption=$(printf '%s' "${regType}" | sed -e 's/^!/ -v/; s/[FEG]$/ -&/')
 
-		if printf '%s' "${uri}" | grep ${grepOption} -q -e "${autoPattern}"; then
-			printf 'W3m-control: COMMAND %s\n' "${autoCommand}"
+		if printf '%s' "${uri}" | grep ${grepOption} -q -e "${pattern}"; then
+			printf 'W3m-control: COMMAND %s\n' "${command}"
 			break
 		fi
 	fi

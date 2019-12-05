@@ -43,8 +43,9 @@ while [ 1 -le "${#}" ]; do
 		# 標準入力を処理する
 		'-')
 			args="${args}$(tr '[:space:]' '\n' | while IFS= read -r uri; do
-				printf ' '
-				printf '%s' "${uri}" | sed -e "s/./'&'/g; s/'''/\"'\"/g"
+				printf " '"
+				printf '%s' "${uri}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"
+				printf "'"
 			done)"
 			;;
 		# `--name=value` 形式のロングオプション
@@ -59,16 +60,20 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+
+				args="${args}${args:+ }'${arg%?_}'"
 				shift
 			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option="${1}"
+			option=$(printf '%s' "${1}" | cut -c '2'; printf '_')
+			options=$(printf '%s' "${1}" | cut -c '3-'; printf '_')
+
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-$(printf '%s' "${option}" | cut -c 2)" "-$(printf '%s' "${option}" | cut -c 3-)" ${@+"${@}"}
+			set -- "-${option%_}" "-${options%_}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
@@ -81,7 +86,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			args="${args}${args:+ }$(printf '%s' "${1}" | sed -e "s/./'&'/g; s/'''/\"'\"/g")"
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+
+			args="${args}${args:+ }'${arg%?_}'"
 			shift
 			;;
 	esac
