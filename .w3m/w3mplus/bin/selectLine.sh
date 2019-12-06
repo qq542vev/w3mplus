@@ -207,7 +207,7 @@ case "${action}" in
 		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/" "${file}"| printText "W3m-control: GOTO_LINE ${startLine}"
 	;;
 	'yank')
-		sed -e "${startLine},${endLine}!d" | yank.sh
+		sed -e "${startLine},${endLine}!d" "${file}" | yank.sh
 	;;
 esac
 

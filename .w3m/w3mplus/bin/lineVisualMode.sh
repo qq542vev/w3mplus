@@ -12,17 +12,12 @@
 set -eu
 
 # 各変数に既定値を代入する
-config="${W3MPLUS_PATH}/visualStart"
 line='1'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-c' | '--config')
-			config="${2}"
-			shift 2
-			;;
 		'-l' | '--line')
 			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
@@ -38,7 +33,6 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... FILE
 				Start visual mode.
 
-				 -c, --config  configuration file
 				 -l, --line    line number
 				 -h, --help    display this help and exit
 			EOF
@@ -91,10 +85,6 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${config}"; printf '_')
-mkdir -p "${directory%?_}"
-: >>"${config}"
-
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
@@ -111,29 +101,20 @@ if [ 1 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-if [ ! -e "${config}" ]; then
-	printf '  0\n' >"${config}"
-fi
+: ${W3MPLUS_VISUALSTART:='  0'}
 
-startChecksum=$(cut -d ' ' -f 1 "${config}")
-startLine=$(cut -d ' ' -f 2 "${config}")
-startTime=$(cut -d ' ' -f 3 "${config}" | tr -d 'TZ:-' | utconv)
+startChecksum=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 1)
+startLine=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 2)
+startTime=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 3 | tr -d 'TZ:-' | utconv)
 
 if [ "${checksum}" = "${startChecksum}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | utconv)" -lt "$((startTime + W3MPLUS_VISUAL_TIMEOUT))" ]; then
-	if [ "${startLine}" -le "${line}" ]; then
-		endLine="${line}"
-	else
-		endLine="${startLine}"
-		startLine="${line}"
-	fi
-
-	sed -n -e "${startLine},${endLine}p" "${file}" | yank.sh
-
-	: >"${config}"
+	selectLine.sh -l "${startLine}" -n "${line}" 'yank' "${file}"
+	printf 'W3m-control: SETENV W3MPLUS_VISUALSTART=\r\n'
 else
-	printf '%s %d %s\n' "${checksum}" "${line}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >"${config}"
-
-	httpResponseW3mBack.sh "W3m-control: EXEC_SHELL echo 'Start visual mode from line ${line}'"
+	cat <<- EOF | httpResponseW3mBack.sh -
+		W3m-control: SETENV W3MPLUS_VISUALSTART=${checksum} ${line} $(date -u '+%Y-%m-%dT%H:%M:%SZ')
+		W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'
+	EOF
 fi
 
 rm -f "${file}"

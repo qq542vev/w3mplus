@@ -2,15 +2,24 @@
 
 set -eu
 
+case "${LANG}" in 'C')
+	LANG='en_US.US-ASCII'
+	;;
+esac
+
 trim () (
-	tr -d '\r\n' | sed -E -e 's/^[\t ]*|[\t ]*$//g'
+	sed -e '1s/^[\t ]*//; $s/[\t ]*$//'
 )
 
 printHeader () (
-	name=$(printf '%s' "${1-}" | trim)
-	value=$(printf '%s' "${2-}" | trim)
+	name=$(printf '%s' "${1}" | trim)
+	value=$(printf '%s' "${2}" | trim)
 
 	if [ -n "${name}" ] && [ -n "${value}" ]; then
+		if printf '%s' "${value}" | grep -q -e '[^\t !-}]'; then
+			value=$(printf '=?%s?B?%s?=' "${LANG#*.}" "$(printf '%s' "${value}" | base64 | tr -d '\n')")
+		fi
+
 		printf '%s: %s\r\n' "${name}" "${value}"
 	fi
 )
@@ -27,7 +36,7 @@ else
 	while [ 1 -le "${#}" ]; do
 		case "${1}" in
 			*:*)
-				printHeaders "${1}"
+				printHeader "${1%%:*}" "${1#*}"
 				shift
 				;;
 			*)

@@ -2,11 +2,7 @@
 
 set -eu
 
-LC_ALL='C'
-LANG='C'
-export 'LC_ALL' 'LANG'
-
-date=$(date -u '+%a, %d %b %Y %H:%M:%S GMT')
+date=$(LANG='C' date -u '+%a, %d %b %Y %H:%M:%S GMT')
 
 body="${1-}"
 header="${2-}"
@@ -37,4 +33,6 @@ httpHeader.sh <<- EOF
 	${header}
 EOF
 
-printf '\r\n%s' "${body}"
+if [ -n "${body}" ]; then
+	printf '\r\n%s' "${body}"
+fi
