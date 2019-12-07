@@ -27,7 +27,7 @@ pseudo_inlines 1
 auto_image 1
 max_load_image 4
 ext_image_viewer 1
-image_scale 30
+image_scale 70
 imgdisplay w3mimgdisplay
 image_map_list 1
 fold_line 0

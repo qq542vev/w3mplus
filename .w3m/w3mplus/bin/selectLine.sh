@@ -125,21 +125,25 @@ fi
 
 lineCount=$(cat "${file}" | grep -c '^')
 
-if [ "${number}" = '$' ]; then
-	number="${lineCount}"
-elif expr "${number}" ':' '[0+-]' >'/dev/null'; then
-	if expr "${number}" ':' '+-' >'/dev/null'; then
-		number="${number#+-}"
-		line=$((line + number))
-		number="$((number * -2))"
-	fi
+case "${number}" in
+	'$')
+		number="${lineCount}"
+		;;
+	'0' | [+-]*)
+			case "${number}" in '+-'*)
+				number="${number#+-}"
+				line=$((line + number))
+				number="$((number * -2))"
+				;;
+			esac
 
-	number=$((line + number))
+			number=$((line + number))
 
-	if [ "${number}" -lt 1 ]; then
-		number='1'
-	fi
-fi
+			if [ "${number}" -lt 1 ]; then
+				number='1'
+			fi
+		;;
+esac
 
 if [ "${line}" -le "${number}" ]; then
 	startLine="${line}"

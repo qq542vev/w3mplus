@@ -12,15 +12,25 @@
 set -eu
 
 # 各変数に既定値を代入する
+line='1'
 percent='50'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
+		'-l' | '--line')
+			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+
+			line="${2}"
+			shift 2
+			;;
 		'-n' | '--number')
 			case "${2}" in
-				[0-9] | [1-9][0-9] | '100')
+				[0-9] | [1-9][0-9] | '100' | [+-][0-9] | [+-][0-9][0-9] | [+-]'100')
 					percent="${2}"
 					shift 2
 					;;
@@ -103,6 +113,17 @@ if [ 1 -lt "${#}" ]; then
 
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
+
+case "${percent}" in [+-]*)
+	percent=$(((((line - 1) * 100) / (lineCount - 1)) + percent))
+
+	if [ "${percent}" -lt 0 ]; then
+		percent='0'
+	elif [ 100 -lt "${percent}" ]; then
+		percent='100'
+	fi
+	;;
+esac
 
 printf 'W3m-control: GOTO_LINE %d' "$((( ( lineCount - 1 ) * percent / 100 ) + 1))" | httpResponseW3mBack.sh -
 rm -f "${file}"

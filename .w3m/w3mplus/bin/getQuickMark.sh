@@ -93,29 +93,34 @@ mkdir -p "${directory%?_}"
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-key=$(printf '%s' "${1}" | sed -e 's/[].\*[]/\\&/g; $s/$$/\\$/')
-
-# 引数の個数が過大である
-if [ 1 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0}: too many arguments
-		Try '${0} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
+if [ "${#}" -eq 0 ]; then
+	set -- $(cat)
 fi
 
-if mark=$(grep -m 1 -e "^${key} " "${markFile}"); then
-	uri=$(printf '%s' "${mark}" | cut -d ' ' -f 2)
-	line=$(printf '%s' "${mark}" | cut -d ' ' -f 3)
+goto=''
+afterHeader=''
 
-	if [ "${gotoLine}" -eq 1 ]; then
-		printRedirect.sh "${uri}" "W3m-control: GOTO_LINE ${line}"
-	else
-		printRedirect.sh "${uri}"
+for key in ${@+"${@}"}; do
+	key=$(printf '%s' "${key}" | sed -e 's/[].\*[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')
+
+	if mark=$(grep -m 1 -e "^${key} " "${markFile}"); then
+		uri=$(printf '%s' "${mark}" | cut -d ' ' -f 2)
+		line=$(printf '%s' "${mark}" | cut -d ' ' -f 3)
+
+		if [ -z "${goto}" ]; then
+			goto="${uri}"
+		else
+			afterHeader=$(printf '%s\nW3m-control: TAB_GOTO %s' "${afterHeader}" "${uri}")
+		fi
+
+		if [ "${gotoLine}" -eq 1 ]; then
+			afterHeader=$(printf '%s\nW3m-control: GOTO_LINE %d' "${afterHeader}" "${line}")
+		fi
 	fi
+done
 
-	exit
+if [ -z "${goto}" ]; then
+	httpResponseW3mBack.sh
+else
+	printRedirect.sh "${goto}" "${afterHeader}"
 fi
-
-httpResponseW3mBack.sh

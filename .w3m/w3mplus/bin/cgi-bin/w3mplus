@@ -150,7 +150,7 @@ if result=$(
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query#?}"
 			;;
 		'gotoPercent')
-			gotoPercent.sh ${query_percent+'-n' "${query_percent}"} "${query_file}"
+			gotoPercent.sh -l "${W3M_CURRENT_LINE}" ${query_percent+'-n' "${query_percent}"} "${query_file}"
 			;;
 		'selectLine')
 			: ${query_line:="${W3M_CURRENT_LINE}"}
