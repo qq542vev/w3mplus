@@ -71,11 +71,8 @@ if result=$(
 		'aboutURI')
 			aboutURI.sh ${query_uri+"${query_uri-}"}
 			;;
-		'lineBegin')
-			lineBegin.sh -l "${W3M_CURRENT_LINE-}" "${query_file}"
-			;;
-		'lineEnd')
-			lineBegin.sh -e -l "${W3M_CURRENT_LINE-}" "${query_file}"
+		'moveColmun')
+			moveColmun.sh -l "${W3M_CURRENT_LINE-}" ${query_number:+-n "${query_number}"} -s "${query_file}"
 			;;
 		'moveParagraph')
 			moveParagraph.sh -l "${W3M_CURRENT_LINE}" ${query_number:+-n "${query_number}"} "${query_file}"
@@ -134,17 +131,11 @@ if result=$(
 		'search')
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"
 			;;
-		'stringFindBack')
-			find.sh -b "${W3M_CURRENT_WORD}"
+		'stringFind')
+			find.sh ${query_number:+-n "${query_number}"} "${W3M_CURRENT_WORD}"
 			;;
-		'stringFindFore')
-			find.sh "${W3M_CURRENT_WORD}"
-			;;
-		'wordFindBack')
-			find.sh -b -e "${W3M_CURRENT_WORD}"
-			;;
-		'wordFindFore')
-			find.sh -e "${W3M_CURRENT_WORD}"
+		'wordFind')
+			find.sh -e ${query_number:+-n "${query_number}"} "${W3M_CURRENT_WORD}"
 			;;
 		'dictWordSearch')
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query#?}"

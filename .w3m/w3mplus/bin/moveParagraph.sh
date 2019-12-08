@@ -132,6 +132,6 @@ while [ "${number}" -ne 0 ]; do
 	fi
 done
 
-lineBegin.sh -l "${line}" "${file}"
+moveColmun.sh -l "${line}" -n '0' -s "${file}"
 
 rm -f "${file}"

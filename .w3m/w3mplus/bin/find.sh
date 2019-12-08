@@ -12,20 +12,25 @@
 set -eu
 
 # 各変数に既定値を代入する
-command='SEARCH'
 exactFlag='0'
+number='+1'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-b' | '--back')
-			command='SEARCH_BACK'
-			shift
-			;;
 		'-e' | '--exact')
 			exactFlag='1'
 			shift
+			;;
+		'-n' | '--number')
+			if [ "$(expr "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+
+			number="${2}"
+			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -33,9 +38,9 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... WORD [WORD]...
 				Search for a word.
 
-				 -b, --back   backward search
-				 -e, --exact  exact search
-				 -h, --help   display this help and exit
+				 -e, --exact   exact search
+				 -n, --number  search count
+				 -h, --help    display this help and exit
 			EOF
 
 			exit
@@ -122,13 +127,21 @@ if [ -n "${keyword}" ]; then
 		keyword="(^|[	 ])(${keyword})([	 ]|\$)"
 	fi
 
-	if [ "${exactFlag}" -eq 1 ] && [ "${command}" = 'SEARCH_BACK' ]; then
-		printf 'W3m-control: MOVE_LEFT1\n'
-	fi
+	while [ "${number}" -ne 0 ]; do
+		if [ "${exactFlag}" -eq 1 ] && [ "${number}" -lt 0 ]; then
+			printf 'W3m-control: MOVE_LEFT1\n'
+		fi
 
-	printf 'W3m-control: %s %s\n' "${command}" "${keyword}"
+		if [ "${number}" -lt 0 ]; then
+			printf 'W3m-control: SEARCH_BACK %s\n' "${keyword}"
+			number=$((number + 1))
+		else
+			printf 'W3m-control: SEARCH %s\n' "${keyword}"
+			number=$((number - 1))
+		fi
 
-	if [ "${exactFlag}" -eq 1 ]; then
-		printf 'W3m-control: MOVE_RIGHT1\n'
-	fi
+		if [ "${exactFlag}" -eq 1 ]; then
+			printf 'W3m-control: MOVE_RIGHT1\n'
+		fi
+	done
 fi | httpResponseW3mBack.sh -

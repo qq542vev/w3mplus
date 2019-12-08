@@ -97,30 +97,31 @@ if [ "${#}" -eq 0 ]; then
 	set -- $(cat)
 fi
 
-goto=''
-afterHeader=''
+marks=''
 
-for key in ${@+"${@}"}; do
-	key=$(printf '%s' "${key}" | sed -e 's/[].\*[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')
-
-	if mark=$(grep -m 1 -e "^${key} " "${markFile}"); then
-		uri=$(printf '%s' "${mark}" | cut -d ' ' -f 2)
-		line=$(printf '%s' "${mark}" | cut -d ' ' -f 3)
-
-		if [ -z "${goto}" ]; then
-			goto="${uri}"
-		else
-			afterHeader=$(printf '%s\nW3m-control: TAB_GOTO %s' "${afterHeader}" "${uri}")
-		fi
-
-		if [ "${gotoLine}" -eq 1 ]; then
-			afterHeader=$(printf '%s\nW3m-control: GOTO_LINE %d' "${afterHeader}" "${line}")
-		fi
-	fi
+for pattern in ${@+"${@}"}; do
+		marks="${marks}$(grep -e "^${pattern} " "${markFile}"; printf '_')"
+		marks="${marks%_}"
 done
 
-if [ -z "${goto}" ]; then
+if [ -z "${marks}" ]; then
 	httpResponseW3mBack.sh
 else
-	printRedirect.sh "${goto}" "${afterHeader}"
+	first=$(printf '%s' "${marks}" | head -n 1)
+
+	header=$(
+		if [ "${gotoLine}" -eq 1 ]; then
+			printf 'W3m-control: GOTO_LINE %d\n' "$(printf '%s' "${first}" | cut -d ' ' -f 3)"
+		fi
+
+		printf '%s' "${marks}" | tail -n '+2' | while read -r 'key' 'uri' 'line' 'date'; do
+			printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
+
+			if [ "${gotoLine}" -eq 1 ]; then
+				printf 'W3m-control: GOTO_LINE %d\n' "${line}"
+			fi
+		done
+	)
+
+	printRedirect.sh "$(printf '%s' "${first}" | cut -d ' ' -f 2)" '' "${header}"
 fi

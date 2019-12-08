@@ -237,7 +237,7 @@ keymap "gF" COMMAND "VIEW; EDIT_SCREEN; VIEW"
 ### Motion commands ###
 
 keymap "0" LINE_BEGIN
-keymap "^" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=lineBegin&file=/tmp/w3mplusPrintCache"
+keymap "^" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=moveColmun&number=0&file=/tmp/w3mplusPrintCache"
 keymap "$" LINE_END
 
 keymap "gg" BEGIN
@@ -521,11 +521,11 @@ keymap "C-tH" TAB_LEFT
 
 keymap "C-to" COMMAND "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; PREV_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB;"
 
-keymap "#" GOTO "file:///cgi-bin/w3mplus?action=wordFindBack"
-keymap "*" GOTO "file:///cgi-bin/w3mplus?action=wordFindFore"
+keymap "#" GOTO "file:///cgi-bin/w3mplus?action=wordFind&number=-1"
+keymap "*" GOTO "file:///cgi-bin/w3mplus?action=wordFind&number=%2B1"
 
-keymap "g#" GOTO "file:///cgi-bin/w3mplus?action=stringFindBack"
-keymap "g*" GOTO "file:///cgi-bin/w3mplus?action=stringFindFore"
+keymap "g#" GOTO "file:///cgi-bin/w3mplus?action=stringFind&number=-1"
+keymap "g*" GOTO "file:///cgi-bin/w3mplus?action=stringFind&number=%2B1"
 
 keymap "V" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=lineVisualMode&file=/tmp/w3mplusPrintCache"
 
@@ -562,4 +562,4 @@ keymap "DEL" PREV
 
 keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
-keymap "g_" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=lineEnd&file=/tmp/w3mplusPrintCache"
+keymap "g_" COMMAND "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=moveColmun&number=100&file=/tmp/w3mplusPrintCache"

@@ -12,16 +12,14 @@
 set -eu
 
 # 各変数に既定値を代入する
-endFlag='0'
 line='1'
+number='0'
+skipFlag='0'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-e' | '--end')
-			endFlag='1'
-			;;
 		'-l' | '--line')
 			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
@@ -31,13 +29,28 @@ while [ 1 -le "${#}" ]; do
 			line="${2}"
 			shift 2
 			;;
+		'-n' | '--number')
+			case "${2}" in
+				[0-9] | [1-9][0-9] | '100')
+					number="${2}"
+					shift 2
+					;;
+				*)
+					printf 'The value must be a number between 0 and 100\n' 1>&2
+					exit 64 # EX_USAGE </usr/include/sysexits.h
+					;;
+			esac
+			;;
+		'-s' | '--skip')
+			skipFlag='1'
+			shift
+			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0} [OPTION]... FILE
 				Move to the beginning of the line.
 
-				 -e, --end   move to end of line.
 				 -l, --line  line number
 				 -h, --help  display this help and exit
 			EOF
@@ -106,13 +119,19 @@ if [ 1 -lt "${#}" ]; then
 fi
 
 {
+	row=$(sed -n -e "${line}{p; Q}" "${file}")
+
 	printf 'W3m-control: GOTO_LINE %d\n' "${line}"
 
-	if [ "${endFlag}" -eq 1 ]; then
-		printf 'W3m-control: LINE_END\n'
-		sed -n -e "${line}{s/^\\(.*[^ ]\\)\\{0,1\\}\\( *\\)\$/\\2/; s/ /W3m-control: MOVE_LEFT1\\n/gp; Q}" "${file}"
-	else
-		sed -n -e "${line}{s/^\\( *\\).*\$/\\1/; s/ /W3m-control: MOVE_RIGHT1\\n/gp; Q}" "${file}"
+	if [ "${skipFlag}" -eq 1 ]; then
+		printf '%s' "${row}" | sed -e 's/^\([\t ]*\).*$/\1/; s/[\t ]/W3m-control: MOVE_RIGHT1\n/g'
+		row=$(printf '%s' "${row}" | sed -e 's/^[\t ]*//; s/[\t ]*$//')
+	fi
+
+	if [ -n "${row}" ]; then
+		columnCount=$(printf "${row}" | wc -m)
+
+		yes 'W3m-control: MOVE_RIGHT1' 2>'/dev/null' | head -n "$(( ( columnCount - 1 ) * number / 100 ))"
 	fi
 } | httpResponseW3mBack.sh -
 
