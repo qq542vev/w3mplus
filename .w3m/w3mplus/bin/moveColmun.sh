@@ -131,9 +131,12 @@ fi
 	fi
 
 	if [ -n "${row}" ]; then
-		columnCount=$(printf "${row}" | wc -m)
+		moveCount=$((($(printf '%s' "${row}" | wc -m) - 1) * number / 100))
 
-		yes 'W3m-control: MOVE_RIGHT1' 2>'/dev/null' | head -n "$(( ( columnCount - 1 ) * number / 100 ))"
+		while [ 1 -le "${moveCount}" ]; do
+			printf 'W3m-control: MOVE_RIGHT1\n'
+			moveCount=$((moveCount - 1))
+		done
 	fi
 } | httpResponseW3mBack.sh -
 

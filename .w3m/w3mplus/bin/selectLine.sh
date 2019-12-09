@@ -123,7 +123,7 @@ if [ 2 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-lineCount=$(cat "${file}" | grep -c '^')
+lineCount=$(grep -c '^' <"${file}")
 
 case "${number}" in
 	'$')

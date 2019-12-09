@@ -11,19 +11,19 @@
 
 set -eu
 
-: ${W3MPLUS_PATH:="${HOME}/.w3m/w3mplus"}
-: ${W3MPLUS_YANK_FILE:="${HOME}/w3mplusyank"}
-: ${W3MPLUS_YANK_HEADER:=''}
-: ${W3MPLUS_YANK_FOOTER:='
-'}
-: ${W3MPLUS_UNDO_TIMEOUT:='7200'}
-: ${W3MPLUS_VISUAL_TIMEOUT:='600'}
-: ${W3MPLUS_SEARCH_URI:='google:'}
-: ${W3MPLUS_OPERATORFUNC:='cat'}
-: ${W3MPLUS_FORMATPRG:='cat'}
-: ${W3MPLUS_EQUALPRG:=''}
-: ${W3MPLUS_ZOOM_MAX:='300'}
-: ${W3MPLUS_ZOOM_MIN:='30'}
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+: "${W3MPLUS_YANK_FILE:=${HOME}/w3mplusyank}"
+: "${W3MPLUS_YANK_HEADER:=}"
+: "${W3MPLUS_YANK_FOOTER:=
+}"
+: "${W3MPLUS_UNDO_TIMEOUT:=7200}"
+: "${W3MPLUS_VISUAL_TIMEOUT:=600}"
+: "${W3MPLUS_SEARCH_URI:=google:}"
+: "${W3MPLUS_OPERATORFUNC:=cat}"
+: "${W3MPLUS_FORMATPRG:=cat}"
+: "${W3MPLUS_EQUALPRG:=}"
+: "${W3MPLUS_ZOOM_MAX:=300}"
+: "${W3MPLUS_ZOOM_MIN:=30}"
 
 PATH="${W3MPLUS_PATH}/bin${PATH:+:}${PATH:-}"
 
@@ -47,7 +47,7 @@ fi
 if result=$(
 	case "${query_action-}" in
 		'autoCommand')
-			: ${query_call:=manual}
+			: "${query_call:=manual}"
 
 			autoCommand.sh "${query_call-}" "${W3M_URL}"
 			;;
@@ -105,12 +105,14 @@ if result=$(
 								W3m-control: SET_OPTION default_url=2
 								W3m-control: GOTO
 							EOF
+
 							exit
 						elif [ "${query_subaction-}" = 'tabopen' ]; then
 							cat <<- 'EOF' | httpResponseW3mBack.sh -
 								W3m-control: SET_OPTION default_url=2
 								W3m-control: TAB_GOTO
 							EOF
+
 							exit
 						fi
 					fi
@@ -144,8 +146,6 @@ if result=$(
 			gotoPercent.sh -l "${W3M_CURRENT_LINE}" ${query_percent+'-n' "${query_percent}"} "${query_file}"
 			;;
 		'selectLine')
-			: ${query_line:="${W3M_CURRENT_LINE}"}
-
 			selectLine.sh -l "${query_line}" ${query_number+'-n' "${query_number}"} "${query_subaction}" "${query_file}"
 			;;
 		'equalPrg')

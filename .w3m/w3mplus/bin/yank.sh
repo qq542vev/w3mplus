@@ -124,7 +124,7 @@ context=$(for yankText in ${@+"${@}"}; do
 	fi
 done; printf '_')
 
-output=$(printf '%s\n' "${context%_}" | sed -e "s/'\{1,\}/'\"&\"'/g; "'s/%/%%/g; s/\\/\\\\/g; s/\r/\\r/g; s/$/\\n/' | tr -d '\n')
+output=$(printf '%s\n' "${context%_}" | sed -e "s/'\\{1,\\}/'\"&\"'/g; "'s/%/%%/g; s/\\/\\\\/g; s/\r/\\r/g; s/$/\\n/' | tr -d '\n')
 number=$(printf '%s' "${context%_}" | grep -c -e '^')
 
-printf '%s' | httpResponseW3mBack.sh "W3m-control: EXEC_SHELL printf '${output}'; printf \"Add %d lines to '%s'\\n\" '${number}' '${yankFile}'"
+httpResponseW3mBack.sh "W3m-control: EXEC_SHELL printf '${output}'; printf \"Add %d lines to '%s'\\n\" '${number}' '${yankFile}'"

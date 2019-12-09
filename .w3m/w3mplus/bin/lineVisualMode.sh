@@ -101,7 +101,7 @@ if [ 1 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-: ${W3MPLUS_VISUALSTART:='  0'}
+: "${W3MPLUS_VISUALSTART:=  0}"
 
 startChecksum=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 1)
 startLine=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 2)

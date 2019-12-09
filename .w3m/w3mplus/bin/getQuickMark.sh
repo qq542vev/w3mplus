@@ -114,11 +114,34 @@ else
 			printf 'W3m-control: GOTO_LINE %d\n' "$(printf '%s' "${first}" | cut -d ' ' -f 3)"
 		fi
 
-		printf '%s' "${marks}" | tail -n '+2' | while read -r 'key' 'uri' 'line' 'date'; do
+		printf '%s' "${marks}" | tail -n '+2' | while read -r 'key' 'uri' 'line' 'colmun' 'date'; do
 			printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
 
 			if [ "${gotoLine}" -eq 1 ]; then
-				printf 'W3m-control: GOTO_LINE %d\n' "${line}"
+				if [ 0 -lt "${line}" ]; then
+					printf 'W3m-control: GOTO_LINE %d\n' "${line}"
+				else
+					printf 'W3m-control: END\n'
+
+					while [ "${line}" -lt 0 ]; do
+						printf 'W3m-control: MOVE_UP1\n'
+						line=$((line + 1))
+					done
+				fi
+
+				if [ 0 -lt "${colmun}" ]; then
+					while [ 1 -lt "${line}"  ]; do
+						printf 'W3m-control: MOVE_LEFT1\n'
+						line=$((line - 1))
+					done
+				else
+					printf 'W3m-control: LINE_END\n'
+
+					while [ "${line}" -lt 0 ]; do
+						printf 'W3m-control: MOVE_LEFT1\n'
+						line=$((line + 1))
+					done
+				fi
 			fi
 		done
 	)
