@@ -46,7 +46,8 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... FILE
 				Display HTTP Response that moves to n% with w3m.
 
-				 -n, --number  percent 0 - 100
+				 -l, --line    line number
+				 -n, --number  move percent 0 - 100
 				 -h, --help    display this help and exit
 			EOF
 
