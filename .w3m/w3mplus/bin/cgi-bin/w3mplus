@@ -47,12 +47,10 @@ fi
 if result=$(
 	case "${query_action-}" in
 		'autoCommand')
-			: "${query_call:=manual}"
-
-			autoCommand.sh "${query_call-}" "${W3M_URL}"
+			autoCommand.sh -- "${query_call:-manual}" "${W3M_URL}"
 			;;
 		'closeTab')
-			closeTab.sh "${W3M_URL}"
+			closeTab.sh -- "${W3M_URL}"
 			;;
 		'undoTab')
 			undoTab.sh ${query_count+'-n' "${query_count}"}
@@ -72,27 +70,39 @@ if result=$(
 			aboutURI.sh ${query_uri+"${query_uri-}"}
 			;;
 		'moveColmun')
-			moveColmun.sh -l "${W3M_CURRENT_LINE-}" ${query_number:+-n "${query_number}"} -s "${query_file}"
+			moveColmun.sh -l "${W3M_CURRENT_LINE}" ${query_number:+-n "${query_number}"} -s -- "${query_file}"
 			;;
 		'moveParagraph')
-			moveParagraph.sh -l "${W3M_CURRENT_LINE}" ${query_number:+-n "${query_number}"} "${query_file}"
+		moveParagraph.sh -l "${W3M_CURRENT_LINE}" ${query_number:+-n "${query_number}"} -- "${query_file}"
 			;;
 		'qmarks')
 			: >>"${W3MPLUS_PATH}/quickmark"
 
 			printRedirect.sh "file://${W3MPLUS_PATH}/quickmark"
 			;;
+		'getLocalMark')
+			autoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
+			;;
+		'setLocalMark')
+			setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -e '^$(printf '%s' "${W3M_URL%%#*}" | sed -e 's/[].\*[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/; '"s/'\\{1,\\}/'\"&\"'/g")$'" "GOTO_LINE ${W3M_CURRENT_LINE}"
+			;;
+		'getLocalMarkGoto')
+			getQuickMark.sh -f "${W3MPLUS_PATH}/localmarkGoto" -l -- "${query_key-}"
+			;;
+		'setLocalMarkGoto')
+			setQuickMark.sh -f "${W3MPLUS_PATH}/localmarkGoto" -l "${W3M_CURRENT_LINE-}" -- "${query_key-}" "${W3M_URL}"
+			;;
 		'getQuickMark')
-			getQuickMark.sh "${query_key-}"
+			getQuickMark.sh -- "${query_key-}"
 			;;
 		'setQuickMark')
-			setQuickMark.sh -l "${W3M_CURRENT_LINE-}" "${query_key-}" "${W3M_URL-}"
+			setQuickMark.sh -l "${W3M_CURRENT_LINE-}" -- "${query_key-}" "${W3M_URL}"
 			;;
 		'contextMenu')
 			contextMenu.sh
 			;;
 		'yankSelection')
-			yank.sh "${W3M_CURRENT_WORD-}"
+			yank.sh -- "${W3M_CURRENT_WORD}"
 			;;
 		'uri')
 			case "${query_uri}" in
@@ -146,7 +156,7 @@ if result=$(
 			gotoPercent.sh -l "${W3M_CURRENT_LINE}" ${query_percent+'-n' "${query_percent}"} "${query_file}"
 			;;
 		'selectLine')
-			selectLine.sh -l "${query_line}" ${query_number+'-n' "${query_number}"} "${query_subaction}" "${query_file}"
+			selectLine.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} "${query_subaction}" "${query_file}"
 			;;
 		'equalPrg')
 			if [ -n "${W3MPLUS_EQUALPRG}" ]; then

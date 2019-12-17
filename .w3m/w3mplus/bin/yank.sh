@@ -12,12 +12,12 @@
 set -eu
 
 # 各変数に既定値を代入する
-yankFile=$(date "+${W3MPLUS_YANK_FILE}"; printf '_')
-yankFile="${yankFile%?_}"
-yankHeader=$(date "+${W3MPLUS_YANK_HEADER}"; printf '_')
-yankHeader="${yankHeader%?_}"
-yankFooter=$(date "+${W3MPLUS_YANK_FOOTER}"; printf '_')
-yankFooter="${yankFooter%?_}"
+yankFile=$(date "+${W3MPLUS_YANK_FILE}"; printf '$')
+yankFile="${yankFile%?$}"
+yankHeader=$(date "+${W3MPLUS_YANK_HEADER}"; printf '$')
+yankHeader="${yankHeader%?$}"
+yankFooter=$(date "+${W3MPLUS_YANK_FOOTER}"; printf '$')
+yankFooter="${yankFooter%?$}"
 args=''
 
 # コマンドライン引数の解析する
@@ -51,9 +51,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			arg=$(sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+			arg=$(sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-			args="${args}${args:+ }'${arg%_}'"
+			args="${args}${args:+ }'${arg%$}'"
 			shift
 			;;
 		# `--name=value` 形式のロングオプション
@@ -68,20 +68,20 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-				args="${args}${args:+ }'${arg%?_}'"
+				args="${args}${args:+ }'${arg%?$}'"
 				shift
 			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option=$(printf '%s' "${1}" | cut -c '2'; printf '_')
-			options=$(printf '%s' "${1}" | cut -c '3-'; printf '_')
+			option=$(printf '%s' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s' "${1}" | cut -c '3-'; printf '$')
 
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-${option%_}" "-${options%_}" ${@+"${@}"}
+			set -- "-${option%$}" "-${options%$}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
@@ -94,16 +94,16 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-			args="${args}${args:+ }'${arg%?_}'"
+			args="${args}${args:+ }'${arg%?$}'"
 			shift
 			;;
 	esac
 done
 
-directory=$(dirname "${yankFile}"; printf '_')
-mkdir -p "${directory%?_}"
+directory=$(dirname "${yankFile}"; printf '$')
+mkdir -p "${directory%?$}"
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
@@ -122,9 +122,9 @@ context=$(for yankText in ${@+"${@}"}; do
 	if [ -n "${yankFooter}" ]; then
 		printf '%s' "${yankFooter}" | tee -a "${yankFile}"
 	fi
-done; printf '_')
+done; printf '$')
 
-output=$(printf '%s\n' "${context%_}" | sed -e "s/'\\{1,\\}/'\"&\"'/g; "'s/%/%%/g; s/\\/\\\\/g; s/\r/\\r/g; s/$/\\n/' | tr -d '\n')
-number=$(printf '%s' "${context%_}" | grep -c -e '^')
+output=$(printf '%s\n' "${context%$}" | sed -e "s/'\\{1,\\}/'\"&\"'/g; "'s/%/%%/g; s/\\/\\\\/g; s/\r/\\r/g; s/$/\\n/' | tr -d '\n')
+number=$(printf '%s' "${context%$}" | grep -c -e '^')
 
 httpResponseW3mBack.sh "W3m-control: EXEC_SHELL printf '${output}'; printf \"Add %d lines to '%s'\\n\" '${number}' '${yankFile}'"

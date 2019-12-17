@@ -57,20 +57,20 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-				args="${args}${args:+ }'${arg%?_}'"
+				args="${args}${args:+ }'${arg%?$}'"
 				shift
 			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option=$(printf '%s' "${1}" | cut -c '2'; printf '_')
-			options=$(printf '%s' "${1}" | cut -c '3-'; printf '_')
+			option=$(printf '%s' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s' "${1}" | cut -c '3-'; printf '$')
 
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-${option%_}" "-${options%_}" ${@+"${@}"}
+			set -- "-${option%$}" "-${options%$}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
@@ -83,9 +83,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-			args="${args}${args:+ }'${arg%?_}'"
+			args="${args}${args:+ }'${arg%?$}'"
 			shift
 			;;
 	esac

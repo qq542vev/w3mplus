@@ -11,6 +11,38 @@
 
 set -eu
 
+gotoMove () (
+	line="${1}"
+	colmun="${2}"
+
+	if [ "${gotoLine}" -eq 1 ]; then
+		if [ 0 -lt "${line}" ]; then
+			printf 'W3m-control: GOTO_LINE %d\n' "${line}"
+		else
+			printf 'W3m-control: END\n'
+
+			while [ "${line}" -lt 0 ]; do
+				printf 'W3m-control: MOVE_UP1\n'
+				line=$((line + 1))
+			done
+		fi
+
+		if [ 0 -lt "${colmun}" ]; then
+			while [ 1 -lt "${colmun}"  ]; do
+				printf 'W3m-control: MOVE_RIGHT1\n'
+				colmun=$((colmun - 1))
+			done
+		else
+			printf 'W3m-control: LINE_END\n'
+
+			while [ "${colmun}" -lt 0 ]; do
+				printf 'W3m-control: MOVE_LEFT1\n'
+				colmun=$((colmun + 1))
+			done
+		fi
+	fi
+)
+
 # 各変数に既定値を代入する
 markFile="${W3MPLUS_PATH}/quickmark"
 gotoLine='0'
@@ -52,20 +84,20 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-				args="${args}${args:+ }'${arg%?_}'"
+				args="${args}${args:+ }'${arg%?$}'"
 				shift
 			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option=$(printf '%s' "${1}" | cut -c '2'; printf '_')
-			options=$(printf '%s' "${1}" | cut -c '3-'; printf '_')
+			option=$(printf '%s' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s' "${1}" | cut -c '3-'; printf '$')
 
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-${option%_}" "-${options%_}" ${@+"${@}"}
+			set -- "-${option%$}" "-${options%$}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
@@ -78,16 +110,16 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-			args="${args}${args:+ }'${arg%?_}'"
+			args="${args}${args:+ }'${arg%?$}'"
 			shift
 			;;
 	esac
 done
 
-directory=$(dirname "${markFile}"; printf '_')
-mkdir -p "${directory%?_}"
+directory=$(dirname "${markFile}"; printf '$')
+mkdir -p "${directory%?$}"
 : >>"${markFile}"
 
 # オプション以外の引数を再セットする
@@ -97,54 +129,28 @@ if [ "${#}" -eq 0 ]; then
 	set -- $(cat)
 fi
 
-marks=''
+goto=''
 
 for pattern in ${@+"${@}"}; do
-		marks="${marks}$(grep -e "^${pattern} " "${markFile}"; printf '_')"
-		marks="${marks%_}"
+	fileds=$(grep -e "^${pattern} " "${markFile}" || :)
+
+	if [ -z "${goto}" ]; then
+		first=$(printf '%s\n' "${fileds}" | head -n 1)
+		goto=$(printf '%s' "${first}" | cut -d ' ' -f 2)
+		header=$(gotoMove "$(printf '%s' "${first}" | cut -d ' ' -f 3)" "$(printf '%s' "${first}" | cut -d ' ' -f 4)")
+		fileds=$(printf '%s\n' "${fileds}" | tail -n '+2'; printf '$')
+	fi
+
+	header=$(printf '%s\n%s' "${header}" "$(
+		printf '%s' "${fileds%$}" | while read -r 'key' 'uri' 'line' 'colmun' 'date'; do
+			printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
+			gotoMove "${line}" "${colmun}"
+		done
+	)")
 done
 
-if [ -z "${marks}" ]; then
+if [ -z "${goto}" ]; then
 	httpResponseW3mBack.sh
 else
-	first=$(printf '%s' "${marks}" | head -n 1)
-
-	header=$(
-		if [ "${gotoLine}" -eq 1 ]; then
-			printf 'W3m-control: GOTO_LINE %d\n' "$(printf '%s' "${first}" | cut -d ' ' -f 3)"
-		fi
-
-		printf '%s' "${marks}" | tail -n '+2' | while read -r 'key' 'uri' 'line' 'colmun' 'date'; do
-			printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
-
-			if [ "${gotoLine}" -eq 1 ]; then
-				if [ 0 -lt "${line}" ]; then
-					printf 'W3m-control: GOTO_LINE %d\n' "${line}"
-				else
-					printf 'W3m-control: END\n'
-
-					while [ "${line}" -lt 0 ]; do
-						printf 'W3m-control: MOVE_UP1\n'
-						line=$((line + 1))
-					done
-				fi
-
-				if [ 0 -lt "${colmun}" ]; then
-					while [ 1 -lt "${line}"  ]; do
-						printf 'W3m-control: MOVE_LEFT1\n'
-						line=$((line - 1))
-					done
-				else
-					printf 'W3m-control: LINE_END\n'
-
-					while [ "${line}" -lt 0 ]; do
-						printf 'W3m-control: MOVE_LEFT1\n'
-						line=$((line + 1))
-					done
-				fi
-			fi
-		done
-	)
-
-	printRedirect.sh "$(printf '%s' "${first}" | cut -d ' ' -f 2)" '' "${header}"
+	printRedirect.sh "${goto}" '' "${header}"
 fi

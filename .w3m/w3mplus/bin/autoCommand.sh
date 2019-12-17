@@ -34,6 +34,12 @@ while [ 1 -le "${#}" ]; do
 
 			exit
 			;;
+		# 標準入力を処理する
+		'-')
+			arg=$( (cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+:
+			args="${args}${args:+ }'${arg%?$}'"
+			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
 			option="${1}"
@@ -46,20 +52,20 @@ while [ 1 -le "${#}" ]; do
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-				args="${args}${args:+ }'${arg%?_}'"
+				args="${args}${args:+ }'${arg%?$}'"
 				shift
 			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option=$(printf '%s' "${1}" | cut -c '2'; printf '_')
-			options=$(printf '%s' "${1}" | cut -c '3-'; printf '_')
+			option=$(printf '%s' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s' "${1}" | cut -c '3-'; printf '$')
 
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-${option%_}" "-${options%_}" ${@+"${@}"}
+			set -- "-${option%$}" "-${options%$}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
@@ -72,41 +78,31 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '_');
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-			args="${args}${args:+ }'${arg%?_}'"
+			args="${args}${args:+ }'${arg%?$}'"
 			shift
 			;;
 	esac
 done
 
-directory=$(dirname "${config}"; printf '_')
-mkdir -p "${directory%?_}"
+directory=$(dirname "${config}"; printf '$')
+mkdir -p "${directory%?$}"
 : >>"${config}"
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-operatorCall="${1-manual}"
-uri="${2-${W3M_URL}}"
+while [ 1 -le "${#}" ]; do
+	operatorCall="${1}"
+	string="${2}"
 
-# 引数の個数が過大である
-if [ 2 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0}: too many arguments
-		Try '${0} --help' for more information.
-	EOF
+	shift 2
 
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
-fi
-
-while read -r 'call' 'regType' 'pattern' 'command'; do
-	if [ "${operatorCall}" = "${call}" ] && expr "${regType}" ':' '!\{0,1\}[EFG]$' >'/dev/null'; then
-		grepOption=$(printf '%s' "${regType}" | sed -e 's/^!/ -v/; s/[FEG]$/ -&/')
-
-		if printf '%s' "${uri}" | grep ${grepOption} -q -e "${pattern}"; then
+	while IFS='	' read -r 'call' 'check' 'command'; do
+		if [ "${operatorCall}" = "${call}" ] && ( printf '%s' "${string}" | eval "${check}" ) >'/dev/null' 2>&1; then
 			printf 'W3m-control: COMMAND %s\n' "${command}"
 			break
 		fi
-	fi
-done <"${config}" | httpResponseW3mBack.sh -
+	done <"${config}"
+done | httpResponseW3mBack.sh -
