@@ -5,26 +5,36 @@
 #
 # @author qq542vev
 # @version 1.0.0
-# @date 2019-11-24
+# @date 2019-12-16
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
 set -eu
 
 # 各変数に既定値を代入する
-markFile="${W3MPLUS_PATH}/quickmark"
-line="${3-${W3M_CURRENT_LINE-1}}"
+config="${W3MPLUS_PATH}/quickmark"
+colmun='1'
+line='1'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-f' | '--file')
-			markFile="${2}"
+		'-c' | '--congig')
+			config="${2}"
+			shift 2
+			;;
+		'-C' | '--colmun')
+			if [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '-\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+
+			colmun="${2}"
 			shift 2
 			;;
 		'-l' | '--line')
-			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '-\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -38,9 +48,10 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... KEY URL
 				Set the quick mark.
 
-				 -f, --file  quick mark file
-				 -l, --line  line number
-				 -h, --help  display this help and exit
+				 -c, --config  quick mark file
+				 -C, --colmun  colmun number
+				 -l, --line    line number
+				 -h, --help    display this help and exit
 			EOF
 
 			exit
@@ -91,15 +102,15 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${markFile}"; printf '$')
+directory=$(dirname "${config}"; printf '$')
 mkdir -p "${directory%?$}"
-: >>"${markFile}"
+: >>"${config}"
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
 key="${1}"
-uri="${2-${W3M_URL}}"
+uri="${2}"
 
 # 引数の個数が過大である
 if [ 2 -lt "${#}" ]; then
@@ -115,7 +126,7 @@ if [ -n "${key}" ] && [ -n "${uri}" ]; then
 	escaped=$(printf '%s' "${uri}" | htmlEscape.sh)
 	date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 
-	oldMarks=$(htmlEscape.sh "${markFile}" | awk '
+	oldMarks=$(htmlEscape.sh "${config}" | awk '
 		/^'"${key}"' /{
 			printf "<p>Old Quick Mark \047<kbd>%s</kbd>\047: <a href=\"%s\">%s</a> <date>%s</date></p>\n", $1, $2, $2, $4
 		}
@@ -128,9 +139,9 @@ if [ -n "${key}" ] && [ -n "${uri}" ]; then
 	fi
 
 	{
-		sed -e '/^$/d' -e "/^${key} /d" "${markFile}"
-		printf '%s %s %d %s\n' "${key}" "${uri}" "${line}" "${date}"
-	} | sort -o "${markFile}"
+		sed -e "/^\$/d; /^${key} /d" "${config}"
+		printf '%s %s %d %d %s\n' "${key}" "${uri}" "${line}" "${colmun}" "${date}"
+	} | sort -o "${config}"
 else
 	httpResposeW3mBack.sh
 fi

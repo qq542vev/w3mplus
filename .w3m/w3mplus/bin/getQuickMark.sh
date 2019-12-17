@@ -26,7 +26,9 @@ gotoMove () (
 				line=$((line + 1))
 			done
 		fi
+	fi
 
+	if [ "${gotoColmun}" -eq 1 ]; then
 		if [ 0 -lt "${colmun}" ]; then
 			while [ 1 -lt "${colmun}"  ]; do
 				printf 'W3m-control: MOVE_RIGHT1\n'
@@ -44,16 +46,21 @@ gotoMove () (
 )
 
 # 各変数に既定値を代入する
-markFile="${W3MPLUS_PATH}/quickmark"
+config="${W3MPLUS_PATH}/quickmark"
+gotoColmun='0'
 gotoLine='0'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-f' | '--file')
-			markFile="${2}"
+		'-c' | '--config')
+			config="${2}"
 			shift 2
+			;;
+		'-C' | '--colmun')
+			gotoColmun='1'
+			shift
 			;;
 		'-l' | '--line')
 			gotoLine='1'
@@ -65,9 +72,10 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION] KEY
 				Get a quick mark.
 
-				 -f, --file  quick mark file
-				 -l, --line  jump to line
-				 -h, --help  display this help and exit
+				 -c, --config  quick mark file
+				 -C, --colmun  jump to colmun
+				 -l, --line    jump to line
+				 -h, --help    display this help and exit
 			EOF
 
 			exit
@@ -118,9 +126,9 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${markFile}"; printf '$')
+directory=$(dirname "${config}"; printf '$')
 mkdir -p "${directory%?$}"
-: >>"${markFile}"
+: >>"${config}"
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
@@ -132,7 +140,7 @@ fi
 goto=''
 
 for pattern in ${@+"${@}"}; do
-	fileds=$(grep -e "^${pattern} " "${markFile}" || :)
+	fileds=$(grep -e "^${pattern} " "${config}" || :)
 
 	if [ -z "${goto}" ]; then
 		first=$(printf '%s\n' "${fileds}" | head -n 1)

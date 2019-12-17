@@ -135,7 +135,7 @@ if result=$(
 			location.sh "${query_subaction}" "${uri}"
 			;;
 		'lineVisualMode')
-			lineVisualMode.sh -l "${W3M_CURRENT_LINE}" "${query_file}"
+			lineVisualMode.sh -l "${W3M_CURRENT_LINE}" -- "${query_file}"
 			;;
 		'zoom')
 			zoom.sh ${query_zoom+'-n' "${query_zoom}"}
@@ -144,19 +144,19 @@ if result=$(
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"
 			;;
 		'stringFind')
-			find.sh ${query_number:+-n "${query_number}"} "${W3M_CURRENT_WORD}"
+			find.sh ${query_number:+-n "${query_number}"} -- "${W3M_CURRENT_WORD}"
 			;;
 		'wordFind')
-			find.sh -e ${query_number:+-n "${query_number}"} "${W3M_CURRENT_WORD}"
+			find.sh -e ${query_number:+-n "${query_number}"} -- "${W3M_CURRENT_WORD}"
 			;;
 		'dictWordSearch')
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query#?}"
 			;;
 		'gotoPercent')
-			gotoPercent.sh -l "${W3M_CURRENT_LINE}" ${query_percent+'-n' "${query_percent}"} "${query_file}"
+			gotoPercent.sh -l "${W3M_CURRENT_LINE}" ${query_percent+'-n' "${query_percent}"} -- "${query_file}"
 			;;
 		'selectLine')
-			selectLine.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} "${query_subaction}" "${query_file}"
+			selectLine.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} -- "${query_subaction}" "${query_file}"
 			;;
 		'equalPrg')
 			if [ -n "${W3MPLUS_EQUALPRG}" ]; then
