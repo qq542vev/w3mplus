@@ -47,7 +47,7 @@ fi
 if result=$(
 	case "${query_action-}" in
 		'autoCommand')
-			autoCommand.sh -- "${query_call:-manual}" "${W3M_URL}"
+			getAutoCommand.sh -- "${query_call:-manual}" "${W3M_URL}"
 			;;
 		'closeTab')
 			closeTab.sh -- "${W3M_URL}"
@@ -81,7 +81,7 @@ if result=$(
 			printRedirect.sh "file://${W3MPLUS_PATH}/quickmark"
 			;;
 		'getLocalMark')
-			autoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
+			getAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
 			;;
 		'setLocalMark')
 			setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -e '^$(printf '%s' "${W3M_URL%%#*}" | sed -e 's/[].\*[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/; '"s/'\\{1,\\}/'\"&\"'/g")$'" "GOTO_LINE ${W3M_CURRENT_LINE}"

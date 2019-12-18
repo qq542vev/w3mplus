@@ -130,10 +130,12 @@ if [ -z "${check}" ] || [ "${check}" = ';' ]; then
 fi
 
 if [ -n "${call}" ]; then
+sedPattern
+
 	escaped=$(printf '%s\t%s\t' "${call}" "${check}" | sed -e 's/[].\*/[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')
 	field=$(printf '%s\t%s\t%s\t%s\n' "${call}" "${check}" "${command}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')")
 	html=$(printf '%s\n' "${field}" | outputHtml)
-	replaced=$(sed -e "/^${escaped}/!d" <"${config}" | outputHtml)
+	replaced=$(sed -e "/^${escaped}/!d" "${config}" | outputHtml)
 
 	{
 		sed -e "/^\$/d; /^${escaped}/d" "${config}"
