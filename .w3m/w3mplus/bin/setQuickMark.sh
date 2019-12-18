@@ -15,7 +15,9 @@ set -eu
 config="${W3MPLUS_PATH}/quickmark"
 colmun='1'
 line='1'
-args=''
+fileds=''
+addList=''
+date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
@@ -66,13 +68,6 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -94,10 +89,19 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+			case "${pattern+1}" in
+				'1')
+					fileds=$(printf '%s%s %s %d %d %s\n$' "${fileds}" "${pattern}" "${1}" "${line}" "${colmun}" "${date}")
+					fileds="${fileds%$}"
+					escapedURI=$(printf '%s' "${1}" | htmlEscape.sh)
+					addList=$(printf '%s<li><a href="%s">%s</a></li>' "${addList}" "${escapedURI}" "${escapedURI}")
+					;;
+				*)
+					pattern="${1}"
+					;;
+				esac
 
-			args="${args}${args:+ }'${arg%?$}'"
-			shift
+				shift
 			;;
 	esac
 done
@@ -106,42 +110,27 @@ directory=$(dirname "${config}"; printf '$')
 mkdir -p "${directory%?$}"
 : >>"${config}"
 
-# オプション以外の引数を再セットする
-eval set -- "${args}"
+deleteList=$(grep -e "^${pattern} " "${config}" | while read -r 'key' 'uri' 'line' 'colmun' 'date'; do
+	escapedURI=$(printf '%s' "${uri}" | htmlEscape.sh)
+	printf '<li><a href="%s">%s</a></li>' "${escapedURI}" "${escapedURI}"
+done)
 
-key="${1}"
-uri="${2}"
+if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
+	httpResposeW3mBack.sh
+else
+	{
+		sedPattern=$(printf '%s' "${pattern}" | sed -e 's#/#\\/#g')
+		sed -e "/^\$/d; /^${sedPattern} /d" "${config}"
+		printf '%s' "${fileds}"
+	} | sort -o "${config}"
 
-# 引数の個数が過大である
-if [ 2 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0}: too many arguments
-		Try '${0} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
-fi
-
-if [ -n "${key}" ] && [ -n "${uri}" ]; then
-	escaped=$(printf '%s' "${uri}" | htmlEscape.sh)
-	date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
-
-	oldMarks=$(htmlEscape.sh "${config}" | awk '
-		/^'"${key}"' /{
-			printf "<p>Old Quick Mark \047<kbd>%s</kbd>\047: <a href=\"%s\">%s</a> <date>%s</date></p>\n", $1, $2, $2, $4
-		}
-	')
-
-	if [ -n "${oldMarks}" ]; then
-		printHtml.sh "Updated Quick Mark '${key}'" "<p>Updated Quick MarK '<kbd>${key}</kbd>': <a href=\"${escaped}\">${escaped}<a> <date>${date}</date></p>${oldMarks}"
-	else
-		printHtml.sh "Added Quick Mark '${key}'" "<p>Added Quick MarK '<kbd>${key}</kbd>': <a href=\"${escaped}\">${escaped}<a> <date>${date}</date></p>"
+	if [ -n "${addList}" ]; then
+		addList="<h1>Added Quick Mark</h1><ul>${addList}</ul>"
 	fi
 
-	{
-		sed -e "/^\$/d; /^${key} /d" "${config}"
-		printf '%s %s %d %d %s\n' "${key}" "${uri}" "${line}" "${colmun}" "${date}"
-	} | sort -o "${config}"
-else
-	httpResposeW3mBack.sh
+	if [ -n "${deleteList}" ]; then
+		deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
+	fi
+
+	printHtml.sh "Quick Mark '${pattern}'" "${addList}${deleteList}"
 fi
