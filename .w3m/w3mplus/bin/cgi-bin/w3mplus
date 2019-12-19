@@ -84,7 +84,7 @@ if result=$(
 			getAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
 			;;
 		'setLocalMark')
-			setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -e '^$(printf '%s' "${W3M_URL%%#*}" | sed -e 's/[].\*[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/; '"s/'\\{1,\\}/'\"&\"'/g")$'" "GOTO_LINE ${W3M_CURRENT_LINE}"
+			setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${W3M_URL%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${W3M_CURRENT_LINE}"
 			;;
 		'getLocalMarkGoto')
 			getQuickMark.sh -f "${W3MPLUS_PATH}/localmarkGoto" -l -- "${query_key-}"

@@ -117,20 +117,20 @@ done)
 
 if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
 	httpResposeW3mBack.sh
-else
-	{
-		sedPattern=$(printf '%s' "${pattern}" | sed -e 's#/#\\/#g')
-		sed -e "/^\$/d; /^${sedPattern} /d" "${config}"
-		printf '%s' "${fileds}"
-	} | sort -o "${config}"
-
-	if [ -n "${addList}" ]; then
-		addList="<h1>Added Quick Mark</h1><ul>${addList}</ul>"
-	fi
-
-	if [ -n "${deleteList}" ]; then
-		deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
-	fi
-
-	printHtml.sh "Quick Mark '${pattern}'" "${addList}${deleteList}"
+	exit
 fi
+
+{
+	sed -e "/^\$/d; /^$(printf '%s' "${pattern}" | sed -e 's#/#\\/#g') /d" "${config}"
+	printf '%s' "${fileds}"
+} | sort -o "${config}"
+
+if [ -n "${addList}" ]; then
+	addList="<h1>Added Quick Mark</h1><ul>${addList}</ul>"
+fi
+
+if [ -n "${deleteList}" ]; then
+	deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
+fi
+
+printHtml.sh "Set Quick Mark '${pattern}'" "${addList}${deleteList}"

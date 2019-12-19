@@ -10,8 +10,6 @@
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
-set -eu
-
 outputHtml () {
 	while IFS='	' read -r 'call' 'check' 'command' 'date'; do
 		cat <<- EOF
@@ -34,7 +32,6 @@ outputHtml () {
 
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/autoCommand"
-args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
@@ -98,12 +95,12 @@ mkdir -p "${directory%?$}"
 
 call="${1}"
 
-if [ "${#}" -le 3 ]; then
+if [ "${#}" -eq 2 ]; then
+	check="${2}"
+elif [ "${#}" -eq 3 ]; then
 	check="${2}"
 	command="${3}"
 else
-	check=''
-	command=''
 	shift
 
 	while [ 1 -le "${#}" ]; do
@@ -112,12 +109,12 @@ else
 			break
 		fi
 
-		check="${check}${check:+ }${1}"
+		check="${check-}${check+ }${1}"
 		shift
 	done
 
 	for arg in ${@+"${@}"}; do
-		command="${command}${command:+; }${arg}"
+		command="${command-}${command+; }${arg}"
 	done
 
 	if [ 2 -le "${#}" ]; then
@@ -125,28 +122,36 @@ else
 	fi
 fi
 
-if [ -z "${check}" ] || [ "${check}" = ';' ]; then
-	check='true'
+escaped=$(printf '%s\t%s' "${call}" "${check-}${check:+	}" | sed -e 's/[].\*/[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')
+
+field=''
+
+case "${command+1}" in '1')
+	field=$(printf '%s\t%s\t%s\t%s\n$' "${call}" "${check}" "${command}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')")
+	field="${field%$}"
+	;;
+esac
+
+addList=$(printf '%s' "${field}" | outputHtml)
+deleteList=$(sed -e "/^${escaped}/!d" "${config}" | outputHtml)
+
+
+if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
+		httpResposeW3mBack.sh
+		exit
 fi
 
-if [ -n "${call}" ]; then
-sedPattern
+{
+	sed -e "/^\$/d; /^${escaped}/d" "${config}"
+	printf '%s' "${field}"
+} | sort -o "${config}"
 
-	escaped=$(printf '%s\t%s\t' "${call}" "${check}" | sed -e 's/[].\*/[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')
-	field=$(printf '%s\t%s\t%s\t%s\n' "${call}" "${check}" "${command}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')")
-	html=$(printf '%s\n' "${field}" | outputHtml)
-	replaced=$(sed -e "/^${escaped}/!d" "${config}" | outputHtml)
-
-	{
-		sed -e "/^\$/d; /^${escaped}/d" "${config}"
-		printf '%s\n' "${field}"
-	} | sort -o "${config}"
-
-	if [ -z "${replaced}" ]; then
-		printHtml.sh 'Added auto command' "<h1>Added auto command</h1>${html}"
-	else
-		printHtml.sh 'Updated auto command' "<h1>Updated auto command</h1>${html}<h1>Replaced auto command</h1>${replaced}"
-	fi
-else
-	httpResposeW3mBack.sh
+if [ -n "${addList}" ]; then
+	addList="<h1>Added auto command</h1>${addList}"
 fi
+
+if [ -n "${deleteList}" ]; then
+	deleteList="<h1>Deleted auto command </h1>${deleteList}"
+fi
+
+printHtml.sh "Set auto command '${call}'" "${addList}${deleteList}"
