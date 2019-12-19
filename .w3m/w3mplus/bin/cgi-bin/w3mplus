@@ -63,9 +63,6 @@ if result=$(
 		'homepage')
 			printRedirect.sh "${WWW_HOME-about:home}"
 			;;
-		'dialog')
-			dialog.sh ${query_page+"${query_page}"}
-			;;
 		'aboutURI')
 			aboutURI.sh ${query_uri+"${query_uri-}"}
 			;;
@@ -186,9 +183,6 @@ if result=$(
 
 		<dt>homepage</dt>
 		<dd>file://${SCRIPT_NAME}?action=homepage</dd>
-
-		<dt>dialog</dt>
-		<dd>file://${SCRIPT_NAME}?action=dialog&amp;page={page}</dd>
 
 		<dt>aboutURI</dt>
 		<dd>file://${SCRIPT_NAME}?action=aboutURI&amp;uri={about-uri}</dd>

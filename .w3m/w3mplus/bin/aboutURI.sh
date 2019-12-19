@@ -5,7 +5,7 @@
 #
 # @author qq542vev
 # @version 1.0.0
-# @date 2019-11-07
+# @date 2019-12-20
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -13,7 +13,7 @@ set -eu
 
 case "${1-about:about}" in
 	'about:')
-		printHtml.sh 'About:' "<pre title=\"w3m Version Information\"><samp>$(w3m -version)</samp></pre>"
+		printHtml.sh 'About:' "<pre title=\"w3m Version Information\"><samp>$(w3m -version | htmlEscape.sh)</samp></pre>"
 		;;
 	'about:about')
 		printHtml.sh 'About About' - <<- 'EOF'
@@ -25,33 +25,43 @@ case "${1-about:about}" in
 				<li><a href="about:">about:</a></li>
 				<li><a href="about:about">about:about</a></li>
 				<li><a href="about:blank">about:blank</a></li>
+				<li><a href="about:bookmark">about:bookmark</a></li>
 				<li><a href="about:cache">about:cache</a></li>
 				<li><a href="about:config">about:config</a></li>
+				<li><a href="about:cookie">about:cookie</a></li>
 				<li><a href="about:downloads">about:downloads</a></li>
+				<li><a href="about:help">about:help</a></li>
+				<li><a href="about:history">about:help</a></li>
 				<li><a href="about:home">about:home</a></li>
+				<li><a href="about:message">about:message</a></li>
 				<li><a href="about:newtab">about:newtab</a></li>
 				<li><a href="about:permissions">about:permissions</a></li>
 			</ul>
 		EOF
 		;;
-
 	'about:blank')
 		printHtml.sh 'about:blank'
 		;;
+	'about:bookmark')
+		printRedirect.sh 'VIEW_BOOKMARK'
+		;;
 	'about:cache')
-		httpResponseNoCache.sh '' - <<- EOF
-			W3m-control: LOAD ${HOME}/.w3m
-			W3m-control: DELETE_PREVBUF
-		EOF
+		printRedirect.sh "file://${HOME}/.w3m"
 		;;
 	'about:config')
-		httpResponseNoCache.sh '' - <<- 'EOF'
-			W3m-control: OPTIONS
-			W3m-control: DELETE_PREVBUF
-		EOF
+		printRedirect.sh 'OPTIONS'
+		;;
+	'about:cookie')
+		printRedirect.sh 'COOKIE'
 		;;
 	'about:downloads')
-		httpResponseW3mBack.sh 'W3m-control: DOWNLOAD_LIST'
+		printRedirect.sh 'DOWNLOAD_LIST'
+		;;
+	'about:help')
+		printRedirect.sh 'HELP'
+		;;
+	'about:history')
+		printRedirect.sh 'HISTORY'
 		;;
 	'about:home')
 		printHtml.sh 'w3m Start Page' - "$(
@@ -70,26 +80,29 @@ case "${1-about:about}" in
 
 			<p align="center">
 				<a accesskey="~" href="file://${HOME}">Home</a> -
-				<a accesskey="b" href="file:///cgi-bin/w3mplus?action=dialog&page=bookmark&redirect=2">Bookmarks</a> -
-				<a accesskey="h" href="file:///cgi-bin/w3mplus?action=dialog&page=history&redirect=2">History</a> -
-				<a accesskey="d" href="file:///cgi-bin/w3mplus?action=dialog&page=download">Downloads</a>
+				<a accesskey="b" href="about:bookmark">Bookmarks</a> -
+				<a accesskey="h" href="about:history">History</a> -
+				<a accesskey="d" href="about:downloads">Downloads</a>
 			</p>
 
 			<p align="center">
-				<a accesskey="?" href="file:///cgi-bin/w3mplus?action=dialog&page=help&redirect=2">Help</a> -
-				<a accesskey="o" href="file:///cgi-bin/w3mplus?action=dialog&page=option&redirect=2">Options</a> -
-				<a accesskey="c" href="file:///cgi-bin/w3mplus?action=dialog&page=cookie">Cookies</a> -
-				<a accesskey="m" href="file:///cgi-bin/w3mplus?action=dialog&page=message&redirect=2">Messages</a>
+				<a accesskey="?" href="about:help">Help</a> -
+				<a accesskey="o" href="about:config">Options</a> -
+				<a accesskey="c" href="about:cookie">Cookies</a> -
+				<a accesskey="m" href="about:message">Messages</a>
 			</p>
 
-			<p align="center"><samp>${SERVER_SOFTWARE:-w3m}</samp></p>
+			<p align="center"><samp>$(printf '%s' "${SERVER_SOFTWARE:-w3m}" | htmlEscape.sh)</samp></p>
 		EOF
+		;;
+	'about:message')
+		printRedirect.sh 'MSGS'
 		;;
 	'about:newtab')
 		httpResponseW3mBack.sh 'W3m-control: TAB_GOTO about:blank'
 		;;
 	'about:permissions')
-		httpResponseW3mBack.sh "W3m-control: LOAD ${HOME}/.w3m/siteconf"
+		printRedirect.sh "file://${HOME}/.w3m/siteconf"
 		;;
 	*)
 		printHtml.sh 'Problem loading page' - '' '400 Bad Request' <<- 'EOF'
