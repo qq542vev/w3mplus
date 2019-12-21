@@ -91,7 +91,7 @@ while [ 1 -le "${#}" ]; do
 		*)
 			case "${pattern+1}" in
 				'1')
-					fileds=$(printf '%s%s %s %d %d %s\n$' "${fileds}" "${pattern}" "${1}" "${line}" "${colmun}" "${date}")
+					fileds=$(printf '%s%s\t%s\t%d\t%d\t%s\n$' "${fileds}" "${pattern}" "${1}" "${line}" "${colmun}" "${date}")
 					fileds="${fileds%$}"
 					escapedURI=$(printf '%s' "${1}" | htmlEscape.sh)
 					addList=$(printf '%s<li><a href="%s">%s</a></li>' "${addList}" "${escapedURI}" "${escapedURI}")
@@ -110,7 +110,7 @@ directory=$(dirname "${config}"; printf '$')
 mkdir -p "${directory%?$}"
 : >>"${config}"
 
-deleteList=$(grep -e "^${pattern} " "${config}" | while read -r 'key' 'uri' 'line' 'colmun' 'date'; do
+deleteList=$(grep -e "^${pattern}	" "${config}" | while IFS='	' read -r 'key' 'uri' 'line' 'colmun' 'date'; do
 	escapedURI=$(printf '%s' "${uri}" | htmlEscape.sh)
 	printf '<li><a href="%s">%s</a></li>' "${escapedURI}" "${escapedURI}"
 done)
@@ -121,7 +121,7 @@ if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
 fi
 
 {
-	sed -e "/^\$/d; /^$(printf '%s' "${pattern}" | sed -e 's#/#\\/#g') /d" "${config}"
+	sed -e "/^\$/d; /^$(printf '%s' "${pattern}" | sed -e 's#/#\\/#g')	/d" "${config}"
 	printf '%s' "${fileds}"
 } | sort -o "${config}"
 

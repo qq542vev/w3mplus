@@ -47,13 +47,13 @@ fi
 if result=$(
 	case "${query_action-}" in
 		'autoCommand')
-			getAutoCommand.sh -- "${query_call:-manual}" "${W3M_URL}"
+			getAutoCommand.sh -- "${query_call-manual}" "${W3M_URL}"
 			;;
 		'closeTab')
 			closeTab.sh -- "${W3M_URL}"
 			;;
 		'undoTab')
-			undoTab.sh ${query_count+'-n' "${query_count}"}
+			undoTab.sh -- ${query_count+'-n' "${query_count}"}
 			;;
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"
@@ -64,18 +64,38 @@ if result=$(
 			printRedirect.sh "${WWW_HOME-about:home}"
 			;;
 		'aboutURI')
-			aboutURI.sh ${query_uri+"${query_uri-}"}
+			aboutURI.sh ${query_uri+"${query_uri}"}
 			;;
 		'moveColmun')
-			moveColmun.sh -l "${W3M_CURRENT_LINE}" ${query_number:+-n "${query_number}"} -s -- "${query_file}"
+			moveColmun.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} -s -- "${query_file}"
 			;;
 		'moveParagraph')
-		moveParagraph.sh -l "${W3M_CURRENT_LINE}" ${query_number:+-n "${query_number}"} -- "${query_file}"
+			moveParagraph.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} -- "${query_file}"
+			;;
+		'movePercent')
+			movePercent.sh -l "${W3M_CURRENT_LINE}" ${query_percent+'-n' "${query_percent}"} -- "${query_file}"
+			;;
+		'stringFind')
+			find.sh ${query_number+'-n' "${query_number}"} -- "${W3M_CURRENT_WORD}"
+			;;
+		'wordFind')
+			find.sh -e ${query_number+'-n' "${query_number}"} -- "${W3M_CURRENT_WORD}"
 			;;
 		'qmarks')
 			: >>"${W3MPLUS_PATH}/quickmark"
 
 			printRedirect.sh "file://${W3MPLUS_PATH}/quickmark"
+			;;
+		'getQuickMark')
+			getQuickMark.sh -- ${query_key+"${query_key}"}
+			;;
+		'setQuickMark')
+			setQuickMark.sh -l "${W3M_CURRENT_LINE}" -- "${query_key}" "${W3M_URL}"
+			;;
+		'marks')
+			: >>"${W3MPLUS_PATH}/localmark"
+
+			printRedirect.sh "file://${W3MPLUS_PATH}/localmark"
 			;;
 		'getLocalMark')
 			getAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
@@ -84,22 +104,13 @@ if result=$(
 			setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${W3M_URL%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${W3M_CURRENT_LINE}"
 			;;
 		'getLocalMarkGoto')
-			getQuickMark.sh -f "${W3MPLUS_PATH}/localmarkGoto" -l -- "${query_key-}"
+			getQuickMark.sh -c "${W3MPLUS_PATH}/localmarkGoto" -l -- ${query_key+"${query_key}"}
 			;;
 		'setLocalMarkGoto')
-			setQuickMark.sh -f "${W3MPLUS_PATH}/localmarkGoto" -l "${W3M_CURRENT_LINE-}" -- "${query_key-}" "${W3M_URL}"
-			;;
-		'getQuickMark')
-			getQuickMark.sh -- "${query_key-}"
-			;;
-		'setQuickMark')
-			setQuickMark.sh -l "${W3M_CURRENT_LINE-}" -- "${query_key-}" "${W3M_URL}"
+			setQuickMark.sh -c "${W3MPLUS_PATH}/localmarkGoto" -l "${W3M_CURRENT_LINE-}" -- "${query_key}" "${W3M_URL}"
 			;;
 		'contextMenu')
 			contextMenu.sh
-			;;
-		'yankSelection')
-			yank.sh -- "${W3M_CURRENT_WORD}"
 			;;
 		'uri')
 			case "${query_uri}" in
@@ -124,15 +135,15 @@ if result=$(
 						fi
 					fi
 					;;
-				*)
-					uri="${query_uri-}"
-					;;
 			esac
 
-			location.sh "${query_subaction}" "${uri}"
+			location.sh "${query_subaction}" "${query_uri-}"
 			;;
 		'lineVisualMode')
 			lineVisualMode.sh -l "${W3M_CURRENT_LINE}" -- "${query_file}"
+			;;
+		'yankSelection')
+			yank.sh -- "${W3M_CURRENT_WORD}"
 			;;
 		'zoom')
 			zoom.sh ${query_zoom+'-n' "${query_zoom}"}
@@ -140,17 +151,8 @@ if result=$(
 		'search')
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"
 			;;
-		'stringFind')
-			find.sh ${query_number:+-n "${query_number}"} -- "${W3M_CURRENT_WORD}"
-			;;
-		'wordFind')
-			find.sh -e ${query_number:+-n "${query_number}"} -- "${W3M_CURRENT_WORD}"
-			;;
 		'dictWordSearch')
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query#?}"
-			;;
-		'gotoPercent')
-			gotoPercent.sh -l "${W3M_CURRENT_LINE}" ${query_percent+'-n' "${query_percent}"} -- "${query_file}"
 			;;
 		'selectLine')
 			selectLine.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} -- "${query_subaction}" "${query_file}"

@@ -140,17 +140,17 @@ fi
 goto=''
 
 for pattern in ${@+"${@}"}; do
-	fileds=$(grep -e "^${pattern} " "${config}" || :)
+	fileds=$(grep -e "^${pattern}	" "${config}" || :)
 
 	if [ -z "${goto}" ]; then
 		first=$(printf '%s\n' "${fileds}" | head -n 1)
-		goto=$(printf '%s' "${first}" | cut -d ' ' -f 2)
-		header=$(gotoMove "$(printf '%s' "${first}" | cut -d ' ' -f 3)" "$(printf '%s' "${first}" | cut -d ' ' -f 4)")
+		goto=$(printf '%s' "${first}" | cut -f 2)
+		header=$(gotoMove "$(printf '%s' "${first}" | cut -f 3)" "$(printf '%s' "${first}" | cut -f 4)")
 		fileds=$(printf '%s\n' "${fileds}" | tail -n '+2'; printf '$')
 	fi
 
 	header=$(printf '%s\n%s' "${header}" "$(
-		printf '%s' "${fileds%$}" | while read -r 'key' 'uri' 'line' 'colmun' 'date'; do
+		printf '%s' "${fileds%$}" | while IFS='	' read -r 'key' 'uri' 'line' 'colmun' 'date'; do
 			printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
 			gotoMove "${line}" "${colmun}"
 		done

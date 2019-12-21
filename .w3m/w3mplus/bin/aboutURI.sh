@@ -71,7 +71,7 @@ case "${1-about:about}" in
 				W3m-control: NEXT_LINK
 			EOF
 		)" <<- EOF
-			<form action="file:///cgi-bin/w3mplus" method="get" accept-charset="UTF-8">
+			<form action="about:search" method="get" accept-charset="UTF-8">
 				<p align="center">
 					<input type="hidden" name="action" value="search" />
 					<input accesskey="s" type="text" name="query" size="30" placeholder="Search Keywords" />
