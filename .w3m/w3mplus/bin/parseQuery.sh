@@ -3,7 +3,7 @@
 set -eu
 
 quoteEscape () (
-	sed -e "s/'/'\"'\"'/g"
+	sed -e "s/'\{1,\}/'\"&\"'/g"
 )
 
 getQuery () (
@@ -19,12 +19,16 @@ getQuery () (
 				fi
 			)
 
-			printf "'%s' '%s'" "${key}" "${value}"
+			if [ -z "${prefix+1}" ] && [ -z "${suffix+1}" ]; then
+				printf '%s %s' "'${key}'" "'${value}'"
 
-			if [ "${#}" -eq 1 ]; then
-				printf '\n'
-			else
-				printf ' '
+				if [ "${#}" -eq 1 ]; then
+					printf '\n'
+				else
+					printf ' '
+				fi
+			elif expr "${key}" : '[_A-Za-z][_0-9A-Za-z]*$' >'/dev/null'; then
+				printf '%s%s%s=%s\n' "${prefix-}" "${key}" "${suffix-}" "'${value}'"
 			fi
 		fi
 
@@ -32,27 +36,80 @@ getQuery () (
 	done
 )
 
-if [ "${#}" -eq 0 ]; then
-	set -- -
-fi
-
+# コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-')
-				getQuery
-				shift
+		'-p' | '--prefix')
+			prefix="${2}"
+			shift 2
 			;;
+		'-s' | '--suffix')
+			suffix="${2}"
+			shift 2
+			;;
+		# ヘルプメッセージを表示して終了する
+		'-h' | '--help')
+			cat <<- EOF
+				Usage: ${0} [OPTION]... [FILE]...
+				Parse the HTTP query
+
+				 -p, --prefix  variable prefix
+				 -s, --suffix  variable suffix
+				 -h, --help    display this help and exit
+			EOF
+
+			exit
+			;;
+		# 標準入力を処理する
+		'-')
+			query="${query-}${query:+&}$(cat)"
+
+			shift
+			;;
+		# `--name=value` 形式のロングオプション
+		'--'[!-]*'='*)
+			option="${1}"
+			shift
+			# `--name value` に変換して再セットする
+			set -- "${option%%=*}" "${option#*=}" ${@+"${@}"}
+			;;
+		# 以降はオプション以外の引数
 		'--')
 			shift
 
 			while [ 1 -le "${#}" ]; do
-				getQuery <"${1}"
+				query="${query-}${query:+&}$(cat -- "${1}")"
 				shift
 			done
 			;;
+		# 複合ショートオプション
+		'-'[!-][!-]*)
+			option=$(printf '%s\n' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s\n' "${1}" | cut -c '3-'; printf '$')
+
+			shift
+			# `-abc` を `-a -bc` に変換して再セットする
+			set -- "-${option%?$}" "-${options%?$}" ${@+"${@}"}
+			;;
+		# その他の無効なオプション
+		'-'*)
+			cat <<- EOF 1>&2
+				${0}: invalid option -- '${1}'
+				Try '${0} --help' for more information.
+			EOF
+
+			exit 64 # EX_USAGE </usr/include/sysexits.h>
+			;;
+		# その他のオプション以外の引数
 		*)
-			getQuery <"${1}"
+			query="${query-}${query:+&}$(cat -- "${1}")"
 			shift
 			;;
 	esac
 done
+
+if [ -z "${query+1}" ]; then
+	query="$(cat)"
+fi
+
+printf '%s' "${query}" | getQuery

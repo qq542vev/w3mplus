@@ -129,7 +129,7 @@ if result=$(
 			uri=$(expand "${query_uri-\${W3M_URL\}}")
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 			if [ -n "${uri}" ]; then
-				setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
+				setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
 			fi
 			;;
 		'getLocalMarkGoto')

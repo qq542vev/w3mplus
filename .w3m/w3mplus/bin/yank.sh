@@ -76,12 +76,12 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
-			option=$(printf '%s' "${1}" | cut -c '2'; printf '$')
-			options=$(printf '%s' "${1}" | cut -c '3-'; printf '$')
+			option=$(printf '%s\n' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s\n' "${1}" | cut -c '3-'; printf '$')
 
 			shift
 			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-${option%$}" "-${options%$}" ${@+"${@}"}
+			set -- "-${option%?$}" "-${options%?$}" ${@+"${@}"}
 			;;
 		# その他の無効なオプション
 		'-'*)
