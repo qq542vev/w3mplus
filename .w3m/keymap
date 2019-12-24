@@ -299,8 +299,8 @@ keymap ":f" FRAME
 
 ### Copying text ###
 
-keymap "y" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=yank&uri=%24%7BW3M_URL%7D"
-keymap "Y" GOTO "file:///cgi-bin/w3mplus?action=yankSelection"
+keymap "y" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_URL%7D"
+keymap "Y" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
 
 ## Options ##
 
@@ -339,8 +339,8 @@ keymap "C-p" PREV_TAB
 keymap "d" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
 keymap "D" GOTO "file:///cgi-bin/w3mplus?action=closeTab"
 
-keymap "u" GOTO "file:///cgi-bin/w3mplus?action=undoTab&count=1"
-keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undoTab&count=1000"
+keymap "u" GOTO "file:///cgi-bin/w3mplus?action=undoTab&number=1"
+keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undoTab&number=1000"
 
 keymap ":u" GOTO "file:///cgi-bin/w3mplus?action=undoTabs"
 
@@ -355,25 +355,20 @@ keymap ";o" GOTO_LINK
 keymap ";t" TAB_LINK
 keymap ";b" TAB_GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=prevTab&uri=%24%7BW3M_CURRENT_LINK%7D&redirect=2"
 keymap ";w" EXTERN_LINK "w3m %s"
-keymap ";O" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=open&uri=%24%7BW3M_CURRENT_LINK%7D"
-keymap ";T" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=tabopen&uri=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";O" GOTO "file:///cgi-bin/w3mplus?action=linkSetOpen"
+keymap ";T" GOTO "file:///cgi-bin/w3mplus?action=linkSetTabopen"
 keymap ";W" EXTERN_LINK
 keymap ";a" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=addBookmark&uri=%24%7BW3M_CURRENT_LINK%7D"
 keymap ";v" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=viewSource&uri=%24%7BW3M_CURRENT_LINK%7D"
 keymap ";V" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=viewSourceExternally&uri=%24%7BW3M_CURRENT_LINK%7D"
-keymap ";y" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=yank&uri=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";y" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_LINK%7D"
+keymap ";Y" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
 keymap ";c" GOTO "file:///cgi-bin/w3mplus?action=contextMenu"
 keymap ";i" VIEW_IMAGE
 keymap ";I" SAVE_IMAGE
 
 keymap "g;" MENU ExtendedHints
 keymap ";TAB" MENU ExtendedHints
-
-## Keyboard shortcuts and commands ##
-
-### Key mapping ###
-
-keymap ":M" DEFINE_KEY
 
 ## Marks ##
 
@@ -567,6 +562,8 @@ keymap "`x" GOTO "file:///cgi-bin/w3mplus?action=getLocalMark&key=x"
 keymap "`y" GOTO "file:///cgi-bin/w3mplus?action=getLocalMark&key=y"
 keymap "`z" GOTO "file:///cgi-bin/w3mplus?action=getLocalMark&key=z"
 
+keymap ":m" GOTO "file:///cgi-bin/w3mplus?action=marks"
+
 ## Automatic commands ##
 
 keymap ":D" GOTO "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
@@ -583,7 +580,7 @@ keymap ":d" DOWNLOAD_LIST
 
 ## Error and informational messages ##
 
-keymap ":m" MSGS
+keymap ":M" MSGS
 
 ## Privacy and sensitive information ##
 

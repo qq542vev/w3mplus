@@ -5,11 +5,19 @@
 #
 # @author qq542vev
 # @version 1.0.0
-# @date 2019-12-01
+# @date 2019-12-23
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
 set -eu
+
+expand () (
+	if expr "${1}" : '${[_A-Z][_0-9A-Za-z]*}$' >'/dev/null'; then
+		eval printf '%s' "\"${1}\""
+	else
+		printf '%s' "${1}"
+	fi
+)
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 : "${W3MPLUS_YANK_FILE:=${HOME}/w3mplusyank}"
@@ -47,13 +55,15 @@ fi
 if result=$(
 	case "${query_action-}" in
 		'autoCommand')
-			getAutoCommand.sh -- "${query_call-manual}" "${W3M_URL}"
+			string=$(expand "${query_string-\${W3M_URL\}}")
+
+			getAutoCommand.sh -- "${query_call-manual}" ${string:+"${string}"}
 			;;
 		'closeTab')
 			closeTab.sh -- "${W3M_URL}"
 			;;
 		'undoTab')
-			undoTab.sh -- ${query_count+'-n' "${query_count}"}
+			undoTab.sh ${query_number+'-n' "${query_number}"}
 			;;
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"
@@ -67,19 +77,29 @@ if result=$(
 			aboutURI.sh ${query_uri+"${query_uri}"}
 			;;
 		'moveColmun')
-			moveColmun.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} -s -- "${query_file}"
+			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+
+			moveColmun.sh -l "${line}" ${query_number+'-n' "${query_number}"} -s -- "${query_file}"
 			;;
 		'moveParagraph')
-			moveParagraph.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} -- "${query_file}"
+			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+
+			moveParagraph.sh -l "${line}" ${query_number+'-n' "${query_number}"} -- "${query_file}"
 			;;
 		'movePercent')
-			movePercent.sh -l "${W3M_CURRENT_LINE}" ${query_percent+'-n' "${query_percent}"} -- "${query_file}"
+			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+
+			movePercent.sh -l "${line}" ${query_percent+'-n' "${query_percent}"} -- "${query_file}"
 			;;
 		'stringFind')
-			find.sh ${query_number+'-n' "${query_number}"} -- "${W3M_CURRENT_WORD}"
+			word=$(expand "${query_word-\${W3M_CURRENT_WORD\}}")
+
+			find.sh ${query_number+'-n' "${query_number}"} -- "${word}"
 			;;
 		'wordFind')
-			find.sh -e ${query_number+'-n' "${query_number}"} -- "${W3M_CURRENT_WORD}"
+			word=$(expand "${query_word-\${W3M_CURRENT_WORD\}}")
+
+			find.sh -e ${query_number+'-n' "${query_number}"} -- "${word}"
 			;;
 		'qmarks')
 			: >>"${W3MPLUS_PATH}/quickmark"
@@ -90,7 +110,12 @@ if result=$(
 			getQuickMark.sh -- ${query_key+"${query_key}"}
 			;;
 		'setQuickMark')
-			setQuickMark.sh -l "${W3M_CURRENT_LINE}" -- "${query_key}" "${W3M_URL}"
+			uri=$(expand "${query_uri-\${W3M_URL\}}")
+			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+
+			if [ -n "${uri}" ]; then
+				setQuickMark.sh -l "${line}" -- "${query_key}" "${uri}"
+			fi
 			;;
 		'marks')
 			: >>"${W3MPLUS_PATH}/localmark"
@@ -101,49 +126,60 @@ if result=$(
 			getAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
 			;;
 		'setLocalMark')
-			setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${W3M_URL%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${W3M_CURRENT_LINE}"
+			uri=$(expand "${query_uri-\${W3M_URL\}}")
+			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+			if [ -n "${uri}" ]; then
+				setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
+			fi
 			;;
 		'getLocalMarkGoto')
 			getQuickMark.sh -c "${W3MPLUS_PATH}/localmarkGoto" -l -- ${query_key+"${query_key}"}
 			;;
 		'setLocalMarkGoto')
-			setQuickMark.sh -c "${W3MPLUS_PATH}/localmarkGoto" -l "${W3M_CURRENT_LINE-}" -- "${query_key}" "${W3M_URL}"
+			uri=$(expand "${query_uri-\${W3M_URL\}}")
+			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+
+			if [ -n "${uri}" ]; then
+				setQuickMark.sh -c "${W3MPLUS_PATH}/localmarkGoto" -l "${line}" -- "${query_key}" "${uri}"
+			fi
 			;;
 		'contextMenu')
 			contextMenu.sh
 			;;
+		'linkSetOpen')
+			if [ -n "${W3M_CURRENT_LINK}" ]; then
+				cat <<- 'EOF' | httpResponseW3mBack.sh -
+					W3m-control: SET_OPTION default_url=2
+					W3m-control: GOTO
+				EOF
+			fi
+			;;
+		'linkSetTabopen')
+			if [ -n "${W3M_CURRENT_LINK}" ]; then
+				cat <<- 'EOF' | httpResponseW3mBack.sh -
+					W3m-control: SET_OPTION default_url=2
+					W3m-control: TAB_GOTO
+				EOF
+			fi
+			;;
 		'uri')
-			case "${query_uri}" in
-				'${W3M_'*'}')
-					uri=$(eval 'printf' '%s' "\"${query_uri}\"")
+			uri=$(expand "${query_uri-\${W3M_URL\}}")
 
-					if [ "${query_uri}" = '${W3M_CURRENT_LINK}' ] && [ -n "${uri}" ]; then
-						if [ "${query_subaction}" = 'open' ]; then
-							cat <<- 'EOF' | httpResponseW3mBack.sh -
-								W3m-control: SET_OPTION default_url=2
-								W3m-control: GOTO
-							EOF
-
-							exit
-						elif [ "${query_subaction-}" = 'tabopen' ]; then
-							cat <<- 'EOF' | httpResponseW3mBack.sh -
-								W3m-control: SET_OPTION default_url=2
-								W3m-control: TAB_GOTO
-							EOF
-
-							exit
-						fi
-					fi
-					;;
-			esac
-
-			location.sh "${query_subaction}" "${query_uri-}"
+			if [ -n "${uri}" ]; then
+				location.sh "${query_subaction}" "${uri}"
+			fi
 			;;
 		'lineVisualMode')
-			lineVisualMode.sh -l "${W3M_CURRENT_LINE}" -- "${query_file}"
+			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+
+			lineVisualMode.sh -l "${line}" -- "${query_file}"
 			;;
-		'yankSelection')
-			yank.sh -- "${W3M_CURRENT_WORD}"
+		'yank')
+			yank=$(expand "${query_yank-\${W3M_URL\}}")
+
+			if [ -n "${yank}" ]; then
+				yank.sh -- "${yank}"
+			fi
 			;;
 		'zoom')
 			zoom.sh ${query_zoom+'-n' "${query_zoom}"}
@@ -152,17 +188,17 @@ if result=$(
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"
 			;;
 		'dictWordSearch')
-			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query#?}"
+			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_qauery#?}"
 			;;
 		'selectLine')
-			selectLine.sh -l "${W3M_CURRENT_LINE}" ${query_number+'-n' "${query_number}"} -- "${query_subaction}" "${query_file}"
+			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+
+			selectLine.sh -l "${line}" ${query_number+'-n' "${query_number}"} -- "${query_subaction}" "${query_file}"
 			;;
 		'equalPrg')
 			if [ -n "${W3MPLUS_EQUALPRG}" ]; then
 				if [ -f "${W3M_SOURCEFILE}" ]; then
 					w3m -dump "${W3M_SOURCEFILE}" | eval "${W3MPLUS_EQUALPRG}"
-				else
-					httpResponseW3mBack.sh
 				fi
 			else
 				printHtml.sh 'Bad Request' '<p>The value of the environment variable <strong><var>W3MPLUS_EQUALPRG</var></strong> is empty.</p>' '400 Bad Request'
@@ -172,13 +208,13 @@ if result=$(
 			printHtml.sh 'Bad Request' - '400 Bad Request' <<- EOF
 	<dl>
 		<dt>autoCommand</dt>
-		<dd>file://${SCRIPT_NAME}?action=autoCommand&amp;call={type}</dd>
+		<dd>file://${SCRIPT_NAME}?action=autoCommand&amp;call={call-type}</dd>
 
 		<dt>closeTab</dt>
 		<dd>file://${SCRIPT_NAME}?action=closeTab</dd>
 
 		<dt>undoTab</dt>
-		<dd>file://${SCRIPT_NAME}?action=undoTab&amp;count={number}</dd>
+		<dd>file://${SCRIPT_NAME}?action=undoTab&amp;number={number}</dd>
 
 		<dt>undoTabs</dt>
 		<dd>file://${SCRIPT_NAME}?action=undoTabs</dd>
@@ -189,19 +225,21 @@ if result=$(
 		<dt>aboutURI</dt>
 		<dd>file://${SCRIPT_NAME}?action=aboutURI&amp;uri={about-uri}</dd>
 
-		<dt>incrementURI</dt>
-		<dd>file://${SCRIPT_NAME}?action=incrementURI&amp;number={number}</dd>
+		<dt>moveColmun</dt>
+		<dd>file://${SCRIPT_NAME}?action=moveColmun&amp;number={number}&amp;file={file}</dd>
 
-		<dt>lineBegin</dt>
-		<dd>file://${SCRIPT_NAME}?action=lineBegin</dd>
+		<dt>moveParagraph</dt>
+		<dd>file://${SCRIPT_NAME}?action=moveParagraph&amp;number={number}&amp;file={file}</dd>
 
-		<dt>lineEnd</dt>
-		<dd>file://${SCRIPT_NAME}?action=lineEnd</dd>
+		<dt>movePercent</dt>
+		<dd>file://${SCRIPT_NAME}?action=movePercent&amp;percent={percent}&amp;file={file}</dd>
 
-		<dt>prevParagraph</dt>
-		<dd>file://${SCRIPT_NAME}?action=prevParagraph</dd>
-		<dt>nextParagraph</dt>
-		<dd>file://${SCRIPT_NAME}?action=nextParagraph</dd>
+		<dt>stringFind</dt>
+		<dd>file://${SCRIPT_NAME}?action=stringFind&number={number}</dd>
+
+		<dt>wordFind</dt>
+		<dd>file://${SCRIPT_NAME}?action=wordFind&number={number}</dd>
+
 		<dt>qmarks</dt>
 		<dd>file://${SCRIPT_NAME}?action=qmarks</dd>
 
@@ -211,52 +249,59 @@ if result=$(
 		<dt>setQuickMark</dt>
 		<dd>file://${SCRIPT_NAME}?action=setQuickMark&amp;key={key}</dd>
 
+		<dt>marks</dt>
+		<dd>file://${SCRIPT_NAME}?action=marks</dd>
+
+		<dt>getLocalMark</dt>
+		<dd>file://${SCRIPT_NAME}?action=getLocalMark&amp;key={key}</dd>
+
+		<dt>setLocalMark</dt>
+		<dd>file://${SCRIPT_NAME}?action=setLocalMark&amp;key={key}</dd>
+
+		<dt>getLocalMarkGoto</dt>
+		<dd>file://${SCRIPT_NAME}?action=getLocalMarkGoto&amp;key={key}</dd>
+
+		<dt>setLocalMarkGoto</dt>
+		<dd>file://${SCRIPT_NAME}?action=setLocalMarkGoto&amp;key={key}</dd>
+
 		<dt>contextMenu</dt>
 		<dd>file://${SCRIPT_NAME}?action=contextMenu</dd>
 
-		<dt>yankSelection</dt>
-		<dd>file://${SCRIPT_NAME}?action=yankSelection</dd>
-		<dt>location</dt>
-		<dd>file://${SCRIPT_NAME}?action=location&subaction={addBookmark|parentPath|prevTab|sendEmail|viewSource|viewSourceExternally|yank}</dd>
+		<dt>uri</dt>
+		<dd>file://${SCRIPT_NAME}?action=uri&subaction={addBookmark|parentPath|prevTab|sendEmail|viewSource|viewSourceExternally|yank}</dd>
 
 		<dt>lineVisualMode</dt>
 		<dd>file://${SCRIPT_NAME}?action=lineVisualMode</dd>
+
+		<dt>yankSelection</dt>
+		<dd>file://${SCRIPT_NAME}?action=yankSelection</dd>
+
 		<dt>zoom</dt>
 		<dd>file://${SCRIPT_NAME}?action=zoom&amp;zoom={number}</dd>
-
-		<dt>viewSourceURI</dt>
-		<dd>file://${SCRIPT_NAME}?action=viewSource&amp;uri={uri}</dd>
 
 		<dt>search</dt>
 		<dd>file://${SCRIPT_NAME}?action=search&amp;query={query}</dd>
 
-		<dt>stringFindBack</dt>
-		<dd>file://${SCRIPT_NAME}?action=stringFindBack</dd>
-
-		<dt>stringFindFore</dt>
-		<dd>file://${SCRIPT_NAME}?action=stringFindFore</dd>
-
-		<dt>wordFindBack</dt>
-		<dd>file://${SCRIPT_NAME}?action=wordFindBack</dd>
-		<dt>wordFindFore</dt>
-		<dd>file://${SCRIPT_NAME}?action=wordFindFore</dd>
-
 		<dt>dictWordSearch</dt>
 		<dd>file://${SCRIPT_NAME}?action=dictWordSearch&amp;query={query}</dd>
 
-		<dt>gotoPercent</dt>
-		<dd>file://${SCRIPT_NAME}?action=gotoPercent&amp;percent={number}</dd>
+		<dt>selectLine</dt>
+		<dd>file://${SCRIPT_NAME}?action=selectLine&amp;subaction={subaction}&amp;number={number}&amp;file={file}</dd>
 
-		<dt>callOperatorFunc</dt>
-		<dd>file://${SCRIPT_NAME}?action=callOperatorFunc&amp;number={number}&amp;file={file}</dd>
+		<dt>equalPrg</dt>
+		<dd>file://${SCRIPT_NAME}?action=equalPrg</dd>
 	</dl>
 EOF
 			;;
 	esac 2>&1
 
-	printf '_'
+	printf '$'
 ); then
-	printf '%s' "${result%_}"
+	if [ -z "${result%$}" ]; then
+		httpResponseW3mBack.sh
+	else
+		printf '%s' "${result%$}"
+	fi
 else
 	printHtml.sh '500 Internal Server Error' - '' '500 Internal Server Error' <<- EOF
 	<p>An unexpected error occurred during request processing.</p>

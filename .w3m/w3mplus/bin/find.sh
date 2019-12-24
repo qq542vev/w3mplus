@@ -104,16 +104,6 @@ if [ "${#}" -eq 0 ]; then
 	set -- "$(cat)"
 fi
 
-# 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
-	cat <<- EOF 1>&2
-		${0}: not enough arguments
-		Try '${0} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
-fi
-
 keyword=''
 
 for word in ${@+"${@}"}; do
