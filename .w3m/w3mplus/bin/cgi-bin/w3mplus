@@ -19,6 +19,15 @@ expand () (
 	fi
 )
 
+addPrintCache () (
+	tmp=$(mktemp -u)
+
+	cat <<- EOF | httpResponseW3mBack.sh -
+		W3m-control: PRINT ${tmp}
+		W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmp}" | urlEncode.sh)
+	EOF
+)
+
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 : "${W3MPLUS_YANK_FILE:=${HOME}/w3mplusyank}"
 : "${W3MPLUS_YANK_HEADER:=}"
@@ -79,17 +88,29 @@ if result=$(
 		'moveColmun')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			moveColmun.sh -l "${line}" ${query_number+'-n' "${query_number}"} -s -- "${query_file}"
+			if [ -f "${query_file-}" ]; then
+				moveColmun.sh -l "${line}" ${query_number+'-n' "${query_number}"} -s -- "${query_file}"
+			else
+				addPrintCache
+			fi
 			;;
 		'moveParagraph')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
+			if [ -f "${query_file-}" ]; then
 			moveParagraph.sh -l "${line}" ${query_number+'-n' "${query_number}"} -- "${query_file}"
+			else
+				addPrintCache
+			fi
 			;;
 		'movePercent')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			movePercent.sh -l "${line}" ${query_percent+'-n' "${query_percent}"} -- "${query_file}"
+			if [ -f "${query_file-}" ]; then
+				movePercent.sh -l "${line}" ${query_percent+'-n' "${query_percent}"} -- "${query_file}"
+			else
+				addPrintCache
+			fi
 			;;
 		'stringFind')
 			word=$(expand "${query_word-\${W3M_CURRENT_WORD\}}")
@@ -172,7 +193,11 @@ if result=$(
 		'lineVisualMode')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			lineVisualMode.sh -l "${line}" -- "${query_file}"
+			if [ -f "${query_file-}" ]; then
+				lineVisualMode.sh -l "${line}" -- "${query_file}"
+			else
+				addPrintCache
+			fi
 			;;
 		'yank')
 			yank=$(expand "${query_yank-\${W3M_URL\}}")
@@ -193,7 +218,11 @@ if result=$(
 		'selectLine')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			selectLine.sh -l "${line}" ${query_number+'-n' "${query_number}"} -- "${query_subaction}" "${query_file}"
+			if [ -f "${query_file-}" ]; then
+				selectLine.sh -l "${line}" ${query_number+'-n' "${query_number}"} -- "${query_subaction}" "${query_file}"
+			else
+				addPrintCache
+			fi
 			;;
 		'equalPrg')
 			if [ -n "${W3MPLUS_EQUALPRG}" ]; then
@@ -319,3 +348,5 @@ else
 	</section>
 	EOF
 fi
+
+rm -f "${query_file-}"

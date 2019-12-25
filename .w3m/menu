@@ -216,132 +216,132 @@ end
 
 menu 0Percents
 	func "0  0%" BEGIN "0"
-	func "1  1%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=1&file=/tmp/w3mplusPrintCache"
-	func "2  2%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=2&file=/tmp/w3mplusPrintCache"
-	func "3  3%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=3&file=/tmp/w3mplusPrintCache"
-	func "4  4%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=4&file=/tmp/w3mplusPrintCache"
-	func "5  5%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=5&file=/tmp/w3mplusPrintCache"
-	func "6  6%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=6&file=/tmp/w3mplusPrintCache"
-	func "7  7%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=7&file=/tmp/w3mplusPrintCache"
-	func "8  8%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=8&file=/tmp/w3mplusPrintCache"
-	func "9  9%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=9&file=/tmp/w3mplusPrintCache"
+	func "1  1%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=1"
+	func "2  2%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=2"
+	func "3  3%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=3"
+	func "4  4%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=4"
+	func "5  5%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=5"
+	func "6  6%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=6"
+	func "7  7%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=7"
+	func "8  8%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=8"
+	func "9  9%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=9"
 end
 
 menu 10Percents
-	func "0  10%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=10&file=/tmp/w3mplusPrintCache"
-	func "1  11%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=11&file=/tmp/w3mplusPrintCache"
-	func "2  12%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=12&file=/tmp/w3mplusPrintCache"
-	func "3  13%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=13&file=/tmp/w3mplusPrintCache"
-	func "4  14%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=14&file=/tmp/w3mplusPrintCache"
-	func "5  15%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=15&file=/tmp/w3mplusPrintCache"
-	func "6  16%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=16&file=/tmp/w3mplusPrintCache"
-	func "7  17%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=17&file=/tmp/w3mplusPrintCache"
-	func "8  18%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=18&file=/tmp/w3mplusPrintCache"
-	func "9  19%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=19&file=/tmp/w3mplusPrintCache"
+	func "0  10%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=10"
+	func "1  11%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=11"
+	func "2  12%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=12"
+	func "3  13%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=13"
+	func "4  14%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=14"
+	func "5  15%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=15"
+	func "6  16%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=16"
+	func "7  17%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=17"
+	func "8  18%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=18"
+	func "9  19%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=19"
 end
 
 menu 20Percents
-	func "0  20%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=20&file=/tmp/w3mplusPrintCache"
-	func "1  21%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=21&file=/tmp/w3mplusPrintCache"
-	func "2  22%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=22&file=/tmp/w3mplusPrintCache"
-	func "3  23%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=23&file=/tmp/w3mplusPrintCache"
-	func "4  24%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=24&file=/tmp/w3mplusPrintCache"
-	func "5  25%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=25&file=/tmp/w3mplusPrintCache"
-	func "6  26%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=26&file=/tmp/w3mplusPrintCache"
-	func "7  27%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=27&file=/tmp/w3mplusPrintCache"
-	func "8  28%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=28&file=/tmp/w3mplusPrintCache"
-	func "9  29%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=29&file=/tmp/w3mplusPrintCache"
+	func "0  20%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=20"
+	func "1  21%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=21"
+	func "2  22%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=22"
+	func "3  23%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=23"
+	func "4  24%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=24"
+	func "5  25%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=25"
+	func "6  26%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=26"
+	func "7  27%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=27"
+	func "8  28%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=28"
+	func "9  29%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=29"
 end
 
 menu 30Percents
-	func "0  30%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=30&file=/tmp/w3mplusPrintCache"
-	func "1  31%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=31&file=/tmp/w3mplusPrintCache"
-	func "2  32%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=32&file=/tmp/w3mplusPrintCache"
-	func "3  33%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=33&file=/tmp/w3mplusPrintCache"
-	func "4  34%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=34&file=/tmp/w3mplusPrintCache"
-	func "5  35%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=35&file=/tmp/w3mplusPrintCache"
-	func "6  36%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=36&file=/tmp/w3mplusPrintCache"
-	func "7  37%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=37&file=/tmp/w3mplusPrintCache"
-	func "8  38%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=38&file=/tmp/w3mplusPrintCache"
-	func "9  39%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=39&file=/tmp/w3mplusPrintCache"
+	func "0  30%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=30"
+	func "1  31%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=31"
+	func "2  32%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=32"
+	func "3  33%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=33"
+	func "4  34%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=34"
+	func "5  35%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=35"
+	func "6  36%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=36"
+	func "7  37%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=37"
+	func "8  38%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=38"
+	func "9  39%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=39"
 end
 
 menu 40Percents
-	func "0  40%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=40&file=/tmp/w3mplusPrintCache"
-	func "1  41%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=41&file=/tmp/w3mplusPrintCache"
-	func "2  42%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=42&file=/tmp/w3mplusPrintCache"
-	func "3  43%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=43&file=/tmp/w3mplusPrintCache"
-	func "4  44%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=44&file=/tmp/w3mplusPrintCache"
-	func "5  45%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=45&file=/tmp/w3mplusPrintCache"
-	func "6  46%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=46&file=/tmp/w3mplusPrintCache"
-	func "7  47%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=47&file=/tmp/w3mplusPrintCache"
-	func "8  48%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=48&file=/tmp/w3mplusPrintCache"
-	func "9  49%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=49&file=/tmp/w3mplusPrintCache"
+	func "0  40%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=40"
+	func "1  41%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=41"
+	func "2  42%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=42"
+	func "3  43%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=43"
+	func "4  44%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=44"
+	func "5  45%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=45"
+	func "6  46%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=46"
+	func "7  47%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=47"
+	func "8  48%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=48"
+	func "9  49%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=49"
 end
 
 menu 50Percents
-	func "0  50%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=50&file=/tmp/w3mplusPrintCache"
-	func "1  51%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=51&file=/tmp/w3mplusPrintCache"
-	func "2  52%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=52&file=/tmp/w3mplusPrintCache"
-	func "3  53%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=53&file=/tmp/w3mplusPrintCache"
-	func "4  54%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=54&file=/tmp/w3mplusPrintCache"
-	func "5  55%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=55&file=/tmp/w3mplusPrintCache"
-	func "6  56%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=56&file=/tmp/w3mplusPrintCache"
-	func "7  57%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=57&file=/tmp/w3mplusPrintCache"
-	func "8  58%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=58&file=/tmp/w3mplusPrintCache"
-	func "9  59%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=59&file=/tmp/w3mplusPrintCache"
+	func "0  50%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=50"
+	func "1  51%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=51"
+	func "2  52%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=52"
+	func "3  53%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=53"
+	func "4  54%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=54"
+	func "5  55%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=55"
+	func "6  56%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=56"
+	func "7  57%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=57"
+	func "8  58%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=58"
+	func "9  59%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=59"
 end
 
 menu 60Percents
-	func "0  60%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=60&file=/tmp/w3mplusPrintCache"
-	func "1  61%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=61&file=/tmp/w3mplusPrintCache"
-	func "2  62%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=62&file=/tmp/w3mplusPrintCache"
-	func "3  63%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=63&file=/tmp/w3mplusPrintCache"
-	func "4  64%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=64&file=/tmp/w3mplusPrintCache"
-	func "5  65%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=65&file=/tmp/w3mplusPrintCache"
-	func "6  66%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=66&file=/tmp/w3mplusPrintCache"
-	func "7  67%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=67&file=/tmp/w3mplusPrintCache"
-	func "8  68%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=68&file=/tmp/w3mplusPrintCache"
-	func "9  69%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=69&file=/tmp/w3mplusPrintCache"
+	func "0  60%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=60"
+	func "1  61%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=61"
+	func "2  62%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=62"
+	func "3  63%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=63"
+	func "4  64%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=64"
+	func "5  65%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=65"
+	func "6  66%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=66"
+	func "7  67%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=67"
+	func "8  68%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=68"
+	func "9  69%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=69"
 end
 
 menu 70Percents
-	func "0  70%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=70&file=/tmp/w3mplusPrintCache"
-	func "1  71%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=71&file=/tmp/w3mplusPrintCache"
-	func "2  72%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=72&file=/tmp/w3mplusPrintCache"
-	func "3  73%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=73&file=/tmp/w3mplusPrintCache"
-	func "4  74%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=74&file=/tmp/w3mplusPrintCache"
-	func "5  75%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=75&file=/tmp/w3mplusPrintCache"
-	func "6  76%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=76&file=/tmp/w3mplusPrintCache"
-	func "7  77%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=77&file=/tmp/w3mplusPrintCache"
-	func "8  78%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=78&file=/tmp/w3mplusPrintCache"
-	func "9  79%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=79&file=/tmp/w3mplusPrintCache"
+	func "0  70%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=70"
+	func "1  71%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=71"
+	func "2  72%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=72"
+	func "3  73%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=73"
+	func "4  74%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=74"
+	func "5  75%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=75"
+	func "6  76%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=76"
+	func "7  77%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=77"
+	func "8  78%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=78"
+	func "9  79%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=79"
 end
 
 menu 80Percents
-	func "0  80%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=80&file=/tmp/w3mplusPrintCache"
-	func "1  81%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=81&file=/tmp/w3mplusPrintCache"
-	func "2  82%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=82&file=/tmp/w3mplusPrintCache"
-	func "3  83%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=83&file=/tmp/w3mplusPrintCache"
-	func "4  84%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=84&file=/tmp/w3mplusPrintCache"
-	func "5  85%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=85&file=/tmp/w3mplusPrintCache"
-	func "6  86%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=86&file=/tmp/w3mplusPrintCache"
-	func "7  87%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=87&file=/tmp/w3mplusPrintCache"
-	func "8  88%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=88&file=/tmp/w3mplusPrintCache"
-	func "9  89%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=89&file=/tmp/w3mplusPrintCache"
+	func "0  80%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=80"
+	func "1  81%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=81"
+	func "2  82%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=82"
+	func "3  83%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=83"
+	func "4  84%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=84"
+	func "5  85%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=85"
+	func "6  86%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=86"
+	func "7  87%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=87"
+	func "8  88%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=88"
+	func "9  89%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=89"
 end
 
 menu 90Percents
-	func "0  90%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=90&file=/tmp/w3mplusPrintCache"
-	func "1  91%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=91&file=/tmp/w3mplusPrintCache"
-	func "2  92%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=92&file=/tmp/w3mplusPrintCache"
-	func "3  93%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=93&file=/tmp/w3mplusPrintCache"
-	func "4  94%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=94&file=/tmp/w3mplusPrintCache"
-	func "5  95%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=95&file=/tmp/w3mplusPrintCache"
-	func "6  96%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=96&file=/tmp/w3mplusPrintCache"
-	func "7  97%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=97&file=/tmp/w3mplusPrintCache"
-	func "8  98%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=98&file=/tmp/w3mplusPrintCache"
-	func "9  99%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=99&file=/tmp/w3mplusPrintCache"
+	func "0  90%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=90"
+	func "1  91%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=91"
+	func "2  92%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=92"
+	func "3  93%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=93"
+	func "4  94%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=94"
+	func "5  95%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=95"
+	func "6  96%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=96"
+	func "7  97%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=97"
+	func "8  98%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=98"
+	func "9  99%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=99"
 end
 
 menu plusPercents
@@ -360,132 +360,132 @@ end
 
 menu plus0Percents
 	func "0  +0%" LINE_BEGIN "0"
-	func "1  +1%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B1&file=/tmp/w3mplusPrintCache"
-	func "2  +2%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B2&file=/tmp/w3mplusPrintCache"
-	func "3  +3%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B3&file=/tmp/w3mplusPrintCache"
-	func "4  +4%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B4&file=/tmp/w3mplusPrintCache"
-	func "5  +5%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B5&file=/tmp/w3mplusPrintCache"
-	func "6  +6%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B6&file=/tmp/w3mplusPrintCache"
-	func "7  +7%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B7&file=/tmp/w3mplusPrintCache"
-	func "8  +8%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B8&file=/tmp/w3mplusPrintCache"
-	func "9  +9%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B9&file=/tmp/w3mplusPrintCache"
+	func "1  +1%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B1"
+	func "2  +2%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B2"
+	func "3  +3%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B3"
+	func "4  +4%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B4"
+	func "5  +5%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B5"
+	func "6  +6%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B6"
+	func "7  +7%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B7"
+	func "8  +8%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B8"
+	func "9  +9%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B9"
 end
 
 menu plus10Percents
-	func "0  +10%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B10&file=/tmp/w3mplusPrintCache"
-	func "1  +11%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B11&file=/tmp/w3mplusPrintCache"
-	func "2  +12%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B12&file=/tmp/w3mplusPrintCache"
-	func "3  +13%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B13&file=/tmp/w3mplusPrintCache"
-	func "4  +14%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B14&file=/tmp/w3mplusPrintCache"
-	func "5  +15%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B15&file=/tmp/w3mplusPrintCache"
-	func "6  +16%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B16&file=/tmp/w3mplusPrintCache"
-	func "7  +17%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B17&file=/tmp/w3mplusPrintCache"
-	func "8  +18%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B18&file=/tmp/w3mplusPrintCache"
-	func "9  +19%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B19&file=/tmp/w3mplusPrintCache"
+	func "0  +10%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B10"
+	func "1  +11%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B11"
+	func "2  +12%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B12"
+	func "3  +13%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B13"
+	func "4  +14%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B14"
+	func "5  +15%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B15"
+	func "6  +16%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B16"
+	func "7  +17%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B17"
+	func "8  +18%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B18"
+	func "9  +19%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B19"
 end
 
 menu plus20Percents
-	func "0  +20%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B20&file=/tmp/w3mplusPrintCache"
-	func "1  +21%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B21&file=/tmp/w3mplusPrintCache"
-	func "2  +22%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B22&file=/tmp/w3mplusPrintCache"
-	func "3  +23%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B23&file=/tmp/w3mplusPrintCache"
-	func "4  +24%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B24&file=/tmp/w3mplusPrintCache"
-	func "5  +25%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B25&file=/tmp/w3mplusPrintCache"
-	func "6  +26%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B26&file=/tmp/w3mplusPrintCache"
-	func "7  +27%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B27&file=/tmp/w3mplusPrintCache"
-	func "8  +28%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B28&file=/tmp/w3mplusPrintCache"
-	func "9  +29%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B29&file=/tmp/w3mplusPrintCache"
+	func "0  +20%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B20"
+	func "1  +21%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B21"
+	func "2  +22%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B22"
+	func "3  +23%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B23"
+	func "4  +24%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B24"
+	func "5  +25%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B25"
+	func "6  +26%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B26"
+	func "7  +27%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B27"
+	func "8  +28%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B28"
+	func "9  +29%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B29"
 end
 
 menu plus30Percents
-	func "0  +30%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B30&file=/tmp/w3mplusPrintCache"
-	func "1  +31%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B31&file=/tmp/w3mplusPrintCache"
-	func "2  +32%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B32&file=/tmp/w3mplusPrintCache"
-	func "3  +33%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B33&file=/tmp/w3mplusPrintCache"
-	func "4  +34%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B34&file=/tmp/w3mplusPrintCache"
-	func "5  +35%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B35&file=/tmp/w3mplusPrintCache"
-	func "6  +36%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B36&file=/tmp/w3mplusPrintCache"
-	func "7  +37%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B37&file=/tmp/w3mplusPrintCache"
-	func "8  +38%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B38&file=/tmp/w3mplusPrintCache"
-	func "9  +39%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B39&file=/tmp/w3mplusPrintCache"
+	func "0  +30%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B30"
+	func "1  +31%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B31"
+	func "2  +32%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B32"
+	func "3  +33%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B33"
+	func "4  +34%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B34"
+	func "5  +35%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B35"
+	func "6  +36%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B36"
+	func "7  +37%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B37"
+	func "8  +38%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B38"
+	func "9  +39%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B39"
 end
 
 menu plus40Percents
-	func "0  +40%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B40&file=/tmp/w3mplusPrintCache"
-	func "1  +41%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B41&file=/tmp/w3mplusPrintCache"
-	func "2  +42%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B42&file=/tmp/w3mplusPrintCache"
-	func "3  +43%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B43&file=/tmp/w3mplusPrintCache"
-	func "4  +44%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B44&file=/tmp/w3mplusPrintCache"
-	func "5  +45%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B45&file=/tmp/w3mplusPrintCache"
-	func "6  +46%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B46&file=/tmp/w3mplusPrintCache"
-	func "7  +47%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B47&file=/tmp/w3mplusPrintCache"
-	func "8  +48%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B48&file=/tmp/w3mplusPrintCache"
-	func "9  +49%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B49&file=/tmp/w3mplusPrintCache"
+	func "0  +40%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B40"
+	func "1  +41%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B41"
+	func "2  +42%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B42"
+	func "3  +43%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B43"
+	func "4  +44%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B44"
+	func "5  +45%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B45"
+	func "6  +46%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B46"
+	func "7  +47%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B47"
+	func "8  +48%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B48"
+	func "9  +49%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B49"
 end
 
 menu plus50Percents
-	func "0  +50%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B50&file=/tmp/w3mplusPrintCache"
-	func "1  +51%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B51&file=/tmp/w3mplusPrintCache"
-	func "2  +52%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B52&file=/tmp/w3mplusPrintCache"
-	func "3  +53%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B53&file=/tmp/w3mplusPrintCache"
-	func "4  +54%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B54&file=/tmp/w3mplusPrintCache"
-	func "5  +55%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B55&file=/tmp/w3mplusPrintCache"
-	func "6  +56%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B56&file=/tmp/w3mplusPrintCache"
-	func "7  +57%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B57&file=/tmp/w3mplusPrintCache"
-	func "8  +58%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B58&file=/tmp/w3mplusPrintCache"
-	func "9  +59%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B59&file=/tmp/w3mplusPrintCache"
+	func "0  +50%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B50"
+	func "1  +51%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B51"
+	func "2  +52%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B52"
+	func "3  +53%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B53"
+	func "4  +54%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B54"
+	func "5  +55%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B55"
+	func "6  +56%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B56"
+	func "7  +57%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B57"
+	func "8  +58%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B58"
+	func "9  +59%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B59"
 end
 
 menu plus60Percents
-	func "0  +60%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B60&file=/tmp/w3mplusPrintCache"
-	func "1  +61%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B61&file=/tmp/w3mplusPrintCache"
-	func "2  +62%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B62&file=/tmp/w3mplusPrintCache"
-	func "3  +63%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B63&file=/tmp/w3mplusPrintCache"
-	func "4  +64%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B64&file=/tmp/w3mplusPrintCache"
-	func "5  +65%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B65&file=/tmp/w3mplusPrintCache"
-	func "6  +66%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B66&file=/tmp/w3mplusPrintCache"
-	func "7  +67%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B67&file=/tmp/w3mplusPrintCache"
-	func "8  +68%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B68&file=/tmp/w3mplusPrintCache"
-	func "9  +69%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B69&file=/tmp/w3mplusPrintCache"
+	func "0  +60%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B60"
+	func "1  +61%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B61"
+	func "2  +62%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B62"
+	func "3  +63%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B63"
+	func "4  +64%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B64"
+	func "5  +65%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B65"
+	func "6  +66%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B66"
+	func "7  +67%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B67"
+	func "8  +68%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B68"
+	func "9  +69%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B69"
 end
 
 menu plus70Percents
-	func "0  +70%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B70&file=/tmp/w3mplusPrintCache"
-	func "1  +71%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B71&file=/tmp/w3mplusPrintCache"
-	func "2  +72%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B72&file=/tmp/w3mplusPrintCache"
-	func "3  +73%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B73&file=/tmp/w3mplusPrintCache"
-	func "4  +74%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B74&file=/tmp/w3mplusPrintCache"
-	func "5  +75%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B75&file=/tmp/w3mplusPrintCache"
-	func "6  +76%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B76&file=/tmp/w3mplusPrintCache"
-	func "7  +77%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B77&file=/tmp/w3mplusPrintCache"
-	func "8  +78%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B78&file=/tmp/w3mplusPrintCache"
-	func "9  +79%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B79&file=/tmp/w3mplusPrintCache"
+	func "0  +70%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B70"
+	func "1  +71%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B71"
+	func "2  +72%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B72"
+	func "3  +73%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B73"
+	func "4  +74%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B74"
+	func "5  +75%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B75"
+	func "6  +76%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B76"
+	func "7  +77%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B77"
+	func "8  +78%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B78"
+	func "9  +79%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B79"
 end
 
 menu plus80Percents
-	func "0  +80%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B80&file=/tmp/w3mplusPrintCache"
-	func "1  +81%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B81&file=/tmp/w3mplusPrintCache"
-	func "2  +82%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B82&file=/tmp/w3mplusPrintCache"
-	func "3  +83%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B83&file=/tmp/w3mplusPrintCache"
-	func "4  +84%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B84&file=/tmp/w3mplusPrintCache"
-	func "5  +85%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B85&file=/tmp/w3mplusPrintCache"
-	func "6  +86%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B86&file=/tmp/w3mplusPrintCache"
-	func "7  +87%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B87&file=/tmp/w3mplusPrintCache"
-	func "8  +88%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B88&file=/tmp/w3mplusPrintCache"
-	func "9  +89%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B89&file=/tmp/w3mplusPrintCache"
+	func "0  +80%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B80"
+	func "1  +81%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B81"
+	func "2  +82%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B82"
+	func "3  +83%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B83"
+	func "4  +84%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B84"
+	func "5  +85%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B85"
+	func "6  +86%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B86"
+	func "7  +87%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B87"
+	func "8  +88%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B88"
+	func "9  +89%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B89"
 end
 
 menu plus90Percents
-	func "0  +90%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B90&file=/tmp/w3mplusPrintCache"
-	func "1  +91%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B91&file=/tmp/w3mplusPrintCache"
-	func "2  +92%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B92&file=/tmp/w3mplusPrintCache"
-	func "3  +93%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B93&file=/tmp/w3mplusPrintCache"
-	func "4  +94%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B94&file=/tmp/w3mplusPrintCache"
-	func "5  +95%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B95&file=/tmp/w3mplusPrintCache"
-	func "6  +96%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B96&file=/tmp/w3mplusPrintCache"
-	func "7  +97%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B97&file=/tmp/w3mplusPrintCache"
-	func "8  +98%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B98&file=/tmp/w3mplusPrintCache"
-	func "9  +99%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=%2B99&file=/tmp/w3mplusPrintCache"
+	func "0  +90%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B90"
+	func "1  +91%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B91"
+	func "2  +92%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B92"
+	func "3  +93%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B93"
+	func "4  +94%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B94"
+	func "5  +95%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B95"
+	func "6  +96%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B96"
+	func "7  +97%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B97"
+	func "8  +98%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B98"
+	func "9  +99%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B99"
 end
 
 menu minusPercents
@@ -504,141 +504,141 @@ end
 
 menu minus0Percents
 	func "0  -0%" LINE_BEGIN "0"
-	func "1  -1%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-1&file=/tmp/w3mplusPrintCache"
-	func "2  -2%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-2&file=/tmp/w3mplusPrintCache"
-	func "3  -3%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-3&file=/tmp/w3mplusPrintCache"
-	func "4  -4%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-4&file=/tmp/w3mplusPrintCache"
-	func "5  -5%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-5&file=/tmp/w3mplusPrintCache"
-	func "6  -6%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-6&file=/tmp/w3mplusPrintCache"
-	func "7  -7%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-7&file=/tmp/w3mplusPrintCache"
-	func "8  -8%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-8&file=/tmp/w3mplusPrintCache"
-	func "9  -9%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-9&file=/tmp/w3mplusPrintCache"
+	func "1  -1%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-1"
+	func "2  -2%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-2"
+	func "3  -3%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-3"
+	func "4  -4%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-4"
+	func "5  -5%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-5"
+	func "6  -6%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-6"
+	func "7  -7%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-7"
+	func "8  -8%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-8"
+	func "9  -9%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-9"
 end
 
 menu minus10Percents
-	func "0  -10%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-10&file=/tmp/w3mplusPrintCache"
-	func "1  -11%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-11&file=/tmp/w3mplusPrintCache"
-	func "2  -12%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-12&file=/tmp/w3mplusPrintCache"
-	func "3  -13%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-13&file=/tmp/w3mplusPrintCache"
-	func "4  -14%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-14&file=/tmp/w3mplusPrintCache"
-	func "5  -15%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-15&file=/tmp/w3mplusPrintCache"
-	func "6  -16%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-16&file=/tmp/w3mplusPrintCache"
-	func "7  -17%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-17&file=/tmp/w3mplusPrintCache"
-	func "8  -18%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-18&file=/tmp/w3mplusPrintCache"
-	func "9  -19%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-19&file=/tmp/w3mplusPrintCache"
+	func "0  -10%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-10"
+	func "1  -11%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-11"
+	func "2  -12%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-12"
+	func "3  -13%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-13"
+	func "4  -14%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-14"
+	func "5  -15%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-15"
+	func "6  -16%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-16"
+	func "7  -17%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-17"
+	func "8  -18%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-18"
+	func "9  -19%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-19"
 end
 
 menu minus20Percents
-	func "0  -20%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-20&file=/tmp/w3mplusPrintCache"
-	func "1  -21%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-21&file=/tmp/w3mplusPrintCache"
-	func "2  -22%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-22&file=/tmp/w3mplusPrintCache"
-	func "3  -23%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-23&file=/tmp/w3mplusPrintCache"
-	func "4  -24%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-24&file=/tmp/w3mplusPrintCache"
-	func "5  -25%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-25&file=/tmp/w3mplusPrintCache"
-	func "6  -26%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-26&file=/tmp/w3mplusPrintCache"
-	func "7  -27%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-27&file=/tmp/w3mplusPrintCache"
-	func "8  -28%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-28&file=/tmp/w3mplusPrintCache"
-	func "9  -29%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-29&file=/tmp/w3mplusPrintCache"
+	func "0  -20%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-20"
+	func "1  -21%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-21"
+	func "2  -22%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-22"
+	func "3  -23%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-23"
+	func "4  -24%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-24"
+	func "5  -25%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-25"
+	func "6  -26%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-26"
+	func "7  -27%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-27"
+	func "8  -28%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-28"
+	func "9  -29%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-29"
 end
 
 menu minus30Percents
-	func "0  -30%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-30&file=/tmp/w3mplusPrintCache"
-	func "1  -31%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-31&file=/tmp/w3mplusPrintCache"
-	func "2  -32%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-32&file=/tmp/w3mplusPrintCache"
-	func "3  -33%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-33&file=/tmp/w3mplusPrintCache"
-	func "4  -34%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-34&file=/tmp/w3mplusPrintCache"
-	func "5  -35%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-35&file=/tmp/w3mplusPrintCache"
-	func "6  -36%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-36&file=/tmp/w3mplusPrintCache"
-	func "7  -37%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-37&file=/tmp/w3mplusPrintCache"
-	func "8  -38%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-38&file=/tmp/w3mplusPrintCache"
-	func "9  -39%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-39&file=/tmp/w3mplusPrintCache"
+	func "0  -30%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-30"
+	func "1  -31%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-31"
+	func "2  -32%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-32"
+	func "3  -33%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-33"
+	func "4  -34%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-34"
+	func "5  -35%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-35"
+	func "6  -36%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-36"
+	func "7  -37%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-37"
+	func "8  -38%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-38"
+	func "9  -39%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-39"
 end
 
 menu minus40Percents
-	func "0  -40%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-40&file=/tmp/w3mplusPrintCache"
-	func "1  -41%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-41&file=/tmp/w3mplusPrintCache"
-	func "2  -42%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-42&file=/tmp/w3mplusPrintCache"
-	func "3  -43%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-43&file=/tmp/w3mplusPrintCache"
-	func "4  -44%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-44&file=/tmp/w3mplusPrintCache"
-	func "5  -45%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-45&file=/tmp/w3mplusPrintCache"
-	func "6  -46%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-46&file=/tmp/w3mplusPrintCache"
-	func "7  -47%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-47&file=/tmp/w3mplusPrintCache"
-	func "8  -48%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-48&file=/tmp/w3mplusPrintCache"
-	func "9  -49%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-49&file=/tmp/w3mplusPrintCache"
+	func "0  -40%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-40"
+	func "1  -41%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-41"
+	func "2  -42%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-42"
+	func "3  -43%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-43"
+	func "4  -44%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-44"
+	func "5  -45%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-45"
+	func "6  -46%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-46"
+	func "7  -47%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-47"
+	func "8  -48%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-48"
+	func "9  -49%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-49"
 end
 
 menu minus50Percents
-	func "0  -50%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-50&file=/tmp/w3mplusPrintCache"
-	func "1  -51%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-51&file=/tmp/w3mplusPrintCache"
-	func "2  -52%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-52&file=/tmp/w3mplusPrintCache"
-	func "3  -53%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-53&file=/tmp/w3mplusPrintCache"
-	func "4  -54%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-54&file=/tmp/w3mplusPrintCache"
-	func "5  -55%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-55&file=/tmp/w3mplusPrintCache"
-	func "6  -56%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-56&file=/tmp/w3mplusPrintCache"
-	func "7  -57%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-57&file=/tmp/w3mplusPrintCache"
-	func "8  -58%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-58&file=/tmp/w3mplusPrintCache"
-	func "9  -59%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-59&file=/tmp/w3mplusPrintCache"
+	func "0  -50%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-50"
+	func "1  -51%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-51"
+	func "2  -52%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-52"
+	func "3  -53%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-53"
+	func "4  -54%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-54"
+	func "5  -55%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-55"
+	func "6  -56%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-56"
+	func "7  -57%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-57"
+	func "8  -58%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-58"
+	func "9  -59%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-59"
 end
 
 menu minus60Percents
-	func "0  -60%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-60&file=/tmp/w3mplusPrintCache"
-	func "1  -61%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-61&file=/tmp/w3mplusPrintCache"
-	func "2  -62%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-62&file=/tmp/w3mplusPrintCache"
-	func "3  -63%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-63&file=/tmp/w3mplusPrintCache"
-	func "4  -64%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-64&file=/tmp/w3mplusPrintCache"
-	func "5  -65%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-65&file=/tmp/w3mplusPrintCache"
-	func "6  -66%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-66&file=/tmp/w3mplusPrintCache"
-	func "7  -67%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-67&file=/tmp/w3mplusPrintCache"
-	func "8  -68%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-68&file=/tmp/w3mplusPrintCache"
-	func "9  -69%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-69&file=/tmp/w3mplusPrintCache"
+	func "0  -60%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-60"
+	func "1  -61%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-61"
+	func "2  -62%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-62"
+	func "3  -63%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-63"
+	func "4  -64%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-64"
+	func "5  -65%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-65"
+	func "6  -66%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-66"
+	func "7  -67%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-67"
+	func "8  -68%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-68"
+	func "9  -69%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-69"
 end
 
 menu minus70Percents
-	func "0  -70%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-70&file=/tmp/w3mplusPrintCache"
-	func "1  -71%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-71&file=/tmp/w3mplusPrintCache"
-	func "2  -72%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-72&file=/tmp/w3mplusPrintCache"
-	func "3  -73%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-73&file=/tmp/w3mplusPrintCache"
-	func "4  -74%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-74&file=/tmp/w3mplusPrintCache"
-	func "5  -75%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-75&file=/tmp/w3mplusPrintCache"
-	func "6  -76%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-76&file=/tmp/w3mplusPrintCache"
-	func "7  -77%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-77&file=/tmp/w3mplusPrintCache"
-	func "8  -78%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-78&file=/tmp/w3mplusPrintCache"
-	func "9  -79%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-79&file=/tmp/w3mplusPrintCache"
+	func "0  -70%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-70"
+	func "1  -71%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-71"
+	func "2  -72%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-72"
+	func "3  -73%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-73"
+	func "4  -74%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-74"
+	func "5  -75%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-75"
+	func "6  -76%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-76"
+	func "7  -77%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-77"
+	func "8  -78%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-78"
+	func "9  -79%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-79"
 end
 
 menu minus80Percents
-	func "0  -80%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-80&file=/tmp/w3mplusPrintCache"
-	func "1  -81%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-81&file=/tmp/w3mplusPrintCache"
-	func "2  -82%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-82&file=/tmp/w3mplusPrintCache"
-	func "3  -83%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-83&file=/tmp/w3mplusPrintCache"
-	func "4  -84%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-84&file=/tmp/w3mplusPrintCache"
-	func "5  -85%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-85&file=/tmp/w3mplusPrintCache"
-	func "6  -86%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-86&file=/tmp/w3mplusPrintCache"
-	func "7  -87%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-87&file=/tmp/w3mplusPrintCache"
-	func "8  -88%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-88&file=/tmp/w3mplusPrintCache"
-	func "9  -89%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-89&file=/tmp/w3mplusPrintCache"
+	func "0  -80%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-80"
+	func "1  -81%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-81"
+	func "2  -82%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-82"
+	func "3  -83%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-83"
+	func "4  -84%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-84"
+	func "5  -85%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-85"
+	func "6  -86%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-86"
+	func "7  -87%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-87"
+	func "8  -88%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-88"
+	func "9  -89%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-89"
 end
 
 menu minus90Percents
-	func "0  -90%" COMMAND "0" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-90&file=/tmp/w3mplusPrintCache"
-	func "1  -91%" COMMAND "1" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-91&file=/tmp/w3mplusPrintCache"
-	func "2  -92%" COMMAND "2" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-92&file=/tmp/w3mplusPrintCache"
-	func "3  -93%" COMMAND "3" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-93&file=/tmp/w3mplusPrintCache"
-	func "4  -94%" COMMAND "4" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-94&file=/tmp/w3mplusPrintCache"
-	func "5  -95%" COMMAND "5" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-95&file=/tmp/w3mplusPrintCache"
-	func "6  -96%" COMMAND "6" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-96&file=/tmp/w3mplusPrintCache"
-	func "7  -97%" COMMAND "7" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-97&file=/tmp/w3mplusPrintCache"
-	func "8  -98%" COMMAND "8" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-98&file=/tmp/w3mplusPrintCache"
-	func "9  -99%" COMMAND "9" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=movePercent&percent=-99&file=/tmp/w3mplusPrintCache"
+	func "0  -90%" GOTO "0" "file:///cgi-bin/w3mplus?action=movePercent&percent=-90"
+	func "1  -91%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-91"
+	func "2  -92%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-92"
+	func "3  -93%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-93"
+	func "4  -94%" GOTO "4" "file:///cgi-bin/w3mplus?action=movePercent&percent=-94"
+	func "5  -95%" GOTO "5" "file:///cgi-bin/w3mplus?action=movePercent&percent=-95"
+	func "6  -96%" GOTO "6" "file:///cgi-bin/w3mplus?action=movePercent&percent=-96"
+	func "7  -97%" GOTO "7" "file:///cgi-bin/w3mplus?action=movePercent&percent=-97"
+	func "8  -98%" GOTO "8" "file:///cgi-bin/w3mplus?action=movePercent&percent=-98"
+	func "9  -99%" GOTO "9" "file:///cgi-bin/w3mplus?action=movePercent&percent=-99"
 end
 
 menu operatorFunc
-	func  "@,h,l  Current line" COMMAND "@hl" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=0&file=/tmp/w3mplusPrintCache"
-	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1&file=/tmp/w3mplusPrintCache"
-	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1&file=/tmp/w3mplusPrintCache"
-	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=$&file=/tmp/w3mplusPrintCache"
-	func  "*      All line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=$&file=/tmp/w3mplusPrintCache"
+	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=0"
+	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
+	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
+	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1"
+	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=$"
+	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=$"
 	nop  "--------------------"
 	popup "1      1 line" operatorFunc1Line "1"
 	popup "2      2 line" operatorFunc2Line "2"
@@ -652,66 +652,66 @@ menu operatorFunc
 end
 
 menu operatorFunc1Line
-	func "j  Down one line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func "k  Up one line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-1&file=/tmp/w3mplusPrintCache"
+	func "j  Down one line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
+	func "k  Up one line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-1"
 end
 
 menu operatorFunc2Line
-	func "j  Down two line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B2&file=/tmp/w3mplusPrintCache"
-	func "k  Up two line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-2&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-2&file=/tmp/w3mplusPrintCache"
+	func "j  Down two line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B2"
+	func "k  Up two line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-2"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-2"
 end
 
 menu operatorFunc3Line
-	func "j  Down three line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B3&file=/tmp/w3mplusPrintCache"
-	func "k  Up three line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-3&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-3&file=/tmp/w3mplusPrintCache"
+	func "j  Down three line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B3"
+	func "k  Up three line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-3"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-3"
 end
 
 menu operatorFunc4Line
-	func "j  Down four line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B4&file=/tmp/w3mplusPrintCache"
-	func "k  Up four line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-4&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-4&file=/tmp/w3mplusPrintCache"
+	func "j  Down four line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B4"
+	func "k  Up four line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-4"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-4"
 end
 
 menu operatorFunc5Line
-	func "j  Down five line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B5&file=/tmp/w3mplusPrintCache"
-	func "k  Up five line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-5&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-5&file=/tmp/w3mplusPrintCache"
+	func "j  Down five line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B5"
+	func "k  Up five line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-5"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-5"
 end
 
 menu operatorFunc6Line
-	func "j  Down six line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B6&file=/tmp/w3mplusPrintCache"
-	func "k  Up six line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-6&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-6&file=/tmp/w3mplusPrintCache"
+	func "j  Down six line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B6"
+	func "k  Up six line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-6"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-6"
 end
 
 menu operatorFunc7Line
-	func "j  Down seven line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B7&file=/tmp/w3mplusPrintCache"
-	func "k  Up seven line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-7&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-7&file=/tmp/w3mplusPrintCache"
+	func "j  Down seven line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B7"
+	func "k  Up seven line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-7"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-7"
 end
 
 menu operatorFunc8Line
-	func "j  Down eight line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B8&file=/tmp/w3mplusPrintCache"
-	func "k  Up eight line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-8&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-8&file=/tmp/w3mplusPrintCache"
+	func "j  Down eight line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B8"
+	func "k  Up eight line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-8"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-8"
 end
 
 menu operatorFunc9Line
-	func "j  Down nine line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B9&file=/tmp/w3mplusPrintCache"
-	func "k  Up nine line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-9&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-9&file=/tmp/w3mplusPrintCache"
+	func "j  Down nine line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B9"
+	func "k  Up nine line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-9"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-9"
 end
 
 menu formatPrg
-	func  "@,h,l  Current line" COMMAND "@hl" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=0&file=/tmp/w3mplusPrintCache"
-	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1&file=/tmp/w3mplusPrintCache"
-	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=1&file=/tmp/w3mplusPrintCache"
-	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=$&file=/tmp/w3mplusPrintCache"
-	func  "*      All line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=$&file=/tmp/w3mplusPrintCache"
+	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=0"
+	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
+	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
+	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=1"
+	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=$"
+	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=$"
 	nop  "--------------------"
 	popup "1      1 line" formatPrg1Line "1"
 	popup "2      2 line" formatPrg2Line "2"
@@ -725,65 +725,65 @@ menu formatPrg
 end
 
 menu formatPrg1Line
-	func "j  Down one line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func "k  Up one line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-1&file=/tmp/w3mplusPrintCache"
+	func "j  Down one line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
+	func "k  Up one line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-1"
 end
 
 menu formatPrg2Line
-	func "j  Down two line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B2&file=/tmp/w3mplusPrintCache"
-	func "k  Up two line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-2&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-2&file=/tmp/w3mplusPrintCache"
+	func "j  Down two line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B2"
+	func "k  Up two line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-2"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-2"
 end
 
 menu formatPrg3Line
-	func "j  Down three line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B3&file=/tmp/w3mplusPrintCache"
-	func "k  Up three line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-3&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-3&file=/tmp/w3mplusPrintCache"
+	func "j  Down three line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B3"
+	func "k  Up three line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-3"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-3"
 end
 
 menu formatPrg4Line
-	func "j  Down four line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B4&file=/tmp/w3mplusPrintCache"
-	func "k  Up four line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-4&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-4&file=/tmp/w3mplusPrintCache"
+	func "j  Down four line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B4"
+	func "k  Up four line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-4"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-4"
 end
 
 menu formatPrg5Line
-	func "j  Down five line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B5&file=/tmp/w3mplusPrintCache"
-	func "k  Up five line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-5&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-5&file=/tmp/w3mplusPrintCache"
+	func "j  Down five line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B5"
+	func "k  Up five line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-5"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-5"
 end
 
 menu formatPrg6Line
-	func "j  Down six line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B6&file=/tmp/w3mplusPrintCache"
-	func "k  Up six line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-6&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-6&file=/tmp/w3mplusPrintCache"
+	func "j  Down six line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B6"
+	func "k  Up six line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-6"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-6"
 end
 
 menu formatPrg7Line
-	func "j  Down seven line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B7&file=/tmp/w3mplusPrintCache"
-	func "k  Up seven line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-7&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-7&file=/tmp/w3mplusPrintCache"
+	func "j  Down seven line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B7"
+	func "k  Up seven line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-7"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-7"
 end
 
 menu formatPrg8Line
-	func "j  Down eight line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B8&file=/tmp/w3mplusPrintCache"
-	func "k  Up eight line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-8&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-8&file=/tmp/w3mplusPrintCache"
+	func "j  Down eight line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B8"
+	func "k  Up eight line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-8"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-8"
 end
 
 menu formatPrg9Line
-	func "j  Down nine line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B9&file=/tmp/w3mplusPrintCache"
-	func "k  Up nine line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-9&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-9&file=/tmp/w3mplusPrintCache"
+	func "j  Down nine line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B9"
+	func "k  Up nine line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-9"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-9"
 end
 
 menu filter
-	func  "!,h,l  Current line" COMMAND "!hl" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=0&file=/tmp/w3mplusPrintCache"
-	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1&file=/tmp/w3mplusPrintCache"
-	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1&file=/tmp/w3mplusPrintCache"
-	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=$&file=/tmp/w3mplusPrintCache"
+	func  "!,h,l  Current line" GOTO "!hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=0"
+	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
+	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
+	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1"
+	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=$"
 	func  "*      All line" PIPE_BUF "*"
 	nop   "--------------------"
 	popup "1      1 line" filter1Line "1"
@@ -798,66 +798,66 @@ menu filter
 end
 
 menu filter1Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-1&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-1"
 end
 
 menu filter2Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B2&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-2&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-2&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B2"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-2"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-2"
 end
 
 menu filter3Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B3&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-3&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-3&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B3"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-3"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-3"
 end
 
 menu filter4Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B4&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-4&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-4&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B4"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-4"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-4"
 end
 
 menu filter5Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B5&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-5&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-5&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B5"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-5"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-5"
 end
 
 menu filter6Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B6&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-6&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-6&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B6"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-6"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-6"
 end
 
 menu filter7Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B7&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-7&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-7&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B7"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-7"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-7"
 end
 
 menu filter8Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B8&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-8&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-8&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B8"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-8"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-8"
 end
 
 menu filter9Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B9&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-9&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-9&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B9"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-9"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-9"
 end
 
 menu switchcase
-	func  "~,h,l  Current line" COMMAND "~hl" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=0&file=/tmp/w3mplusPrintCache"
-	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1&file=/tmp/w3mplusPrintCache"
-	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1&file=/tmp/w3mplusPrintCache"
-	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=$&file=/tmp/w3mplusPrintCache"
-	func  "*      All line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=$&file=/tmp/w3mplusPrintCache"
+	func  "~,h,l  Current line" GOTO "~hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=0"
+	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
+	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
+	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1"
+	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=$"
+	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=$"
 	nop  "--------------------"
 	popup "1      1 line" switchcase1Line "1"
 	popup "2      2 line" switchcase2Line "2"
@@ -871,66 +871,66 @@ menu switchcase
 end
 
 menu switchcase1Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-1&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-1"
 end
 
 menu switchcase2Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B2&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-2&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-2&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B2"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-2"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-2"
 end
 
 menu switchcase3Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B3&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-3&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-3&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B3"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-3"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-3"
 end
 
 menu switchcase4Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B4&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-4&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-4&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B4"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-4"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-4"
 end
 
 menu switchcase5Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B5&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-5&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-5&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B5"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-5"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-5"
 end
 
 menu switchcase6Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B6&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-6&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-6&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B6"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-6"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-6"
 end
 
 menu switchcase7Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B7&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-7&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-7&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B7"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-7"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-7"
 end
 
 menu switchcase8Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B8&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-8&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-8&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B8"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-8"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-8"
 end
 
 menu switchcase9Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B9&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-9&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-9&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B9"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-9"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-9"
 end
 
 menu rot13
-	func  "?,h,l  Current line" COMMAND "?hl" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=0&file=/tmp/w3mplusPrintCache"
-	func  "j      Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func  "k      Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1&file=/tmp/w3mplusPrintCache"
-	func  "g      Top line" COMMAND "g" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1&file=/tmp/w3mplusPrintCache"
-	func  "G      Bottom line" COMMAND "G" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=$&file=/tmp/w3mplusPrintCache"
-	func  "*      All line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=$&file=/tmp/w3mplusPrintCache"
+	func  "?,h,l  Current line" GOTO "?hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=0"
+	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
+	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
+	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1"
+	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=$"
+	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=$"
 	nop  "--------------------"
 	popup "1      1 line" switchcase1Line "1"
 	popup "2      2 line" switchcase2Line "2"
@@ -944,55 +944,55 @@ menu rot13
 end
 
 menu rot13-1Line
-	func "j      Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1&file=/tmp/w3mplusPrintCache"
-	func "k      Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-1&file=/tmp/w3mplusPrintCache"
+	func "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
+	func "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-1"
 end
 
 menu rot13-2Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B2&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-2&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-2&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B2"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-2"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-2"
 end
 
 menu rot13-3Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B3&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-3&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-3&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B3"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-3"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-3"
 end
 
 menu rot13-4Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B4&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-4&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-4&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B4"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-4"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-4"
 end
 
 menu rot13-5Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B5&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-5&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-5&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B5"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-5"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-5"
 end
 
 menu rot13-6Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B6&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-6&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-6&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B6"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-6"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-6"
 end
 
 menu rot13-7Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B7&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-7&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-7&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B7"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-7"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-7"
 end
 
 menu rot13-8Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B8&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-8&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-8&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B8"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-8"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-8"
 end
 
 menu rot13-9Line
-	func "j  Down line" COMMAND "j" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B9&file=/tmp/w3mplusPrintCache"
-	func "k  Up line" COMMAND "k" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-9&file=/tmp/w3mplusPrintCache"
-	func "*  Up line & Down line" COMMAND "*" "PRINT /tmp/w3mplusPrintCache; GOTO file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-9&file=/tmp/w3mplusPrintCache"
+	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B9"
+	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-9"
+	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-9"
 end

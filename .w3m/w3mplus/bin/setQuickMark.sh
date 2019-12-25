@@ -47,7 +47,7 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION]... KEY URL
+				Usage: ${0} [OPTION]... KEY [URI]...
 				Set the quick mark.
 
 				 -c, --config  quick mark file

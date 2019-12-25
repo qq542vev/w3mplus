@@ -35,7 +35,7 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION]... WORD [WORD]...
+				Usage: ${0} [OPTION]... [WORD]...
 				Search for a word.
 
 				 -e, --exact   exact search
@@ -47,7 +47,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			arg=$( (cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+			arg=$((cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 :
 			args="${args}${args:+ }'${arg%?$}'"
 			;;
