@@ -33,8 +33,8 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... FILE
 				Start visual mode.
 
-				 -l, --line    line number
-				 -h, --help    display this help and exit
+				 -l, --line=NUMBER  line number
+				 -h, --help         display this help and exit
 			EOF
 
 			exit

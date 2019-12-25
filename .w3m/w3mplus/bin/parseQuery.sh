@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 
+##
+# Parse the HTTP query.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-11-27
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
 set -eu
 
 quoteEscape () (
@@ -51,7 +60,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0} [OPTION]... [FILE]...
-				Parse the HTTP query
+				Parse the HTTP query.
 
 				 -p, --prefix  variable prefix
 				 -s, --suffix  variable suffix
