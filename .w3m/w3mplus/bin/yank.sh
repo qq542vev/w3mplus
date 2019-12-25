@@ -38,13 +38,13 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION] TEXT [TEXT]
+				Usage: ${0} [OPTION]... [TEXT]...
 				Yank text with w3m.
 
-				 -f, --file    yank file
-				 -F, --footer  footer text
-				 -H, --header  header text
-				 -h, --help    display this help and exit
+				 -f, --file=FILE      yank file
+				 -F, --footer=STRING  footer text
+				 -H, --header=STRING  header text
+				 -h, --help           display this help and exit
 			EOF
 
 			exit

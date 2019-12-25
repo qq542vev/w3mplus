@@ -116,5 +116,3 @@ else
 		W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'
 	EOF
 fi
-
-rm -f "${file}"

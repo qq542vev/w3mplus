@@ -237,7 +237,7 @@ keymap "gF" COMMAND "VIEW; EDIT_SCREEN; VIEW"
 ### Motion commands ###
 
 keymap "0" LINE_BEGIN
-keymap "^" GOTO "file:///cgi-bin/w3mplus?action=moveColmun&number=0"
+keymap "^" GOTO "file:///cgi-bin/w3mplus?action=moveColmun&percent=0"
 keymap "$" LINE_END
 
 keymap "gg" BEGIN
@@ -664,4 +664,4 @@ keymap "DEL" PREV
 
 keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
-keymap "g_" GOTO "file:///cgi-bin/w3mplus?action=moveColmun&number=100"
+keymap "g_" GOTO "file:///cgi-bin/w3mplus?action=moveColmun&percent=100"

@@ -133,5 +133,3 @@ while [ "${number}" -ne 0 ]; do
 done
 
 moveColmun.sh -l "${line}" -n '0' -s "${file}"
-
-rm -f "${file}"

@@ -50,10 +50,10 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... KEY [URI]...
 				Set the quick mark.
 
-				 -c, --config  quick mark file
-				 -C, --colmun  colmun number
-				 -l, --line    line number
-				 -h, --help    display this help and exit
+				 -c, --config=FILE    quick mark file
+				 -C, --colmun=NUMBER  colmun number
+				 -l, --line=NUMBER    line number
+				 -h, --help           display this help and exit
 			EOF
 
 			exit

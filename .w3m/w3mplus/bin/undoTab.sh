@@ -38,9 +38,9 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]...
 				Restore w3m tabs.
 
-				 -f, --file    restore file
-				 -n, --number  restore count
-				 -h, --help    display this help and exit
+				 -f, --file=FILE      restore file
+				 -n, --number=NUMBER  restore count
+				 -h, --help           display this help and exit
 			EOF
 
 			exit

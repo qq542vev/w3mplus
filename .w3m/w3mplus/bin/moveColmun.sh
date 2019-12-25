@@ -139,5 +139,3 @@ fi
 		done
 	fi
 } | httpResponseW3mBack.sh -
-
-rm -f "${file}"

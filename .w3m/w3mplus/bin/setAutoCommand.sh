@@ -43,11 +43,11 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION]... CALL URI COMMAND
+				Usage: ${0} [OPTION]... CALL [CHECK] [COMMAND]...
 				Set a auto command.
 
-				 -c, --config  configuration file
-				 -h, --help    display this help and exit
+				 -c, --config=FILE  configuration file
+				 -h, --help         display this help and exit
 			EOF
 
 			exit

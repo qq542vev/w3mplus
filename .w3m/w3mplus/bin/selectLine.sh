@@ -214,5 +214,3 @@ case "${action}" in
 		sed -e "${startLine},${endLine}!d" "${file}" | yank.sh
 	;;
 esac
-
-rm -f "${file}"

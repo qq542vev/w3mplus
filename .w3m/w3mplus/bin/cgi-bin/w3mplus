@@ -89,7 +89,7 @@ if result=$(
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
 			if [ -f "${query_file-}" ]; then
-				moveColmun.sh -l "${line}" ${query_number+'-n' "${query_number}"} -s -- "${query_file}"
+				moveColmun.sh -l "${line}" ${query_percent+'-n' "${query_percent}"} -s -- "${query_file}"
 			else
 				addPrintCache
 			fi

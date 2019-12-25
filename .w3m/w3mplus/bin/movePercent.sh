@@ -127,4 +127,3 @@ case "${percent}" in [+-]*)
 esac
 
 printf 'W3m-control: GOTO_LINE %d' "$((( ( lineCount - 1 ) * percent / 100 ) + 1))" | httpResponseW3mBack.sh -
-rm -f "${file}"
