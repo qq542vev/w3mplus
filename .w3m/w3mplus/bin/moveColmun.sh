@@ -51,10 +51,10 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... FILE
 				Move to the beginning of the line.
 
-				 -l, --line    line number
-				 -n, --number  move column percent
-				 -s, --skip    ignores whitespace at the beginning and end of lines
-				 -h, --help    display this help and exit
+				 -l, --line=NUNBER    line number
+				 -n, --number=NUMBER  move column percent
+				 -s, --skip           ignores whitespace at the beginning and end of lines
+				 -h, --help           display this help and exit
 			EOF
 
 			exit

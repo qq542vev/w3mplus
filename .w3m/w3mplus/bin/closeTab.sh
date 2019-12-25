@@ -12,14 +12,14 @@
 set -eu
 
 # 各変数に既定値を代入する
-file="${W3MPLUS_PATH}/tabRestore"
+config="${W3MPLUS_PATH}/tabRestore"
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-f' | '--file')
-			file="${2}"
+		'-c' | '--config')
+			config="${2}"
 			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
@@ -28,8 +28,8 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... URI
 				Close the tab and record the URI.
 
-				 -f, --file  restore file
-				 -h, --help  display this help and exit
+				 -c, --config=FILE  restore file
+				 -h, --help         display this help and exit
 			EOF
 
 			exit
@@ -80,9 +80,9 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${file}"; printf '$')
+directory=$(dirname "${config}"; printf '$')
 mkdir -p "${directory%?$}"
-: >>"${file}"
+: >>"${config}"
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
@@ -100,12 +100,12 @@ if [ 1 -lt "${#}" ]; then
 fi
 
 if [ -n "${uri}" ]; then
-	if [ "${uri}" = "$(tail -n 1 "${file}" | cut -d ' ' -f 1)" ]; then (
-			tmp=$(cat "${file}")
-			printf '%s\n' "${tmp}" | sed -e '/^$/d; $d' >"${file}"
+	if [ "${uri}" = "$(tail -n 1 "${config}" | cut -d ' ' -f 1)" ]; then (
+		tmp=$(cat "${config}")
+		printf '%s\n' "${tmp}" | sed -e '/^$/d; $d' >"${config}"
 	) fi
 
-	printf '%s %s\n' "${uri}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${file}"
+	printf '%s %s\n' "${uri}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${config}"
 fi
 
 printf 'W3m-control: CLOSE_TAB' | httpResponseW3mBack.sh -

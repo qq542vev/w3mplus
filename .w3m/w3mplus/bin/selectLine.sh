@@ -51,12 +51,12 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION]... FILE
+				Usage: ${0} [OPTION]... ACTION FILE
 				Call OperatorFunc.
 
-				 -l, --line    line number
-				 -n, --number  cut line
-				 -h, --help    display this help and exit
+				 -l, --line=NUMBER    line number
+				 -n, --number=NUMBER  cut line
+				 -h, --help           display this help and exit
 			EOF
 
 			exit

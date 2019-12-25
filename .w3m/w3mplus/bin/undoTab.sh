@@ -12,15 +12,15 @@
 set -eu
 
 # 各変数に既定値を代入する
-file="${W3MPLUS_PATH}/tabRestore"
+config="${W3MPLUS_PATH}/tabRestore"
 count='1'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-f' | '--file')
-			file="${2}"
+		'-c' | '--config')
+			config="${2}"
 			shift 2
 			;;
 		'-n' | '--number')
@@ -38,7 +38,7 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]...
 				Restore w3m tabs.
 
-				 -f, --file=FILE      restore file
+				 -c, --config=FILE    restore file
 				 -n, --number=NUMBER  restore count
 				 -h, --help           display this help and exit
 			EOF
@@ -91,9 +91,9 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${file}"; printf '$')
+directory=$(dirname "${config}"; printf '$')
 mkdir -p "${directory%?$}"
-: >>"${file}"
+: >>"${config}"
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
@@ -108,7 +108,7 @@ if [ 0 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-restoreData=$(cat "${file}")
+restoreData=$(cat "${config}")
 date=$(($(date -u '+%Y%m%d%H%M%S' | utconv) - W3MPLUS_UNDO_TIMEOUT))
 header=''
 
@@ -126,6 +126,6 @@ while [ -n "${restoreData}" ] && [ 1 -le "${count}" ]; do
 	fi
 done
 
-printf '%s\n' "${restoreData}" | sed -e '/^$/d' >"${file}"
+printf '%s\n' "${restoreData}" | sed -e '/^$/d' >"${config}"
 
 printf '%s\n' "${header}" | httpResponseW3mBack.sh -

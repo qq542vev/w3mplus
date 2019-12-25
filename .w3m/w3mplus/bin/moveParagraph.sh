@@ -42,9 +42,9 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... FILE
 				Move to the next paragraph.
 
-				 -l, --line    line number
-				 -n, --number  number of paragraph moves
-				 -h, --help    display this help and exit
+				 -l, --line=NUMBER    line number
+				 -n, --number=NUMBER  number of paragraph moves
+				 -h, --help           display this help and exit
 			EOF
 
 			exit

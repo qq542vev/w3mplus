@@ -69,13 +69,13 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION] [PATERN]...
+				Usage: ${0} [OPTION]... [PATTERN]...
 				Get a quick mark.
 
-				 -c, --config  quick mark file
-				 -C, --colmun  jump to colmun
-				 -l, --line    jump to line
-				 -h, --help    display this help and exit
+				 -c, --config=FILE  quick mark file
+				 -C, --colmun       jump to colmun
+				 -l, --line         jump to line
+				 -h, --help         display this help and exit
 			EOF
 
 			exit

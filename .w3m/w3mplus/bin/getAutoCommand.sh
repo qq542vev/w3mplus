@@ -28,8 +28,8 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... [CALL] [URI]
 				Execute the command according to the site.
 
-				 -c, --config  configuration file
-				 -h, --help    display this help and exit
+				 -c, --config=FILE  configuration file
+				 -h, --help         display this help and exit
 			EOF
 
 			exit

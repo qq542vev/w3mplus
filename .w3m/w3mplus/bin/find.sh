@@ -38,9 +38,9 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... [WORD]...
 				Search for a word.
 
-				 -e, --exact   exact search
-				 -n, --number  search count
-				 -h, --help    display this help and exit
+				 -e, --exact          exact search
+				 -n, --number=NUMBER  search count
+				 -h, --help           display this help and exit
 			EOF
 
 			exit
