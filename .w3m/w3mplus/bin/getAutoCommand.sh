@@ -36,7 +36,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			arg=$((cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+			arg=$( (cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 :
 			args="${args}${args:+ }'${arg%?$}'"
 			;;
