@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-# Call OperatorFunc.
+# Performs an action on the selected row.
 #
 # @author qq542vev
 # @version 1.0.0
@@ -52,7 +52,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0} [OPTION]... ACTION FILE
-				Call OperatorFunc.
+				Performs an action on the selected row.
 
 				 -l, --line=NUMBER    line number
 				 -n, --number=NUMBER  cut line

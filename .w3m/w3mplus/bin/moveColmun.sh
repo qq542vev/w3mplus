@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ##
-# Move to the beginning of the line.
+# Move column n%.
 #
 # @author qq542vev
 # @version 1.0.0
@@ -49,7 +49,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0} [OPTION]... FILE
-				Move to the beginning of the line.
+				Move column n%.
 
 				 -l, --line=NUNBER    line number
 				 -n, --number=NUMBER  move column percent
