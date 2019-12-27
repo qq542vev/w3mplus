@@ -248,7 +248,12 @@ keymap "^" GOTO "file:///cgi-bin/w3mplus?action=moveColmun&percent=0"
 keymap "$" LINE_END
 
 keymap "gg" BEGIN
+keymap "^[[H" BEGIN
+keymap "^[[1~" BEGIN
+
 keymap "G" END
+keymap "^[[F" END
+keymap "^[[4~" END
 
 keymap "%" MENU Percents
 
@@ -610,6 +615,7 @@ keymap ":h" HELP
 ### Uncategorized ###
 
 keymap "i" EDIT_SCREEN
+keymap "^[[L" EDIT_SCREEN
 keymap "^[[2~" EDIT_SCREEN
 
 keymap "::" COMMAND
