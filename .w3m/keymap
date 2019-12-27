@@ -248,12 +248,12 @@ keymap "^" GOTO "file:///cgi-bin/w3mplus?action=moveColmun&percent=0"
 keymap "$" LINE_END
 
 keymap "gg" BEGIN
-keymap "^[[H" BEGIN
 keymap "^[[1~" BEGIN
+keymap "^[[H" BEGIN
 
 keymap "G" END
-keymap "^[[F" END
 keymap "^[[4~" END
+keymap "^[[F" END
 
 keymap "%" MENU Percents
 
@@ -276,12 +276,14 @@ keymap "C-d" NEXT_HALF_PAGE
 keymap "C-u" PREV_HALF_PAGE
 
 keymap "C-b" PREV_PAGE
-keymap "M-SP"C PREV_PAGE
+keymap "M-SPC" PREV_PAGE
 keymap "^[[5~" PREV_PAGE
+keymap "^[[I" PREV_PAGE
 
 keymap "C-f" NEXT_PAGE
 keymap "SPC" NEXT_PAGE
 keymap "^[[6~" NEXT_PAGE
+keymap "^[[G" NEXT_PAGE
 
 ### Jumping to elements ###
 
@@ -615,8 +617,8 @@ keymap ":h" HELP
 ### Uncategorized ###
 
 keymap "i" EDIT_SCREEN
-keymap "^[[L" EDIT_SCREEN
 keymap "^[[2~" EDIT_SCREEN
+keymap "^[[L" EDIT_SCREEN
 
 keymap "::" COMMAND
 keymap ":TAB" MENU Commands
