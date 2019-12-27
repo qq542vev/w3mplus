@@ -1,3 +1,12 @@
+##
+# Mouse configuration.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-12-27
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
 button 1 default MOVE_MOUSE
 button 2 default NEXT_HALF_PAGE
 button 3 default MENU_MOUSE

@@ -1,3 +1,12 @@
+##
+# Webpage configuration.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-12-27
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
 url /^bing:/
 substitute_url "https://www.bing.com/search?q="
 

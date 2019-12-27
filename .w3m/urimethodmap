@@ -1,3 +1,12 @@
+##
+# URI method configuration.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-12-27
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
 about: file:///cgi-bin/w3mplus?action=aboutURI&uri=%s
 tp: ht%s
 tps: ht%s
