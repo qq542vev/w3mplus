@@ -5,7 +5,7 @@
 #
 # @author qq542vev
 # @version 1.0.0
-# @date 2019-11-21
+# @date 2019-12-28
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -19,11 +19,11 @@ args=''
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'--cookie')
+		'-c' | '--cookie')
 			cookie='1'
 			shift
 			;;
-		'--history')
+		'-H' | '--history')
 			history='1'
 			shift
 			;;
@@ -33,9 +33,9 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0} [OPTION]... [DIRECTORY]...
 				Cleanup the w3m config directory.
 
-				 --cookie    delete cookies
-				 --history   delete histories
-				 -h, --help  display this help and exit
+				 -c, --cookie   delete cookies
+				 -H, --history  delete histories
+				 -h, --help     display this help and exit
 			EOF
 
 			exit
