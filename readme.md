@@ -13,7 +13,7 @@ w3mplusは[PaleMoon](https://www.palemoon.org/) + [Pentadactyl](https://github.c
      * その他細かなUI関連
  * Pentadactylの模倣
      * `o`, `t`, `O`, `T`, `gh`, `gu`などのリソースへのアクセス 
-     * `h`, `j`, `k`, `l`, `gg`, `G`, `0`, '$'などのページ内の移動
+     * `h`, `j`, `k`, `l`, `gg`, `G`, `0`, `$`などのページ内の移動
      * `y`, `Y`などのヤンク
      * `d`, `u`などのタブを閉じる、タブの復元
      * ヒント及び拡張ヒント
