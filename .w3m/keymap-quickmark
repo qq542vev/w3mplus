@@ -3,9 +3,19 @@
 #
 # @author qq542vev
 # @version 1.0.0
-# @date 2019-12-27
+# @date 2019-12-28
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
+
+# Ctrl  : C-, ^
+# Escape: ESC-, M-, ^[
+# Space : SPC, ' '
+# Tab   : TAB, ^i, ^I
+# Delete: DEL, ^?
+# Up    : UP, ^[[A
+# Down  : DOWN, ^[[B
+# Right : RIGHT, ^[[C
+# Left  : LEFT, ^[[D
 
 keymap "SPC" SET_OPTION "keymap_file=keymap"
 keymap "TAB" SET_OPTION "keymap_file=keymap"

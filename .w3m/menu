@@ -1,5 +1,12 @@
-# A sample of ~/.w3m/menu  (default)
+##
+# Menu configuration.
 #
+# @author qq542vev
+# @version 1.0.0
+# @date 2019-12-28
+# @licence https://creativecommons.org/licenses/by/4.0/
+##
+
 # menu MENU_ID
 #  func  LABEL FUNCTION KEYS
 #  popup LABEL MENU_ID  KEYS
