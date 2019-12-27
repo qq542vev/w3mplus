@@ -450,6 +450,7 @@ keymap ":Q" GOTO "file:///cgi-bin/w3mplus?action=qmarks"
 ### Local marks ###
 
 keymap "m'" MARK
+keymap "m@" REG_MARK
 
 keymap "['" PREV_MARK
 keymap "]'" NEXT_MARK
