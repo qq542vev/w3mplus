@@ -18,6 +18,9 @@ w3mplusは[PaleMoon](https://www.palemoon.org/) + [Pentadactyl](https://github.c
      * `d`, `u`などのタブを閉じる、タブの復元
      * ヒント及び拡張ヒント
      * QuickMark & LocalMark
+----
 
-作成日: 2019-12-26
-更新日: 2019-12-26
+作成日
+:   2019-12-26
+更新日
+:   2019-12-26
