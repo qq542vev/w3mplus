@@ -25,10 +25,10 @@ getQuery () (
 
 	while [ 1 -le "${#}" ]; do
 		if [ -n "${1}" ]; then
-			key=$(printf '%s' "${1%%=*}" | urlDecode.sh | quoteEscape)
+			key=$(printf '%s' "${1%%=*}" | urldecode | quoteEscape)
 			value=$(
 				if [ "${1}" != "${1#*=}" ]; then
-					printf '%s' "${1#*=}" | urlDecode.sh | quoteEscape
+					printf '%s' "${1#*=}" | urldecode | quoteEscape
 				fi
 			)
 
