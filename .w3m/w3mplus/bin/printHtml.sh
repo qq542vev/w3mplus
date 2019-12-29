@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
+# 初期化
 set -eu
+umask 0022
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
 
 case "${LANG:-C}" in 'C')
 	LANG='en_US.US-ASCII'

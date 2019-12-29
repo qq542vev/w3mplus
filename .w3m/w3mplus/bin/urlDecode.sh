@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
+# 初期化
 set -eu
+umask 0022
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
 
 decodeURI () (
 	sed -e 's/+/%20/g' -e 's/%/\\x/g' | xargs -0 printf '%b'

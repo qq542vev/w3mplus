@@ -9,7 +9,11 @@
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
+# 初期化
 set -eu
+umask 0022
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
 
 : ${W3MPLUS_PATH:="${HOME}/.w3m/w3mplus"}
 

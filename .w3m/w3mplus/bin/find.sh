@@ -9,7 +9,11 @@
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
+# 初期化
 set -eu
+umask 0022
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
 
 # 各変数に既定値を代入する
 exactFlag='0'

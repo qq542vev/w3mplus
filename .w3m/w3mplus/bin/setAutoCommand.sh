@@ -10,6 +10,12 @@
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
+# 初期化
+set -eu
+umask 0022
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
+
 outputHtml () {
 	while IFS='	' read -r 'call' 'check' 'command' 'date'; do
 		cat <<- EOF

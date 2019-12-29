@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
+# 初期化
 set -eu
+umask 0022
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
 
 date=$(LANG='C' date -u '+%a, %d %b %Y %H:%M:%S GMT')
 
