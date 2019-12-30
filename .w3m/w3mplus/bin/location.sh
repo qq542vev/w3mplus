@@ -79,7 +79,7 @@ case "${action}" in
 		printRedirect.sh "${uri}" '' 'W3m-control: PREV_TAB'
 		;;
 	'sendEmail')
-		printRedirect.sh "mailto:?body=$(printf '%s' "${uri}" | urlEncode.sh)"
+		printRedirect.sh "mailto:?body=$(printf '%s' "${uri}" | urlencode)"
 		;;
 	'viewSource')
 		printRedirect.sh "${uri}" '' 'W3m-control: VIEW'

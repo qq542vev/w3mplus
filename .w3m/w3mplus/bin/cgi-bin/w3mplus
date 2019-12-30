@@ -28,7 +28,7 @@ addPrintCache () (
 
 	cat <<- EOF | httpResponseW3mBack.sh -
 		W3m-control: PRINT ${tmp}
-		W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmp}" | urlEncode.sh)
+		W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmp}" | urlencode)
 	EOF
 )
 
