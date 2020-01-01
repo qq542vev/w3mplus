@@ -4,8 +4,8 @@
 # Update the blacklist for w3m.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-11-24
+# @version 1.0.1
+# @date 2020-01-02
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -17,7 +17,7 @@ export 'IFS'
 
 # 終了時に一時ディレクトリを削除する
 endcall () {
-	rm -fr "${tmpDir}"
+	rm -fr -- "${tmpDir}"
 }
 
 # 各変数に既定値を代入する
@@ -25,11 +25,21 @@ config="${HOME}/.w3m/siteconf"
 redirect="file:///cgi-bin/blocking?"
 beginMessage='# BEGIN - Blacklist - '
 endMessage='# END - Blacklist'
+args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-b' | '--begin')
+			if [ 2 -le "$(printf '%s' "${2}" | grep -c -e '^')" ]; then
+				cat <<- EOF 1>&2
+					${0}: '${1}' must not contain newlines.
+					Try '${0} --help' for more information.
+				EOF
+
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+
 			beginMessage="${2}"
 			shift 2
 			;;
@@ -38,6 +48,15 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-e' | '--end')
+			if [ 2 -le "$(printf '%s' "${2}" | grep -c -e '^')" ]; then
+				cat <<- EOF 1>&2
+					${0}: '${1}' must not contain newlines.
+					Try '${0} --help' for more information.
+				EOF
+
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+
 			endMessage="${2}"
 			shift 2
 			;;
@@ -119,6 +138,8 @@ if [ 0 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
+escapedBeginMes=$(printf '%s' "${beginMessage}" | sed -e 's/[].\*/[]/\\&/g')
+escapedEndMes=$(printf '%s' "${endMessage}" | sed -e 's/[].\*/[]/\\&/g')
 tmpDir=$(mktemp -d)
 
 # 終了時の動作を設定する
@@ -128,9 +149,7 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
-readonly 'beginMessage' 'endMessage' 'config' 'tmpDir'
-
-sed -n -e "/^${beginMessage}/p" "${config}" | while read -r 'message'; do
+sed -e "/^${escapedBeginMes}/!d" "${config}" | while read -r 'message'; do
 	url="${message#${beginMessage}}"
 
 	printf 'Downloading... %s\n' "${url}" 1>&2
@@ -144,30 +163,35 @@ sed -n -e "/^${beginMessage}/p" "${config}" | while read -r 'message'; do
 
 	printf 'Converting...\n' 1>&2
 
-	while read -r 'address'; do
-		if [ "${address}" = "${address#*://}" ]; then
-			for protocol in 'http' 'https'; do
-				blockURL="${protocol}://${address}/"
+	awk -v "redirect=${redirect}" '
+		BEGIN {
+			pLength = split("http https", protocol)
+		}
+		/:\/\// {
+			printf "url \"%s\"\n", $1
+			printf "substitute_url \"%s%s\"\n", redirect, $1
+			printf "\n"
+			next
+		}
+		{
+			for(i = 1; i <= pLength; i++) {
+				blockURL = protocol[i] "://" $1 "/"
 
-				printf 'url "%s"\n' "${blockURL}"
-				printf 'substitute_url "%s%s"\n' "${redirect}" "${blockURL}"
-				printf '\n'
-			done
-		else
-			printf 'url "%s"\n' "${address}"
-			printf 'substitute_url "%s%s"\n' "${redirect}" "${address}"
-			printf '\n'
-		fi
-	done <"${tmpDir}/blacklist" >"${tmpDir}/urls"
+				printf "url \"%s\"\n", blockURL
+				printf "substitute_url \"%s%s\"\n", redirect, blockURL
+				printf "\n"
+			}
+		}
+	' "${tmpDir}/blacklist" >"${tmpDir}/urls"
 
 	printf 'Data Writing...\n' 1>&2
 
-	pattern=$(printf '%s' "${message}" | sed -e 's/\([].\*/[]\)/\\\1/g; 1s/^^/\\^/; $s/$$/\\$/')
+	escapedMes=$(printf '%s' "${message}" | sed -e 's/\([].\*/[]\)/\\\1/g')
 
-	sed -e "/^${pattern}/{p; :loop; /${endMessage}\$/{D}; g; N; b loop}" "${config}" | sed -e "/^${pattern}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
+	sed -e "/^${escapedMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
 
-	mv -f "${tmpDir}/siteconf" "${config}"
-	rm -fr "${tmpDir:?}/"*
+	mv -f -- "${tmpDir}/siteconf" "${config}"
+	rm -fr -- "${tmpDir:?}/"*
 done
 
 printf 'Done\n' 1>&2

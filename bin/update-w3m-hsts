@@ -4,8 +4,8 @@
 # Update the HSTS list for w3m.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-11-08
+# @version 1.0.1
+# @date 2020-01-02
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -17,19 +17,29 @@ export 'IFS'
 
 # 終了時に一時ディレクトリを削除する
 endcall () {
-	rm -fr "${tmpDir}"
+	rm -fr -- "${tmpDir}"
 }
 
 # 各変数に既定値を代入する
-config="${1-${HOME}/.w3m/siteconf}"
+config="${HOME}/.w3m/siteconf"
 url='https://hg.mozilla.org/mozilla-central/raw-file/tip/security/manager/ssl/nsSTSPreloadList.inc'
 beginMessage='# BEGIN - Preloading HSTS'
 endMessage='# END - Preloading HSTS'
+args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-b' | '--begin')
+			if [ 2 -le "$(printf '%s' "${2}" | grep -c -e '^')" ]; then
+				cat <<- EOF 1>&2
+					${0}: '${1}' must not contain newlines.
+					Try '${0} --help' for more information.
+				EOF
+
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+
 			beginMessage="${2}"
 			shift 2
 			;;
@@ -38,6 +48,15 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-e' | '--end')
+			if [ 2 -le "$(printf '%s' "${2}" | grep -c -e '^')" ]; then
+				cat <<- EOF 1>&2
+					${0}: '${1}' must not contain newlines.
+					Try '${0} --help' for more information.
+				EOF
+
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+
 			endMessage="${2}"
 			shift 2
 			;;
@@ -119,6 +138,8 @@ if [ 0 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
+escapedBeginMes=$(printf '%s' "${beginMessage}" | sed -e 's/[].\*/[]/\\&/g')
+escapedEndMes=$(printf '%s' "${endMessage}" | sed -e 's/[].\*/[]/\\&/g')
 tmpDir=$(mktemp -d)
 
 # 終了時の動作を設定する
@@ -128,34 +149,32 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
-readonly 'url' 'beginMessage' 'endMessage' 'config' 'tmpDir'
-
 printf 'Downloading... %s\n' "${url}" 1>&2
 
 w3m -dump_source -o 'auto_uncompress=1' "${url}" >"${tmpDir}/preloadList"
 
 if [ ! -s "${tmpDir}/preloadList" ]; then
-		printf 'Download failed.\n' 1>&2
-		exit 69 # EX_UNAVAILABLE </usr/include/sysexits.h>
+	printf 'Download failed.\n' 1>&2
+	exit 69 # EX_UNAVAILABLE </usr/include/sysexits.h>
 fi
 
 printf 'Converting...\n' 1>&2
 
 sed -n -e '/^%%$/,/^%%$/p' "${tmpDir}/preloadList" | sed -e '/^%%$/d' | awk -F ',' '{
-		printf "url \"http://%s/\"\n",$1
-		printf "substitute_url \"https://%s/\"\n",$1
-		printf "\n"
+	printf "url \"http://%s/\"\n", $1
+	printf "substitute_url \"https://%s/\"\n", $1
+	printf "\n"
 }' >"${tmpDir}/urls"
 
 if [ ! -s "${tmpDir}/urls" ]; then
-		printf 'Convert failed.\n' 1>&2
-		exit 69 # EX_UNAVAILABLE </usr/include/sysexits.h>
+	printf 'Convert failed.\n' 1>&2
+	exit 69 # EX_UNAVAILABLE </usr/include/sysexits.h>
 fi
 
 printf 'Data Writing...\n' 1>&2
 
-sed -e "/^${beginMessage}\$/{p; :loop; /${endMessage}\$/{D}; g; N; b loop}" "${config}" | sed -e "/^${beginMessage}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
+sed -e "/^${escapedBeginMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedBeginMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
 
-mv -f "${tmpDir}/siteconf" "${config}"
+mv -f -- "${tmpDir}/siteconf" "${config}"
 
 printf 'Done\n' 1>&2
