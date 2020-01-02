@@ -4,8 +4,8 @@
 # Yank text with w3m.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-11-08
+# @version 1.0.1
+# @date 2020-01-03
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -16,12 +16,9 @@ IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
 # 各変数に既定値を代入する
-yankFile=$(date "+${W3MPLUS_YANK_FILE}"; printf '$')
-yankFile="${yankFile%?$}"
-yankHeader=$(date "+${W3MPLUS_YANK_HEADER}"; printf '$')
-yankHeader="${yankHeader%?$}"
-yankFooter=$(date "+${W3MPLUS_YANK_FOOTER}"; printf '$')
-yankFooter="${yankFooter%?$}"
+yankFile=$(date "+${W3MPLUS_YANK_FILE}"; printf '$'); yankFile="${yankFile%?$}"
+yankHeader=$(date "+${W3MPLUS_YANK_HEADER}"; printf '$'); yankHeader="${yankHeader%?$}"
+yankFooter=$(date "+${W3MPLUS_YANK_FOOTER}"; printf '$'); yankFooter="${yankFooter%?$}"
 args=''
 
 # コマンドライン引数の解析する
@@ -55,9 +52,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			arg=$(sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+			arg=$( (cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
 
-			args="${args}${args:+ }'${arg%$}'"
+			args="${args}${args:+ }'${arg%?$}'"
 			shift
 			;;
 		# `--name=value` 形式のロングオプション

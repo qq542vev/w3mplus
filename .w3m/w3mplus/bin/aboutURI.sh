@@ -4,8 +4,8 @@
 # Displays a page about w3m.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-12-20
+# @version 1.0.1
+# @date 2020-01-02
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -71,7 +71,6 @@ case "${1-about:about}" in
 		printHtml.sh 'w3m Start Page' - "$(
 			cat <<- 'EOF'
 				W3m-control: BEGIN
-				W3m-control: LINE_BEGIN
 				W3m-control: NEXT_LINK
 			EOF
 		)" <<- EOF

@@ -141,7 +141,6 @@ esac
 addList=$(printf '%s' "${field}" | outputHtml)
 deleteList=$(sed -e "/^${escaped}/!d" "${config}" | outputHtml)
 
-
 if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
 		httpResposeW3mBack.sh
 		exit

@@ -4,8 +4,8 @@
 # Change w3m image_scale.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-11-24
+# @version 1.0.1
+# @date 2020-01-03
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -16,7 +16,7 @@ IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
 # 各変数に既定値を代入する
-configFile="${HOME}/.w3m/config"
+config="${HOME}/.w3m/config"
 zoom='100'
 args=''
 
@@ -24,7 +24,7 @@ args=''
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-c' | '--config')
-			configFile="${2}"
+			config="${2}"
 			shift 2
 			;;
 		'-n' | '--number')
@@ -108,7 +108,7 @@ if [ 0 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-if scale=$(grep -m '1' -e '^image_scale[\t ]\{1,\}[0-9]\{1,\}$' "${configFile}" | grep -o -e '[0-9]\{1,\}'); then
+if scale=$(grep -m '1' -e '^image_scale[\t ]\{1,\}[0-9]\{1,\}$' "${config}" | grep -o -e '[0-9]\{1,\}'); then
 	if expr "${zoom}" ':' '[+-]' >'/dev/null'; then
 		newScale=$((scale + zoom))
 	else
@@ -121,7 +121,10 @@ if scale=$(grep -m '1' -e '^image_scale[\t ]\{1,\}[0-9]\{1,\}$' "${configFile}" 
 		newScale="${W3MPLUS_ZOOM_MIN}"
 	fi
 
-	sed -i -e "/^image_scale[\\t ]/c image_scale ${newScale}" "${configFile}"
+	if [ "${scale}" -ne "${newScale}" ]; then
+		value=$(cat "${config}")
+		printf '%s\n' "${value}" | sed -e "/^image_scale[\\t ]/c image_scale ${newScale}" >"${config}"
 
-	printf 'W3m-control: REINIT'
+		printf 'W3m-control: REINIT'
+	fi
 fi | httpResponseW3mBack.sh -

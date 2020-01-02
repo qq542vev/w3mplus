@@ -4,8 +4,8 @@
 # Execute the command according to the site.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-11-24
+# @version 1.1.0
+# @date 2020-01-03
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -104,8 +104,13 @@ while [ 1 -le "${#}" ]; do
 	shift 2
 
 	while IFS='	' read -r 'call' 'check' 'command'; do
-		if [ "${operatorCall}" = "${call}" ] && ( printf '%s' "${string}" | eval "${check}" ) >'/dev/null' 2>&1; then
-			printf 'W3m-control: COMMAND %s\n' "${command}"
+		if [ "${operatorCall}" = "${call}" ] && result=$(printf '%s' "${string}" | eval "${check}" 2>'/dev/null'); then
+			if [ -z "${command}" ]; then
+				printf 'W3m-control: %s\n' "${result}"
+			else
+				printf 'W3m-control: %s\n' "${command}"
+			fi
+
 			break
 		fi
 	done <"${config}"
