@@ -4,7 +4,7 @@
 # Update the HSTS list for w3m.
 #
 # @author qq542vev
-# @version 1.0.1
+# @version 2.0.0
 # @date 2020-01-02
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
@@ -21,7 +21,6 @@ endcall () {
 }
 
 # 各変数に既定値を代入する
-config="${HOME}/.w3m/siteconf"
 url='https://hg.mozilla.org/mozilla-central/raw-file/tip/security/manager/ssl/nsSTSPreloadList.inc'
 beginMessage='# BEGIN - Preloading HSTS'
 endMessage='# END - Preloading HSTS'
@@ -41,10 +40,6 @@ while [ 1 -le "${#}" ]; do
 			fi
 
 			beginMessage="${2}"
-			shift 2
-			;;
-		'-c' | '--config')
-			config="${2}"
 			shift 2
 			;;
 		'-e' | '--end')
@@ -67,11 +62,10 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION]...
+				Usage: ${0} [OPTION]... [CONFIG_FILE]...
 				Update the blacklist for w3m.
 
 				 -b, --begin=STRING  begin message
-				 -c, --config=FILE   config file
 				 -e, --end=STRING    end message
 				 -l, --list=URL      list url
 				 -h, --help          display this help and exit
@@ -128,14 +122,9 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# 引数の個数が過大である
-if [ 0 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0}: too many arguments
-		Try '${0} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
+# 引数の個数が過小である
+if [ "${#}" -eq 0 ]; then
+	set -- "${HOME}/.w3m/siteconf"
 fi
 
 escapedBeginMes=$(printf '%s' "${beginMessage}" | sed -e 's/[].\*/[]/\\&/g')
@@ -171,10 +160,10 @@ if [ ! -s "${tmpDir}/urls" ]; then
 	exit 69 # EX_UNAVAILABLE </usr/include/sysexits.h>
 fi
 
-printf 'Data Writing...\n' 1>&2
-
-sed -e "/^${escapedBeginMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedBeginMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
-
-mv -f -- "${tmpDir}/siteconf" "${config}"
+for config in ${@+"${@}"}; do
+	printf "Writing to '%s'...\\n" "${config}" 1>&2
+	sed -e "/^${escapedBeginMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedBeginMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
+	mv -f -- "${tmpDir}/siteconf" "${config}"
+done
 
 printf 'Done\n' 1>&2

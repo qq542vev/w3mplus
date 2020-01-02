@@ -4,7 +4,7 @@
 # Update the blacklist for w3m.
 #
 # @author qq542vev
-# @version 1.1.0
+# @version 2.0.0
 # @date 2020-01-02
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
@@ -21,7 +21,6 @@ endcall () {
 }
 
 # 各変数に既定値を代入する
-config="${HOME}/.w3m/siteconf"
 redirect="file:///cgi-bin/blocking?"
 beginMessage='# BEGIN - Blacklist - '
 endMessage='# END - Blacklist'
@@ -42,10 +41,6 @@ while [ 1 -le "${#}" ]; do
 			fi
 
 			beginMessage="${2}"
-			shift 2
-			;;
-		'-c' | '--config')
-			config="${2}"
 			shift 2
 			;;
 		'-e' | '--end')
@@ -72,11 +67,10 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION]...
+				Usage: ${0} [OPTION]... [CONFIG_FILE]...
 				Update the blacklist for w3m.
 
 				 -b, --begin=STRING  begin message
-				 -c, --config=FILE   config file
 				 -e, --end=STRING    end message
 				 -r, --redirect=URI  redirect page
 				 -s, --skip          continue even if the download fails
@@ -134,14 +128,9 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# 引数の個数が過大である
-if [ 0 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0}: too many arguments
-		Try '${0} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
+# 引数の個数が過小である
+if [ "${#}" -eq 0 ]; then
+	set -- "${HOME}/.w3m/siteconf"
 fi
 
 escapedBeginMes=$(printf '%s' "${beginMessage}" | sed -e 's/[].\*/[]/\\&/g')
@@ -155,7 +144,7 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
-sed -e "/^${escapedBeginMes}/!d" "${config}" | while read -r 'message'; do
+sed -e "/^${escapedBeginMes}/!d" ${@+"${@}"} | sort | uniq | while read -r 'message'; do
 	url="${message#${beginMessage}}"
 
 	printf 'Downloading... %s\n' "${url}" 1>&2
@@ -199,9 +188,12 @@ sed -e "/^${escapedBeginMes}/!d" "${config}" | while read -r 'message'; do
 
 	escapedMes=$(printf '%s' "${message}" | sed -e 's/\([].\*/[]\)/\\\1/g')
 
-	sed -e "/^${escapedMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
+	for config in ${@+"${@}"}; do
+		sed -e "/^${escapedMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
 
-	mv -f -- "${tmpDir}/siteconf" "${config}"
+		mv -f -- "${tmpDir}/siteconf" "${config}"
+	done
+
 	rm -fr -- "${tmpDir:?}/"*
 done
 
