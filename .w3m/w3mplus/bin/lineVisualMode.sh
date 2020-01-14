@@ -4,8 +4,8 @@
 # Start visual mode.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-11-24
+# @version 1.0.1
+# @date 2020-01-15
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -109,9 +109,9 @@ fi
 
 startChecksum=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 1)
 startLine=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 2)
-startTime=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 3 | tr -d 'TZ:-' | utconv)
+startTime=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 3 | tr -d 'TZ:-' | TZ='UTC+0' utconv)
 
-if [ "${checksum}" = "${startChecksum}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | utconv)" -lt "$((startTime + W3MPLUS_VISUAL_TIMEOUT))" ]; then
+if [ "${checksum}" = "${startChecksum}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)" -lt "$((startTime + W3MPLUS_VISUAL_TIMEOUT))" ]; then
 	selectLine.sh -l "${startLine}" -n "${line}" 'yank' "${file}"
 	printf 'W3m-control: SETENV W3MPLUS_VISUALSTART=\r\n'
 else

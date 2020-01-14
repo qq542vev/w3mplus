@@ -4,8 +4,8 @@
 # Display the response for w3m.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-12-23
+# @version 1.0.1
+# @date 2020-01-15
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -24,11 +24,11 @@ expand () (
 )
 
 addPrintCache () (
-	tmp=$(mktemp -u)
+	tmpPath=$(mktemp -u)
 
 	cat <<- EOF | httpResponseW3mBack.sh -
-		W3m-control: PRINT ${tmp}
-		W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmp}" | urlencode)
+		W3m-control: PRINT ${tmpPath}
+		W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmpPath}" | urlencode)
 	EOF
 )
 
@@ -76,7 +76,7 @@ if result=$(
 			closeTab.sh -- "${W3M_URL}"
 			;;
 		'undoTab')
-			undoTab.sh ${query_number+'-n' "${query_number}"}
+			undoTab.sh ${query_number+'-n' "${query_number}"} ${query_count+'-C' "${query_count}"}
 			;;
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"

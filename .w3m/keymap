@@ -2,8 +2,8 @@
 # Default keymap.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-12-28
+# @version 1.0.1
+# @date 2020-01-15
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -353,8 +353,8 @@ keymap "C-p" PREV_TAB
 keymap "d" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
 keymap "D" GOTO "file:///cgi-bin/w3mplus?action=closeTab"
 
-keymap "u" GOTO "file:///cgi-bin/w3mplus?action=undoTab&number=1"
-keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undoTab&number=1000"
+keymap "u" GOTO "file:///cgi-bin/w3mplus?action=undoTab"
+keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undoTab&count=0"
 
 keymap ":u" GOTO "file:///cgi-bin/w3mplus?action=undoTabs"
 

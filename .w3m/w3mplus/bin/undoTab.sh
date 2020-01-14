@@ -4,8 +4,8 @@
 # Restore w3m tabs.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-11-24
+# @version 1.1.0
+# @date 2020-01-15
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -18,6 +18,7 @@ export 'IFS'
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/tabRestore"
 count='1'
+number='1'
 args=''
 
 # コマンドライン引数の解析する
@@ -27,13 +28,22 @@ while [ 1 -le "${#}" ]; do
 			config="${2}"
 			shift 2
 			;;
-		'-n' | '--number')
-			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+		'-C' | '--count')
+			if [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
 
 			count="${2}"
+			shift 2
+			;;
+		'-n' | '--number')
+			if [ "$(expr "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+
+			number="${2}"
 			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
@@ -43,7 +53,8 @@ while [ 1 -le "${#}" ]; do
 				Restore w3m tabs.
 
 				 -c, --config=FILE    restore file
-				 -n, --number=NUMBER  restore count
+				 -C, --count=NUMBER   restore count
+				 -n, --number=NUMBER  restore number
 				 -h, --help           display this help and exit
 			EOF
 
@@ -112,24 +123,62 @@ if [ 0 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-restoreData=$(cat "${config}")
-date=$(($(date -u '+%Y%m%d%H%M%S' | utconv) - W3MPLUS_UNDO_TIMEOUT))
-header=''
+limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - W3MPLUS_UNDO_TIMEOUT))
+tmpFile=$(mktemp)
+lineCount=$(grep -c -e '^' "${config}" || :)
 
-while [ -n "${restoreData}" ] && [ 1 -le "${count}" ]; do
-	restore=$(printf '%s' "${restoreData}" | sed -n -e '$p')
-	restoreUri=$(printf '%s' "${restore}" | cut -d ' ' -f 1)
-	restoreDate=$(printf '%s' "${restore}" | cut -d ' ' -f 2 | tr -d 'TZ:-' | utconv)
+if [ 1 -le "${number}" ]; then
+	end=$((lineCount - number + 1))
+	start=$((end - count + 1))
 
-	if [ "${date}" -lt "${restoreDate}" ]; then
-		header=$(printf '%s\nW3m-control: TAB_GOTO %s\n' "${header}" "${restoreUri}")
-		count=$((count - 1))
-		restoreData=$(printf '%s' "${restoreData}" | sed -e '$d')
-	else
-		restoreData=''
+	if [ 1 -le "${end}" ]; then
+		if [ "${count}" -eq 0 ] || [ "${start}" -lt 1 ]; then
+			start='1'
+		fi
+
+		head -n "$((start - 1))" "${config}" >"${tmpFile}"
+
+		sed -e "${start},${end}!d" "${config}" | sed -e '1!G; h; $!d' | while read -r 'uri' 'date'; do
+			timestamp=$(printf '%s' "${date}" | tr -d 'TZ:-' | TZ='UTC+0' utconv)
+
+			if [ "${limitTime}" -lt "${timestamp}" ]; then
+				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
+			else
+				: >"${tmpFile}"
+				break
+			fi
+		done
+
+		tail -n "+$((end + 1))" "${config}" >>"${tmpFile}"
+
+		mv -f -- "${tmpFile}" "${config}"
 	fi
-done
+elif [ "${number}" -lt 0 ]; then
+	start=$((number * -1))
+	end=$((start + count - 1))
+	if [ "${count}" -eq 0 ]; then
+		end="${lineCount}"
+	fi
+	index='1'
 
-printf '%s\n' "${restoreData}" | sed -e '/^$/d' >"${config}"
+	while read -r 'uri' 'date'; do
+		if [ "${end}" -lt "${index}" ]; then
+			printf '%s %s\n' "${uri}" "${date}" >>"${tmpFile}"
+			continue
+		fi
 
-printf '%s\n' "${header}" | httpResponseW3mBack.sh -
+		timestamp=$(printf '%s' "${date}" | tr -d 'TZ:-' | TZ='UTC+0' utconv)
+
+		if [ "${limitTime}" -lt "${timestamp}" ]; then
+			if [ "${number}" -le "${index}" ]; then
+				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
+			else
+				printf '%s %s\n' "${uri}" "${date}" >>"${tmpFile}"
+			fi
+
+			index=$((index + 1))
+		fi
+	done <"${config}"
+
+	mv -f -- "${tmpFile}" "${config}"
+fi #| httpResponseW3mBack.sh -
