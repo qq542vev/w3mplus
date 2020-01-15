@@ -5,8 +5,9 @@
 #
 # @author qq542vev
 # @version 1.0.1
-# @date 2020-01-02
-# @licence https://creativecommons.org/licenses/by/4.0/
+# @date 2020-01-15
+# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
 
 # 初期化

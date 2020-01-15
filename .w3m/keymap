@@ -4,7 +4,8 @@
 # @author qq542vev
 # @version 1.0.2
 # @date 2020-01-15
-# @licence https://creativecommons.org/licenses/by/4.0/
+# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
 
 # Ctrl  : C-, ^
@@ -16,6 +17,8 @@
 # Down  : DOWN, ^[[B
 # Right : RIGHT, ^[[C
 # Left  : LEFT, ^[[D
+
+# Reset #
 
 keymap "SPC" NULL
 keymap "TAB" NULL
@@ -163,7 +166,7 @@ keymap "C-f" NULL
 keymap "C-g" NULL
 keymap "C-h" NULL
 keymap "C-i" NULL
-keymap "C-j" NULL
+keymap "C-j" GOTO_LINK
 keymap "C-k" NULL
 keymap "C-l" NULL
 keymap "C-m" NULL

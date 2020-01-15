@@ -4,9 +4,10 @@
 # Set a quick mark.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2019-12-16
-# @licence https://creativecommons.org/licenses/by/4.0/
+# @version 1.1.0
+# @date 2020-01-15
+# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
 
 # 初期化
@@ -51,13 +52,22 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0} [OPTION]... KEY [URI]...
+				Usage: ${0##*/} [OPTION]... KEY [URI]...
 				Set the quick mark.
 
 				 -c, --config=FILE    quick mark file
 				 -C, --colmun=NUMBER  colmun number
 				 -l, --line=NUMBER    line number
 				 -h, --help           display this help and exit
+			EOF
+
+			exit
+			;;
+		'-v' | '--version')
+			cat <<- EOF
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' "${0}")
 			EOF
 
 			exit
@@ -85,8 +95,8 @@ while [ 1 -le "${#}" ]; do
 		# その他の無効なオプション
 		'-'*)
 			cat <<- EOF 1>&2
-				${0}: invalid option -- '${1}'
-				Try '${0} --help' for more information.
+				${0##*/}: invalid option -- '${1}'
+				Try '${0##*/} --help' for more information.
 			EOF
 
 			exit 64 # EX_USAGE </usr/include/sysexits.h>
