@@ -12,7 +12,7 @@
 
 # 初期化
 set -eu
-umask 0022
+umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
@@ -51,9 +51,10 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0##*/} [OPTION]... FILE
 				Display HTTP Response that moves to n% with w3m.
 
-				 -l, --line    line number
-				 -n, --number  move percent 0 - 100
-				 -h, --help    display this help and exit
+				 -l, --line     line number
+				 -n, --number   move percent 0 - 100
+				 -h, --help     display this help and exit
+				 -v, --version  output version information and exit
 			EOF
 
 			exit

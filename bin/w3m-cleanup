@@ -12,7 +12,7 @@
 
 # 初期化
 set -eu
-umask 0022
+umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 

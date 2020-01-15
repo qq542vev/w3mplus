@@ -12,7 +12,7 @@
 
 # 初期化
 set -eu
-umask 0022
+umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
@@ -62,6 +62,7 @@ while [ 1 -le "${#}" ]; do
 				 -l, --line=NUMBER    line number
 				 -n, --number=NUMBER  cut line
 				 -h, --help           display this help and exit
+				 -v, --version        output version information and exit
 			EOF
 
 			exit

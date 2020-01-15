@@ -12,7 +12,7 @@
 
 # 初期化
 set -eu
-umask 0022
+umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
@@ -46,6 +46,7 @@ while [ 1 -le "${#}" ]; do
 				 -c, --config=FILE    w3m configuration file
 				 -n, --number=NUMBER  image scale
 				 -h, --help           display this help and exit
+				 -v, --version        output version information and exit
 			EOF
 
 			exit
