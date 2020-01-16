@@ -14,7 +14,7 @@ button 3 default MENU_MOUSE
 
 button 1 anchor COMMAND "MOVE_MOUSE; GOTO_LINK"
 button 2 anchor COMMAND "MOVE_MOUSE; TAB_LINK"
-button 3 anchor CIMMAND "MOVE_MOUSE; GOTO file:///cgi-bin/w3mplus?action=contextMenu"
+button 3 anchor COMMAND "MOVE_MOUSE; MENU_MOUSE ContextMenuLink"
 
 button 1 tab TAB_MOUSE
 button 2 tab CLOSE_TAB_MOUSE
@@ -30,8 +30,8 @@ button 1 lastline 4 4	RELOAD
 button 2 lastline 4 4	COMMAND "NEW_TAB; RELOAD"
 button 1 lastline 6 6	GOTO "file:///cgi-bin/w3mplus?action=homepage"
 button 2 lastline 6 6	GOTO "file:///cgi-bin/w3mplus?action=homepage&redirect=1"
-button 1 lastline 8 8	MENU_MOUSE MenuBookmarks
+button 1 lastline 8 8	MENU_MOUSE "MenuBookmarks"
 button 2 lastline 8 8	COMMAND "NEW_TAB; VIEW_BOOKMARK; DELETE_PREVBUF"
 button 1 lastline 10 10	COMMAND "SET_OPTION default_url=1; GOTO"
 button 2 lastline 10 10	COMMAND "SET_OPTION default_url=1; TAB_GOTO"
-button 3 lastline 3 11 MENU Menu
+button 3 lastline 3 11 MENU_MOUSE "Menu"
