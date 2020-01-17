@@ -341,7 +341,7 @@ keymap "C-td" NEW_TAB
 keymap "O" COMMAND "SET_OPTION default_url=1; GOTO"
 keymap "T" COMMAND "SET_OPTION default_url=1; TAB_GOTO"
 
-keymap "w" EXEC_SHELL "w3m"
+keymap "w" EXTERN "w3m ${WWW_HOME-about:home} #"
 keymap "W" EXTERN
 
 keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"

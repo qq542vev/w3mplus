@@ -33,7 +33,7 @@ end
 menu ContextMenuLink
 	func "Open Link in New Tab            (t)" TAB_LINK "Tt"
 	func "Open Link in New Window         (w)" EXTERN_LINK "Ww" "w3m %s"
-	func "Open Link in New Private Window (p)" EXEC_SHELL "Pp" "w3m-private ${W3M_CURRENT_LINK}"
+	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private %s"
 	func "Open Link in Current Tab        (o)" GOTO_LINK "Oo"
 	nop  "-----------------------------------"
 	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?action=uri&subaction=addBookmark&uri=%24%7BW3M_CURRENT_LINK%7D"
@@ -53,7 +53,7 @@ end
 menu ContextMenuLinkImage
 	func "Open Link in New Tab            (t)" TAB_LINK "Tt"
 	func "Open Link in New Window         (w)" EXTERN_LINK "Ww" "w3m %s"
-	func "Open Link in New Private Window (p)" EXEC_SHELL "Pp" "w3m-private ${W3M_CURRENT_LINK}"
+	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private %s"
 	func "Open Link in Current Tab        (O)" GOTO_LINK "O"
 	nop  "-----------------------------------"
 	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?action=uri&subaction=addBookmark&uri=%24%7BW3M_CURRENT_LINK%7D"
@@ -98,8 +98,8 @@ end
 
 menu MenuFile
 	func "New Tab            (t)" NEW_TAB "Tt"
-	func "New Window         (n)" EXEC_SHELL "Nn" w3m
-	func "New Private Window (w)" EXEC_SHELL "Ww" "w3m-private about:home"
+	func "New Window         (n)" EXTERN "Nn" "echo w3m ${WWW_HOME-about:home} #"
+	func "New Private Window (w)" EXTERN "Ww" "w3m-private about:home #"
 	func "Open File...       (o)" LOAD "Oo"
 	nop  "----------------------"
 	func "Save Page As...    (a)" DOWNLOAD "Aa"
