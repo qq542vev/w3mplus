@@ -8,18 +8,18 @@ open_tab_blank 0
 open_tab_dl_list 1
 display_link 1
 display_link_number 0
-decode_url 0
+decode_url 1
 display_lineinfo 1
 ext_dirlist 1
 dirlist_cmd file:///$LIB/dirlist.cgi
 use_dictcommand 1
-dictcommand file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=
+dictcommand file:///cgi-bin/w3mplus?action=dictWordSearch&query=
 multicol 0
 alt_entity 0
 graphic_char 2
 display_borders 1
 fold_textarea 0
-display_ins_del 1
+display_ins_del 2
 ignore_null_img_alt 1
 view_unseenobject 0
 display_image 1
@@ -33,7 +33,7 @@ image_map_list 1
 fold_line 0
 show_lnum 0
 show_srch_str 1
-label_topline 0
+label_topline 1
 nextpage_topline 0
 color 1
 basic_color terminal
@@ -54,7 +54,7 @@ confirm_qq 1
 close_tab_back 0
 mark 1
 emacs_like_lineedit 0
-vi_prec_num 0
+vi_prec_num 1
 mark_all_pages 1
 wrap_search 1
 ignorecase_search 1
@@ -64,7 +64,7 @@ use_mouse 1
 reverse_mouse 0
 relative_wheel_scroll 0
 relative_wheel_scroll_ratio 30
-fixed_wheel_scroll_count 1
+fixed_wheel_scroll_count 5
 clear_buffer 1
 decode_cte 0
 auto_uncompress 0
@@ -72,7 +72,7 @@ preserve_timestamp 1
 keymap_file keymap
 document_root 
 personal_document_root 
-cgi_bin ~/.w3m/w3mplus/bin/cgi-bin:~/.w3m/cgi-bin
+cgi_bin ~/w3m/cgi-bin:~/.w3m/w3mplus/bin/cgi-bin
 index_file 
 mime_types ~/.w3m/mime.types, /etc/mime.types
 mailcap ~/.w3m/mailcap, /etc/w3m/mailcap, /etc/mailcap

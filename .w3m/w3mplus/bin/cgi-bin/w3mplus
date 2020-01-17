@@ -217,7 +217,7 @@ if result=$(
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"
 			;;
 		'dictWordSearch')
-			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_qauery#?}"
+			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query#?}"
 			;;
 		'selectLine')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
