@@ -27,7 +27,7 @@ pseudo_inlines 1
 auto_image 1
 max_load_image 4
 ext_image_viewer 1
-image_scale 100
+image_scale 80
 imgdisplay w3mimgdisplay
 image_map_list 1
 fold_line 0
@@ -79,16 +79,16 @@ mailcap ~/.w3m/mailcap, /etc/w3m/mailcap, /etc/mailcap
 urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
 editor sensible-editor
 mailto_options 2
-mailer xdg-open mailto:%s
+mailer xdg-open %s
 extbrowser sensible-browser
-extbrowser2 
-extbrowser3 chromium %s &
-extbrowser4 epiphany %s &
-extbrowser5 konqueror %s &
+extbrowser2 firefox %s &
+extbrowser3 url=%s && xdg-open "mailto:?body=$(printf '%s' "${url}" | urlencode)"
+extbrowser4 url=%s && printf '%s' "${url}" | xsel && printf '%s' "${url}" | xsel -b &
+extbrowser5 
 extbrowser6 curl -L -O -C - %s &
-extbrowser7 wget -c
-extbrowser8 url=%s && printf %s "$url" | xsel && printf %s "$url" | xsel -b &
-extbrowser9 mpv %s &
+extbrowser7 wget -b -c -- %s
+extbrowser8 w3m %s
+extbrowser9 w3m-private %s
 bgextviewer 1
 use_lessopen 0
 passwd_file ~/.w3m/passwd
