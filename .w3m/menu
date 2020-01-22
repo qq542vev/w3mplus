@@ -98,7 +98,7 @@ end
 
 menu MenuFile
 	func "New Tab            (t)" NEW_TAB "Tt"
-	func "New Window         (n)" EXTERN "Nn" "echo w3m ${WWW_HOME-about:home} #"
+	func "New Window         (n)" EXTERN "Nn" "w3m ${WWW_HOME-about:home} #"
 	func "New Private Window (w)" EXTERN "Ww" "w3m-private about:home #"
 	func "Open File...       (o)" LOAD "Oo"
 	nop  "----------------------"
@@ -137,15 +137,42 @@ menu MenuBookmarks
 end
 
 menu MenuTools
-	func "Downloads     (d)" DOWNLOAD_LIST "Dd"
-	func "Cookies       (c)" COOKIE "Cc"
-	func "Permissions   (m)" GOTO "Mm" "about:permissions"
-	nop  "-----------------"
-	func "Page Source   (o)" SOURCE "Oo"
-	func "Error Message (e)" MSGS "Ee"
-	func "Page Info     (i)" INFO "Ii"
-	nop  "-----------------"
-	func "Preferences   (p)" OPTIONS "Pp"
+	func  "Downloads     (d)" DOWNLOAD_LIST "Dd"
+	func  "Cookies       (c)" COOKIE "Cc"
+	func  "Permissions   (m)" GOTO "Mm" "about:permissions"
+	nop   "-----------------"
+	func  "Page Source   (o)" SOURCE "Oo"
+	func  "Error Message (e)" MSGS "Ee"
+	func  "Page Info     (i)" INFO "Ii"
+	nop   "-----------------"
+	popup "User Agent    (u)" MenuUserAgent "Uu"
+	func  "Preferences   (p)" OPTIONS "Pp"
+end
+
+menu MenuUserAgent
+	nop   "-- CLI Web Browser ---"
+	func  "w3m                (3)" SET_OPTION "3" "user_agent="
+	func  "lynx               (l)" SET_OPTION "l" "user_agent=Lynx/2.8.9rel.1 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/3.6.5"
+	nop   "-- GUI Web Browser ---"
+	func  "Internet Explorer  (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; rv:11.0) like Gecko"
+	func  "Microsoft Edge     (e)" SET_OPTION "e" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.35g38.102 Safari/537.36 Edge/18.18363"
+	func  "Safari             (s)" SET_OPTION "s" "user_agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A"
+	func  "Google Chrome      (c)" SET_OPTION "c" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
+	func  "Mozilla Firefox    (f)" SET_OPTION "f" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0"
+	func  "PaleMoon           (p)" SET_OPTION "p" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.9) Goanna/4.4 PaleMoon/28.8.0"
+	func  "NetSurf            (n)" SET_OPTION "n" "user_agent=NetSurf/3.6 (Linux; x86_64)"
+	nop   "-- Mobile Web Browser "
+	func  "android (Chrome)   (a)" SET_OPTION "a" "user_agent=Mozilla/5.0 (Linux; U; Android 6.0) AppleWebKit/537.16 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.16 Chrome/33.0.0.0"
+	func  "iPhone  (Safari)   (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+	func  "Firefox for Mobile (F)" SET_OPTION "F" "user_agent=Mozilla/5.0 (Android 6.0.1; Mobile; rv:68.0) Gecko/68.0 Firefox/68.0"
+	func  "Windows 10 Mobile  (w)" SET_OPTION "w" "user_agent=Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; Lumia 950 XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Mobile Safari/537.36 Edge/14.14393"
+	nop   "-- Web Crawler -------"
+	func  "Googlebot          (g)" SET_OPTION "g" "user_agent=Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+	func  "Bingbot            (b)" SET_OPTION "b" "user_agent=Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+	func  "Baiduspider        (B)" SET_OPTION "B" "user_agent=Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
+	nop   "-- Download Utility --"
+	func  "Wget               (W)" SET_OPTION "W" "user_agent=Wget/1.20.1 (linux-gnueabihf)"
+	func  "curl               (C)" SET_OPTION "C" "user_agent=curl/7.64.0"
 end
 
 menu MenuHelp
