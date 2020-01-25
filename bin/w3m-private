@@ -1,5 +1,15 @@
 #!/usr/bin/env sh
 
+##
+# Private w3m..
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2020-01-25
+# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##
+
 # 初期化
 set -eu
 umask '0022'
@@ -8,7 +18,7 @@ export 'IFS'
 
 # 終了時に一時ディレクトリを削除する
 endcall () {
-	rm -fr "${tmpDir}"
+	rm -fr -- "${tmpDir}"
 }
 
 exclude='\./(cookie|w3m(cache|cookie|src|tmp).*)'
@@ -27,14 +37,15 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
-mkdir -p "${tmpDir}/.w3m"
+mkdir -p -- "${tmpDir}/.w3m"
+
 (
 	cd "${HOME}/.w3m"
 
 	find '.' -mindepth '1' -maxdepth '1' -regextype 'posix-egrep' '!' -regex "${exclude}" -execdir 'cp' '-a' '{}' "${tmpDir}/.w3m" ';'
 
 	if [ -e "${tmpDir}/.w3m/bookmark.html" ]; then
-		ln -fs "${HOME}/.w3m/bookmark.html" "${tmpDir}/.w3m/bookmark.html"
+		ln -fs -- "${HOME}/.w3m/bookmark.html" "${tmpDir}/.w3m/bookmark.html"
 	else
 		cat >"${tmpDir}/.w3m/bookmark.html" <<- 'EOF'
 <html><head><title>Bookmarks</title></head>

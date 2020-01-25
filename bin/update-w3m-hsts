@@ -4,8 +4,8 @@
 # Update the HSTS list for w3m.
 #
 # @author qq542vev
-# @version 2.1.0
-# @date 2020-01-15
+# @version 2.1.1
+# @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -77,9 +77,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -160,7 +160,7 @@ fi
 
 printf 'Converting...\n' 1>&2
 
-sed -n -e '/^%%$/,/^%%$/p' "${tmpDir}/preloadList" | sed -e '/^%%$/d' | awk -F ',' '{
+sed -n -e '/^%%$/,/^%%$/p' -- "${tmpDir}/preloadList" | sed -e '/^%%$/d' | awk -F ',' '{
 	printf "url \"http://%s/\"\n", $1
 	printf "substitute_url \"https://%s/\"\n", $1
 	printf "\n"
@@ -174,7 +174,7 @@ fi
 for config in ${@+"${@}"}; do
 	printf "Writing to '%s'...\\n" "${config}" 1>&2
 	sed -e "/^${escapedBeginMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedBeginMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
-	mv -f -- "${tmpDir}/siteconf" "${config}"
+	cp -fp -- "${tmpDir}/siteconf" "${config}"
 done
 
 printf 'Done\n' 1>&2

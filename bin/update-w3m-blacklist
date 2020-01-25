@@ -4,8 +4,8 @@
 # Update the blacklist for w3m.
 #
 # @author qq542vev
-# @version 2.1.0
-# @date 2020-01-15
+# @version 2.1.1
+# @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -83,9 +83,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -155,7 +155,7 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
-sed -e "/^${escapedBeginMes}/!d" ${@+"${@}"} | sort | uniq | while read -r 'message'; do
+sed -e "/^${escapedBeginMes}/!d" -- ${@+"${@}"} | sort | uniq | while read -r 'message'; do
 	url="${message#${beginMessage}}"
 
 	printf 'Downloading... %s\n' "${url}" 1>&2
@@ -202,7 +202,7 @@ sed -e "/^${escapedBeginMes}/!d" ${@+"${@}"} | sort | uniq | while read -r 'mess
 	for config in ${@+"${@}"}; do
 		sed -e "/^${escapedMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
 
-		mv -f -- "${tmpDir}/siteconf" "${config}"
+		cp -fp -- "${tmpDir}/siteconf" "${config}"
 	done
 
 	rm -fr -- "${tmpDir:?}/"*

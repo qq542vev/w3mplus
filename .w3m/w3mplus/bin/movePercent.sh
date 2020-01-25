@@ -4,8 +4,8 @@
 # Display HTTP Response that moves to n% with w3m.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -25,7 +25,7 @@ args=''
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-l' | '--line')
-			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "$(expr -- "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -61,9 +61,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -118,7 +118,7 @@ done
 eval set -- "${args}"
 
 file="${1}"
-lineCount=$(grep -c -e '^' "${file}")
+lineCount=$(grep -c -e '^' -- "${file}")
 
 # 引数の個数が過大である
 if [ 1 -lt "${#}" ]; then

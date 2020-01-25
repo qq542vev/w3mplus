@@ -4,8 +4,8 @@
 # Restore w3m tabs.
 #
 # @author qq542vev
-# @version 1.2.0
-# @date 2020-01-15
+# @version 1.2.1
+# @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -15,6 +15,11 @@ set -eu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
+
+# 終了時に一時ディレクトリを削除する
+endcall () {
+	rm -fr "${tmpDir}"
+}
 
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/tabRestore"
@@ -30,7 +35,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-C' | '--count')
-			if [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "${2}" != '0' ] && [ "$(expr -- "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -39,7 +44,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-n' | '--number')
-			if [ "$(expr "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
+			if [ "$(expr -- "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -64,9 +69,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -117,8 +122,8 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${config}"; printf '$')
-mkdir -p "${directory%?$}"
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
 # オプション以外の引数を再セットする
@@ -136,7 +141,14 @@ fi
 
 limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - W3MPLUS_UNDO_TIMEOUT))
 tmpFile=$(mktemp)
-lineCount=$(grep -c -e '^' "${config}" || :)
+lineCount=$(grep -c -e '^' -- "${config}" || :)
+
+# 終了時の動作を設定する
+trap 'endcall' 0 # EXIT
+trap 'exit 129' 1 # SIGHUP
+trap 'exit 130' 2 # SIGINT
+trap 'exit 131' 3 # SIGQUIT
+trap 'exit 143' 15 # SIGTERM
 
 if [ 1 -le "${number}" ]; then
 	end=$((lineCount - number + 1))
@@ -147,9 +159,9 @@ if [ 1 -le "${number}" ]; then
 			start='1'
 		fi
 
-		head -n "$((start - 1))" "${config}" >"${tmpFile}"
+		head -n "$((start - 1))" -- "${config}" >"${tmpFile}"
 
-		sed -e "${start},${end}!d" "${config}" | sed -e '1!G; h; $!d' | while read -r 'uri' 'date'; do
+		sed -e "${start},${end}!d" -- "${config}" | sed -e '1!G; h; $!d' | while IFS='	' read -r 'uri' 'date'; do
 			timestamp=$(printf '%s' "${date}" | tr -d 'TZ:-' | TZ='UTC+0' utconv)
 
 			if [ "${limitTime}" -lt "${timestamp}" ]; then
@@ -160,9 +172,9 @@ if [ 1 -le "${number}" ]; then
 			fi
 		done
 
-		tail -n "+$((end + 1))" "${config}" >>"${tmpFile}"
+		tail -n "+$((end + 1))" -- "${config}" >>"${tmpFile}"
 
-		mv -f -- "${tmpFile}" "${config}"
+		cp -fp -- "${tmpFile}" "${config}"
 	fi
 elif [ "${number}" -lt 0 ]; then
 	start=$((number * -1))
@@ -172,7 +184,7 @@ elif [ "${number}" -lt 0 ]; then
 	fi
 	index='1'
 
-	while read -r 'uri' 'date'; do
+	while IFS='	' read -r 'uri' 'date'; do
 		if [ "${end}" -lt "${index}" ]; then
 			printf '%s %s\n' "${uri}" "${date}" >>"${tmpFile}"
 			continue
@@ -191,5 +203,5 @@ elif [ "${number}" -lt 0 ]; then
 		fi
 	done <"${config}"
 
-	mv -f -- "${tmpFile}" "${config}"
-fi #| httpResponseW3mBack.sh -
+	cp -fp -- "${tmpFile}" "${config}"
+fi | httpResponseW3mBack.sh -

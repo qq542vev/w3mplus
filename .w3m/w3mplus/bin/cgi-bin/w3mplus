@@ -4,8 +4,8 @@
 # Display the response for w3m.
 #
 # @author qq542vev
-# @version 1.0.1
-# @date 2020-01-15
+# @version 1.0.2
+# @date 2020-01-25
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -16,7 +16,7 @@ IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
 expand () (
-	if expr "${1}" : '${[_A-Z][_0-9A-Za-z]*}$' >'/dev/null'; then
+	if expr -- "${1}" ':' '${[_A-Za-z][_0-9A-Za-z]*}$' >'/dev/null'; then
 		eval printf '%s' "\"${1}\""
 	else
 		printf '%s' "${1}"
@@ -53,7 +53,7 @@ export 'W3MPLUS_PATH' 'W3MPLUS_YANK_FILE' 'W3MPLUS_YANK_HEADER' 'W3MPLUS_YANK_FO
 eval 'set' '--' "$(printf '%s' "${QUERY_STRING-}" | parseQuery.sh)"
 
 while [ 1 -le "${#}" ]; do
-	if expr "${1}" ':' '[_A-Za-z][_0-9A-Za-z]*$' >'/dev/null'; then
+	if expr -- "${1}" ':' '[_A-Za-z][_0-9A-Za-z]*$' >'/dev/null'; then
 		eval "query_${1}='${2-}'"
 	fi
 
@@ -153,6 +153,7 @@ if result=$(
 		'setLocalMark')
 			uri=$(expand "${query_uri-\${W3M_URL\}}")
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
+
 			if [ -n "${uri}" ]; then
 				setAutoCommand.sh -c "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
 			fi
@@ -173,7 +174,7 @@ if result=$(
 			;;
 		'linkSetOpen')
 			if [ -n "${W3M_CURRENT_LINK}" ]; then
-				cat <<- 'EOF' | httpResponseW3mBack.sh -
+				httpResponseW3mBack.sh - <<- 'EOF'
 					W3m-control: SET_OPTION default_url=2
 					W3m-control: GOTO
 				EOF
@@ -181,7 +182,7 @@ if result=$(
 			;;
 		'linkSetTabopen')
 			if [ -n "${W3M_CURRENT_LINK}" ]; then
-				cat <<- 'EOF' | httpResponseW3mBack.sh -
+				httpResponseW3mBack.sh - <<- 'EOF'
 					W3m-control: SET_OPTION default_url=2
 					W3m-control: TAB_GOTO
 				EOF
@@ -353,4 +354,4 @@ else
 	EOF
 fi
 
-rm -f "${query_file-}"
+rm -f -- "${query_file-}"

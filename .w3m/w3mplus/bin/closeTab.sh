@@ -4,8 +4,8 @@
 # Close the tab and record the URI.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-01-24
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -42,9 +42,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -95,8 +95,8 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${config}"; printf '$')
-mkdir -p "${directory%?$}"
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
 # オプション以外の引数を再セットする
@@ -115,12 +115,14 @@ if [ 1 -lt "${#}" ]; then
 fi
 
 if [ -n "${uri}" ]; then
-	if [ "${uri}" = "$(tail -n 1 "${config}" | cut -d ' ' -f 1)" ]; then (
-		tmp=$(cat "${config}")
-		printf '%s\n' "${tmp}" | sed -e '/^$/d; $d' >"${config}"
+	if [ "${uri}" = "$(tail -n 1 -- "${config}" | cut -f 1)" ]; then (
+		tmpFile=$(mktemp)
+		sed -e '/^$/d; $d' -- "${config}" >"${tmpFile}"
+		cp -fp -- "${tmpFile}" "${config}"
+		rm -f -- "${tmpFile}"
 	) fi
 
-	printf '%s %s\n' "${uri}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${config}"
+	printf '%s\t%s\n' "${uri}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${config}"
 fi
 
 printf 'W3m-control: CLOSE_TAB' | httpResponseW3mBack.sh -

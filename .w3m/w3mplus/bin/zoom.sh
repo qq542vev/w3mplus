@@ -4,8 +4,8 @@
 # Change w3m image_scale.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -29,7 +29,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-n' | '--number')
-			if [ "$(expr "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "$(expr -- "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -53,9 +53,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -119,8 +119,8 @@ if [ 0 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-if scale=$(grep -m '1' -e '^image_scale[\t ]\{1,\}[0-9]\{1,\}$' "${config}" | grep -o -e '[0-9]\{1,\}'); then
-	if expr "${zoom}" ':' '[+-]' >'/dev/null'; then
+if scale=$(grep -m '1' -e '^image_scale[\t ]\{1,\}[0-9]\{1,\}$' -- "${config}" | grep -o -e '[0-9]\{1,\}'); then
+	if expr -- "${zoom}" ':' '[+-]' >'/dev/null'; then
 		newScale=$((scale + zoom))
 	else
 		newScale="${zoom}"

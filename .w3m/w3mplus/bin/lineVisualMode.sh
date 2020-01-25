@@ -4,8 +4,8 @@
 # Start visual mode.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-02-15
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -24,7 +24,7 @@ args=''
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-l' | '--line')
-			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "$(expr -- "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -47,9 +47,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -104,7 +104,7 @@ done
 eval set -- "${args}"
 
 file="${1}"
-checksum=$(cksum "${file}" | cut -d ' ' -f '1-2' | tr ' ' '-')
+checksum=$(cksum -- "${file}" | cut -d ' ' -f '1-2' | tr ' ' '-')
 
 # 引数の個数が過大である
 if [ 1 -lt "${#}" ]; then
@@ -116,18 +116,18 @@ if [ 1 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-: "${W3MPLUS_VISUALSTART:=  0}"
+: "${W3MPLUS_VISUALSTART:=0	0	0}"
 
-startChecksum=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 1)
-startLine=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 2)
-startTime=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -d ' ' -f 3 | tr -d 'TZ:-' | TZ='UTC+0' utconv)
+startChecksum=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 1)
+startLine=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 2)
+startTime=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 3 | tr -d 'TZ:-' | TZ='UTC+0' utconv)
 
 if [ "${checksum}" = "${startChecksum}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)" -lt "$((startTime + W3MPLUS_VISUAL_TIMEOUT))" ]; then
 	selectLine.sh -l "${startLine}" -n "${line}" 'yank' "${file}"
 	printf 'W3m-control: SETENV W3MPLUS_VISUALSTART=\r\n'
 else
-	cat <<- EOF | httpResponseW3mBack.sh -
-		W3m-control: SETENV W3MPLUS_VISUALSTART=${checksum} ${line} $(date -u '+%Y-%m-%dT%H:%M:%SZ')
+	httpResponseW3mBack.sh - <<- EOF
+		W3m-control: SETENV W3MPLUS_VISUALSTART=${checksum}	${line}	$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 		W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'
 	EOF
 fi

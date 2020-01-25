@@ -4,8 +4,8 @@
 # Get a quick mark.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-01-24
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -88,9 +88,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -141,8 +141,8 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${config}"; printf '$')
-mkdir -p "${directory%?$}"
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
 # オプション以外の引数を再セットする
@@ -155,7 +155,7 @@ fi
 goto=''
 
 for pattern in ${@+"${@}"}; do
-	fileds=$(grep -e "^${pattern}	" "${config}" || :)
+	fileds=$(grep -e "^${pattern}	" -- "${config}" || :)
 
 	if [ -z "${goto}" ]; then
 		first=$(printf '%s\n' "${fileds}" | head -n 1)

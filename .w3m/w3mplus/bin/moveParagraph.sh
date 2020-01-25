@@ -4,8 +4,8 @@
 # Move to the next paragraph.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -25,7 +25,7 @@ args=''
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-l' | '--line')
-			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "$(expr -- "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -34,7 +34,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-n' | '--number')
-			if [ "$(expr "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
+			if [ "$(expr -- "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
 			fi
 
@@ -57,9 +57,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -127,16 +127,16 @@ fi
 
 while [ "${number}" -ne 0 ]; do
 	if [ 0 -lt "${number}" ]; then
-		line=$(sed -n -e "${line},\$!d; /^\$/{N; /^\\n$/D; =; Q}" "${file}")
+		line=$(sed -n -e "${line},\$!d; /^\$/{N; /^\\n$/D; =; Q}" -- "${file}")
 
 		if [ -z "${line}" ]; then
-			line=$(grep -c -e '^' "${file}")
+			line=$(grep -c -e '^' -- "${file}")
 			break
 		fi
 
 		number=$((number - 1))
 	else
-		line=$(sed -n "1{/./=}; ${line}Q; /^\$/{N; ${line}Q; /^\\n*\$/D; =}" "${file}" | tail -n '1')
+		line=$(sed -n "1{/./=}; ${line}Q; /^\$/{N; ${line}Q; /^\\n*\$/D; =}" -- "${file}" | tail -n '1')
 
 		if [ -z "${line}" ]; then
 			line='1'

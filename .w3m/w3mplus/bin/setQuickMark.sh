@@ -4,8 +4,8 @@
 # Set a quick mark.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-01-24
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -32,7 +32,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-C' | '--colmun')
-			if [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '-\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "${2}" != '0' ] && [ "$(expr -- "${2}" ':' '-\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -41,7 +41,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-l' | '--line')
-			if [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '-\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "${2}" != '0' ] && [ "$(expr -- "${2}" ':' '-\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -66,9 +66,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -121,11 +121,11 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${config}"; printf '$')
-mkdir -p "${directory%?$}"
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
-deleteList=$(grep -e "^${pattern}	" "${config}" | while IFS='	' read -r 'key' 'uri' 'line' 'colmun' 'date'; do
+deleteList=$(grep -e "^${pattern}	" -- "${config}" | while IFS='	' read -r 'key' 'uri' 'line' 'colmun' 'date'; do
 	escapedURI=$(printf '%s' "${uri}" | htmlEscape.sh)
 	printf '<li><a href="%s">%s</a></li>' "${escapedURI}" "${escapedURI}"
 done)
@@ -136,9 +136,9 @@ if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
 fi
 
 {
-	sed -e "/^\$/d; /^$(printf '%s' "${pattern}" | sed -e 's#/#\\/#g')	/d" "${config}"
+	sed -e "/^\$/d; /^$(printf '%s' "${pattern}" | sed -e 's#/#\\/#g')	/d" -- "${config}"
 	printf '%s' "${fileds}"
-} | sort -o "${config}"
+} | sort -o -- "${config}"
 
 if [ -n "${addList}" ]; then
 	addList="<h1>Added Quick Mark</h1><ul>${addList}</ul>"

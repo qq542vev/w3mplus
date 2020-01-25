@@ -4,8 +4,8 @@
 # Set a auto command.
 #
 # @author qq542vev
-# @version 1.0.0
-# @date 2020-01-15
+# @version 1.0.1
+# @date 2020-01-25
 # @since 2019-12-15
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -62,9 +62,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -106,8 +106,8 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname "${config}"; printf '$')
-mkdir -p "${directory%?$}"
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
 call="${1}"
@@ -140,7 +140,6 @@ else
 fi
 
 escaped=$(printf '%s\t%s' "${call}" "${check-}${check:+	}" | sed -e 's/[].\*/[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')
-
 field=''
 
 case "${command+1}" in '1')
@@ -158,7 +157,7 @@ if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
 fi
 
 {
-	sed -e "/^\$/d; /^${escaped}/d" "${config}"
+	sed -e "/^\$/d; /^${escaped}/d" -- "${config}"
 	printf '%s' "${field}"
 } | sort -o "${config}"
 

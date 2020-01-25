@@ -4,8 +4,8 @@
 # Access the resource and execute the command.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -33,9 +33,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -78,13 +78,13 @@ case "${action}" in
 		printRedirect.sh "${uri}" '' 'W3m-control: ADD_BOOKMARK'
 		;;
 	'decrementURI')
-		printRedirect.sh "$(incrementURI.sh -n '-1' "${uri}")"
+		printRedirect.sh "$(incrementURI.sh -n '-1' -- "${uri}")"
 		;;
 	'incrementURI')
-		printRedirect.sh "$(incrementURI.sh "${uri}")"
+		printRedirect.sh "$(incrementURI.sh -- "${uri}")"
 		;;
 	'parentPath')
-		printRedirect.sh "$(parentPath.sh "${uri}")"
+		printRedirect.sh "$(parentPath.sh -- "${uri}")"
 		;;
 	'prevTab')
 		printRedirect.sh "${uri}" '' 'W3m-control: PREV_TAB'

@@ -4,8 +4,8 @@
 # Performs an action on the selected row.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.1.1
+# @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -36,7 +36,7 @@ args=''
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-l' | '--line')
-			if [ "$(expr "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "$(expr -- "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -45,7 +45,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-n' | '--number')
-			if [ "${2}" != '$' ] && [ "${2}" != '0' ] && [ "$(expr "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$')" -eq 0 ] && [ "$(expr "${2}" ':' '+-[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "${2}" != '$' ] && [ "${2}" != '0' ] && [ "$(expr -- "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$')" -eq 0 ] && [ "$(expr -- "${2}" ':' '+-[1-9][0-9]*$')" -eq 0 ]; then
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
@@ -69,9 +69,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' "${0}") (Last update: $(sed -n -e 's/^# @date //1p' "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
 			EOF
 
 			exit
@@ -138,7 +138,7 @@ if [ 2 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-lineCount=$(grep -c '^' <"${file}")
+lineCount=$(grep -c -e '^' -- "${file}")
 
 case "${number}" in
 	'$')
@@ -172,60 +172,78 @@ case "${action}" in
 	'operatorFunc')
 		tmpFile=$(mktemp)
 
-		sed -e "${startLine},${endLine}!d" "${file}" >"${tmpFile}"
+		sed -e "${startLine},${endLine}!d" -- "${file}" >"${tmpFile}"
 
-		printf "W3m-control: EXEC_SHELL cat '%s' | %s; rm -f '%s'\\n" "${tmpFile}" "${W3MPLUS_OPERATORFUNC}" "${tmpFile}" | httpResponseW3mBack.sh -
+		printf "W3m-control: EXEC_SHELL cat -- '%s' | %s; rm -f -- '%s'\\n" "${tmpFile}" "${W3MPLUS_OPERATORFUNC}" "${tmpFile}" | httpResponseW3mBack.sh -
 		;;
 	'formatPrg')
-		{
+		command=$(
+			printf 'file=%%s;'
+
 			if [ 2 -le "${startLine}" ]; then
-				sed -e "$((startLine - 1))q" "${file}"
+				printf "sed -e '%s' -- \"\${file}\";" "$((startLine - 1))q"
 			fi
 
-			sed -e "${startLine},${endLine}!d" "${file}" | eval "${W3MPLUS_FORMATPRG}"
-			sed -e "$((endLine + 1)),\$!d" "${file}"
-		} | printText "W3m-control: GOTO_LINE ${startLine}"
+			printf "sed -e '%s' -- \"\${file}\" | %s;" "${startLine},${endLine}!d" "${W3MPLUS_FORMATPRG}"
+			printf "sed -e '%s' -- \"\${file}\";" "$((endLine + 1)),\$!d"
+		)
+
+		httpResponseW3mBack.sh - <<-EOF
+			W3m-control: PIPE_BUF ${command}
+			W3m-control: GOTO_LINE ${startLine}
+		EOF
 		;;
 	'filter')
 		if [ "${startLine}" -eq 1 ] && [ "${lineCount}" -le "${endLine}" ]; then
 			httpResponseW3mBack.sh 'W3m-control: PIPE_BUF'
 		else
 			tmpFile=$(mktemp)
-			cp -f "${file}" "${tmpFile}"
+			cp -f -- "${file}" "${tmpFile}"
 
 			commands=$(
 				if [ 2 -le "${startLine}" ]; then
-					printf "sed -e '%sq' '%s';" "$((startLine - 1))" "${tmpFile}"
+					printf "sed -e '%s' -- '%s';" "$((startLine - 1))q" "${tmpFile}"
 				fi
 
-				printf "cat %%s;"
-				printf "sed -e '%s,\$!d' '%s';" "$((endLine + 1))" "${tmpFile}"
-				printf "rm -f '%s';" "${tmpFile}"
+				printf "cat -- %%s;"
+				printf "sed -e '%s' '%s';" "$((endLine + 1)),\$!d" "${tmpFile}"
+				printf "rm -f -- '%s';" "${tmpFile}"
 			)
 
-			sed -e "${startLine},${endLine}!d" "${file}" | printText "$(
-				cat <<- EOF
-					W3m-control: PIPE_BUF
-					W3m-control: PIPE_BUF ${commands}
-					W3m-control: DELETE_PREVBUF
-					W3m-control: GOTO_LINE ${startLine}
-				EOF
-			)"
+			httpResponseW3mBack.sh - <<- EOF
+				W3m-control: PIPE_BUF	sed -e "${startLine},${endLine}!d" -- %s
+				W3m-control: PIPE_BUF
+				W3m-control: PIPE_BUF ${commands}
+				W3m-control: DELETE_PREVBUF
+				W3m-control: GOTO_LINE ${startLine}
+			EOF
 		fi
 		;;
 	'uppercase')
-		sed -e "${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText "W3m-control: GOTO_LINE ${startLine}"
+		httpResponseW3mBack.sh - <<- EOF
+			W3m-control: PIPE_BUF sed -e "${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/" -- %s
+			W3m-control: GOTO_LINE ${startLine}
+		EOF
 		;;
 	'lowercase')
-		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/" "${file}" | printText "W3m-control: GOTO_LINE ${startLine}"
+		httpResponseW3mBack.sh - <<- EOF
+			W3m-control: PIPE_BUF sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/" -- %s
+			W3m-control: GOTO_LINE ${startLine}
+		EOF
 		;;
 	'switchcase')
-		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/" "${file}" | printText "W3m-control: GOTO_LINE ${startLine}"
+		httpResponseW3mBack.sh - <<- EOF
+			W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/' -- %s
+			W3m-control: GOTO_LINE ${startLine}
+		EOF
 		;;
 	'rot13')
-		sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/" "${file}"| printText "W3m-control: GOTO_LINE ${startLine}"
+		httpResponseW3mBack.sh - <<- EOF
+			W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/' -- %s
+			W3m-control: GOTO_LINE ${startLine}
+		EOF
 	;;
 	'yank')
-		sed -e "${startLine},${endLine}!d" "${file}" | yank.sh
+		sed -e "${startLine},${endLine}!d" -- "${file}" | yank.sh
 	;;
 esac
