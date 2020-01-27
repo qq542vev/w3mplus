@@ -15,6 +15,18 @@ umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
+# 終了時の動作を設定する
+trap 'endcall' 0 # EXIT
+trap 'endcall; exit 129' 1 # SIGHUP
+trap 'endcall; exit 130' 2 # SIGINT
+trap 'endcall; exit 131' 3 # SIGQUIT
+trap 'endcall; exit 143' 15 # SIGTERM
+
+# 終了時に一時ファイルを削除する
+endcall () {
+	rm -f -- "${query_file-}"
+}
+
 expand () (
 	if expr -- "${1}" ':' '${[_A-Za-z][_0-9A-Za-z]*}$' >'/dev/null'; then
 		eval printf '%s' "\"${1}\""
@@ -73,7 +85,11 @@ if result=$(
 			getAutoCommand.sh -- "${query_call-manual}" ${string:+"${string}"}
 			;;
 		'closeTab')
-			closeTab.sh -- "${W3M_URL}"
+			if [ -n "${W3M_URL}" ]; then
+				closeTab.sh -- "${W3M_URL}"
+			fi
+
+			printf 'W3m-control: CLOSE_TAB' | httpResponseW3mBack.sh -
 			;;
 		'undoTab')
 			undoTab.sh ${query_number+'-n' "${query_number}"} ${query_count+'-C' "${query_count}"}
@@ -353,5 +369,3 @@ else
 	</section>
 	EOF
 fi
-
-rm -f -- "${query_file-}"

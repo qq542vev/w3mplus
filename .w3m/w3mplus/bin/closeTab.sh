@@ -16,6 +16,18 @@ umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
+# 終了時の動作を設定する
+trap 'endcall' 0 # EXIT
+trap 'endcall; exit 129' 1 # SIGHUP
+trap 'endcall; exit 130' 2 # SIGINT
+trap 'endcall; exit 131' 3 # SIGQUIT
+trap 'endcall; exit 143' 15 # SIGTERM
+
+# 終了時に一時ファイルを削除する
+endcall () {
+	rm -f "${tmpFile}"
+}
+
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/tabRestore"
 args=''
@@ -102,27 +114,21 @@ mkdir -p -- "${directory%?$}"
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-uri="${1}"
-
-# 引数の個数が過大である
-if [ 1 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0##*/}: too many arguments
-		Try '${0##*/} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
+if [ "${#}" -eq 0 ]; then
+	set -- "$(cat)"
 fi
 
-if [ -n "${uri}" ]; then
-	if [ "${uri}" = "$(tail -n 1 -- "${config}" | cut -f 1)" ]; then (
-		tmpFile=$(mktemp)
-		sed -e '/^$/d; $d' -- "${config}" >"${tmpFile}"
-		cp -fp -- "${tmpFile}" "${config}"
-		rm -f -- "${tmpFile}"
-	) fi
+tmpFile=$(mktemp)
+date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 
-	printf '%s\t%s\n' "${uri}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${config}"
-fi
+{
+	cat -- "${config}"
 
-printf 'W3m-control: CLOSE_TAB' | httpResponseW3mBack.sh -
+	for uri in ${@+"${@}"}; do
+		if [ -n "${uri}" ]; then
+			printf '%s\t%s\n' "${uri}" "${date}"
+		fi
+	done
+} | tac | rev | uniq -f 1 | rev | tac >"${tmpFile}"
+
+cp -fp -- "${tmpFile}" "${config}"

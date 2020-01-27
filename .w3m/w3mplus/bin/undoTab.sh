@@ -16,9 +16,16 @@ umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
+# 終了時の動作を設定する
+trap 'endcall' 0 # EXIT
+trap 'endcall; exit 129' 1 # SIGHUP
+trap 'endcall; exit 130' 2 # SIGINT
+trap 'endcall; exit 131' 3 # SIGQUIT
+trap 'endcall; exit 143' 15 # SIGTERM
+
 # 終了時に一時ディレクトリを削除する
 endcall () {
-	rm -fr "${tmpDir}"
+	rm -fr "${tmpDir-}"
 }
 
 # 各変数に既定値を代入する
@@ -142,13 +149,6 @@ fi
 limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - W3MPLUS_UNDO_TIMEOUT))
 tmpFile=$(mktemp)
 lineCount=$(grep -c -e '^' -- "${config}" || :)
-
-# 終了時の動作を設定する
-trap 'endcall' 0 # EXIT
-trap 'exit 129' 1 # SIGHUP
-trap 'exit 130' 2 # SIGINT
-trap 'exit 131' 3 # SIGQUIT
-trap 'exit 143' 15 # SIGTERM
 
 if [ 1 -le "${number}" ]; then
 	end=$((lineCount - number + 1))
