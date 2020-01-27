@@ -61,6 +61,14 @@ while [ 1 -le "${#}" ]; do
 
 			exit
 			;;
+		# 標準入力を処理する
+		'-')
+			args="${args}$(tr '[:space:]' '\n' | while IFS= read -r uri; do
+				printf " '"
+				printf '%s' "${uri}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"
+				printf "'"
+			done)"
+			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
 			option="${1}"
