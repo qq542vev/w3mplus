@@ -4,8 +4,8 @@
 # Get a quick mark.
 #
 # @author qq542vev
-# @version 1.1.1
-# @date 2020-01-24
+# @version 1.1.2
+# @date 2020-01-27
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -154,8 +154,11 @@ mkdir -p -- "${directory%?$}"
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
+# 引数の個数が過小である
 if [ "${#}" -eq 0 ]; then
+	set -f
 	set -- $(cat)
+	set +f
 fi
 
 goto=''

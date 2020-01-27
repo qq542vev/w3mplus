@@ -4,8 +4,8 @@
 # Close the tab and record the URI.
 #
 # @author qq542vev
-# @version 1.1.1
-# @date 2020-01-24
+# @version 2.0.0
+# @date 2020-01-27
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -115,7 +115,9 @@ mkdir -p -- "${directory%?$}"
 eval set -- "${args}"
 
 if [ "${#}" -eq 0 ]; then
-	set -- "$(cat)"
+	set -f
+	set -- $(cat)
+	set +f
 fi
 
 tmpFile=$(mktemp)
@@ -129,6 +131,6 @@ date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 			printf '%s\t%s\n' "${uri}" "${date}"
 		fi
 	done
-} | tac | rev | uniq -f 1 | rev | tac >"${tmpFile}"
+} | sed -e '1!G; h; $!d' | rev | uniq -f 1 | rev | sed -e '1!G; h; $!d' >"${tmpFile}"
 
 cp -fp -- "${tmpFile}" "${config}"

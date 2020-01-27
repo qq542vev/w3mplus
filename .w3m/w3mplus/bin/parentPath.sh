@@ -4,8 +4,8 @@
 # Access the parent directory.
 #
 # @author qq542vev
-# @version 1.1.1
-# @date 2020-01-25
+# @version 1.2.0
+# @date 2020-01-27
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -110,18 +110,15 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# regular expression of URI
-pattern='^\(\([^:\/?#]\{1,\}\):\)\{0,1\}\(\/\/\([^\/?#]*\)\)\{0,1\}\([^?#]*\)\(?\([^#]*\)\)\{0,1\}\(#\(.*\)\)\{0,1\}$'
-
 # 引数の個数が過小である
 if [ "${#}" -eq 0 ]; then
-	cat <<- EOF 1>&2
-		${0##*/}: not enough arguments
-		Try '${0##*/} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
+	set -f
+	set -- $(cat)
+	set +f
 fi
+
+# regular expression of URI
+pattern='^\(\([^:\/?#]\{1,\}\):\)\{0,1\}\(\/\/\([^\/?#]*\)\)\{0,1\}\([^?#]*\)\(?\([^#]*\)\)\{0,1\}\(#\(.*\)\)\{0,1\}$'
 
 for uri in ${@+"${@}"}; do
 	path=$(printf '%s' "${uri}" | sed -e "s/${pattern}/\\5/")

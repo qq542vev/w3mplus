@@ -4,8 +4,8 @@
 # Increments the URI.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-15
+# @version 1.2.0
+# @date 2020-01-27
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -120,12 +120,9 @@ eval set -- "${args}"
 
 # 引数の個数が過小である
 if [ "${#}" -eq 0 ]; then
-	cat <<- EOF 1>&2
-		${0##*/}: not enough arguments
-		Try '${0##*/} --help' for more information.
-	EOF
-
-	exit 64 # EX_USAGE </usr/include/sysexits.h>
+	set -f
+	set -- $(cat)
+	set +f
 fi
 
 for uri in ${@+"${@}"}; do

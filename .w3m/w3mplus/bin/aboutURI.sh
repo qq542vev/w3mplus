@@ -4,8 +4,8 @@
 # Displays a page about w3m.
 #
 # @author qq542vev
-# @version 1.0.1
-# @date 2020-01-15
+# @version 1.0.2
+# @date 2020-01-27
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##

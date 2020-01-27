@@ -4,7 +4,7 @@
 # Change w3m image_scale.
 #
 # @author qq542vev
-# @version 1.1.1
+# @version 1.1.2
 # @date 2020-01-25
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>

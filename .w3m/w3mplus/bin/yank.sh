@@ -4,7 +4,7 @@
 # Yank text with w3m.
 #
 # @author qq542vev
-# @version 1.1.1
+# @version 1.1.2
 # @date 2020-01-24
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -130,19 +130,13 @@ if [ "${#}" -eq 0 ]; then
 	set -- "$(cat)"
 fi
 
-context=$(for yankText in ${@+"${@}"}; do
-	if [ -n "${yankHeader}" ]; then
-		printf '%s' "${yankHeader}" | tee -a -- "${yankFile}"
-	fi
+tmpFile=$(mktemp)
 
-	printf '%s' "${yankText}" | tee -a -- "${yankFile}"
+for yankText in ${@+"${@}"}; do
+		printf '%s%s%s' "${yankHeader}" "${yankText}" "${yankFooter}" >>"${tmpFile}"
+done
 
-	if [ -n "${yankFooter}" ]; then
-		printf '%s' "${yankFooter}" | tee -a -- "${yankFile}"
-	fi
-done; printf '$')
+cat -- "${tmpFile}" >>"${yankFile}"
+count=$(grep -c -e '^' -- "${tmpFile}" || :)
 
-output=$(printf '%s\n' "${context%$}" | sed -e "s/'\\{1,\\}/'\"&\"'/g; "'s/%/%%/g; s/\\/\\\\/g; s/\r/\\r/g; s/$/\\n/' | tr -d '\n')
-number=$(printf '%s' "${context%$}" | grep -c -e '^')
-
-httpResponseW3mBack.sh "W3m-control: EXEC_SHELL printf '${output}'; printf \"Add %d lines to '%s'\\n\" '${number}' '${yankFile}'"
+httpResponseW3mBack.sh "W3m-control: EXEC_SHELL cat -- '${tmpFile}'; rm -f -- '${tmpFile}'; printf \"\\nAdd %d lines to '%s'\\n\" '${count}' '${yankFile}'"
