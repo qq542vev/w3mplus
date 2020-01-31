@@ -17,15 +17,15 @@ IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
 # 終了時の動作を設定する
-trap 'endcall' 0 # EXIT
-trap 'endcall; exit 129' 1 # SIGHUP
-trap 'endcall; exit 130' 2 # SIGINT
-trap 'endcall; exit 131' 3 # SIGQUIT
-trap 'endcall; exit 143' 15 # SIGTERM
+trap 'endCall' 0 # EXIT
+trap 'endCall; exit 129' 1 # SIGHUP
+trap 'endCall; exit 130' 2 # SIGINT
+trap 'endCall; exit 131' 3 # SIGQUIT
+trap 'endCall; exit 143' 15 # SIGTERM
 
 # 終了時に一時ファイルを削除する
-endcall () {
-	rm -f "${tmpFile}"
+endCall () {
+	rm -f -- ${tmpFile+"${tmpFile}"}
 }
 
 # 各変数に既定値を代入する

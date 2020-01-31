@@ -5,7 +5,7 @@
 #
 # @author qq542vev
 # @version 1.1.1
-# @date 2020-01-27
+# @date 2020-01-31
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -69,7 +69,7 @@ while [ 1 -le "${#}" ]; do
 		# 標準入力を処理する
 		'-')
 			arg=$( (cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-:
+
 			args="${args}${args:+ }'${arg%?$}'"
 			;;
 		# `--name=value` 形式のロングオプション

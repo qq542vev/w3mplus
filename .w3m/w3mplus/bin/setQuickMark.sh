@@ -4,8 +4,8 @@
 # Set a quick mark.
 #
 # @author qq542vev
-# @version 1.1.2
-# @date 2020-01-27
+# @version 1.1.3
+# @date 2020-02-01
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -110,15 +110,15 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			case "${pattern+1}" in
+			case "${key+1}" in
 				'1')
-					fileds=$(printf '%s%s\t%s\t%d\t%d\t%s\n$' "${fileds}" "${pattern}" "${1}" "${line}" "${colmun}" "${date}")
+					fileds=$(printf '%s%s\t%s\t%d\t%d\t%s\n$' "${fileds}" "${key}" "${1}" "${line}" "${colmun}" "${date}")
 					fileds="${fileds%$}"
 					escapedURI=$(printf '%s' "${1}" | htmlEscape.sh)
-					addList=$(printf '%s<li><a href="%s">%s</a></li>' "${addList}" "${escapedURI}" "${escapedURI}")
+					addList="${addList}<li><a href=\"${escapedURI}\">${escapedURI}</a></li>"
 					;;
 				*)
-					pattern="${1}"
+					key="${1}"
 					;;
 				esac
 
@@ -131,10 +131,9 @@ directory=$(dirname -- "${config}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
-deleteList=$(grep -e "^${pattern}	" -- "${config}" | while IFS='	' read -r 'key' 'uri' 'line' 'colmun' 'date'; do
-	escapedURI=$(printf '%s' "${uri}" | htmlEscape.sh)
-	printf '<li><a href="%s">%s</a></li>' "${escapedURI}" "${escapedURI}"
-done)
+escapedKey=$(printf '%s' "${key}" | sed 's/[].\*/[]/\\&/g')
+
+deleteList=$(grep -e "^${escapedKey}	" -- "${config}" | cut -f '2' | htmlEscape.sh | sed -e 's/^.*$/<li><a href="&">&<\/a><\/li>/')
 
 if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
 	httpResposeW3mBack.sh
@@ -142,9 +141,9 @@ if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
 fi
 
 {
-	sed -e "/^\$/d; /^$(printf '%s' "${pattern}" | sed -e 's#/#\\/#g')	/d" -- "${config}"
+	sed -e "/^\$/d; /^${escapedKey}	/d" -- "${config}"
 	printf '%s' "${fileds}"
-} | sort -o -- "${config}"
+} | sort -o "${config}"
 
 if [ -n "${addList}" ]; then
 	addList="<h1>Added Quick Mark</h1><ul>${addList}</ul>"
@@ -154,4 +153,4 @@ if [ -n "${deleteList}" ]; then
 	deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
 fi
 
-printHtml.sh "Set Quick Mark '${pattern}'" "${addList}${deleteList}"
+printHtml.sh "Set Quick Mark '${key}'" "<p>Set Quick Mark '<strong>${key}</strong>'</p>${addList}${deleteList}"

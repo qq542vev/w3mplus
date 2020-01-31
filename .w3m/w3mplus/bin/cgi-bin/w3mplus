@@ -4,8 +4,8 @@
 # Display the response for w3m.
 #
 # @author qq542vev
-# @version 1.0.3
-# @date 2020-01-27
+# @version 1.1.0
+# @date 2020-02-01
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -16,15 +16,15 @@ IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
 # 終了時の動作を設定する
-trap 'endcall' 0 # EXIT
-trap 'endcall; exit 129' 1 # SIGHUP
-trap 'endcall; exit 130' 2 # SIGINT
-trap 'endcall; exit 131' 3 # SIGQUIT
-trap 'endcall; exit 143' 15 # SIGTERM
+trap 'endCall' 0 # EXIT
+trap 'endCall; exit 129' 1 # SIGHUP
+trap 'endCall; exit 130' 2 # SIGINT
+trap 'endCall; exit 131' 3 # SIGQUIT
+trap 'endCall; exit 143' 15 # SIGTERM
 
 # 終了時に一時ファイルを削除する
-endcall () {
-	rm -f -- "${query_file-}"
+endCall () {
+	rm -f -- ${query_file+"${query_file}"}
 }
 
 expand () (
@@ -252,6 +252,13 @@ if result=$(
 				fi
 			else
 				printHtml.sh 'Bad Request' '<p>The value of the environment variable <strong><var>W3MPLUS_EQUALPRG</var></strong> is empty.</p>' '400 Bad Request'
+			fi
+			;;
+		'cookieManager')
+			url=$(expand "${query_url-\${W3M_URL\}}")
+
+			if [ -n "${url}" ]; then
+				cookieManager.sh ${query_blacklist+-b "${query_blacklist}"} ${query_whitelist+-w "${query_whitelist}"} ${query_subdomain+-s} "${url}"
 			fi
 			;;
 		*)

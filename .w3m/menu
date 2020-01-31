@@ -2,8 +2,8 @@
 # Menu configuration.
 #
 # @author qq542vev
-# @version 1.1.0
-# @date 2020-01-23
+# @version 1.2.0
+# @date 2020-02-01
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -137,16 +137,26 @@ menu MenuBookmarks
 end
 
 menu MenuTools
-	func  "Downloads     (d)" DOWNLOAD_LIST "Dd"
-	func  "Cookies       (c)" COOKIE "Cc"
-	func  "Permissions   (m)" GOTO "Mm" "about:permissions"
-	nop   "-----------------"
-	func  "Page Source   (o)" SOURCE "Oo"
-	func  "Error Message (e)" MSGS "Ee"
-	func  "Page Info     (i)" INFO "Ii"
-	nop   "-----------------"
-	popup "User Agent    (u)" MenuUserAgent "Uu"
-	func  "Preferences   (p)" OPTIONS "Pp"
+	func  "Downloads      (d)" DOWNLOAD_LIST "Dd"
+	func  "Cookies        (c)" COOKIE "Cc"
+	func  "Permissions    (m)" GOTO "Mm" "about:permissions"
+	nop   "------------------"
+	func  "Page Source    (o)" SOURCE "Oo"
+	func  "Error Message  (e)" MSGS "Ee"
+	func  "Page Info      (i)" INFO "Ii"
+	nop   "------------------"
+	popup "Cookie Manager (k)" MenuCookieManager "Kk"
+	popup "User Agent     (u)" MenuUserAgent "Uu"
+	func  "Preferences    (p)" OPTIONS "Pp"
+end
+
+menu MenuCookieManager
+	nop   "-- Toggle the domain to blacklist --"
+	func  "Apply to the sub-domain          (b)" GOTO "b" "file:///cgi-bin/w3mplus?action=cookieManager&blacklist=toggle&subdomain=1"
+	func  "Apply to only the domain of page (B)" GOTO "B" "file:///cgi-bin/w3mplus?action=cookieManager&blacklist=toggle"
+	nop   "-- Toggle the domain to whitelist --"
+	func  "Apply to the sub-domain          (w)" GOTO "w" "file:///cgi-bin/w3mplus?action=cookieManager&whitelist=toggle&subdomain=1"
+	func  "Apply to only the domain of page (W)" GOTO "W" "file:///cgi-bin/w3mplus?action=cookieManager&whitelist=toggle"
 end
 
 menu MenuUserAgent
