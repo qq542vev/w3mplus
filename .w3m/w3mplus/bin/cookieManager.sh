@@ -4,7 +4,7 @@
 # Cookie management.
 #
 # @author qq542vev
-# @version 1.0.0
+# @version 1.0.1
 # @date 2020-02-01
 # @since 2019-01-27
 # @copyright Copyright (C) 2020 qq542vev. Some rights reserved.
@@ -29,7 +29,7 @@ endCall () {
 }
 
 # 各変数に既定値を代入する
-config="${HOME}/.w3m/config"
+config="${W3MPLUS_W3M_CONFIG}"
 blacklist=''
 whitelist=''
 subdomain='0'

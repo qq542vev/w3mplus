@@ -4,8 +4,8 @@
 # Change w3m image_scale.
 #
 # @author qq542vev
-# @version 1.1.2
-# @date 2020-01-25
+# @version 1.1.3
+# @date 2020-02-01
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -23,7 +23,7 @@ trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
 # 各変数に既定値を代入する
-config="${HOME}/.w3m/config"
+config="${W3MPLUS_W3M_CONFIG}"
 zoom='100'
 args=''
 
