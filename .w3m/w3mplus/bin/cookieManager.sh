@@ -4,8 +4,8 @@
 # Cookie management.
 #
 # @author qq542vev
-# @version 1.0.1
-# @date 2020-02-01
+# @version 1.0.2
+# @date 2020-02-08
 # @since 2019-01-27
 # @copyright Copyright (C) 2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -23,6 +23,9 @@ trap 'endCall; exit 129' 1 # SIGHUP
 trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
+
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
 endCall () {
 	rm -f -- ${tmpFile+"${tmpFile}"}
@@ -81,12 +84,12 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... [WORD]...
-				Search for a word.
+				Usage: ${0##*/} [OPTION]... [DOMAIN]...
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
-				 -b, --blacklist=TYPE  black list type
+				 -b, --blacklist=TYPE  black list type (add, delete, toggle)
 				 -s, --subdomain       also applies to subdomains
-				 -w, --whitelist=TYPE  white list type
+				 -w, --whitelist=TYPE  white list type (add, delete, toggle)
 				 -h, --help            display this help and exit
 				 -v, --version         output version information and exit
 			EOF
@@ -167,9 +170,9 @@ tmpFile=$(mktemp)
 listitem=''
 
 for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"cookie_accept_domains ${whitelist}"}; do
-	filed="${value% *}"
+	field="${value% *}"
 	action="${value#* }"
-	item=$(sed -n -e "s/^${filed}[\\t ]//p" -- "${config}" | sed -e 's/[\t ,]\{1,\}/,/g; s/^,//; s/,$//' | tr 'A-Z' 'a-z')
+	item=$(sed -n -e "s/^${field}[\\t ]//p" -- "${config}" | sed -e 's/[\t ,]\{1,\}/,/g; s/^,//; s/,$//' | tr 'A-Z' 'a-z')
 
 	for domain in ${@+"${@}"}; do
 		if [ "${domain}" != "${domain#*/}" ]; then
@@ -189,20 +192,18 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 		if printf '%s' "${item}" | grep -E -e "(^|,)${escaped}(,|\$)"; then
 			case "${action}" in 'delete' | 'toggle')
 				item=$(printf '%s' "${item}" | sed -e "s/^${escaped},\\{0,1\\}//g; s/,${escaped}//g")
-				listitem="${listitem}<li>Removed the '<strong>${domain}</strong>' from the '<code>${filed}</code>'.</li>"
+				listitem="${listitem}<li>Removed the '<strong>${domain}</strong>' from the '<code>${field}</code>'.</li>"
 			esac
 		else
 			case "${action}" in 'add' | 'toggle')
 				item="${item}${item:+,}${domain}"
-				listitem="${listitem}<li>Added the '<strong>${domain}</strong>' to the '<code>${filed}</code>'.</li>"
+				listitem="${listitem}<li>Added the '<strong>${domain}</strong>' to the '<code>${field}</code>'.</li>"
 			esac
 		fi
 	done
 
-	sed -e "/^${filed}[\\t ]/c ${filed} ${item}" -- "${config}" >"${tmpFile}"
+	sed -e "/^${field}[\\t ]/c ${field} ${item}" -- "${config}" >"${tmpFile}"
 	cp -fp "${tmpFile}" "${config}"
 done
 
-printHtml.sh 'Cookie Manager' -  <<- EOF
-	<ul>${listitem}</ul>
-EOF
+printf '<ul>%s</ul>' "${listitem}" | printHtml.sh --title 'Cookie Manager'

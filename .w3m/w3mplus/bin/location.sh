@@ -4,8 +4,8 @@
 # Access the resource and execute the command.
 #
 # @author qq542vev
-# @version 1.1.2
-# @date 2020-01-27
+# @version 1.1.3
+# @date 2020-02-08
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -21,6 +21,9 @@ trap 'exit 129' 1 # SIGHUP
 trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
+
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
 args=''
 
@@ -81,7 +84,7 @@ fi
 
 case "${action}" in
 	'addBookmark')
-		printRedirect.sh "${uri}" '' 'W3m-control: ADD_BOOKMARK'
+		printRedirect.sh --header-field 'W3m-control: ADD_BOOKMARK' "${uri}"
 		;;
 	'decrementURI')
 		printRedirect.sh "$(incrementURI.sh -n '-1' -- "${uri}")"
@@ -93,25 +96,25 @@ case "${action}" in
 		printRedirect.sh "$(parentPath.sh -- "${uri}")"
 		;;
 	'prevTab')
-		printRedirect.sh "${uri}" '' 'W3m-control: PREV_TAB'
+		printRedirect.sh --header-field 'W3m-control: PREV_TAB' "${uri}"
 		;;
 	'sendEmail')
 		printRedirect.sh "mailto:?body=$(printf '%s' "${uri}" | urlencode)"
 		;;
 	'viewSource')
-		printRedirect.sh "${uri}" '' 'W3m-control: VIEW'
+		printRedirect.sh --header-field 'W3m-control: VIEW' "${uri}"
 		;;
 	'viewSourceExternally')
-		printRedirect.sh "${uri}" '' "$(
+		printRedirect.sh --header-field "$(
 			cat <<- 'EOF'
 				W3m-control: VIEW
 				W3m-control: EDIT_SCREEN
 				W3m-control: VIEW
 			EOF
-		)"
+		)" "${uri}"
 		;;
 	*)
-		printHtml.sh 'Problem loading page' - <<- 'EOF'
+		printHtml.sh --title 'Problem loading page' <<- 'EOF'
 			<h1>The address isn't valid</h1>
 
 			<p>The URL is not valid and cannot be loaded.</p>

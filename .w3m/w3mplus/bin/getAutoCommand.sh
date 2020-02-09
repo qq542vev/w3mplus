@@ -4,8 +4,8 @@
 # Execute the command according to the site.
 #
 # @author qq542vev
-# @version 1.2.2
-# @date 2020-01-31
+# @version 1.3.0
+# @date 2020-02-08
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -22,8 +22,12 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
+
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/autoCommand"
+regexpFlag='0'
 args=''
 
 # コマンドライン引数の解析する
@@ -33,15 +37,20 @@ while [ 1 -le "${#}" ]; do
 			config="${2}"
 			shift 2
 			;;
+		'-E' | '--extended-regexp')
+			regexpFlag='1'
+			shift
+			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]... [CALL] [URI]
-				Execute the command according to the site.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
-				 -c, --config=FILE  configuration file
-				 -h, --help         display this help and exit
-				 -v, --version      output version information and exit
+				 -c, --config=FILE      configuration file
+				 -E, --extended-regexp  PATTERNS are extended regular expressions
+				 -h, --help             display this help and exit
+				 -v, --version          output version information and exit
 			EOF
 
 			exit
@@ -114,14 +123,29 @@ mkdir -p -- "${directory%?$}"
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
+awkScript=$(cat <<- 'EOF'
+	BEGIN {
+		if(!regexpFlag) {
+			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
+		}
+
+		pattern = "^" pattern "$"
+	}
+
+	$1 ~ pattern {
+		print $0
+	}
+EOF
+)
+
 while [ 1 -le "${#}" ]; do
-	operatorCall="${1}"
+	pattern="${1}"
 	string="${2}"
 
 	shift 2
 
-	while IFS='	' read -r 'call' 'check' 'command'; do
-		if [ "${operatorCall}" = "${call}" ] && result=$(printf '%s' "${string}" | eval "${check}" 2>'/dev/null'); then
+	awk -v "pattern=${pattern}" -v "regexpFlag=${regexpFlag}" -- "${awkScript}" "${config}" | while IFS='	' read -r 'call' 'check' 'command' 'date'; do
+		if result=$(printf '%s' "${string}" | sh -c "${check}" 'sh' "${call}" "${command}" "${date}" 2>'/dev/null'); then
 			if [ -z "${command}" ]; then
 				printf 'W3m-control: %s\n' "${result}"
 			else
@@ -130,5 +154,5 @@ while [ 1 -le "${#}" ]; do
 
 			break
 		fi
-	done <"${config}"
+		done
 done | httpResponseW3mBack.sh -

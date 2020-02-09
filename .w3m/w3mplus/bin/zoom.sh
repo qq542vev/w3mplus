@@ -22,6 +22,9 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
+
 # 各変数に既定値を代入する
 config="${W3MPLUS_W3M_CONFIG}"
 zoom='100'
@@ -47,7 +50,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]...
-				Change w3m image_scale.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -c, --config=FILE    w3m configuration file
 				 -n, --number=NUMBER  image scale
@@ -114,6 +117,14 @@ done
 
 # オプション以外の引数を再セットする
 eval set -- "${args}"
+
+# 引数の個数が過小である
+if [ "${#}" -eq 0 ]; then
+	set -f
+	set -- $(cat)
+	set +f
+fi
+
 
 # 引数の個数が過大である
 if [ 0 -lt "${#}" ]; then

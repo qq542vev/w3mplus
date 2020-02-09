@@ -4,8 +4,8 @@
 # Get a quick mark.
 #
 # @author qq542vev
-# @version 1.1.2
-# @date 2020-01-27
+# @version 1.2.0
+# @date 2020-02-08
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -22,44 +22,14 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
-gotoMove () (
-	line="${1}"
-	colmun="${2}"
-
-	if [ "${gotoLine}" -eq 1 ]; then
-		if [ 0 -lt "${line}" ]; then
-			printf 'W3m-control: GOTO_LINE %d\n' "${line}"
-		else
-			printf 'W3m-control: END\n'
-
-			while [ "${line}" -lt 0 ]; do
-				printf 'W3m-control: MOVE_UP1\n'
-				line=$((line + 1))
-			done
-		fi
-	fi
-
-	if [ "${gotoColmun}" -eq 1 ]; then
-		if [ 0 -lt "${colmun}" ]; then
-			while [ 1 -lt "${colmun}"  ]; do
-				printf 'W3m-control: MOVE_RIGHT1\n'
-				colmun=$((colmun - 1))
-			done
-		else
-			printf 'W3m-control: LINE_END\n'
-
-			while [ "${colmun}" -lt 0 ]; do
-				printf 'W3m-control: MOVE_LEFT1\n'
-				colmun=$((colmun + 1))
-			done
-		fi
-	fi
-)
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/quickmark"
-gotoColmun='0'
-gotoLine='0'
+moveColmun='0'
+moveLine='0'
+regexpFlag='0'
 args=''
 
 # コマンドライン引数の解析する
@@ -70,24 +40,29 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-C' | '--colmun')
-			gotoColmun='1'
+			moveColmun='1'
+			shift
+			;;
+		'-E' | '--extended-regexp')
+			regexpFlag='1'
 			shift
 			;;
 		'-l' | '--line')
-			gotoLine='1'
+			moveLine='1'
 			shift
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... [PATTERN]...
-				Get a quick mark.
+				Usage: ${0##*/} [OPTION]... [PATTERNS]...
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
-				 -c, --config=FILE  quick mark file
-				 -C, --colmun       jump to colmun
-				 -l, --line         jump to line
-				 -h, --help         display this help and exit
-				 -v, --version      output version information and exit
+				 -c, --config=FILE      quick mark file
+				 -C, --colmun           jump to colmun
+				 -E, --extended-regexp  PATTERNS are extended regular expressions
+				 -l, --line             jump to line
+				 -h, --help             display this help and exit
+				 -v, --version          output version information and exit
 			EOF
 
 			exit
@@ -161,28 +136,65 @@ if [ "${#}" -eq 0 ]; then
 	set +f
 fi
 
-goto=''
+awkScript=$(cat <<- 'EOF'
+	BEGIN {
+		if(!regexpFlag) {
+			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
+		}
+
+		pattern = "^" pattern "$"
+
+		jumpListCount = split("line colmun", jumpList, " ")
+
+		data["line"] = moveLine
+		data["line_goto"] = "GOTO_LINE %s"
+		data["line_end"] = "END"
+		data["line_up"] = "MOVE_UP %s"
+
+		data["colmun"] = moveColmun
+		data["colmun_goto"] = "COMMAND LINE_BEGIN; MOVE_RIGHT1 %s"
+		data["colmun_end"] = "LINE_END"
+		data["colmun_up"] = "MOVE_LEFT1 %s"
+	}
+
+	function quoteEscape(string) {
+		gsub(/'+/, "'\"&\"'", string)
+		return "'" string "'"
+	}
+
+	function w3mCommand(command) {
+		return sprintf("W3m-control: %s\n", command)
+	}
+
+	$1 ~ pattern {
+		uri = $2
+		data["line_number"] = $3
+		data["colmun_number"] = $4
+		headerField = ""
+
+		for(i = 1; i <= jumpListCount; i++) {
+			if(data[jumpList[i]]) {
+				if(0 < data[jumpList[i] "_number"]) {
+					headerField = headerField w3mCommand(sprintf(data[jumpList[i] "_goto"], data[jumpList[i] "_number"]))
+				} else {
+					headerField = headerField w3mCommand(data[jumpList[i] "_end"])
+
+					if(data[jumpList[i] "_number"] < 0) {
+						headerField = headerField w3mCommand(sprintf(data[jumpList[i] "_up"], data[jumpList[i] "_number"] * -1))
+					}
+				}
+			}
+		}
+
+		printf(" '--header-field' %s %s", quoteEscape(headerField), quoteEscape(uri))
+	}
+EOF
+)
+
+arguments='printRedirect.sh'
 
 for pattern in ${@+"${@}"}; do
-	fileds=$(grep -e "^${pattern}	" -- "${config}" || :)
-
-	if [ -z "${goto}" ]; then
-		first=$(printf '%s\n' "${fileds}" | head -n 1)
-		goto=$(printf '%s' "${first}" | cut -f 2)
-		header=$(gotoMove "$(printf '%s' "${first}" | cut -f 3)" "$(printf '%s' "${first}" | cut -f 4)")
-		fileds=$(printf '%s\n' "${fileds}" | tail -n '+2'; printf '$')
-	fi
-
-	header=$(printf '%s\n%s' "${header}" "$(
-		printf '%s' "${fileds%$}" | while IFS='	' read -r 'key' 'uri' 'line' 'colmun' 'date'; do
-			printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
-			gotoMove "${line}" "${colmun}"
-		done
-	)")
+	arguments="${arguments}$(awk -v "pattern=${pattern}" -v "regexpFlag=${regexpFlag}" -v "moveLine=${moveLine}" -v "moveColmun=${moveColmun}" -- "${awkScript}" "${config}")"
 done
 
-if [ -z "${goto}" ]; then
-	httpResponseW3mBack.sh
-else
-	printRedirect.sh "${goto}" '' "${header}"
-fi
+eval "${arguments}"

@@ -1,5 +1,15 @@
 #!/usr/bin/env sh
 
+##
+# Print redirect message.
+#
+# @author qq542vev
+# @version 1.0.0
+# @date 2020-02-08
+# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##
+
 # 初期化
 set -eu
 umask '0022'
@@ -12,49 +22,56 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
-uri="${1:-}"
-beforeHeader="${2:-}"
-afterHeader="${3:-}"
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
-if expr "${uri}" ':' '[0-9A-Za-z]\{1,\}:' >'/dev/null'; then
-	if [ "${W3MPLUS_REDIRECT_TYPE:-0}" -eq '1' ]; then
-		command="W3m-control: TAB_GOTO ${uri}"
-	else
-		command="W3m-control: GOTO ${uri}"
-	fi
+afterHeaderFields=''
 
-	body="<p>Redirecting: <a href=\"${uri}\">${uri}</a></p>"
-else
-	command="W3m-control: ${uri}"
-	body="<p>Redirecting: <code>${uri}</code></p>"
-fi
+headerFields=''
 
-if [ -z "${uri}" ]; then
-	if [ "${W3MPLUS_REDIRECT_TYPE:-0}" -eq '2' ]; then
-		httpResponseNoCache.sh '' 'W3m-control: CLOSE_TAB'
-	else
-		httpResponseW3mBack.sh
-	fi
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-H' | '--header-field')
+			afterHeaderFields="${2}"
+			shift 2
+			;;
+		# ヘルプメッセージを表示して終了する
+		'-h' | '--help')
+			cat <<- EOF
+				Usage: ${0##*/} [OPTION]... [URL1] [OPTION]... [URL2]...
+				Print redirect message.
 
-	exit 0
-fi
+				 -H, --header-field=HEADER  HTTP header field after redirect
+				 -h, --help                 display this help and exit
+				 -v, --version              output version information and exit
+			EOF
 
-if [ "${W3MPLUS_REDIRECT_TYPE:-0}" -eq '2' ]; then
-	printHtml.sh 'Redirecting' "${body}" "$(
-		cat <<- EOF
-			${beforeHeader}
-			${command}
-			W3m-control: DELETE_PREVBUF
-			${afterHeader}
-		EOF
-	)"
+			exit
+			;;
+		'-v' | '--version')
+			cat <<- EOF
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
+			EOF
 
-	exit 0
-fi
+			exit
+			;;
+		*)
+			if [ "${W3MPLUS_REDIRECT_TYPE-0}" -eq 1 ]; then
+				command='TAB_GOTO'
+			else
+				command='GOTO'
+			fi
 
-httpResponseNoCache.sh '' - <<- EOF
-	${beforeHeader}
-	W3m-control: BACK
-	${command}
-	${afterHeader}
-EOF
+			if [ -z "${headerFields}" ]; then
+				W3MPLUS_REDIRECT_TYPE='1'
+			fi
+
+			headerFields=$(printf '%s\nW3m-control: %s %s\n%s' "${headerFields}" "${command}" "${1}" "${afterHeaderFields}")
+			shift
+			;;
+	esac
+done
+
+printf '%s\n' "${headerFields}" | httpResponseW3mBack.sh -

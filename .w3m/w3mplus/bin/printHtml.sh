@@ -1,5 +1,15 @@
 #!/usr/bin/env sh
 
+##
+# Print HTTP message for HTML.
+#
+# @author qq542vev
+# @version 2.0.0
+# @date 2020-02-08
+# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##
+
 # 初期化
 set -eu
 umask '0022'
@@ -7,52 +17,137 @@ IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
 # 終了時の動作を設定する
-trap 'exit 129' 1 # SIGHUP
-trap 'exit 130' 2 # SIGINT
-trap 'exit 131' 3 # SIGQUIT
-trap 'exit 143' 15 # SIGTERM
+trap 'endCall' 0 # EXIT
+trap 'endCall; exit 129' 1 # SIGHUP
+trap 'endCall; exit 130' 2 # SIGINT
+trap 'endCall; exit 131' 3 # SIGQUIT
+trap 'endCall; exit 143' 15 # SIGTERM
 
-case "${LANG:-C}" in 'C')
-	LANG='en_US.US-ASCII'
-	;;
-esac
+endCall () {
+	rm -fr ${tmpFile+"${tmpFile}"}
+}
 
-lang=$(printf '%s' "${LANG%%.*}" | tr '_' '-')
-charset="${LANG#*.}"
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
-title="${1-No title}"
-main="${2-}"
-header=$(printf '%s\nContent-Type: text/html; charset=%s' "${3-}" "${charset}")
-statusCode="${4-200 OK}"
+title='No title'
+headerFields=''
+statusCode="200 OK"
+args=''
 
-case "${main}" in '-')
-	main=$(cat)
-	;;
-esac
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-H' | '--header-field')
+			headerFields="${2}"
+			shift 2
+			;;
+		'-m' | '--meta-data')
+			metaData="${2}"
+			shift 2
+			;;
+		'-s' | '--status-code')
+			statusCode="${2}"
+			shift 2
+			;;
+		'-t' | '--title')
+			title="${2}"
+			shift 2
+			;;
+		'-h' | '--help')
+			cat <<- EOF
+				Usage: ${0##*/} [OPTION]... [FILE]...
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
-httpResponseNoCache.sh - "${header}" "${statusCode}" <<- EOF
-	<!DOCTYPE html>
-	<html
-		xmlns="http://www.w3.org/1999/xhtml"
-		lang="${lang}"
-		xml:lang="${lang}"
-		about=""
-		typeof="foaf:Document"
-	>
-		<head>
-			<meta charset="${charset}" />
-			<meta name="copyright" property="dc11:rights" content="Copyright © 2019 qq542vev. Some rights reserved." />
-			<meta name="generator" content="w3mplus" />
-			<meta name="referrer" content="no-referrer" />
+				 -H, --header-field=HEADER     HTTP header fields
+				 -m, --meta-data=ELEMENT       HTML elements in head element
+				 -s, --status-code=STATUSCODE  HTTP status code
+				 -t, --title=TITLE             page title in title element
+				 -h, --help                    display this help and exit
+				 -v, --version                 output version information and exit
+			EOF
 
-			<title property="dcterms:title">${title}</title>
+			exit
+			;;
+		'-v' | '--version')
+			cat <<- EOF
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
+			EOF
 
-			<link rel="author" title="qq542vev - GitHub" href="https://github.com/qq542vev" />
-			<link rel="help" title="w3mplus Document" href="file://${W3MPLUS_PATH}/doc/index.html" />
-			<link rel="license" title="Creative Commons License" href="https://creativecommons.org/licenses/by-nc/4.0/" />
-		</head>
-		<body>
-			<main id="main" rel="schema:mainContentOfPage" resource="#main">${main}</main>
-		</body>
-	</html>
-EOF
+			exit
+			;;
+		'-')
+			tmpFile=$(mktemp)
+			cat >"${tmpFile}"
+			shift
+
+			set -- "${tmpFile}" ${@+"${@}"}
+			;;
+		# `--name=value` 形式のロングオプション
+		'--'[!-]*'='*)
+			option="${1}"
+			shift
+			# `--name value` に変換して再セットする
+			set -- "${option%%=*}" "${option#*=}" ${@+"${@}"}
+			;;
+		# 以降はオプション以外の引数
+		'--')
+			shift
+
+			while [ 1 -le "${#}" ]; do
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+
+				args="${args}${args:+ }'${arg%?$}'"
+				shift
+			done
+			;;
+		# 複合ショートオプション
+		'-'[!-][!-]*)
+			option=$(printf '%s\n' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s\n' "${1}" | cut -c '3-'; printf '$')
+
+			shift
+			# `-abc` を `-a -bc` に変換して再セットする
+			set -- "-${option%?$}" "-${options%?$}" ${@+"${@}"}
+			;;
+		# その他の無効なオプション
+		'-'*)
+			cat <<- EOF 1>&2
+				${0##*/}: invalid option -- '${1}'
+				Try '${0##*/} --help' for more information.
+			EOF
+
+			exit 64 # EX_USAGE </usr/include/sysexits.h>
+			;;
+		# その他のオプション以外の引数
+		*)
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+
+			args="${args}${args:+ }'${arg%?$}'"
+			shift
+			;;
+	esac
+done
+
+# オプション以外の引数を再セットする
+eval set -- "${args}"
+
+# 引数の個数が過小である
+if [ "${#}" -eq 0 ]; then
+	tmpFile=$(mktemp)
+	cat >"${tmpFile}"
+
+	set -- "${tmpFile}"
+fi
+
+mainContent=$(cat -- ${@+"${@}"}; printf '$')
+mainContent="${mainContent%$}"
+
+headerFields=$(printf 'Content-Type: text/html; charset=UTF-8\n%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh -u 'W3m-control'; printf '$')
+headerFields="${headerFields%$}"
+
+messageBody=$("${W3MPLUS_TEMPLATE_HTML}" -t "${title}" -c "${mainContent}"; printf '$')
+messageBody="${messageBody%$}"
+
+"${W3MPLUS_TEMPLATE_HTTP}" -b "${messageBody}" -h "${headerFields}" -s "${statusCode}"

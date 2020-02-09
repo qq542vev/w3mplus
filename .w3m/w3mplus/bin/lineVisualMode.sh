@@ -4,8 +4,8 @@
 # Start visual mode.
 #
 # @author qq542vev
-# @version 1.1.2
-# @date 2020-01-27
+# @version 1.1.3
+# @date 2020-02-08
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -21,6 +21,9 @@ trap 'exit 129' 1 # SIGHUP
 trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
+
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
 # 各変数に既定値を代入する
 line='1'

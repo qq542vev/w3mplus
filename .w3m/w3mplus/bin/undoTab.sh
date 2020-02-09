@@ -63,7 +63,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]...
-				Restore w3m tabs.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -c, --config=FILE    restore file
 				 -C, --count=NUMBER   restore count

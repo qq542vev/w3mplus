@@ -4,8 +4,8 @@
 # Set a auto command.
 #
 # @author qq542vev
-# @version 1.0.2
-# @date 2020-01-27
+# @version 1.0.3
+# @date 2020-02-08
 # @since 2019-12-15
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -22,6 +22,9 @@ trap 'exit 129' 1 # SIGHUP
 trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
+
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
 outputHtml () {
 	while IFS='	' read -r 'call' 'check' 'command' 'date'; do
@@ -57,7 +60,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]... CALL [CHECK] [COMMAND]...
-				Set a auto command.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -c, --config=FILE  configuration file
 				 -h, --help         display this help and exit
@@ -175,4 +178,4 @@ if [ -n "${deleteList}" ]; then
 	deleteList="<h1>Deleted auto command </h1>${deleteList}"
 fi
 
-printHtml.sh "Set auto command '${call}'" "${addList}${deleteList}"
+printRedirect.sh "data:text/html;base64,$("${W3MPLUS_TEMPLATE_HTML}" -t "Set auto command '${call}'" -c "${addList}${deleteList}" | base64 | tr -d '\n')"

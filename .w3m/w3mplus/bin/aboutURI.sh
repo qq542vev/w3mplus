@@ -4,8 +4,8 @@
 # Displays a page about w3m.
 #
 # @author qq542vev
-# @version 1.0.2
-# @date 2020-01-27
+# @version 1.0.3
+# @date 2020-02-08
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -22,12 +22,15 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
+
 case "${1-about:about}" in
 	'about:')
-		printHtml.sh 'About:' "<pre title=\"w3m Version Information\"><samp>$(w3m -version | htmlEscape.sh)</samp></pre>"
+		printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "$(w3m -version | htmlEscape.sh)" | printHtml.sh --title 'About:'
 		;;
 	'about:about')
-		printHtml.sh 'About About' - <<- 'EOF'
+		printHtml.sh --title 'About About' <<- 'EOF'
 			<h1>About About</h1>
 
 			<p>This is a list of “about” pages for your convenience.</p>
@@ -51,31 +54,31 @@ case "${1-about:about}" in
 		EOF
 		;;
 	'about:blank')
-		printHtml.sh 'about:blank'
+		: | printHtml.sh --title 'about:blank'
 		;;
 	'about:bookmark')
-		printRedirect.sh 'VIEW_BOOKMARK'
+		httpResponseW3mBack.sh 'W3m-control: VIEW_BOOKMARK'
 		;;
 	'about:cache')
-		printRedirect.sh "file://${HOME}/.w3m"
+		printRedirect.sh "file://$(urlencodeForPath "${HOME}")/.w3m"
 		;;
 	'about:config')
-		printRedirect.sh 'OPTIONS'
+		httpResponseW3mBack.sh 'W3m-control: OPTIONS'
 		;;
 	'about:cookie')
-		printRedirect.sh 'COOKIE'
+		httpResponseW3mBack.sh 'W3m-control: COOKIE'
 		;;
 	'about:downloads')
-		printRedirect.sh 'DOWNLOAD_LIST'
+		httpResponseW3mBack.sh 'W3m-control: DOWNLOAD_LIST'
 		;;
 	'about:help')
-		printRedirect.sh 'HELP'
+		httpResponseW3mBack.sh 'W3m-control: HELP'
 		;;
 	'about:history')
-		printRedirect.sh 'HISTORY'
+		httpResponseW3mBack.sh 'W3m-control: HISTORY'
 		;;
 	'about:home')
-		printHtml.sh 'w3m Start Page' - "$(
+		printHtml.sh --title 'w3m Start Page' --header-field "$(
 			cat <<- 'EOF'
 				W3m-control: BEGIN
 				W3m-control: NEXT_LINK
@@ -106,16 +109,16 @@ case "${1-about:about}" in
 		EOF
 		;;
 	'about:message')
-		printRedirect.sh 'MSGS'
+		httpResponseW3mBack.sh 'W3m-control: MSGS'
 		;;
 	'about:newtab')
 		httpResponseW3mBack.sh 'W3m-control: TAB_GOTO about:blank'
 		;;
 	'about:permissions')
-		printRedirect.sh "file://${HOME}/.w3m/siteconf"
+		printRedirect.sh "file://$(urlencodeForPath "${HOME}")/.w3m/siteconf"
 		;;
 	*)
-		printHtml.sh 'Problem loading page' - '' '400 Bad Request' <<- 'EOF'
+		printHtml.sh --title 'Problem loading page' --status-code '400 Bad Request' <<- 'EOF'
 			<h1>The address isn't valid</h1>
 
 			<p>The URL is not valid and cannot be loaded.</p>

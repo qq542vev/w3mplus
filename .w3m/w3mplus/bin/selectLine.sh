@@ -4,8 +4,8 @@
 # Performs an action on the selected row.
 #
 # @author qq542vev
-# @version 1.1.2
-# @date 2020-01-27
+# @version 1.1.3
+# @date 2020-02-08
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -22,16 +22,8 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
-printText () (
-	case "${LANG:-C}" in 'C')
-		LANG='en_US.US-ASCII'
-		;;
-	esac
-
-	charset="${LANG#*.}"
-
-	httpResponseNoCache.sh - "$(printf 'Content-Type: text/plain; charset=%s\n%s' "${charset}" "${1-}")"
-)
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
 # 各変数に既定値を代入する
 line='1'
@@ -63,7 +55,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]... ACTION FILE
-				Performs an action on the selected row.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -l, --line=NUMBER    line number
 				 -n, --number=NUMBER  cut line

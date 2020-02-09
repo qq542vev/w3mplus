@@ -9,6 +9,14 @@
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
+#echo W3m-control: BACK
+echo W3m-control: EXEC_SHELL echo "UTF-8''%20" ';' LANG=C '=?UTF-8?B?ZGF0ZQ==?='
+#echo W3m-control: EXEC_SHELL date '&&' LANG=C date
+echo
+echo bbb
+exit
+echo W3m-control: EXEC_SHELL =?UTF-8?B?ZGF0ZQ==?= ; LANG=C date
+
 # 初期化
 set -eu
 umask 0022

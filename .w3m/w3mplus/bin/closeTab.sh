@@ -5,7 +5,7 @@
 #
 # @author qq542vev
 # @version 2.0.0
-# @date 2020-01-27
+# @date 2020-02-08
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -22,6 +22,9 @@ trap 'endCall; exit 129' 1 # SIGHUP
 trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
+
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
 
 # 終了時に一時ファイルを削除する
 endCall () {
@@ -42,8 +45,8 @@ while [ 1 -le "${#}" ]; do
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... URI
-				Close the tab and record the URI.
+				Usage: ${0##*/} [OPTION]... [URI]...
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -c, --config=FILE  restore file
 				 -h, --help         display this help and exit
@@ -135,10 +138,28 @@ date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 	cat -- "${config}"
 
 	for uri in ${@+"${@}"}; do
-		if [ -n "${uri}" ]; then
-			printf '%s\t%s\n' "${uri}" "${date}"
-		fi
+		printf '%s\t%s\n' "${uri}" "${date}"
 	done
-} | sed -e '1!G; h; $!d' | rev | uniq -f 1 | rev | sed -e '1!G; h; $!d' >"${tmpFile}"
+} | awk '
+	BEGIN {
+		prev["uri"] = ""
+		prev["date"] = ""
+	}
+
+	NF == 2 {
+		if(prev["uri"] != "" && $1 != prev["uri"]) {
+			printf("%s\t%s\n", prev["uri"], prev["date"])
+		}
+
+		prev["uri"] = $1
+		prev["date"] = $2
+	}
+
+	END {
+		if(prev["uri"] != "") {
+			printf("%s\t%s\n", prev["uri"], prev["date"])
+		}
+	}
+' >"${tmpFile}"
 
 cp -fp -- "${tmpFile}" "${config}"

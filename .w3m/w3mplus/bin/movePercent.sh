@@ -22,6 +22,9 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
+
 # 各変数に既定値を代入する
 line='1'
 percent='50'
@@ -55,7 +58,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]... FILE
-				Display HTTP Response that moves to n% with w3m.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -l, --line     line number
 				 -n, --number   move percent 0 - 100
@@ -124,7 +127,7 @@ done
 eval set -- "${args}"
 
 file="${1}"
-lineCount=$(grep -c -e '^' -- "${file}")
+lineCount=$(grep -c -e '^' -- "${file}" || :)
 
 # 引数の個数が過大である
 if [ 1 -lt "${#}" ]; then

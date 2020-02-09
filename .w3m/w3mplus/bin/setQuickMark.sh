@@ -22,11 +22,14 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
+
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/quickmark"
 colmun='1'
 line='1'
-fileds=''
+fields=''
 addList=''
 date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 
@@ -59,7 +62,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]... KEY [URI]...
-				Set the quick mark.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -c, --config=FILE    quick mark file
 				 -C, --colmun=NUMBER  colmun number
@@ -112,8 +115,8 @@ while [ 1 -le "${#}" ]; do
 		*)
 			case "${key+1}" in
 				'1')
-					fileds=$(printf '%s%s\t%s\t%d\t%d\t%s\n$' "${fileds}" "${key}" "${1}" "${line}" "${colmun}" "${date}")
-					fileds="${fileds%$}"
+					fields=$(printf '%s%s\t%s\t%d\t%d\t%s\n$' "${fields}" "${key}" "${1}" "${line}" "${colmun}" "${date}")
+					fields="${fields%$}"
 					escapedURI=$(printf '%s' "${1}" | htmlEscape.sh)
 					addList="${addList}<li><a href=\"${escapedURI}\">${escapedURI}</a></li>"
 					;;
@@ -142,7 +145,7 @@ fi
 
 {
 	sed -e "/^\$/d; /^${escapedKey}	/d" -- "${config}"
-	printf '%s' "${fileds}"
+	printf '%s' "${fields}"
 } | sort -o "${config}"
 
 if [ -n "${addList}" ]; then
@@ -153,4 +156,4 @@ if [ -n "${deleteList}" ]; then
 	deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
 fi
 
-printHtml.sh "Set Quick Mark '${key}'" "<p>Set Quick Mark '<strong>${key}</strong>'</p>${addList}${deleteList}"
+printRedirect.sh "data:text/html;base64,$("${W3MPLUS_TEMPLATE_HTML}" -t "Set Quick Mark '${key}'" -c "<p>Set Quick Mark '<strong>${key}</strong>'</p>${addList}${deleteList}" | base64 | tr -d '\n')"

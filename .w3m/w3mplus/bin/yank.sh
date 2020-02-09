@@ -4,8 +4,8 @@
 # Yank text with w3m.
 #
 # @author qq542vev
-# @version 1.1.2
-# @date 2020-01-24
+# @version 1.1.3
+# @date 2020-02-08
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -22,10 +22,16 @@ trap 'exit 130' 2 # SIGINT
 trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
+
 # 各変数に既定値を代入する
-yankFile=$(date "+${W3MPLUS_YANK_FILE}"; printf '$'); yankFile="${yankFile%?$}"
-yankHeader=$(date "+${W3MPLUS_YANK_HEADER}"; printf '$'); yankHeader="${yankHeader%?$}"
-yankFooter=$(date "+${W3MPLUS_YANK_FOOTER}"; printf '$'); yankFooter="${yankFooter%?$}"
+yankFile=$(date "+${W3MPLUS_YANK_FILE}"; printf '$');
+yankFile="${yankFile%?$}"
+yankHeader=$(date "+${W3MPLUS_YANK_HEADER}"; printf '$');
+yankHeader="${yankHeader%?$}"
+yankFooter=$(date "+${W3MPLUS_YANK_FOOTER}"; printf '$');
+yankFooter="${yankFooter%?$}"
 args=''
 
 # コマンドライン引数の解析する
@@ -47,7 +53,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]... [TEXT]...
-				Yank text with w3m.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -f, --file=FILE      yank file
 				 -F, --footer=STRING  footer text
