@@ -25,7 +25,7 @@ trap 'endCall; exit 143' 15 # SIGTERM
 
 # 終了時に一時ディレクトリを削除する
 endCall () {
-	rm -fr -- ${tmpDir+"${tmpDir}"}
+	rm -fr -- ${tmpFile+"${tmpFile}"}
 }
 
 # 各変数に既定値を代入する

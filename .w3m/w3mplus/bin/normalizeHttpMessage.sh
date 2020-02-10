@@ -23,9 +23,7 @@ trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
 
-: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/config"
-
+# 終了時に一時ファイルを削除する
 endCall () {
 	rm -fr ${tmpDir+"${tmpDir}"}
 }

@@ -27,6 +27,7 @@ trap 'endCall; exit 143' 15 # SIGTERM
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/config"
 
+# 終了時に一時ファイルを削除する
 endCall () {
 	rm -f -- ${tmpFile+"${tmpFile}"}
 }
@@ -206,4 +207,4 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 	cp -fp "${tmpFile}" "${config}"
 done
 
-printf '<ul>%s</ul>' "${listitem}" | printHtml.sh --title 'Cookie Manager'
+printRedirect.sh "data:text/html;base64,$("${W3MPLUS_TEMPLATE_HTML}" -t 'Cookie Manager' -c "<ul>${listitem}</ul>" | base64 | tr -d '\n')"

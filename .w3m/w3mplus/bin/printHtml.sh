@@ -23,6 +23,7 @@ trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
 
+# 終了時に一時ファイルを削除する
 endCall () {
 	rm -fr ${tmpFile+"${tmpFile}"}
 }
