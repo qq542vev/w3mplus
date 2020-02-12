@@ -4,8 +4,8 @@
 # Restore w3m tabs.
 #
 # @author qq542vev
-# @version 1.2.2
-# @date 2020-01-27
+# @version 2.0.0
+# @date 2020-02-12
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -23,6 +23,9 @@ trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
 
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/config"
+
 # 終了時に一時ディレクトリを削除する
 endCall () {
 	rm -fr -- ${tmpFile+"${tmpFile}"}
@@ -30,8 +33,8 @@ endCall () {
 
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/tabRestore"
-count='1'
-number='+1'
+count='-1'
+number='0'
 args=''
 
 # コマンドライン引数の解析する
@@ -42,8 +45,8 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-C' | '--count')
-			if [ "${2}" != '0' ] && [ "$(expr -- "${2}" ':' '[1-9][0-9]*$')" -eq 0 ]; then
-				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+			if [ "$(expr -- "${2}" ':' '@\{0,1\}[+-]0$')" -eq 0 ] && [ "$(expr -- "${2}" ':' '@\{0,1\}[+-][1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a integer or timestamp.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
 
@@ -51,8 +54,8 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-n' | '--number')
-			if [ "$(expr -- "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
-				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
+			if [ "${2}" != '0' ] && [ "${2}" != '@0' ] && [ "$(expr -- "${2}" ':' '@\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a integer or timestamp.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
 
@@ -76,9 +79,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //p' -- "${0}")
 			EOF
 
 			exit
@@ -147,61 +150,139 @@ if [ 0 -lt "${#}" ]; then
 fi
 
 limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - W3MPLUS_UNDO_TIMEOUT))
-tmpFile=$(mktemp)
 lineCount=$(grep -c -e '^' -- "${config}" || :)
+tmpFile=$(mktemp)
 
-if [ 1 -le "${number}" ]; then
-	end=$((lineCount - number + 1))
-	start=$((end - count + 1))
+case "${number}" in '@'*)
+	case "${count}" in
+		'@'*)
+			result=$(sed '1!G; h; $!d' -- "${config}" | awk -v "timePosition=${number#@}" -v "timeCount=${count#@}" -- "$(
+				cat <<- 'EOF'
+				BEGIN {
+					position = -1
+					count = -1
 
-	if [ 1 -le "${end}" ]; then
-		if [ "${count}" -eq 0 ] || [ "${start}" -lt 1 ]; then
-			start='1'
+					if(0 <= timeCount) {
+						start = timePosition + timeCount
+						end = timePosition
+					} else {
+						start = timePosition
+						end = timePosition + timeCount
+					}
+				}
+
+				{
+					date = $2
+
+					gsub(/[TZ:-]/, "", date)
+					gsub(/'+/, "'\"&\"'", date)
+
+					command = "printf '%s' '" date "' | TZ='UTC+0' utconv"
+					command | getline timestamp
+
+					if(position < 0 && timestamp <= start) {
+						position = NR - 1
+					}
+
+					if(0 <= position && timestamp < end) {
+						count = NR - position - 1
+						exit
+					}
+				}
+
+				END {
+					if(position < 0) {
+						position = NR
+					}
+
+					if(count < 0) {
+						count = NR - position
+					}
+
+					printf("%d %s%d\n", position, (position || count) ? "-" : "+", count)
+				}
+				EOF
+			)")
+			number="${result% *}"
+			count="${result#* }"
+			;;
+		*)
+			number=$(sed '1!G; h; $!d' -- "${config}" | awk -v "time=${number#@}" -v "sign=${count%%[0-9]*}" -- "$(
+				cat <<- 'EOF'
+				BEGIN {
+					number = -1
+				}
+
+				{
+					date = $2
+
+					gsub(/[TZ:-]/, "", date)
+					gsub(/'+/, "'\"&\"'", date)
+
+					command = "printf '%s' '" date "' | TZ='UTC+0' utconv"
+					command | getline timestamp
+
+					if((("+" == sign) && (timestamp < time)) || (("-" == sign) && (timestamp <= time))) {
+						number = NR - 1
+						exit
+					}
+				}
+
+				END {
+					printf("%d", (0 <= number) ? number : NR)
+				}
+				EOF
+			)")
+			;;
+	esac
+	;;
+esac
+
+case "${count}" in
+	'+0')
+		count="${number}"
+		number='0'
+		;;
+	'+'*)
+		if [ "${number}" -lt "${count}" ]; then
+			count="${number}"
 		fi
 
-		head -n "$((start - 1))" -- "${config}" >"${tmpFile}"
+		number=$((number - count))
+		count=$((count))
+		;;
+	'-0')
+		count="${lineCount}"
+		;;
+	'-'*)
+		count=$((count * -1))
+		;;
+esac
 
-		sed -e "${start},${end}!d" -- "${config}" | sed -e '1!G; h; $!d' | while IFS='	' read -r 'uri' 'date'; do
-			timestamp=$(printf '%s' "${date}" | tr -d 'TZ:-' | TZ='UTC+0' utconv)
+head -n "-$((number + count))" -- "${config}" >>"${tmpFile}"
 
-			if [ "${limitTime}" -lt "${timestamp}" ]; then
-				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
-			else
-				: >"${tmpFile}"
-				break
-			fi
-		done
+head -n "-${number}" -- "${config}" | tail -n "${count}" | sed '1!G; h; $!d' | awk -v "limitTime=${limitTime}" -v "file=${tmpFile}" -- "$(
+	cat <<- 'EOF'
+	{
+		date = $2
 
-		tail -n "+$((end + 1))" -- "${config}" >>"${tmpFile}"
+		gsub(/[TZ:-]/, "", date)
+		gsub(/'+/, "'\"&\"'", date)
 
-		cp -fp -- "${tmpFile}" "${config}"
-	fi
-elif [ "${number}" -lt 0 ]; then
-	start=$((number * -1))
-	end=$((start + count - 1))
-	if [ "${count}" -eq 0 ]; then
-		end="${lineCount}"
-	fi
-	index='1'
+		command = "printf '%s' '" date "' | TZ='UTC+0' utconv"
+		command | getline timestamp
 
-	while IFS='	' read -r 'uri' 'date'; do
-		if [ "${end}" -lt "${index}" ]; then
-			printf '%s %s\n' "${uri}" "${date}" >>"${tmpFile}"
-			continue
-		fi
+		if(timestamp <= limitTime) {
+			gsub(/'+/, "'\"&\"'", file)
+			system(": >'" file "'")
+			exit
+		}
 
-		timestamp=$(printf '%s' "${date}" | tr -d 'TZ:-' | TZ='UTC+0' utconv)
+		printf("%s\t%s\n", $1, $2)
+	}
+	EOF
+)"
 
-		if [ "${limitTime}" -lt "${timestamp}" ]; then
-			if [ "${number}" -le "${index}" ]; then
-				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
-			else
-				printf '%s %s\n' "${uri}" "${date}" >>"${tmpFile}"
-			fi
+tail -n "${number}" -- "${config}" >>"${tmpFile}"
 
-			index=$((index + 1))
-		fi
-	done <"${config}"
-
-	cp -fp -- "${tmpFile}" "${config}"
-fi | httpResponseW3mBack.sh -
+cp -fp -- "${tmpFile}" "${config}"

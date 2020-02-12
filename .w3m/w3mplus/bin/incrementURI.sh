@@ -5,7 +5,7 @@
 #
 # @author qq542vev
 # @version 1.2.0
-# @date 2020-01-27
+# @date 2020-02-13
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -43,7 +43,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]... URI [URI]...
-				Increments the URI.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -n, --number   increment number
 				 -h, --help     display this help and exit
@@ -54,9 +54,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //p' -- "${0}")
 			EOF
 
 			exit

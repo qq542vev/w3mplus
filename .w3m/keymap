@@ -526,7 +526,7 @@ keymap "d" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
 keymap "D" GOTO "file:///cgi-bin/w3mplus?action=closeTab"
 
 keymap "u" GOTO "file:///cgi-bin/w3mplus?action=undoTab"
-keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undoTab&count=0"
+keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undoTab&count=-0"
 
 keymap ":u" GOTO "file:///cgi-bin/w3mplus?action=undoTabs"
 
@@ -841,7 +841,7 @@ keymap "^[[18~" EDIT_SCREEN
 keymap "M-f" MENU MenuFile
 keymap "M-e" MENU MenuEdit
 keymap "M-v" MENU MenuView
-keymap "M-s" HISTORY
+keymap "M-s" MENU MenuHistory
 keymap "M-b" MENU MenuBookmarks
 keymap "M-t" MENU MenuTools
 keymap "M-h" MENU MenuHelp

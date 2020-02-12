@@ -4,8 +4,8 @@
 # Move to the next paragraph.
 #
 # @author qq542vev
-# @version 1.1.3
-# @date 2020-02-08
+# @version 1.1.4
+# @date 2020-02-13
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -54,7 +54,7 @@ while [ 1 -le "${#}" ]; do
 		'-h' | '--help')
 			cat <<- EOF
 				Usage: ${0##*/} [OPTION]... FILE
-				Move to the next paragraph.
+				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
 				 -l, --line=NUMBER    line number
 				 -n, --number=NUMBER  number of paragraph moves
@@ -66,9 +66,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-v' | '--version')
 			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
+				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //p' -- "${0}"))
+				$(sed -n -e 's/^# @copyright //p' -- "${0}")
+				License: $(sed -n -e 's/^# @licence //p' -- "${0}")
 			EOF
 
 			exit
@@ -136,7 +136,7 @@ fi
 
 while [ "${number}" -ne 0 ]; do
 	if [ 0 -lt "${number}" ]; then
-		line=$(sed -n -e "${line},\$!d; /^\$/{N; /^\\n$/D; =; Q}" -- "${file}")
+		line=$(sed -n -e "${line},\$!d; /^\$/{N; /^\\n$/D; =; q}" -- "${file}")
 
 		if [ -z "${line}" ]; then
 			line=$(grep -c -e '^' -- "${file}")
@@ -145,7 +145,7 @@ while [ "${number}" -ne 0 ]; do
 
 		number=$((number - 1))
 	else
-		line=$(sed -n "1{/./=}; ${line}Q; /^\$/{N; ${line}Q; /^\\n*\$/D; =}" -- "${file}" | tail -n '1')
+		line=$(sed -n "1{/./=}; ${line}q; /^\$/{N; ${line}q; /^\\n*\$/D; =}" -- "${file}" | tail -n '1')
 
 		if [ -z "${line}" ]; then
 			line='1'

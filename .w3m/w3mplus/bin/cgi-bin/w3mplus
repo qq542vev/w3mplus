@@ -4,8 +4,8 @@
 # Display the response for w3m.
 #
 # @author qq542vev
-# @version 1.1.2
-# @date 2020-02-08
+# @version 1.2.0
+# @date 2020-02-13
 # @licence https://creativecommons.org/licenses/by/4.0/
 ##
 
@@ -69,7 +69,12 @@ if result=$(
 			printf 'W3m-control: CLOSE_TAB' | httpResponseW3mBack.sh -
 			;;
 		'undoTab')
-			undoTab.sh ${query_number+'-n' "${query_number}"} ${query_count+'-C' "${query_count}"}
+			case "${query_count}" in '@'*)
+				query_number="@$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)"
+			esac
+
+			list=$(undoTab.sh ${query_number+'--number' "${query_number}"} ${query_count+'--count' "${query_count}"})
+			printf '%s' "${list}" | cut -f 1 | sed -e 's/^/W3m-control: TAB_GOTO /' | httpResponseW3mBack.sh -
 			;;
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"
@@ -206,6 +211,8 @@ if result=$(
 			;;
 		'zoom')
 			zoom.sh ${query_zoom+'--number' "${query_zoom}"}
+
+			printf 'W3m-control: REINIT' | httpResponseW3mBack.sh -
 			;;
 		'search')
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"

@@ -4,8 +4,8 @@
 # Change w3m image_scale.
 #
 # @author qq542vev
-# @version 1.1.3
-# @date 2020-02-01
+# @version 2.0.0
+# @date 2020-02-13
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -118,14 +118,6 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
-	set -f
-	set -- $(cat)
-	set +f
-fi
-
-
 # 引数の個数が過大である
 if [ 0 -lt "${#}" ]; then
 	cat <<- EOF 1>&2
@@ -136,23 +128,31 @@ if [ 0 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-if scale=$(grep -m '1' -e '^image_scale[\t ]\{1,\}[0-9]\{1,\}$' -- "${config}" | grep -o -e '[0-9]\{1,\}'); then
-	if expr -- "${zoom}" ':' '[+-]' >'/dev/null'; then
-		newScale=$((scale + zoom))
-	else
-		newScale="${zoom}"
-	fi
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
+: >>"${config}"
 
-	if [ "${W3MPLUS_ZOOM_MAX}" -lt "${newScale}" ]; then
-		newScale="${W3MPLUS_ZOOM_MAX}"
-	elif [ "${newScale}" -lt "${W3MPLUS_ZOOM_MIN}" ]; then
-		newScale="${W3MPLUS_ZOOM_MIN}"
-	fi
+pattern='^image_scale[\t ]\{1,\}\([0-9]\{1,\}\)[\t ]*$'
+scale=$(sed -n -e "/${pattern}/{s/${pattern}/\\1/p; q}" -- "${config}")
 
-	if [ "${scale}" -ne "${newScale}" ]; then
-		value=$(cat "${config}")
-		printf '%s\n' "${value}" | sed -e "/^image_scale[\\t ]/c image_scale ${newScale}" >"${config}"
+if [ -z "${scale}" ]; then
+	scale='100'
+	printf 'image_scale 100\n' >>"${config}"
+fi
 
-		printf 'W3m-control: REINIT'
-	fi
-fi | httpResponseW3mBack.sh -
+if expr -- "${zoom}" ':' '[+-]' >'/dev/null'; then
+	newScale=$((scale + zoom))
+else
+	newScale="${zoom}"
+fi
+
+if [ "${W3MPLUS_ZOOM_MAX}" -lt "${newScale}" ]; then
+	newScale="${W3MPLUS_ZOOM_MAX}"
+elif [ "${newScale}" -lt "${W3MPLUS_ZOOM_MIN}" ]; then
+	newScale="${W3MPLUS_ZOOM_MIN}"
+fi
+
+if [ "${scale}" -ne "${newScale}" ]; then
+	value=$(cat "${config}")
+	printf '%s\n' "${value}" | sed -e "/${pattern}/c image_scale ${newScale}" >"${config}"
+fi

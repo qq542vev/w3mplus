@@ -75,7 +75,7 @@ menu ContextMenuTab
 	nop  "---------------------------------"
 	func "Close Tab                     (c)" COMMAND "Cc" "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
 	func "Close Other Tabs              (o)" COMMAND "Oo" "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; PREV_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB"
-	func "Undo Close Tab                (u)" GOTO "Uu" "file:///cgi-bin/w3mplus?action=undoTab"
+	func "Undo Closed Tab               (u)" GOTO "u" "file:///cgi-bin/w3mplus?action=undoTab"
 	nop  "---------------------------------"
 	func "Move Left Along Tab Bar       (l)" TAB_LEFT "l"
 	func "Move Right Along Tab Bar      (r)" TAB_RIGHT "r"
@@ -90,7 +90,7 @@ menu Menu
 	popup "File      (f)" MenuFile "Ff"
 	popup "Edit      (e)" MenuEdit "Ee"
 	popup "View      (v)" MenuView "Vv"
-	func  "History   (s)" HISTORY "Ss"
+	popup "History   (s)" MenuHistory "Ss"
 	popup "Bookmarks (b)" MenuBookmarks "Bb"
 	popup "Tools     (t)" MenuTools "Tt"
 	popup "Help      (h)" MenuHelp "Hh"
@@ -129,6 +129,24 @@ menu MenuView
 	func "Show All Link      (l)" LIST_MENU "Ll"
 	nop  "----------------------"
 	func "Show All Tabs      (a)" TAB_MENU "Aa"
+end
+
+menu MenuHistory
+	func  "Show All History (h)" HISTORY "Hh"
+	func  "Buffer History   (b)" SELECT_MENU "Bb"
+	popup "Undo Closed Tab  (u)" MenuUndoClosedTabs "Uu"
+end
+
+menu MenuUndoClosedTabs
+	func "Undo Closed Tab      (u)" GOTO "u" "file:///cgi-bin/w3mplus?action=undoTab"
+	func "Undo 5 Closed Tabs   (f)" GOTO "Ff" "file:///cgi-bin/w3mplus?action=undoTab&count=-5"
+	func "Undo 10 Closed Tabs  (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=undoTab&count=-5"
+	nop  "------------------------"
+	func "within 10 minutes    (1)" GOTO "1" "file:///cgi-bin/w3mplus?action=undoTab&count=%40-600"
+	func "within 30 minutes    (3)" GOTO "3" "file:///cgi-bin/w3mplus?action=undoTab&count=%40-1800"
+	func "within 60 minutes    (6)" GOTO "6" "file:///cgi-bin/w3mplus?action=undoTab&count=%40-3600"
+	nop  "------------------------"
+	func "Undo All Closed Tabs (U)" GOTO "U" "file:///cgi-bin/w3mplus?action=undoTab&count=-0"
 end
 
 menu MenuBookmarks
