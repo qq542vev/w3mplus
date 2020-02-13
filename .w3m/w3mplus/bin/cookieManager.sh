@@ -158,6 +158,10 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
+: >>"${config}"
+
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
@@ -167,44 +171,62 @@ if [ "${#}" -eq 0 ]; then
 	set +f
 fi
 
+uriPattern='^\(\([^:/?#]\{1,\}\):\)\{0,1\}\(\/\/\([^@/?#]@\)\{0,1\}\([^/?#]*\)\(:[^/?#]*\)\{0,1\}\)\{0,1\}\([^?#]*\)\(?\([^#]*\)\)\{0,1\}\(#\(.*\)\)\{0,1\}$'
+ipPattern='^(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$'
 tmpFile=$(mktemp)
 listitem=''
+headerField=''
 
 for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"cookie_accept_domains ${whitelist}"}; do
-	field="${value% *}"
+	name="${value% *}"
 	action="${value#* }"
-	item=$(sed -n -e "s/^${field}[\\t ]//p" -- "${config}" | sed -e 's/[\t ,]\{1,\}/,/g; s/^,//; s/,$//' | tr 'A-Z' 'a-z')
+
+	if field=$(grep -m '1' -e "^${name}[	 ]" -- "${config}"); then
+		value=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[	 ,]\\{1,\\}/,/" | tr 'A-Z' 'a-z')
+	else
+		value=''
+		printf '%s \n' "${field}" >>"${config}"
+	fi
 
 	for domain in ${@+"${@}"}; do
 		if [ "${domain}" != "${domain#*/}" ]; then
-			domain=$(printf '%s' "${domain}" | sed -E -e 's/^(([^:/?#]+):)?(\/\/([^@/?#]@)?([^/?#]*)(:[^/?#]*)?)?([^?#]*)(\?([^#]*))?(#(.*))?$/\5/')
+			domain=$(printf '%s' "${domain}" | sed -e "s/${uriPattern}/\\5/")
 		fi
 
 		if [ -z "${domain}" ]; then
 			continue
 		fi
 
-		if [ "${subdomain}" -eq 1 ] && printf '%s' "${domain}" | grep -Eqv -e '^(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$'; then
+		if [ "${subdomain}" -eq 1 ] && printf '%s' "${domain}" | grep -Eqv -e "${ipPattern}"; then
 			domain=".${domain}"
 		fi
 
-		escaped=$(printf '%s' "${domain}" | tr 'A-Z' 'a-z' | sed -e 's/[].\*/[]/\\&/g; 1s/^^/\\^/; s/$$/\\$/')
-
-		if printf '%s' "${item}" | grep -E -e "(^|,)${escaped}(,|\$)"; then
-			case "${action}" in 'delete' | 'toggle')
-				item=$(printf '%s' "${item}" | sed -e "s/^${escaped},\\{0,1\\}//g; s/,${escaped}//g")
-				listitem="${listitem}<li>Removed the '<strong>${domain}</strong>' from the '<code>${field}</code>'.</li>"
-			esac
-		else
-			case "${action}" in 'add' | 'toggle')
-				item="${item}${item:+,}${domain}"
-				listitem="${listitem}<li>Added the '<strong>${domain}</strong>' to the '<code>${field}</code>'.</li>"
-			esac
-		fi
+		case "${value}" in
+			*",${domain},"*)
+				case "${action}" in 'delete' | 'toggle')
+					value=$(printf '%s' "${value}" | fsed ",${domain}" '')
+					listitem="${listitem}<li>Removed the '<strong>${domain}</strong>' from the '<code>${name}</code>'.</li>"
+					;;
+				esac
+				;;
+			*)
+				case "${action}" in 'add' | 'toggle')
+					value="${value}${domain},"
+					listitem="${listitem}<li>Added the '<strong>${domain}</strong>' to the '<code>${name}</code>'.</li>"
+					;;
+				esac
+				;;
+		esac
 	done
 
-	sed -e "/^${field}[\\t ]/c ${field} ${item}" -- "${config}" >"${tmpFile}"
+	value="${value#,}"
+	value="${value%,}"
+
+	sed -e "/^${name}[	 ]/c ${name} ${value}" -- "${config}" >"${tmpFile}"
 	cp -fp "${tmpFile}" "${config}"
+
+	headerField=$(printf '%sW3m-control: SET_OPTION %s=%s\n$' "${headerField}" "${name}" "${value}")
+	headerField="${headerField%$}"
 done
 
-printRedirect.sh "data:text/html;base64,$("${W3MPLUS_TEMPLATE_HTML}" -t 'Cookie Manager' -c "<ul>${listitem}</ul>" | base64 | tr -d '\n')"
+printRedirect.sh --header-field "${headerField}" "data:text/html;base64,$("${W3MPLUS_TEMPLATE_HTML}" -t 'Cookie Manager' -c "<ul>${listitem}</ul>" | base64 | tr -d '\n')"

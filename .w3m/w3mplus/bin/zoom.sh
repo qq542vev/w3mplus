@@ -115,6 +115,10 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
+: >>"${config}"
+
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
@@ -128,11 +132,7 @@ if [ 0 -lt "${#}" ]; then
 	exit 64 # EX_USAGE </usr/include/sysexits.h>
 fi
 
-directory=$(dirname -- "${config}"; printf '$')
-mkdir -p -- "${directory%?$}"
-: >>"${config}"
-
-pattern='^image_scale[\t ]\{1,\}\([0-9]\{1,\}\)[\t ]*$'
+pattern='^image_scale[	 ]\{1,\}\([0-9]\{1,\}\)[	 ]*$'
 scale=$(sed -n -e "/${pattern}/{s/${pattern}/\\1/p; q}" -- "${config}")
 
 if [ -z "${scale}" ]; then
@@ -140,11 +140,14 @@ if [ -z "${scale}" ]; then
 	printf 'image_scale 100\n' >>"${config}"
 fi
 
-if expr -- "${zoom}" ':' '[+-]' >'/dev/null'; then
-	newScale=$((scale + zoom))
-else
-	newScale="${zoom}"
-fi
+case "${zoom}" in
+	'+'* | '-'*)
+		newScale=$((scale + zoom))
+		;;
+	*)
+		newScale="${zoom}"
+		;;
+esac
 
 if [ "${W3MPLUS_ZOOM_MAX}" -lt "${newScale}" ]; then
 	newScale="${W3MPLUS_ZOOM_MAX}"
