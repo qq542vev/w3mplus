@@ -4,8 +4,8 @@
 # Displays a page about w3m.
 #
 # @author qq542vev
-# @version 1.0.3
-# @date 2020-02-08
+# @version 1.0.4
+# @date 2020-02-14
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -92,7 +92,7 @@ case "${1-about:about}" in
 			</form>
 
 			<p align="center">
-				<a accesskey="~" href="file://${HOME}">Home</a> -
+				<a accesskey="~" href="file://$(urlencodeForPath "${HOME}")">Home</a> -
 				<a accesskey="b" href="about:bookmark">Bookmarks</a> -
 				<a accesskey="h" href="about:history">History</a> -
 				<a accesskey="d" href="about:downloads">Downloads</a>

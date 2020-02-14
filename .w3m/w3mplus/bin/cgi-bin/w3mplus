@@ -212,7 +212,7 @@ if result=$(
 		'zoom')
 			zoom.sh ${query_zoom+'--number' "${query_zoom}"}
 
-			printf 'W3m-control: REINIT' | httpResponseW3mBack.sh -
+			printf 'W3m-control: SET_OPTION image_scale=%d\n' -- "$(awk -- '/^image_scale[	 ]/ { printf("%d", $2); exit }' "${W3MPLUS_W3M_CONFIG}")" | httpResponseW3mBack.sh -
 			;;
 		'search')
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"

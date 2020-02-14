@@ -180,12 +180,13 @@ headerField=''
 for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"cookie_accept_domains ${whitelist}"}; do
 	name="${value% *}"
 	action="${value#* }"
+	field=$(sed -n -e "/^${name}[	 ]/{p; q}" -- "${config}")
 
-	if field=$(grep -m '1' -e "^${name}[	 ]" -- "${config}"); then
-		value=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[	 ,]\\{1,\\}/,/" | tr 'A-Z' 'a-z')
-	else
+	if [ -z "${field}" ]; then
 		value=''
 		printf '%s \n' "${field}" >>"${config}"
+	else
+		value=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[	 ,]\\{1,\\}/,/" | tr 'A-Z' 'a-z')
 	fi
 
 	for domain in ${@+"${@}"}; do
