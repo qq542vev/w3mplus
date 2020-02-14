@@ -189,7 +189,6 @@ awkScript=$(cat << 'EOF'
 		headerCount = split("", headerOrder)
 		currentHeader = ""
 		emptyLine = 0
-		output = "," output ","
 		uncombine = "," tolower(uncombine) ","
 	}
 
@@ -241,20 +240,20 @@ awkScript=$(cat << 'EOF'
 		exit
 	}
 
-	index(output, ",start,") && NR == 1 && /^[!#-'*+.^_`|~A-Za-z0-9-]/ {
+	NR == 1 && index(output, "start") && /^[!#-'*+.^_`|~A-Za-z0-9-]/ {
 		gsub(/\r$/, "", $0)
 		printf("%s\r\n", $0)
 	}
 
 	END {
-		if(index(output, ",header,")) {
+		if(index(output, "header")) {
 			for(i = 1; i <= headerCount; i++) {
 				printf("%s\r\n", header[headerOrder[i]])
 			}
 		}
 
-		if(emptyLine && index(output, ",body,")) {
-			if(0 < getline && (index(output, ",start,") || index(output, ",header,"))) {
+		if(emptyLine && index(output, "body")) {
+			if(0 < getline && (index(output, "start") || index(output, "header"))) {
 				printf("\r\n")
 			}
 
