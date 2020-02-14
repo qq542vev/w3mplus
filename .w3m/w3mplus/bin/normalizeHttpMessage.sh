@@ -4,8 +4,8 @@
 # Normalize HTTP message.
 #
 # @author qq542vev
-# @version 1.0.1
-# @date 2020-02-13
+# @version 1.0.2
+# @date 2020-02-15
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -40,16 +40,16 @@ case "${LANG:-C}" in
 		;;
 esac
 
-unset 'suffix'
-
 output='start,header,body'
 uncombine='Set-Cookie'
 args=''
 
+unset 'suffix'
+
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-c' | '--charset')
-			if expr "${2}" ':' "${token}\$" >'/dev/nul'; then
+			if expr "${2}" ':' "${token}\$" >'/dev/null'; then
 				charset="${2}"
 				shift 2
 			else
@@ -66,17 +66,20 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-o' | '--output')
-			case "${1}" in 'start' | 'header' | 'body' | 'start,header' | 'start,body' | 'header,body' | 'start,header,body')
-				cat <<- EOF 1>&2
-					${0##*/}: invalid option -- '${1}'
-					Possible values: start[,header][,body] or header[,body] or body.
-				EOF
+			case "${2}" in
+				'start' | 'header' | 'body' | 'start,header' | 'start,body' | 'header,body' | 'start,header,body')
+					output="${2}"
+					shift 2
+					;;
+				*)
+					cat <<- EOF 1>&2
+						${0##*/}: invalid option -- '${1}'
+						Possible values: start[,header][,body] or header[,body] or body.
+					EOF
 
-				exit 64 # EX_USAGE </usr/include/sysexits.h>
+					exit 64 # EX_USAGE </usr/include/sysexits.h>
+					;;
 			esac
-
-			output="${2}"
-			shift 2
 			;;
 		'-u' | '--uncombine')
 			if expr "${2}" ':' "\\(${token}\\(,${token}\\)*\\)\\{0,1\\}\$" >'/dev/null'; then
@@ -251,12 +254,14 @@ awkScript=$(cat << 'EOF'
 		}
 
 		if(emptyLine && index(output, ",body,")) {
-			if(index(output, ",start,") || index(output, ",header,")) {
+			if(0 < getline && (index(output, ",start,") || index(output, ",header,"))) {
 				printf("\r\n")
 			}
 
+			printf("%s", $0)
+
 			while(0 < getline) {
-				printf("%s\n", $0)
+				printf("\n%s", $0)
 			}
 		}
 	}
@@ -266,7 +271,7 @@ EOF
 tmpFile=$(mktemp -p "${tmpDir}")
 
 for file in ${@+"${@}"}; do
-	awk -v "charset=${charset}" -v "output=${output}" -v "uncombine=${uncombine}" -- "${awkScript}" "${file}" >"${tmpFile}"
+	(cat "${file}"; echo) | awk -v "charset=${charset}" -v "output=${output}" -v "uncombine=${uncombine}" -- "${awkScript}" >"${tmpFile}"
 
 	if [ "${suffix+1}" = '1' ]; then
 		cp -fp -- "${tmpFile}" "${file}"
