@@ -5,7 +5,7 @@
 #
 # @author qq542vev
 # @version 1.0.2
-# @date 2020-02-15
+# @date 2020-02-17
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -192,17 +192,124 @@ awkScript=$(cat << 'EOF'
 		uncombine = "," tolower(uncombine) ","
 	}
 
-	function fieldValue(string, command) {
-		gsub(/[\t\r ]+/, " ", string)
-		gsub(/^ +| +$/, "", string)
+	function fieldValue(string, charset) {
+		gsub(/^[	 ]/, "", string)
+		return fieldContentToken(string, charset)
+	}
 
-		if(match(string, /[^\t -~]/)) {
-			gsub(/'+/, "'\"&\"'", string)
+	function encodeBase64(string, charset, command) {
+		if(charset == "") {
+			charset = "UTF-8"
+		}
 
-			command = "printf '%s' '" string "' | base64 | tr -d '\\n'"
-			command | getline string
+		gsub(/'+/, "'\"&\"'", string)
 
-			return sprintf("=?%s?B?%s?=", charset, string)
+		command = "printf '%s' '" string "' | base64 | tr -d '\\n'"
+		command | getline string
+
+		return sprintf("=?%s?B?%s?=", charset, string)
+	}
+
+	function fieldContentToken(string, charset, delimiter,after,count) {
+		delimiter = ""
+		after = ""
+
+		if(match(string, /["(),\/:;<=>?@\[\\\]{}]/)) {
+			delimiter = substr(string, RSTART, RLENGTH)
+			after = substr(string, RSTART + RLENGTH)
+			string = substr(string, 1, RSTART - 1)
+		} else {
+			gsub(/[	 ]+$/, "", string)
+		}
+
+		gsub(/[	 ]+/, " ", string)
+		count = split(string, array, / /)
+		string = ""
+
+		for(; 0 < count; count--) {
+			string = (array[count] ~ /[^ -~]/ ? encodeBase64(array[count], charset) : array[count]) string
+
+			if(count != 1) {
+				string = " " string
+			}
+		}
+
+		if(delimiter == "\"") {
+			string = string delimiter fieldContentQuotedString(after, charset)
+		} else if(delimiter == "(") {
+			string = string delimiter fieldContentComment(after, charset)
+		} else if(delimiter != "") {
+			string = string delimiter fieldContentToken(after, charset)
+		}
+
+		return string
+	}
+
+	function fieldContentQuotedString(string, charset, delimiter,after) {
+		delimiter = ""
+		after = ""
+
+		if(match(string, /\\\\?|\\?"/)) {
+			delimiter = substr(string, RSTART, RLENGTH)
+			after = substr(string, RSTART + RLENGTH)
+			string = substr(string, 1, RSTART - 1)
+		}
+
+		if(delimiter == "\"") {
+			string = string delimiter fieldContentToken(after, charset)
+		} else if((delimiter == "\\\\") || (delimiter == "\\\"")) {
+			string = string delimiter fieldContentQuotedString(after, charset)
+		} else if(delimiter == "\\") {
+			if(after == "") {
+				string = string "\\" delimiter fieldContentQuotedString(after, charset)
+			} else {
+				string = string fieldContentQuotedString(after, charset)
+			}
+		} else {
+			string = string "\""
+		}
+
+		return string
+	}
+
+	function fieldContentComment(string, charset, depth, delimiter,after) {
+		if(depth == "") {
+			depth = 1
+		}
+
+		delimiter = ""
+		after = ""
+
+		if(match(string, /\\\\?|\\?[()]/)) {
+			delimiter = substr(string, RSTART, RLENGTH)
+			after = substr(string, RSTART + RLENGTH)
+			string = substr(string, 1, RSTART - 1)
+		}
+
+		if(string ~ /[^ -~]/) {
+			string = encodeBase64(string, charset)
+		}
+
+		if(delimiter == "(") {
+			string = string delimiter fieldContentComment(after, charset, ++depth)
+		} else if(delimiter == ")") {
+			if(--depth) {
+				string = string delimiter fieldContentComment(after, charset, depth)
+			} else {
+				string = string delimiter fieldContentToken(after, charset)
+			}
+		} else if((delimiter == "\\\\") || (delimiter == "\\(") || (delimiter == "\\)")) {
+			string = string delimiter fieldContentComment(after, charset, depth)
+		} else if(delimiter == "\\") {
+			if(after == "") {
+				string = string "\\" delimiter fieldContentComment(after, charset, depth)
+			} else {
+				string = string fieldContentComment(after, charset, depth)
+			}
+		} else {
+			for(; 0 < depth; depth--) {
+				string = string ")"
+			}
 		}
 
 		return string
