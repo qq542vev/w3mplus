@@ -4,7 +4,7 @@
 # Normalize HTTP message.
 #
 # @author qq542vev
-# @version 1.0.2
+# @version 1.0.3
 # @date 2020-02-17
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -380,7 +380,7 @@ for file in ${@+"${@}"}; do
 	(cat "${file}"; echo) | awk -v "charset=${charset}" -v "output=${output}" -v "uncombine=${uncombine}" -- "${awkScript}" >"${tmpFile}"
 
 	if [ "${suffix+1}" = '1' ]; then
-		cp -fp -- "${tmpFile}" "${file}"
+		cp -fp -- "${tmpFile}" "${file}${suffix}"
 	else
 		cat -- "${tmpFile}"
 	fi
