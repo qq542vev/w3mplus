@@ -72,6 +72,7 @@ normalizeHttpMessage.sh <<- EOF
 	Expires: Thu, 01 Jan 1970 00:00:00 GMT
 	Last-Modified: ${date}
 	Link: <https://purl.org/meta/me>; rel="author"; title="qq542vev", <https://github.com/qq542vev/w3mplus>; rel="code-repository"; title="w3mplus main repository", <file://$(urlencodeForPath "${W3MPLUS_PATH}")/doc/index.html>; rel="help"; title="w3mplus Document", <https://creativecommons.org/licenses/by-nc/4.0/>; rel="license"; title="Creative Commons License"
+	MIME-Version: 1.0
 EOF
 
 printf '%s\r\n%s' "${header}" "${body}"
