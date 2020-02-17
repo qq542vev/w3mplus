@@ -4,8 +4,8 @@
 # Normalize HTTP message.
 #
 # @author qq542vev
-# @version 1.0.3
-# @date 2020-02-17
+# @version 1.0.4
+# @date 2020-02-18
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -41,7 +41,8 @@ case "${LANG:-C}" in
 esac
 
 output='start,header,body'
-uncombine='Set-Cookie'
+uncombined='Set-Cookie'
+unstructured=''
 args=''
 
 unset 'suffix'
@@ -81,9 +82,22 @@ while [ 1 -le "${#}" ]; do
 					;;
 			esac
 			;;
-		'-u' | '--uncombine')
+		'-u' | '--uncombined')
 			if expr "${2}" ':' "\\(${token}\\(,${token}\\)*\\)\\{0,1\\}\$" >'/dev/null'; then
-				uncombine="${2}"
+				uncombined="${2}"
+				shift 2
+			else
+				cat <<- EOF 1>&2
+					${0##*/}: invalid option -- '${1}'
+					Possible values: HTTP header name
+				EOF
+
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+			;;
+		'-U' | '--unstructured')
+			if expr "${2}" ':' "\\(${token}\\(,${token}\\)*\\)\\{0,1\\}\$" >'/dev/null'; then
+				unstructured="${2}"
 				shift 2
 			else
 				cat <<- EOF 1>&2
@@ -99,12 +113,13 @@ while [ 1 -le "${#}" ]; do
 				Usage: ${0##*/} [OPTION]... [FILE]...
 				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
 
-				 -c, --charset=STRING    header charset
-				 -i, --in-place=SUFFIX   edit files in place (makes backup if SUFFIX supplied)
-				 -o, --output=STRING     start, header, body
-				 -u, --uncombine=STRING  uncombine headers
-				 -h, --help              display this help and exit
-				 -v, --version           output version information and exit
+				 -c, --charset=STRING       header charset
+				 -i, --in-place=SUFFIX      edit files in place (makes backup if SUFFIX supplied)
+				 -o, --output=STRING        start, header, body
+				 -u, --uncombined=STRING    uncombined headers
+				 -U, --unstructured=STRING  uncombined headers
+				 -h, --help                 display this help and exit
+				 -v, --version              output version information and exit
 			EOF
 
 			exit
@@ -185,11 +200,12 @@ fi
 
 awkScript=$(cat << 'EOF'
 	BEGIN {
-		split("", header)
+		split("", headerName)
+		split("", headerValue)
 		headerCount = split("", headerOrder)
-		currentHeader = ""
 		emptyLine = 0
-		uncombine = "," tolower(uncombine) ","
+		uncombined = "," tolower(uncombined) ","
+		unstructured = "," tolower(unstructured) ","
 	}
 
 	function fieldValue(string, charset) {
@@ -315,30 +331,34 @@ awkScript=$(cat << 'EOF'
 		return string
 	}
 
+	function unstructuredField(string, charset) {
+		gsub(/^[	 ]+|[	 ]+$/, "", string)
+
+		return (string ~ /[^ -~]/ ? encodeBase64(string, charset) : string)
+	}
+
 	/^[!#-'*+.^_`|~A-Za-z0-9-]+:/ {
 		i = index($0, ":")
 		name = substr($0, 0, i)
 		lowerName = tolower(name)
 
-		if(index(uncombine, "," tolower(lowerName) ",")) {
+		if(index(uncombined, "," tolower(lowerName) ",")) {
 			lowerName = lowerName "@" NR
 		}
 
-		currentHeader = lowerName
-
-		if(lowerName in header) {
-			header[lowerName] = header[lowerName] ","
+		if(lowerName in headerName) {
+			headerValue[lowerName] = headerValue[lowerName] ","
 		} else {
-			header[lowerName] = name ": "
+			headerName[lowerName] = name
 			headerOrder[++headerCount] = lowerName
 		}
 
-		header[lowerName] = header[lowerName] fieldValue(substr($0, i + 1))
+		headerValue[lowerName] = headerValue[lowerName] substr($0, i + 1)
 		next
 	}
 
-	currentHeader != "" && /^[\t ]/ {
-		header[currentHeader] = header[currentHeader] " " fieldValue($0)
+	headerCount && /^[\t ]/ {
+		headerValue[headerOrder[headerCount]] = headerValue[headerOrder[headerCount]] $0
 		next
 	}
 
@@ -355,7 +375,13 @@ awkScript=$(cat << 'EOF'
 	END {
 		if(index(output, "header")) {
 			for(i = 1; i <= headerCount; i++) {
-				printf("%s\r\n", header[headerOrder[i]])
+				printf("%s: ", headerName[headerOrder[i]])
+
+				if(index(unstructured, "," tolower(headerName[headerOrder[i]]) ",")) {
+					printf("%s\r\n", unstructuredField(headerValue[headerOrder[i]], charset))
+				} else {
+					printf("%s\r\n", fieldValue(headerValue[headerOrder[i]], charset))
+				}
 			}
 		}
 
@@ -377,7 +403,7 @@ EOF
 tmpFile=$(mktemp -p "${tmpDir}")
 
 for file in ${@+"${@}"}; do
-	(cat "${file}"; echo) | awk -v "charset=${charset}" -v "output=${output}" -v "uncombine=${uncombine}" -- "${awkScript}" >"${tmpFile}"
+	(cat "${file}"; echo) | awk -v "charset=${charset}" -v "output=${output}" -v "uncombined=${uncombined}" -v "unstructured=${unstructured}" -- "${awkScript}" >"${tmpFile}"
 
 	if [ "${suffix+1}" = '1' ]; then
 		cp -fp -- "${tmpFile}" "${file}${suffix}"

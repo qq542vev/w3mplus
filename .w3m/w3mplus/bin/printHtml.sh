@@ -5,7 +5,7 @@
 #
 # @author qq542vev
 # @version 2.0.0
-# @date 2020-02-13
+# @date 2020-02-18
 # @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 # @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##
@@ -145,7 +145,7 @@ fi
 mainContent=$(cat -- ${@+"${@}"}; printf '$')
 mainContent="${mainContent%$}"
 
-headerFields=$(printf 'Content-Type: text/html; charset=UTF-8\n%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh -u 'W3m-control'; printf '$')
+headerFields=$(printf 'Content-Type: text/html; charset=UTF-8\n%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control'; printf '$')
 headerFields="${headerFields%$}"
 
 messageBody=$("${W3MPLUS_TEMPLATE_HTML}" -t "${title}" -c "${mainContent}"; printf '$')
