@@ -334,7 +334,7 @@ awkScript=$(cat << 'EOF'
 	function unstructuredField(string, charset) {
 		gsub(/^[	 ]+|[	 ]+$/, "", string)
 
-		return (string ~ /[^ -~]/ ? encodeBase64(string, charset) : string)
+		return (string ~ /[^	 -~]/ ? encodeBase64(string, charset) : string)
 	}
 
 	/^[!#-'*+.^_`|~A-Za-z0-9-]+:/ {
