@@ -18,6 +18,7 @@
 ##   -s, --skip          - continue even if the download fails
 ##   -h, --help          - display this help and exit
 ##   -v, --version       - output version information and exit
+##
 ## Exit Status:
 ##
 ##   0  - Program terminated normally.
