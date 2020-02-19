@@ -1,14 +1,41 @@
 #!/usr/bin/env sh
 
+## File: update-w3m-blacklist
 ##
-# Update the blacklist for w3m.
-#
-# @author qq542vev
-# @version 2.1.2
-# @date 2020-01-25
-# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Update the blacklist for w3m.
 ##
+## Usage:
+##
+##   (start code)
+##   update-w3m-blacklist [OPTION]... [SITECONF_FILE]...
+##   (end)
+##
+## Options:
+##
+##   -b, --begin=MESSAGE - begin message
+##   -e, --end=MESSAGE   - end message
+##   -r, --redirect=URI  - redirect page
+##   -s, --skip          - continue even if the download fails
+##   -h, --help          - display this help and exit
+##   -v, --version       - output version information and exit
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 2.1.3
+##   date - 2020-02-19
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
 set -eu
@@ -23,10 +50,8 @@ trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
 
-# 終了時に一時ディレクトリを削除する
-endCall () {
-	rm -fr -- ${tmpDir+"${tmpDir}"}
-}
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/lib/functions"
 
 # 各変数に既定値を代入する
 redirect="file:///cgi-bin/blocking?"
@@ -74,27 +99,11 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
-			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... [CONFIG_FILE]...
-				Update the blacklist for w3m.
-
-				 -b, --begin=STRING  begin message
-				 -e, --end=STRING    end message
-				 -r, --redirect=URI  redirect page
-				 -s, --skip          continue even if the download fails
-				 -h, --help          display this help and exit
-				 -v, --version       output version information and exit
-			EOF
-
+			usage
 			exit
 			;;
 		'-v' | '--version')
-			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //1p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //1p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //1p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //1p' -- "${0}")
-			EOF
-
+			version
 			exit
 			;;
 		# `--name=value` 形式のロングオプション

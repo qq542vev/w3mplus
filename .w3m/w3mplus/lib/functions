@@ -1,0 +1,52 @@
+#!/usr/bin/env sh
+
+## File: w3mplus-functions
+##
+## Definition of variables and functions used in w3mplus
+##
+## Usage:
+##
+##   (start code)
+##   . w3mplus-functions
+##   (end)
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2020-02-19
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   licence - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project Homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
+usage() {
+	sed -e '/^## *(start code)/,/^## *(end)/!d' -- "${0}" | sed -e '1d; $d; s/^## *//'
+
+	sed -e '/^## File:/,/^## .*:$/!d' -- "${0}" | sed -e '1d; $d; s/^## *//'
+
+	printf 'Options\n'
+
+	sed -n -e '/^## *-.* - /s/^## *//p' -- "${0}" | awk -F ' - ' '{print "  " $1 "  " $2}'
+
+	printf '\nExit status\n'
+
+	sed -n -e '/^## *[0-9]\{1,\}.* - /s/^## */  /p' -- "${0}"
+}
+
+version() {
+	cat <<- EOF
+		$(sed -n -e 's/^## File: //p' -- "${0}") ($(sed -n -e 's/^## *package - //p' -- "${0}")) $(sed -n -e 's/^## *version - //p' -- "${0}") (Last update: $(sed -n -e 's/^## *date - //p' -- "${0}"))
+		$(sed -n -e 's/^## *copyright - //p' -- "${0}")
+		License: $(sed -n -e 's/^## *license - //p' -- "${0}")
+		Author: $(sed -n -e 's/^## *author - //p' -- "${0}")
+	EOF
+}
+
+endCall() {
+	rm -fr -- ${tmpDir+"${tmpDir}"} ${tmpFile+"${tmpFile}"}
+}

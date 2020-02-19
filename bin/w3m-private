@@ -1,14 +1,39 @@
 #!/usr/bin/env sh
 
+## File: w3m-private
 ##
-# Private w3m..
-#
-# @author qq542vev
-# @version 1.0.1
-# @date 2020-01-25
-# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Start w3m in private mode.
 ##
+## Cache files, temporary files, cookies, and history are deleted when w3m ends.
+##
+## Usage:
+##
+##   (start code)
+##   w3m-private [--exclude PATTERN] [W3MARG]...
+##   (end)
+##
+## Options:
+##
+##   --exclude - files not shared with profiles.
+##
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.2
+##   date - 2020-02-19
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project Homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
 set -eu
@@ -23,10 +48,8 @@ trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
 
-# 終了時に一時ディレクトリを削除する
-endCall () {
-	rm -fr -- ${tmpDir+"${tmpDir}"}
-}
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/lib/functions"
 
 exclude='\./(cookie|w3m(cache|cookie|src|tmp).*)'
 
