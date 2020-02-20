@@ -1,5 +1,40 @@
 #!/usr/bin/env sh
 
+## File: http.sh
+##
+## Default HTTP message template for w3mplus.
+##
+## Usage:
+##
+##   (start code)
+##   http.sh [OPTION]...
+##   (end)
+##
+## Options:
+##
+##   -b - HTTP message body
+##   -h - HTTP header field
+##   -s - HTTP status code
+##
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.1
+##   date - 2020-02-20
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
 # 初期化
 set -eu
 umask '0022'
@@ -13,7 +48,7 @@ trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/config"
+. "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
 body=''
 header=''

@@ -1,14 +1,39 @@
 #!/usr/bin/env sh
 
+## File: html.sh
 ##
-# Default HTML template for w3mplus.
-#
-# @author qq542vev
-# @version 1.0.0
-# @date 2020-02-01
-# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Default HTML template for w3mplus.
 ##
+## Usage:
+##
+##   (start code)
+##   html.sh [OPTION]...
+##   (end)
+##
+## Options:
+##
+##   -c - main content
+##   -m - meta data
+##   -t - title
+##
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.1
+##   date - 2020-02-20
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
 set -eu
@@ -23,7 +48,7 @@ trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/config"
+. "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
 mainCintent=''
 metaData=''
