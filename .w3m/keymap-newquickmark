@@ -1,12 +1,20 @@
+## File: keymap-newquickmark
 ##
-# Keymap for QuickMark.
-#
-# @author qq542vev
-# @version 1.0.0
-# @date 2020-01-15
-# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Keymap for QuickMark.
 ##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2020-02-20
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # Ctrl  : C-, ^
 # Escape: ESC-, M-, ^[
