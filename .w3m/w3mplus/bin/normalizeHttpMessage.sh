@@ -1,14 +1,43 @@
 #!/usr/bin/env sh
 
+## File: normalizeHttpMessage.sh
 ##
-# Normalize HTTP message.
-#
-# @author qq542vev
-# @version 1.0.4
-# @date 2020-02-18
-# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Normalize HTTP message.
 ##
+## Usage:
+##
+##   (start code)
+##   normalizeHttpMessage.sh [OPTION]... [FILE]...
+##   (end)
+##
+## Options:
+##
+##   -c, --charset=STRING           - header charset
+##   -i, --in-place=SUFFIX          - edit files in place (makes backup if SUFFIX supplied)
+##   -o, --output=STRING            - start, header, body
+##   -u, --uncombined=HEADER_NAME   - uncombined headers
+##   -U, --unstructured=HEADER_NAME - uncombined headers
+##   -h, --help                     - display this help and exit
+##   -v, --version                  - output version information and exit
+##
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.5
+##   date - 2020-02-20
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # 初期化
 set -eu
@@ -23,10 +52,8 @@ trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
 
-# 終了時に一時ファイルを削除する
-endCall () {
-	rm -fr ${tmpDir+"${tmpDir}"}
-}
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
 token="[!#-'*+.^_\`|~A-Za-z0-9-]\\{1,\\}"
 tmpDir=$(mktemp -d)
@@ -109,28 +136,11 @@ while [ 1 -le "${#}" ]; do
 			fi
 			;;
 		'-h' | '--help')
-			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... [FILE]...
-				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
-
-				 -c, --charset=STRING       header charset
-				 -i, --in-place=SUFFIX      edit files in place (makes backup if SUFFIX supplied)
-				 -o, --output=STRING        start, header, body
-				 -u, --uncombined=STRING    uncombined headers
-				 -U, --unstructured=STRING  uncombined headers
-				 -h, --help                 display this help and exit
-				 -v, --version              output version information and exit
-			EOF
-
+			usage
 			exit
 			;;
 		'-v' | '--version')
-			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //p' -- "${0}")
-			EOF
-
+			version
 			exit
 			;;
 		# 標準入力を処理する

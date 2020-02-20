@@ -1,15 +1,42 @@
 #!/usr/bin/env sh
 
+## File: cookieManager.sh
 ##
-# Cookie management.
-#
-# @author qq542vev
-# @version 1.0.2
-# @date 2020-02-13
-# @since 2019-01-27
-# @copyright Copyright (C) 2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Cookie management.
 ##
+## Usage:
+##
+##   (start code)
+##   cookieManager.sh [OPTION]... [DOMAIN]...
+##   (end)
+##
+## Options:
+##
+##   -b, --blacklist=TYPE - black list type (add, delete, toggle)
+##   -s, --subdomain      - also applies to subdomains
+##   -w, --whitelist=TYPE - white list type (add, delete, toggle)
+##   -h, --help           - display this help and exit
+##   -v, --version        - output version information and exit
+##
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.3
+##   date - 2020-02-19
+##   since - 2020-01-27
+##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # 初期化
 set -eu
@@ -25,12 +52,7 @@ trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/config"
-
-# 終了時に一時ファイルを削除する
-endCall () {
-	rm -f -- ${tmpFile+"${tmpFile}"}
-}
+. "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
 # 各変数に既定値を代入する
 config="${W3MPLUS_W3M_CONFIG}"
@@ -84,26 +106,11 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
-			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... [DOMAIN]...
-				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
-
-				 -b, --blacklist=TYPE  black list type (add, delete, toggle)
-				 -s, --subdomain       also applies to subdomains
-				 -w, --whitelist=TYPE  white list type (add, delete, toggle)
-				 -h, --help            display this help and exit
-				 -v, --version         output version information and exit
-			EOF
-
+			usage
 			exit
 			;;
 		'-v' | '--version')
-			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //p' -- "${0}")
-			EOF
-
+			version
 			exit
 			;;
 		# 標準入力を処理する

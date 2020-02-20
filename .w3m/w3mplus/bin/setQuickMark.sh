@@ -1,14 +1,41 @@
 #!/usr/bin/env sh
 
+## File: setQuickMark.sh
 ##
-# Set a quick mark.
-#
-# @author qq542vev
-# @version 1.1.3
-# @date 2020-02-13
-# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Set a quick mark.
 ##
+## Usage:
+##
+##   (start code)
+##   setQuickMark.sh [OPTION]... KEY [URI]...
+##   (end)
+##
+## Options:
+##
+##   -c, --config=FILE    quick mark file
+##   -C, --colmun=NUMBER  colmun number
+##   -l, --line=NUMBER    line number
+##   -h, --help           display this help and exit
+##   -v, --version        output version information and exit
+##
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.1.4
+##   date - 2020-02-20
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
 set -eu
@@ -23,7 +50,7 @@ trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/config"
+. "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/quickmark"
@@ -60,26 +87,11 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
-			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... KEY [URI]...
-				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
-
-				 -c, --config=FILE    quick mark file
-				 -C, --colmun=NUMBER  colmun number
-				 -l, --line=NUMBER    line number
-				 -h, --help           display this help and exit
-				 -v, --version        output version information and exit
-			EOF
-
+			usage
 			exit
 			;;
 		'-v' | '--version')
-			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //p' -- "${0}")
-			EOF
-
+			version
 			exit
 			;;
 		# `--name=value` 形式のロングオプション

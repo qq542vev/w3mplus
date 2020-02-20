@@ -1,14 +1,42 @@
 #!/usr/bin/env sh
 
+## File: printHtml.sh
 ##
-# Print HTTP message for HTML.
-#
-# @author qq542vev
-# @version 2.0.0
-# @date 2020-02-18
-# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Print HTTP message for HTML.
 ##
+## Usage:
+##
+##   (start code)
+##   printHtml.sh [OPTION]... [FILE]...
+##   (end)
+##
+## Options:
+##
+##   -H, --header-field=HEADER     - HTTP header fields
+##   -m, --meta-data=ELEMENT       - HTML elements in head element
+##   -s, --status-code=STATUS_CODE - HTTP status code
+##   -t, --title=TITLE             - page title in title element
+##   -h, --help                    - display this help and exit
+##   -v, --version                 - output version information and exit
+##
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 2.0.1
+##   date - 2020-02-20
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
 set -eu
@@ -23,13 +51,8 @@ trap 'endCall; exit 130' 2 # SIGINT
 trap 'endCall; exit 131' 3 # SIGQUIT
 trap 'endCall; exit 143' 15 # SIGTERM
 
-# 終了時に一時ファイルを削除する
-endCall () {
-	rm -fr ${tmpFile+"${tmpFile}"}
-}
-
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/config"
+. "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
 title='No title'
 headerFields=''
@@ -55,27 +78,11 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-h' | '--help')
-			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... [FILE]...
-				$(sed -e '/^##$/,/^##$/!d; /^# /!d; s/^# //; q' -- "${0}")
-
-				 -H, --header-field=HEADER     HTTP header fields
-				 -m, --meta-data=ELEMENT       HTML elements in head element
-				 -s, --status-code=STATUSCODE  HTTP status code
-				 -t, --title=TITLE             page title in title element
-				 -h, --help                    display this help and exit
-				 -v, --version                 output version information and exit
-			EOF
-
+			usage
 			exit
 			;;
 		'-v' | '--version')
-			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //p' -- "${0}")
-			EOF
-
+			version
 			exit
 			;;
 		'-')

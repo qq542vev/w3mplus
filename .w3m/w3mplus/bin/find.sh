@@ -1,14 +1,40 @@
 #!/usr/bin/env sh
 
+## File: find.sh
 ##
-# Search for a word.
-#
-# @author qq542vev
-# @version 1.1.1
-# @date 2020-02-13
-# @copyright Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-# @licence CC-BY <https://creativecommons.org/licenses/by/4.0/>
+## Search for a word.
 ##
+## Usage:
+##
+##   (start code)
+##   find.sh [OPTION]... [WORD]...
+##   (end)
+##
+## Options:
+##
+##   -e, --exact         - exact search
+##   -n, --number=NUMBER - search count
+##   -h, --help          - display this help and exit
+##   -v, --version       - output version information and exit
+##
+## Exit Status:
+##
+##   0  - Program terminated normally.
+##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.1.2
+##   date - 2020-02-19
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # 初期化
 set -eu
@@ -23,7 +49,7 @@ trap 'exit 131' 3 # SIGQUIT
 trap 'exit 143' 15 # SIGTERM
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/config"
+. "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
 # 各変数に既定値を代入する
 exactFlag='0'
@@ -48,25 +74,11 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
-			cat <<- EOF
-				Usage: ${0##*/} [OPTION]... [WORD]...
-				Search for a word.
-
-				 -e, --exact          exact search
-				 -n, --number=NUMBER  search count
-				 -h, --help           display this help and exit
-				 -v, --version        output version information and exit
-			EOF
-
+			usage
 			exit
 			;;
 		'-v' | '--version')
-			cat <<- EOF
-				${0##*/} (w3mplus) $(sed -n -e 's/^# @version //p' -- "${0}") (Last update: $(sed -n -e 's/^# @date //p' -- "${0}"))
-				$(sed -n -e 's/^# @copyright //p' -- "${0}")
-				License: $(sed -n -e 's/^# @licence //p' -- "${0}")
-			EOF
-
+			version
 			exit
 			;;
 		# 標準入力を処理する
