@@ -63,18 +63,20 @@ if result=$(
 			;;
 		'closeTab')
 			if [ -n "${W3M_URL}" ]; then
-				closeTab.sh -- "${W3M_URL}"
+				closeTab.sh --line "${W3M_CURRENT_LINE}" --colmun "${W3M_CURRENT_COLUMN}" -- "${W3M_URL}"
 			fi
 
 			printf 'W3m-control: CLOSE_TAB' | httpResponseW3mBack.sh -
 			;;
 		'undoTab')
-			case "${query_count}" in '@'*)
+			case "${query_count-}" in '@'*)
 				query_number="@$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)"
 			esac
 
-			list=$(undoTab.sh ${query_number+'--number' "${query_number}"} ${query_count+'--count' "${query_count}"})
-			printf '%s' "${list}" | cut -f 1 | sed -e 's/^/W3m-control: TAB_GOTO /' | httpResponseW3mBack.sh -
+			undoTab.sh ${query_number+'--number' "${query_number}"} ${query_count+'--count' "${query_count}"} | awk '{
+				printf("W3m-control: TAB_GOTO %s\n", $1)
+				printf("W3m-control: GOTO_LINE %d\n", $2)
+			}' | httpResponseW3mBack.sh -
 			;;
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"

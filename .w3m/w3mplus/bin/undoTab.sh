@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.0.1
-##   date - 2020-02-20
+##   version - 2.1.0
+##   date - 2020-02-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -38,7 +38,7 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
-set -eu
+set -efu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
@@ -54,6 +54,7 @@ trap 'endCall; exit 143' 15 # SIGTERM
 . "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
 # 各変数に既定値を代入する
+null='/dev/null'
 config="${W3MPLUS_PATH}/tabRestore"
 count='-1'
 number='0'
@@ -67,28 +68,29 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-C' | '--count')
-			if [ "$(expr -- "${2}" ':' '@\{0,1\}[+-]0$')" -eq 0 ] && [ "$(expr -- "${2}" ':' '@\{0,1\}[+-][1-9][0-9]*$')" -eq 0 ]; then
+			if expr -- "${2}" ':' '@\{0,1\}[+-]0$' >"${null}" || expr -- "${2}" ':' '@\{0,1\}[+-][1-9][0-9]*$' >"${null}"; then
+				count="${2}"
+				shift 2
+			else
 				printf 'The option "%s" must be a integer or timestamp.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
-
-			count="${2}"
-			shift 2
 			;;
 		'-n' | '--number')
-			if [ "${2}" != '0' ] && [ "${2}" != '@0' ] && [ "$(expr -- "${2}" ':' '@\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "${2}" = '0' ] || [ "${2}" = '@0' ] || expr -- "${2}" ':' '@\{0,1\}[1-9][0-9]*$' >"${null}"; then
+				number="${2}"
+				shift 2
+			else
 				printf 'The option "%s" must be a integer or timestamp.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
-
-			number="${2}"
-			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
 			exit
 			;;
+		# バージョン情報を表示して終了する
 		'-v' | '--version')
 			version
 			exit
@@ -104,12 +106,8 @@ while [ 1 -le "${#}" ]; do
 		'--')
 			shift
 
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -131,9 +129,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
@@ -179,12 +175,12 @@ case "${number}" in '@'*)
 				}
 
 				{
-					date = $2
+					datetime = $NF
 
-					gsub(/[TZ:-]/, "", date)
-					gsub(/'+/, "'\"&\"'", date)
+					gsub(/[TZ:-]/, "", datetime)
+					gsub(/'+/, "'\"&\"'", datetime)
 
-					command = "printf '%s' '" date "' | TZ='UTC+0' utconv"
+					command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
 					command | getline timestamp
 
 					if(position < 0 && timestamp <= start) {
@@ -221,12 +217,12 @@ case "${number}" in '@'*)
 				}
 
 				{
-					date = $2
+					datetime = $NF
 
-					gsub(/[TZ:-]/, "", date)
-					gsub(/'+/, "'\"&\"'", date)
+					gsub(/[TZ:-]/, "", datetime)
+					gsub(/'+/, "'\"&\"'", datetime)
 
-					command = "printf '%s' '" date "' | TZ='UTC+0' utconv"
+					command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
 					command | getline timestamp
 
 					if((("+" == sign) && (timestamp < time)) || (("-" == sign) && (timestamp <= time))) {
@@ -271,12 +267,12 @@ head -n "-$((number + count))" -- "${config}" >>"${tmpFile}"
 head -n "-${number}" -- "${config}" | tail -n "${count}" | sed '1!G; h; $!d' | awk -v "limitTime=${limitTime}" -v "file=${tmpFile}" -- "$(
 	cat <<- 'EOF'
 	{
-		date = $2
+		datetime = $NF
 
-		gsub(/[TZ:-]/, "", date)
-		gsub(/'+/, "'\"&\"'", date)
+		gsub(/[TZ:-]/, "", datetime)
+		gsub(/'+/, "'\"&\"'", datetime)
 
-		command = "printf '%s' '" date "' | TZ='UTC+0' utconv"
+		command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
 		command | getline timestamp
 
 		if(timestamp <= limitTime) {
@@ -285,7 +281,7 @@ head -n "-${number}" -- "${config}" | tail -n "${count}" | sed '1!G; h; $!d' | a
 			exit
 		}
 
-		printf("%s\t%s\n", $1, $2)
+		printf("%s\n", $0)
 	}
 	EOF
 )"

@@ -70,3 +70,11 @@ version() {
 endCall() {
 	rm -fr -- ${tmpDir+"${tmpDir}"} ${tmpFile+"${tmpFile}"}
 }
+
+quoteEscape() (
+	for arg in ${@+"${@}"}; do
+		result=$(printf '%s\n' "${arg}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$')
+
+		printf "'%s' " "${result%?$}"
+	done
+)

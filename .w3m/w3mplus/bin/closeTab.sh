@@ -13,6 +13,8 @@
 ## Options:
 ##
 ##   -c, --config=FILE - restore file
+##   -c, --colmun      - colmun number
+##   -l, --line        - line number
 ##   -h, --help        - display this help and exit
 ##   -v, --version     - output version information and exit
 ##
@@ -24,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.0.1
-##   date - 2020-02-19
+##   version - 2.1.0
+##   date - 2020-02-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -36,7 +38,7 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # 初期化
-set -eu
+set -efu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
@@ -53,7 +55,22 @@ trap 'endCall; exit 143' 15 # SIGTERM
 
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/tabRestore"
-args=''
+colmun='1'
+line='1'
+fields=''
+datetime=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+
+setFieldList() {
+	for uri in ${@+"${@}"}; do
+		if uricheck -q "${uri}"; then
+			fields=$(printf '%s%s\t%d\t%d\t%s\n$' "${fields}" "${uri}" "${line}" "${colmun}" "${datetime}")
+			fields="${fields%$}"
+		else
+			printf "%s: not URI -- '%s'\\n" "${0##*/}" "${1}" 1>&2
+			exit 64 # EX_USAGE </usr/include/sysexits.h>
+		fi
+	done
+}
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
@@ -62,22 +79,27 @@ while [ 1 -le "${#}" ]; do
 			config="${2}"
 			shift 2
 			;;
+		'-C' | '--colmun')
+			colmun="${2}"
+			shift 2
+			;;
+		'-l' | '--line')
+			line="${2}"
+			shift 2
+			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
 			exit
 			;;
+		# バージョン情報を表示して終了する
 		'-v' | '--version')
 			version
 			exit
 			;;
 		# 標準入力を処理する
 		'-')
-			args="${args}$(tr '[:space:]' '\n' | while IFS= read -r uri; do
-				printf " '"
-				printf '%s' "${uri}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"
-				printf "'"
-			done)"
+			setFieldList $(cat)
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -89,13 +111,8 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
+			setFieldList ${@+"${@}"}
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -117,9 +134,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			setFieldList "${1}"
 			shift
 			;;
 	esac
@@ -129,43 +144,32 @@ directory=$(dirname -- "${config}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
-# オプション以外の引数を再セットする
-eval set -- "${args}"
-
-if [ "${#}" -eq 0 ]; then
-	set -f
-	set -- $(cat)
-	set +f
-fi
-
 tmpFile=$(mktemp)
-date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 
 {
 	cat -- "${config}"
-
-	for uri in ${@+"${@}"}; do
-		printf '%s\t%s\n' "${uri}" "${date}"
-	done
+	printf '%s' "${fields}"
 } | awk '
 	BEGIN {
-		prev["uri"] = ""
-		prev["date"] = ""
+		split("", previous)
 	}
 
-	NF == 2 {
-		if(prev["uri"] != "" && $1 != prev["uri"]) {
-			printf("%s\t%s\n", prev["uri"], prev["date"])
+	function printArray(array) {
+		if(array[1] != "") {
+			printf("%s\t%s\t%s\t%s\n", array[1], array[2], array[3], array[4])
+		}
+	}
+
+	NF == 4 {
+		if($1 != previous[1]) {
+			printArray(previous)
 		}
 
-		prev["uri"] = $1
-		prev["date"] = $2
+		split($0, previous, FS)
 	}
 
 	END {
-		if(prev["uri"] != "") {
-			printf("%s\t%s\n", prev["uri"], prev["date"])
-		}
+		printArray(previous)
 	}
 ' >"${tmpFile}"
 
