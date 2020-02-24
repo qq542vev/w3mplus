@@ -44,7 +44,7 @@ export 'IFS'
 
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/lib/w3mplus/functions"
+. "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 outputHtml () {
 	while IFS='	' read -r 'call' 'check' 'command' 'date'; do

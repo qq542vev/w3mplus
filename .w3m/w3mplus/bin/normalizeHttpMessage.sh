@@ -47,7 +47,7 @@ export 'IFS'
 
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/lib/w3mplus/functions"
+. "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 token="[!#-'*+.^_\`|~A-Za-z0-9-]\\{1,\\}"
 tmpDir=$(mktemp -d)

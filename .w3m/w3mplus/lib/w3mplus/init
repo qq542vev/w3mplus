@@ -13,8 +13,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-02-20
+##   version - 1.1.0
+##   date - 2020-02-24
 ##   since - 2020-02-19
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   licence - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -52,6 +52,20 @@ trap 'endCall 130' 2 # SIGINT
 trap 'endCall 131' 3 # SIGQUIT
 trap 'endCall 143' 15 # SIGTERM
 
+endCall() {
+	previousExitStatus="${?}"
+
+	rm -fr -- ${tmpDir+"${tmpDir}"} ${tmpFile+"${tmpFile}"}
+
+	if [ 1 -le "${#}" ]; then
+		exit "${1}"
+	elif [ "${previousExitStatus}" -ne 0 ]; then
+		exit "${EX_SOFTWARE}"
+	fi
+
+	exit "${exitStatus-0}"
+}
+
 usage() {
 	sed -e '/^## *(start code)/,/^## *(end)/!d' -- "${0}" | sed -e '1d; $d; s/^## */Usage: /'
 
@@ -73,20 +87,6 @@ version() {
 		License: $(sed -n -e 's/^## *license - //p' -- "${0}")
 		Author: $(sed -n -e 's/^## *author - //p' -- "${0}")
 	EOF
-}
-
-endCall() {
-	previousExitStatus="${?}"
-
-	rm -fr -- ${tmpDir+"${tmpDir}"} ${tmpFile+"${tmpFile}"}
-
-	if [ 1 -le "${#}" ]; then
-		exit "${1}"
-	elif [ "${previousExitStatus}" -ne 0 ]; then
-		exit "${EX_SOFTWARE}" # </usr/include/sysexits.h>
-	fi
-
-	exit "${exitStatus-0}"
 }
 
 quoteEscape() (

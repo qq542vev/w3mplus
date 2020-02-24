@@ -8,7 +8,7 @@ export 'IFS'
 
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/lib/w3mplus/functions"
+. "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 escape () {
 	sed -e "s/&/\\&amp;/g; s/</\\&lt;/g; s/>/\\&gt;/g; s/\"/\\&quot;/g; s/'/\\&#x27;/g"
