@@ -28,7 +28,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.4
+##   version - 1.1.5
 ##   date - 2020-02-24
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -40,7 +40,7 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # 初期化
-set -eu
+set -efu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
@@ -122,10 +122,10 @@ if [ "${#}" -eq 0 ]; then
 fi
 
 for directory in ${@+"${@}"}; do
-	rm -fr -- "${directory}/w3mcache"* "${directory}/w3msrc"* "${directory}/w3mtmp"*
+	find -- "${directory}" '(' -name 'w3mcache*' -o -name 'w3mcookie*' -o -name 'w3mframe*' -o -name 'w3msrc*' -o -name 'w3mtmp*' ')' -prune -exec 'rm' '-fr' '--' '{}' '+'
 
 	if [ "${cookie}" -eq 1 ]; then
-		rm -fr -- "${directory}/cookie" "${directory}/w3mcookie"*
+		rm -fr -- "${directory}/cookie"
 	fi
 
 	if [ "${history}" -eq 1 ]; then
