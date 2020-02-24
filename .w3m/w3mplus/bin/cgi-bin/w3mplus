@@ -1,13 +1,35 @@
 #!/usr/bin/env sh
 
+## File: w3mplus
 ##
-# Display the response for w3m.
-#
-# @author qq542vev
-# @version 1.2.0
-# @date 2020-02-13
-# @licence https://creativecommons.org/licenses/by/4.0/
+## Display the response for w3m.
 ##
+## Usage:
+##
+##   (start code)
+##   QUERY_STRING='HTTP_QUERY' w3mplus
+##   (end)
+##
+## Options:
+##
+## Exit Status:
+##
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.2.0
+##   date - 2020-02-24
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
 set -efu
