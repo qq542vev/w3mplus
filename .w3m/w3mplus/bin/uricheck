@@ -7,7 +7,7 @@
 ## Usage:
 ##
 ##   (start code)
-##   Usage: uricheck [OPTION]... [URI]...
+##   uricheck [OPTION]... [URI]...
 ##   (end)
 ##
 ## Options:
@@ -15,8 +15,8 @@
 ##   -f, --field=[FIELD] - specify the fields to be output separated by commas.
 ##   -m, --match         - displays the URI.
 ##   -V, --invert        - displays that it is not a URI.
-##   -h, --help          - display this help and exit
-##   -v, --version       - output version information and exit
+##   -h, --help          - display this help and exit.
+##   -v, --version       - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -33,7 +33,7 @@
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
-## See:
+## See Also:
 ##
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
@@ -68,7 +68,7 @@ while [ 1 -le "${#}" ]; do
 					If '!' is suffixed to 'scheme' 'authority', 'userinfo', 'port', 'query' or 'fragment', the delimiter is also output.
 				EOF
 
-				exit 64 # EX_USAGE </usr/include/sysexits.h>
+				exitStatus="${EX_USAGE}"; exit
 			fi
 			;;
 		'-m' | '--match')
@@ -123,7 +123,7 @@ while [ 1 -le "${#}" ]; do
 				Try '${0##*/} --help' for more information.
 			EOF
 
-			exit 64 # EX_USAGE </usr/include/sysexits.h>
+			exitStatus="${EX_USAGE}"; exit
 			;;
 		# その他のオプション以外の引数
 		*)

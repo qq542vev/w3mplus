@@ -15,13 +15,13 @@
 ##   -f, --file=FILE     - yank file
 ##   -F, --footer=STRING - footer text
 ##   -H, --header=STRING - header text
-##   -h, --help          - display this help and exit
-##   -v, --version       - output version information and exit
+##   -h, --help          - display this help and exit.
+##   -v, --version       - output version information and exit.
 ##
 ## Exit Status:
 ##
-##   0  - Program terminated normally.
-##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
 ##
 ## Metadata:
 ##
@@ -32,22 +32,17 @@
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
-## See:
+## See Also:
 ##
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
-set -eu
+set -efu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
-# 終了時の動作を設定する
-trap 'exit 129' 1 # SIGHUP
-trap 'exit 130' 2 # SIGINT
-trap 'exit 131' 3 # SIGQUIT
-trap 'exit 143' 15 # SIGTERM
 
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/functions"
@@ -81,6 +76,7 @@ while [ 1 -le "${#}" ]; do
 			usage
 			exit
 			;;
+		# バージョン情報を表示して終了する
 		'-v' | '--version')
 			version
 			exit
@@ -126,7 +122,7 @@ while [ 1 -le "${#}" ]; do
 				Try '${0##*/} --help' for more information.
 			EOF
 
-			exit 64 # EX_USAGE </usr/include/sysexits.h>
+			exitStatus="${EX_USAGE}"; exit
 			;;
 		# その他のオプション以外の引数
 		*)
