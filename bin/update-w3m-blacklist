@@ -21,19 +21,19 @@
 ##
 ## Exit Status:
 ##
-##   0  - Program terminated normally.
-##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
 ##
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.1.3
-##   date - 2020-02-19
+##   version - 2.1.4
+##   date - 2020-02-24
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
-## See:
+## See Also:
 ##
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
@@ -44,15 +44,9 @@ umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
-# 終了時の動作を設定する
-trap 'endCall' 0 # EXIT
-trap 'endCall; exit 129' 1 # SIGHUP
-trap 'endCall; exit 130' 2 # SIGINT
-trap 'endCall; exit 131' 3 # SIGQUIT
-trap 'endCall; exit 143' 15 # SIGTERM
-
+# initファイルの読み込み
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/lib/w3mplus/functions"
+. "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
 redirect="file:///cgi-bin/blocking?"
@@ -65,30 +59,30 @@ args=''
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-b' | '--begin')
-			if [ 2 -le "$(printf '%s' "${2}" | grep -c -e '^')" ]; then
+			if [ "$(printf '%s' "${2}" | wc -l)" -eq 0 ]; then
+				beginMessage="${2}"
+				shift 2
+			else
 				cat <<- EOF 1>&2
 					${0##*/}: '${1}' must not contain newlines.
 					Try '${0##*/} --help' for more information.
 				EOF
 
-				exit 64 # EX_USAGE </usr/include/sysexits.h>
+				exitStatus="${EX_USAGE}"; exit
 			fi
-
-			beginMessage="${2}"
-			shift 2
 			;;
 		'-e' | '--end')
-			if [ 2 -le "$(printf '%s' "${2}" | grep -c -e '^')" ]; then
+			if [ "$(printf '%s' "${2}" | wc -l)" -eq 0 ]; then
+				endMessage="${2}"
+				shift 2
+			else
 				cat <<- EOF 1>&2
 					${0##*/}: '${1}' must not contain newlines.
 					Try '${0##*/} --help' for more information.
 				EOF
 
-				exit 64 # EX_USAGE </usr/include/sysexits.h>
+				exitStatus="${EX_USAGE}"; exit
 			fi
-
-			endMessage="${2}"
-			shift 2
 			;;
 		'-r' | '--redirect')
 			redirect="${2}"
@@ -103,6 +97,7 @@ while [ 1 -le "${#}" ]; do
 			usage
 			exit
 			;;
+		# バージョン情報を表示して終了する
 		'-v' | '--version')
 			version
 			exit
@@ -117,13 +112,8 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -141,13 +131,11 @@ while [ 1 -le "${#}" ]; do
 				Try '${0##*/} --help' for more information.
 			EOF
 
-			exit 64 # EX_USAGE </usr/include/sysexits.h>
+			exitStatus="${EX_USAGE}"; exit
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
@@ -179,7 +167,7 @@ sed -e "/^${escapedBeginMes}/!d" -- ${@+"${@}"} | sort | uniq | while read -r 'm
 			continue
 		fi
 
-		exit 69 # EX_UNAVAILABLE </usr/include/sysexits.h>
+		exitStatus="${EX_UNAVAILABLE}"; exit
 	fi
 
 	printf 'Converting...\n' 1>&2
