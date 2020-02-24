@@ -41,7 +41,7 @@ umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
-
+# initファイルの読み込み
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
