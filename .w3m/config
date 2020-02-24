@@ -129,8 +129,8 @@ use_cookie 1
 show_cookie 0
 accept_cookie 1
 accept_bad_cookie 0
-cookie_reject_domains 
-cookie_accept_domains 
+cookie_reject_domains www.yyy,www.yyyuuu,www.yu
+cookie_accept_domains www.yyyuuu,www.yu
 cookie_avoid_wrong_number_of_dots 
 display_charset UTF-8
 document_charset UTF-8

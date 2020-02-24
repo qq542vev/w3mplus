@@ -37,7 +37,7 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # 初期化
-set -eu
+set -efu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
@@ -64,28 +64,28 @@ while [ 1 -le "${#}" ]; do
 			shift
 			;;
 		'-n' | '--number')
-			if [ "$(expr -- "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
+			if expr -- "${2}" ':' '[+-][1-9][0-9]*$' >'/dev/null'; then
+				number="${2}"
+				shift 2
+			else
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
-
-			number="${2}"
-			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
 			exit
 			;;
+		# バージョン情報を表示して終了する
 		'-v' | '--version')
 			version
 			exit
 			;;
 		# 標準入力を処理する
 		'-')
-			arg=$( (cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			input=$(cat; printf '$')
+			args="${args}$(quoteEscape "${input%$}")"
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -97,13 +97,8 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -125,9 +120,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
@@ -137,6 +130,8 @@ done
 eval set -- "${args}"
 
 if [ "${#}" -eq 0 ]; then
+	input=$(cat; printf '$')
+
 	set -- "$(cat)"
 fi
 
@@ -144,7 +139,7 @@ keyword=''
 
 for word in ${@+"${@}"}; do
 	if [ -n "${word}" ]; then
-		keyword="${keyword}${keyword:+|}$(printf '%s' "${word}" | tr '\n' ' ' | sed -e 's/[].\*+?|(){}[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')"
+		keyword="${keyword}${keyword:+|}$(printf '%s' "${word}" | tr '\n' ' ' | sed -e 's/[].\*+?|(){}[]/\\&/g; s/^^/\\^/; s/$$/\\$/')"
 	fi
 done
 

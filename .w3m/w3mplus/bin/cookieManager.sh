@@ -13,6 +13,7 @@
 ## Options:
 ##
 ##   -b, --blacklist=TYPE - black list type (add, delete, toggle)
+##   -c, --config=FILE    - w3m configuration file
 ##   -s, --subdomain      - also applies to subdomains
 ##   -w, --whitelist=TYPE - white list type (add, delete, toggle)
 ##   -h, --help           - display this help and exit
@@ -73,7 +74,7 @@ while [ 1 -le "${#}" ]; do
 				*)
 					cat <<- EOF 1>&2
 						${0##*/}: invalid option -- '${1}'
-						The only available values for the '${1}' are add, delete, and toggle.
+						The only available values for the '${1}' are 'add', 'delete' and 'toggle'.
 					EOF
 
 					exit 64 # EX_USAGE </usr/include/sysexits.h>
@@ -97,7 +98,7 @@ while [ 1 -le "${#}" ]; do
 				*)
 					cat <<- EOF 1>&2
 						${0##*/}: invalid option -- '${1}'
-						The only available values for the '${1}' are add, delete, and toggle.
+						The only available values for the '${1}' are 'add', 'delete' and 'toggle'.
 					EOF
 
 					exit 64 # EX_USAGE </usr/include/sysexits.h>
@@ -109,15 +110,15 @@ while [ 1 -le "${#}" ]; do
 			usage
 			exit
 			;;
+		# バージョン情報を表示して終了する
 		'-v' | '--version')
 			version
 			exit
 			;;
 		# 標準入力を処理する
 		'-')
-			arg=$( (cat; echo) | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			shift
+			args="${args}$(quoteEscape $(cat))"
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -129,13 +130,8 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -157,9 +153,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
@@ -172,13 +166,8 @@ mkdir -p -- "${directory%?$}"
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-if [ "${#}" -eq 0 ]; then
-	set -f
-	set -- $(cat)
-	set +f
-fi
-
 uriPattern='^\(\([^:/?#]\{1,\}\):\)\{0,1\}\(\/\/\([^@/?#]@\)\{0,1\}\([^/?#]*\)\(:[^/?#]*\)\{0,1\}\)\{0,1\}\([^?#]*\)\(?\([^#]*\)\)\{0,1\}\(#\(.*\)\)\{0,1\}$'
+hostPattern='^([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?\.)*[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?$'
 ipPattern='^(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$'
 tmpFile=$(mktemp)
 listitem=''
@@ -187,21 +176,22 @@ headerField=''
 for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"cookie_accept_domains ${whitelist}"}; do
 	name="${value% *}"
 	action="${value#* }"
-	field=$(sed -n -e "/^${name}[	 ]/{p; q}" -- "${config}")
+	field=$(sed -e "/^${name}[	 ]/!d; q" -- "${config}")
 
 	if [ -z "${field}" ]; then
-		value=''
-		printf '%s \n' "${field}" >>"${config}"
+		fieldValue=''
+		printf '%s \n' "${name}" >>"${config}"
 	else
-		value=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[	 ,]\\{1,\\}/,/" | tr 'A-Z' 'a-z')
+		fieldValue=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[	 ,]\\{1,\\}/,/" | tr 'A-Z' 'a-z')
 	fi
 
 	for domain in ${@+"${@}"}; do
-		if [ "${domain}" != "${domain#*/}" ]; then
-			domain=$(printf '%s' "${domain}" | sed -e "s/${uriPattern}/\\5/")
+		if host=$(uricheck -f 'host' "${domain}"); then
+			domain="${host}"
 		fi
 
-		if [ -z "${domain}" ]; then
+		if [ "$(printf '%s' "${domain}" | wc -l)" -eq 0 ] && printf '%s' "${domain}" | grep -Eq -e "${hostPattern}"; then :; else
+			printf "%s: invalid domain -- '%s'\\n" "${0##*/}" "${domain}" 1>&2
 			continue
 		fi
 
@@ -209,17 +199,17 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 			domain=".${domain}"
 		fi
 
-		case "${value}" in
+		case "${fieldValue}" in
 			*",${domain},"*)
 				case "${action}" in 'delete' | 'toggle')
-					value=$(printf '%s' "${value}" | fsed ",${domain}" '')
+					fieldValue=$(printf '%s' "${fieldValue}" | fsed ",${domain}" '')
 					listitem="${listitem}<li>Removed the '<strong>${domain}</strong>' from the '<code>${name}</code>'.</li>"
 					;;
 				esac
 				;;
 			*)
 				case "${action}" in 'add' | 'toggle')
-					value="${value}${domain},"
+					fieldValue="${fieldValue}${domain},"
 					listitem="${listitem}<li>Added the '<strong>${domain}</strong>' to the '<code>${name}</code>'.</li>"
 					;;
 				esac
@@ -227,13 +217,13 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 		esac
 	done
 
-	value="${value#,}"
-	value="${value%,}"
+	fieldValue="${fieldValue#,}"
+	fieldValue="${fieldValue%,}"
 
-	sed -e "/^${name}[	 ]/c ${name} ${value}" -- "${config}" >"${tmpFile}"
+	sed -e "/^${name}[	 ]/c ${name} ${fieldValue}" -- "${config}" >"${tmpFile}"
 	cp -fp "${tmpFile}" "${config}"
 
-	headerField=$(printf '%sW3m-control: SET_OPTION %s=%s\n$' "${headerField}" "${name}" "${value}")
+	headerField=$(printf '%sW3m-control: SET_OPTION %s=%s\n$' "${headerField}" "${name}" "${fieldValue}")
 	headerField="${headerField%$}"
 done
 

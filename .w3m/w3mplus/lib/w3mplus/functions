@@ -44,6 +44,29 @@
 
 PATH="${W3MPLUS_PATH}/bin:${HOME}/bin${PATH:+:}${PATH-}"
 
+readonly 'SYS_EX_OK=0'
+readonly 'SYS_EX_USAGE=64'
+readonly 'SYS_EX_DATAERR=65'
+readonly 'SYS_EX_NOINPUT=66'
+readonly 'SYS_EX_NOUSER=67'
+readonly 'SYS_EX_NOHOST=68'
+readonly 'SYS_EX_UNAVAILABLE=69'
+readonly 'SYS_EX_SOFTWARE=70'
+readonly 'SYS_EX_OSERR=71'
+readonly 'SYS_EX_OSFILE=72'
+readonly 'SYS_EX_CANTCREAT=73'
+readonly 'SYS_EX_IOERR=74'
+readonly 'SYS_EX_TEMPFAIL=75'
+readonly 'SYS_EX_PROTOCOL=76'
+readonly 'SYS_EX_NOPERM=77'
+readonly 'SYS_EX_CONFIG=78'
+
+trap 'endCall' 0 # EXIT
+trap 'endCall 129' 1 # SIGHUP
+trap 'endCall 130' 2 # SIGINT
+trap 'endCall 131' 3 # SIGQUIT
+trap 'endCall 143' 15 # SIGTERM
+
 usage() {
 	sed -e '/^## *(start code)/,/^## *(end)/!d' -- "${0}" | sed -e '1d; $d; s/^## *//'
 
@@ -68,7 +91,17 @@ version() {
 }
 
 endCall() {
+	previousExitStatus="${?}"
+
 	rm -fr -- ${tmpDir+"${tmpDir}"} ${tmpFile+"${tmpFile}"}
+
+	if [ 1 -le "${#}" ]; then
+		exit "${1}"
+	elif [ "${previousExitStatus}" -ne 0 ]; then
+		exit "${SYS_EX_SOFTWARE}" # </usr/include/sysexits.h>
+	fi
+
+	exit "${exitStatus-0}"
 }
 
 quoteEscape() (

@@ -65,7 +65,7 @@ while [ '1' -le "${#}" ]; do
 	esac
 done
 
-headerFields=$(printf '%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control'; printf '$')
+headerFields=$(printf '%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control' --unstructured 'W3m-control'; printf '$')
 headerFields="${headerFields%$}"
 
 "${W3MPLUS_TEMPLATE_HTTP}" -h "${headerFields}"

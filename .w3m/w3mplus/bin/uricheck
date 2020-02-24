@@ -7,26 +7,27 @@
 ## Usage:
 ##
 ##   (start code)
-##   uricheck [OPTION]... [URI]...
+##   Usage: uricheck [OPTION]... [URI]...
 ##   (end)
 ##
 ## Options:
 ##
-##   -m, --match  - displays the URI.
-##   -V, --invert - displays that it is not a URI.
-##   -q, --quiet  - do not output anything to standard output. If any argument is not a URI, the exit status returns 1.
-##   -h, --help    - display this help and exit
-##   -v, --version - output version information and exit
+##   -f, --field=[FIELD] - specify the fields to be output separated by commas.
+##   -m, --match         - displays the URI.
+##   -V, --invert        - displays that it is not a URI.
+##   -h, --help          - display this help and exit
+##   -v, --version       - output version information and exit
 ##
 ## Exit Status:
 ##
-##   0  - Program terminated normally.
-##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##   0 - Program terminated normally.
+##   1 - There was an argument other than URI.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
 ##
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
+##   version - 1.1.0
 ##   date - 2020-02-21
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -43,32 +44,39 @@ umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
-# 終了時の動作を設定する
-trap 'exit 129' 1 # SIGHUP
-trap 'exit 130' 2 # SIGINT
-trap 'exit 131' 3 # SIGQUIT
-trap 'exit 143' 15 # SIGTERM
-
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/functions"
 
-uriPattern='^[A-Za-z][A-Za-z0-9+.-]*:(//(([A-Za-z0-9._~!$&'\''()*+,;=:-]|%[0-9A-Fa-f]{2})*@)?(\[(((([0-9A-F]{1,4}:){6}|::([0-9A-F]{1,4}:){5}|([0-9A-F]{1,4})?::([0-9A-F]{1,4}:){4}|(([0-9A-F]{1,4}:){0,1}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){3}|(([0-9A-F]{1,4}:){0,2}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){2}|(([0-9A-F]{1,4}:){0,3}[0-9A-F]{1,4})?::[0-9A-F]{1,4}:|(([0-9A-F]{1,4}:){0,4}[0-9A-F]{1,4})?::)([0-9A-F]{1,4}:[0-9A-F]{1,4}|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|(([0-9A-F]{1,4}:){0,5}[0-9A-F]{1,4})?::[0-9A-F]{1,4}|(([0-9A-F]{1,4}:){0,6}[0-9A-F]{1,4})?::)|v[0-9A-F]+\.[A-Za-z0-9._~!$&'\''()*+,;=:-]+)]|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([A-Za-z0-9._~!$&'\''()*+,;=-]|%[0-9A-Fa-f]{2})*)(:[0-9]*)?(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|/((([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*)?|(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|)(\?([A-Za-z0-9._~!$&'\''()*+,;=:@/?-]|%[0-9A-Fa-f]{2})*)?(#([A-Za-z0-9._~!$&'\''()*+,;=:@/?-]|%[0-9A-Fa-f]{2})*)?$'
+fieldPattern='(original|scheme!?|authority!?|userinfo!?|host|port!?|path|query!?|fragment!?)'
+
+# 各変数に既定値を代入する
 type='match'
+field='original'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
+		'-f' | '--field')
+			if [ -z "${2}" ] || ( [ "$(printf '%s' "${2}" | wc -l)" -eq 0 ] && printf '%s' "${2}" | grep -Eq -e "^${fieldPattern}(,${fieldPattern})*$" ); then
+				field="${2}"
+				shift
+			else
+				cat <<- EOF 1>&2
+					${0##*/}: invalid option -- '${1}'
+					The only values that can be used are 'original', 'scheme', 'authority', 'userinfo', 'host', 'port!', 'path', 'query' and 'fragment'.
+					If '!' is suffixed to 'scheme' 'authority', 'userinfo', 'port', 'query' or 'fragment', the delimiter is also output.
+				EOF
+
+				exit 64 # EX_USAGE </usr/include/sysexits.h>
+			fi
+			;;
 		'-m' | '--match')
 			type='match'
 			shift
 			;;
 		'-V' | '--invert')
 			type='invert'
-			shift
-			;;
-		'-q' | '--quiet')
-			type='quiet'
 			shift
 			;;
 		# ヘルプメッセージを表示して終了する
@@ -96,7 +104,6 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
 			args="${args}$(quoteEscape ${@+"${@}"})"
 			shift "${#}"
 			;;
@@ -129,20 +136,73 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
+exitStatus='0'
+uriPattern='^[A-Za-z][A-Za-z0-9+.-]*:(//(([A-Za-z0-9._~!$&'\''()*+,;=:-]|%[0-9A-Fa-f]{2})*@)?(\[(((([0-9A-F]{1,4}:){6}|::([0-9A-F]{1,4}:){5}|([0-9A-F]{1,4})?::([0-9A-F]{1,4}:){4}|(([0-9A-F]{1,4}:){0,1}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){3}|(([0-9A-F]{1,4}:){0,2}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){2}|(([0-9A-F]{1,4}:){0,3}[0-9A-F]{1,4})?::[0-9A-F]{1,4}:|(([0-9A-F]{1,4}:){0,4}[0-9A-F]{1,4})?::)([0-9A-F]{1,4}:[0-9A-F]{1,4}|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|(([0-9A-F]{1,4}:){0,5}[0-9A-F]{1,4})?::[0-9A-F]{1,4}|(([0-9A-F]{1,4}:){0,6}[0-9A-F]{1,4})?::)|v[0-9A-F]+\.[A-Za-z0-9._~!$&'\''()*+,;=:-]+)]|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([A-Za-z0-9._~!$&'\''()*+,;=-]|%[0-9A-Fa-f]{2})*)(:[0-9]*)?(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|/((([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*)?|(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|)(\?([A-Za-z0-9._~!$&'\''()*+,;=:@/?-]|%[0-9A-Fa-f]{2})*)?(#([A-Za-z0-9._~!$&'\''()*+,;=:@/?-]|%[0-9A-Fa-f]{2})*)?$'
+uriSplitPattern='^\([^:/?#]\{1,\}:\)\{0,1\}\(\/\/\([^@/?#]*@\)\{0,1\}\([^:/?#]*\)\(:[^/?#]*\)\{0,1\}\)\{0,1\}\([^?#]*\)\(?[^#]*\)\{0,1\}\(#.*\)\{0,1\}$'
+awkScript='
+	BEGIN {
+		fieldCount = split(field, fields, ",")
+	}
+
+	{
+		for(i = 1; i <= fieldCount; i++) {
+			if(fields[i] == "original") {
+				printf("%s", $1 $2 $3 $4 $5 $6 $7 $8)
+			} else if(fields[i] == "scheme") {
+				printf("%s", $1)
+			} else if(fields[i] == "scheme!") {
+				printf("%s", substr($1, 1, length(fields[i]) - 1))
+			} else if(fields[i] == "authority") {
+				printf("%s", substr($2, 3))
+			} else if(fields[i] == "authority!") {
+				printf("%s", $2)
+			} else if(fields[i] == "userinfo") {
+				printf("%s", substr($3, 1, length(fields[i]) - 1))
+			} else if(fields[i] == "userinfo!") {
+				printf("%s", $3)
+			} else if(fields[i] == "host") {
+				printf("%s", $4)
+			} else if(fields[i] == "port") {
+				printf("%s", substr($5, 2))
+			} else if(fields[i] == "port!") {
+				printf("%s", $5)
+			} else if(fields[i] == "path") {
+				printf("%s", $6)
+			} else if(fields[i] == "query") {
+				printf("%s", substr($7, 2))
+			} else if(fields[i] == "query!") {
+				printf("%s", $7)
+			} else if(fields[i] == "fragment") {
+				printf("%s", substr($8, 2))
+			} else if(fields[i] == "fragment!") {
+				printf("%s", $8)
+			}
+
+			printf(i == fieldCount ? "\n" : "\t")
+		}
+	}
+'
+
 for uri in ${@+"${@}"}; do
 	if [ "$(printf '%s' "${uri}" | wc -l)" -eq 0 ] && printf '%s' "${uri}" | grep -Eq -e "${uriPattern}"; then
-		case "${type}" in 'match')
-			printf '%s\n' "${uri}"
-			;;
+		case "${type}" in
+			'match')
+				printf '%s' "${uri}" | sed -e "s/${uriSplitPattern}/\\1|\\2|\\3|\\4|\\5|\\6|\\7|\\8/" | awk -v "field=${field}" -F '|' "${awkScript}"
+				;;
+			'invert')
+				exitStatus='1'
+				;;
 		esac
 	else
 		case "${type}" in
+			'match')
+				exitStatus='1'
+				;;
 			'invert')
 				printf '%s\n' "${uri}"
-				;;
-			'quiet')
-				exit 1
 				;;
 		esac
 	fi
 done
+
+exit "${exitStatus}"

@@ -12,16 +12,16 @@
 ##
 ## Options:
 ##
-##   -c, --config=FILE - restore file
-##   -c, --colmun      - colmun number
-##   -l, --line        - line number
-##   -h, --help        - display this help and exit
-##   -v, --version     - output version information and exit
+##   -c, --config=FILE   - restore file
+##   -C, --colmun=NUMBER - colmun number
+##   -l, --line=NUMBER   - line number
+##   -h, --help          - display this help and exit
+##   -v, --version       - output version information and exit
 ##
 ## Exit Status:
 ##
-##   0  - Program terminated normally.
-##   1< - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
 ##
 ## Metadata:
 ##

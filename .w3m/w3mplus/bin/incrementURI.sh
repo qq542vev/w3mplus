@@ -36,7 +36,7 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # 初期化
-set -eu
+set -efu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
@@ -58,31 +58,28 @@ args=''
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-n' | '--number')
-			if [ "${2}" != '0' ] && [ "$(expr -- "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$')" -eq 0 ]; then
+			if [ "${2}" = '0' ] || expr -- "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$' >'/dev/null'; then
+				number="${2}"
+				shift 2
+			else
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
-
 				exit 64 # EX_USAGE </usr/include/sysexits.h>
 			fi
-
-			number="${2}"
-			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
 			exit
 			;;
+		# バージョン情報を表示して終了する
 		'-v' | '--version')
 			version
 			exit
 			;;
 		# 標準入力を処理する
 		'-')
-			args="${args}$(tr '[:space:]' '\n' | while IFS= read -r uri; do
-				printf " '"
-				printf '%s' "${uri}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"
-				printf "'"
-			done)"
+			shift
+			args="${args}$(quoteEscape $(cat))"
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -94,13 +91,8 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -122,9 +114,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
@@ -141,23 +131,31 @@ if [ "${#}" -eq 0 ]; then
 fi
 
 for uri in ${@+"${@}"}; do
-	parts=$(printf '%s' "${uri}" | sed -e 's/\([:\/?#@&*=_-]\)\([0-9]\{1,\}\)/\1\n\2\n/g')
+	if uricheck -q "${uri}"; then :; else
+		printf "%s: not URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
+	fi
+
+	parts=$(printf '%s' "${uri}" | sed -e 's/\([:\/?#@&*=_-]\)\([0-9]\{1,\}\)/\1 \2 /g' | tr ' ' '\n')
 	line=$(printf '%s' "${parts}" | sed -n -e '/^[0-9]\{1,\}$/=' | tail -n '1')
 
 	if [ -n "${line}" ]; then
-		page=$(printf '%s' "${parts}" | sed -n -e "${line}p")
+		page=$(printf '%s' "${parts}" | sed -e "${line}!d")
 
-		if printf '%s' "${number}" | grep -q -e '^[0-9]\{1,\}$'; then
-			page="${number}"
-		else
-			page="$((page + number))"
+		case "${number}" in
+			'+'* | '-'*)
+				page="$((page + number))"
 
-			if [ "${page}" -lt 0 ]; then
-				page='0'
-			fi
-		fi
+				if [ "${page}" -lt 0 ]; then
+					page='0'
+				fi
+				;;
+			*)
+				page="${number}"
+				;;
+		esac
 
-		printf '%s' "${parts}" | sed -e "${line}c ${page}" | tr -d '\n'
-		printf '\n'
+		uri=$(printf '%s' "${parts}" | sed -e "${line}c ${page}" | tr -d '\n')
 	fi
+
+	printf '%s\n' "${uri}"
 done
