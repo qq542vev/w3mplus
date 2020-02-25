@@ -24,7 +24,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.3
+##   version - 1.1.0
 ##   date - 2020-02-24
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -36,7 +36,7 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues
 
 # 初期化
-set -eu
+set -efu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
@@ -45,12 +45,36 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-exclude='\./(cookie|w3m(cache|cookie|src|tmp).*)'
+exclude='./cookie ./w3mcache* ./w3mcookie* ./w3mframe* ./w3msrc* ./w3mtmp*'
+awkScript=$(cat <<- 'EOF'
+	BEGIN {
+		output = ""
+	}
+
+	{
+		for(i = 1; i <= NF; i++) {
+			if(output) {
+				output = output " -o "
+			}
+
+			gsub(/'+/, "'\"&\"'", $i)
+			output = output sprintf("-path %s", $i)
+		}
+	}
+
+	END {
+		if(output) {
+			printf("! ( ( %s ) -prune )", output)
+		}
+	}
+EOF
+)
 
 if [ "${1-}" = '--exclude' ]; then
-	exclude="${2-}"
-	shift 2
+	exclude="${2}"
 fi
+
+expression=$(printf '%s' "${exclude}" | awk "${awkScript}")
 
 tmpDir=$(mktemp -d)
 mkdir -p -- "${tmpDir}/.w3m"
@@ -58,29 +82,22 @@ mkdir -p -- "${tmpDir}/.w3m"
 (
 	cd "${HOME}/.w3m"
 
-	find '.' -mindepth '1' -maxdepth '1' -regextype 'posix-egrep' '!' -regex "${exclude}" -execdir 'cp' '-a' '{}' "${tmpDir}/.w3m" ';'
+	find -L -- '.' ${expression} -type d -exec 'mkdir' '-p' "${tmpDir}/.w3m/{}" ';'
+	find -L -- '.' ${expression} -type f -exec 'cp' '-fp' '{}' "${tmpDir}/.w3m/{}" ';'
 
 	if [ -e "${tmpDir}/.w3m/bookmark.html" ]; then
 		ln -fs -- "${HOME}/.w3m/bookmark.html" "${tmpDir}/.w3m/bookmark.html"
 	else
 		cat >"${tmpDir}/.w3m/bookmark.html" <<- 'EOF'
-<html><head><title>Bookmarks</title></head>
-<body>
-<h1>Bookmarks</h1>
-<h2>Unsorted Bookmarks</h2>
-<ul>
-<!--End of section (do not delete this comment)-->
-</ul>
-<h2>w3m</h2>
-<ul>
-<li><a href="http://w3m.sourceforge.net/">W3M Homepage</a>
-<li><a href="https://github.com/tats/w3m">GitHub - tats/w3m: Debian's w3m: WWW browsable pager</a>
-<li><a href="http://pub.ks-and-ks.ne.jp/prog/w3mmee/">w3m-mee</a>
-<li><a href="http://emacs-w3m.namazu.org/">Emacs-w3m</a>
-<!--End of section (do not delete this comment)-->
-</ul>
-</body>
-</html>
+			<html><head><title>Bookmarks</title></head>
+			<body>
+			<h1>Bookmarks</h1>
+			<h2>Unsorted Bookmarks</h2>
+			<ul>
+			<!--End of section (do not delete this comment)-->
+			</ul>
+			</body>
+			</html>
 		EOF
 	fi
 )
