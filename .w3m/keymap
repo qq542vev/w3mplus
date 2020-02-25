@@ -841,10 +841,13 @@ keymap "=" GOTO "file:///cgi-bin/w3mplus?action=equalPrg"
 
 # Firefox Key Map #
 
-keymap "^[OP" HELP
-keymap "M-^[OS" EXIT
-keymap "^[[15~" RELOAD
-keymap "^[[18~" EDIT_SCREEN
+keymap "^[OP" HELP # F1 key
+keymap "^[OR" SEARCH_NEXT # F3 key
+keymap "M-^[OS" EXIT # Meta + F4 key
+keymap "^[[15~" RELOAD # F5 key
+keymap "^[[17~" COMMAND "SET_OPTION default_url=1; GOTO" # F6 key
+keymap "^[[18~" EDIT_SCREEN # F7 key
+keymap "^[[21~" MENU Menu # F10 key
 
 keymap "M-f" MENU MenuFile
 keymap "M-e" MENU MenuEdit
