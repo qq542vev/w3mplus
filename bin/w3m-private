@@ -14,7 +14,7 @@
 ##
 ## Options:
 ##
-##   --exclude - files not shared with profiles.
+##   --exclude=PATTERN - files not shared with profiles.
 ##
 ## Exit Status:
 ##
