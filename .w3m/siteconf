@@ -55,11 +55,26 @@ substitute_url "https://www.startpage.com/do/search?query="
 url /^twitter:/
 substitute_url "https://twitter.com/search?q="
 
+url m@^urn:isbn:@i
+substitute_url "https://www.worldcat.org/search?q=bn%3A"
+
+url m@^urn:issn:@i
+substitute_url "https://www.worldcat.org/search?q=n2%3A"
+
 url /^wikipedia-en:/
 substitute_url "https://en.wikipedia.org/w/index.php?search="
 
 url /^wikipedia-ja:/
 substitute_url "https://ja.wikipedia.org/w/index.php?search="
+
+url /^yandex:/
+substitute_url "https://yandex.com/search/?text="
+
+url /^yandex-image:/
+substitute_url "https://yandex.com/images/search?text="
+
+url /^yandex-video:/
+substitute_url "https://yandex.com/video/search?text="
 
 url /^youtube:/
 substitute_url "https://www.youtube.com/results?search_query="
