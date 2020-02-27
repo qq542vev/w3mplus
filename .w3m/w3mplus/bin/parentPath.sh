@@ -12,13 +12,14 @@
 ##
 ## Options:
 ##
-##   -n, --number  - number of go up
+##   -n, --number  - number of go up.
 ##   -h, --help    - display this help and exit.
 ##   -v, --version - output version information and exit.
 ##
 ## Exit Status:
 ##
 ##   0 - Program terminated normally.
+##   1 - There are command line arguments other than URI.
 ##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
 ##
 ## Metadata:
@@ -57,7 +58,10 @@ while [ 1 -le "${#}" ]; do
 				count="${2}"
 				shift 2
 			else
-				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+				cat <<- EOF 1>&2
+					${0##*/}: invalid option value -- '${1}'
+					Try '${0##*/} --help' for more information.
+				EOF
 
 				exitStatus="${EX_USAGE}"; exit
 			fi
@@ -114,18 +118,13 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
-	set -f
-	set -- $(cat)
-	set +f
-fi
-
-# regular expression of URI
-pattern='^\(\([^:/?#]\{1,\}\):\)\{0,1\}\(\/\/\([^/?#]*\)\)\{0,1\}\([^?#]*\)\(?\([^#]*\)\)\{0,1\}\(#\(.*\)\)\{0,1\}$'
-
 for uri in ${@+"${@}"}; do
-	path=$(printf '%s' "${uri}" | sed -e "s/${pattern}/\\5/")
+	if path=$(uricheck -f 'path' "${uri}"); then :; else
+		printf "%s: not a URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
+		exitStatus='1'
+		continue
+	fi
+
 	tmpCount="${count}"
 
 	while [ "${tmpCount}" -ne 0 ] && [ "${path}" != '/' ]; do
@@ -137,5 +136,5 @@ for uri in ${@+"${@}"}; do
 		tmpCount=$((tmpCount - 1))
 	done
 
-	printf '%s%s\n' "$(printf '%s' "${uri}" | sed -e "s/${pattern}/\\1\\3/")" "${path}"
+	printf '%s%s\n' "$(uricheck -f 'scheme!,authority!' "${uri}" | tr -d '\t')" "${path}"
 done

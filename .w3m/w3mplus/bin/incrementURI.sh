@@ -12,13 +12,14 @@
 ##
 ## Options:
 ##
-##   -n, --number  - increment number
-##   -h, --help    - display this help and exit.
-##   -v, --version - output version information and exit.
+##   -n, --number=NUMBER - increment number.
+##   -h, --help          - display this help and exit.
+##   -v, --version       - output version information and exit.
 ##
 ## Exit Status:
 ##
 ##   0 - Program terminated normally.
+##   1 - There are command line arguments other than URI.
 ##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
 ##
 ## Metadata:
@@ -57,7 +58,11 @@ while [ 1 -le "${#}" ]; do
 				number="${2}"
 				shift 2
 			else
-				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
+				cat <<- EOF 1>&2
+					${0##*/}: invalid option value -- '${1}'
+					Try '${0##*/} --help' for more information.
+				EOF
+
 				exitStatus="${EX_USAGE}"; exit
 			fi
 			;;
@@ -73,8 +78,8 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			shift
 			args="${args}$(quoteEscape $(cat))"
+			shift
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -118,16 +123,10 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
-	set -f
-	set -- $(cat)
-	set +f
-fi
-
 for uri in ${@+"${@}"}; do
 	if uricheck -f '' -V "${uri}"; then
-		printf "%s: not URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
+		printf "%s: not a URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
+		exitStatus='1'
 		continue
 	fi
 
