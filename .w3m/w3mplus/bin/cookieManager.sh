@@ -28,7 +28,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.3
-##   date - 2020-02-19
+##   date - 2020-02-27
 ##   since - 2020-01-27
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -221,4 +221,4 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 	headerField="${headerField%$}"
 done
 
-printRedirect.sh --header-field "${headerField}" "data:text/html;base64,$("${W3MPLUS_TEMPLATE_HTML}" -t 'Cookie Manager' -c "<ul>${listitem}</ul>" | base64 | tr -d '\n')"
+printf '<ul>%s</ul>' "${listitem}" | printHtml.sh --header-field "${headerField}" --title 'Cookie Manager' --http-template ''

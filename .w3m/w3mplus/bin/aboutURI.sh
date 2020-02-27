@@ -21,7 +21,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.4
-##   date - 2020-02-19
+##   date - 2020-02-27
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -43,7 +43,7 @@ export 'IFS'
 
 case "${1-about:about}" in
 	'about:')
-		printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "$(w3m -version | htmlEscape.sh)" | printHtml.sh --title 'About:'
+		printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "$(w3m -version | htmlescape)" | printHtml.sh --title 'About:'
 		;;
 	'about:about')
 		printHtml.sh --title 'About About' <<- 'EOF'
@@ -121,7 +121,7 @@ case "${1-about:about}" in
 				<a accesskey="m" href="about:message">Messages</a>
 			</p>
 
-			<p align="center"><samp>$(printf '%s' "${SERVER_SOFTWARE:-w3m}" | htmlEscape.sh)</samp></p>
+			<p align="center"><samp>$(printf '%s' "${SERVER_SOFTWARE:-w3m}" | htmlescape)</samp></p>
 		EOF
 		;;
 	'about:message')

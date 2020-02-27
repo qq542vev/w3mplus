@@ -45,16 +45,11 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-afterHeaderFields=''
-
-headerFields=''
+# 各変数に既定値を代入する
+args=''
 
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-H' | '--header-field')
-			afterHeaderFields="${2}"
-			shift 2
-			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
@@ -65,21 +60,74 @@ while [ 1 -le "${#}" ]; do
 			version
 			exit
 			;;
+		# 標準入力を処理する
+		'-')
+			shift
+
+			awkScript=$(cat <<- 'EOF'
+				$0 != "" {
+					gsub(/'+/, "'\"&\"'", $0)
+					printf("'%s' ", $0)
+				}
+			EOF
+			)
+
+			args="${args}$(awk "${awkScript}")"
+			;;
+		# `--name=value` 形式のロングオプション
+		'--'[!-]*'='*)
+			option="${1}"
+			shift
+			# `--name value` に変換して再セットする
+			set -- "${option%%=*}" "${option#*=}" ${@+"${@}"}
+			;;
+		# 以降はオプション以外の引数
+		'--')
+			shift
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
+			;;
+		# 複合ショートオプション
+		'-'[!-][!-]*)
+			option=$(printf '%s\n' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s\n' "${1}" | cut -c '3-'; printf '$')
+
+			shift
+			# `-abc` を `-a -bc` に変換して再セットする
+			set -- "-${option%?$}" "-${options%?$}" ${@+"${@}"}
+			;;
+		# その他の無効なオプション
+		'-'*)
+			cat <<- EOF 1>&2
+				${0##*/}: invalid option -- '${1}'
+				Try '${0##*/} --help' for more information.
+			EOF
+
+			exitStatus="${EX_USAGE}"; exit
+			;;
+		# その他のオプション以外の引数
 		*)
-			if [ "${W3MPLUS_REDIRECT_TYPE-0}" -eq 1 ]; then
-				command='TAB_GOTO'
-			else
-				command='GOTO'
-			fi
-
-			if [ -z "${headerFields}" ]; then
-				W3MPLUS_REDIRECT_TYPE='1'
-			fi
-
-			headerFields=$(printf '%s\nW3m-control: %s %s\n%s' "${headerFields}" "${command}" "${1}" "${afterHeaderFields}")
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
 done
 
-printf '%s\n' "${headerFields}" | httpResponseW3mBack.sh -
+# オプション以外の引数を再セットする
+eval set -- "${args}"
+
+for uri in ${@+"${@}"}; do
+	if uricheck -f '' "${uri}"; then
+		case "${W3MPLUS_REDIRECT_TYPE-0}" in
+			'1')
+				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
+				W3MPLUS_REDIRECT_TYPE='0'
+				;;
+			*)
+				printf 'W3m-control: GOTO %s\n' "${uri}"
+				;;
+		esac
+	else
+		printf '%s\n' "${uri}"
+	fi
+done | httpResponseW3mBack.sh -

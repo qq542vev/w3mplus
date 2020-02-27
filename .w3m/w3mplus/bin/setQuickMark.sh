@@ -27,7 +27,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.1.4
-##   date - 2020-02-20
+##   date - 2020-02-27
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -125,7 +125,7 @@ while [ 1 -le "${#}" ]; do
 				'1')
 					fields=$(printf '%s%s\t%s\t%d\t%d\t%s\n$' "${fields}" "${key}" "${1}" "${line}" "${colmun}" "${date}")
 					fields="${fields%$}"
-					escapedURI=$(printf '%s' "${1}" | htmlEscape.sh)
+					escapedURI=$(printf '%s' "${1}" | htmlescape)
 					addList="${addList}<li><a href=\"${escapedURI}\">${escapedURI}</a></li>"
 					;;
 				*)
@@ -144,7 +144,7 @@ mkdir -p -- "${directory%?$}"
 
 escapedKey=$(printf '%s' "${key}" | sed 's/[].\*/[]/\\&/g')
 
-deleteList=$(grep -e "^${escapedKey}	" -- "${config}" | cut -f '2' | htmlEscape.sh | sed -e 's/^.*$/<li><a href="&">&<\/a><\/li>/')
+deleteList=$(grep -e "^${escapedKey}	" -- "${config}" | cut -f '2' | htmlescape | sed -e 's/^.*$/<li><a href="&">&<\/a><\/li>/')
 
 if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
 	httpResposeW3mBack.sh
@@ -164,4 +164,4 @@ if [ -n "${deleteList}" ]; then
 	deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
 fi
 
-printRedirect.sh "data:text/html;base64,$("${W3MPLUS_TEMPLATE_HTML}" -t "Set Quick Mark '${key}'" -c "<p>Set Quick Mark '<strong>${key}</strong>'</p>${addList}${deleteList}" | base64 | tr -d '\n')"
+printf "<p>Set Quick Mark '<strong>%s</strong>'</p>%s" "${key}" "${addList}${deleteList}" | printHtml.sh  --title "Set Quick Mark '${key}'" --http-template ''

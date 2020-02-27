@@ -33,7 +33,7 @@ export 'W3MPLUS_PATH' 'PATH'
 url="${QUERY_STRING}"
 
 printHtml.sh 'Blocking' - <<- EOF
-	<p><strong><a href="$(printf '%s' "${url}" | htmlEscape.sh)">${url}</a></strong></p>
+	<p><strong><a href="$(printf '%s' "${url}" | htmlescape)">${url}</a></strong></p>
 
 	<p><a href="about:permissions">siteconf</a></p>
 EOF

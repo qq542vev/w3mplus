@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2020-02-24
+##   version - 1.3.0
+##   date - 2020-02-27
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -265,6 +265,11 @@ if result=$(
 				cookieManager.sh ${query_blacklist+'--blacklist' "${query_blacklist}"} ${query_whitelist+'--whitelist' "${query_whitelist}"} ${query_subdomain+'--subdomain'} -- "${url}"
 			fi
 			;;
+		'bookmarkBar')
+			uri=$(expand "${query_url-\${W3M_URL\}}")
+
+			bookmarkBar.sh ${uri:+'--uri' "${uri}"} ${query_type:+'--type' "${query_type}"}
+			;;
 		*)
 			printHtml.sh --title 'Bad Request' --status-code '400 Bad Request' <<- EOF
 				<dl>
@@ -370,13 +375,13 @@ else
 	<section id="error-message">
 		<h1>Error message</h1>
 
-		<pre title="Error Message"><samp>$(printf '%s' "${result}" | htmlEscape.sh)</samp></pre>
+		<pre title="Error Message"><samp>$(printf '%s' "${result}" | htmlescape)</samp></pre>
 	</section>
 
 	<section id="environment-variable">
 		<h1>Environment variable</h1>
 
-		<pre title="Environment variable"><code><samp>$(env | htmlEscape.sh)</samp></code></pre>
+		<pre title="Environment variable"><code><samp>$(env | htmlescape)</samp></code></pre>
 	</section>
 	EOF
 

@@ -27,8 +27,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.0
-##   date - 2020-02-21
+##   version - 1.1.1
+##   date - 2020-02-27
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -61,7 +61,7 @@ while [ 1 -le "${#}" ]; do
 		'-f' | '--field')
 			if [ -z "${2}" ] || ( [ "$(printf '%s' "${2}" | wc -l)" -eq 0 ] && printf '%s' "${2}" | grep -Eq -e "^${fieldPattern}(,${fieldPattern})*$" ); then
 				field="${2}"
-				shift
+				shift 2
 			else
 				cat <<- EOF 1>&2
 					${0##*/}: invalid option -- '${1}'
@@ -148,7 +148,7 @@ awkScript='
 	{
 		for(i = 1; i <= fieldCount; i++) {
 			if(fields[i] == "original") {
-				printf("%s", $1 $2 $3 $4 $5 $6 $7 $8)
+				printf("%s", $1 $2 $6 $7 $8)
 			} else if(fields[i] == "scheme") {
 				printf("%s", $1)
 			} else if(fields[i] == "scheme!") {
@@ -200,10 +200,11 @@ for uri in ${@+"${@}"}; do
 				exitStatus='1'
 				;;
 			'invert')
-				printf '%s\n' "${uri}"
+				case "${field}" in ?)
+					printf '%s\n' "${uri}"
+					;;
+				esac
 				;;
 		esac
 	fi
 done
-
-exit "${exitStatus}"

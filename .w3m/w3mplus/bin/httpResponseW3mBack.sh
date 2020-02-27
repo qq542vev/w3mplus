@@ -41,26 +41,29 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-headerFields='W3m-control: BACK'
+headerFields=$(
+	{
+		printf 'W3m-control: BACK\n'
 
-while [ '1' -le "${#}" ]; do
-	case "${1}" in
-		'-')
-			headerFields=$(printf '%s\n%s' "${headerFields}" "$(cat)")
-			shift
-			;;
-		*:*)
-			headerFields=$(printf '%s\n%s' "${headerFields}" "${1}")
-			shift
-			;;
-		*)
-			headerFields=$(printf '%s\n%s' "${headerFields}" "${1}: ${2}")
-			shift
-			;;
-	esac
-done
+		while [ '1' -le "${#}" ]; do
+			case "${1}" in
+				'-')
+					printf '%s\n' "$(cat)"
+					shift
+					;;
+				*:*)
+					printf '%s\n'"${1}"
+					shift
+					;;
+				*)
+					printf '%s: %s\n' "${1}: ${2}"
+					shift
+					;;
+			esac
+		done
+	} | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control' --unstructured 'W3m-control'
 
-headerFields=$(printf '%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control' --unstructured 'W3m-control'; printf '$')
-headerFields="${headerFields%$}"
+	printf '$'
+)
 
-"${W3MPLUS_TEMPLATE_HTTP}" -h "${headerFields}"
+"${W3MPLUS_TEMPLATE_HTTP}" -h "${headerFields%$}"

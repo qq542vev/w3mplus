@@ -13,8 +13,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.0
-##   date - 2020-02-24
+##   version - 1.2.0
+##   date - 2020-02-27
 ##   since - 2020-02-19
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   licence - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -41,6 +41,7 @@
 : "${W3MPLUS_W3M_CONFIG:=${HOME}/.w3m/config}"
 : "${W3MPLUS_TEMPLATE_HTTP:=${W3MPLUS_PATH}/lib/w3mplus/template/http.sh}"
 : "${W3MPLUS_TEMPLATE_HTML:=${W3MPLUS_PATH}/lib/w3mplus/template/html.sh}"
+: "${W3MPLUS_TEMPLATE_FRAMESET:=${W3MPLUS_PATH}/lib/w3mplus/template/frameset}"
 
 PATH="${W3MPLUS_PATH}/bin:${HOME}/bin${PATH:+:}${PATH-}"
 

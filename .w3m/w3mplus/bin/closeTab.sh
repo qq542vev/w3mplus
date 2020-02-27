@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.1.0
-##   date - 2020-02-21
+##   version - 2.1.1
+##   date - 2020-02-27
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -56,7 +56,7 @@ datetime=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 
 setFieldList() {
 	for uri in ${@+"${@}"}; do
-		if uricheck -q "${uri}"; then
+		if uricheck -f '' "${uri}"; then
 			fields=$(printf '%s%s\t%d\t%d\t%s\n$' "${fields}" "${uri}" "${line}" "${colmun}" "${datetime}")
 			fields="${fields%$}"
 		else

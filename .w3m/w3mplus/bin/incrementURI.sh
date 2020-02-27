@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.1
-##   date - 2020-02-19
+##   version - 1.2.2
+##   date - 2020-02-27
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -126,8 +126,9 @@ if [ "${#}" -eq 0 ]; then
 fi
 
 for uri in ${@+"${@}"}; do
-	if uricheck -q "${uri}"; then :; else
+	if uricheck -f '' -V "${uri}"; then
 		printf "%s: not URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
+		continue
 	fi
 
 	parts=$(printf '%s' "${uri}" | sed -e 's/\([:\/?#@&*=_-]\)\([0-9]\{1,\}\)/\1 \2 /g' | tr ' ' '\n')

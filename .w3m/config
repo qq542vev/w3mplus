@@ -3,7 +3,7 @@ indent_incr 2
 pixel_per_char 6
 pixel_per_line 13
 frame 1
-target_self 0
+target_self 1
 open_tab_blank 0
 open_tab_dl_list 1
 display_link 1
@@ -129,8 +129,8 @@ use_cookie 1
 show_cookie 0
 accept_cookie 1
 accept_bad_cookie 0
-cookie_reject_domains www.yyy,www.yyyuuu,www.yu
-cookie_accept_domains www.yyyuuu,www.yu
+cookie_reject_domains 
+cookie_accept_domains 
 cookie_avoid_wrong_number_of_dots 
 display_charset UTF-8
 document_charset UTF-8

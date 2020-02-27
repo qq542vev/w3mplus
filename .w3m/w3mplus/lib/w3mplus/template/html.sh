@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-02-20
+##   version - 1.0.2
+##   date - 2020-02-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -45,7 +45,7 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-mainCintent=''
+mainContent=''
 metaData=''
 title='No title'
 

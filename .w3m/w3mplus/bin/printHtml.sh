@@ -16,6 +16,8 @@
 ##   -m, --meta-data=ELEMENT       - HTML elements in head element
 ##   -s, --status-code=STATUS_CODE - HTTP status code
 ##   -t, --title=TITLE             - page title in title element
+##   --html-template=FILE          - HTML template.
+##   --http-template=FILE          - HTTP template.
 ##   -h, --help                    - display this help and exit.
 ##   -v, --version                 - output version information and exit.
 ##
@@ -27,8 +29,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.0.1
-##   date - 2020-02-20
+##   version - 2.1.0
+##   date - 2020-02-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -48,9 +50,12 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-title='No title'
 headerFields=''
-statusCode="200 OK"
+metaData=''
+statusCode='200 OK'
+title='No title'
+htmlTemplate="${W3MPLUS_TEMPLATE_HTML}"
+httpTemplate="${W3MPLUS_TEMPLATE_HTTP}"
 args=''
 
 while [ 1 -le "${#}" ]; do
@@ -69,6 +74,14 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-t' | '--title')
 			title="${2}"
+			shift 2
+			;;
+		'--html-template')
+			htmlTemplate="${2}"
+			shift 2
+			;;
+		'--http-template')
+			httpTemplate="${2}"
 			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
@@ -148,10 +161,14 @@ fi
 mainContent=$(cat -- ${@+"${@}"}; printf '$')
 mainContent="${mainContent%$}"
 
-headerFields=$(printf 'Content-Type: text/html; charset=UTF-8\n%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control'; printf '$')
-headerFields="${headerFields%$}"
-
-messageBody=$("${W3MPLUS_TEMPLATE_HTML}" -t "${title}" -c "${mainContent}"; printf '$')
+messageBody=$("${htmlTemplate}" -t "${title}" -m "${metaData}" -c "${mainContent}"; printf '$')
 messageBody="${messageBody%$}"
 
-"${W3MPLUS_TEMPLATE_HTTP}" -b "${messageBody}" -h "${headerFields}" -s "${statusCode}"
+if [ -z "${httpTemplate}" ]; then
+	printf '%s' "${headerFields}" | printRedirect.sh - "data:text/html;base64,$(printf '%s' "${messageBody}" | base64 | tr -d '\n')"
+else
+	headerFields=$(printf 'Content-Type: text/html; charset=UTF-8\n%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control'; printf '$')
+	headerFields="${headerFields%$}"
+
+	"${httpTemplate}" -b "${messageBody}" -h "${headerFields}" -s "${statusCode}"
+fi
