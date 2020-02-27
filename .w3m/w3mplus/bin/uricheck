@@ -12,7 +12,7 @@
 ##
 ## Options:
 ##
-##   -f, --field=[FIELD] - specify the fields to be output separated by commas.
+##   -f, --field=[FIELD] - specify the fields to be output separated by commas. The only values that can be specified for TYPE are 'original', 'scheme', 'authority', 'userinfo', 'host', 'port!', 'path', 'query' and 'fragment'. If '!' is suffixed to 'scheme' 'authority', 'userinfo', 'port', 'query' or 'fragment', the delimiter is also output.
 ##   -m, --match         - displays the URI.
 ##   -V, --invert        - displays that it is not a URI.
 ##   -h, --help          - display this help and exit.
@@ -64,9 +64,8 @@ while [ 1 -le "${#}" ]; do
 				shift 2
 			else
 				cat <<- EOF 1>&2
-					${0##*/}: invalid option -- '${1}'
-					The only values that can be used are 'original', 'scheme', 'authority', 'userinfo', 'host', 'port!', 'path', 'query' and 'fragment'.
-					If '!' is suffixed to 'scheme' 'authority', 'userinfo', 'port', 'query' or 'fragment', the delimiter is also output.
+					${0##*/}: option "${1}" value is invalid.
+					Try '${0##*/} --help' for more information.
 				EOF
 
 				exitStatus="${EX_USAGE}"; exit
@@ -92,8 +91,8 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			shift
 			args="${args}$(quoteEscape $(cat))"
+			shift
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -137,7 +136,6 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-exitStatus='0'
 uriPattern='^[A-Za-z][A-Za-z0-9+.-]*:(//(([A-Za-z0-9._~!$&'\''()*+,;=:-]|%[0-9A-Fa-f]{2})*@)?(\[(((([0-9A-F]{1,4}:){6}|::([0-9A-F]{1,4}:){5}|([0-9A-F]{1,4})?::([0-9A-F]{1,4}:){4}|(([0-9A-F]{1,4}:){0,1}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){3}|(([0-9A-F]{1,4}:){0,2}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){2}|(([0-9A-F]{1,4}:){0,3}[0-9A-F]{1,4})?::[0-9A-F]{1,4}:|(([0-9A-F]{1,4}:){0,4}[0-9A-F]{1,4})?::)([0-9A-F]{1,4}:[0-9A-F]{1,4}|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|(([0-9A-F]{1,4}:){0,5}[0-9A-F]{1,4})?::[0-9A-F]{1,4}|(([0-9A-F]{1,4}:){0,6}[0-9A-F]{1,4})?::)|v[0-9A-F]+\.[A-Za-z0-9._~!$&'\''()*+,;=:-]+)]|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([A-Za-z0-9._~!$&'\''()*+,;=-]|%[0-9A-Fa-f]{2})*)(:[0-9]*)?(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|/((([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*)?|(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|)(\?([A-Za-z0-9._~!$&'\''()*+,;=:@/?-]|%[0-9A-Fa-f]{2})*)?(#([A-Za-z0-9._~!$&'\''()*+,;=:@/?-]|%[0-9A-Fa-f]{2})*)?$'
 uriSplitPattern='^\([^:/?#]\{1,\}:\)\{0,1\}\(\/\/\([^@/?#]*@\)\{0,1\}\([^:/?#]*\)\(:[^/?#]*\)\{0,1\}\)\{0,1\}\([^?#]*\)\(?[^#]*\)\{0,1\}\(#.*\)\{0,1\}$'
 awkScript='
@@ -200,7 +198,7 @@ for uri in ${@+"${@}"}; do
 				exitStatus='1'
 				;;
 			'invert')
-				case "${field}" in ?)
+				case "${field}" in *?*)
 					printf '%s\n' "${uri}"
 					;;
 				esac

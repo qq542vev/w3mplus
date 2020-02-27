@@ -131,6 +131,9 @@ eval set -- "${args}"
 sedScript='s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g;'
 
 case "${escape}" in
+	'special')
+		sedScript="${sedScript} s/\"/\\&quot;/g; s/'/\\&#x27;/g"
+		;;
 	'single')
 		sedScript="${sedScript} s/\"/\\&quot;/g"
 		;;
