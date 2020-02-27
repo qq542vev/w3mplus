@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: html.sh
+## File: html
 ##
 ## Default HTML template for w3mplus.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   html.sh [OPTION]...
+##   html [OPTION]...
 ##   (end)
 ##
 ## Options:
