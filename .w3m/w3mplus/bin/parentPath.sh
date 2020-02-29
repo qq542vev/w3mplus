@@ -25,8 +25,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.2
-##   date - 2020-02-20
+##   version - 1.2.3
+##   date - 2020-02-27
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -119,22 +119,22 @@ done
 eval set -- "${args}"
 
 for uri in ${@+"${@}"}; do
-	if path=$(uricheck -f 'path' "${uri}"); then :; else
+	if path=$(uricheck --field 'path' --normalize -- "${uri}"); then
+		printf '%s%s\n' "$(uricheck --field 'scheme!,authority!' --normalize -- "${uri}" | tr -d '\t')" "$(printf '%s' "${path}" | sed -e 's/\/$//' | awk -F '/' -v "count=${count}" -- '
+			{
+				printf("%s", $1)
+
+				if(2 <= NF) {
+					printf("/")
+				}
+
+				for(i = 2; i <= (NF - count); i++) {
+					printf("%s/", $i)
+				}
+			}
+		')"
+	else
 		printf "%s: not a URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
 		exitStatus='1'
-		continue
 	fi
-
-	tmpCount="${count}"
-
-	while [ "${tmpCount}" -ne 0 ] && [ "${path}" != '/' ]; do
-		if expr -- "${path}" ':' '.*/$' >'/dev/null'; then
-			path="${path%/*}"
-		fi
-
-		path="${path%/*}/"
-		tmpCount=$((tmpCount - 1))
-	done
-
-	printf '%s%s\n' "$(uricheck -f 'scheme!,authority!' "${uri}" | tr -d '\t')" "${path}"
 done

@@ -14,6 +14,7 @@
 ##
 ##   -f, --field=[FIELD] - specify the fields to be output separated by commas. The only values that can be specified for TYPE are 'original', 'scheme', 'authority', 'userinfo', 'host', 'port!', 'path', 'query' and 'fragment'. If '!' is suffixed to 'scheme' 'authority', 'userinfo', 'port', 'query' or 'fragment', the delimiter is also output.
 ##   -m, --match         - displays the URI.
+##   -n, --normalize     - normalize URI.
 ##   -V, --invert        - displays that it is not a URI.
 ##   -h, --help          - display this help and exit.
 ##   -v, --version       - output version information and exit.
@@ -27,8 +28,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.1
-##   date - 2020-02-27
+##   version - 1.2.0
+##   date - 2020-02-29
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -51,8 +52,9 @@ export 'IFS'
 fieldPattern='(original|scheme!?|authority!?|userinfo!?|host|port!?|path|query!?|fragment!?)'
 
 # 各変数に既定値を代入する
-type='match'
 field='original'
+type='match'
+normalize='0'
 args=''
 
 # コマンドライン引数の解析する
@@ -73,6 +75,10 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-m' | '--match')
 			type='match'
+			shift
+			;;
+		'-n' | '--normalize')
+			normalize='1'
 			shift
 			;;
 		'-V' | '--invert')
@@ -136,6 +142,7 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
+# See Also - Regex matching URI <https://gist.github.com/zmwangx/10df52fa856ba0696922>
 uriPattern='^[A-Za-z][A-Za-z0-9+.-]*:(//(([A-Za-z0-9._~!$&'\''()*+,;=:-]|%[0-9A-Fa-f]{2})*@)?(\[(((([0-9A-F]{1,4}:){6}|::([0-9A-F]{1,4}:){5}|([0-9A-F]{1,4})?::([0-9A-F]{1,4}:){4}|(([0-9A-F]{1,4}:){0,1}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){3}|(([0-9A-F]{1,4}:){0,2}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){2}|(([0-9A-F]{1,4}:){0,3}[0-9A-F]{1,4})?::[0-9A-F]{1,4}:|(([0-9A-F]{1,4}:){0,4}[0-9A-F]{1,4})?::)([0-9A-F]{1,4}:[0-9A-F]{1,4}|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|(([0-9A-F]{1,4}:){0,5}[0-9A-F]{1,4})?::[0-9A-F]{1,4}|(([0-9A-F]{1,4}:){0,6}[0-9A-F]{1,4})?::)|v[0-9A-F]+\.[A-Za-z0-9._~!$&'\''()*+,;=:-]+)]|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([A-Za-z0-9._~!$&'\''()*+,;=-]|%[0-9A-Fa-f]{2})*)(:[0-9]*)?(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|/((([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*)?|(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(/(([A-Za-z0-9._~!$&'\''()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|)(\?([A-Za-z0-9._~!$&'\''()*+,;=:@/?-]|%[0-9A-Fa-f]{2})*)?(#([A-Za-z0-9._~!$&'\''()*+,;=:@/?-]|%[0-9A-Fa-f]{2})*)?$'
 uriSplitPattern='^\([^:/?#]\{1,\}:\)\{0,1\}\(\/\/\([^@/?#]*@\)\{0,1\}\([^:/?#]*\)\(:[^/?#]*\)\{0,1\}\)\{0,1\}\([^?#]*\)\(?[^#]*\)\{0,1\}\(#.*\)\{0,1\}$'
 awkScript='
@@ -143,7 +150,59 @@ awkScript='
 		fieldCount = split(field, fields, ",")
 	}
 
+	# See Also - 5.2.4. Remove Dot Segments <https://tools.ietf.org/html/rfc3986#section-5.2.4>
+	function remove_dot_segments(path, output) {
+		if(!index(path, ".")) {
+			return path
+		}
+
+		output = ""
+
+		while(path != "") {
+			if(index(path, "./") == 1) {
+				path = substr(path, 3)
+			} else if(index(path, "../") == 1) {
+				path = substr(path, 4)
+			} else if(index(path, "/./") == 1) {
+				path = substr(path, 3)
+			} else if(path == "/.") {
+				path = "/"
+			} else if(index(path, "/../") == 1) {
+				path = substr(path, 4)
+				gsub(/\/?[^\/]*$/, "", output)
+			} else if(path == "/..") {
+				path = "/"
+				gsub(/\/?[^\/]*$/, "", output)
+			} else if(path == "." || path == "..") {
+				path = ""
+			} else {
+				match(path, /^.[^\/]*/)
+
+				output = output substr(path, RSTART, RLENGTH)
+				path = substr(path, RLENGTH + 1)
+			}
+		}
+
+		return output
+	}
+
 	{
+		if(normalize == 1) {
+			$1 = tolower($1)
+
+			if($2 != "") {
+				$4 = tolower($4)
+
+				if($5 == ":") {
+					$5 = ""
+				}
+
+				$2 = "//" $3 $4 $5
+			}
+
+			$6 = remove_dot_segments($6)
+		}
+
 		for(i = 1; i <= fieldCount; i++) {
 			if(fields[i] == "original") {
 				printf("%s", $1 $2 $6 $7 $8)
@@ -181,12 +240,58 @@ awkScript='
 		}
 	}
 '
+normalizePercent='
+	BEGIN {
+		split("", hex)
+
+		# Character range 0 - 9
+		for(i = 48; i <= 57; i++) {
+			hex["%" sprintf("%X", i)] = sprintf("%c", i)
+		}
+
+		# Character range A - Z
+		for(i = 65; i <= 90; i++) {
+			hex["%" sprintf("%X", i)] = sprintf("%c", i)
+		}
+
+		# Characters range a- z
+		for(i = 97; i <= 122; i++) {
+			hex["%" sprintf("%X", i)] = sprintf("%c", i)
+		}
+
+		hex["%2D"] = "-"
+		hex["%2E"] = "."
+		hex["%5F"] = "_"
+		hex["%7E"] = "~"
+	}
+
+	function normalize(string, position,encoded) {
+		position = index(string, "%")
+
+		if(position) {
+			encoded = toupper(substr(string, position, 3))
+
+			return substr(string, 1, position - 1) (encoded in hex ? hex[encoded] : encoded) normalize(substr(string, position + 3))
+		}
+
+		return string
+	}
+
+	{
+		printf("%s", normalize($0))
+	}
+'
 
 for uri in ${@+"${@}"}; do
 	if [ "$(printf '%s' "${uri}" | wc -l)" -eq 0 ] && printf '%s' "${uri}" | grep -Eq -e "${uriPattern}"; then
 		case "${type}" in
 			'match')
-				printf '%s' "${uri}" | sed -e "s/${uriSplitPattern}/\\1|\\2|\\3|\\4|\\5|\\6|\\7|\\8/" | awk -v "field=${field}" -F '|' "${awkScript}"
+				case "${normalize}" in '1')
+					uri=$(printf '%s' "${uri}" | awk -- "${normalizePercent}")
+					;;
+				esac
+
+				printf '%s' "${uri}" | sed -e "s/${uriSplitPattern}/\\1|\\2|\\3|\\4|\\5|\\6|\\7|\\8/" | awk -v "field=${field}" -v "normalize=${normalize}" -F '|' -- "${awkScript}"
 				;;
 			'invert')
 				exitStatus='1'
