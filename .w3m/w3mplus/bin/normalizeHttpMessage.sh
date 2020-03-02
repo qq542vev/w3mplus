@@ -228,6 +228,7 @@ awkScript=$(cat << 'EOF'
 
 		command = "printf '%s' '" string "' | base64 | tr -d '\\n'"
 		command | getline string
+		close(command)
 
 		return sprintf("=?%s?B?%s?=", charset, string)
 	}

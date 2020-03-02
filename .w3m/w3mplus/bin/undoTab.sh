@@ -176,6 +176,7 @@ case "${number}" in '@'*)
 
 					command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
 					command | getline timestamp
+					close(command)
 
 					if(position < 0 && timestamp <= start) {
 						position = NR - 1
@@ -218,6 +219,7 @@ case "${number}" in '@'*)
 
 					command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
 					command | getline timestamp
+					close(command)
 
 					if((("+" == sign) && (timestamp < time)) || (("-" == sign) && (timestamp <= time))) {
 						number = NR - 1
@@ -268,6 +270,7 @@ head -n "-${number}" -- "${config}" | tail -n "${count}" | sed '1!G; h; $!d' | a
 
 		command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
 		command | getline timestamp
+		close(command)
 
 		if(timestamp <= limitTime) {
 			gsub(/'+/, "'\"&\"'", file)

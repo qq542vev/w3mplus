@@ -41,7 +41,7 @@ umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
-
+# initファイルの読み込み
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
@@ -103,7 +103,7 @@ cat <<- EOF
 			<meta name="referrer" content="no-referrer" />
 			<meta name="robots" content="noindex,nofollow,noarchive" />
 
-			<title property="dcterms:title">$(printf '%s' "${title}" | htmlEscape.sh)</title>
+			<title property="dcterms:title">$(printf '%s' "${title}" | htmlescape)</title>
 
 			<link rel="author" title="qq542vev" href="https://purl.org/meta/me" />
 			<link rel="code-repository" title="w3mplus main repository" href="https://github.com/qq542vev/w3mplus" />

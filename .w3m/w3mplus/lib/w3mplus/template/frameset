@@ -102,7 +102,7 @@ cat <<- EOF
 			<meta name="referrer" content="no-referrer" />
 			<meta name="robots" content="noindex,nofollow,noarchive" />
 
-			<title>$(printf '%s' "${title}" | htmlEscape.sh)</title>
+			<title>$(printf '%s' "${title}" | htmlescape)</title>
 
 			<link rel="author" title="qq542vev" href="https://purl.org/meta/me" />
 			<link rel="code-repository" title="w3mplus main repository" href="https://github.com/qq542vev/w3mplus" />
