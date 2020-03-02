@@ -61,7 +61,7 @@ while [ 1 -le "${#}" ]; do
 				shift 2
 			else
 				cat <<- EOF 1>&2
-					${0##*/}: invalid option value -- '${1}'
+					${0##*/}: invalid '${1}' option value -- '${2}'
 					Try '${0##*/} --help' for more information.
 				EOF
 
@@ -74,7 +74,7 @@ while [ 1 -le "${#}" ]; do
 				shift 2
 			else
 				cat <<- EOF 1>&2
-					${0##*/}: invalid option value -- '${1}'
+					${0##*/}: invalid '${1}' option value -- '${2}'
 					Try '${0##*/} --help' for more information.
 				EOF
 

@@ -59,7 +59,7 @@ while [ 1 -le "${#}" ]; do
 				shift 2
 			else
 				cat <<- EOF 1>&2
-					${0##*/}: invalid option value -- '${1}'
+					${0##*/}: invalid '${1}' option value -- '${2}'
 					Try '${0##*/} --help' for more information.
 				EOF
 
@@ -122,6 +122,11 @@ for uri in ${@+"${@}"}; do
 	if path=$(uricheck --field 'path' --normalize -- "${uri}"); then
 		printf '%s%s\n' "$(uricheck --field 'scheme!,authority!' --normalize -- "${uri}" | tr -d '\t')" "$(printf '%s' "${path}" | sed -e 's/\/$//' | awk -F '/' -v "count=${count}" -- '
 			{
+				if(count == 0) {
+					printf("%s", $0)
+					exit
+				}
+
 				printf("%s", $1)
 
 				if(2 <= NF) {
