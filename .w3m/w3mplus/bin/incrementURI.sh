@@ -12,9 +12,10 @@
 ##
 ## Options:
 ##
-##   -n, --number=NUMBER - increment number.
-##   -h, --help          - display this help and exit.
-##   -v, --version       - output version information and exit.
+##   -n, --number=NUMBER   - increment number.
+##   -p, --position=NUMBER - increment position.
+##   -h, --help            - display this help and exit.
+##   -v, --version         - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -25,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.2
-##   date - 2020-02-27
+##   version - 1.3.0
+##   date - 2020-03-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -48,6 +49,7 @@ export 'IFS'
 
 # 各変数に既定値を代入する
 number='+1'
+position='-1'
 args=''
 
 # コマンドライン引数の解析する
@@ -56,6 +58,19 @@ while [ 1 -le "${#}" ]; do
 		'-n' | '--number')
 			if [ "${2}" = '0' ] || expr -- "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$' >'/dev/null'; then
 				number="${2}"
+				shift 2
+			else
+				cat <<- EOF 1>&2
+					${0##*/}: invalid option value -- '${1}'
+					Try '${0##*/} --help' for more information.
+				EOF
+
+				exitStatus="${EX_USAGE}"; exit
+			fi
+			;;
+		'-p' | '--position')
+			if expr -- "${2}" ':' '[+-][1-9][0-9]*$' >'/dev/null'; then
+				position="${2}"
 				shift 2
 			else
 				cat <<- EOF 1>&2
@@ -123,34 +138,81 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
+awkScript=$(
+	cat <<- 'EOF'
+	function nonNegativeInteger(string, number) {
+		if(string ~ /^[0-9]+$/) {
+			if(number ~ /^[+-]/) {
+				number += string
+			}
+
+			return (0 <= number ? number : 0)
+		}
+
+		return string
+	}
+
+	function forwardIncrement(string, number, position, count,segment,mLength) {
+		if(number == "") {
+			number = "+1"
+		}
+
+		if(position == "") {
+			position = 1
+		}
+
+		if(count == "") {
+			count = 1
+		}
+
+		if(match(string, /^[^:\/?#[\]@!$&'()*+,;=._~-]*[:\/?#[\]@!$&'()*+,;=._~-]/)) {
+			mLength = RLENGTH
+			segment = substr(string, 1, mLength - 1)
+
+			return forwardIncrement(segment, number, position, count) substr(string, mLength, 1) forwardIncrement(substr(string, mLength + 1), number, position, count + (segment ~ /^[0-9]+$/))
+		}
+
+		return (position == count) ? nonNegativeInteger(string, number) : string
+	}
+
+	function backwardIncrement(string, number, position, count,segment,mStart) {
+		if(number == "") {
+			number = "+1"
+		}
+
+		if(position == "") {
+			position = 1
+		}
+
+		if(count == "") {
+			count = 1
+		}
+
+		if(match(string, /[:\/?#[\]@!$&'()*+,;=._~-][^:\/?#[\]@!$&'()*+,;=._~-]*$/)) {
+			mStart = RSTART
+			segment = substr(string, mStart + 1)
+
+			return backwardIncrement(substr(string, 1, mStart - 1), number, position, count + (segment ~ /^[0-9]+$/)) substr(string, mStart, 1) backwardIncrement(segment, number, position, count)
+		}
+
+		return (position == count) ? nonNegativeInteger(string, number) : string
+	}
+
+	{
+		if(1 <= position) {
+			printf("%s\n", forwardIncrement($0, number, position))
+		} else if(position <= -1) {
+			printf("%s\n", backwardIncrement($0, number, position * -1))
+		}
+	}
+	EOF
+)
+
 for uri in ${@+"${@}"}; do
-	if uricheck -f '' -V "${uri}"; then
+	if normalized=$(uricheck --normalize "${uri}"); then
+		printf '%s' "${normalized}" | awk -v "number=${number}" -v "position=${position}" -- "${awkScript}"
+	else
 		printf "%s: not a URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
 		exitStatus='1'
-		continue
 	fi
-
-	parts=$(printf '%s' "${uri}" | sed -e 's/\([:\/?#@&*=_-]\)\([0-9]\{1,\}\)/\1 \2 /g' | tr ' ' '\n')
-	line=$(printf '%s' "${parts}" | sed -n -e '/^[0-9]\{1,\}$/=' | tail -n '1')
-
-	if [ -n "${line}" ]; then
-		page=$(printf '%s' "${parts}" | sed -e "${line}!d")
-
-		case "${number}" in
-			'+'* | '-'*)
-				page="$((page + number))"
-
-				if [ "${page}" -lt 0 ]; then
-					page='0'
-				fi
-				;;
-			*)
-				page="${number}"
-				;;
-		esac
-
-		uri=$(printf '%s' "${parts}" | sed -e "${line}c ${page}" | tr -d '\n')
-	fi
-
-	printf '%s\n' "${uri}"
 done
