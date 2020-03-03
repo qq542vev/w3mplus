@@ -146,7 +146,7 @@ eval set -- "${args}"
 awkScript=$(
 	cat <<- 'EOF'
 	BEGIN {
-		RS = "&"
+		RS = "[&;]"
 		split("", names)
 		split("", values)
 		count = 0
