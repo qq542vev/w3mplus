@@ -23,8 +23,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.4
-##   date - 2020-02-19
+##   version - 1.1.5
+##   date - 2020-03-03
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -92,7 +92,7 @@ fi
 
 case "${action}" in
 	'addBookmark')
-		printRedirect.sh --header-field 'W3m-control: ADD_BOOKMARK' "${uri}"
+		printRedirect.sh "${uri}" 'W3m-control: ADD_BOOKMARK'
 		;;
 	'decrementURI')
 		printRedirect.sh "$(incrementuri -n '-1' -- "${uri}")"
@@ -104,22 +104,16 @@ case "${action}" in
 		printRedirect.sh "$(parentPath.sh -- "${uri}")"
 		;;
 	'prevTab')
-		printRedirect.sh --header-field 'W3m-control: PREV_TAB' "${uri}"
+		printRedirect.sh "${uri}" 'W3m-control: PREV_TAB'
 		;;
 	'sendEmail')
 		printRedirect.sh "mailto:?body=$(printf '%s' "${uri}" | urlencode)"
 		;;
 	'viewSource')
-		printRedirect.sh --header-field 'W3m-control: VIEW' "${uri}"
+		printRedirect.sh "${uri}" 'W3m-control: VIEW'
 		;;
 	'viewSourceExternally')
-		printRedirect.sh --header-field "$(
-			cat <<- 'EOF'
-				W3m-control: VIEW
-				W3m-control: EDIT_SCREEN
-				W3m-control: VIEW
-			EOF
-		)" "${uri}"
+		printRedirect.sh "${uri}" 'W3m-control: VIEW' 'W3m-control: EDIT_SCREEN' 'W3m-control: VIEW'
 		;;
 	*)
 		printHtml.sh --title 'Problem loading page' <<- 'EOF'

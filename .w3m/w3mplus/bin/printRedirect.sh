@@ -12,7 +12,6 @@
 ##
 ## Options:
 ##
-## -H, --header-field=HEADER - HTTP header field after redirect
 ## -h, --help                - display this help and exit.
 ## -v, --version             - output version information and exit.
 ##
