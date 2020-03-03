@@ -21,7 +21,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.3.0
-##   date - 2020-02-27
+##   date - 2020-03-04
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -63,7 +63,7 @@ addPrintCache () (
 	EOF
 )
 
-eval "$(printf '%s' "${QUERY_STRING-}" | parseQuery.sh --prefix 'query_')"
+eval "$(printf '%s' "${QUERY_STRING-}" | parsequery --prefix 'query_')"
 
 if [ -n "${query_redirect-}" ]; then
 	W3MPLUS_REDIRECT_TYPE="${query_redirect}"
