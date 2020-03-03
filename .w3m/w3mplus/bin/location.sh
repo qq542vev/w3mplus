@@ -95,10 +95,10 @@ case "${action}" in
 		printRedirect.sh --header-field 'W3m-control: ADD_BOOKMARK' "${uri}"
 		;;
 	'decrementURI')
-		printRedirect.sh "$(incrementURI.sh -n '-1' -- "${uri}")"
+		printRedirect.sh "$(incrementuri -n '-1' -- "${uri}")"
 		;;
 	'incrementURI')
-		printRedirect.sh "$(incrementURI.sh -- "${uri}")"
+		printRedirect.sh "$(incrementuri -- "${uri}")"
 		;;
 	'parentPath')
 		printRedirect.sh "$(parentPath.sh -- "${uri}")"
