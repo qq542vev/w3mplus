@@ -1,1 +1,10 @@
-misc-tools/urlencode
+#!/usr/bin/env sh
+
+("$(dirname "${0}")/misc-tools/urlencode" -r ${@+"${@}"}; echo) | awk -- 'BEGIN{
+	getline line
+	printf("%s", line)
+
+	while(getline line) {
+		printf("%%0A%s", line)
+	}
+}'

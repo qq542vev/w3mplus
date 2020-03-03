@@ -97,7 +97,7 @@ if result=$(
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"
 
-			printRedirect.sh "file://$(urlencodeForPath "${W3MPLUS_PATH}")/tabRestore"
+			printRedirect.sh "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/tabRestore"
 			;;
 		'homepage')
 			printRedirect.sh "${WWW_HOME-about:home}"
@@ -145,7 +145,7 @@ if result=$(
 		'qmarks')
 			: >>"${W3MPLUS_PATH}/quickmark"
 
-			printRedirect.sh "file://$(urlencodeForPath "${W3MPLUS_PATH}")/quickmark"
+			printRedirect.sh "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/quickmark"
 			;;
 		'getQuickMark')
 			getQuickMark.sh -- ${query_key+"${query_key}"}
@@ -161,7 +161,7 @@ if result=$(
 		'marks')
 			: >>"${W3MPLUS_PATH}/localmark"
 
-			printRedirect.sh "file://$(urlencodeForPath "${W3MPLUS_PATH}")/localmark"
+			printRedirect.sh "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/localmark"
 			;;
 		'getLocalMark')
 			getAutoCommand.sh --config "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"

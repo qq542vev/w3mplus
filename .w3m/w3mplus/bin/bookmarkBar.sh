@@ -7,7 +7,7 @@
 ## Usage:
 ##
 ##   (start code)
-##   aboutURI.sh [ABOUT_URI]
+##   bookmarkBar.sh [OPTION]...
 ##   (end)
 ##
 ## Options:
@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-02-26
+##   version - 1.0.1
+##   date - 2020-03-03
 ##   since - 2020-02-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -134,8 +134,9 @@ done
 eval set -- "${args}"
 
 dataURI="data:text/html;base64,$(sed -e 's/<a /<a target="main" /' "${file}" | base64 | tr -d '\n')"
+escapedURL=$(printf '%s' "${uri}" | htmlescape)
 menu="<frame title=\"Bookmark Menu\" src=\"${dataURI}\" />"
-main="<frame name=\"main\" title=\"Main Content\" src=\"${uri}\" />"
+main="<frame name=\"main\" title=\"Main Content\" src=\"${escapedURL}\" />"
 
 case "${type}" in
 	'leftSidebar')
@@ -169,8 +170,8 @@ esac
 			<p>The frame cannot be displayed on your Web browser.</p>
 
 			<ul>
-				<li><a href="file://$(urlencodeForPath "${file}")">Menu</a></li>
-				<li><a href="$(printf '%s' "${uri}" | htmlEscape.sh)">Main Content</a></li>
+				<li><a href="file://$(printf '%s' "${file}" | urlencode | fsed '%2F' '/')">Menu</a></li>
+				<li><a href="${escapedURL}">Main Content</a></li>
 			</ul>
 		</noframes>
 	</frameset>

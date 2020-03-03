@@ -21,7 +21,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.4
-##   date - 2020-02-27
+##   date - 2020-03-03
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -76,7 +76,7 @@ case "${1-about:about}" in
 		httpResponseW3mBack.sh 'W3m-control: VIEW_BOOKMARK'
 		;;
 	'about:cache')
-		printRedirect.sh "file://$(urlencodeForPath "${HOME}")/.w3m"
+		printRedirect.sh "file://$(printf '%s' "${HOME}" | urlencode | fsed '%2F' '/')/.w3m"
 		;;
 	'about:config')
 		httpResponseW3mBack.sh 'W3m-control: OPTIONS'
@@ -108,7 +108,7 @@ case "${1-about:about}" in
 			</form>
 
 			<p align="center">
-				<a accesskey="~" href="file://$(urlencodeForPath "${HOME}")">Home</a> -
+				<a accesskey="~" href="file://$(printf '%s' "${HOME}" | urlencode | fsed '%2F' '/')">Home</a> -
 				<a accesskey="b" href="about:bookmark">Bookmarks</a> -
 				<a accesskey="h" href="about:history">History</a> -
 				<a accesskey="d" href="about:downloads">Downloads</a>
@@ -131,7 +131,7 @@ case "${1-about:about}" in
 		httpResponseW3mBack.sh 'W3m-control: TAB_GOTO about:blank'
 		;;
 	'about:permissions')
-		printRedirect.sh "file://$(urlencodeForPath "${HOME}")/.w3m/siteconf"
+		printRedirect.sh "file://$(printf '%s' "${HOME}" | urlencode | fsed '%2F' '/')/.w3m/siteconf"
 		;;
 	*)
 		printHtml.sh --title 'Problem loading page' --status-code '400 Bad Request' <<- 'EOF'

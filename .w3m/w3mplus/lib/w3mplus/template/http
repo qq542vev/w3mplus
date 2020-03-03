@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-02-27
+##   version - 1.0.2
+##   date - 2020-03-03
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -101,7 +101,7 @@ normalizeHttpMessage.sh <<- EOF
 	Content-Length: $(printf '%s' "${body}" | wc -c)
 	Expires: Thu, 01 Jan 1970 00:00:00 GMT
 	Last-Modified: ${date}
-	Link: <https://purl.org/meta/me>; rel="author"; title="qq542vev", <https://github.com/qq542vev/w3mplus>; rel="code-repository"; title="w3mplus main repository", <file://$(urlencodeForPath "${W3MPLUS_PATH}")/doc/index.html>; rel="help"; title="w3mplus Document", <https://creativecommons.org/licenses/by-nc/4.0/>; rel="license"; title="Creative Commons License"
+	Link: <https://purl.org/meta/me>; rel="author"; title="qq542vev", <https://github.com/qq542vev/w3mplus>; rel="code-repository"; title="w3mplus main repository", <file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/share/doc/w3mplus/index.html>; rel="help"; title="w3mplus Document", <https://creativecommons.org/licenses/by-nc/4.0/>; rel="license"; title="Creative Commons License"
 	MIME-Version: 1.0
 EOF
 

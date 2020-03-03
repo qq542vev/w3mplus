@@ -23,8 +23,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-02-26
+##   version - 1.0.1
+##   date - 2020-03-03
 ##   since - 2020-02-26
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -107,7 +107,7 @@ cat <<- EOF
 
 			<link rel="author" title="qq542vev" href="https://purl.org/meta/me" />
 			<link rel="code-repository" title="w3mplus main repository" href="https://github.com/qq542vev/w3mplus" />
-			<link rel="help" title="w3mplus Document" href="file://$(urlencodeForPath "${W3MPLUS_PATH}")/doc/index.html" />
+			<link rel="help" title="w3mplus Document" href="file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/share/doc/w3mplus/index.html" />
 			<link rel="license" title="Creative Commons License" href="https://creativecommons.org/licenses/by-nc/4.0/" />
 			${metaData}
 		</head>
