@@ -101,7 +101,7 @@ case "${action}" in
 		printRedirect.sh "$(incrementuri -- "${uri}")"
 		;;
 	'parentPath')
-		printRedirect.sh "$(parentPath.sh -- "${uri}")"
+		printRedirect.sh "$(parenturipath -- "${uri}")"
 		;;
 	'prevTab')
 		printRedirect.sh "${uri}" 'W3m-control: PREV_TAB'
