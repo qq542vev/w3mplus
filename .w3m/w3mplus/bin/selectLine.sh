@@ -25,8 +25,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.4
-##   date - 2020-02-20
+##   version - 1.1.5
+##   date - 2020-03-05
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -176,11 +176,11 @@ fi
 
 case "${action}" in
 	'operatorFunc')
-		tmpFile=$(mktemp)
+		selectLineTmpFile=$(mktemp)
 
-		sed -e "${startLine},${endLine}!d" -- "${file}" >"${tmpFile}"
+		sed -e "${startLine},${endLine}!d" -- "${file}" >"${selectLineTmpFile}"
 
-		printf "W3m-control: EXEC_SHELL cat -- '%s' | %s; rm -f -- '%s'\\n" "${tmpFile}" "${W3MPLUS_OPERATORFUNC}" "${tmpFile}" | httpResponseW3mBack.sh -
+		printf "W3m-control: EXEC_SHELL cat -- '%s' | %s; rm -f -- '%s'\\n" "${selectLineTmpFile}" "${W3MPLUS_OPERATORFUNC}" "${selectLineTmpFile}" | httpResponseW3mBack.sh -
 		;;
 	'formatPrg')
 		command=$(
@@ -203,17 +203,17 @@ case "${action}" in
 		if [ "${startLine}" -eq 1 ] && [ "${lineCount}" -le "${endLine}" ]; then
 			httpResponseW3mBack.sh 'W3m-control: PIPE_BUF'
 		else
-			tmpFile=$(mktemp)
-			cp -f -- "${file}" "${tmpFile}"
+			selectLineTmpFile=$(mktemp)
+			cp -f -- "${file}" "${selectLineTmpFile}"
 
 			commands=$(
 				if [ 2 -le "${startLine}" ]; then
-					printf "sed -e '%s' -- '%s';" "$((startLine - 1))q" "${tmpFile}"
+					printf "sed -e '%s' -- '%s';" "$((startLine - 1))q" "${selectLineTmpFile}"
 				fi
 
 				printf "cat -- %%s;"
-				printf "sed -e '%s' '%s';" "$((endLine + 1)),\$!d" "${tmpFile}"
-				printf "rm -f -- '%s';" "${tmpFile}"
+				printf "sed -e '%s' '%s';" "$((endLine + 1)),\$!d" "${selectLineTmpFile}"
+				printf "rm -f -- '%s';" "${selectLineTmpFile}"
 			)
 
 			httpResponseW3mBack.sh - <<- EOF

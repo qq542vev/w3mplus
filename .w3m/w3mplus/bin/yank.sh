@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.4
-##   date - 2020-02-20
+##   version - 1.1.5
+##   date - 2020-03-05
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -144,13 +144,13 @@ if [ "${#}" -eq 0 ]; then
 	set -- "$(cat)"
 fi
 
-tmpFile=$(mktemp)
+yankTmpFile=$(mktemp)
 
 for yankText in ${@+"${@}"}; do
-		printf '%s%s%s' "${yankHeader}" "${yankText}" "${yankFooter}" >>"${tmpFile}"
+	printf '%s%s%s' "${yankHeader}" "${yankText}" "${yankFooter}" >>"${yankTmpFile}"
 done
 
-cat -- "${tmpFile}" >>"${yankFile}"
-count=$(grep -c -e '^' -- "${tmpFile}" || :)
+cat -- "${yankTmpFile}" >>"${yankFile}"
+count=$(grep -c -e '^' -- "${yankTmpFile}" || :)
 
-httpResponseW3mBack.sh "W3m-control: EXEC_SHELL cat -- '${tmpFile}'; rm -f -- '${tmpFile}'; printf \"\\nAdd %d lines to '%s'\\n\" '${count}' '${yankFile}'"
+httpResponseW3mBack.sh "W3m-control: EXEC_SHELL cat -- '${yankTmpFile}'; rm -f -- '${yankTmpFile}'; printf \"\\nAdd %d lines to '%s'\\n\" '${count}' '${yankFile}'"

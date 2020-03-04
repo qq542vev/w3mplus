@@ -361,6 +361,7 @@ awkScript=$(cat << 'EOF'
 		}
 
 		headerValue[lowerName] = headerValue[lowerName] substr($0, i + 1)
+
 		next
 	}
 
