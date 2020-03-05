@@ -141,10 +141,10 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			tmpFile=$(mktemp -p "${tmpDir}")
-			cat >"${tmpFile}"
+			tmpFile=$(mktemp -p "${tmpDir}" -u)
+			mkfifo "${tmpFile}"
+			cat >"${tmpFile}" &
 			shift
-
 			set -- "${tmpFile}" ${@+"${@}"}
 			;;
 		# `--name=value` 形式のロングオプション
@@ -157,13 +157,8 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -185,9 +180,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
@@ -230,7 +223,7 @@ awkScript=$(cat << 'EOF'
 		command | getline string
 		close(command)
 
-		return sprintf("=?%s?B?%s?=", charset, string)
+		return "=?" charset "?B?" string "?="
 	}
 
 	function fieldContentToken(string, charset, delimiter,after,count) {

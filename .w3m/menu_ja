@@ -276,18 +276,18 @@ menu Commands
 	func "e  w3m メニューを表示" MENU "e" Menu
 	func "d  ダウンロードリストを表示" DOWNLOAD_LIST "d"
 	func "v  バージョン情報を表示" VERSION "v"
-	func "m 以前のメッセージを表示" MSGS "m"
+	func "m  以前のメッセージを表示" MSGS "m"
 	func "s  ローカルオプションを設定" SET_OPTION "s"
 	func "S  グローバルオプションを設定" SET_ENV "S"
 	func "!  コマンドを実行" EXEC_SHELL "!"
 	func "p  w3m の設定を表示" OPTIONS "p"
 	func "M  Map a key sequence" DEFINE_KEY "M"
 	func "r  Execute shell command and display output" PIPE_SHELL "r"
-	func ":  Run a w3m command" COMMAND ":"
-	func "h  Open the introductory help page" HELP "h"
+	func ":  w3m のコマンドを実行" COMMAND ":"
+	func "h  入門用のヘルプを開く" HELP "h"
 	func "c  Change cookie permissions for sites" COOKIE "c"
-	func "B  Go 30 back in the browser history" COMMAND "B" "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
-	func "F  Go 30 forward in the browser history" COMMAND "F" "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
+	func "B  ブラウザーの履歴から30ページ戻る" COMMAND "B" "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
+	func "F  ブラウザーの履歴から30ページ進む" COMMAND "F" "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
 	func "D  Apply the autocommands matching the specified URL pattern" GOTO "D" "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
 	func "Q  Show the specified QuickMarks" GOTO "Q" "file:///cgi-bin/w3mplus?action=qmarks"
 end
@@ -304,8 +304,8 @@ menu Percents
 	popup "8  80% - 89%" 80Percents "8"
 	popup "9  90% - 99%" 90Percents "9"
 	func  "$  100%" END "$"
-	popup "+  move +n%"  plusPercents "+"
-	popup "-  move -n%"  minusPercents "-"
+	popup "+  +n% 移動"  plusPercents "+"
+	popup "-  -n% 移動"  minusPercents "-"
 end
 
 menu 0Percents

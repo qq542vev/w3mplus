@@ -60,7 +60,7 @@
 ## metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   date - 2020-02-24
+##   date - 2020-03-05
 ##   version - 1.0.0
 ##   copyright - Copyright (c) 1987, 1993
 ##     The Regents of the University of California.  All rights reserved.
@@ -97,9 +97,9 @@
 #  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #  SUCH DAMAGE.
 
-readonly 'EX_OK=0            # successful termination
+readonly 'EX_OK=0'           # successful termination
 
-readonly 'EX__BASE=64        # base value for error messages
+readonly 'EX__BASE=64'       # base value for error messages
 
 readonly 'EX_USAGE=64'       # command line usage error
 readonly 'EX_DATAERR=65'     # data format error
