@@ -239,6 +239,7 @@ menu MenuHelp
 end
 
 menu ExtendedHints
+	func ";  " MOVE_LIST_MENU ";"
 	func "?  Show information for line" LINE_INFO "?"
 	func "s  Save hint" SAVE_LINK "s"
 	func "o  Open link" GOTO_LINK "o"

@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.2
-##   date - 2020-02-20
+##   version - 1.1.0
+##   date - 2020-03-06
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -543,6 +543,7 @@ keymap ":u" GOTO "file:///cgi-bin/w3mplus?action=undoTabs"
 keymap "f" LIST_MENU
 keymap "F" COMMAND "NEW_TAB; LIST_MENU"
 
+keymap ";;" MOVE_LIST_MENU
 keymap ";?" LINE_INFO
 keymap ";s" SAVE_LINK
 keymap ";o" GOTO_LINK
