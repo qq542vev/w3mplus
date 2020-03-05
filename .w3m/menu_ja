@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-03-05
+##   version - 1.0.2
+##   date - 2020-03-06
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -451,7 +451,7 @@ menu plusPercents
 end
 
 menu plus0Percents
-	func "0  +0%" LINE_BEGIN "0"
+	func "0  +0%" NULL "0"
 	func "1  +1%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B1"
 	func "2  +2%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B2"
 	func "3  +3%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B3"
@@ -595,7 +595,7 @@ menu minusPercents
 end
 
 menu minus0Percents
-	func "0  -0%" LINE_BEGIN "0"
+	func "0  -0%" NULL "0"
 	func "1  -1%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-1"
 	func "2  -2%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-2"
 	func "3  -3%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-3"
@@ -729,8 +729,8 @@ menu operatorFunc
 	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
 	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
 	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1"
-	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=$"
-	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=$"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=%24"
 	nop   "---------------------"
 	popup "1      1行" operatorFunc1Line "1"
 	popup "2      2行" operatorFunc2Line "2"
@@ -802,8 +802,8 @@ menu formatPrg
 	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
 	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
 	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=1"
-	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=$"
-	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=$"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=%24"
 	nop   "---------------------"
 	popup "1      1行" formatPrg1Line "1"
 	popup "2      2行" formatPrg2Line "2"
@@ -875,7 +875,7 @@ menu filter
 	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
 	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
 	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1"
-	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=$"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%24"
 	func  "*      すべての行" PIPE_BUF "*"
 	nop   "---------------------"
 	popup "1      1行" filter1Line "1"
@@ -948,8 +948,8 @@ menu switchcase
 	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
 	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
 	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1"
-	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=$"
-	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=$"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=%24"
 	nop   "---------------------"
 	popup "1      1行" switchcase1Line "1"
 	popup "2      2行" switchcase2Line "2"
@@ -1021,8 +1021,8 @@ menu rot13
 	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
 	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
 	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1"
-	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=$"
-	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=$"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=%24"
 	nop   "---------------------"
 	popup "1      1行" switchcase1Line "1"
 	popup "2      2行" switchcase2Line "2"
