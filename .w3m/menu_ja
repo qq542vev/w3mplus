@@ -5,7 +5,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
+##   version - 1.0.1
 ##   date - 2020-03-05
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
@@ -123,11 +123,11 @@ menu MenuFile
 end
 
 menu MenuEdit
-	func "元に戻す      (u)" UNDO "Uu"
-	func "やり直し      (r)" REDO "Rr"
-	nop  "-------------"
-func "コピー      (c)" GOTO "Cc" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
-	func "マーク      (m)" MARK "Mm"
+	func "元に戻す   (u)" UNDO "Uu"
+	func "やり直し   (r)" REDO "Rr"
+	nop  "--------------"
+	func "コピー     (c)" GOTO "Cc" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+	func "マーク     (m)" MARK "Mm"
 	nop  "--------------"
 	func "検索       (f)" ISEARCH "Ff"
 	func "ハイライト (h)" REG_MARK "Hh"
@@ -146,7 +146,7 @@ menu MenuView
 end
 
 menu MenuViewToolbars
-	func "ブックマークツールバー (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=bookmarkBar&type=topToolbar"
+	func "ブックマークツールバー (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmarkBar&type=topToolbar"
 end
 
 menu MenuViewSidebar
@@ -181,8 +181,6 @@ end
 menu MenuBookmarks
 	func "このページをブックマーク (m)" ADD_BOOKMARK "Mm"
 	func "ブックマークを表示       (v)" VIEW_BOOKMARK "Vv"
-	func "Open Sidebar             (s)" GOTO "Ss" "file:///cgi-bin/w3mplus?action=bookmarkBar"
-	func "Bookmark Toolbar         (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=bookmarkBar&type=topToolbar"
 end
 
 menu MenuTools
@@ -209,29 +207,29 @@ menu MenuCookieManager
 end
 
 menu MenuUserAgent
-	nop  "-- CLI Web Browser ---"
-	func "w3m                (3)" SET_OPTION "3" "user_agent="
-	func "lynx               (l)" SET_OPTION "l" "user_agent=Lynx/2.8.9rel.1 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/3.6.5"
-	nop  "-- GUI Web Browser ---"
-	func "Internet Explorer  (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; rv:11.0) like Gecko"
-	func "Microsoft Edge     (e)" SET_OPTION "e" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.35g38.102 Safari/537.36 Edge/18.18363"
-	func "Safari             (s)" SET_OPTION "s" "user_agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A"
-	func "Google Chrome      (c)" SET_OPTION "c" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
-	func "Mozilla Firefox    (f)" SET_OPTION "f" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0"
-	func "PaleMoon           (p)" SET_OPTION "p" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.9) Goanna/4.4 PaleMoon/28.8.0"
-	func "NetSurf            (n)" SET_OPTION "n" "user_agent=NetSurf/3.6 (Linux; x86_64)"
-	nop  "-- Mobile Web Browser "
-	func "android (Chrome)   (a)" SET_OPTION "a" "user_agent=Mozilla/5.0 (Linux; U; Android 6.0) AppleWebKit/537.16 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.16 Chrome/33.0.0.0"
-	func "iPhone  (Safari)   (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
-	func "Firefox for Mobile (F)" SET_OPTION "F" "user_agent=Mozilla/5.0 (Android 6.0.1; Mobile; rv:68.0) Gecko/68.0 Firefox/68.0"
-	func "Windows 10 Mobile  (w)" SET_OPTION "w" "user_agent=Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; Lumia 950 XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Mobile Safari/537.36 Edge/14.14393"
-	nop  "-- Web Crawler -------"
-	func "Googlebot          (g)" SET_OPTION "g" "user_agent=Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-	func "Bingbot            (b)" SET_OPTION "b" "user_agent=Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
-	func "Baiduspider        (B)" SET_OPTION "B" "user_agent=Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
-	nop  "-- Download Utility --"
-	func "Wget               (W)" SET_OPTION "W" "user_agent=Wget/1.20.1 (linux-gnueabihf)"
-	func "curl               (C)" SET_OPTION "C" "user_agent=curl/7.64.0"
+	nop  "-- CLI Web ブラウザー ----"
+	func "w3m                    (3)" SET_OPTION "3" "user_agent="
+	func "lynx                   (l)" SET_OPTION "l" "user_agent=Lynx/2.8.9rel.1 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/3.6.5"
+	nop  "-- GUI Web ブラウザー ----"
+	func "Internet Explorer      (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; rv:11.0) like Gecko"
+	func "Microsoft Edge         (e)" SET_OPTION "e" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.35g38.102 Safari/537.36 Edge/18.18363"
+	func "Safari                 (s)" SET_OPTION "s" "user_agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A"
+	func "Google Chrome          (c)" SET_OPTION "c" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
+	func "Mozilla Firefox        (f)" SET_OPTION "f" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0"
+	func "PaleMoon               (p)" SET_OPTION "p" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.9) Goanna/4.4 PaleMoon/28.8.0"
+	func "NetSurf                (n)" SET_OPTION "n" "user_agent=NetSurf/3.6 (Linux; x86_64)"
+	nop  "-- モバイル Web ブラウザー"
+	func "android (Chrome)       (a)" SET_OPTION "a" "user_agent=Mozilla/5.0 (Linux; U; Android 6.0) AppleWebKit/537.16 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.16 Chrome/33.0.0.0"
+	func "iPhone  (Safari)       (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+	func "Firefox for Mobile     (F)" SET_OPTION "F" "user_agent=Mozilla/5.0 (Android 6.0.1; Mobile; rv:68.0) Gecko/68.0 Firefox/68.0"
+	func "Windows 10 Mobile      (w)" SET_OPTION "w" "user_agent=Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; Lumia 950 XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Mobile Safari/537.36 Edge/14.14393"
+	nop  "-- Web クローラー --------"
+	func "Googlebot              (g)" SET_OPTION "g" "user_agent=Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+	func "Bingbot                (b)" SET_OPTION "b" "user_agent=Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+	func "Baiduspider            (B)" SET_OPTION "B" "user_agent=Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
+	nop  "-- ダウンロードツール ----"
+	func "Wget                   (W)" SET_OPTION "W" "user_agent=Wget/1.20.1 (linux-gnueabihf)"
+	func "curl                   (C)" SET_OPTION "C" "user_agent=curl/7.64.0"
 end
 
 menu MenuHelp
@@ -281,15 +279,15 @@ menu Commands
 	func "S  グローバルオプションを設定" SET_ENV "S"
 	func "!  コマンドを実行" EXEC_SHELL "!"
 	func "p  w3m の設定を表示" OPTIONS "p"
-	func "M  Map a key sequence" DEFINE_KEY "M"
-	func "r  Execute shell command and display output" PIPE_SHELL "r"
+	func "M  キー入力を設定" DEFINE_KEY "M"
+	func "r  シェルコマンドを実行して出力を表示" PIPE_SHELL "r"
 	func ":  w3m のコマンドを実行" COMMAND ":"
 	func "h  入門用のヘルプを開く" HELP "h"
-	func "c  Change cookie permissions for sites" COOKIE "c"
+	func "c  サイトのCookieアクセス許可を変更" COOKIE "c"
 	func "B  ブラウザーの履歴から30ページ戻る" COMMAND "B" "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
 	func "F  ブラウザーの履歴から30ページ進む" COMMAND "F" "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
-	func "D  Apply the autocommands matching the specified URL pattern" GOTO "D" "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
-	func "Q  Show the specified QuickMarks" GOTO "Q" "file:///cgi-bin/w3mplus?action=qmarks"
+	func "D  指定されたURLパターンに一致するオートコマンドを適用" GOTO "D" "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
+	func "Q  すべてのQuickMarkを表示する" GOTO "Q" "file:///cgi-bin/w3mplus?action=qmarks"
 end
 
 menu Percents
@@ -727,366 +725,366 @@ menu minus90Percents
 end
 
 menu operatorFunc
-	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=$"
-	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=$"
-	nop  "--------------------"
-	popup "1      1 line" operatorFunc1Line "1"
-	popup "2      2 line" operatorFunc2Line "2"
-	popup "3      3 line" operatorFunc3Line "3"
-	popup "4      4 line" operatorFunc4Line "4"
-	popup "5      5 line" operatorFunc5Line "5"
-	popup "6      6 line" operatorFunc6Line "6"
-	popup "7      7 line" operatorFunc7Line "7"
-	popup "8      8 line" operatorFunc8Line "8"
-	popup "9      9 line" operatorFunc9Line "9"
+	func  "@,h,l  現在の行" GOTO "@hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=$"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=$"
+	nop   "---------------------"
+	popup "1      1行" operatorFunc1Line "1"
+	popup "2      2行" operatorFunc2Line "2"
+	popup "3      3行" operatorFunc3Line "3"
+	popup "4      4行" operatorFunc4Line "4"
+	popup "5      5行" operatorFunc5Line "5"
+	popup "6      6行" operatorFunc6Line "6"
+	popup "7      7行" operatorFunc7Line "7"
+	popup "8      8行" operatorFunc8Line "8"
+	popup "9      9行" operatorFunc9Line "9"
 end
 
 menu operatorFunc1Line
-	func "j  Down one line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
-	func "k  Up one line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-1"
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-1"
 end
 
 menu operatorFunc2Line
-	func "j  Down two line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B2"
-	func "k  Up two line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-2"
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-2"
 end
 
 menu operatorFunc3Line
-	func "j  Down three line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B3"
-	func "k  Up three line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-3"
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-3"
 end
 
 menu operatorFunc4Line
-	func "j  Down four line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B4"
-	func "k  Up four line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-4"
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-4"
 end
 
 menu operatorFunc5Line
-	func "j  Down five line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B5"
-	func "k  Up five line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-5"
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-5"
 end
 
 menu operatorFunc6Line
-	func "j  Down six line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B6"
-	func "k  Up six line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-6"
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-6"
 end
 
 menu operatorFunc7Line
-	func "j  Down seven line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B7"
-	func "k  Up seven line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-7"
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-7"
 end
 
 menu operatorFunc8Line
-	func "j  Down eight line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B8"
-	func "k  Up eight line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-8"
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-8"
 end
 
 menu operatorFunc9Line
-	func "j  Down nine line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B9"
-	func "k  Up nine line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-9"
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-9"
 end
 
 menu formatPrg
-	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=$"
-	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=$"
-	nop  "--------------------"
-	popup "1      1 line" formatPrg1Line "1"
-	popup "2      2 line" formatPrg2Line "2"
-	popup "3      3 line" formatPrg3Line "3"
-	popup "4      4 line" formatPrg4Line "4"
-	popup "5      5 line" formatPrg5Line "5"
-	popup "6      6 line" formatPrg6Line "6"
-	popup "7      7 line" formatPrg7Line "7"
-	popup "8      8 line" formatPrg8Line "8"
-	popup "9      9 line" formatPrg9Line "9"
+	func  "q,h,l  現在の行" GOTO "qhl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=$"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=$"
+	nop   "---------------------"
+	popup "1      1行" formatPrg1Line "1"
+	popup "2      2行" formatPrg2Line "2"
+	popup "3      3行" formatPrg3Line "3"
+	popup "4      4行" formatPrg4Line "4"
+	popup "5      5行" formatPrg5Line "5"
+	popup "6      6行" formatPrg6Line "6"
+	popup "7      7行" formatPrg7Line "7"
+	popup "8      8行" formatPrg8Line "8"
+	popup "9      9行" formatPrg9Line "9"
 end
 
 menu formatPrg1Line
-	func "j  Down one line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
-	func "k  Up one line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-1"
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-1"
 end
 
 menu formatPrg2Line
-	func "j  Down two line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B2"
-	func "k  Up two line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-2"
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-2"
 end
 
 menu formatPrg3Line
-	func "j  Down three line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B3"
-	func "k  Up three line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-3"
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-3"
 end
 
 menu formatPrg4Line
-	func "j  Down four line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B4"
-	func "k  Up four line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-4"
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-4"
 end
 
 menu formatPrg5Line
-	func "j  Down five line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B5"
-	func "k  Up five line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-5"
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-5"
 end
 
 menu formatPrg6Line
-	func "j  Down six line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B6"
-	func "k  Up six line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-6"
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-6"
 end
 
 menu formatPrg7Line
-	func "j  Down seven line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B7"
-	func "k  Up seven line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-7"
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-7"
 end
 
 menu formatPrg8Line
-	func "j  Down eight line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B8"
-	func "k  Up eight line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-8"
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-8"
 end
 
 menu formatPrg9Line
-	func "j  Down nine line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B9"
-	func "k  Up nine line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-9"
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-9"
 end
 
 menu filter
-	func  "!,h,l  Current line" GOTO "!hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=$"
-	func  "*      All line" PIPE_BUF "*"
-	nop   "--------------------"
-	popup "1      1 line" filter1Line "1"
-	popup "2      2 line" filter2Line "2"
-	popup "3      3 line" filter3Line "3"
-	popup "4      4 line" filter4Line "4"
-	popup "5      5 line" filter5Line "5"
-	popup "6      6 line" filter6Line "6"
-	popup "7      7 line" filter7Line "7"
-	popup "8      8 line" filter8Line "8"
-	popup "9      9 line" filter9Line "9"
+	func  "!,h,l  現在の行" GOTO "!hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=$"
+	func  "*      すべての行" PIPE_BUF "*"
+	nop   "---------------------"
+	popup "1      1行" filter1Line "1"
+	popup "2      2行" filter2Line "2"
+	popup "3      3行" filter3Line "3"
+	popup "4      4行" filter4Line "4"
+	popup "5      5行" filter5Line "5"
+	popup "6      6行" filter6Line "6"
+	popup "7      7行" filter7Line "7"
+	popup "8      8行" filter8Line "8"
+	popup "9      9行" filter9Line "9"
 end
 
 menu filter1Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-1"
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-1"
 end
 
 menu filter2Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B2"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-2"
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-2"
 end
 
 menu filter3Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B3"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-3"
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-3"
 end
 
 menu filter4Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B4"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-4"
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-4"
 end
 
 menu filter5Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B5"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-5"
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-5"
 end
 
 menu filter6Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B6"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-6"
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-6"
 end
 
 menu filter7Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B7"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-7"
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-7"
 end
 
 menu filter8Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B8"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-8"
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-8"
 end
 
 menu filter9Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B9"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-9"
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-9"
 end
 
 menu switchcase
-	func  "~,h,l  Current line" GOTO "~hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=$"
-	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=$"
-	nop  "--------------------"
-	popup "1      1 line" switchcase1Line "1"
-	popup "2      2 line" switchcase2Line "2"
-	popup "3      3 line" switchcase3Line "3"
-	popup "4      4 line" switchcase4Line "4"
-	popup "5      5 line" switchcase5Line "5"
-	popup "6      6 line" switchcase6Line "6"
-	popup "7      7 line" switchcase7Line "7"
-	popup "8      8 line" switchcase8Line "8"
-	popup "9      9 line" switchcase9Line "9"
+	func  "~,h,l  現在の行" GOTO "~hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=$"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=$"
+	nop   "---------------------"
+	popup "1      1行" switchcase1Line "1"
+	popup "2      2行" switchcase2Line "2"
+	popup "3      3行" switchcase3Line "3"
+	popup "4      4行" switchcase4Line "4"
+	popup "5      5行" switchcase5Line "5"
+	popup "6      6行" switchcase6Line "6"
+	popup "7      7行" switchcase7Line "7"
+	popup "8      8行" switchcase8Line "8"
+	popup "9      9行" switchcase9Line "9"
 end
 
 menu switchcase1Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-1"
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-1"
 end
 
 menu switchcase2Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B2"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-2"
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-2"
 end
 
 menu switchcase3Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B3"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-3"
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-3"
 end
 
 menu switchcase4Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B4"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-4"
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-4"
 end
 
 menu switchcase5Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B5"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-5"
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-5"
 end
 
 menu switchcase6Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B6"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-6"
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-6"
 end
 
 menu switchcase7Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B7"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-7"
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-7"
 end
 
 menu switchcase8Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B8"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-8"
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-8"
 end
 
 menu switchcase9Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B9"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-9"
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-9"
 end
 
 menu rot13
-	func  "?,h,l  Current line" GOTO "?hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=$"
-	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=$"
-	nop  "--------------------"
-	popup "1      1 line" switchcase1Line "1"
-	popup "2      2 line" switchcase2Line "2"
-	popup "3      3 line" switchcase3Line "3"
-	popup "4      4 line" switchcase4Line "4"
-	popup "5      5 line" switchcase5Line "5"
-	popup "6      6 line" switchcase6Line "6"
-	popup "7      7 line" switchcase7Line "7"
-	popup "8      8 line" switchcase8Line "8"
-	popup "9      9 line" switchcase9Line "9"
+	func  "?,h,l  現在の行" GOTO "?hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=$"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=$"
+	nop   "---------------------"
+	popup "1      1行" switchcase1Line "1"
+	popup "2      2行" switchcase2Line "2"
+	popup "3      3行" switchcase3Line "3"
+	popup "4      4行" switchcase4Line "4"
+	popup "5      5行" switchcase5Line "5"
+	popup "6      6行" switchcase6Line "6"
+	popup "7      7行" switchcase7Line "7"
+	popup "8      8行" switchcase8Line "8"
+	popup "9      9行" switchcase9Line "9"
 end
 
 menu rot13-1Line
-	func "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
-	func "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-1"
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-1"
 end
 
 menu rot13-2Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B2"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-2"
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-2"
 end
 
 menu rot13-3Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B3"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-3"
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-3"
 end
 
 menu rot13-4Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B4"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-4"
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-4"
 end
 
 menu rot13-5Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B5"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-5"
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-5"
 end
 
 menu rot13-6Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B6"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-6"
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-6"
 end
 
 menu rot13-7Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B7"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-7"
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-7"
 end
 
 menu rot13-8Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B8"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-8"
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-8"
 end
 
 menu rot13-9Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B9"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-9"
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-9"
 end
