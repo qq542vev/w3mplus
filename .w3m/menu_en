@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.0
-##   date - 2020-03-04
+##   version - 1.3.1
+##   date - 2020-03-06
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -145,7 +145,7 @@ menu MenuView
 end
 
 menu MenuViewToolbars
-	func "Bookmarks Toolbar (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=bookmarkBar&type=topToolbar"
+	func "Bookmarks Toolbar (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmarkBar&type=topToolbar"
 end
 
 menu MenuViewSidebar
@@ -450,7 +450,7 @@ menu plusPercents
 end
 
 menu plus0Percents
-	func "0  +0%" LINE_BEGIN "0"
+	func "0  +0%" NULL "0"
 	func "1  +1%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B1"
 	func "2  +2%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B2"
 	func "3  +3%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=%2B3"
@@ -594,7 +594,7 @@ menu minusPercents
 end
 
 menu minus0Percents
-	func "0  -0%" LINE_BEGIN "0"
+	func "0  -0%" NULL "0"
 	func "1  -1%" GOTO "1" "file:///cgi-bin/w3mplus?action=movePercent&percent=-1"
 	func "2  -2%" GOTO "2" "file:///cgi-bin/w3mplus?action=movePercent&percent=-2"
 	func "3  -3%" GOTO "3" "file:///cgi-bin/w3mplus?action=movePercent&percent=-3"
@@ -725,365 +725,365 @@ end
 
 menu operatorFunc
 	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=$"
-	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=$"
-	nop  "--------------------"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&line=1&number=%24"
+	nop   "----------------------"
 	popup "1      1 line" operatorFunc1Line "1"
-	popup "2      2 line" operatorFunc2Line "2"
-	popup "3      3 line" operatorFunc3Line "3"
-	popup "4      4 line" operatorFunc4Line "4"
-	popup "5      5 line" operatorFunc5Line "5"
-	popup "6      6 line" operatorFunc6Line "6"
-	popup "7      7 line" operatorFunc7Line "7"
-	popup "8      8 line" operatorFunc8Line "8"
-	popup "9      9 line" operatorFunc9Line "9"
+	popup "2      2 lines" operatorFunc2Line "2"
+	popup "3      3 lines" operatorFunc3Line "3"
+	popup "4      4 lines" operatorFunc4Line "4"
+	popup "5      5 lines" operatorFunc5Line "5"
+	popup "6      6 lines" operatorFunc6Line "6"
+	popup "7      7 lines" operatorFunc7Line "7"
+	popup "8      8 lines" operatorFunc8Line "8"
+	popup "9      9 lines" operatorFunc9Line "9"
 end
 
 menu operatorFunc1Line
-	func "j  Down one line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
-	func "k  Up one line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-1"
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-1"
 end
 
 menu operatorFunc2Line
-	func "j  Down two line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B2"
-	func "k  Up two line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-2"
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-2"
 end
 
 menu operatorFunc3Line
-	func "j  Down three line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B3"
-	func "k  Up three line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-3"
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-3"
 end
 
 menu operatorFunc4Line
-	func "j  Down four line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B4"
-	func "k  Up four line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-4"
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-4"
 end
 
 menu operatorFunc5Line
-	func "j  Down five line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B5"
-	func "k  Up five line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-5"
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-5"
 end
 
 menu operatorFunc6Line
-	func "j  Down six line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B6"
-	func "k  Up six line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-6"
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-6"
 end
 
 menu operatorFunc7Line
-	func "j  Down seven line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B7"
-	func "k  Up seven line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-7"
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-7"
 end
 
 menu operatorFunc8Line
-	func "j  Down eight line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B8"
-	func "k  Up eight line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-8"
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-8"
 end
 
 menu operatorFunc9Line
-	func "j  Down nine line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B9"
-	func "k  Up nine line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-9"
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=operatorFunc&number=%2B-9"
 end
 
 menu formatPrg
-	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=$"
-	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=$"
-	nop  "--------------------"
+	func  "q,h,l  Current line" GOTO "qhl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=0"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&line=1&number=%24"
+	nop   "----------------------"
 	popup "1      1 line" formatPrg1Line "1"
-	popup "2      2 line" formatPrg2Line "2"
-	popup "3      3 line" formatPrg3Line "3"
-	popup "4      4 line" formatPrg4Line "4"
-	popup "5      5 line" formatPrg5Line "5"
-	popup "6      6 line" formatPrg6Line "6"
-	popup "7      7 line" formatPrg7Line "7"
-	popup "8      8 line" formatPrg8Line "8"
-	popup "9      9 line" formatPrg9Line "9"
+	popup "2      2 lines" formatPrg2Line "2"
+	popup "3      3 lines" formatPrg3Line "3"
+	popup "4      4 lines" formatPrg4Line "4"
+	popup "5      5 lines" formatPrg5Line "5"
+	popup "6      6 lines" formatPrg6Line "6"
+	popup "7      7 lines" formatPrg7Line "7"
+	popup "8      8 lines" formatPrg8Line "8"
+	popup "9      9 lines" formatPrg9Line "9"
 end
 
 menu formatPrg1Line
-	func "j  Down one line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
-	func "k  Up one line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-1"
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-1"
 end
 
 menu formatPrg2Line
-	func "j  Down two line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B2"
-	func "k  Up two line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-2"
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-2"
 end
 
 menu formatPrg3Line
-	func "j  Down three line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B3"
-	func "k  Up three line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-3"
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-3"
 end
 
 menu formatPrg4Line
-	func "j  Down four line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B4"
-	func "k  Up four line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-4"
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-4"
 end
 
 menu formatPrg5Line
-	func "j  Down five line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B5"
-	func "k  Up five line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-5"
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-5"
 end
 
 menu formatPrg6Line
-	func "j  Down six line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B6"
-	func "k  Up six line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-6"
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-6"
 end
 
 menu formatPrg7Line
-	func "j  Down seven line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B7"
-	func "k  Up seven line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-7"
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-7"
 end
 
 menu formatPrg8Line
-	func "j  Down eight line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B8"
-	func "k  Up eight line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-8"
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-8"
 end
 
 menu formatPrg9Line
-	func "j  Down nine line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B9"
-	func "k  Up nine line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-9"
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=formatPrg&number=%2B-9"
 end
 
 menu filter
 	func  "!,h,l  Current line" GOTO "!hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=$"
-	func  "*      All line" PIPE_BUF "*"
-	nop   "--------------------"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%24"
+	func  "*      All lines" PIPE_BUF "*"
+	nop   "----------------------"
 	popup "1      1 line" filter1Line "1"
-	popup "2      2 line" filter2Line "2"
-	popup "3      3 line" filter3Line "3"
-	popup "4      4 line" filter4Line "4"
-	popup "5      5 line" filter5Line "5"
-	popup "6      6 line" filter6Line "6"
-	popup "7      7 line" filter7Line "7"
-	popup "8      8 line" filter8Line "8"
-	popup "9      9 line" filter9Line "9"
+	popup "2      2 lines" filter2Line "2"
+	popup "3      3 lines" filter3Line "3"
+	popup "4      4 lines" filter4Line "4"
+	popup "5      5 lines" filter5Line "5"
+	popup "6      6 lines" filter6Line "6"
+	popup "7      7 lines" filter7Line "7"
+	popup "8      8 lines" filter8Line "8"
+	popup "9      9 lines" filter9Line "9"
 end
 
 menu filter1Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-1"
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-1"
 end
 
 menu filter2Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B2"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-2"
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-2"
 end
 
 menu filter3Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B3"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-3"
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-3"
 end
 
 menu filter4Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B4"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-4"
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-4"
 end
 
 menu filter5Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B5"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-5"
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-5"
 end
 
 menu filter6Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B6"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-6"
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-6"
 end
 
 menu filter7Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B7"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-7"
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-7"
 end
 
 menu filter8Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B8"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-8"
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-8"
 end
 
 menu filter9Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B9"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-9"
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=filter&number=%2B-9"
 end
 
 menu switchcase
 	func  "~,h,l  Current line" GOTO "~hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=$"
-	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=$"
-	nop  "--------------------"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&line=1&number=%24"
+	nop   "----------------------"
 	popup "1      1 line" switchcase1Line "1"
-	popup "2      2 line" switchcase2Line "2"
-	popup "3      3 line" switchcase3Line "3"
-	popup "4      4 line" switchcase4Line "4"
-	popup "5      5 line" switchcase5Line "5"
-	popup "6      6 line" switchcase6Line "6"
-	popup "7      7 line" switchcase7Line "7"
-	popup "8      8 line" switchcase8Line "8"
-	popup "9      9 line" switchcase9Line "9"
+	popup "2      2 lines" switchcase2Line "2"
+	popup "3      3 lines" switchcase3Line "3"
+	popup "4      4 lines" switchcase4Line "4"
+	popup "5      5 lines" switchcase5Line "5"
+	popup "6      6 lines" switchcase6Line "6"
+	popup "7      7 lines" switchcase7Line "7"
+	popup "8      8 lines" switchcase8Line "8"
+	popup "9      9 lines" switchcase9Line "9"
 end
 
 menu switchcase1Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-1"
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-1"
 end
 
 menu switchcase2Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B2"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-2"
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-2"
 end
 
 menu switchcase3Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B3"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-3"
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-3"
 end
 
 menu switchcase4Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B4"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-4"
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-4"
 end
 
 menu switchcase5Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B5"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-5"
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-5"
 end
 
 menu switchcase6Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B6"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-6"
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-6"
 end
 
 menu switchcase7Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B7"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-7"
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-7"
 end
 
 menu switchcase8Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B8"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-8"
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-8"
 end
 
 menu switchcase9Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B9"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-9"
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=switchcase&number=%2B-9"
 end
 
 menu rot13
 	func  "?,h,l  Current line" GOTO "?hl" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=0"
-	func  "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
-	func  "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
-	func  "g      Top line" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1"
-	func  "G      Bottom line" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=$"
-	func  "*      All line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=$"
-	nop  "--------------------"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&line=1&number=%24"
+	nop   "----------------------"
 	popup "1      1 line" switchcase1Line "1"
-	popup "2      2 line" switchcase2Line "2"
-	popup "3      3 line" switchcase3Line "3"
-	popup "4      4 line" switchcase4Line "4"
-	popup "5      5 line" switchcase5Line "5"
-	popup "6      6 line" switchcase6Line "6"
-	popup "7      7 line" switchcase7Line "7"
-	popup "8      8 line" switchcase8Line "8"
-	popup "9      9 line" switchcase9Line "9"
+	popup "2      2 lines" switchcase2Line "2"
+	popup "3      3 lines" switchcase3Line "3"
+	popup "4      4 lines" switchcase4Line "4"
+	popup "5      5 lines" switchcase5Line "5"
+	popup "6      6 lines" switchcase6Line "6"
+	popup "7      7 lines" switchcase7Line "7"
+	popup "8      8 lines" switchcase8Line "8"
+	popup "9      9 lines" switchcase9Line "9"
 end
 
 menu rot13-1Line
-	func "j      Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
-	func "k      Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-1"
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-1"
 end
 
 menu rot13-2Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B2"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-2"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-2"
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-2"
 end
 
 menu rot13-3Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B3"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-3"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-3"
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-3"
 end
 
 menu rot13-4Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B4"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-4"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-4"
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-4"
 end
 
 menu rot13-5Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B5"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-5"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-5"
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-5"
 end
 
 menu rot13-6Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B6"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-6"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-6"
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-6"
 end
 
 menu rot13-7Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B7"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-7"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-7"
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-7"
 end
 
 menu rot13-8Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B8"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-8"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-8"
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-8"
 end
 
 menu rot13-9Line
-	func "j  Down line" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B9"
-	func "k  Up line" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-9"
-	func "*  Up line & Down line" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-9"
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-9"
 end
