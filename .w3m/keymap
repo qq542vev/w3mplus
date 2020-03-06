@@ -428,12 +428,14 @@ keymap "$" LINE_END
 keymap "g_" GOTO "file:///cgi-bin/w3mplus?action=moveColmun&percent=100"
 
 keymap "gg" BEGIN
-keymap "^[[1~" BEGIN # home key
-keymap "^[[H" BEGIN # home key
+# Home key
+keymap "^[[1~" BEGIN
+keymap "^[[H" BEGIN
 
 keymap "G" END
-keymap "^[[4~" END # end key
-keymap "^[[F" END # end key
+# End key
+keymap "^[[4~" END
+keymap "^[[F" END
 
 keymap "%" MENU Percents
 
@@ -457,13 +459,15 @@ keymap "C-u" PREV_HALF_PAGE
 
 keymap "C-b" PREV_PAGE
 keymap "M-SPC" PREV_PAGE
-keymap "^[[5~" PREV_PAGE # page up key
-keymap "^[[I" PREV_PAGE # page up key
+# Page up key
+keymap "^[[5~" PREV_PAGE
+keymap "^[[I" PREV_PAGE
 
 keymap "C-f" NEXT_PAGE
 keymap "SPC" NEXT_PAGE
-keymap "^[[6~" NEXT_PAGE # page down key
-keymap "^[[G" NEXT_PAGE # page down key
+# Page down key
+keymap "^[[6~" NEXT_PAGE
+keymap "^[[G" NEXT_PAGE
 
 ### Jumping to elements ###
 
@@ -838,8 +842,9 @@ keymap ":h" HELP
 ### Uncategorized ###
 
 keymap "i" EDIT_SCREEN
-keymap "^[[2~" EDIT_SCREEN # insert key
-keymap "^[[L" EDIT_SCREEN # insert key
+# Insert key
+keymap "^[[2~" EDIT_SCREEN
+keymap "^[[L" EDIT_SCREEN
 
 # Vim Key Map #
 
@@ -867,13 +872,20 @@ keymap "g:" GOTO_LINE
 
 # Firefox Key Map #
 
-keymap "^[OP" HELP # F1 key
-keymap "^[OR" SEARCH_NEXT # F3 key
-keymap "M-^[OS" EXIT # Meta + F4 key
-keymap "^[[15~" RELOAD # F5 key
-keymap "^[[17~" COMMAND "SET_OPTION default_url=1; GOTO" # F6 key
-keymap "^[[18~" EDIT_SCREEN # F7 key
-keymap "^[[21~" MENU Menu # F10 key
+# F1 key
+keymap "^[OP" HELP
+# F3 key
+keymap "^[OR" SEARCH_NEXT
+# Meta + F4 key
+keymap "M-^[OS" EXIT
+# F5 key
+keymap "^[[15~" RELOAD
+# F6 key
+keymap "^[[17~" COMMAND "SET_OPTION default_url=1; GOTO"
+# F7 key
+keymap "^[[18~" EDIT_SCREEN
+# F10 key
+keymap "^[[21~" MENU Menu
 
 keymap "M-f" MENU MenuFile
 keymap "M-e" MENU MenuEdit
