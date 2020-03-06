@@ -28,6 +28,8 @@
 # Right : RIGHT, ^[[C
 # Left  : LEFT, ^[[D
 
+# Reset #
+
 keymap "SPC" NULL
 keymap "TAB" NULL
 keymap "DEL" NULL
@@ -327,6 +329,8 @@ keymap "M-C-]" NULL
 keymap "M-C-^" NULL
 keymap "M-C-_" NULL
 keymap "M-C-?" NULL
+
+# Keymap define #
 
 keymap "C-@" MARK
 keymap "C-a" LINE_BEGIN

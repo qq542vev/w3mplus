@@ -6,7 +6,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-02-20
+##   date - 2020-03-06
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -25,6 +25,8 @@
 # Down  : DOWN, ^[[B
 # Right : RIGHT, ^[[C
 # Left  : LEFT, ^[[D
+
+# Reset #
 
 keymap "SPC" SET_OPTION "keymap_file=keymap"
 keymap "TAB" SET_OPTION "keymap_file=keymap"
@@ -263,6 +265,8 @@ keymap "M-C-]" SET_OPTION "keymap_file=keymap"
 keymap "M-C-^" SET_OPTION "keymap_file=keymap"
 keymap "M-C-_" SET_OPTION "keymap_file=keymap"
 keymap "M-C-?" SET_OPTION "keymap_file=keymap"
+
+# Keymap define #
 
 keymap "0" COMMAND "SET_OPTION keymap_file=keymap; GOTO file:///cgi-bin/w3mplus?action=getQuickMark&key=0"
 keymap "1" COMMAND "SET_OPTION keymap_file=keymap; GOTO file:///cgi-bin/w3mplus?action=getQuickMark&key=1"
