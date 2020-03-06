@@ -1,0 +1,160 @@
+## File: keymap-default-toggle
+##
+## Default w3m keymap(toggle).
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2020-03-06
+##   since - 2020-03-06
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##   source - keymap.default <https://github.com/tats/w3m/blob/master/doc/keymap.default>
+##
+## See Also:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
+# Ctrl  : C-, ^
+# Escape: ESC-, M-, ^[
+# Space : SPC, ' '
+# Tab   : TAB, ^i, ^I
+# Delete: DEL, ^?
+# Up    : UP, ^[[A
+# Down  : DOWN, ^[[B
+# Right : RIGHT, ^[[C
+# Left  : LEFT, ^[[D
+
+keymap "C-@" COMMAND "MARK; SET_OPTION keymap_file=keymap"
+keymap "C-a" COMMAND "LINE_BEGIN; SET_OPTION keymap_file=keymap"
+keymap "C-b" COMMAND "MOVE_LEFT; SET_OPTION keymap_file=keymap"
+keymap "C-e" COMMAND "LINE_END; SET_OPTION keymap_file=keymap"
+keymap "C-f" COMMAND "MOVE_RIGHT; SET_OPTION keymap_file=keymap"
+keymap "C-g" COMMAND "LINE_INFO; SET_OPTION keymap_file=keymap"
+keymap "C-h" COMMAND "HISTORY; SET_OPTION keymap_file=keymap"
+keymap "TAB" COMMAND "NEXT_LINK; SET_OPTION keymap_file=keymap"
+keymap "C-j" COMMAND "GOTO_LINK; SET_OPTION keymap_file=keymap"
+keymap "C-k" COMMAND "COOKIE; SET_OPTION keymap_file=keymap"
+keymap "C-l" COMMAND "REDRAW; SET_OPTION keymap_file=keymap"
+keymap "C-m" COMMAND "GOTO_LINK; SET_OPTION keymap_file=keymap"
+keymap "C-n" COMMAND "MOVE_DOWN; SET_OPTION keymap_file=keymap"
+keymap "C-p" COMMAND "MOVE_UP; SET_OPTION keymap_file=keymap"
+keymap "C-q" COMMAND "CLOSE_TAB; SET_OPTION keymap_file=keymap"
+keymap "C-r" COMMAND "ISEARCH_BACK; SET_OPTION keymap_file=keymap"
+keymap "C-s" COMMAND "ISEARCH; SET_OPTION keymap_file=keymap"
+keymap "C-t" COMMAND "TAB_LINK; SET_OPTION keymap_file=keymap"
+keymap "C-u" COMMAND "PREV_LINK; SET_OPTION keymap_file=keymap"
+keymap "C-v" COMMAND "NEXT_PAGE; SET_OPTION keymap_file=keymap"
+keymap "C-w" COMMAND "WRAP_TOGGLE; SET_OPTION keymap_file=keymap"
+keymap "C-z" COMMAND "SUSPEND; SET_OPTION keymap_file=keymap"
+
+keymap "SPC" COMMAND "NEXT_PAGE; SET_OPTION keymap_file=keymap"
+keymap "!" COMMAND "SHELL; SET_OPTION keymap_file=keymap"
+keymap "\"" COMMAND "REG_MARK; SET_OPTION keymap_file=keymap"
+keymap "#" COMMAND "PIPE_SHELL; SET_OPTION keymap_file=keymap"
+keymap "$" COMMAND "LINE_END; SET_OPTION keymap_file=keymap"
+keymap "(" COMMAND "UNDO; SET_OPTION keymap_file=keymap"
+keymap ")" COMMAND "REDO; SET_OPTION keymap_file=keymap"
+keymap "+" COMMAND "NEXT_PAGE; SET_OPTION keymap_file=keymap"
+keymap "," COMMAND "LEFT; SET_OPTION keymap_file=keymap"
+keymap "-" COMMAND "PREV_PAGE; SET_OPTION keymap_file=keymap"
+keymap "." COMMAND "RIGHT; SET_OPTION keymap_file=keymap"
+keymap "/" COMMAND "SEARCH; SET_OPTION keymap_file=keymap"
+keymap ":" COMMAND "MARK_URL; SET_OPTION keymap_file=keymap"
+keymap ";" COMMAND "MARK_WORD; SET_OPTION keymap_file=keymap"
+keymap "<" COMMAND "SHIFT_LEFT; SET_OPTION keymap_file=keymap"
+keymap "=" COMMAND "INFO; SET_OPTION keymap_file=keymap"
+keymap ">" COMMAND "SHIFT_RIGHT; SET_OPTION keymap_file=keymap"
+keymap "?" COMMAND "SEARCH_BACK; SET_OPTION keymap_file=keymap"
+keymap "@" COMMAND "READ_SHELL; SET_OPTION keymap_file=keymap"
+keymap "B" COMMAND "BACK; SET_OPTION keymap_file=keymap"
+keymap "D" COMMAND "DOWNLOAD_LIST; SET_OPTION keymap_file=keymap"
+keymap "E" COMMAND "EDIT; SET_OPTION keymap_file=keymap"
+keymap "F" COMMAND "FRAME; SET_OPTION keymap_file=keymap"
+keymap "G" COMMAND "END; SET_OPTION keymap_file=keymap"
+keymap "H" COMMAND "HELP; SET_OPTION keymap_file=keymap"
+keymap "I" COMMAND "VIEW_IMAGE; SET_OPTION keymap_file=keymap"
+keymap "J" COMMAND "UP; SET_OPTION keymap_file=keymap"
+keymap "K" COMMAND "DOWN; SET_OPTION keymap_file=keymap"
+keymap "L" COMMAND "LIST; SET_OPTION keymap_file=keymap"
+keymap "M" COMMAND "EXTERN; SET_OPTION keymap_file=keymap"
+keymap "N" COMMAND "SEARCH_PREV; SET_OPTION keymap_file=keymap"
+keymap "Q" COMMAND "EXIT; SET_OPTION keymap_file=keymap"
+keymap "R" COMMAND "RELOAD; SET_OPTION keymap_file=keymap"
+keymap "S" COMMAND "SAVE_SCREEN; SET_OPTION keymap_file=keymap"
+keymap "T" COMMAND "NEW_TAB; SET_OPTION keymap_file=keymap"
+keymap "U" COMMAND "GOTO; SET_OPTION keymap_file=keymap"
+keymap "V" COMMAND "LOAD; SET_OPTION keymap_file=keymap"
+keymap "W" COMMAND "PREV_WORD; SET_OPTION keymap_file=keymap"
+keymap "Z" COMMAND "CENTER_H; SET_OPTION keymap_file=keymap"
+keymap "[" COMMAND "LINK_BEGIN; SET_OPTION keymap_file=keymap"
+keymap "]" COMMAND "LINK_END; SET_OPTION keymap_file=keymap"
+keymap "^" COMMAND "LINE_BEGIN; SET_OPTION keymap_file=keymap"
+keymap "a" COMMAND "SAVE_LINK; SET_OPTION keymap_file=keymap"
+keymap "b" COMMAND "PREV_PAGE; SET_OPTION keymap_file=keymap"
+keymap "c" COMMAND "PEEK; SET_OPTION keymap_file=keymap"
+keymap "g" COMMAND "BEGIN; SET_OPTION keymap_file=keymap"
+keymap "h" COMMAND "MOVE_LEFT; SET_OPTION keymap_file=keymap"
+keymap "i" COMMAND "PEEK_IMG; SET_OPTION keymap_file=keymap"
+keymap "j" COMMAND "MOVE_DOWN; SET_OPTION keymap_file=keymap"
+keymap "k" COMMAND "MOVE_UP; SET_OPTION keymap_file=keymap"
+keymap "l" COMMAND "MOVE_RIGHT; SET_OPTION keymap_file=keymap"
+keymap "m" COMMAND "MOUSE_TOGGLE; SET_OPTION keymap_file=keymap"
+keymap "n" COMMAND "SEARCH_NEXT; SET_OPTION keymap_file=keymap"
+keymap "o" COMMAND "OPTIONS; SET_OPTION keymap_file=keymap"
+keymap "q" COMMAND "QUIT; SET_OPTION keymap_file=keymap"
+keymap "r" COMMAND "VERSION; SET_OPTION keymap_file=keymap"
+keymap "s" COMMAND "SELECT_MENU; SET_OPTION keymap_file=keymap"
+keymap "u" COMMAND "PEEK_LINK; SET_OPTION keymap_file=keymap"
+keymap "v" COMMAND "VIEW; SET_OPTION keymap_file=keymap"
+keymap "w" COMMAND "NEXT_WORD; SET_OPTION keymap_file=keymap"
+keymap "z" COMMAND "CENTER_V; SET_OPTION keymap_file=keymap"
+keymap "{" COMMAND "PREV_TAB; SET_OPTION keymap_file=keymap"
+keymap "|" COMMAND "PIPE_BUF; SET_OPTION keymap_file=keymap"
+keymap "}" COMMAND "NEXT_TAB; SET_OPTION keymap_file=keymap"
+
+keymap "M-TAB" COMMAND "PREV_LINK; SET_OPTION keymap_file=keymap"
+keymap "M-C-j" COMMAND "SAVE_LINK; SET_OPTION keymap_file=keymap"
+keymap "M-C-m" COMMAND "SAVE_LINK; SET_OPTION keymap_file=keymap"
+
+keymap "M-:" COMMAND "MARK_MID; SET_OPTION keymap_file=keymap"
+keymap "M-<" COMMAND "BEGIN; SET_OPTION keymap_file=keymap"
+keymap "M->" COMMAND "END; SET_OPTION keymap_file=keymap"
+keymap "M-I" COMMAND "SAVE_IMAGE; SET_OPTION keymap_file=keymap"
+keymap "M-M" COMMAND "EXTERN_LINK; SET_OPTION keymap_file=keymap"
+keymap "M-W" COMMAND "DICT_WORD_AT; SET_OPTION keymap_file=keymap"
+keymap "M-a" COMMAND "ADD_BOOKMARK; SET_OPTION keymap_file=keymap"
+keymap "M-b" COMMAND "BOOKMARK; SET_OPTION keymap_file=keymap"
+keymap "M-c" COMMAND "COMMAND; SET_OPTION keymap_file=keymap"
+keymap "M-e" COMMAND "EDIT_SCREEN; SET_OPTION keymap_file=keymap"
+keymap "M-g" COMMAND "GOTO_LINE; SET_OPTION keymap_file=keymap"
+keymap "M-k" COMMAND "DEFINE_KEY; SET_OPTION keymap_file=keymap"
+keymap "M-l" COMMAND "LIST_MENU; SET_OPTION keymap_file=keymap"
+keymap "M-m" COMMAND "MOVE_LIST_MENU; SET_OPTION keymap_file=keymap"
+keymap "M-n" COMMAND "NEXT_MARK; SET_OPTION keymap_file=keymap"
+keymap "M-o" COMMAND "SET_OPTION; SET_OPTION keymap_file=keymap"
+keymap "M-p" COMMAND "PREV_MARK; SET_OPTION keymap_file=keymap"
+keymap "M-s" COMMAND "SAVE; SET_OPTION keymap_file=keymap"
+keymap "M-t" COMMAND "TAB_MENU; SET_OPTION keymap_file=keymap"
+keymap "M-u" COMMAND "GOTO_RELATIVE; SET_OPTION keymap_file=keymap"
+keymap "M-v" COMMAND "PREV_PAGE; SET_OPTION keymap_file=keymap"
+keymap "M-w" COMMAND "DICT_WORD; SET_OPTION keymap_file=keymap"
+
+keymap "UP" COMMAND "MOVE_UP; SET_OPTION keymap_file=keymap"
+keymap "DOWN" COMMAND "MOVE_DOWN; SET_OPTION keymap_file=keymap"
+keymap "RIGHT" COMMAND "MOVE_RIGHT; SET_OPTION keymap_file=keymap"
+keymap "LEFT" COMMAND "MOVE_LEFT; SET_OPTION keymap_file=keymap"
+
+keymap "M-[E" COMMAND "MENU; SET_OPTION keymap_file=keymap"
+keymap "M-[L" COMMAND "MENU; SET_OPTION keymap_file=keymap"
+keymap "M-[Z" COMMAND "PREV_LINK; SET_OPTION keymap_file=keymap"
+
+keymap "M-[1~" COMMAND "BEGIN; SET_OPTION keymap_file=keymap"
+keymap "M-[2~" COMMAND "MENU; SET_OPTION keymap_file=keymap"
+keymap "M-[4~" COMMAND "END; SET_OPTION keymap_file=keymap"
+keymap "M-[5~" COMMAND "PREV_PAGE; SET_OPTION keymap_file=keymap"
+keymap "M-[6~" COMMAND "NEXT_PAGE; SET_OPTION keymap_file=keymap"
+keymap "M-[28~" COMMAND "MENU; SET_OPTION keymap_file=keymap"
