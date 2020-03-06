@@ -408,7 +408,6 @@ keymap ":q" QUIT
 
 ### The current directory ###
 
-keymap ":C" SETENV "HOME"
 keymap ":P" EXEC_SHELL pwd
 
 ## Buffer ##
