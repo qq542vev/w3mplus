@@ -240,7 +240,7 @@ menu MenuHelp
 end
 
 menu ExtendedHints
-	func ";  " MOVE_LIST_MENU ";"
+	func ";  リンクをフォーカス" MOVE_LIST_MENU ";"
 	func "?  行の情報を表示" LINE_INFO "?"
 	func "s  リンク先を保存" SAVE_LINK "s"
 	func "o  リンクを開く" GOTO_LINK "o"
