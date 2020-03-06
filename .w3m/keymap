@@ -601,7 +601,7 @@ keymap ";TAB" MENU ExtendedHints
 
 ### Bypassing Pentadactyl ###
 
-keymap "C-v" MOUSE_TOGGLE
+keymap "C-v" SET_OPTION "keymap_file=keymap-default-toggle"
 keymap "M-z" SET_OPTION "keymap_file=keymap-default"
 
 ## Marks ##
