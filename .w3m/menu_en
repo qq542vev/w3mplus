@@ -283,7 +283,7 @@ menu Commands
 	func "v  Show version information" VERSION "v"
 	func "m  Display previously shown messages" MSGS "m"
 	func "s  Set local option" SET_OPTION "s"
-	func "S  Set global option" SET_ENV "S"
+	func "S  Set global option" SETENV "S"
 	func "!  Run a command" EXEC_SHELL "!"
 	func "p  Show w3m preferences" OPTIONS "p"
 	func "M  Map a key sequence" DEFINE_KEY "M"
