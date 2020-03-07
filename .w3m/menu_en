@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.4.0
-##   date - 2020-03-07
+##   version - 1.5.0
+##   date - 2020-03-08
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -136,11 +136,12 @@ menu MenuView
 	popup "Toolbars           (t)" MenuViewToolbars "Tt"
 	popup "Sidebar            (e)" MenuViewSidebar "Ee"
 	nop   "----------------------"
+	popup "Style & Color      (s)" MenuViewStyle "Ss"
 	popup "Zoom               (z)" MenuViewZoom "Zz"
 	func  "Character Encoding (c)" CHARSET "Cc"
+	nop   "----------------------"
 	func  "Navigation Link    (n)" LINK_MENU "Nn"
 	func  "Show All Link      (l)" LIST_MENU "Ll"
-	popup "Style & Color      (s)" MenuViewStyle "Ss"
 	nop   "----------------------"
 	func  "Show All Tabs      (a)" TAB_MENU "Aa"
 end
@@ -194,13 +195,20 @@ menu MenuTools
 	func  "Cookies        (c)" COOKIE "Cc"
 	func  "Permissions    (m)" GOTO "Mm" "about:permissions"
 	nop   "------------------"
-	func  "Page Source    (o)" SOURCE "Oo"
-	func  "Error Message  (e)" MSGS "Ee"
+	popup "Advanced Tools (a)" MenuAdvanced "Aa"
 	func  "Page Info      (i)" INFO "Ii"
 	nop   "------------------"
 	popup "Cookie Manager (k)" MenuCookieManager "Kk"
 	popup "User Agent     (u)" MenuUserAgent "Uu"
 	func  "Preferences    (p)" OPTIONS "Pp"
+end
+
+menu MenuAdvanced
+	func "Page Source           (o)" SOURCE "Oo"
+	func "Error Messages        (m)" MSGS "Mm"
+	func "Apply Shell Command   (s)" PIPE_BUF "Ss"
+	func "Execute w3m Command   (c)" COMMAND "Cc"
+	func "Execute shell Command (e)" EXEC_SHELL "Ee"
 end
 
 menu MenuCookieManager
@@ -267,34 +275,138 @@ menu ExtendedHints
 end
 
 menu Commands
-	func "o  Open URL in the current tab" COMMAND "o" "SET_OPTION default_url=0; GOTO"
-	func "t  Open URL in a new tab" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
-	func "j  Show jumplist" SELECT_MENU "j"
-	func "w  Save current document to disk" DOWNLOAD "w"
-	func "W  Print current document" PRINT "W"
-	func "x  Quit w3m" EXIT "x"
-	func "q  Quit w3m" QUIT "q"
-	func "P  Print the current directory name" EXEC_SHELL "P" pwd
-	func "f  Toggle rendering HTML frames" FRAME "f"
-	func "b  Open bookmarks" VIEW_BOOKMARK "b"
-	func "H  Show recently visited URLs" HISTORY "H"
-	func "e  Open w3m menu" MENU "e" Menu
-	func "d  Display the downloads list" DOWNLOAD_LIST "d"
-	func "v  Show version information" VERSION "v"
-	func "m  Display previously shown messages" MSGS "m"
-	func "s  Set local option" SET_OPTION "s"
-	func "S  Set global option" SETENV "S"
-	func "!  Run a command" EXEC_SHELL "!"
-	func "p  Show w3m preferences" OPTIONS "p"
-	func "M  Map a key sequence" DEFINE_KEY "M"
-	func "r  Execute shell command and display output" PIPE_SHELL "r"
-	func ":  Run a w3m command" COMMAND ":"
-	func "h  Open the introductory help page" HELP "h"
-	func "c  Change cookie permissions for sites" COOKIE "c"
-	func "B  Go 30 back in the browser history" COMMAND "B" "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
-	func "F  Go 30 forward in the browser history" COMMAND "F" "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
-	func "D  Apply the autocommands matching the specified URL pattern" GOTO "D" "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
-	func "Q  Show the specified QuickMarks" GOTO "Q" "file:///cgi-bin/w3mplus?action=qmarks"
+	func  "!  Run a command" EXEC_SHELL "!"
+	func  ":  Run a w3m command" COMMAND ":"
+	func  "b  Open bookmarks" VIEW_BOOKMARK "b"
+	func  "B  Go 30 back in the browser history" COMMAND "B" "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
+	func  "c  Change cookie permissions for sites" COOKIE "c"
+	func  "D  Apply the autocommands matching the specified URL pattern" GOTO "D" "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
+	func  "d  Display the downloads list" DOWNLOAD_LIST "d"
+	func  "e  Open w3m menu" MENU "e" Menu
+	func  "f  Toggle rendering HTML frames" FRAME "f"
+	func  "F  Go 30 forward in the browser history" COMMAND "F" "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
+	func  "h  Open the introductory help page" HELP "h"
+	func  "H  Show recently visited URLs" HISTORY "H"
+	func  "j  Show jumplist" SELECT_MENU "j"
+	func  "m  Show the marks" GOTO "m" "file:///cgi-bin/w3mplus?action=marks"
+	func  "M  Display previously shown messages" MSGS "M"
+	func  "n  Map a key sequence in Normal mode" DEFINE_KEY "n"
+	func  "o  Open URL in the current tab" COMMAND "o" "SET_OPTION default_url=0; GOTO"
+	func  "p  Show w3m preferences" OPTIONS "p"
+	func  "P  Print the current directory name" EXEC_SHELL "P" pwd
+	func  "q  Quit w3m" QUIT "q"
+	func  "Q  Show the specified QuickMarks" GOTO "Q" "file:///cgi-bin/w3mplus?action=qmarks"
+	func  "r  Execute shell command and display output" PIPE_SHELL "r"
+	func  "s  Set local option" SET_OPTION "s"
+	func  "S  Set global option" SETENV "S"
+	func  "t  Open URL in a new tab" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
+	func  "u  Recently closed tabs" GOTO "u" "file:///cgi-bin/w3mplus?action=undoTabs"
+	func  "v  Show version information" VERSION "v"
+	func  "w  Save current document to disk" DOWNLOAD "w"
+	func  "W  Print current document" PRINT "W"
+	func  "x  Quit w3m" EXIT "x"
+	popup "z  Set zoom value of current web page" Zoom "z"
+end
+
+menu Zoom
+	popup "0    0% -  90%" Zoom0Percents "0"
+	popup "1  100% - 190%" Zoom100Percents "1"
+	popup "2  200% - 290%" Zoom200Percents "2"
+	popup "3  300% - 390%" Zoom300Percents "3"
+	popup "4  400% - 490%" Zoom400Percents "4"
+	popup "+  Zoom in" ZoomIn "+"
+	popup "-  Zoom out" ZoomOut "-"
+end
+
+menu Zoom0Percents
+	func "0   0%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=0"
+	func "1  10%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=10"
+	func "2  20%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=20"
+	func "3  30%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=30"
+	func "4  40%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=40"
+	func "5  50%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=50"
+	func "6  60%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=60"
+	func "7  70%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=70"
+	func "8  80%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=80"
+	func "9  90%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=90"
+end
+
+menu Zoom100Percents
+	func "0  100%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
+	func "1  110%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=110"
+	func "2  120%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=120"
+	func "3  130%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=130"
+	func "4  140%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=140"
+	func "5  150%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=150"
+	func "6  160%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=160"
+	func "7  170%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=170"
+	func "8  180%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=180"
+	func "9  190%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=190"
+end
+
+menu Zoom200Percents
+	func "0  200%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=200"
+	func "1  210%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=210"
+	func "2  220%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=220"
+	func "3  230%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=230"
+	func "4  240%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=240"
+	func "5  250%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=250"
+	func "6  260%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=260"
+	func "7  270%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=270"
+	func "8  280%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=280"
+	func "9  290%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=290"
+end
+
+menu Zoom300Percents
+	func "0  300%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=300"
+	func "1  310%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=310"
+	func "2  320%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=320"
+	func "3  330%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=330"
+	func "4  340%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=340"
+	func "5  350%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=350"
+	func "6  360%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=360"
+	func "7  370%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=370"
+	func "8  380%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=380"
+	func "9  390%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=390"
+end
+
+menu Zoom400Percents
+	func "0  400%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=400"
+	func "1  410%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=410"
+	func "2  420%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=420"
+	func "3  430%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=430"
+	func "4  440%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=440"
+	func "5  450%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=450"
+	func "6  460%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=460"
+	func "7  470%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=470"
+	func "8  480%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=480"
+	func "9  490%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=490"
+end
+
+menu ZoomIn
+	func "1  +10%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B10"
+	func "2  +20%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B20"
+	func "3  +30%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B30"
+	func "4  +40%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B40"
+	func "5  +50%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B50"
+	func "6  +60%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B60"
+	func "7  +70%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B70"
+	func "8  +80%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B80"
+	func "9  +90%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B90"
+	func "0  +100%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B100"
+end
+
+menu ZoomOut
+	func "1  -10%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=-10"
+	func "2  -20%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=-20"
+	func "3  -30%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=-30"
+	func "4  -40%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=-40"
+	func "5  -50%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=-50"
+	func "6  -60%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=-60"
+	func "7  -70%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=-70"
+	func "8  -80%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=-80"
+	func "9  -90%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=-90"
+	func "0  -100%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=-100"
 end
 
 menu Percents
