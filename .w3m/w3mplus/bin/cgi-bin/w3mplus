@@ -20,7 +20,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.1
+##   version - 1.3.2
 ##   date - 2020-03-07
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -230,10 +230,10 @@ if result=$(
 			printf 'W3m-control: SET_OPTION image_scale=%d\n' -- "$(awk -- '/^image_scale[	 ]/ { printf("%d", $2); exit }' "${W3MPLUS_W3M_CONFIG}")" | httpResponseW3mBack.sh -
 			;;
 		'search')
-			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query-}"
+			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${query_query-}" | urlencode)"
 			;;
 		'dictWordSearch')
-			printRedirect.sh "${W3MPLUS_SEARCH_URI}${query_query#?}" ${query_prevtab+"W3m-control: PREV_TAB"}
+			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${query_query#?}" | urlencode)" ${query_prevtab+"W3m-control: PREV_TAB"}
 
 			;;
 		'selectLine')
