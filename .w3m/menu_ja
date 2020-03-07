@@ -284,7 +284,7 @@ menu Commands
 	func "v  バージョン情報を表示" VERSION "v"
 	func "m  以前のメッセージを表示" MSGS "m"
 	func "s  ローカルオプションを設定" SET_OPTION "s"
-	func "S  グローバルオプションを設定" SET_ENV "S"
+	func "S  グローバルオプションを設定" SETENV "S"
 	func "!  コマンドを実行" EXEC_SHELL "!"
 	func "p  w3m の設定を表示" OPTIONS "p"
 	func "M  キー入力を設定" DEFINE_KEY "M"
