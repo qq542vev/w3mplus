@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.1
-##   date - 2020-03-06
+##   version - 1.4.0
+##   date - 2020-03-07
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -140,6 +140,7 @@ menu MenuView
 	func  "Character Encoding (c)" CHARSET "Cc"
 	func  "Navigation Link    (n)" LINK_MENU "Nn"
 	func  "Show All Link      (l)" LIST_MENU "Ll"
+	popup "Style & Color      (s)" MenuViewStyle "Ss"
 	nop   "----------------------"
 	func  "Show All Tabs      (a)" TAB_MENU "Aa"
 end
@@ -157,6 +158,12 @@ menu MenuViewZoom
 	func "Zoom Out (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=zoom&zoom=-20"
 	nop  "------------"
 	func "Reset    (r)" GOTO "Rr" "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
+end
+
+menu MenuViewStyle
+	func "lynx       (l)" COMMAND "Ll" "SET_OPTION display_ins_del=1; SET_OPTION color=1; SET_OPTION basic_color=terminal; SET_OPTION anchor_color=green; SET_OPTION image_color=yellow; SET_OPTION form_color=white; SET_OPTION mark_color=cyan; SET_OPTION bg_color=terminal; SET_OPTION active_style=1; SET_OPTION active_color=yellow; SET_OPTION visited_anchor=0"
+	func "Monochrome (m)" COMMAND "Mm" "SET_OPTION display_ins_del=1; SET_OPTION color=0; SET_OPTION basic_color=terminal; SET_OPTION bg_color=terminal"
+	func "Reset      (r)" COMMAND "Rr" "SET_OPTION display_ins_del=2; SET_OPTION color=1; SET_OPTION basic_color=terminal; SET_OPTION anchor_color=blue; SET_OPTION image_color=green; SET_OPTION form_color=red; SET_OPTION mark_color=yellow; SET_OPTION bg_color=terminal; SET_OPTION active_style=1; SET_OPTION active_color=cyan; SET_OPTION visited_anchor=1; SET_OPTION visited_color=magenta"
 end
 
 menu MenuHistory
@@ -244,7 +251,7 @@ menu ExtendedHints
 	func "s  Save hint" SAVE_LINK "s"
 	func "o  Open link" GOTO_LINK "o"
 	func "t  Open link in a new tab" TAB_LINK "t"
-	func "b  Open link in a background tab" TAB_GOTO "b" "file:///cgi-bin/w3mplus?action=uri&subaction=prevTab&uri=%24%7BW3M_CURRENT_LINK%7D&redirect=2"
+	func "b  Open link in a background tab" GOTO "b" "file:///cgi-bin/w3mplus?action=uri&subaction=prevTab&uri=%24%7BW3M_CURRENT_LINK%7D&redirect=2"
 	func "w  Open link in a new window" EXTERN_LINK "w" "w3m %s"
 	func "O  Generate a ':o URL' prompt" GOTO "O" "file:///cgi-bin/w3mplus?action=linkSetOpen"
 	func "T  Generate a ':t URL' prompt" GOTO "T" "file:///cgi-bin/w3mplus?action=linkSetTabopen"

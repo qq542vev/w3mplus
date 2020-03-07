@@ -122,6 +122,15 @@ for uri in ${@+"${@}"}; do
 				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
 				W3MPLUS_REDIRECT_TYPE='0'
 				;;
+			'2')
+				cat <<- EOF
+					W3m-control: NEW_TAB
+					W3m-control: GOTO ${uri}
+					W3m-control: DELETE_PREVBUF
+				EOF
+
+				W3MPLUS_REDIRECT_TYPE='0'
+				;;
 			*)
 				printf 'W3m-control: GOTO %s\n' "${uri}"
 				;;

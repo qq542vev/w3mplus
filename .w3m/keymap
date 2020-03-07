@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.0
-##   date - 2020-03-06
+##   version - 1.1.1
+##   date - 2020-03-07
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -353,7 +353,7 @@ keymap "W" EXTERN
 
 keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
 keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD_AT"
-keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD_AT; TAB_LEFT"
+keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=2&prevtab=1&query=; DICT_WORD_AT"
 
 keymap "C-x" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=incrementURI&uri=%24%7BW3M_URL%7D"
 keymap "C-a" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=decrementURI&uri=%24%7BW3M_URL%7D"
@@ -584,7 +584,7 @@ keymap ";?" LINE_INFO
 keymap ";s" SAVE_LINK
 keymap ";o" GOTO_LINK
 keymap ";t" TAB_LINK
-keymap ";b" TAB_GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=prevTab&uri=%24%7BW3M_CURRENT_LINK%7D&redirect=2"
+keymap ";b" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=prevTab&uri=%24%7BW3M_CURRENT_LINK%7D&redirect=2"
 keymap ";w" EXTERN_LINK "w3m %s"
 keymap ";O" GOTO "file:///cgi-bin/w3mplus?action=linkSetOpen"
 keymap ";T" GOTO "file:///cgi-bin/w3mplus?action=linkSetTabopen"

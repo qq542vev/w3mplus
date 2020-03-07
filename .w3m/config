@@ -40,7 +40,7 @@ basic_color terminal
 anchor_color blue
 image_color green
 form_color red
-mark_color cyan
+mark_color yellow
 bg_color terminal
 active_style 1
 active_color cyan
