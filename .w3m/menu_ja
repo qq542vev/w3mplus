@@ -104,7 +104,7 @@ menu ContextMenuSearch
 	func  "Twitter" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=twitter:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 	func  "Wikipedia (en)" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=wikipedia-en:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 	func  "Wikipedia (ja)" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=wikipedia-ja:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
-	popup "その他の検索" ContextMenuSearchOther "; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	popup "その他の検索" ContextMenuSearchOther ""
 end
 
 menu ContextMenuSearchOther
