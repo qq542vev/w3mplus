@@ -31,18 +31,18 @@ button 3 tab COMMAND "TAB_MOUSE; MENU_MOUSE ContextMenuTab"
 lastline "< > R H B L S "
 button 1 lastline 0 0 PREV
 button 2 lastline 0 0 COMMAND "PREV; NEW_TAB; PREV_TAB; NEXT"
-button 1 lastline 2 2	NEXT
+button 1 lastline 2 2 NEXT
 button 2 lastline 2 2 COMMAND "NEXT; NEW_TAB; PREV_TAB; PREV"
 button 3 lastline 0 2 SELECT_MENU
-button 1 lastline 4 4	RELOAD
-button 2 lastline 4 4	COMMAND "NEW_TAB; RELOAD"
-button 1 lastline 6 6	GOTO "file:///cgi-bin/w3mplus?action=homepage"
-button 2 lastline 6 6	GOTO "file:///cgi-bin/w3mplus?action=homepage&redirect=1"
-button 1 lastline 8 8	MENU_MOUSE "MenuBookmarks"
-button 2 lastline 8 8	COMMAND "NEW_TAB; VIEW_BOOKMARK; DELETE_PREVBUF"
+button 1 lastline 4 4 RELOAD
+button 2 lastline 4 4 COMMAND "NEW_TAB; RELOAD"
+button 1 lastline 6 6 GOTO "file:///cgi-bin/w3mplus?action=homepage"
+button 2 lastline 6 6 GOTO "file:///cgi-bin/w3mplus?action=homepage&redirect=1"
+button 1 lastline 8 8 MENU_MOUSE "MenuBookmarks"
+button 2 lastline 8 8 COMMAND "NEW_TAB; VIEW_BOOKMARK; DELETE_PREVBUF"
 button 1 lastline 10 10	COMMAND "SET_OPTION default_url=1; GOTO"
 button 2 lastline 10 10	COMMAND "SET_OPTION default_url=1; TAB_GOTO"
+button 3 lastline 3 11 MENU_MOUSE "Menu"
 button 1 lastline 12 12	COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 button 2 lastline 12 12	COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
-button 3 lastline 12 12 COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; MENU_MOUSE ContextMenuSearch"
-button 3 lastline 3 10 MENU_MOUSE "Menu"
+button 3 lastline 12 13 MENU_MOUSE "ContextMenuSearch"
