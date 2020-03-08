@@ -95,6 +95,32 @@ menu ContextMenuTab
 	func "Show All Tabs                 (a)" TAB_MENU "Aa"
 end
 
+menu ContextMenuSearch
+	func  "Bing" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=bing:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func  "Google" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=google:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func  "DuckDuckGo" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=duckduckgo:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func  "Startpage" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=startpage:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func  "Twitter" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=twitter:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func  "Wikipedia (en)" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=wikipedia-en:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func  "Wikipedia (ja)" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=wikipedia-ja:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	popup "Other Search" ContextMenuSearchOther ""
+end
+
+menu ContextMenuSearchOther
+	func "Bing Image" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=bing-image:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "Bing Video" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=bing-video:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "Bing News" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=bing-news:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "GitHub" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=github:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "Google Image" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=google-image:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "Google Video" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=google-video:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "Google News" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=google-news:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "pkgs.org" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=pkgs.org:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "Yandex" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=yandex:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "Yandex Image" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=yandex-image:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "Yandex Video" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=yandex-video:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+	func "YouTube" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=youtube:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+end
+
 menu Menu
 	popup "File      (f)" MenuFile "Ff"
 	popup "Edit      (e)" MenuEdit "Ee"
