@@ -108,7 +108,7 @@ default_url 0
 follow_redirection 10
 meta_refresh 0
 dns_order 0
-nntpserver 
+nntpserver nntp.aioe.org
 nntpmode 
 max_news 50
 use_proxy 1
