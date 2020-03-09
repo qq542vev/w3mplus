@@ -484,15 +484,15 @@ keymap "}" GOTO "file:///cgi-bin/w3mplus?action=moveParagraph&number=%2B1"
 
 ### Zooming ###
 
-keymap "zi" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B20"
+keymap "ZI" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B20"
 keymap "+" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B20"
-keymap "zm" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B60"
+keymap "ZM" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B60"
 
-keymap "zo" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-20"
+keymap "ZO" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-20"
 keymap "-" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-20"
-keymap "zr" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-60"
+keymap "ZR" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-60"
 
-keymap "zz" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
+keymap "zZ" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
 
 keymap ":z" MENU Zoom
 
@@ -850,12 +850,16 @@ keymap "^[[L" EDIT_SCREEN
 
 # Vim Key Map #
 
-keymap "z." CENTER_V
+keymap "zz" CENTER_V
+keymap "z." COMMAND "CENTER_V; GOTO file:///cgi-bin/w3mplus?action=moveColmun&percent=0"
 
 keymap "zh" LEFT
 keymap "zLEFT" LEFT
 keymap "zl" RIGHT
 keymap "zRIGHT" RIGHT
+
+keymap "zL" SHIFT_RIGHT
+keymap "zH" SHIFT_LEFT
 
 keymap "gx" COMMAND "MARK_URL; GOTO_LINK"
 
