@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2020-03-08
+##   version - 1.3.0
+##   date - 2020-03-09
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -304,7 +304,7 @@ keymap "M-C-f" NULL
 keymap "M-C-g" NULL
 keymap "M-C-h" NULL
 keymap "M-C-i" NULL
-keymap "M-C-j" NULL
+keymap "M-C-j" SUBMIT
 keymap "M-C-k" NULL
 keymap "M-C-l" NULL
 keymap "M-C-m" NULL
@@ -850,8 +850,14 @@ keymap "^[[L" EDIT_SCREEN
 
 # Vim Key Map #
 
-keymap "zz" CENTER_V
+keymap "zt" GOTO "file:///cgi-bin/w3mplus?action=zMove&move=t"
+keymap "zb" GOTO "file:///cgi-bin/w3mplus?action=zMove&move=b"
+
+keymap "z+" COMMAND "NEXT_PAGE; GOTO file:///cgi-bin/w3mplus?action=moveColmun&percent=0"
+keymap "z^" COMMAND "PREV_PAGE; GOTO file:///cgi-bin/w3mplus?action=moveColmun&percent=0"
+
 keymap "z." COMMAND "CENTER_V; GOTO file:///cgi-bin/w3mplus?action=moveColmun&percent=0"
+keymap "zz" CENTER_V
 
 keymap "zh" LEFT
 keymap "zLEFT" LEFT
