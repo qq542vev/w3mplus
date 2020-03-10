@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.4.0
-##   date - 2020-03-09
+##   version - 1.5.0
+##   date - 2020-03-11
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -301,6 +301,7 @@ end
 menu MenuHelp
 	func "w3m ヘルプ   (h)" HELP "Hh"
 	func "Man w3m      (m)" EXEC_SHELL "Mm" "man w3m"
+	func "セーフモード (s)" EXTERN "Ss" "w3m-private --exclude './*' --link './bookmark.html ./history ./request.log ./pre_form ./passwd' -v #"
 	nop  "----------------"
 	func "w3m について (a)" VERSION "Aa"
 end

@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.0
-##   date - 2020-02-24
+##   version - 1.2.0
+##   date - 2020-03-11
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -45,8 +45,10 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-exclude='./cookie ./w3mcache* ./w3mcookie* ./w3mframe* ./w3msrc* ./w3mtmp*'
-awkScript=$(cat <<- 'EOF'
+expression='! ( ( -path ./cookie -o -path ./w3mcache* -o -path ./w3mcookie* -o -path ./w3mframe* -o -path ./w3msrc* -o -path ./w3mtmp* ) -prune )'
+linkExpr='-path ./bookmark.html'
+awkScript=$(
+	cat <<- 'EOF'
 	BEGIN {
 		output = ""
 	}
@@ -64,17 +66,28 @@ awkScript=$(cat <<- 'EOF'
 
 	END {
 		if(output) {
-			printf("! ( ( %s ) -prune )", output)
+			printf("( %s )", output)
 		}
 	}
-EOF
+	EOF
 )
 
-if [ "${1-}" = '--exclude' ]; then
-	exclude="${2}"
-fi
+case "${1-}" in
+	'--exclude')
+		expression="! ( $(printf '%s' "${2}" | awk "${awkScript}") -prune )"
+		shift 2
+		;;
+	'--include')
+		expression=$(printf '%s' "${2}" | awk "${awkScript}")
+		shift 2
+		;;
+esac
 
-expression=$(printf '%s' "${exclude}" | awk "${awkScript}")
+case "${1-}" in '--link')
+	linkExpr=$(printf '%s' "${2}" | awk "${awkScript}")
+	shift 2
+	;;
+esac
 
 tmpDir=$(mktemp -d)
 mkdir -p -- "${tmpDir}/.w3m"
@@ -84,22 +97,7 @@ mkdir -p -- "${tmpDir}/.w3m"
 
 	find -L -- '.' ${expression} -type d -exec 'mkdir' '-p' "${tmpDir}/.w3m/{}" ';'
 	find -L -- '.' ${expression} -type f -exec 'cp' '-fp' '{}' "${tmpDir}/.w3m/{}" ';'
-
-	if [ -e "${tmpDir}/.w3m/bookmark.html" ]; then
-		ln -fs -- "${HOME}/.w3m/bookmark.html" "${tmpDir}/.w3m/bookmark.html"
-	else
-		cat >"${tmpDir}/.w3m/bookmark.html" <<- 'EOF'
-			<html><head><title>Bookmarks</title></head>
-			<body>
-			<h1>Bookmarks</h1>
-			<h2>Unsorted Bookmarks</h2>
-			<ul>
-			<!--End of section (do not delete this comment)-->
-			</ul>
-			</body>
-			</html>
-		EOF
-	fi
+	find -L -- '.' ${linkExpr} -type f -exec 'ln' '-fs' "$(pwd)/{}" "${tmpDir}/.w3m/{}" ';'
 )
 
 HOME="${tmpDir}" w3m ${@+"${@}"}
