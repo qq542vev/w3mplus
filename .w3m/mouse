@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2020-03-08
+##   version - 1.3.0
+##   date - 2020-03-09
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -16,8 +16,8 @@
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
-button 1 default MOVE_MOUSE
-button 2 default NEXT_HALF_PAGE
+button 1 default COMMAND "ALARM 0; MOVE_MOUSE"
+button 2 default MENU_MOUSE "ContextMenuScrollAuto"
 button 3 default MENU_MOUSE
 
 button 1 anchor COMMAND "MOVE_MOUSE; GOTO_LINK"

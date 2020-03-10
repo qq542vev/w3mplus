@@ -5,7 +5,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.0
+##   version - 1.4.0
 ##   date - 2020-03-09
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -898,6 +898,8 @@ keymap "^[[17~" COMMAND "SET_OPTION default_url=1; GOTO"
 keymap "^[[18~" EDIT_SCREEN
 # F10 key
 keymap "^[[21~" MENU Menu
+# F12 key
+keymap "^[[24~" MENU MenuAdvanced
 
 keymap "M-f" MENU MenuFile
 keymap "M-e" MENU MenuEdit

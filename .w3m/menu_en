@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.6.0
-##   date - 2020-03-08
+##   version - 1.7.0
+##   date - 2020-03-09
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -119,6 +119,31 @@ menu ContextMenuSearchOther
 	func "Yandex Image" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=yandex-image:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 	func "Yandex Video" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=yandex-video:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 	func "YouTube" COMMAND "" "SETENV W3MPLUS_SEARCH_URI=youtube:; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+end
+
+menu ContextMenuScrollAuto
+	func  "5 line down every 1 sec (a)" ALARM "Aa" "1 UP 5"
+	func  "4 line down every 1 sec (b)" ALARM "Bb" "1 UP 4"
+	func  "3 line down every 1 sec (c)" ALARM "Cc" "1 UP 3"
+	func  "2 line down every 1 sec (d)" ALARM "Dd" "1 UP 2"
+	func  "1 line down every 1 sec (e)" ALARM "Ee" "1 UP"
+	func  "1 line down every 2 sec (f)" ALARM "Ff" "2 UP"
+	func  "1 line down every 3 sec (g)" ALARM "Gg" "3 UP"
+	func  "1 line down every 4 sec (h)" ALARM "Hh" "4 UP"
+	func  "1 line down every 5 sec (i)" ALARM "Ii" "5 UP"
+	popup "Scroll Up               (u)" ContextMenuScrollAutoUp "Uu"
+end
+
+menu ContextMenuScrollAutoUp
+	func "5 line up every 1 sec (a)" ALARM "Aa" "1 DOWN 5"
+	func "4 line up every 1 sec (b)" ALARM "Bb" "1 DOWN 4"
+	func "3 line up every 1 sec (c)" ALARM "Cc" "1 DOWN 3"
+	func "2 line up every 1 sec (d)" ALARM "Dd" "1 DOWN 2"
+	func "1 line up every 1 sec (e)" ALARM "Ee" "1 DOWN"
+	func "1 line up every 2 sec (f)" ALARM "Ff" "2 DOWN"
+	func "1 line up every 3 sec (g)" ALARM "Gg" "3 DOWN"
+	func "1 line up every 4 sec (h)" ALARM "Hh" "4 DOWN"
+	func "1 line up every 5 sec (i)" ALARM "Ii" "5 DOWN"
 end
 
 menu Menu
