@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.4
-##   date - 2020-03-03
+##   version - 1.1.0
+##   date - 2020-03-14
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -61,8 +61,9 @@ case "${1-about:about}" in
 				<li><a href="about:cookie">about:cookie</a></li>
 				<li><a href="about:downloads">about:downloads</a></li>
 				<li><a href="about:help">about:help</a></li>
-				<li><a href="about:history">about:help</a></li>
+				<li><a href="about:history">about:history</a></li>
 				<li><a href="about:home">about:home</a></li>
+				<li><a href="about:memory">about:memory</a></li>
 				<li><a href="about:message">about:message</a></li>
 				<li><a href="about:newtab">about:newtab</a></li>
 				<li><a href="about:permissions">about:permissions</a></li>
@@ -123,6 +124,58 @@ case "${1-about:about}" in
 
 			<p align="center"><samp>$(printf '%s' "${SERVER_SOFTWARE:-w3m}" | htmlescape)</samp></p>
 		EOF
+		;;
+	'about:memory')
+		header='pid=,ppid=,pcpu=,vsz=,nice=,etime=,time=,args='
+		awkScript='
+			BEGIN {
+				headerCount = split("Process ID,Parent process ID,Ratio of CPU time,Memory usage,Nice value,Elapsed time,Cumulative CPU time,Command", header, /,/)
+				split("S M H DT", timeUnit)
+			}
+
+			{
+				printf("<table><tbody>")
+
+				for(i = 1; i <= headerCount; i++) {
+					printf("<tr><th>%s</th><td>", header[i])
+
+					if(i == 3) {
+						printf("%s%%", $i)
+					} else if(i == 4) {
+						printf("%s KiB", $i)
+					} else if((i == 6) || (i == 7)) {
+						count = split($i, time, /[:-]/)
+
+						datetime = "P"
+						for(j = 1; j <= count; j++) {
+							datetime = datetime (time[j] + 0) timeUnit[count - j + 1]
+						}
+
+						printf("<time datetime=\"%s\">%s</time>", datetime, $i)
+					} else if(i == headerCount) {
+						printf("%s", $i)
+
+						for(j = headerCount + 1; j <= NF; j++) {
+							printf(" %s", $j)
+						}
+					} else {
+						printf("%s", $i)
+					}
+
+					printf("</td></tr>")
+				}
+
+				printf("</tbody></table>")
+			}
+		'
+
+		if w3mid=$(ancestorProsess "${$}" 'w3m'); then
+			printf '<h1>Current w3m process<h1>'
+			ps -o "${header}" -p "${w3mid}" | htmlescape | awk -- "${awkScript}"
+
+			printf '<h1>Other w3m processes<h1>'
+			ps -o "${header}" | awk -v "pid=${w3mid}" -- '($1 != pid) && ($8 == "w3m") { print $0 }'| htmlescape | awk -- "${awkScript}"
+		fi | printHtml.sh
 		;;
 	'about:message')
 		httpResponseW3mBack.sh 'W3m-control: MSGS'
