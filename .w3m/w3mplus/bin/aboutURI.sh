@@ -20,7 +20,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.0
+##   version - 1.2.0
 ##   date - 2020-03-14
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -77,7 +77,68 @@ case "${1-about:about}" in
 		httpResponseW3mBack.sh 'W3m-control: VIEW_BOOKMARK'
 		;;
 	'about:cache')
-		printRedirect.sh "file://$(printf '%s' "${HOME}" | urlencode | fsed '%2F' '/')/.w3m"
+		w3mhome="${HOME}/.w3m"
+		fileurl="file://$(printf '%s' ${w3mhome} | urlencode | fsed '%2F' '/')/"
+
+		awkScript=$(
+			cat <<- 'EOF'
+			BEGIN {
+				monthListCount = split("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec", monthList)
+
+				for(i = 1; i <= monthListCount; i++) {
+					monthList[monthList[i]] = i
+				}
+
+				command = "date '+%Y %m'"
+				command | getline
+				close(command)
+
+				currentYear = $1
+				currentMonth = $2
+
+				totalSize = 0
+
+				printf("<tbody rel=\"rdf:li\">")
+			}
+
+			index($0, "-") == 1 && $7 ~ /^w3m(cache|cookie|frame|src|tmp)[.0-9A-Z_a-z-]*$/ {
+				fileSize = $3
+				fileMonth = monthList[$4]
+				fileDay = $5
+				fileYear = $6
+				fileName = $7
+
+				totalSize += fileSize
+
+				if(index(fileYear, ":")) {
+					fileYear = currentYear - (currentMonth < fileMonth)
+				}
+
+				date = sprintf("%04d-%02d-%02d", fileYear, fileMonth, fileDay)
+
+				printf("<tr typeof=\"schema:DigitalDocument\"><td><a property=\"foaf:name\" rel=\"owl:sameAs\" href=\"%s\">%s</a></td><td property=\"dc11:format\" datatype=\"xsd:nonNegativeInteger\">%s</td><td property=\"dcterms:modified\" content=\"%s\" datatype=\"dcterms:W3CDTF\"><time datetime=\"%s\">%s</time></td></tr>", fileurl fileName, fileName, fileSize, date, date, $4 " " $5 " " $6)
+			}
+
+			END {
+				printf("</tbody>")
+				printf("<tfoot><tr><th scope=\"row\">Total Size</th><td>%s</td><td></td></tr></tfoot>", totalSize)
+			}
+			EOF
+		)
+
+		printHtml.sh <<- EOF
+			<table typeof="rdf:Seq">
+				<caption property="dcterms:title">w3m Cache Files in '<a rel="dcterms:relation" href="${fileurl}">${w3mhome}</a>'</caption>
+				<thead>
+					<tr>
+						<th scope="col">File Name</th>
+						<th scope="col">Size(Byte)</th>
+						<th scope="col">Modified</th>
+					</tr>
+				</thead>
+				$(LANG='C' ls -go "${w3mhome}" | awk -v "fileurl=${fileurl}" -- "${awkScript}")
+			</table>
+		EOF
 		;;
 	'about:config')
 		httpResponseW3mBack.sh 'W3m-control: OPTIONS'
@@ -170,11 +231,13 @@ case "${1-about:about}" in
 		'
 
 		if w3mid=$(ancestorProsess "${$}" 'w3m'); then
-			printf '<h1>Current w3m process<h1>'
-			ps -o "${header}" -p "${w3mid}" | htmlescape | awk -- "${awkScript}"
+			cat <<- EOF
+				<h1>Current w3m process<h1>
+				$(ps -o "${header}" -p "${w3mid}" | htmlescape | awk -- "${awkScript}")
 
-			printf '<h1>Other w3m processes<h1>'
-			ps -o "${header}" | awk -v "pid=${w3mid}" -- '($1 != pid) && ($8 == "w3m") { print $0 }'| htmlescape | awk -- "${awkScript}"
+				<h1>Other w3m processes<h1>
+				$(ps -o "${header}" | awk -v "pid=${w3mid}" -- '($1 != pid) && ($8 == "w3m") { print $0 }'| htmlescape | awk -- "${awkScript}")
+			EOF
 		fi | printHtml.sh
 		;;
 	'about:message')
