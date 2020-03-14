@@ -258,6 +258,7 @@ end
 menu MenuAdvanced
 	func "ページのソース       (o)" SOURCE "Oo"
 	func "エラーメッセージ     (m)" MSGS "Mm"
+	func "ネットワークログ     (n)" LOAD "Nn" "~/.w3m/request.log"
 	func "シェルコマンドを適用 (s)" PIPE_BUF "Ss"
 	func "w3m コマンドを実行   (c)" COMMAND "Cc"
 	func "シェルコマンドを実行 (e)" EXEC_SHELL "Ee"

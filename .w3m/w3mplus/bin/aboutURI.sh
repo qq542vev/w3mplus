@@ -128,7 +128,7 @@ case "${1-about:about}" in
 			EOF
 		)
 
-		printHtml.sh <<- EOF
+		printHtml.sh --title 'Network Cache Storage Information' <<- EOF
 			<table typeof="rdf:Seq">
 				<caption property="dcterms:title">w3m Cache Files in '<a rel="dcterms:relation" href="${fileurl}">${w3mhome}</a>'</caption>
 				<thead>
@@ -246,7 +246,7 @@ case "${1-about:about}" in
 					$(ps -o "${header}" | awk -v "pid=${w3mid}" -- '($1 != pid) && ($8 == "w3m") { print $0 }'| htmlescape | awk -- "${awkScript}")
 				</section>
 			EOF
-		fi | printHtml.sh
+		fi | printHtml.sh --title 'w3m processes'
 		;;
 	'about:message')
 		httpResponseW3mBack.sh 'W3m-control: MSGS'

@@ -257,6 +257,7 @@ end
 menu MenuAdvanced
 	func "Page Source           (o)" SOURCE "Oo"
 	func "Error Messages        (m)" MSGS "Mm"
+	func "Network Log           (n)" LOAD "Nn" "~/.w3m/request.log"
 	func "Apply Shell Command   (s)" PIPE_BUF "Ss"
 	func "Execute w3m Command   (c)" COMMAND "Cc"
 	func "Execute Shell Command (e)" EXEC_SHELL "Ee"

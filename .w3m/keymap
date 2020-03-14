@@ -5,7 +5,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.4.0
+##   version - 1.5.0
 ##   date - 2020-03-09
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -366,10 +366,10 @@ keymap "C-i" REDO
 keymap ":j" SELECT_MENU
 
 keymap "H" PREV
-#keymap ^[^[[D PREV
+#keymap "^[^[[D" PREV
 
 keymap "L" NEXT
-#keymap ^[^[[C NEXT
+#keymap "^[^[[C" NEXT
 
 keymap ":B" COMMAND "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
 keymap ":F" COMMAND "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
@@ -910,3 +910,7 @@ keymap "M-t" MENU MenuTools
 keymap "M-h" MENU MenuHelp
 
 keymap "DEL" PREV
+keymap "^[DEL" NEXT
+#keymap "C-k" MENU "ContextMenuSearch"
+
+keymap "M-m" MOUSE_TOGGLE
