@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-## File: w3mplus-functions
+## File: init
 ##
 ## Definition of variables and functions used in w3mplus
 ##
@@ -99,40 +99,40 @@ quoteEscape() (
 )
 
 ancestorProsess() (
-  pid="${1}"
-  find="${2}"
+	pid="${1}"
+	find="${2}"
 
-  ps -o 'pid=,ppid=,comm' | awk -v "pid=${pid}" -v "find=${find}" -- '
-    BEGIN {
-      split("", ppid)
-      split("", command)
-    }
+	ps -o 'pid=,ppid=,comm' | awk -v "pid=${pid}" -v "find=${find}" -- '
+		BEGIN {
+			split("", ppid)
+			split("", command)
+		}
 
-  	function ancestorProsess(pid, find) {
-      if(pid in command) {
-    		if(command[pid] == find) {
-    			return pid
-    		}
+		function ancestorProsess(pid, find) {
+			if(pid in command) {
+				if(command[pid] == find) {
+					return pid
+				}
 
-      	return ancestorProsess(ppid[pid], find)
-      }
+				return ancestorProsess(ppid[pid], find)
+			}
 
-      return -1
-  	}
+			return -1
+		}
 
-    {
-      ppid[$1] = $2
-      command[$1] = $3
-  	}
+		{
+			ppid[$1] = $2
+			command[$1] = $3
+		}
 
-    END {
-      psid = ancestorProsess(pid, find)
+		END {
+			psid = ancestorProsess(pid, find)
 
-      if(psid == -1) {
-        exit 1
-      }
+			if(psid == -1) {
+				exit 1
+			}
 
-      print psid
-    }
-  '
+			print psid
+		}
+	'
 )
