@@ -47,27 +47,29 @@ case "${1-about:about}" in
 		;;
 	'about:about')
 		printHtml.sh --title 'About About' <<- 'EOF'
-			<h1>About About</h1>
+			<section>
+				<h1>About About</h1>
 
-			<p>This is a list of “about” pages for your convenience.</p>
+				<p>This is a list of “about” pages for your convenience.</p>
 
-			<ul>
-				<li><a href="about:">about:</a></li>
-				<li><a href="about:about">about:about</a></li>
-				<li><a href="about:blank">about:blank</a></li>
-				<li><a href="about:bookmark">about:bookmark</a></li>
-				<li><a href="about:cache">about:cache</a></li>
-				<li><a href="about:config">about:config</a></li>
-				<li><a href="about:cookie">about:cookie</a></li>
-				<li><a href="about:downloads">about:downloads</a></li>
-				<li><a href="about:help">about:help</a></li>
-				<li><a href="about:history">about:history</a></li>
-				<li><a href="about:home">about:home</a></li>
-				<li><a href="about:memory">about:memory</a></li>
-				<li><a href="about:message">about:message</a></li>
-				<li><a href="about:newtab">about:newtab</a></li>
-				<li><a href="about:permissions">about:permissions</a></li>
-			</ul>
+				<ul>
+					<li><a href="about:">about:</a></li>
+					<li><a href="about:about">about:about</a></li>
+					<li><a href="about:blank">about:blank</a></li>
+					<li><a href="about:bookmark">about:bookmark</a></li>
+					<li><a href="about:cache">about:cache</a></li>
+					<li><a href="about:config">about:config</a></li>
+					<li><a href="about:cookie">about:cookie</a></li>
+					<li><a href="about:downloads">about:downloads</a></li>
+					<li><a href="about:help">about:help</a></li>
+					<li><a href="about:history">about:history</a></li>
+					<li><a href="about:home">about:home</a></li>
+					<li><a href="about:memory">about:memory</a></li>
+					<li><a href="about:message">about:message</a></li>
+					<li><a href="about:newtab">about:newtab</a></li>
+					<li><a href="about:permissions">about:permissions</a></li>
+				</ul>
+			</section>
 		EOF
 		;;
 	'about:blank')
@@ -232,11 +234,17 @@ case "${1-about:about}" in
 
 		if w3mid=$(ancestorProsess "${$}" 'w3m'); then
 			cat <<- EOF
-				<h1>Current w3m process<h1>
-				$(ps -o "${header}" -p "${w3mid}" | htmlescape | awk -- "${awkScript}")
+				<section>
+					<h1>Current w3m process<h1>
 
-				<h1>Other w3m processes<h1>
-				$(ps -o "${header}" | awk -v "pid=${w3mid}" -- '($1 != pid) && ($8 == "w3m") { print $0 }'| htmlescape | awk -- "${awkScript}")
+					$(ps -o "${header}" -p "${w3mid}" | htmlescape | awk -- "${awkScript}")
+				</section>
+
+				<section>
+					<h1>Other w3m processes<h1>
+
+					$(ps -o "${header}" | awk -v "pid=${w3mid}" -- '($1 != pid) && ($8 == "w3m") { print $0 }'| htmlescape | awk -- "${awkScript}")
+				</section>
 			EOF
 		fi | printHtml.sh
 		;;
