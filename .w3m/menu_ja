@@ -256,12 +256,13 @@ menu MenuTools
 end
 
 menu MenuAdvanced
-	func "ページのソース       (o)" SOURCE "Oo"
-	func "エラーメッセージ     (m)" MSGS "Mm"
-	func "ネットワークログ     (n)" LOAD "Nn" "~/.w3m/request.log"
-	func "シェルコマンドを適用 (s)" PIPE_BUF "Ss"
-	func "w3m コマンドを実行   (c)" COMMAND "Cc"
-	func "シェルコマンドを実行 (e)" EXEC_SHELL "Ee"
+	func "ウェブコンソール (w)" PIPE_BUF "Ww"
+	func "ネットワーク     (n)" LOAD "Nn" "~/.w3m/request.log"
+	nop  "--------------------"
+	func "開発ツールバー   (v)" COMMAND "Vv"
+	func "スクラッチパッド (s)" EXEC_SHELL "Ss"
+	func "ページのソース   (o)" VIEW "Oo"
+	func "エラーコンソール (c)" MSGS "Cc"
 end
 
 menu MenuCookieManager
