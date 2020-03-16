@@ -479,10 +479,12 @@ keymap "M-C-b" BOOKMARK
 keymap "M-C-y" DOWNLOAD_LIST
 # F12 key
 keymap "^[[24~" MENU MenuAdvanced
-keymap "M-C-k" MSGS
+keymap "M-C-k" PIPE_BUF
 keymap "M-C-q" LOAD "Nn" "~/.w3m/request.log"
 # F14 key
 keymap "^[[27~" COMMAND
+# F16 key
+keymap "^[[29~" EXEC_SHELL
 keymap "C-u" VIEW
 
 ## Miscellaneous ##
