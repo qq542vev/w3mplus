@@ -378,7 +378,146 @@ keymap "^[[E" NULL
 keymap "^[[L" NULL
 keymap "^[[Z" NULL
 
-# Pentadactyl Key Map #
+# Defining a Pale Moon like keymap #
+
+## Navigation ##
+
+# Backspace key
+keymap "DEL" PREV
+keymap "M-DEL" NEXT
+keymap "C-o" LOAD
+# F5 key
+keymap "^[[15~" RELOAD
+keymap "C-r" RELOAD
+
+## Current Page ##
+
+keymap "TAB" NEXT_LINK
+# Shift key + Tab key in xterm
+keymap "^[[Z" PREV_LINK
+keymap "M-TAB" PREV_LINK
+# Page Down key
+keymap "^[[6~" NEXT_PAGE
+keymap "^[[G" NEXT_PAGE
+keymap "SPC" NEXT_PAGE
+# Page Up key
+keymap "^[[5~" PREV_PAGE
+keymap "^[[I" PREV_PAGE
+keymap "M-SPC" PREV_PAGE
+# End key
+keymap "^[OF" END
+keymap "^[[4~" END
+keymap "^[[8~" NULL
+keymap "^[[F" END
+# Home key
+keymap "^[OH" BEGIN
+keymap "^[[1~" BEGIN
+keymap "^[[7~" BEGIN
+keymap "^[[H" BEGIN
+keymap "C-p" PRINT
+keymap "M-C-j" SAVE_LINK
+keymap "M-C-m" SAVE_LINK
+keymap "C-s" DOWNLOAD
+
+## Editing ##
+
+keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
+keymap "C-y" REDO
+keymap "C-z" UNDO
+
+## Search ##
+
+keymap "C-f" SEARCH
+# F3 key
+keymap "^[OR" SEARCH_NEXT
+keymap "^[[13~" SEARCH_NEXT
+keymap "C-g" SEARCH_NEXT
+# F15 key
+keymap "^[[28~" SEARCH_PREV
+keymap "M-C-g" SEARCH_PREV
+keymap "/" ISEARCH
+keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
+# F4 key
+keymap "^[OS" MENU ContextMenuSearch
+keymap "^[[14~" MENU ContextMenuSearch
+
+## Windows & Tabs ##
+
+keymap "C-w" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
+keymap "M-C-w" QUIT
+keymap "C-q" EXIT
+keymap "C-t" TAB_GOTO "about:blank"
+keymap "C-n" EXTERN "w3m ${WWW_HOME-about:home} #"
+keymap "M-C-p" EXTERN "w3m-private #"
+keymap "C-j" GOTO_LINK
+keymap "C-m" GOTO_LINK
+keymap "M-C-t" GOTO "file:///cgi-bin/w3mplus?action=undoTab"
+keymap "M-1" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; CLOSE_TAB"
+keymap "M-2" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-3" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-4" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-5" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-6" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-7" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-8" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-9" COMMAND "NEW_TAB; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+
+## History ##
+
+keymap "M-C-h" HISTORY
+
+## Bookmarks ##
+
+keymap "C-d" ADD_BOOKMARK
+keymap "C-b" GOTO "file:///cgi-bin/w3mplus?action=bookmarkBar"
+keymap "M-C-b" BOOKMARK
+
+## Tools ##
+
+keymap "M-C-y" DOWNLOAD_LIST
+# F12 key
+keymap "^[[24~" MENU MenuAdvanced
+keymap "M-C-k" PIPE_BUF
+keymap "M-C-q" LOAD "Nn" "~/.w3m/request.log"
+# F14 key
+keymap "^[[27~" COMMAND
+# F16 key
+keymap "^[[29~" EXEC_SHELL
+keymap "C-u" VIEW
+
+## Miscellaneous ##
+
+# F10 key
+keymap "^[[21~" MENU Menu
+# F7 key
+keymap "^[[18~" EDIT_SCREEN
+# F6 key
+keymap "^[[17~" COMMAND "SET_OPTION default_url=1; GOTO"
+keymap "M-d" COMMAND "SET_OPTION default_url=1; TAB_GOTO"
+keymap "C-l" COMMAND "SET_OPTION default_url=1; GOTO"
+
+## Menu Bar ##
+
+keymap "M-f" MENU MenuFile
+keymap "M-e" MENU MenuEdit
+keymap "M-v" MENU MenuView
+keymap "M-s" MENU MenuHistory
+keymap "M-b" MENU MenuBookmarks
+keymap "M-t" MENU MenuTools
+keymap "M-h" MENU MenuHelp
+
+## Other ##
+
+keymap "LEFT" MOVE_LEFT1
+keymap "RIGHT" MOVE_RIGHT1
+keymap "UP" MOVE_UP1
+keymap "DOWN" MOVE_DOWN1
+keymap "M-C-d" SUSPEND
+keymap "M-C-v" SET_OPTION "keymap_file=keymap_w3mplus"
+
+# Defining a Pentadactyl like keymap #
 
 ## Browsing ##
 
@@ -668,8 +807,9 @@ keymap ";TAB" MENU ExtendedHints
 
 ### Bypassing Pentadactyl ###
 
-keymap "C-v" SET_OPTION "keymap_file=keymap-default-toggle"
-keymap "M-z" SET_OPTION "keymap_file=keymap-default"
+keymap "M-b" SET_OPTION "keymap_file=keymap_w3m-toggle"
+#keymap "C-v" SET_OPTION "keymap_file=keymap_palemoon-toggle"
+keymap "M-C-v" SET_OPTION "keymap_file=keymap_palemoon"
 
 ## Marks ##
 
@@ -743,8 +883,8 @@ keymap "Mx" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=x"
 keymap "My" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=y"
 keymap "Mz" GOTO "file:///cgi-bin/w3mplus?action=setQuickMark&key=z"
 
-keymap "go" SET_OPTION "keymap_file=keymap-quickmark"
-keymap "gn" SET_OPTION "keymap_file=keymap-newquickmark"
+keymap "go" SET_OPTION "keymap_file=keymap_w3mplus-quickmark"
+keymap "gn" SET_OPTION "keymap_file=keymap_w3mplus-newquickmark"
 
 keymap ":Q" GOTO "file:///cgi-bin/w3mplus?action=qmarks"
 
