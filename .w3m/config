@@ -77,7 +77,7 @@ index_file
 mime_types ~/.w3m/mime.types, /etc/mime.types
 mailcap ~/.w3m/mailcap, /etc/w3m/mailcap, /etc/mailcap
 urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
-editor sensible-editor
+editor "${VISUAL-${EDITOR-vi}}"
 mailto_options 2
 mailer xdg-open %s
 extbrowser sensible-browser
