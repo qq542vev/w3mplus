@@ -1,22 +1,22 @@
-## File: keymap-default
+## File: keymap-default-toggle
 ##
-## Default w3m keymap.
+## Pale Moon like keymap.
 ##
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-03-16
-##   since - 2020-03-06
+##   version - 1.0.0
+##   date - 2020-03-17
+##   since - 2020-03-17
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
-##   source - keymap.default <https://github.com/tats/w3m/blob/master/doc/keymap.default>
 ##
 ## See Also:
 ##
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * Keyboard shortcuts - Perform common Firefox tasks quickly - <https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly>
 
 # Ctrl  : C-, ^
 # Escape: ESC-, M-, ^[
@@ -380,137 +380,141 @@ keymap "^[[E" NULL
 keymap "^[[L" NULL
 keymap "^[[Z" NULL
 
-# Defining a w3m default keymap #
+# Defining a Pale Moon like keymap #
 
-keymap "C-@" MARK
-keymap "C-a" LINE_BEGIN
-keymap "C-b" MOVE_LEFT
-keymap "C-e" LINE_END
-keymap "C-f" MOVE_RIGHT
-keymap "C-g" LINE_INFO
-keymap "C-h" HISTORY
+## Navigation ##
+
+# Backspace key
+keymap "DEL" PREV
+keymap "M-DEL" NEXT
+keymap "C-o" LOAD
+# F5 key
+keymap "^[[15~" RELOAD
+keymap "C-r" RELOAD
+
+## Current Page ##
+
 keymap "TAB" NEXT_LINK
-keymap "C-j" GOTO_LINK
-keymap "C-k" COOKIE
-keymap "C-l" REDRAW
-keymap "C-m" GOTO_LINK
-keymap "C-n" MOVE_DOWN
-keymap "C-p" MOVE_UP
-keymap "C-q" CLOSE_TAB
-keymap "C-r" ISEARCH_BACK
-keymap "C-s" ISEARCH
-keymap "C-t" TAB_LINK
-keymap "C-u" PREV_LINK
-keymap "C-v" NEXT_PAGE
-keymap "C-w" WRAP_TOGGLE
-keymap "C-z" SUSPEND
-
-keymap "SPC" NEXT_PAGE
-keymap "!" SHELL
-keymap "\"" REG_MARK
-keymap "#" PIPE_SHELL
-keymap "$" LINE_END
-keymap "(" UNDO
-keymap ")" REDO
-keymap "+" NEXT_PAGE
-keymap "," LEFT
-keymap "-" PREV_PAGE
-keymap "." RIGHT
-keymap "/" SEARCH
-keymap ":" MARK_URL
-keymap ";" MARK_WORD
-keymap "<" SHIFT_LEFT
-keymap "=" INFO
-keymap ">" SHIFT_RIGHT
-keymap "?" SEARCH_BACK
-keymap "@" READ_SHELL
-keymap "B" BACK
-keymap "D" DOWNLOAD_LIST
-keymap "E" EDIT
-keymap "F" FRAME
-keymap "G" END
-keymap "H" HELP
-keymap "I" VIEW_IMAGE
-keymap "J" UP
-keymap "K" DOWN
-keymap "L" LIST
-keymap "M" EXTERN
-keymap "N" SEARCH_PREV
-keymap "Q" EXIT
-keymap "R" RELOAD
-keymap "S" SAVE_SCREEN
-keymap "T" NEW_TAB
-keymap "U" GOTO
-keymap "V" LOAD
-keymap "W" PREV_WORD
-keymap "Z" CENTER_H
-keymap "[" LINK_BEGIN
-keymap "]" LINK_END
-keymap "^" LINE_BEGIN
-keymap "a" SAVE_LINK
-keymap "b" PREV_PAGE
-keymap "c" PEEK
-keymap "g" BEGIN
-keymap "h" MOVE_LEFT
-keymap "i" PEEK_IMG
-keymap "j" MOVE_DOWN
-keymap "k" MOVE_UP
-keymap "l" MOVE_RIGHT
-keymap "m" MOUSE_TOGGLE
-keymap "n" SEARCH_NEXT
-keymap "o" OPTIONS
-keymap "q" QUIT
-keymap "r" VERSION
-keymap "s" SELECT_MENU
-keymap "u" PEEK_LINK
-keymap "v" VIEW
-keymap "w" NEXT_WORD
-keymap "z" CENTER_V
-keymap "{" PREV_TAB
-keymap "|" PIPE_BUF
-keymap "}" NEXT_TAB
-
+# Shift key + Tab key in xterm
+keymap "^[[Z" PREV_LINK
 keymap "M-TAB" PREV_LINK
+# Page Down key
+keymap "^[[6~" NEXT_PAGE
+keymap "^[[G" NEXT_PAGE
+keymap "SPC" NEXT_PAGE
+# Page Up key
+keymap "^[[5~" PREV_PAGE
+keymap "^[[I" PREV_PAGE
+keymap "M-SPC" PREV_PAGE
+# End key
+keymap "^[OF" END
+keymap "^[[4~" END
+keymap "^[[8~" NULL
+keymap "^[[F" END
+# Home key
+keymap "^[OH" BEGIN
+keymap "^[[1~" BEGIN
+keymap "^[[7~" BEGIN
+keymap "^[[H" BEGIN
+keymap "C-p" PRINT
 keymap "M-C-j" SAVE_LINK
 keymap "M-C-m" SAVE_LINK
+keymap "C-s" DOWNLOAD
 
-keymap "M-:" MARK_MID
-keymap "M-<" BEGIN
-keymap "M->" END
-keymap "M-I" SAVE_IMAGE
-keymap "M-M" EXTERN_LINK
-keymap "M-W" DICT_WORD_AT
-keymap "M-a" ADD_BOOKMARK
-keymap "M-b" BOOKMARK
-keymap "M-c" COMMAND
-keymap "M-e" EDIT_SCREEN
-keymap "M-g" GOTO_LINE
-keymap "M-k" DEFINE_KEY
-keymap "M-l" LIST_MENU
-keymap "M-m" MOVE_LIST_MENU
-keymap "M-n" NEXT_MARK
-keymap "M-o" SET_OPTION
-keymap "M-p" PREV_MARK
-keymap "M-s" SAVE
-keymap "M-t" TAB_MENU
-keymap "M-u" GOTO_RELATIVE
-keymap "M-v" PREV_PAGE
-keymap "M-w" DICT_WORD
+## Editing ##
 
-keymap "UP" MOVE_UP
-keymap "DOWN" MOVE_DOWN
-keymap "RIGHT" MOVE_RIGHT
-keymap "LEFT" MOVE_LEFT
+keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
+keymap "C-y" REDO
+keymap "C-z" UNDO
 
-keymap "M-[E" MENU
-keymap "M-[L" MENU
-keymap "M-[Z" PREV_LINK
+## Search ##
 
-keymap "M-[1~" BEGIN
-keymap "M-[2~" MENU
-keymap "M-[4~" END
-keymap "M-[5~" PREV_PAGE
-keymap "M-[6~" NEXT_PAGE
-keymap "M-[28~" MENU
+keymap "C-f" SEARCH
+# F3 key
+keymap "^[OR" SEARCH_NEXT
+keymap "^[[13~" SEARCH_NEXT
+keymap "C-g" SEARCH_NEXT
+# F15 key
+keymap "^[[28~" SEARCH_PREV
+keymap "M-C-g" SEARCH_PREV
+keymap "/" ISEARCH
+keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
+# F4 key
+keymap "^[OS" MENU ContextMenuSearch
+keymap "^[[14~" MENU ContextMenuSearch
 
-keymap "M-z" SET_OPTION "keymap_file=keymap_w3mplus"
+## Windows & Tabs ##
+
+keymap "C-w" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
+keymap "M-C-w" QUIT
+keymap "C-q" EXIT
+keymap "C-t" TAB_GOTO "about:blank"
+keymap "C-n" EXTERN "w3m ${WWW_HOME-about:home} #"
+keymap "M-C-p" EXTERN "w3m-private #"
+keymap "C-j" GOTO_LINK
+keymap "C-m" GOTO_LINK
+keymap "M-C-t" GOTO "file:///cgi-bin/w3mplus?action=undoTab"
+keymap "M-1" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; CLOSE_TAB"
+keymap "M-2" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-3" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-4" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-5" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-6" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-7" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-8" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-9" COMMAND "NEW_TAB; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+
+## History ##
+
+keymap "M-C-h" HISTORY
+
+## Bookmarks ##
+
+keymap "C-d" ADD_BOOKMARK
+keymap "C-b" GOTO "file:///cgi-bin/w3mplus?action=bookmarkBar"
+keymap "M-C-b" BOOKMARK
+
+## Tools ##
+
+keymap "M-C-y" DOWNLOAD_LIST
+# F12 key
+keymap "^[[24~" MENU MenuAdvanced
+keymap "M-C-k" PIPE_BUF
+keymap "M-C-q" LOAD "Nn" "~/.w3m/request.log"
+# F14 key
+keymap "^[[27~" COMMAND
+# F16 key
+keymap "^[[29~" EXEC_SHELL
+keymap "C-u" VIEW
+
+## Miscellaneous ##
+
+# F10 key
+keymap "^[[21~" MENU Menu
+# F7 key
+keymap "^[[18~" EDIT_SCREEN
+# F6 key
+keymap "^[[17~" COMMAND "SET_OPTION default_url=1; GOTO"
+keymap "M-d" COMMAND "SET_OPTION default_url=1; TAB_GOTO"
+keymap "C-l" COMMAND "SET_OPTION default_url=1; GOTO"
+
+## Menu Bar ##
+
+keymap "M-f" MENU MenuFile
+keymap "M-e" MENU MenuEdit
+keymap "M-v" MENU MenuView
+keymap "M-s" MENU MenuHistory
+keymap "M-b" MENU MenuBookmarks
+keymap "M-t" MENU MenuTools
+keymap "M-h" MENU MenuHelp
+
+## Other ##
+
+keymap "LEFT" MOVE_LEFT1
+keymap "RIGHT" MOVE_RIGHT1
+keymap "UP" MOVE_UP1
+keymap "DOWN" MOVE_DOWN1
+keymap "M-C-d" SUSPEND
+keymap "M-C-v" SET_OPTION "keymap_file=keymap_w3mplus"
