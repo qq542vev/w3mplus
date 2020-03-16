@@ -313,14 +313,14 @@ keymap "^[[6~" NULL
 ### Home key ###
 
 keymap "^[[1~" NULL
-keymap "^[[H" BEGIN
-keymap "^[OH" BEGIN
+keymap "^[[H" NULL
+keymap "^[OH" NULL
 
 ### End key ###
 
 keymap "^[[4~" NULL
-keymap "^[[F" END
-keymap "^[OF" END
+keymap "^[[F" NULL
+keymap "^[OF" NULL
 
 ### Insert key ###
 
