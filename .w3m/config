@@ -80,9 +80,9 @@ urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
 editor "${VISUAL-${EDITOR-vi}}"
 mailto_options 2
 mailer "${MAILER}" %s
-extbrowser sensible-browser
+extbrowser "${BROWSER}" %s
 extbrowser2 firefox %s &
-extbrowser3 url=%s && xdg-open "mailto:?body=$(printf '%s' "${url}" | urlencode)"
+extbrowser3 url=%s && "${MAILER}" "mailto:?body=$(printf '%s' "${url}" | urlencode)"
 extbrowser4 url=%s && printf '%s' "${url}" | xsel && printf '%s' "${url}" | xsel -b &
 extbrowser5 
 extbrowser6 curl -L -O -C - %s &
