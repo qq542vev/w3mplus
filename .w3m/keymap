@@ -298,46 +298,52 @@ keymap "M-C-?" NULL
 
 ## Special keys ##
 
-### Arrow keys ###
+### Navigation keys ###
+
+#### Arrow keys ####
 
 keymap "UP" NULL
 keymap "DOWN" NULL
 keymap "RIGHT" NULL
 keymap "LEFT" NULL
 
-### Page Up key ###
+#### Page Up key ####
 
 keymap "^[[5~" NULL
 keymap "^[[I" NULL
 
-### Page Down key ###
+#### Page Down key ####
+
 keymap "^[[6~" NULL
 keymap "^[[G" NULL
 
-### Home key ###
+#### Home key ####
 
 keymap "^[OH" NULL
 keymap "^[[1~" NULL
 keymap "^[[7~" NULL
 keymap "^[[H" NULL
 
-### End key ###
+#### End key ####
 
 keymap "^[OF" NULL
 keymap "^[[4~" NULL
 keymap "^[[8~" NULL
 keymap "^[[F" NULL
 
-### Insert key ###
+### Editing keys ###
+
+#### Insert key ####
 
 keymap "^[[2~" NULL
 keymap "^[[L" NULL
 
-### Delete key ###
+#### Delete key ####
 
 keymap "^[[3~" NULL
 
 ### Function keys (F1 key - F20 key) ###
+
 keymap "^[OP" NULL
 keymap "^[[11~" NULL
 keymap "^[OQ" NULL
