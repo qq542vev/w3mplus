@@ -305,26 +305,33 @@ keymap "DOWN" NULL
 keymap "RIGHT" NULL
 keymap "LEFT" NULL
 
-### Page Up key / Page Down key ###
+### Page Up key ###
 
 keymap "^[[5~" NULL
+keymap "^[[I" NULL
+
+### Page Down key ###
 keymap "^[[6~" NULL
+keymap "^[[G" NULL
 
 ### Home key ###
 
-keymap "^[[1~" NULL
-keymap "^[[H" NULL
 keymap "^[OH" NULL
+keymap "^[[1~" NULL
+keymap "^[[7~" NULL
+keymap "^[[H" NULL
 
 ### End key ###
 
-keymap "^[[4~" NULL
-keymap "^[[F" NULL
 keymap "^[OF" NULL
+keymap "^[[4~" NULL
+keymap "^[[8~" NULL
+keymap "^[[F" NULL
 
 ### Insert key ###
 
 keymap "^[[2~" NULL
+keymap "^[[L" NULL
 
 ### Delete key ###
 
@@ -467,15 +474,17 @@ keymap "g_" GOTO "file:///cgi-bin/w3mplus?action=moveColmun&percent=100"
 
 keymap "gg" BEGIN
 # Home key
-keymap "^[[1~" BEGIN
-keymap "^[[H" BEGIN
 keymap "^[OH" BEGIN
+keymap "^[[1~" BEGIN
+keymap "^[[7~" BEGIN
+keymap "^[[H" BEGIN
 
 keymap "G" END
 # End key
-keymap "^[[4~" END
-keymap "^[[F" END
 keymap "^[OF" END
+keymap "^[[4~" END
+keymap "^[[8~" NULL
+keymap "^[[F" END
 
 keymap "%" MENU Percents
 
