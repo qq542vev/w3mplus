@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-03-06
+##   version - 1.0.1
+##   date - 2020-03-16
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -26,16 +26,13 @@
 # Right : RIGHT, ^[[C
 # Left  : LEFT, ^[[D
 
-# Reset #
+# Reset keymap #
+
+## ASCII characters ##
+
+### Printable characters ###
 
 keymap "SPC" SET_OPTION "keymap_file=keymap"
-keymap "TAB" SET_OPTION "keymap_file=keymap"
-keymap "DEL" SET_OPTION "keymap_file=keymap"
-keymap "UP" SET_OPTION "keymap_file=keymap"
-keymap "DOWN" SET_OPTION "keymap_file=keymap"
-keymap "RIGHT" SET_OPTION "keymap_file=keymap"
-keymap "LEFT" SET_OPTION "keymap_file=keymap"
-
 keymap "!" SET_OPTION "keymap_file=keymap"
 keymap "\"" SET_OPTION "keymap_file=keymap"
 keymap "#" SET_OPTION "keymap_file=keymap"
@@ -51,6 +48,16 @@ keymap "," SET_OPTION "keymap_file=keymap"
 keymap "-" SET_OPTION "keymap_file=keymap"
 keymap "." SET_OPTION "keymap_file=keymap"
 keymap "/" SET_OPTION "keymap_file=keymap"
+keymap "0" SET_OPTION "keymap_file=keymap"
+keymap "1" SET_OPTION "keymap_file=keymap"
+keymap "2" SET_OPTION "keymap_file=keymap"
+keymap "3" SET_OPTION "keymap_file=keymap"
+keymap "4" SET_OPTION "keymap_file=keymap"
+keymap "5" SET_OPTION "keymap_file=keymap"
+keymap "6" SET_OPTION "keymap_file=keymap"
+keymap "7" SET_OPTION "keymap_file=keymap"
+keymap "8" SET_OPTION "keymap_file=keymap"
+keymap "9" SET_OPTION "keymap_file=keymap"
 keymap ":" SET_OPTION "keymap_file=keymap"
 keymap ";" SET_OPTION "keymap_file=keymap"
 keymap "<" SET_OPTION "keymap_file=keymap"
@@ -58,49 +65,69 @@ keymap "=" SET_OPTION "keymap_file=keymap"
 keymap ">" SET_OPTION "keymap_file=keymap"
 keymap "?" SET_OPTION "keymap_file=keymap"
 keymap "@" SET_OPTION "keymap_file=keymap"
+keymap "A" SET_OPTION "keymap_file=keymap"
+keymap "B" SET_OPTION "keymap_file=keymap"
+keymap "C" SET_OPTION "keymap_file=keymap"
+keymap "D" SET_OPTION "keymap_file=keymap"
+keymap "E" SET_OPTION "keymap_file=keymap"
+keymap "F" SET_OPTION "keymap_file=keymap"
+keymap "G" SET_OPTION "keymap_file=keymap"
+keymap "H" SET_OPTION "keymap_file=keymap"
+keymap "I" SET_OPTION "keymap_file=keymap"
+keymap "J" SET_OPTION "keymap_file=keymap"
+keymap "K" SET_OPTION "keymap_file=keymap"
+keymap "L" SET_OPTION "keymap_file=keymap"
+keymap "M" SET_OPTION "keymap_file=keymap"
+keymap "N" SET_OPTION "keymap_file=keymap"
+keymap "O" SET_OPTION "keymap_file=keymap"
+keymap "P" SET_OPTION "keymap_file=keymap"
+keymap "Q" SET_OPTION "keymap_file=keymap"
+keymap "R" SET_OPTION "keymap_file=keymap"
+keymap "S" SET_OPTION "keymap_file=keymap"
+keymap "T" SET_OPTION "keymap_file=keymap"
+keymap "U" SET_OPTION "keymap_file=keymap"
+keymap "V" SET_OPTION "keymap_file=keymap"
+keymap "W" SET_OPTION "keymap_file=keymap"
+keymap "X" SET_OPTION "keymap_file=keymap"
+keymap "Y" SET_OPTION "keymap_file=keymap"
+keymap "Z" SET_OPTION "keymap_file=keymap"
 keymap "[" SET_OPTION "keymap_file=keymap"
 keymap "]" SET_OPTION "keymap_file=keymap"
-keymap "^" SET_OPTION "keymap_file=keymap"
+keymap "\^" SET_OPTION "keymap_file=keymap"
 keymap "_" SET_OPTION "keymap_file=keymap"
 keymap "`" SET_OPTION "keymap_file=keymap"
+keymap "a" SET_OPTION "keymap_file=keymap"
+keymap "b" SET_OPTION "keymap_file=keymap"
+keymap "c" SET_OPTION "keymap_file=keymap"
+keymap "d" SET_OPTION "keymap_file=keymap"
+keymap "e" SET_OPTION "keymap_file=keymap"
+keymap "f" SET_OPTION "keymap_file=keymap"
+keymap "g" SET_OPTION "keymap_file=keymap"
+keymap "h" SET_OPTION "keymap_file=keymap"
+keymap "i" SET_OPTION "keymap_file=keymap"
+keymap "j" SET_OPTION "keymap_file=keymap"
+keymap "k" SET_OPTION "keymap_file=keymap"
+keymap "l" SET_OPTION "keymap_file=keymap"
+keymap "m" SET_OPTION "keymap_file=keymap"
+keymap "n" SET_OPTION "keymap_file=keymap"
+keymap "o" SET_OPTION "keymap_file=keymap"
+keymap "p" SET_OPTION "keymap_file=keymap"
+keymap "q" SET_OPTION "keymap_file=keymap"
+keymap "r" SET_OPTION "keymap_file=keymap"
+keymap "s" SET_OPTION "keymap_file=keymap"
+keymap "t" SET_OPTION "keymap_file=keymap"
+keymap "u" SET_OPTION "keymap_file=keymap"
+keymap "v" SET_OPTION "keymap_file=keymap"
+keymap "w" SET_OPTION "keymap_file=keymap"
+keymap "x" SET_OPTION "keymap_file=keymap"
+keymap "y" SET_OPTION "keymap_file=keymap"
+keymap "z" SET_OPTION "keymap_file=keymap"
 keymap "{" SET_OPTION "keymap_file=keymap"
 keymap "|" SET_OPTION "keymap_file=keymap"
 keymap "}" SET_OPTION "keymap_file=keymap"
 keymap "~" SET_OPTION "keymap_file=keymap"
 
-keymap "^[[1~" SET_OPTION "keymap_file=keymap"
-keymap "^[[2~" SET_OPTION "keymap_file=keymap"
-keymap "^[[3~" SET_OPTION "keymap_file=keymap"
-keymap "^[[4~" SET_OPTION "keymap_file=keymap"
-keymap "^[[5~" SET_OPTION "keymap_file=keymap"
-keymap "^[[6~" SET_OPTION "keymap_file=keymap"
-keymap "^[[28~" SET_OPTION "keymap_file=keymap"
-
-keymap "^[[E" SET_OPTION "keymap_file=keymap"
-keymap "^[[F" SET_OPTION "keymap_file=keymap"
-keymap "^[[G" SET_OPTION "keymap_file=keymap"
-keymap "^[[H" SET_OPTION "keymap_file=keymap"
-keymap "^[[I" SET_OPTION "keymap_file=keymap"
-keymap "^[[L" SET_OPTION "keymap_file=keymap"
-keymap "^[[Z" SET_OPTION "keymap_file=keymap"
-
-keymap "^[OP" SET_OPTION "keymap_file=keymap"
-keymap "^[OQ" SET_OPTION "keymap_file=keymap"
-keymap "^[OR" SET_OPTION "keymap_file=keymap"
-keymap "^[OS" SET_OPTION "keymap_file=keymap"
-keymap "^[[11~" SET_OPTION "keymap_file=keymap"
-keymap "^[[12~" SET_OPTION "keymap_file=keymap"
-keymap "^[[13~" SET_OPTION "keymap_file=keymap"
-keymap "^[[14~" SET_OPTION "keymap_file=keymap"
-keymap "^[[15~" SET_OPTION "keymap_file=keymap"
-keymap "^[[17~" SET_OPTION "keymap_file=keymap"
-keymap "^[[18~" SET_OPTION "keymap_file=keymap"
-keymap "^[[19~" SET_OPTION "keymap_file=keymap"
-keymap "^[[20~" SET_OPTION "keymap_file=keymap"
-keymap "^[[21~" SET_OPTION "keymap_file=keymap"
-keymap "^[[22~" SET_OPTION "keymap_file=keymap"
-keymap "^[[23~" SET_OPTION "keymap_file=keymap"
-keymap "^[[24~" SET_OPTION "keymap_file=keymap"
+### Control characters ###
 
 keymap "C-@" SET_OPTION "keymap_file=keymap"
 keymap "C-a" SET_OPTION "keymap_file=keymap"
@@ -136,8 +163,9 @@ keymap "C-^" SET_OPTION "keymap_file=keymap"
 keymap "C-_" SET_OPTION "keymap_file=keymap"
 keymap "C-?" SET_OPTION "keymap_file=keymap"
 
+## ESC + ASCII printable characters ##
+
 keymap "M-SPC" SET_OPTION "keymap_file=keymap"
-keymap "M-TAB" SET_OPTION "keymap_file=keymap"
 keymap "M-!" SET_OPTION "keymap_file=keymap"
 keymap "M-\"" SET_OPTION "keymap_file=keymap"
 keymap "M-#" SET_OPTION "keymap_file=keymap"
@@ -198,7 +226,7 @@ keymap "M-Y" SET_OPTION "keymap_file=keymap"
 keymap "M-Z" SET_OPTION "keymap_file=keymap"
 keymap "M-[" SET_OPTION "keymap_file=keymap"
 keymap "M-]" SET_OPTION "keymap_file=keymap"
-keymap "M-^" SET_OPTION "keymap_file=keymap"
+keymap "M-\^" SET_OPTION "keymap_file=keymap"
 keymap "M-_" SET_OPTION "keymap_file=keymap"
 keymap "M-`" SET_OPTION "keymap_file=keymap"
 keymap "M-a" SET_OPTION "keymap_file=keymap"
@@ -231,6 +259,8 @@ keymap "M-{" SET_OPTION "keymap_file=keymap"
 keymap "M-|" SET_OPTION "keymap_file=keymap"
 keymap "M-}" SET_OPTION "keymap_file=keymap"
 keymap "M-~" SET_OPTION "keymap_file=keymap"
+
+## ESC + ASCII Control characters ##
 
 keymap "M-C-@" SET_OPTION "keymap_file=keymap"
 keymap "M-C-a" SET_OPTION "keymap_file=keymap"
@@ -266,7 +296,89 @@ keymap "M-C-^" SET_OPTION "keymap_file=keymap"
 keymap "M-C-_" SET_OPTION "keymap_file=keymap"
 keymap "M-C-?" SET_OPTION "keymap_file=keymap"
 
-# Keymap define #
+## Special keys ##
+
+### Navigation keys ###
+
+#### Arrow keys ####
+
+keymap "UP" SET_OPTION "keymap_file=keymap"
+keymap "DOWN" SET_OPTION "keymap_file=keymap"
+keymap "RIGHT" SET_OPTION "keymap_file=keymap"
+keymap "LEFT" SET_OPTION "keymap_file=keymap"
+
+#### Page Up key ####
+
+keymap "^[[5~" SET_OPTION "keymap_file=keymap"
+keymap "^[[I" SET_OPTION "keymap_file=keymap"
+
+#### Page Down key ####
+
+keymap "^[[6~" SET_OPTION "keymap_file=keymap"
+keymap "^[[G" SET_OPTION "keymap_file=keymap"
+
+#### Home key ####
+
+keymap "^[OH" SET_OPTION "keymap_file=keymap"
+keymap "^[[1~" SET_OPTION "keymap_file=keymap"
+keymap "^[[7~" SET_OPTION "keymap_file=keymap"
+keymap "^[[H" SET_OPTION "keymap_file=keymap"
+
+#### End key ####
+
+keymap "^[OF" SET_OPTION "keymap_file=keymap"
+keymap "^[[4~" SET_OPTION "keymap_file=keymap"
+keymap "^[[8~" SET_OPTION "keymap_file=keymap"
+keymap "^[[F" SET_OPTION "keymap_file=keymap"
+
+### Editing keys ###
+
+#### Insert key ####
+
+keymap "^[[2~" SET_OPTION "keymap_file=keymap"
+keymap "^[[L" SET_OPTION "keymap_file=keymap"
+
+#### Delete key ####
+
+keymap "^[[3~" SET_OPTION "keymap_file=keymap"
+
+### Function keys (F1 key - F20 key) ###
+
+keymap "^[OP" SET_OPTION "keymap_file=keymap"
+keymap "^[[11~" SET_OPTION "keymap_file=keymap"
+keymap "^[OQ" SET_OPTION "keymap_file=keymap"
+keymap "^[[12~" SET_OPTION "keymap_file=keymap"
+keymap "^[OR" SET_OPTION "keymap_file=keymap"
+keymap "^[[13~" SET_OPTION "keymap_file=keymap"
+keymap "^[OS" SET_OPTION "keymap_file=keymap"
+keymap "^[[14~" SET_OPTION "keymap_file=keymap"
+keymap "^[[15~" SET_OPTION "keymap_file=keymap"
+keymap "^[[17~" SET_OPTION "keymap_file=keymap"
+keymap "^[[18~" SET_OPTION "keymap_file=keymap"
+keymap "^[[19~" SET_OPTION "keymap_file=keymap"
+keymap "^[[20~" SET_OPTION "keymap_file=keymap"
+keymap "^[[21~" SET_OPTION "keymap_file=keymap"
+keymap "^[[22~" SET_OPTION "keymap_file=keymap"
+keymap "^[[23~" SET_OPTION "keymap_file=keymap"
+keymap "^[[24~" SET_OPTION "keymap_file=keymap"
+keymap "^[[25~" SET_OPTION "keymap_file=keymap"
+keymap "^[[26~" SET_OPTION "keymap_file=keymap"
+keymap "^[[27~" SET_OPTION "keymap_file=keymap"
+keymap "^[[28~" SET_OPTION "keymap_file=keymap"
+keymap "^[[29~" SET_OPTION "keymap_file=keymap"
+keymap "^[[30~" SET_OPTION "keymap_file=keymap"
+keymap "^[[31~" SET_OPTION "keymap_file=keymap"
+keymap "^[[32~" SET_OPTION "keymap_file=keymap"
+keymap "^[[33~" SET_OPTION "keymap_file=keymap"
+keymap "^[[34~" SET_OPTION "keymap_file=keymap"
+
+### Key used in w3m ###
+
+keymap "^[[E" SET_OPTION "keymap_file=keymap"
+keymap "^[[L" SET_OPTION "keymap_file=keymap"
+keymap "^[[Z" SET_OPTION "keymap_file=keymap"
+
+# Defining the QuickMarks keymap #
 
 keymap "0" COMMAND "SET_OPTION keymap_file=keymap; GOTO file:///cgi-bin/w3mplus?action=getQuickMark&key=0&redirect=1"
 keymap "1" COMMAND "SET_OPTION keymap_file=keymap; GOTO file:///cgi-bin/w3mplus?action=getQuickMark&key=1&redirect=1"
