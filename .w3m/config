@@ -79,7 +79,7 @@ mailcap ~/.w3m/mailcap, /etc/w3m/mailcap, /etc/mailcap
 urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
 editor "${VISUAL-${EDITOR-vi}}"
 mailto_options 2
-mailer xdg-open %s
+mailer "${MAILER}" %s
 extbrowser sensible-browser
 extbrowser2 firefox %s &
 extbrowser3 url=%s && xdg-open "mailto:?body=$(printf '%s' "${url}" | urlencode)"
