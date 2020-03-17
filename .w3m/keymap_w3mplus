@@ -407,7 +407,7 @@ keymap "M-SPC" PREV_PAGE
 # End key
 keymap "^[OF" END
 keymap "^[[4~" END
-keymap "^[[8~" NULL
+keymap "^[[8~" END
 keymap "^[[F" END
 # Home key
 keymap "^[OH" BEGIN
@@ -628,7 +628,7 @@ keymap "G" END
 # End key
 keymap "^[OF" END
 keymap "^[[4~" END
-keymap "^[[8~" NULL
+keymap "^[[8~" END
 keymap "^[[F" END
 
 keymap "%" MENU Percents
