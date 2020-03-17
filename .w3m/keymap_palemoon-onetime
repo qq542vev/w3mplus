@@ -16,6 +16,8 @@
 ##
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * README.menu - <https://github.com/tats/w3m/blob/master/doc-jp/README.menu>
+##   * Table of function-keys for XTerm and other Terminal Emulators - <https://invisible-island.net/xterm/xterm-function-keys.html>
 ##   * Keyboard shortcuts - Perform common Firefox tasks quickly - <https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly>
 
 # Ctrl  : C-, ^
@@ -157,7 +159,7 @@ keymap "C-v" NULL
 keymap "C-w" NULL
 keymap "C-x" NULL
 keymap "C-y" NULL
-keymap "C-z" SUSPEND
+keymap "C-z" NULL
 keymap "C-[" NULL
 keymap "C-\\" NULL
 keymap "C-]" NULL
