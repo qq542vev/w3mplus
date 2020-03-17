@@ -1,4 +1,4 @@
-## File: keymap
+## File: keymap_w3mplus
 ##
 ## Default w3mplus keymap.
 ##
@@ -812,6 +812,7 @@ keymap ";TAB" MENU ExtendedHints
 ### Bypassing Pentadactyl ###
 
 keymap "M-b" SET_OPTION "keymap_file=keymap_w3m-onetime"
+keymap "M-C-b" SET_OPTION "keymap_file=keymap_w3m"
 keymap "C-v" SET_OPTION "keymap_file=keymap_palemoon-onetime"
 keymap "M-C-v" SET_OPTION "keymap_file=keymap_palemoon"
 
