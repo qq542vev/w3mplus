@@ -812,7 +812,7 @@ keymap ";TAB" MENU ExtendedHints
 ### Bypassing Pentadactyl ###
 
 keymap "M-b" SET_OPTION "keymap_file=keymap_w3m-onetime"
-#keymap "C-v" SET_OPTION "keymap_file=keymap_palemoon-toggle"
+keymap "C-v" SET_OPTION "keymap_file=keymap_palemoon-onetime"
 keymap "M-C-v" SET_OPTION "keymap_file=keymap_palemoon"
 
 ## Marks ##
