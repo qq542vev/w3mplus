@@ -1025,6 +1025,10 @@ keymap ":e" MENU Menu
 
 keymap ":d" DOWNLOAD_LIST
 
+## Styling the GUI and web pages ##
+
+keymap ":C" MENU MenuStyle
+
 ## Error and informational messages ##
 
 keymap ":M" MSGS
@@ -1034,6 +1038,12 @@ keymap ":M" MSGS
 ### Cookie settings ###
 
 keymap ":c" COOKIE
+
+## Using Plugins ##
+
+### User Agent Switcher ###
+
+keymap ":U" MENU MenuUserAgent
 
 ## Other ##
 
@@ -1089,3 +1099,4 @@ keymap "=" GOTO "file:///cgi-bin/w3mplus?action=equalPrg"
 keymap "g:" GOTO_LINE
 
 keymap "C-z" SUSPEND
+keymap "gM" COMMAND "GOTO file:///cgi-bin/w3mplus?action=moveColmun&percent=50; CENTER_H"

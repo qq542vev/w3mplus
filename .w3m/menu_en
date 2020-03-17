@@ -185,11 +185,11 @@ menu MenuEdit
 end
 
 menu MenuView
-	popup "Toolbars           (t)" MenuViewToolbars "Tt"
-	popup "Sidebar            (e)" MenuViewSidebar "Ee"
+	popup "Toolbars           (t)" MenuToolbars "Tt"
+	popup "Sidebar            (e)" MenuSidebar "Ee"
 	nop   "----------------------"
-	popup "Style & Color      (s)" MenuViewStyle "Ss"
-	popup "Zoom               (z)" MenuViewZoom "Zz"
+	popup "Style & Color      (s)" MenuStyle "Ss"
+	popup "Zoom               (z)" MenuZoom "Zz"
 	func  "Character Encoding (c)" CHARSET "Cc"
 	nop   "----------------------"
 	func  "Navigation Link    (n)" LINK_MENU "Nn"
@@ -198,22 +198,22 @@ menu MenuView
 	func  "Show All Tabs      (a)" TAB_MENU "Aa"
 end
 
-menu MenuViewToolbars
+menu MenuToolbars
 	func "Bookmarks Toolbar (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmarkBar&type=topToolbar"
 end
 
-menu MenuViewSidebar
+menu MenuSidebar
 	func "Bookmarks (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmarkBar"
 end
 
-menu MenuViewZoom
+menu MenuZoom
 	func "Zoom In  (i)" GOTO "Ii" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B20"
 	func "Zoom Out (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=zoom&zoom=-20"
 	nop  "------------"
 	func "Reset    (r)" GOTO "Rr" "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
 end
 
-menu MenuViewStyle
+menu MenuStyle
 	func "lynx       (l)" COMMAND "Ll" "SET_OPTION display_ins_del=1; SET_OPTION color=1; SET_OPTION basic_color=terminal; SET_OPTION anchor_color=green; SET_OPTION image_color=yellow; SET_OPTION form_color=white; SET_OPTION mark_color=cyan; SET_OPTION bg_color=terminal; SET_OPTION active_style=1; SET_OPTION active_color=yellow; SET_OPTION visited_anchor=0"
 	func "Monochrome (m)" COMMAND "Mm" "SET_OPTION display_ins_del=1; SET_OPTION color=0; SET_OPTION basic_color=terminal; SET_OPTION bg_color=terminal"
 	func "Reset      (r)" COMMAND "Rr" "SET_OPTION display_ins_del=2; SET_OPTION color=1; SET_OPTION basic_color=terminal; SET_OPTION anchor_color=blue; SET_OPTION image_color=green; SET_OPTION form_color=red; SET_OPTION mark_color=yellow; SET_OPTION bg_color=terminal; SET_OPTION active_style=1; SET_OPTION active_color=cyan; SET_OPTION visited_anchor=1; SET_OPTION visited_color=magenta"
