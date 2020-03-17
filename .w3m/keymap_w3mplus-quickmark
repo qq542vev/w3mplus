@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-03-16
+##   version - 1.0.2
+##   date - 2020-03-17
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -15,6 +15,8 @@
 ##
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * README.keymap - <https://github.com/tats/w3m/blob/master/doc-jp/README.keymap>
+##   * Table of function-keys for XTerm and other Terminal Emulators - <https://invisible-island.net/xterm/xterm-function-keys.html>
 
 # Ctrl  : C-, ^
 # Escape: ESC-, M-, ^[
@@ -155,7 +157,7 @@ keymap "C-v" SET_OPTION "keymap_file=keymap_w3mplus"
 keymap "C-w" SET_OPTION "keymap_file=keymap_w3mplus"
 keymap "C-x" SET_OPTION "keymap_file=keymap_w3mplus"
 keymap "C-y" SET_OPTION "keymap_file=keymap_w3mplus"
-keymap "C-z" SUSPEND
+keymap "C-z" SET_OPTION "keymap_file=keymap_w3mplus"
 keymap "C-[" SET_OPTION "keymap_file=keymap_w3mplus"
 keymap "C-\\" SET_OPTION "keymap_file=keymap_w3mplus"
 keymap "C-]" SET_OPTION "keymap_file=keymap_w3mplus"
