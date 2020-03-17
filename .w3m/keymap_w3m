@@ -515,4 +515,4 @@ keymap "M-[5~" PREV_PAGE
 keymap "M-[6~" NEXT_PAGE
 keymap "M-[28~" MENU
 
-keymap "M-z" SET_OPTION "keymap_file=keymap_w3mplus"
+keymap "M-C-b" SET_OPTION "keymap_file=keymap_w3mplus"
