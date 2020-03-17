@@ -1,6 +1,6 @@
 ## File: keymap-default-toggle
 ##
-## Pale Moon like keymap.
+## Pale Moon like keymap (one time).
 ##
 ## Metadata:
 ##
@@ -385,136 +385,135 @@ keymap "^[[Z" NULL
 ## Navigation ##
 
 # Backspace key
-keymap "DEL" PREV
-keymap "M-DEL" NEXT
-keymap "C-o" LOAD
+keymap "DEL" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV"
+keymap "M-DEL" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT"
+keymap "C-o" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LOAD"
 # F5 key
-keymap "^[[15~" RELOAD
-keymap "C-r" RELOAD
+keymap "^[[15~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; RELOAD"
+keymap "C-r" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; RELOAD"
 
 ## Current Page ##
 
-keymap "TAB" NEXT_LINK
+keymap "TAB" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_LINK"
 # Shift key + Tab key in xterm
-keymap "^[[Z" PREV_LINK
-keymap "M-TAB" PREV_LINK
+keymap "^[[Z" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
+keymap "M-TAB" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
 # Page Down key
-keymap "^[[6~" NEXT_PAGE
-keymap "^[[G" NEXT_PAGE
-keymap "SPC" NEXT_PAGE
+keymap "^[[6~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_PAGE"
+keymap "^[[G" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_PAGE"
+keymap "SPC" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_PAGE"
 # Page Up key
-keymap "^[[5~" PREV_PAGE
-keymap "^[[I" PREV_PAGE
-keymap "M-SPC" PREV_PAGE
+keymap "^[[5~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
+keymap "^[[I" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
+keymap "M-SPC" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
 # End key
-keymap "^[OF" END
-keymap "^[[4~" END
-keymap "^[[8~" NULL
-keymap "^[[F" END
+keymap "^[OF" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
+keymap "^[[4~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
+keymap "^[[8~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
+keymap "^[[F" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
 # Home key
-keymap "^[OH" BEGIN
-keymap "^[[1~" BEGIN
-keymap "^[[7~" BEGIN
-keymap "^[[H" BEGIN
-keymap "C-p" PRINT
-keymap "M-C-j" SAVE_LINK
-keymap "M-C-m" SAVE_LINK
-keymap "C-s" DOWNLOAD
+keymap "^[OH" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
+keymap "^[[1~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
+keymap "^[[7~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
+keymap "^[[H" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
+keymap "C-p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PRINT"
+keymap "M-C-j" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_LINK"
+keymap "M-C-m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_LINK"
+keymap "C-s" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DOWNLOAD"
 
 ## Editing ##
 
-keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
-keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
-keymap "C-y" REDO
-keymap "C-z" UNDO
+keymap "C-c" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+keymap "C-v" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
+keymap "C-y" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; REDO"
+keymap "C-z" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; UNDO"
 
 ## Search ##
 
-keymap "C-f" SEARCH
+keymap "C-f" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH"
 # F3 key
-keymap "^[OR" SEARCH_NEXT
-keymap "^[[13~" SEARCH_NEXT
-keymap "C-g" SEARCH_NEXT
+keymap "^[OR" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH_NEXT"
+keymap "^[[13~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH_NEXT"
+keymap "C-g" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH_NEXT"
 # F15 key
-keymap "^[[28~" SEARCH_PREV
-keymap "M-C-g" SEARCH_PREV
-keymap "/" ISEARCH
-keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
-keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
+keymap "^[[28~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH_PREV"
+keymap "M-C-g" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH_PREV"
+keymap "/" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; ISEARCH"
+keymap "C-k" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
+keymap "C-e" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
 # F4 key
-keymap "^[OS" MENU ContextMenuSearch
-keymap "^[[14~" MENU ContextMenuSearch
+keymap "^[OS" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU ContextMenuSearch"
+keymap "^[[14~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU ContextMenuSearch"
 
 ## Windows & Tabs ##
 
-keymap "C-w" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
-keymap "M-C-w" QUIT
-keymap "C-q" EXIT
-keymap "C-t" TAB_GOTO "about:blank"
-keymap "C-n" EXTERN "w3m ${WWW_HOME-about:home} #"
-keymap "M-C-p" EXTERN "w3m-private #"
-keymap "C-j" GOTO_LINK
-keymap "C-m" GOTO_LINK
-keymap "M-C-t" GOTO "file:///cgi-bin/w3mplus?action=undoTab"
-keymap "M-1" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; CLOSE_TAB"
-keymap "M-2" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
-keymap "M-3" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
-keymap "M-4" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
-keymap "M-5" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
-keymap "M-6" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
-keymap "M-7" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
-keymap "M-8" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
-keymap "M-9" COMMAND "NEW_TAB; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "C-w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=closeTab"
+keymap "M-C-w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; QUIT"
+keymap "C-q" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXIT"
+keymap "C-t" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; TAB_GOTO about:blank"
+keymap "C-n" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXTERN \"w3m ${WWW_HOME-about:home} #\""
+keymap "M-C-p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXTERN \"w3m-private #\""
+keymap "C-j" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
+keymap "C-m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
+keymap "M-C-t" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO file:///cgi-bin/w3mplus?action=undoTab"
+keymap "M-1" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; CLOSE_TAB"
+keymap "M-2" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-3" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-4" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-5" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-6" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-7" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-8" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
+keymap "M-9" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
 
 ## History ##
 
-keymap "M-C-h" HISTORY
+keymap "M-C-h" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; HISTORY"
 
 ## Bookmarks ##
 
-keymap "C-d" ADD_BOOKMARK
-keymap "C-b" GOTO "file:///cgi-bin/w3mplus?action=bookmarkBar"
-keymap "M-C-b" BOOKMARK
+keymap "C-d" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; ADD_BOOKMARK"
+keymap "C-b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO file:///cgi-bin/w3mplus?action=bookmarkBar"
+keymap "M-C-b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BOOKMARK"
 
 ## Tools ##
 
-keymap "M-C-y" DOWNLOAD_LIST
+keymap "M-C-y" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DOWNLOAD_LIST"
 # F12 key
-keymap "^[[24~" MENU MenuAdvanced
-keymap "M-C-k" PIPE_BUF
-keymap "M-C-q" LOAD "Nn" "~/.w3m/request.log"
+keymap "^[[24~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuAdvanced"
+keymap "M-C-k" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PIPE_BUF"
+keymap "M-C-q" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LOAD ~/.w3m/request.log"
 # F14 key
-keymap "^[[27~" COMMAND
+keymap "^[[27~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; COMMAND"
 # F16 key
-keymap "^[[29~" EXEC_SHELL
-keymap "C-u" VIEW
+keymap "^[[29~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXEC_SHELL"
+keymap "C-u" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; VIEW"
 
 ## Miscellaneous ##
 
 # F10 key
-keymap "^[[21~" MENU Menu
+keymap "^[[21~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU Menu"
 # F7 key
-keymap "^[[18~" EDIT_SCREEN
+keymap "^[[18~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EDIT_SCREEN"
 # F6 key
-keymap "^[[17~" COMMAND "SET_OPTION default_url=1; GOTO"
-keymap "M-d" COMMAND "SET_OPTION default_url=1; TAB_GOTO"
-keymap "C-l" COMMAND "SET_OPTION default_url=1; GOTO"
+keymap "^[[17~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION default_url=1; GOTO"
+keymap "M-d" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION default_url=1; TAB_GOTO"
+keymap "C-l" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION default_url=1; GOTO"
 
 ## Menu Bar ##
 
-keymap "M-f" MENU MenuFile
-keymap "M-e" MENU MenuEdit
-keymap "M-v" MENU MenuView
-keymap "M-s" MENU MenuHistory
-keymap "M-b" MENU MenuBookmarks
-keymap "M-t" MENU MenuTools
-keymap "M-h" MENU MenuHelp
+keymap "M-f" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuFile"
+keymap "M-e" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuEdit"
+keymap "M-v" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuView"
+keymap "M-s" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuHistory"
+keymap "M-b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuBookmarks"
+keymap "M-t" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuTools"
+keymap "M-h" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuHelp"
 
 ## Other ##
 
-keymap "LEFT" MOVE_LEFT1
-keymap "RIGHT" MOVE_RIGHT1
-keymap "UP" MOVE_UP1
-keymap "DOWN" MOVE_DOWN1
-keymap "M-C-d" SUSPEND
-keymap "M-C-v" SET_OPTION "keymap_file=keymap_w3mplus"
+keymap "LEFT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_LEFT1"
+keymap "RIGHT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_RIGHT1"
+keymap "UP" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_UP1"
+keymap "DOWN" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_DOWN1"
+keymap "M-C-d" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SUSPEND"
