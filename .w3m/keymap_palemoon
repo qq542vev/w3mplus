@@ -5,7 +5,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
+##   version - 1.0.2
 ##   date - 2020-03-17
 ##   since - 2020-03-17
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
@@ -440,6 +440,7 @@ keymap "C-g" SEARCH_NEXT
 # F15 key
 keymap "^[[28~" SEARCH_PREV
 keymap "M-C-g" SEARCH_PREV
+keymap "'" LIST_MENU
 keymap "/" ISEARCH
 keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD"
 keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD"
