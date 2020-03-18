@@ -1094,3 +1094,5 @@ keymap "C-z" SUSPEND
 keymap "gM" COMMAND "GOTO file:///cgi-bin/w3mplus?action=moveColmun&percent=50; CENTER_H"
 keymap ":L" SETENV
 keymap ":S" EXEC_SHELL "${SHELL}"
+
+keymap "|" COMMAND "LINE_BEGIN; MOVE_RIGHT1"
