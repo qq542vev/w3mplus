@@ -1269,3 +1269,16 @@ menu rot13-9Line
 	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=-9"
 	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=selectLine&subaction=rot13&number=%2B-9"
 end
+
+menu ToggleOption
+	func "c  Enable HTTP cookie" SET_OPTION "c" "use_cookie=toggle"
+	func "h  Enable History" SET_OPTION "h" "use_history=toggle"
+	func "i  Show inline images" SET_OPTION "i" "display_image=toggle"
+	func "I  Case search" SET_OPTION "I" "ignorecase_search=toggle"
+	func "m  Enable mouse" MOUSE_TOGGLE "m"
+	func "n  Show line numbers" SET_OPTION "n" "show_lnum=toggle"
+	func "p  Enable Network Proxy" SET_OPTION "p" "use_proxy=toggle"
+	func "r  Send HTTP referer" SET_OPTION "r" "no_referer=toggle"	func "u  Convert URL to link" SET_OPTION "u" "mark_all_pages=toggle"
+	func "w  Line wrapping in text file" SET_OPTION "w" "fold_line=toggle"
+	func "W  Wrap in search" WRAP_TOGGLE "W"
+end
