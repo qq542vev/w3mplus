@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.5.0
-##   date - 2020-03-11
+##   version - 1.7.0
+##   date - 2020-03-18
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -331,19 +331,20 @@ menu ExtendedHints
 end
 
 menu Commands
-	func  "!  コマンドを実行" EXEC_SHELL "!"
+	func  "!  シェルコマンドを実行" EXEC_SHELL "!"
 	func  ":  w3m のコマンドを実行" COMMAND ":"
 	func  "b  ブックマークを開く" VIEW_BOOKMARK "b"
-	func  "B  ブラウザーの履歴から30ページ戻る" COMMAND "B" "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
 	func  "c  サイトのCookieアクセス許可を変更" COOKIE "c"
+	popup "C  カラースキームを読み込む" MenuStyle "C"
 	func  "d  ダウンロードリストを表示" DOWNLOAD_LIST "d"
 	func  "D  指定されたURLパターンに一致するオートコマンドを適用" GOTO "D" "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
 	func  "e  w3m メニューを表示" MENU "e" Menu
-	func  "f  HTML フレームの描写の切り替え" FRAME "f"
-	func  "F  ブラウザーの履歴から30ページ進む" COMMAND "F" "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
+	func  "f  HTML フレームの表示の切り替え" FRAME "f"
 	func  "h  入門用のヘルプを開く" HELP "h"
 	func  "H  最近訪れた URL を表示" HISTORY "H"
 	func  "j  ジャンプリストを表示" SELECT_MENU "j"
+	popup "l  リストコマンドを表示" LCommands "l"
+	func  "L  環境変数を設定" SETENV "L"
 	func  "m  マークを表示" GOTO "m" "file:///cgi-bin/w3mplus?action=marks"
 	func  "M  メッセージを表示" MSGS "M"
 	func  "n  Map a key sequence in Normal mode" DEFINE_KEY "n"
@@ -351,17 +352,23 @@ menu Commands
 	func  "q  w3m を終了" QUIT "q"
 	func  "Q  すべてのQuickMarkを表示する" GOTO "Q" "file:///cgi-bin/w3mplus?action=qmarks"
 	func  "p  w3m の設定を表示" OPTIONS "p"
-	func  "P  カレントディレクトリ名を表示" EXEC_SHELL "P" pwd
 	func  "r  シェルコマンドを実行して出力を表示" PIPE_SHELL "r"
-	func  "s  ローカルオプションを設定" SET_OPTION "s"
-	func  "S  グローバルオプションを設定" SETENV "S"
+	func  "s  w3m のオプションを設定" SET_OPTION "s"
+	func  "S  シェルを開始" EXEC_SHELL "S" "${SHELL}"
 	func  "t  新しいタブで URL を開く" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
 	func  "u  最近閉じたタブの一覧" GOTO "u" "file:///cgi-bin/w3mplus?action=undoTabs"
+	popup "U  ユーザーエージェントを変更" MenuUserAgent "U"
 	func  "v  バージョン情報を表示" VERSION "v"
 	func  "w  現在のページをディスクに保存" DOWNLOAD "w"
 	func  "W  現在のページを印刷" PRINT "W"
 	func  "x  w3m を終了" EXIT "x"
 	popup "z  Set zoom value of current web page" Zoom "z"
+end
+
+menu LCommands
+	popup "c  List all Ex commands along with their short descriptions" Commands "c"
+	func  "K  List all mappings along with their short descriptions" HELP "k"
+	func  "o  List all options along with their short descriptions" PIPE_SHELL "o" "w3m -show-option"
 end
 
 menu Zoom

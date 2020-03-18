@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.7.2
-##   date - 2020-03-16
+##   version - 1.8.0
+##   date - 2020-03-18
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -561,13 +561,7 @@ keymap "M-C-o" REDO
 keymap ":j" SELECT_MENU
 
 keymap "H" PREV
-#keymap "^[^[[D" PREV
-
 keymap "L" NEXT
-#keymap "^[^[[C" NEXT
-
-keymap ":B" COMMAND "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
-keymap ":F" COMMAND "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
 
 keymap ":H" HISTORY
 
@@ -600,10 +594,6 @@ keymap ":x" EXIT
 
 keymap "ZZ" QUIT
 keymap ":q" QUIT
-
-### The current directory ###
-
-keymap ":P" EXEC_SHELL pwd
 
 ## Buffer ##
 
@@ -720,7 +710,6 @@ keymap ":TAB" MENU Commands
 ### Setting options ###
 
 keymap ":s" SET_OPTION
-keymap ":S" SETENV
 
 ### Setting w3m options ###
 
@@ -1058,6 +1047,8 @@ keymap ":v" VERSION
 
 keymap ":h" HELP
 
+keymap ":l" MENU LCommands
+
 ### Uncategorized ###
 
 keymap "i" EDIT_SCREEN
@@ -1101,3 +1092,5 @@ keymap "g:" GOTO_LINE
 
 keymap "C-z" SUSPEND
 keymap "gM" COMMAND "GOTO file:///cgi-bin/w3mplus?action=moveColmun&percent=50; CENTER_H"
+keymap ":L" SETENV
+keymap ":S" EXEC_SHELL "${SHELL}"

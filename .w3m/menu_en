@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.8.0
-##   date - 2020-03-11
+##   version - 1.9.0
+##   date - 2020-03-18
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -330,37 +330,44 @@ menu ExtendedHints
 end
 
 menu Commands
-	func  "!  Run a command" EXEC_SHELL "!"
+	func  "!  Run a shell command" EXEC_SHELL "!"
 	func  ":  Run a w3m command" COMMAND ":"
 	func  "b  Open bookmarks" VIEW_BOOKMARK "b"
-	func  "B  Go 30 back in the browser history" COMMAND "B" "PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV; PREV"
 	func  "c  Change cookie permissions for sites" COOKIE "c"
-	func  "D  Apply the autocommands matching the specified URL pattern" GOTO "D" "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
+	popup "C  Load a color scheme" MenuStyle "C"
 	func  "d  Display the downloads list" DOWNLOAD_LIST "d"
+	func  "D  Apply the autocommands matching the specified URL pattern" GOTO "D" "file:///cgi-bin/w3mplus?action=autoCommand&call=manual"
 	func  "e  Open w3m menu" MENU "e" Menu
 	func  "f  Toggle rendering HTML frames" FRAME "f"
-	func  "F  Go 30 forward in the browser history" COMMAND "F" "NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT; NEXT"
 	func  "h  Open the introductory help page" HELP "h"
 	func  "H  Show recently visited URLs" HISTORY "H"
 	func  "j  Show jumplist" SELECT_MENU "j"
+	popup "l  Show list commands" LCommands "l"
+	func  "L  Set environment variable" SETENV "L"
 	func  "m  Show the marks" GOTO "m" "file:///cgi-bin/w3mplus?action=marks"
 	func  "M  Display previously shown messages" MSGS "M"
 	func  "n  Map a key sequence in Normal mode" DEFINE_KEY "n"
 	func  "o  Open URL in the current tab" COMMAND "o" "SET_OPTION default_url=0; GOTO"
 	func  "p  Show w3m preferences" OPTIONS "p"
-	func  "P  Print the current directory name" EXEC_SHELL "P" pwd
 	func  "q  Quit w3m" QUIT "q"
 	func  "Q  Show the specified QuickMarks" GOTO "Q" "file:///cgi-bin/w3mplus?action=qmarks"
 	func  "r  Execute shell command and display output" PIPE_SHELL "r"
-	func  "s  Set local option" SET_OPTION "s"
-	func  "S  Set global option" SETENV "S"
+	func  "s  Set w3m option" SET_OPTION "s"
+	func  "S  Start a shell" EXEC_SHELL "S" "${SHELL}"
 	func  "t  Open URL in a new tab" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
 	func  "u  Recently closed tabs" GOTO "u" "file:///cgi-bin/w3mplus?action=undoTabs"
+	popup "U  Change the user agent" MenuUserAgent "U"
 	func  "v  Show version information" VERSION "v"
 	func  "w  Save current document to disk" DOWNLOAD "w"
 	func  "W  Print current document" PRINT "W"
 	func  "x  Quit w3m" EXIT "x"
-	popup "z  Set zoom value of current web page" Zoom "z"
+	popup "z  Set zoom value" Zoom "z"
+end
+
+menu LCommands
+	popup "c  List all Ex commands along with their short descriptions" Commands "c"
+	func  "K  List all mappings along with their short descriptions" HELP "k"
+	func  "o  List all options along with their short descriptions" PIPE_SHELL "o" "w3m -show-option"
 end
 
 menu Zoom
