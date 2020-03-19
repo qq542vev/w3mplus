@@ -1283,7 +1283,7 @@ menu ToggleOption
 	func "n  行番号を(表示 / 非表示)" SET_OPTION "n" "show_lnum=toggle"
 	func "p  ネットワークプロキシを(使用 / 不使用)" SET_OPTION "p" "use_proxy=toggle"
 	func "r  HTTP リファラを(送信 / 非送信)" SET_OPTION "r" "no_referer=toggle"
-	func "u  ページの URL をリンクに(変換 / 非変換)" SET_OPTION "u" "mark_all_pages=toggle"
+	func "u  ページ内の URL をリンクに(変換 / 非変換)" SET_OPTION "u" "mark_all_pages=toggle"
 	func "w  テキストファイルの行折り返しを(有効/ 無効)" COMMAND "w" "SET_OPTION fold_line=toggle; RESHAPE"
 	func "W  折り返し検索を(有効 / 無効)" WRAP_TOGGLE "W"
 end
