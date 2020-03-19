@@ -1275,7 +1275,7 @@ menu ToggleOption
 	func "b  table の border 値を(解釈 / 無視)" COMMAND "b" "SET_OPTION display_borders=toggle; RESHAPE"
 	func "c  HTTP cookie を(使用 / 不使用)" SET_OPTION "c" "use_cookie=toggle"
 	func "f  HTML フレームを(自動 / 手動)で表示" SET_OPTION "f" "frame=toggle"
-	func "h  履歴機能を(有効 / 無効)" SET_OPTION "h" "use_history=toggle"
+	func "h  履歴機能を(有効 / 無効)" SET_OPTION "h" "save_hist=toggle"
 	func "i  インライン画像を(表示 / 非表示)" SET_OPTION "i" "display_image=toggle"
 	func "I  大文字小文字を(区別して / 同一で)検索" SET_OPTION "I" "ignorecase_search=toggle"
 	func "m  マウス機能を(有効 / 無効)" MOUSE_TOGGLE "m"

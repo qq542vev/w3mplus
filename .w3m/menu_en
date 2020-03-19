@@ -1274,7 +1274,7 @@ menu ToggleOption
 	func "b  (Interpret / Ignore) the table border value" COMMAND "b" "SET_OPTION display_borders=toggle; RESHAPE"
 	func "c  (Do not) Use HTTP cookie" SET_OPTION "c" "use_cookie=toggle"
 	func "f  Display HTML frame (automatically / manually)" SET_OPTION "f" "frame=toggle"
-	func "h  (Enable / Disable) history function" SET_OPTION "h" "use_history=toggle"
+	func "h  (Enable / Disable) history function" SET_OPTION "h" "save_hist=toggle"
 	func "i  (Do not) Show inline images" SET_OPTION "i" "display_image=toggle"
 	func "I  Search case (sensitive / insensitive)" SET_OPTION "I" "ignorecase_search=toggle"
 	func "m  (Enable / Disable) mouse function" MOUSE_TOGGLE "m"
