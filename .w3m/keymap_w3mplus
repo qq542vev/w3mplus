@@ -5,7 +5,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.8.0
+##   version - 1.9.0
 ##   date - 2020-03-18
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -1057,6 +1057,9 @@ keymap "^[[2~" EDIT_SCREEN
 keymap "^[[L" EDIT_SCREEN
 
 # Vim Key Map #
+
+keymap "E" NEXT_WORD
+keymap "B" PREV_WORD
 
 keymap "zt" GOTO "file:///cgi-bin/w3mplus?action=zMove&move=t"
 keymap "zb" GOTO "file:///cgi-bin/w3mplus?action=zMove&move=b"
