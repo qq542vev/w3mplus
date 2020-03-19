@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.7.0
-##   date - 2020-03-18
+##   version - 1.8.0
+##   date - 2020-03-19
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -1272,18 +1272,18 @@ menu rot13-9Line
 end
 
 menu ToggleOption
-	func "b  Show table border" COMMAND "b" "SET_OPTION display_borders=toggle; RESHAPE"
-	func "c  Enable HTTP cookie" SET_OPTION "c" "use_cookie=toggle"
-	func "f  Enable HTML frame" SET_OPTION "f" "frame=toggle"
-	func "h  Enable history" SET_OPTION "h" "use_history=toggle"
-	func "i  Show inline images" SET_OPTION "i" "display_image=toggle"
-	func "I  Case search" SET_OPTION "I" "ignorecase_search=toggle"
-	func "m  Enable mouse" MOUSE_TOGGLE "m"
-	func "M  Enable color" SET_OPTION "M" "color=toggle"
-	func "n  Show line numbers" SET_OPTION "n" "show_lnum=toggle"
-	func "p  Enable network proxy" SET_OPTION "p" "use_proxy=toggle"
-	func "r  Send HTTP referer" SET_OPTION "r" "no_referer=toggle"
-	func "u  Convert URL to link" SET_OPTION "u" "mark_all_pages=toggle"
-	func "w  Line wrapping in text file" COMMAND "w" "SET_OPTION fold_line=toggle; RESHAPE"
-	func "W  Wrap in search" WRAP_TOGGLE "W"
+	func "b  table の border 値を(解釈 / 無視)" COMMAND "b" "SET_OPTION display_borders=toggle; RESHAPE"
+	func "c  HTTP cookie を(使用 / 不使用)" SET_OPTION "c" "use_cookie=toggle"
+	func "f  HTML フレームを(自動 / 手動)で表示" SET_OPTION "f" "frame=toggle"
+	func "h  履歴機能を(有効 / 無効)" SET_OPTION "h" "use_history=toggle"
+	func "i  インライン画像を(表示 / 非表示)" SET_OPTION "i" "display_image=toggle"
+	func "I  大文字小文字を(区別して / 同一で)検索" SET_OPTION "I" "ignorecase_search=toggle"
+	func "m  マウス機能を(有効 / 無効)" MOUSE_TOGGLE "m"
+	func "M  (モノクローム / カラー)で表示" SET_OPTION "M" "color=toggle"
+	func "n  行番号を(表示 / 非表示)" SET_OPTION "n" "show_lnum=toggle"
+	func "p  ネットワークプロキシを(使用 / 不使用)" SET_OPTION "p" "use_proxy=toggle"
+	func "r  HTTP リファラを(送信 / 非送信)" SET_OPTION "r" "no_referer=toggle"
+	func "u  ページの URL をリンクに(変換 / 非変換)" SET_OPTION "u" "mark_all_pages=toggle"
+	func "w  テキストファイルの行折り返しを(有効/ 無効)" COMMAND "w" "SET_OPTION fold_line=toggle; RESHAPE"
+	func "W  折り返し検索を(有効 / 無効)" WRAP_TOGGLE "W"
 end
