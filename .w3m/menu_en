@@ -1278,7 +1278,7 @@ menu ToggleOption
 	func "i  Show inline images" SET_OPTION "i" "display_image=toggle"
 	func "I  Case search" SET_OPTION "I" "ignorecase_search=toggle"
 	func "m  Enable mouse" MOUSE_TOGGLE "m"
-	func "M  Enable Color" SET_OPTION "M" "color=toggle"
+	func "M  Enable color" SET_OPTION "M" "color=toggle"
 	func "n  Show line numbers" SET_OPTION "n" "show_lnum=toggle"
 	func "p  Enable network proxy" SET_OPTION "p" "use_proxy=toggle"
 	func "r  Send HTTP referer" SET_OPTION "r" "no_referer=toggle"
