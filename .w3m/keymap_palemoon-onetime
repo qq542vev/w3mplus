@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-03-17
+##   version - 1.0.1
+##   date - 2020-03-20
 ##   since - 2020-03-17
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -454,7 +454,7 @@ keymap "M-C-w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; QUIT"
 keymap "C-q" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXIT"
 keymap "C-t" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; TAB_GOTO about:blank"
 keymap "C-n" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXTERN \"w3m ${WWW_HOME-about:home} #\""
-keymap "M-C-p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXTERN \"w3m-private #\""
+keymap "M-C-p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXTERN \"w3m-private 'about:private' #\""
 keymap "C-j" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
 keymap "C-m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
 keymap "M-C-t" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO file:///cgi-bin/w3mplus?action=undoTab"

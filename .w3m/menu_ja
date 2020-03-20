@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.8.0
-##   date - 2020-03-19
+##   version - 1.8.1
+##   date - 2020-03-20
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -161,7 +161,7 @@ end
 menu MenuFile
 	func "新しいタブ                     (t)" NEW_TAB "Tt"
 	func "新しいウィンドウ               (n)" EXTERN "Nn" "w3m ${WWW_HOME-about:home} #"
-	func "新しいプライベートウィンドウ   (w)" EXTERN "Ww" "w3m-private about:home #"
+	func "新しいプライベートウィンドウ   (w)" EXTERN "Ww" "w3m-private 'about:private' #"
 	func "ファイルを開く...              (o)" LOAD "Oo"
 	nop  "----------------------------------"
 	func "名前を付けてページを保存...    (a)" DOWNLOAD "Aa"

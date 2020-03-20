@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.2
-##   date - 2020-03-17
+##   version - 1.0.3
+##   date - 2020-03-20
 ##   since - 2020-03-17
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -455,7 +455,7 @@ keymap "M-C-w" QUIT
 keymap "C-q" EXIT
 keymap "C-t" TAB_GOTO "about:blank"
 keymap "C-n" EXTERN "w3m ${WWW_HOME-about:home} #"
-keymap "M-C-p" EXTERN "w3m-private #"
+keymap "M-C-p" EXTERN "w3m-private 'about:private' #"
 keymap "C-j" GOTO_LINK
 keymap "C-m" GOTO_LINK
 keymap "M-C-t" GOTO "file:///cgi-bin/w3mplus?action=undoTab"

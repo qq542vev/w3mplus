@@ -5,7 +5,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.10.0
+##   version - 1.10.1
 ##   date - 2020-03-20
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -160,7 +160,7 @@ end
 menu MenuFile
 	func "New Tab            (t)" NEW_TAB "Tt"
 	func "New Window         (n)" EXTERN "Nn" "w3m ${WWW_HOME-about:home} #"
-	func "New Private Window (w)" EXTERN "Ww" "w3m-private about:home #"
+	func "New Private Window (w)" EXTERN "Ww" "w3m-private 'about:private' #"
 	func "Open File...       (o)" LOAD "Oo"
 	nop  "----------------------"
 	func "Save Page As...    (a)" DOWNLOAD "Aa"

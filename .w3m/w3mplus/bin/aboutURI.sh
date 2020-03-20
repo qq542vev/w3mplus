@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2020-03-14
+##   version - 1.3.0
+##   date - 2020-03-20
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -256,6 +256,19 @@ case "${1-about:about}" in
 		;;
 	'about:permissions')
 		printRedirect.sh "file://$(printf '%s' "${HOME}" | urlencode | fsed '%2F' '/')/.w3m/siteconf"
+		;;
+	'about:private')
+		printHtml.sh --title 'Private Browsing' <<- 'EOF'
+			<h1>Private Browsing</h1>
+
+			<p>w3m won't remember any history for this window.</p>
+
+			<p>In a Private Browsing window, w3m won't keep any browser history, search history, download history, web form history, cookies, or temporary internet files. However, files you download and bookmarks you make will be kept.</p>
+
+			<p>To stop Private Browsing, you can close this window.</p>
+
+			<p>While this computer won't have a record of your browsing history, your internet service provider or employer can still track the pages you visit.</p>
+		EOF
 		;;
 	*)
 		printHtml.sh --title 'Problem loading page' --status-code '400 Bad Request' <<- 'EOF'
