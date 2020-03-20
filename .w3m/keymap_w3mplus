@@ -801,8 +801,8 @@ keymap ";TAB" MENU ExtendedHints
 
 ### Bypassing Pentadactyl ###
 
-keymap "M-b" SET_OPTION "keymap_file=keymap_w3m-onetime"
-keymap "M-C-b" SET_OPTION "keymap_file=keymap_w3m"
+keymap "M-b" SET_OPTION "keymap_file=keymap_builtin-onetime"
+keymap "M-C-b" SET_OPTION "keymap_file=keymap_builtin"
 keymap "C-v" SET_OPTION "keymap_file=keymap_palemoon-onetime"
 keymap "M-C-v" SET_OPTION "keymap_file=keymap_palemoon"
 
