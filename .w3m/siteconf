@@ -5,7 +5,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
+##   version - 1.0.1
 ##   date - 2020-03-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -19,66 +19,87 @@
 
 url /^bing:/
 substitute_url "https://www.bing.com/search?q="
+no_referer_from on
 
 url /^bing-image:/
 substitute_url "https://www.bing.com/images/search?q=
+no_referer_from on
 
 url /^bing-video:/
 substitute_url "https://www.bing.com/videos/search?q=
+no_referer_from on
 
 url /^bing-news:/
 substitute_url "https://www.bing.com/news/search?q="
+no_referer_from on
 
 url /^duckduckgo:/
 substitute_url "https://duckduckgo.com/?q="
+no_referer_from on
 
 url /^github:/
 substitute_url "https://github.com/search?q="
+no_referer_from on
 
 url /^google:/
 substitute_url "https://www.google.com/search?ie=UTF-8&oe=UTF-8&q="
+no_referer_from on
 
 url /^google-image:/
 substitute_url "https://www.google.com/search?tbm=isch&ie=UTF-8&oe=UTF-8&q="
+no_referer_from on
 
 url /^google-video:/
 substitute_url "https://www.google.com/search?tbm=vid&ie=UTF-8&oe=UTF-8&q="
+no_referer_from on
 
 url /^google-news:/
 substitute_url "https://news.google.com/search?q="
+no_referer_from on
 
 url /^pkgs.org:/
 substitute_url "https://pkgs.org/download/"
+no_referer_from on
 
 url /^startpage:/
 substitute_url "https://www.startpage.com/do/search?query="
+no_referer_from on
 
 url /^twitter:/
 substitute_url "https://twitter.com/search?q="
+no_referer_from on
 
 url m@^urn:isbn:@i
 substitute_url "https://www.worldcat.org/search?q=bn%3A"
+no_referer_from on
 
 url m@^urn:issn:@i
 substitute_url "https://www.worldcat.org/search?q=n2%3A"
+no_referer_from on
 
 url /^wikipedia-en:/
 substitute_url "https://en.wikipedia.org/w/index.php?search="
+no_referer_from on
 
 url /^wikipedia-ja:/
 substitute_url "https://ja.wikipedia.org/w/index.php?search="
+no_referer_from on
 
 url /^yandex:/
 substitute_url "https://yandex.com/search/?text="
+no_referer_from on
 
 url /^yandex-image:/
 substitute_url "https://yandex.com/images/search?text="
+no_referer_from on
 
 url /^yandex-video:/
 substitute_url "https://yandex.com/video/search?text="
+no_referer_from on
 
 url /^youtube:/
 substitute_url "https://www.youtube.com/results?search_query="
+no_referer_from on
 
 url /^view-source:/
 substitute_url "file:///cgi-bin/w3mplus?redirect=2&action=uri&subaction=viewSource&uri="
