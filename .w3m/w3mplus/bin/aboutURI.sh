@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.1
-##   date - 2020-03-20
+##   version - 1.4.0
+##   date - 2020-03-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -69,6 +69,7 @@ case "${1-about:about}" in
 					<li><a href="about:newtab">about:newtab</a></li>
 					<li><a href="about:permissions">about:permissions</a></li>
 					<li><a href="about:private">about:private</a></li>
+					<li><a href="about:preferences">about:preferences</a></li>
 				</ul>
 			</section>
 		EOF
@@ -144,7 +145,7 @@ case "${1-about:about}" in
 		EOF
 		;;
 	'about:config')
-		httpResponseW3mBack.sh 'W3m-control: OPTIONS'
+		printRedirect.sh "file://$(printf '%s' "${W3MPLUS_W3M_CONFIG}" | urlencode | fsed '%2F' '/')"
 		;;
 	'about:cookie')
 		httpResponseW3mBack.sh 'W3m-control: COOKIE'
@@ -257,6 +258,9 @@ case "${1-about:about}" in
 		;;
 	'about:permissions')
 		printRedirect.sh "file://$(printf '%s' "${HOME}" | urlencode | fsed '%2F' '/')/.w3m/siteconf"
+		;;
+	'about:preferences')
+		httpResponseW3mBack.sh 'W3m-control: OPTIONS'
 		;;
 	'about:private')
 		printHtml.sh --title 'Private Browsing' <<- 'EOF'
