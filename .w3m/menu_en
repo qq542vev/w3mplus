@@ -247,7 +247,7 @@ menu MenuTools
 	func  "Cookies        (c)" COOKIE "Cc"
 	func  "Permissions    (m)" GOTO "Mm" "about:permissions"
 	nop   "------------------"
-	popup "Advanced Tools (a)" MenuAdvanced "Aa"
+	popup "Web Developer  (w)" MenuWebDeveloper "Ww"
 	func  "Page Info      (i)" INFO "Ii"
 	nop   "------------------"
 	popup "Cookie Manager (k)" MenuCookieManager "Kk"
@@ -255,7 +255,7 @@ menu MenuTools
 	func  "Preferences    (p)" OPTIONS "Pp"
 end
 
-menu MenuAdvanced
+menu MenuWebDeveloper
 	func "Web Console       (w)" PIPE_BUF "Ww"
 	func "Network           (n)" LOAD "Nn" "~/.w3m/request.log"
 	nop  "---------------------"

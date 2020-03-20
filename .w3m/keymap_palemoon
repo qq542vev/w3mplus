@@ -483,7 +483,7 @@ keymap "M-C-b" BOOKMARK
 
 keymap "M-C-y" DOWNLOAD_LIST
 # F12 key
-keymap "^[[24~" MENU MenuAdvanced
+keymap "^[[24~" MENU MenuWebDeveloper
 keymap "M-C-k" PIPE_BUF
 keymap "M-C-q" LOAD "Nn" "~/.w3m/request.log"
 # F14 key

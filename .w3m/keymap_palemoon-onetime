@@ -482,7 +482,7 @@ keymap "M-C-b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BOOKMARK"
 
 keymap "M-C-y" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DOWNLOAD_LIST"
 # F12 key
-keymap "^[[24~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuAdvanced"
+keymap "^[[24~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuWebDeveloper"
 keymap "M-C-k" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PIPE_BUF"
 keymap "M-C-q" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LOAD ~/.w3m/request.log"
 # F14 key

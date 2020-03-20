@@ -244,19 +244,19 @@ menu MenuBookmarks
 end
 
 menu MenuTools
-	func  "ダウンロード     (d)" DOWNLOAD_LIST "Dd"
-	func  "Cookies          (c)" COOKIE "Cc"
-	func  "サイト別設定     (m)" GOTO "Mm" "about:permissions"
-	nop   "--------------------"
-	popup "高度な機能       (a)" MenuAdvanced "Aa"
-	func  "ページの情報     (i)" INFO "Ii"
-	nop   "--------------------"
-	popup "Cookie の管理    (k)" MenuCookieManager "Kk"
-	popup "User Agent       (u)" MenuUserAgent "Uu"
-	func  "設定             (p)" OPTIONS "Pp"
+	func  "ダウンロード  (d)" DOWNLOAD_LIST "Dd"
+	func  "Cookies       (c)" COOKIE "Cc"
+	func  "サイト別設定  (m)" GOTO "Mm" "about:permissions"
+	nop   "-----------------"
+	popup "ウェブ開発    (w)" MenuWebDeveloper "Ww"
+	func  "ページの情報  (i)" INFO "Ii"
+	nop   "-----------------"
+	popup "Cookie の管理 (k)" MenuCookieManager "Kk"
+	popup "User Agent    (u)" MenuUserAgent "Uu"
+	func  "設定          (p)" OPTIONS "Pp"
 end
 
-menu MenuAdvanced
+menu MenuWebDeveloper
 	func "ウェブコンソール (w)" PIPE_BUF "Ww"
 	func "ネットワーク     (n)" LOAD "Nn" "~/.w3m/request.log"
 	nop  "--------------------"
