@@ -30,7 +30,7 @@ ext_image_viewer 1
 image_scale 100
 imgdisplay w3mimgdisplay
 image_map_list 1
-fold_line 0
+fold_line 1
 show_lnum 0
 show_srch_str 1
 label_topline 1

@@ -1,17 +1,17 @@
-## File: keymap_w3m-onetime
+## File: keymap_lynx
 ##
-## Default w3m keymap(one time).
+## Lynx like keymap (one time).
 ##
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.2
-##   date - 2020-03-17
-##   since - 2020-03-06
+##   version - 1.0.0
+##   date - 2020-03-20
+##   since - 2020-03-20
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
-##   source - keymap.default <https://github.com/tats/w3m/blob/master/doc/keymap.default>
+##   source - keymap.lynx <https://github.com/tats/w3m/blob/master/doc/keymap.lynx>
 ##
 ## See Also:
 ##
@@ -382,13 +382,13 @@ keymap "^[[E" NULL
 keymap "^[[L" NULL
 keymap "^[[Z" NULL
 
-# Defining a w3m default keymap #
+# Defining a Lynx like keymap #
 
 keymap "C-@" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MARK"
-keymap "C-a" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LINE_BEGIN"
-keymap "C-b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_LEFT"
-keymap "C-e" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LINE_END"
-keymap "C-f" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_RIGHT"
+keymap "C-a" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
+keymap "C-b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BACK"
+keymap "C-e" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
+keymap "C-f" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
 keymap "C-g" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LINE_INFO"
 keymap "C-h" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; HISTORY"
 keymap "TAB" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_LINK"
@@ -396,15 +396,15 @@ keymap "C-j" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
 keymap "C-k" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; COOKIE"
 keymap "C-l" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; REDRAW"
 keymap "C-m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
-keymap "C-n" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_DOWN"
-keymap "C-p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_UP"
+keymap "C-n" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_LINK"
+keymap "C-p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
 keymap "C-q" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; CLOSE_TAB"
-keymap "C-r" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; ISEARCH_BACK"
-keymap "C-s" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; ISEARCH"
+keymap "C-r" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; RELOAD"
+keymap "C-s" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH"
 keymap "C-t" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; TAB_LINK"
 keymap "C-u" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
 keymap "C-v" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_PAGE"
-keymap "C-w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; WRAP_TOGGLE"
+keymap "C-w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; REDRAW"
 keymap "C-z" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SUSPEND"
 
 keymap "SPC" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_PAGE"
@@ -424,20 +424,21 @@ keymap ";" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MARK_WORD"
 keymap "<" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SHIFT_LEFT"
 keymap "=" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; INFO"
 keymap ">" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SHIFT_RIGHT"
-keymap "?" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH_BACK"
+keymap "?" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; HELP"
 keymap "@" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; READ_SHELL"
 keymap "B" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BACK"
 keymap "D" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DOWNLOAD_LIST"
 keymap "E" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EDIT"
 keymap "F" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; FRAME"
-keymap "G" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
+keymap "G" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINE"
 keymap "H" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; HELP"
 keymap "I" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; VIEW_IMAGE"
 keymap "J" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; UP"
 keymap "K" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DOWN"
 keymap "L" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LIST"
 keymap "M" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXTERN"
-keymap "N" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH_PREV"
+keymap "N" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_MARK"
+keymap "P" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_MARK"
 keymap "Q" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXIT"
 keymap "R" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; RELOAD"
 keymap "S" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_SCREEN"
@@ -447,12 +448,14 @@ keymap "V" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LOAD"
 keymap "W" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_WORD"
 keymap "Z" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; CENTER_H"
 keymap "[" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LINK_BEGIN"
+keymap "\\" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SOURCE"
 keymap "]" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LINK_END"
 keymap "\^" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LINE_BEGIN"
-keymap "a" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_LINK"
+keymap "a" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; ADD_BOOKMARK"
 keymap "b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
 keymap "c" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PEEK"
-keymap "g" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
+keymap "d" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_LINK"
+keymap "g" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO"
 keymap "h" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_LEFT"
 keymap "i" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PEEK_IMG"
 keymap "j" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_DOWN"
@@ -461,11 +464,12 @@ keymap "l" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_RIGHT"
 keymap "m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOUSE_TOGGLE"
 keymap "n" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SEARCH_NEXT"
 keymap "o" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; OPTIONS"
+keymap "p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_SCREEN"
 keymap "q" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; QUIT"
 keymap "r" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; VERSION"
 keymap "s" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SELECT_MENU"
 keymap "u" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PEEK_LINK"
-keymap "v" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; VIEW"
+keymap "v" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BOOKMARK"
 keymap "w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_WORD"
 keymap "z" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; CENTER_V"
 keymap "{" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_TAB"
@@ -499,14 +503,13 @@ keymap "M-u" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_RELATIVE"
 keymap "M-v" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
 keymap "M-w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DICT_WORD"
 
-keymap "UP" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_UP"
-keymap "DOWN" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_DOWN"
-keymap "RIGHT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_RIGHT"
-keymap "LEFT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_LEFT"
+keymap "UP" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
+keymap "DOWN" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_LINK"
+keymap "RIGHT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
+keymap "LEFT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BACK"
 
 keymap "M-[E" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
 keymap "M-[L" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
-keymap "M-[Z" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
 
 keymap "M-[1~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
 keymap "M-[2~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"

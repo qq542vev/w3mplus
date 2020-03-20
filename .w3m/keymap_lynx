@@ -1,17 +1,17 @@
-## File: keymap_w3m
+## File: keymap_lynx
 ##
-## Default w3m keymap.
+## Lynx like keymap.
 ##
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.2
-##   date - 2020-03-17
-##   since - 2020-03-06
+##   version - 1.0.0
+##   date - 2020-03-20
+##   since - 2020-03-20
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
-##   source - keymap.default <https://github.com/tats/w3m/blob/master/doc/keymap.default>
+##   source - keymap.lynx <https://github.com/tats/w3m/blob/master/doc/keymap.lynx>
 ##
 ## See Also:
 ##
@@ -382,13 +382,13 @@ keymap "^[[E" NULL
 keymap "^[[L" NULL
 keymap "^[[Z" NULL
 
-# Defining a w3m default keymap #
+# Defining a Lynx like keymap #
 
 keymap "C-@" MARK
-keymap "C-a" LINE_BEGIN
-keymap "C-b" MOVE_LEFT
-keymap "C-e" LINE_END
-keymap "C-f" MOVE_RIGHT
+keymap "C-a" BEGIN
+keymap "C-b" BACK
+keymap "C-e" END
+keymap "C-f" GOTO_LINK
 keymap "C-g" LINE_INFO
 keymap "C-h" HISTORY
 keymap "TAB" NEXT_LINK
@@ -396,15 +396,15 @@ keymap "C-j" GOTO_LINK
 keymap "C-k" COOKIE
 keymap "C-l" REDRAW
 keymap "C-m" GOTO_LINK
-keymap "C-n" MOVE_DOWN
-keymap "C-p" MOVE_UP
+keymap "C-n" NEXT_LINK
+keymap "C-p" PREV_LINK
 keymap "C-q" CLOSE_TAB
-keymap "C-r" ISEARCH_BACK
-keymap "C-s" ISEARCH
+keymap "C-r" RELOAD
+keymap "C-s" SEARCH
 keymap "C-t" TAB_LINK
 keymap "C-u" PREV_LINK
 keymap "C-v" NEXT_PAGE
-keymap "C-w" WRAP_TOGGLE
+keymap "C-w" REDRAW
 keymap "C-z" SUSPEND
 
 keymap "SPC" NEXT_PAGE
@@ -424,20 +424,21 @@ keymap ";" MARK_WORD
 keymap "<" SHIFT_LEFT
 keymap "=" INFO
 keymap ">" SHIFT_RIGHT
-keymap "?" SEARCH_BACK
+keymap "?" HELP
 keymap "@" READ_SHELL
 keymap "B" BACK
 keymap "D" DOWNLOAD_LIST
 keymap "E" EDIT
 keymap "F" FRAME
-keymap "G" END
+keymap "G" GOTO_LINE
 keymap "H" HELP
 keymap "I" VIEW_IMAGE
 keymap "J" UP
 keymap "K" DOWN
 keymap "L" LIST
 keymap "M" EXTERN
-keymap "N" SEARCH_PREV
+keymap "N" NEXT_MARK
+keymap "P" PREV_MARK
 keymap "Q" EXIT
 keymap "R" RELOAD
 keymap "S" SAVE_SCREEN
@@ -447,12 +448,14 @@ keymap "V" LOAD
 keymap "W" PREV_WORD
 keymap "Z" CENTER_H
 keymap "[" LINK_BEGIN
+keymap "\\" SOURCE
 keymap "]" LINK_END
 keymap "\^" LINE_BEGIN
-keymap "a" SAVE_LINK
+keymap "a" ADD_BOOKMARK
 keymap "b" PREV_PAGE
 keymap "c" PEEK
-keymap "g" BEGIN
+keymap "d" SAVE_LINK
+keymap "g" GOTO
 keymap "h" MOVE_LEFT
 keymap "i" PEEK_IMG
 keymap "j" MOVE_DOWN
@@ -461,11 +464,12 @@ keymap "l" MOVE_RIGHT
 keymap "m" MOUSE_TOGGLE
 keymap "n" SEARCH_NEXT
 keymap "o" OPTIONS
+keymap "p" SAVE_SCREEN
 keymap "q" QUIT
 keymap "r" VERSION
 keymap "s" SELECT_MENU
 keymap "u" PEEK_LINK
-keymap "v" VIEW
+keymap "v" BOOKMARK
 keymap "w" NEXT_WORD
 keymap "z" CENTER_V
 keymap "{" PREV_TAB
@@ -499,14 +503,13 @@ keymap "M-u" GOTO_RELATIVE
 keymap "M-v" PREV_PAGE
 keymap "M-w" DICT_WORD
 
-keymap "UP" MOVE_UP
-keymap "DOWN" MOVE_DOWN
-keymap "RIGHT" MOVE_RIGHT
-keymap "LEFT" MOVE_LEFT
+keymap "UP" PREV_LINK
+keymap "DOWN" NEXT_LINK
+keymap "RIGHT" GOTO_LINK
+keymap "LEFT" BACK
 
 keymap "M-[E" MENU
 keymap "M-[L" MENU
-keymap "M-[Z" PREV_LINK
 
 keymap "M-[1~" BEGIN
 keymap "M-[2~" MENU
