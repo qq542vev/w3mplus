@@ -20,7 +20,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.0
+##   version - 1.3.1
 ##   date - 2020-03-20
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -68,6 +68,7 @@ case "${1-about:about}" in
 					<li><a href="about:message">about:message</a></li>
 					<li><a href="about:newtab">about:newtab</a></li>
 					<li><a href="about:permissions">about:permissions</a></li>
+					<li><a href="about:private">about:private</a></li>
 				</ul>
 			</section>
 		EOF
