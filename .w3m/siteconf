@@ -6,7 +6,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-02-20
+##   date - 2020-03-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -15,6 +15,7 @@
 ##
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * README.siteconf - <https://github.com/tats/w3m/blob/master/doc-jp/README.siteconf>
 
 url /^bing:/
 substitute_url "https://www.bing.com/search?q="
