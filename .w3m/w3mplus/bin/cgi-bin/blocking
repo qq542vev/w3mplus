@@ -1,39 +1,53 @@
 #!/usr/bin/env sh
 
+## File: blocking
 ##
-# Display blocked information.
-#
-# @author qq542vev
-# @version 1.0.0
-# @date 2019-11-08
-# @licence https://creativecommons.org/licenses/by/4.0/
+## Shows the malware protection page.
 ##
-
-#echo W3m-control: BACK
-echo W3m-control: EXEC_SHELL echo "UTF-8''%20" ';' LANG=C '=?UTF-8?B?ZGF0ZQ==?='
-#echo W3m-control: EXEC_SHELL date '&&' LANG=C date
-echo
-echo bbb
-exit
-echo W3m-control: EXEC_SHELL =?UTF-8?B?ZGF0ZQ==?= ; LANG=C date
+## Usage:
+##
+##   (start code)
+##   QUERY_STRING='type={malware|phishing|spam}&source={url}&url={url}' bloking
+##   (end)
+##
+## Options:
+##
+## Exit Status:
+##
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.1.0
+##   date - 2020-03-21
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * about:blocked - <about:blocked>
 
 # 初期化
 set -efu
-umask 0022
+umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
 
+# initファイルの読み込み
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-: ${W3MPLUS_PATH:="${HOME}/.w3m/w3mplus"}
+eval "$(printf '%s' "${QUERY_STRING%%url=*}" | parsequery --prefix 'query_')"
+url="${QUERY_STRING#*url=}"
+escaped=$(printf '%s' "${url}" | htmlescape)
 
-PATH="${W3MPLUS_PATH}/bin${PATH:+:}${PATH:-}"
-
-export 'W3MPLUS_PATH' 'PATH'
-
-url="${QUERY_STRING}"
-
-printHtml.sh 'Blocking' - <<- EOF
-	<p><strong><a href="$(printf '%s' "${url}" | htmlescape)">${url}</a></strong></p>
+printHtml.sh --title 'Blocking' - <<- EOF
+	<p><strong><a href="${escaped}">${escaped}</a></strong></p>
 
 	<p><a href="about:permissions">siteconf</a></p>
 EOF
