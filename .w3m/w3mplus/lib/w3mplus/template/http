@@ -90,7 +90,7 @@ date=$(LANG='C' date -u '+%a, %d %b %Y %H:%M:%S GMT')
 
 printf 'HTTP/1.1 %s\r\n' "${status}"
 
-normalizeHttpMessage.sh <<- EOF
+normalizehttpmsg <<- EOF
 	Date: ${date}
 	Cache-Control: no-cache, no-store, must-revalidate, max-age=0
 	Pragma: no-cache

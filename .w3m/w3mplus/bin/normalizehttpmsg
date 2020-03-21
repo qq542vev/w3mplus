@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: normalizeHttpMessage.sh
+## File: normalizehttpmsg
 ##
 ## Normalize HTTP message.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   normalizeHttpMessage.sh [OPTION]... [FILE]...
+##   normalizehttpmsg [OPTION]... [FILE]...
 ##   (end)
 ##
 ## Options:

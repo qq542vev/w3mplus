@@ -61,7 +61,7 @@ headerFields=$(
 					;;
 			esac
 		done
-	} | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control' --unstructured 'W3m-control'
+	} | sed -e "/^$(printf '\r')*\$/d" | normalizehttpmsg --uncombined 'W3m-control' --unstructured 'W3m-control'
 
 	printf '$'
 )

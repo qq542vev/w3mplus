@@ -20,7 +20,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.4.0
+##   version - 1.4.1
 ##   date - 2020-03-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -182,7 +182,7 @@ case "${1-about:about}" in
 
 			<p align="center">
 				<a accesskey="?" href="about:help">Help</a> -
-				<a accesskey="o" href="about:config">Options</a> -
+				<a accesskey="o" href="about:preferences">Options</a> -
 				<a accesskey="c" href="about:cookie">Cookies</a> -
 				<a accesskey="m" href="about:message">Messages</a>
 			</p>

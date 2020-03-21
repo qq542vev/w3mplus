@@ -167,7 +167,7 @@ messageBody="${messageBody%$}"
 if [ -z "${httpTemplate}" ]; then
 	printf '%s' "${headerFields}" | printRedirect.sh - "data:text/html;base64,$(printf '%s' "${messageBody}" | base64 | tr -d '\n')"
 else
-	headerFields=$(printf 'Content-Type: text/html; charset=UTF-8\n%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizeHttpMessage.sh --uncombined 'W3m-control'; printf '$')
+	headerFields=$(printf 'Content-Type: text/html; charset=UTF-8\n%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizehttpmsg --uncombined 'W3m-control'; printf '$')
 	headerFields="${headerFields%$}"
 
 	"${httpTemplate}" -b "${messageBody}" -h "${headerFields}" -s "${statusCode}"
