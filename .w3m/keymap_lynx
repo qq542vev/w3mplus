@@ -160,7 +160,7 @@ keymap "C-w" NULL
 keymap "C-x" NULL
 keymap "C-y" NULL
 keymap "C-z" NULL
-keymap "C-[" NULL
+#keymap "C-[" NULL
 keymap "C-\\" NULL
 keymap "C-]" NULL
 keymap "C-^" NULL
