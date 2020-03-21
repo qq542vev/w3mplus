@@ -216,7 +216,7 @@ keymap "M-K" NULL
 keymap "M-L" NULL
 keymap "M-M" NULL
 keymap "M-N" NULL
-keymap "M-O" NULL
+#keymap "M-O" NULL
 keymap "M-P" NULL
 keymap "M-Q" NULL
 keymap "M-R" NULL
