@@ -23,8 +23,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-02-20
+##   version - 1.0.2
+##   date - 2020-03-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -120,7 +120,6 @@ for uri in ${@+"${@}"}; do
 		case "${W3MPLUS_REDIRECT_TYPE-0}" in
 			'1')
 				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
-				W3MPLUS_REDIRECT_TYPE='0'
 				;;
 			'2')
 				cat <<- EOF
@@ -128,11 +127,10 @@ for uri in ${@+"${@}"}; do
 					W3m-control: GOTO ${uri}
 					W3m-control: DELETE_PREVBUF
 				EOF
-
-				W3MPLUS_REDIRECT_TYPE='0'
 				;;
 			*)
 				printf 'W3m-control: GOTO %s\n' "${uri}"
+				W3MPLUS_REDIRECT_TYPE='1'
 				;;
 		esac
 	else

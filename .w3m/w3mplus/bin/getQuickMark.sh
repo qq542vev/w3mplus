@@ -27,8 +27,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.1
-##   date - 2020-02-19
+##   version - 1.2.2
+##   date - 2020-03-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -135,7 +135,8 @@ if [ "${#}" -eq 0 ]; then
 	set -- $(cat)
 fi
 
-awkScript=$(cat <<- 'EOF'
+awkScript=$(
+	cat <<- 'EOF'
 	BEGIN {
 		if(!regexpFlag) {
 			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
@@ -146,54 +147,48 @@ awkScript=$(cat <<- 'EOF'
 		jumpListCount = split("line colmun", jumpList, " ")
 
 		data["line"] = moveLine
-		data["line_goto"] = "GOTO_LINE %s"
+		data["line_goto"] = "MOVE_DOWN %s"
 		data["line_end"] = "END"
 		data["line_up"] = "MOVE_UP %s"
+		data["line_center"] = "CENTER_V"
 
 		data["colmun"] = moveColmun
-		data["colmun_goto"] = "COMMAND LINE_BEGIN; MOVE_RIGHT1 %s"
+		data["colmun_goto"] = "MOVE_RIGHT %s"
 		data["colmun_end"] = "LINE_END"
-		data["colmun_up"] = "MOVE_LEFT1 %s"
-	}
-
-	function quoteEscape(string) {
-		gsub(/'+/, "'\"&\"'", string)
-		return "'" string "'"
+		data["colmun_up"] = "MOVE_LEFT %s"
+		data["colmun_center"] = "CENTER_H"
 	}
 
 	function w3mCommand(command) {
-		return sprintf("W3m-control: %s\n", command)
+		printf("W3m-control: %s\n", command)
 	}
 
 	$1 ~ pattern {
 		uri = $2
 		data["line_number"] = $3
 		data["colmun_number"] = $4
-		headerField = ""
+
+		printf("%s\n", uri)
 
 		for(i = 1; i <= jumpListCount; i++) {
 			if(data[jumpList[i]]) {
 				if(0 < data[jumpList[i] "_number"]) {
-					headerField = headerField w3mCommand(sprintf(data[jumpList[i] "_goto"], data[jumpList[i] "_number"]))
+					w3mCommand(sprintf(data[jumpList[i] "_goto"], data[jumpList[i] "_number"] - 1))
 				} else {
-					headerField = headerField w3mCommand(data[jumpList[i] "_end"])
+					w3mCommand(data[jumpList[i] "_end"])
 
 					if(data[jumpList[i] "_number"] < 0) {
-						headerField = headerField w3mCommand(sprintf(data[jumpList[i] "_up"], data[jumpList[i] "_number"] * -1))
+						w3mCommand(sprintf(data[jumpList[i] "_up"], data[jumpList[i] "_number"] * -1))
 					}
 				}
+
+				w3mCommand(data[jumpList[i] "_center"])
 			}
 		}
-
-		printf(" '--header-field' %s %s", quoteEscape(headerField), quoteEscape(uri))
 	}
-EOF
+	EOF
 )
 
-arguments='printRedirect.sh'
-
 for pattern in ${@+"${@}"}; do
-	arguments="${arguments}$(awk -v "pattern=${pattern}" -v "regexpFlag=${regexpFlag}" -v "moveLine=${moveLine}" -v "moveColmun=${moveColmun}" -- "${awkScript}" "${config}")"
-done
-
-eval "${arguments}"
+	awk -v "pattern=${pattern}" -v "regexpFlag=${regexpFlag}" -v "moveLine=${moveLine}" -v "moveColmun=${moveColmun}" -- "${awkScript}" "${config}"
+done | printRedirect.sh -
