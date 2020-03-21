@@ -20,7 +20,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.4.0
+##   version - 1.4.1
 ##   date - 2020-03-09
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -225,9 +225,12 @@ if result=$(
 			fi
 			;;
 		'zoom')
-			zoom.sh ${query_zoom+'--number' "${query_zoom}"}
+			zoom=$(zoom.sh ${query_zoom+'--number' "${query_zoom}"})
 
-			printf 'W3m-control: SET_OPTION image_scale=%d\n' -- "$(awk -- '/^image_scale[	 ]/ { printf("%d", $2); exit }' "${W3MPLUS_W3M_CONFIG}")" | httpResponseW3mBack.sh -
+			httpResponseW3mBack.sh - <<- EOF
+				W3m-control: SET_OPTION image_scale=${zoom}
+				W3m-control: RESHAPE
+			EOF
 			;;
 		'search')
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${query_query-}" | urlencode)"
