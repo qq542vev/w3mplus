@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.4.1
-##   date - 2020-03-09
+##   version - 1.5.0
+##   date - 2020-03-22
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -41,11 +41,6 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-# 終了時に一時ファイルを削除する
-endCall () {
-	rm -f -- ${query_file+"${query_file}"}
-}
-
 expand () (
 	if expr -- "${1}" ':' '${[_A-Za-z][_0-9A-Za-z]*}$' >'/dev/null'; then
 		eval printf '%s' "\"${1}\""
@@ -55,17 +50,60 @@ expand () (
 )
 
 addPrintCache () (
-	tmpPath=$(mktemp -u)
+	tmpFile=$(mktemp -u)
 
-	httpResponseW3mBack.sh "W3m-control: PRINT ${tmpPath}" "W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmpPath}" | urlencode)"
+	httpResponseW3mBack.sh "W3m-control: PRINT ${tmpFile}" "W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmpFile}" | urlencode)"
+)
+
+gotoMove () (
+	awk -v "moveLine=${1-0}" -v "moveColmun=${2-0}" -- '
+		BEGIN {
+			jumpListCount = split("line colmun", jumpList, " ")
+
+			data["line_enable"] = moveLine
+			data["line_goto"] = "COMMAND BEGIN; MOVE_DOWN %s"
+			data["line_end"] = "COMMAND END; MOVE_UP %s"
+			data["line_center"] = "CENTER_V"
+
+			data["colmun_enable"] = moveColmun
+			data["colmun_goto"] = "COMMAND LINE_BEGIN; MOVE_RIGHT %s"
+			data["colmun_end"] = "COMMAND LINE_END; MOVE_LEFT %s"
+			data["colmun_center"] = "CENTER_H"
+		}
+
+		function w3mCommand(command) {
+			printf("W3m-control: %s\n", command)
+		}
+
+		{
+			uri = $1
+			data["line_number"] = $2
+			data["colmun_number"] = $3
+
+			printf("%s\n", uri)
+
+			for(i = 1; i <= jumpListCount; i++) {
+				if(data[jumpList[i] "_enable"]) {
+					if(0 < data[jumpList[i] "_number"]) {
+						w3mCommand(sprintf(data[jumpList[i] "_goto"], data[jumpList[i] "_number"] - 1))
+					} else {
+						w3mCommand(sprintf(data[jumpList[i] "_end"], data[jumpList[i] "_number"] * -1))
+					}
+
+					w3mCommand(data[jumpList[i] "_center"])
+				}
+			}
+		}
+	' | printRedirect.sh -
 )
 
 eval "$(printf '%s' "${QUERY_STRING-}" | parsequery --prefix 'query_')"
 
-if [ -n "${query_redirect-}" ]; then
-	W3MPLUS_REDIRECT_TYPE="${query_redirect}"
-	export 'W3MPLUS_REDIRECT_TYPE'
-fi
+case "${query_redirect-}" in [0-9])
+	export "W3MPLUS_REDIRECT_TYPE=${query_redirect}"
+esac
+
+tmpFile="${query_file-}"
 
 if result=$(
 	case "${query_action-}" in
@@ -82,14 +120,13 @@ if result=$(
 			printf 'W3m-control: CLOSE_TAB' | httpResponseW3mBack.sh -
 			;;
 		'undoTab')
+			export 'W3MPLUS_REDIRECT_TYPE=1'
+
 			case "${query_count-}" in '@'*)
 				query_number="@$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)"
 			esac
 
-			undoTab.sh ${query_number+'--number' "${query_number}"} ${query_count+'--count' "${query_count}"} | awk '{
-				printf("W3m-control: TAB_GOTO %s\n", $1)
-				printf("W3m-control: GOTO_LINE %d\n", $2)
-			}' | httpResponseW3mBack.sh -
+			undoTab.sh ${query_number+'--number' "${query_number}"} ${query_count+'--count' "${query_count}"} | gotoMove '1'
 			;;
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"
@@ -105,7 +142,7 @@ if result=$(
 		'moveColmun')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			if [ -f "${query_file-}" ]; then
+			if [ -f "${tmpFile}" ]; then
 				moveColmun.sh --line "${line}" ${query_percent+'--number' "${query_percent}"} --skip -- "${query_file}"
 			else
 				addPrintCache
@@ -114,7 +151,7 @@ if result=$(
 		'moveParagraph')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			if [ -f "${query_file-}" ]; then
+			if [ -f "${tmpFile}" ]; then
 				moveParagraph.sh --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_file}"
 			else
 				addPrintCache
@@ -123,7 +160,7 @@ if result=$(
 		'movePercent')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			if [ -f "${query_file-}" ]; then
+			if [ -f "${tmpFile}" ]; then
 				movePercent.sh --line "${line}" ${query_percent+'--number' "${query_percent}"} -- "${query_file}"
 			else
 				addPrintCache
@@ -145,7 +182,7 @@ if result=$(
 			printRedirect.sh "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/quickmark"
 			;;
 		'getQuickMark')
-			getQuickMark.sh -- ${query_key+"${query_key}"}
+			getQuickMark.sh -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove
 			;;
 		'setQuickMark')
 			uri=$(expand "${query_uri-\${W3M_URL\}}")
@@ -172,7 +209,7 @@ if result=$(
 			fi
 			;;
 		'getLocalMarkGoto')
-			getQuickMark.sh --config "${W3MPLUS_PATH}/localmarkGoto" --line -- ${query_key+"${query_key}"}
+			getQuickMark.sh --config "${W3MPLUS_PATH}/localmarkGoto" -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove '1'
 			;;
 		'setLocalMarkGoto')
 			uri=$(expand "${query_uri-\${W3M_URL\}}")
@@ -211,7 +248,7 @@ if result=$(
 		'lineVisualMode')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			if [ -f "${query_file-}" ]; then
+			if [ -f "${tmpFile}" ]; then
 				lineVisualMode.sh --line "${line}" -- "${query_file}"
 			else
 				addPrintCache
@@ -242,7 +279,7 @@ if result=$(
 		'selectLine')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
 
-			if [ -f "${query_file-}" ]; then
+			if [ -f "${tmpFile}" ]; then
 				selectLine.sh --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_subaction}" "${query_file}"
 			else
 				addPrintCache

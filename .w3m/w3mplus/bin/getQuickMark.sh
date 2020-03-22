@@ -13,9 +13,7 @@
 ## Options:
 ##
 ##   -c, --config=FILE     - quick mark file
-##   -C, --colmun          - jump to colmun
 ##   -E, --extended-regexp - PATTERNS are extended regular expressions
-##   -l, --line            - jump to line
 ##   -h, --help            - display this help and exit.
 ##   -v, --version         - output version information and exit.
 ##
@@ -27,7 +25,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.2
+##   version - 2.0.0
 ##   date - 2020-03-21
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -62,16 +60,8 @@ while [ 1 -le "${#}" ]; do
 			config="${2}"
 			shift 2
 			;;
-		'-C' | '--colmun')
-			moveColmun='1'
-			shift
-			;;
 		'-E' | '--extended-regexp')
 			regexpFlag='1'
-			shift
-			;;
-		'-l' | '--line')
-			moveLine='1'
 			shift
 			;;
 		# ヘルプメッセージを表示して終了する
@@ -135,60 +125,33 @@ if [ "${#}" -eq 0 ]; then
 	set -- $(cat)
 fi
 
-awkScript=$(
-	cat <<- 'EOF'
-	BEGIN {
+result=$(for pattern in ${@+"${@}"}; do
+	printf '%s\n' "${pattern}"
+done | 	awk -v "config=${config}" -v "regexpFlag=${regexpFlag}" -- '
+	{
+		pattern = $0
+
 		if(!regexpFlag) {
 			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
 		}
 
 		pattern = "^" pattern "$"
 
-		jumpListCount = split("line colmun", jumpList, " ")
-
-		data["line"] = moveLine
-		data["line_goto"] = "MOVE_DOWN %s"
-		data["line_end"] = "END"
-		data["line_up"] = "MOVE_UP %s"
-		data["line_center"] = "CENTER_V"
-
-		data["colmun"] = moveColmun
-		data["colmun_goto"] = "MOVE_RIGHT %s"
-		data["colmun_end"] = "LINE_END"
-		data["colmun_up"] = "MOVE_LEFT %s"
-		data["colmun_center"] = "CENTER_H"
-	}
-
-	function w3mCommand(command) {
-		printf("W3m-control: %s\n", command)
-	}
-
-	$1 ~ pattern {
-		uri = $2
-		data["line_number"] = $3
-		data["colmun_number"] = $4
-
-		printf("%s\n", uri)
-
-		for(i = 1; i <= jumpListCount; i++) {
-			if(data[jumpList[i]]) {
-				if(0 < data[jumpList[i] "_number"]) {
-					w3mCommand(sprintf(data[jumpList[i] "_goto"], data[jumpList[i] "_number"] - 1))
-				} else {
-					w3mCommand(data[jumpList[i] "_end"])
-
-					if(data[jumpList[i] "_number"] < 0) {
-						w3mCommand(sprintf(data[jumpList[i] "_up"], data[jumpList[i] "_number"] * -1))
-					}
-				}
-
-				w3mCommand(data[jumpList[i] "_center"])
+		while(0 < (getline < config)) {
+			if($1 ~ pattern) {
+				printf("%s\n", $0)
 			}
 		}
-	}
-	EOF
-)
 
-for pattern in ${@+"${@}"}; do
-	awk -v "pattern=${pattern}" -v "regexpFlag=${regexpFlag}" -v "moveLine=${moveLine}" -v "moveColmun=${moveColmun}" -- "${awkScript}" "${config}"
-done | printRedirect.sh -
+		close(config)
+	}
+')
+
+case "${result}" in
+	'')
+		exitStatus='1'
+		;;
+	*)
+		printf '%s\n' "${result}"
+		;;
+esac
