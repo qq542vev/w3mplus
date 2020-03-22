@@ -133,15 +133,16 @@ fi
 keyword=''
 
 for word in ${@+"${@}"}; do
-	if [ -n "${word}" ]; then
+	case "${word}" in ?*)
 		keyword="${keyword}${keyword:+|}$(printf '%s' "${word}" | tr '\n' ' ' | sed -e 's/[].\*+?|(){}[]/\\&/g; s/^^/\\^/; s/$$/\\$/')"
-	fi
+		;;
+	esac
 done
 
-if [ -n "${keyword}" ]; then
-	if [ "${exactFlag}" -eq 1 ]; then
+case "${keyword}" in ?*)
+	case "${exactFlag}" in '1')
 		keyword="(^|[	 ])(${keyword})([	 ]|\$)"
-	fi
+	esac
 
 	while [ "${number}" -ne 0 ]; do
 		if [ "${exactFlag}" -eq 1 ] && [ "${number}" -lt 0 ]; then
@@ -160,4 +161,4 @@ if [ -n "${keyword}" ]; then
 			printf 'W3m-control: MOVE_RIGHT1\n'
 		fi
 	done
-fi | httpResponseW3mBack.sh -
+esac | httpResponseW3mBack.sh -

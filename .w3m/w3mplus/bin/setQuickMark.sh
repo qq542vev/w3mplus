@@ -54,6 +54,7 @@ line='1'
 fields=''
 addList=''
 date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+unset 'key'
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do

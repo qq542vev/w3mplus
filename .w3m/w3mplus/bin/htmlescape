@@ -34,6 +34,7 @@
 ##
 ##   * Project homepage - <https://github.com/qq542vev/w3mplus>
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
 # 初期化
 set -efu
 umask '0022'

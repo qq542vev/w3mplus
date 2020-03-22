@@ -12,7 +12,7 @@
 ##
 ## Options:
 ##
-##   -f, --field=[FIELD] - specify the fields to be output separated by commas. The only values that can be specified for TYPE are 'original', 'scheme', 'authority', 'userinfo', 'host', 'port!', 'path', 'query' and 'fragment'. If '!' is suffixed to 'scheme' 'authority', 'userinfo', 'port', 'query' or 'fragment', the delimiter is also output.
+##   -f, --field=[FIELD] - specify the fields to be output separated by commas. The only values that can be specified for TYPE are 'original', 'scheme', 'authority', 'userinfo', 'host', 'port', 'path', 'query' and 'fragment'. If '!' is suffixed to 'scheme' 'authority', 'userinfo', 'port', 'query' or 'fragment', the delimiter is also output.
 ##   -m, --match         - displays the URI.
 ##   -n, --normalize     - normalize URI.
 ##   -V, --invert        - displays that it is not a URI.
@@ -28,8 +28,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2020-02-29
+##   version - 1.2.1
+##   date - 2020-03-23
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -207,15 +207,15 @@ awkScript='
 			if(fields[i] == "original") {
 				printf("%s", $1 $2 $6 $7 $8)
 			} else if(fields[i] == "scheme") {
-				printf("%s", $1)
+				printf("%s", substr($1, 1, length($1) - 1))
 			} else if(fields[i] == "scheme!") {
-				printf("%s", substr($1, 1, length(fields[i]) - 1))
+				printf("%s", $1)
 			} else if(fields[i] == "authority") {
 				printf("%s", substr($2, 3))
 			} else if(fields[i] == "authority!") {
 				printf("%s", $2)
 			} else if(fields[i] == "userinfo") {
-				printf("%s", substr($3, 1, length(fields[i]) - 1))
+				printf("%s", substr($3, 1, length($3) - 1))
 			} else if(fields[i] == "userinfo!") {
 				printf("%s", $3)
 			} else if(fields[i] == "host") {

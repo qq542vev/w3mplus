@@ -136,10 +136,10 @@ fi
 pattern='^image_scale[	 ]\{1,\}\([0-9]\{1,\}\)[	 ]*$'
 scale=$(sed -n -e "/${pattern}/{s/${pattern}/\\1/p; q}" -- "${config}")
 
-if [ -z "${scale}" ]; then
+case "${scale}" in '')
 	scale='100'
 	printf 'image_scale 100\n' >>"${config}"
-fi
+esac
 
 case "${zoom}" in
 	'+'* | '-'*)
