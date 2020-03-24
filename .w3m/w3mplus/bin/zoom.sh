@@ -139,6 +139,7 @@ scale=$(sed -n -e "/${pattern}/{s/${pattern}/\\1/p; q}" -- "${config}")
 case "${scale}" in '')
 	scale='100'
 	printf 'image_scale 100\n' >>"${config}"
+	;;
 esac
 
 case "${zoom}" in
