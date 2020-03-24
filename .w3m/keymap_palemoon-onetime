@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-03-20
+##   version - 1.1.0
+##   date - 2020-03-25
 ##   since - 2020-03-17
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -470,6 +470,7 @@ keymap "M-9" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEW_TAB; TAB_RIGHT;
 
 ## History ##
 
+keymap "C-h" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO file:///cgi-bin/w3mplus?action=historyBar"
 keymap "M-C-h" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; HISTORY"
 
 ## Bookmarks ##
