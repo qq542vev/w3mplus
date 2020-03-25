@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-03-03
+##   version - 1.0.2
+##   date - 2020-03-26
 ##   since - 2020-02-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -42,9 +42,18 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
+sidebar () (
+	printf '<frame name="menu" title="Bookmark Menu" src="data:text/html;base64,%s" />\n' "$(sed -e 's/<a /<a target="main" /' "${1}" | base64 | tr -d '\n')"
+)
+
+toolbar () (
+		links=$(sed -e '/<h2>Bookmarks Toolbar<\/h2>/,/<\/ul>/!d; /<li>/!d; s/<\/\{0,1\}li>//g; s/<a /<a target="main"/' "${file}" | sed -e '1!s/^/| /')
+		printf '<frame name="toolbar" title="Bookmark Toolbar" src="data:text/html;base64,%s" />' "$(${W3MPLUS_TEMPLATE_HTML} -t 'Bookmark' -c "<p>${links}</p>" | base64 | tr -d '\n')"
+)
+
 # 各変数に既定値を代入する
 file="${HOME}/.w3m/bookmark.html"
-size='150'
+size='35'
 type='leftSidebar'
 uri='data:text/plain,'
 args=''
@@ -133,26 +142,36 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-dataURI="data:text/html;base64,$(sed -e 's/<a /<a target="main" /' "${file}" | base64 | tr -d '\n')"
-escapedURL=$(printf '%s' "${uri}" | htmlescape)
-menu="<frame title=\"Bookmark Menu\" src=\"${dataURI}\" />"
-main="<frame name=\"main\" title=\"Main Content\" src=\"${escapedURL}\" />"
+pattern='^pixel_per_char[	 ]\{1,\}\([0-9]\{1,\}\)[	 ]*$'
+pixelPerChar=$(sed -n -e "/${pattern}/{s/${pattern}/\\1/p; q}" -- "${W3MPLUS_W3M_CONFIG}")
+
+case "${pixelPerChar}" in '')
+	pixelPerChar='6'
+	;;
+esac
+
+col=$((size * pixelPerChar))
+main="<frame name=\"main\" title=\"Main Content\" src=\"$(printf '%s' "${uri}" | htmlescape)\" />"
 
 case "${type}" in
 	'leftSidebar')
-		attribute="cols=\"${size},*\""
+		menu=$(sidebar "${file}")
+		attribute="cols=\"${col},*\""
 		frames="${menu}${main}"
 		;;
 	'rightSidebar')
-		attribute="cols=\"*,${size}\""
+		menu=$(sidebar "${file}")
+		attribute="cols=\"*,${col}\""
 		frames="${main}${menu}"
 		;;
 	'topToolbar')
-		attribute="rows=\"${size},*\""
+		menu=$(toolbar "${file}")
+		attribute="rows=\"*,*\""
 		frames="${menu}${main}"
 		;;
 	'bottomToolbar')
-		attribute="rows=\"*,${size}\""
+		menu=$(toolbar "${file}")
+		attribute="rows=\"*,*\""
 		frames="${main}${menu}"
 		;;
 esac
@@ -169,10 +188,7 @@ esac
 		<noframes>
 			<p>The frame cannot be displayed on your Web browser.</p>
 
-			<ul>
-				<li><a href="file://$(printf '%s' "${file}" | urlencode | fsed '%2F' '/')">Menu</a></li>
-				<li><a href="${escapedURL}">Main Content</a></li>
-			</ul>
+			<p>Please enable HTML Frame. If w3m, execute 'FRAME' command.</p>
 		</noframes>
 	</frameset>
 	EOF

@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.8.1
-##   date - 2020-03-20
+##   version - 1.9.0
+##   date - 2020-03-25
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -205,6 +205,7 @@ end
 
 menu MenuSidebar
 	func "ブックマーク (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmarkBar"
+	func "履歴         (h)" GOTO "Hh" "file:///cgi-bin/w3mplus?action=historyBar"
 end
 
 menu MenuZoom

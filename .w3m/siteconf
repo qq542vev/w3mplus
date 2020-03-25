@@ -33,6 +33,10 @@ url /^bing-news:/
 substitute_url "https://www.bing.com/news/search?q="
 no_referer_from on
 
+# HTML frame の場合 HTTP refererを送信してしまうため無効
+url /^data:/
+no_referer_from on
+
 url /^duckduckgo:/
 substitute_url "https://duckduckgo.com/?q="
 no_referer_from on
