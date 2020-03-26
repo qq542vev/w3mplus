@@ -21,7 +21,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.1.0
-##   date - 2020-03-21
+##   date - 2020-03-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -43,11 +43,13 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 eval "$(printf '%s' "${QUERY_STRING%%url=*}" | parsequery --prefix 'query_')"
-url="${QUERY_STRING#*url=}"
-escaped=$(printf '%s' "${url}" | htmlescape)
+url=$(printf '%s' "${QUERY_STRING#*url=}" | htmlescape)
+source=$(printf '%s' "${query_source}" | htmlescape)
 
-printHtml.sh --title 'Blocking' - <<- EOF
-	<p><strong><a href="${escaped}">${escaped}</a></strong></p>
+printHtml.sh --title 'Forbidden Site' - <<- EOF
+	<h1>Forbidden Site</h1>
 
-	<p><a href="about:permissions">siteconf</a></p>
+	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${source}<></p>
+
+	<p>To access this web page, change <a href="about:permissions">about:permissions</a> settings.</p>
 EOF
