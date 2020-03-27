@@ -39,7 +39,7 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 # 初期化
-set -eu
+set -efu
 umask '0022'
 IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
 export 'IFS'
@@ -145,55 +145,60 @@ done
 eval set -- "${args}"
 
 # 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
+case "${#}" in '0')
 	set -- "${HOME}/.w3m/siteconf"
-fi
+	;;
+esac
 
 escapedBeginMes=$(printf '%s' "${beginMessage}" | sed -e 's/[].\*/[]/\\&/g')
 escapedEndMes=$(printf '%s' "${endMessage}" | sed -e 's/[].\*/[]/\\&/g')
 tmpDir=$(mktemp -d)
+awkScript=$(
+	cat <<- 'EOF'
+	BEGIN {
+		count = split("http https", protocols)
+	}
+
+	/^[A-Za-z][A-Za-z0-9+.-]*:\/\// {
+		printf("url \"%s\" exact\n", $1)
+		printf("substitute_url \"%s?source=%s&url=%s\"\n", redirect, source, $1)
+		printf("\n")
+		next
+	}
+
+	/^([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f][0-9A-Fa-f])+$/ {
+		for(i = 1; i <= count; i++) {
+			blockURL = protocols[i] "://" $1 "/"
+
+			printf("url \"%s\"\n", blockURL)
+			printf("substitute_url \"%s?source=%s&url=%s\"\n", redirect, source, blockURL)
+			printf("\n")
+		}
+	}
+	EOF
+)
 
 sed -e "/^${escapedBeginMes}/!d" -- ${@+"${@}"} | sort | uniq | while read -r 'message'; do
-	url="${message#${beginMessage}}"
+	source="${message#${beginMessage}}"
 
-	printf 'Downloading... %s\n' "${url}" 1>&2
+	printf 'Downloading... %s\n' "${source}" 1>&2
 
-	w3m -dump_source -o 'auto_uncompress=1' "${url}" >"${tmpDir}/blacklist"
+	w3m -dump_source -o 'auto_uncompress=1' "${source}" >"${tmpDir}/blacklist"
 
 	if [ ! -s "${tmpDir}/blacklist" ]; then
 		printf 'Download failed.\n' 1>&2
 
-		if [ "${skipFlag}" -eq 1 ]; then
+		case "${skipFlag}" in '1')
 			continue
-		fi
+			;;
+		esac
 
 		exitStatus="${EX_UNAVAILABLE}"; exit
 	fi
 
 	printf 'Converting...\n' 1>&2
 
-	awk -v "redirect=${redirect}" -v "source=$(printf '%s' "${url}" | urlencode)" -- '
-		BEGIN {
-			count = split("http https", protocols)
-		}
-
-		/^[A-Za-z][A-Za-z0-9+.-]*:\/\// {
-			printf("url \"%s\"\n", $1)
-			printf("substitute_url \"%s?source=%s&url=%s\"\n", redirect, source, $1)
-			printf("\n")
-			next
-		}
-
-		/^([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f][0-9A-Fa-f])$/ {
-			for(i = 1; i <= count; i++) {
-				blockURL = protocols[i] "://" $1 "/"
-
-				printf("url \"%s\"\n", blockURL)
-				printf("substitute_url \"%s?source=%s&url=%s\"\n", redirect, source, blockURL)
-				printf("\n")
-			}
-		}
-	' "${tmpDir}/blacklist" >"${tmpDir}/urls"
+	awk -v "redirect=${redirect}" -v "source=$(printf '%s' "${source}" | urlencode)" -- "${awkScript}" "${tmpDir}/blacklist" >"${tmpDir}/urls"
 
 	printf 'Data Writing...\n' 1>&2
 
@@ -205,7 +210,7 @@ sed -e "/^${escapedBeginMes}/!d" -- ${@+"${@}"} | sort | uniq | while read -r 'm
 		cp -fp -- "${tmpDir}/siteconf" "${config}"
 	done
 
-	rm -fr -- "${tmpDir:?}/"*
+	rm -fr -- "${tmpDir}/blacklist" "${tmpDir}/urls" "${tmpDir}/siteconf"
 done
 
 printf 'Done\n' 1>&2
