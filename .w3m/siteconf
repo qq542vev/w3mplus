@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2020-03-21
+##   version - 2.0.0
+##   date - 2020-03-30
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -112,10 +112,18 @@ substitute_url "file:///cgi-bin/w3mplus?redirect=2&action=uri&subaction=viewSour
 # url m@^http://@
 # substitute_url "https://"
 
-# BEGIN - Blacklist - https://openphish.com/feed.txt
+# @source https://pastebin.com/raw/JBDqraKC
+
+# BEGIN - Blacklist
+# @title OpenPhish
+# @source https://openphish.com/feed.txt
+# @category phishing
 # END - Blacklist
 
-# BEGIN - Blacklist - https://mirror1.malwaredomains.com/files/justdomains
+# BEGIN - Blacklist
+# @title Malware Domain Blocklist
+# @source https://mirror1.malwaredomains.com/files/justdomains
+# @category malware
 # END - Blacklist
 
 # BEGIN - Preloading HSTS

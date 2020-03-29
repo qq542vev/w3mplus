@@ -45,11 +45,13 @@ export 'IFS'
 eval "$(printf '%s' "${QUERY_STRING%%url=*}" | parsequery --prefix 'query_')"
 url=$(printf '%s' "${QUERY_STRING#*url=}" | htmlescape)
 source=$(printf '%s' "${query_source}" | htmlescape)
+title=$(printf '%s' "${query_title-${query_source}}" | htmlescape)
+category=$(printf '%s' "${query_category-forbidden}" | htmlescape)
 
 printHtml.sh --title 'Forbidden Site' - <<- EOF
 	<h1>Forbidden Site</h1>
 
-	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${source}</a></p>
+	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${title}</a></p>
 
 	<p>To access this web page, change <a href="about:permissions">about:permissions</a> settings.</p>
 EOF

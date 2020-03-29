@@ -15,7 +15,6 @@
 ##   -b, --begin=MESSAGE - begin message
 ##   -e, --end=MESSAGE   - end message
 ##   -r, --redirect=URI  - redirect page
-##   -s, --skip          - continue even if the download fails
 ##   -h, --help          - display this help and exit
 ##   -v, --version       - output version information and exit
 ##
@@ -27,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 3.0.0
-##   date - 2020-03-24
+##   version - 4.0.0
+##   date - 2020-03-30
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -49,10 +48,9 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
-redirect="file:///cgi-bin/blocking"
-beginMessage='# BEGIN - Blacklist - '
+redirect="file:///cgi-bin/blocking?"
+beginMessage='# BEGIN - Blacklist'
 endMessage='# END - Blacklist'
-skipFlag='0'
 args=''
 
 # コマンドライン引数の解析する
@@ -87,10 +85,6 @@ while [ 1 -le "${#}" ]; do
 		'-r' | '--redirect')
 			redirect="${2}"
 			shift 2
-			;;
-		'-s' | '--skip')
-			skipFlag='1'
-			shift
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -150,67 +144,108 @@ case "${#}" in '0')
 	;;
 esac
 
-escapedBeginMes=$(printf '%s' "${beginMessage}" | sed -e 's/[].\*/[]/\\&/g')
-escapedEndMes=$(printf '%s' "${endMessage}" | sed -e 's/[].\*/[]/\\&/g')
 tmpDir=$(mktemp -d)
 awkScript=$(
 	cat <<- 'EOF'
 	BEGIN {
-		count = split("http https", protocols)
+		split("http https", protocols)
 	}
 
-	/^[A-Za-z][A-Za-z0-9+.-]*:\/\// {
-		printf("url \"%s\" exact\n", $1)
-		printf("substitute_url \"%s?source=%s&url=%s\"\n", redirect, source, $1)
-		printf("\n")
-		next
+	function quoteEscape(string) {
+		gsub(/'+/, "'\"&\"'", string)
+
+		return "'" string "'"
 	}
 
-	/^([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f][0-9A-Fa-f])+$/ {
-		for(i = 1; i <= count; i++) {
-			blockURL = protocols[i] "://" $1 "/"
+	function urlEncode(string, result) {
+		command = "printf '%s' " quoteEscape(string) " | urlencode"
+		command | getline result
+		close(command)
 
-			printf("url \"%s\"\n", blockURL)
-			printf("substitute_url \"%s?source=%s&url=%s\"\n", redirect, source, blockURL)
-			printf("\n")
+		return result
+	}
+
+	function joinField(start, end, delimiter) {
+		if(start <= end) {
+			return $start ((start == end) ? "" : delimiter) joinField(start + 1, end, delimiter)
 		}
+
+		return ""
+	}
+
+	function arrayToQuery(array, result) {
+		result = ""
+
+		for(key in array) {
+			result = result ((result == "") ? "" : "&") urlEncode(key) "=" urlEncode(array[key])
+		}
+
+		return result
+	}
+
+	function printRedirect(url, redirect, exact) {
+		printf("url \"%s\"%s\n", url, (exact ? " exact" : ""))
+		printf("substitute_url \"%s\"\n", redirect url)
+		printf("\n")
+	}
+
+	$0 == beginMessage {
+		printf("%s\n", $0)
+
+		split("", properties)
+
+		while((0 < getline) && ($0 ~ /^#+[	 ]+@[a-z]+[	 ]+/)) {
+			if($0 ~ /^#+[	 ]+@[a-z]+[	 ]+/) {
+				printf("%s\n", $0)
+
+				sub(/@/, "", $2)
+				properties[$2] = joinField(3, NF, " ")
+			}
+		}
+
+		query = arrayToQuery(properties)
+
+		system("printf 'Downloading... %s\n' " quoteEscape(properties["source"]) " 1>&2")
+		system("w3m -dump_source -o 'auto_uncompress=1' " quoteEscape(properties["source"]) " | tr '\\r' '\\n' >'" tmpDir "/blacklist'")
+		status = system("[ -s '" tmpDir "/blacklist' ]")
+
+		if(status) {
+			system("printf 'Download failed. Skip and proceed to the next.\n' 1>&2")
+		} else {
+			system("printf 'Converting...\n' 1>&2")
+		}
+
+		while(0 < (getline address < (tmpDir "/blacklist"))) {
+			if(address ~ /^[A-Za-z][A-Za-z0-9+.-]*:\/\//) {
+				printRedirect(address, redirect query "&url=", 1)
+			} else if(address ~ /^([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f][0-9A-Fa-f])+$/) {
+				for(i in protocols) {
+					printRedirect(protocols[i] "://" address "/", redirect query "&url=")
+				}
+			}
+		}
+
+		close(tmpDir "/blacklist")
+
+		do {
+			if($0 == endMessage) {
+				break
+			}
+
+			if(status) {
+				printf("%s\n", $0)
+			}
+		}	while(0 < getline)
+	}
+
+	{
+		printf("%s\n", $0)
 	}
 	EOF
 )
 
-sed -e "/^${escapedBeginMes}/!d" -- ${@+"${@}"} | sort | uniq | while read -r 'message'; do
-	source="${message#${beginMessage}}"
+for file in ${@+"${@}"}; do
+	awk -v "beginMessage=${beginMessage}" -v "endMessage=${endMessage}" -v "redirect=${redirect}" -v "tmpDir=${tmpDir}" "${awkScript}" "${file}" >"${tmpDir}/siteconf"
 
-	printf 'Downloading... %s\n' "${source}" 1>&2
-
-	w3m -dump_source -o 'auto_uncompress=1' "${source}" >"${tmpDir}/blacklist"
-
-	if [ ! -s "${tmpDir}/blacklist" ]; then
-		printf 'Download failed.\n' 1>&2
-
-		case "${skipFlag}" in '1')
-			continue
-			;;
-		esac
-
-		exitStatus="${EX_UNAVAILABLE}"; exit
-	fi
-
-	printf 'Converting...\n' 1>&2
-
-	awk -v "redirect=${redirect}" -v "source=$(printf '%s' "${source}" | urlencode)" -- "${awkScript}" "${tmpDir}/blacklist" >"${tmpDir}/urls"
-
-	printf 'Data Writing...\n' 1>&2
-
-	escapedMes=$(printf '%s' "${message}" | sed -e 's/\([].\*/[]\)/\\\1/g')
-
-	for config in ${@+"${@}"}; do
-		sed -e "/^${escapedMes}\$/{p; :loop; /${escapedEndMes}\$/{D}; g; N; b loop}" -- "${config}" | sed -e "/^${escapedMes}\$/r ${tmpDir}/urls" >"${tmpDir}/siteconf"
-
-		cp -fp -- "${tmpDir}/siteconf" "${config}"
-	done
-
-	rm -fr -- "${tmpDir}/blacklist" "${tmpDir}/urls" "${tmpDir}/siteconf"
+	cp -fp -- "${tmpDir}/siteconf" "${file}"
 done
-
-printf 'Done\n' 1>&2
