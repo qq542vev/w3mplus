@@ -45,13 +45,40 @@ export 'IFS'
 eval "$(printf '%s' "${QUERY_STRING%%url=*}" | parsequery --prefix 'query_')"
 url=$(printf '%s' "${QUERY_STRING#*url=}" | htmlescape)
 source=$(printf '%s' "${query_source}" | htmlescape)
-title=$(printf '%s' "${query_title-${query_source}}" | htmlescape)
-category=$(printf '%s' "${query_category-forbidden}" | htmlescape)
+name=$(printf '%s' "${query_name-${query_source}}" | htmlescape)
+case "${query_category-}" in
+	'phishing')
+		title='Reported Web Forgery!'
+		message='
+			<p>Web forgeries are designed to trick you into revealing personal or financial information by imitating sources you may trust.</p>
+
+			<p>Entering any information on this web page may result in identity theft or other fraud.</p>
+		'
+		;;
+	'malware')
+		title='Reported Attack Page!'
+		message='
+			<p>Attack pages try to install programs that steal private information, use your computer to attack others, or damage your system.</p>
+
+			<p>Some attack pages intentionally distribute harmful software, but many are compromised without the knowledge or permission of their owners.</p>
+		'
+		;;
+	'unwanted-software')
+		title='Reported Unwanted Software Page!'
+		message='<p>Unwanted software pages try to install software that can be deceptive and affect your system in unexpected ways.</p>'
+		;;
+	*)
+		title='Forbidden Site'
+		message=''
+		;;
+esac
 
 printHtml.sh --title 'Forbidden Site' - <<- EOF
-	<h1>Forbidden Site</h1>
+	<h1>${title}</h1>
 
-	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${title}</a></p>
+	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${name}</a></p>
+
+	${message}
 
 	<p>To access this web page, change <a href="about:permissions">about:permissions</a> settings.</p>
 EOF
