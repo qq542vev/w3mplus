@@ -112,13 +112,13 @@ substitute_url "file:///cgi-bin/w3mplus?redirect=2&action=uri&subaction=viewSour
 # url m@^http://@
 # substitute_url "https://"
 
-# !BEGIN - Blacklist
+# BEGIN - Blacklist
 # @name OpenPhish
 # @source https://openphish.com/feed.txt
 # @category phishing
 # END - Blacklist
 
-# !BEGIN - Blacklist
+# BEGIN - Blacklist
 # @name Malvertising filter list by Disconnect
 # @source https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
 # @category malware
@@ -130,13 +130,13 @@ substitute_url "file:///cgi-bin/w3mplus?redirect=2&action=uri&subaction=viewSour
 # @category malware
 # END - Blacklist
 
-# !BEGIN - Blacklist
+# BEGIN - Blacklist
 # @name Malware Domain Blocklist
 # @source https://mirror1.malwaredomains.com/files/justdomains
 # @category malware
 # END - Blacklist
 
-# !BEGIN - Blacklist
+# BEGIN - Blacklist
 # @name Spam404
 # @source https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
 # @category phishing
