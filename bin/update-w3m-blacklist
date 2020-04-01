@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 4.0.0
-##   date - 2020-03-30
+##   version - 4.1.0
+##   date - 2020-04-01
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -221,6 +221,14 @@ awkScript=$(
 			} else if(address ~ /^([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f][0-9A-Fa-f])+$/) {
 				for(i in protocols) {
 					printRedirect(protocols[i] "://" address "/", redirect query "&url=")
+				}
+			} else {
+				split(address, fields)
+
+				if(fields[1] == "127.0.0.1" && fields[2] ~ /^[0-9A-Za-z]([.0-9A-Za-z-]*[0-9A-Za-z])?\.[0-9A-Za-z]([0-9A-Za-z-]*[0-9A-Za-z])?$/) {
+					for(i in protocols) {
+						printRedirect(protocols[i] "://" fields[2] "/", redirect query "&url=")
+					}
 				}
 			}
 		}
