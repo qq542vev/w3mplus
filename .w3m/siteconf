@@ -142,6 +142,11 @@ substitute_url "file:///cgi-bin/w3mplus?redirect=2&action=uri&subaction=viewSour
 # @category phishing
 # END - Blacklist
 
+# BEGIN - Blacklist
+# @name MVPS HOSTS
+# @source https://winhelp2002.mvps.org/hosts.txt
+# @category ad
+# END - Blacklist
 
 # BEGIN - Blacklist
 # @name Peter Lowe’s Ad and tracking server list
