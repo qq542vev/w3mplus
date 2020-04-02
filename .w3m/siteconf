@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.1.0
-##   date - 2020-04-01
+##   version - 2.2.0
+##   date - 2020-04-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -140,6 +140,13 @@ substitute_url "file:///cgi-bin/w3mplus?redirect=2&action=uri&subaction=viewSour
 # @name Spam404
 # @source https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
 # @category phishing
+# END - Blacklist
+
+
+# BEGIN - Blacklist
+# @name Peter Lowe’s Ad and tracking server list
+# @source https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=plain
+# @category ad
 # END - Blacklist
 
 # BEGIN - Preloading HSTS
