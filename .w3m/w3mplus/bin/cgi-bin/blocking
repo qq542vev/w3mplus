@@ -67,6 +67,10 @@ case "${query_category-}" in
 		title='Reported Unwanted Software Page!'
 		message='<p>Unwanted software pages try to install software that can be deceptive and affect your system in unexpected ways.</p>'
 		;;
+	'ad')
+		title='Reported Advertisement!'
+		message=''
+		;;
 	*)
 		title='Forbidden Site'
 		message=''
