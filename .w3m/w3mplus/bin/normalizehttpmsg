@@ -189,12 +189,13 @@ done
 eval set -- "${args}"
 
 # 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
+case "${#}" in '0')
 	tmpFile=$(mktemp -p "${tmpDir}")
 	cat >"${tmpFile}"
 
 	set -- "${tmpFile}"
-fi
+	;;
+esac
 
 awkScript=$(cat << 'EOF'
 	BEGIN {

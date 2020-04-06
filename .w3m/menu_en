@@ -34,7 +34,7 @@ menu Main
 	nop  "----------------------"
 	func "Bookmark This Page (m)" ADD_BOOKMARK "Mm"
 	func "Save Page As...    (p)" SAVE "Pp"
-	func "Send Page Link...  (e)" GOTO "Ee" "file:///cgi-bin/w3mplus?action=uri&subaction=sendEmail"
+	func "Send Page Link...  (e)" GOTO "Ee" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail"
 	nop  "----------------------"
 	func "View Page Source   (v)" VIEW "Vv"
 	func "View Page Info     (i)" INFO "Ii"
@@ -46,18 +46,18 @@ menu ContextMenuLink
 	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private %s"
 	func "Open Link in Current Tab        (o)" GOTO_LINK "Oo"
 	nop  "-----------------------------------"
-	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?action=uri&subaction=addBookmark&uri=%24%7BW3M_CURRENT_LINK%7D"
+	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?action=runVariable&run=addBookmark&variable=W3M_CURRENT_LINK"
 	func "Save Link As...                 (k)" SAVE_LINK "Kk"
-	func "Send Link...                    (d)" GOTO "Dd" "file:///cgi-bin/w3mplus?action=uri&subaction=sendEmail&uri=%24%7BW3M_CURRENT_LINK%7D"
-	func "Copy Link Location              (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_LINK%7D"
+	func "Send Link...                    (d)" GOTO "Dd" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_CURRENT_LINK"
+	func "Copy Link Location              (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_LINK"
 end
 
 menu ContextMenuImage
 	func "View Image          (i)" VIEW_IMAGE "Ii"
-	func "Copy Image Location (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_IMG%7D"
+	func "Copy Image Location (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_IMG"
 	nop  "-----------------------"
 	func "Save Image As...    (v)" SAVE_IMAGE "Vv"
-	func "Email Image...      (g)" GOTO "Gg" "file:///cgi-bin/w3mplus?action=uri&subaction=sendEmail&uri=%24%7BW3M_CURRENT_IMG%7D"
+	func "Email Image...      (g)" GOTO "Gg" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_CURRENT_IMG"
 end
 
 menu ContextMenuLinkImage
@@ -66,16 +66,16 @@ menu ContextMenuLinkImage
 	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private %s"
 	func "Open Link in Current Tab        (O)" GOTO_LINK "O"
 	nop  "-----------------------------------"
-	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?action=uri&subaction=addBookmark&uri=%24%7BW3M_CURRENT_LINK%7D"
+	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?action=runVariable&run=addBookmark&variable=W3M_CURRENT_LINK"
 	func "Save Link As...                 (k)" SAVE_LINK "Kk"
-	func "Send Link...                    (d)" GOTO "Dd" "file:///cgi-bin/w3mplus?action=uri&subaction=sendEmail&uri=%24%7BW3M_CURRENT_LINK%7D"
-	func "Copy Link Location              (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_LINK%7D"
+	func "Send Link...                    (d)" GOTO "Dd" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_CURRENT_LINK"
+	func "Copy Link Location              (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_LINK"
 	nop  "-----------------------------------"
 	func "View Image                      (i)" VIEW_IMAGE "Ii"
-	func "Copy Image Location             (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_IMG%7D"
+	func "Copy Image Location             (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_IMG"
 	nop  "-----------------------------------"
 	func "Save Image As...                (v)" SAVE_IMAGE "Vv"
-	func "Email Image...                  (g)" GOTO "Gg" "file:///cgi-bin/w3mplus?action=uri&subaction=sendEmail&uri=%24%7BW3M_CURRENT_IMG%7D"
+	func "Email Image...                  (g)" GOTO "Gg" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_CURRENT_IMG"
 end
 
 menu ContextMenuTab
@@ -164,7 +164,7 @@ menu MenuFile
 	func "Open File...       (o)" LOAD "Oo"
 	nop  "----------------------"
 	func "Save Page As...    (a)" DOWNLOAD "Aa"
-	func "Email Link...      (e)" GOTO "Ee" "file:///cgi-bin/w3mplus?action=uri&subaction=sendEmail&uri=%24%7BW3M_URL%7D"
+	func "Email Link...      (e)" GOTO "Ee" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_URL"
 	nop  "----------------------"
 	func "Print              (p)" PRINT "Pp"
 	nop  "----------------------"
@@ -177,7 +177,7 @@ menu MenuEdit
 	func "Undo      (u)" UNDO "Uu"
 	func "Redo      (r)" REDO "Rr"
 	nop  "-------------"
-	func "Copy      (c)" GOTO "Cc" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+	func "Copy      (c)" GOTO "Cc" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
 	func "Mark      (m)" MARK "Mm"
 	nop  "-------------"
 	func "Find      (f)" ISEARCH "Ff"
@@ -315,16 +315,16 @@ menu ExtendedHints
 	func "s  Save hint" SAVE_LINK "s"
 	func "o  Open link" GOTO_LINK "o"
 	func "t  Open link in a new tab" TAB_LINK "t"
-	func "b  Open link in a background tab" GOTO "b" "file:///cgi-bin/w3mplus?action=uri&subaction=prevTab&uri=%24%7BW3M_CURRENT_LINK%7D&redirect=2"
+	func "b  Open link in a background tab" GOTO "b" "file:///cgi-bin/w3mplus?action=runVariable&run=prevTab&variable=W3M_CURRENT_LINK&redirect=2"
 	func "w  Open link in a new window" EXTERN_LINK "w" "w3m %s"
 	func "O  Generate a ':o URL' prompt" GOTO "O" "file:///cgi-bin/w3mplus?action=linkSetOpen"
 	func "T  Generate a ':t URL' prompt" GOTO "T" "file:///cgi-bin/w3mplus?action=linkSetTabopen"
 	func "W  Open link in external browser" EXTERN_LINK "W"
-	func "a  Add a bookmark" GOTO "a" "file:///cgi-bin/w3mplus?action=uri&subaction=addBookmark&uri=%24%7BW3M_CURRENT_LINK%7D"
-	func "v  View link source" GOTO "v" "file:///cgi-bin/w3mplus?action=uri&subaction=viewSource&uri=%24%7BW3M_CURRENT_LINK%7D"
-	func "V  View link source in external editor" GOTO "V" "file:///cgi-bin/w3mplus?action=uri&subaction=viewSourceExternally&uri=%24%7BW3M_CURRENT_LINK%7D"
-	func "y  Yank link location" GOTO "y" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_LINK%7D"
-	func "Y  Yank link description" GOTO "Y" "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+	func "a  Add a bookmark" GOTO "a" "file:///cgi-bin/w3mplus?action=runVariable&run=addBookmark&variable=W3M_CURRENT_LINK"
+	func "v  View link source" GOTO "v" "file:///cgi-bin/w3mplus?action=runVariable&run=viewSource&variable=W3M_CURRENT_LINK"
+	func "V  View link source in external editor" GOTO "V" "file:///cgi-bin/w3mplus?action=runVariable&run=viewSourceExternally&variable=W3M_CURRENT_LINK"
+	func "y  Yank link location" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_LINK"
+	func "Y  Yank link description" GOTO "Y" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
 	func "c  Open context menu" MENU "c"
 	func "i  Show image" VIEW_IMAGE "i"
 	func "I  Save image" SAVE_IMAGE "I"
@@ -1286,4 +1286,91 @@ menu ToggleOption
 	func "u  (Do not) Convert URLs in page to links" SET_OPTION "u" "mark_all_pages=toggle"
 	func "w  (Enable / Disable) line wrapping in text file" COMMAND "w" "SET_OPTION fold_line=toggle; RESHAPE"
 	func "W  (Enable / Disable) wrap search" WRAP_TOGGLE "W"
+end
+
+menu register0
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_0&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_0&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_0&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_0&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_0&encode=base64"
+end
+
+menu register1
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_1&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_1&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_1&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_1&encode=base64"
+6	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_1&encode=base64"
+end
+
+menu register2
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_2&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_2&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_2&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_2&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_2&encode=base64"
+end
+
+menu register3
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_3&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_3&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_3&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_3&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_3&encode=base64"
+end
+
+menu register4
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_4&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_4&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_4&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_4&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_4&encode=base64"
+end
+
+menu register5
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_5&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_5&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_5&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_5&encode=base64"
+end
+
+menu register6
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_6&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_6&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_6&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_6&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_6&encode=base64"
+end
+
+menu register7
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_7&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_7&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_7&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_7&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_7&encode=base64"
+end
+
+menu register8
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_8&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_8&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_8&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_8&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_8&encode=base64"
+end
+
+menu register9
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_9&encode=base64"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_9&redirect=1&encode=base64"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_9&encode=base64"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_9&encode=base64"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_9&encode=base64"
+end
+
+menu registerCurrent
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&run=search&variable=W3M_URL"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&run=search&variable=W3M_URL&redirect=1"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_URL"
+	func "S  Show" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&run=show&variable=W3M_URL"
+	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_URL"
 end

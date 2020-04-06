@@ -425,7 +425,7 @@ keymap "C-s" DOWNLOAD
 
 ## Editing ##
 
-keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
 keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
 keymap "C-y" REDO
 keymap "C-z" UNDO
@@ -546,12 +546,12 @@ keymap "C-td" NEW_TAB
 keymap "w" EXTERN "w3m ${WWW_HOME-about:home} #"
 keymap "W" EXTERN
 
-keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
-keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD_AT"
-keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=2&prevtab=1&query=; DICT_WORD_AT"
+keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT; GOTO \"file:///cgi-bin/env\""
+keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD_AT; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=register&variable=W3M_CURRENT_WORD"
+keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=2&prevtab=1&query=; DICT_WORD_AT; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=register&variable=W3M_CURRENT_WORD"
 
-keymap "C-x" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=incrementURI&uri=%24%7BW3M_URL%7D"
-keymap "C-a" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=decrementURI&uri=%24%7BW3M_URL%7D"
+keymap "C-x" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=decrementURI&variable=W3M_URL"
+keymap "C-a" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=incrementURI&variable=W3M_URL"
 
 ### History ###
 
@@ -572,7 +572,7 @@ keymap "~" LOAD "~"
 keymap "gh" GOTO "file:///cgi-bin/w3mplus?action=homepage"
 keymap "gH" GOTO "file:///cgi-bin/w3mplus?action=homepage&redirect=1"
 
-keymap "gu" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=parentPath&uri=%24%7BW3M_URL%7D"
+keymap "gu" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=parentUriPath&variable=W3M_URL"
 keymap "gU" GOTO_RELATIVE "/"
 
 ### Reloading ###
@@ -695,8 +695,8 @@ keymap ":f" FRAME
 
 ### Copying text ###
 
-keymap "y" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_URL%7D"
-keymap "Y" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+keymap "y" COMMAND "GOTO file:///cgi-bin/w3mplus?action=runVariable&run=register&variable=W3M_URL; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_URL"
+keymap "Y" COMMAND "GOTO file:///cgi-bin/w3mplus?action=runVariable&run=register&variable=W3M_CURRENT_WORD; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
 
 ## Command Line mode ##
 
@@ -781,16 +781,16 @@ keymap ";?" LINE_INFO
 keymap ";s" SAVE_LINK
 keymap ";o" GOTO_LINK
 keymap ";t" TAB_LINK
-keymap ";b" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=prevTab&uri=%24%7BW3M_CURRENT_LINK%7D&redirect=2"
+keymap ";b" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=prevTab&variable=W3M_CURRENT_LINK&redirect=2"
 keymap ";w" EXTERN_LINK "w3m %s"
 keymap ";O" GOTO "file:///cgi-bin/w3mplus?action=linkSetOpen"
 keymap ";T" GOTO "file:///cgi-bin/w3mplus?action=linkSetTabopen"
 keymap ";W" EXTERN_LINK
-keymap ";a" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=addBookmark&uri=%24%7BW3M_CURRENT_LINK%7D"
-keymap ";v" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=viewSource&uri=%24%7BW3M_CURRENT_LINK%7D"
-keymap ";V" GOTO "file:///cgi-bin/w3mplus?action=uri&subaction=viewSourceExternally&uri=%24%7BW3M_CURRENT_LINK%7D"
-keymap ";y" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_LINK%7D"
-keymap ";Y" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+keymap ";a" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=addBookmark&variable=W3M_CURRENT_LINK"
+keymap ";v" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=viewSource&variable=W3M_CURRENT_LINK"
+keymap ";V" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=viewSourceExternally&variable=W3M_CURRENT_LINK"
+keymap ";y" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_LINK"
+keymap ";Y" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
 keymap ";c" GOTO "file:///cgi-bin/w3mplus?action=contextMenu"
 keymap ";i" VIEW_IMAGE
 keymap ";I" SAVE_IMAGE
@@ -1100,6 +1100,18 @@ keymap ":L" SETENV
 keymap ":S" EXEC_SHELL "${SHELL}"
 
 keymap "|" COMMAND "LINE_BEGIN; MOVE_RIGHT1"
+
+keymap "\"0" MENU "register0"
+keymap "\"1" MENU "register1"
+keymap "\"2" MENU "register2"
+keymap "\"3" MENU "register3"
+keymap "\"4" MENU "register4"
+keymap "\"5" MENU "register5"
+keymap "\"6" MENU "register6"
+keymap "\"7" MENU "register7"
+keymap "\"8" MENU "register8"
+keymap "\"9" MENU "register9"
+keymap "\"%" MENU "registerCurrent"
 
 # w3mplus Key Map #
 

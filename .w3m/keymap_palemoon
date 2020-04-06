@@ -425,7 +425,7 @@ keymap "C-s" DOWNLOAD
 
 ## Editing ##
 
-keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=yank&yank=%24%7BW3M_CURRENT_WORD%7D"
+keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
 keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
 keymap "C-y" REDO
 keymap "C-z" UNDO

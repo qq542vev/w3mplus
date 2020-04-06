@@ -1,21 +1,19 @@
 #!/usr/bin/env sh
 
-## File: zoom.sh
+## File: register
 ##
-## Change w3m image_scale.
+## Set register for w3m.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   zoom.sh [OPTION]...
+##   register [OPTION]... [FILE]...
 ##   (end)
 ##
 ## Options:
 ##
-##   -c, --config=FILE   - w3m configuration file
-##   -n, --number=NUMBER - image scale
-##   -h, --help          - display this help and exit.
-##   -v, --version       - output version information and exit.
+##   -h, --help    - display this help and exit.
+##   -v, --version - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -25,8 +23,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.0.2
-##   date - 2020-02-20
+##   version - 1.0.0
+##   date - 2020-04-04
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -46,27 +44,11 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-# 各変数に既定値を代入する
-config="${W3MPLUS_W3M_CONFIG}"
-zoom='100'
+tmpDir=$(mktemp -d)
 args=''
 
-# コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-c' | '--config')
-			config="${2}"
-			shift 2
-			;;
-		'-n' | '--number')
-			if expr -- "${2}" ':' '[+-]\{0,1\}[1-9][0-9]*$' >'/dev/null'; then
-				zoom="${2}"
-				shift 2
-			else
-				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
-				exitStatus="${EX_USAGE}"; exit
-			fi
-			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
@@ -76,6 +58,13 @@ while [ 1 -le "${#}" ]; do
 		'-v' | '--version')
 			version
 			exit
+			;;
+		# 標準入力を処理する
+		'-')
+			tmpFile=$(mktemp -p "${tmpDir}")
+			cat >"${tmpFile}"
+			shift
+			set -- "${tmpFile}" ${@+"${@}"}
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -116,50 +105,36 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
-directory=$(dirname -- "${config}"; printf '$')
-mkdir -p -- "${directory%?$}"
-: >>"${config}"
-
-# オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# 引数の個数が過大である
-if [ 0 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0##*/}: too many arguments
-		Try '${0##*/} --help' for more information.
-	EOF
+# 引数の個数が過小である
+case "${#}" in '0')
+	tmpFile=$(mktemp -p "${tmpDir}")
+	cat >"${tmpFile}"
 
-	exitStatus="${EX_USAGE}"; exit
-fi
-
-pattern='^image_scale[	 ]\{1,\}\([0-9]\{1,\}\)[	 ]*$'
-scale=$(sed -n -e "/${pattern}/{s/${pattern}/\\1/p; q}" -- "${config}")
-
-case "${scale}" in '')
-	scale='100'
-	printf 'image_scale 100\n' >>"${config}"
+	set -- "${tmpFile}"
 	;;
 esac
 
-case "${zoom}" in
-	'+'* | '-'*)
-		newScale=$((scale + zoom))
-		;;
-	*)
-		newScale="${zoom}"
-		;;
-esac
+{
+	i=$((9 - ${#}))
+	while [ 0 -le "${i}" ]; do
+		item=$(eval printf '%s' "\"\${W3MPLUS_REGISTER_${i}-}\"")
 
-if [ "${W3MPLUS_ZOOM_MAX}" -lt "${newScale}" ]; then
-	newScale="${W3MPLUS_ZOOM_MAX}"
-elif [ "${newScale}" -lt "${W3MPLUS_ZOOM_MIN}" ]; then
-	newScale="${W3MPLUS_ZOOM_MIN}"
-fi
+		case "${item}" in ?*)
+			printf 'W3m-control: SETENV W3MPLUS_REGISTER_%s=%s\n' "$((i + ${#}))" "${item}"
+			;;
+		esac
 
-if [ "${scale}" -ne "${newScale}" ]; then
-	value=$(cat "${config}")
-	printf '%s\n' "${value}" | sed -e "/${pattern}/c image_scale ${newScale}" >"${config}"
-fi
+		i=$((i - 1))
+	done
 
-printf '%d\n' "${newScale}"
+	i='1'
+	for file in ${@+"${@}"}; do
+		if [ "$((${#} - i))" -le 9 ]; then
+			printf 'W3m-control: SETENV W3MPLUS_REGISTER_%s=%s\n' "$((${#} - i))" "$(base64 ${file} | tr -d '\n')"
+		fi
+
+		i=$((i + 1))
+	done
+} | httpResponseW3mBack.sh -

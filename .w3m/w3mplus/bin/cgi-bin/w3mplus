@@ -238,12 +238,8 @@ if result=$(
 				EOF
 			fi
 			;;
-		'uri')
-			uri=$(expand "${query_uri-\${W3M_URL\}}")
-
-			if [ -n "${uri}" ]; then
-				location.sh "${query_subaction}" "${uri}"
-			fi
+		'runVariable')
+			runenvvar ${query_encode+-e "${query_encode}"} "${query_run}" "${query_variable}"
 			;;
 		'lineVisualMode')
 			line=$(expand "${query_line-\${W3M_CURRENT_LINE\}}")
@@ -262,7 +258,7 @@ if result=$(
 			fi
 			;;
 		'zoom')
-			zoom=$(zoom.sh ${query_zoom+'--number' "${query_zoom}"})
+			zoom=$(chimgscale ${query_zoom+'--number' "${query_zoom}"})
 
 			httpResponseW3mBack.sh - <<- EOF
 				W3m-control: SET_OPTION image_scale=${zoom}
