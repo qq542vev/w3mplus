@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+aaaa=$(
+cat << EOF | base64
+aaa=GHH
+
+KK
+8
+EOF
+)
+
+printf '%s\n' "W3m-control: SETENV =?UTF-8?B?${aaaa}?="
+echo
+env

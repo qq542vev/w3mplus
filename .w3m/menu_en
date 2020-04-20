@@ -1289,88 +1289,11 @@ menu ToggleOption
 end
 
 menu register0
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_0&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_0&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_0&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_0&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_0&encode=base64"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=0&run=search"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=0&run=search&redirect=1"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=0&run=sendEmail"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=0&run=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=0&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=0&value=W3M_CURRENT_WORD"
 end
 
-menu register1
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_1&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_1&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_1&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_1&encode=base64"
-6	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_1&encode=base64"
-end
-
-menu register2
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_2&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_2&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_2&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_2&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_2&encode=base64"
-end
-
-menu register3
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_3&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_3&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_3&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_3&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_3&encode=base64"
-end
-
-menu register4
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_4&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_4&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_4&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_4&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_4&encode=base64"
-end
-
-menu register5
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_5&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_5&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_5&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_5&encode=base64"
-end
-
-menu register6
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_6&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_6&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_6&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_6&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_6&encode=base64"
-end
-
-menu register7
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_7&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_7&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_7&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_7&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_7&encode=base64"
-end
-
-menu register8
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_8&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_8&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_8&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_8&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_8&encode=base64"
-end
-
-menu register9
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_9&encode=base64"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&subaction=search&variable=W3MPLUS_REGISTER_9&redirect=1&encode=base64"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&subaction=sendEmail&variable=W3MPLUS_REGISTER_9&encode=base64"
-	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&subaction=show&variable=W3MPLUS_REGISTER_9&encode=base64"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&subaction=yank&variable=W3MPLUS_REGISTER_9&encode=base64"
-end
-
-menu registerCurrent
-	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&run=search&variable=W3M_URL"
-	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&run=search&variable=W3M_URL&redirect=1"
-	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_URL"
-	func "S  Show" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&run=show&variable=W3M_URL"
-	func "y  Yank" GOTO "y" "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_URL"
-end

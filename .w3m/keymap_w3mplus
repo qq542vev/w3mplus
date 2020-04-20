@@ -546,9 +546,9 @@ keymap "C-td" NEW_TAB
 keymap "w" EXTERN "w3m ${WWW_HOME-about:home} #"
 keymap "W" EXTERN
 
-keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT; GOTO \"file:///cgi-bin/env\""
-keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD_AT; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=register&variable=W3M_CURRENT_WORD"
-keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=2&prevtab=1&query=; DICT_WORD_AT; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=register&variable=W3M_CURRENT_WORD"
+keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&query=; DICT_WORD_AT"
+keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=1&query=; DICT_WORD_AT"
+keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dictWordSearch&redirect=2&prevtab=1&query=; DICT_WORD_AT"
 
 keymap "C-x" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=decrementURI&variable=W3M_URL"
 keymap "C-a" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=incrementURI&variable=W3M_URL"
@@ -695,8 +695,8 @@ keymap ":f" FRAME
 
 ### Copying text ###
 
-keymap "y" COMMAND "GOTO file:///cgi-bin/w3mplus?action=runVariable&run=register&variable=W3M_URL; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_URL"
-keymap "Y" COMMAND "GOTO file:///cgi-bin/w3mplus?action=runVariable&run=register&variable=W3M_CURRENT_WORD; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
+keymap "y" COMMAND "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2B&value=W3M_URL&back=0; BACK; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_URL"
+keymap "Y" COMMAND "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2B&value=W3M_CURRENT_WORD&back=0; BACK; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
 
 ## Command Line mode ##
 

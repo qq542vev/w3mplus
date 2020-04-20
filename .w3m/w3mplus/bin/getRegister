@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
 
-## File: getQuickMark.sh
+## File: getRegister
 ##
-## Get a quick mark.
+## Get a register.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   getQuickMark.sh [OPTION]... [PATTERN]...
+##   getRegister [OPTION]... [key]...
 ##   (end)
 ##
 ## Options:
 ##
-##   -c, --config=FILE     - quick mark file
+##   -c, --config=FILE     - register file
 ##   -E, --extended-regexp - PATTERNS are extended regular expressions
 ##   -h, --help            - display this help and exit.
 ##   -v, --version         - output version information and exit.
@@ -20,13 +20,14 @@
 ## Exit Status:
 ##
 ##   0 - Program terminated normally.
+##   1 - No corresponding field found.
 ##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
 ##
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.0.0
-##   date - 2020-03-21
+##   version - 1.0.0
+##   date - 2020-04-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -47,10 +48,9 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
-config="${W3MPLUS_PATH}/quickmark"
-moveColmun='0'
-moveLine='0'
+config="${W3MPLUS_PATH}/register"
 regexpFlag='0'
+rowFlag='0'
 args=''
 
 # コマンドライン引数の解析する
@@ -62,6 +62,10 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-E' | '--extended-regexp')
 			regexpFlag='1'
+			shift
+			;;
+		'-r' | '-row')
+			rowFlag='1'
 			shift
 			;;
 		# ヘルプメッセージを表示して終了する
@@ -120,38 +124,47 @@ mkdir -p -- "${directory%?$}"
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
-	set -- $(cat)
-fi
-
-result=$(for pattern in ${@+"${@}"}; do
-	printf '%s\n' "${pattern}"
-done | awk -v "config=${config}" -v "regexpFlag=${regexpFlag}" -- '
-	{
-		pattern = $0
-
-		if(!regexpFlag) {
-			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
-		}
-
-		pattern = "^" pattern "$"
-
-		while(0 < (getline < config)) {
-			if($1 ~ pattern) {
-				printf("%s\n", $0)
-			}
-		}
-
-		close(config)
-	}
-')
-
-case "${result}" in
-	'')
-		exitStatus='1'
-		;;
-	*)
-		printf '%s\n' "${result}"
-		;;
+case "${#}" in '0')
+	cat -- "${config}"
+	exit
 esac
+
+awkScript='
+	BEGIN {
+		exitStatus = 1
+	}
+
+	(regexpFlag && $1 ~ ("^" pattern "$")) || (!regexpFlag && $1 == pattern) {
+		exitStatus = 0
+
+		if(rowFlag) {
+			printf("%s\n", $0)
+		} else {
+			printf("%s", $2)
+			exit
+		}
+	}
+
+	END {
+		printf("%s", "$")
+		exit exitStatus
+	}
+'
+
+status='1'
+
+for pattern in ${@+"${@}"}; do
+	if result=$(awk -F '\t' -v "pattern=$(printf '%s' "${pattern}" | octalEncode)" -v "regexpFlag=${regexpFlag}" -v "rowFlag=${rowFlag}" -- "${awkScript}" "${config}"); then
+		case "${rowFlag}" in
+			'0')
+				printf '%s' "${result%$}" | base64 -d
+				exit
+				;;
+			*)
+				printf '%s' "${result%$}"
+				status='0'
+		esac
+	fi
+done
+
+exitStatus="${status}"; exit

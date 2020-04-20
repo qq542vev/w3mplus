@@ -1,0 +1,201 @@
+#!/usr/bin/env sh
+
+## File: runenvvar
+##
+## Run a subcommand based on environment variables.
+##
+## Usage:
+##
+##   (start code)
+##   runenvvar [OPTION]... SUB_COMMAND VARIABLE_NAME
+##   (end)
+##
+## Options:
+##
+##   -e, --encode-type - variable encoding type. only 'none', 'base64' or 'urlencode'.
+##   -h, --help        - display this help and exit.
+##   -v, --version     - output version information and exit.
+##
+## Exit Status:
+##
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2020-04-05
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
+# 初期化
+set -efu
+umask '0022'
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
+
+# initファイルの読み込み
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/lib/w3mplus/init"
+
+encodeType='none'
+args=''
+
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-e' | '--encode-type')
+			case "${2}" in
+				'none' | 'base64' | 'urlencode')
+					encodeType="${2}"
+					;;
+				*)
+					cat <<- EOF 1>&2
+						${0##*/}: invalid option -- '${1}'
+						Possible values: Character Set
+					EOF
+
+					exitStatus="${EX_USAGE}"; exit
+					;;
+			esac
+
+			shift 2
+			;;
+		# ヘルプメッセージを表示して終了する
+		'-h' | '--help')
+			usage
+			exit
+			;;
+		# バージョン情報を表示して終了する
+		'-v' | '--version')
+			version
+			exit
+			;;
+		# `--name=value` 形式のロングオプション
+		'--'[!-]*'='*)
+			option="${1}"
+			shift
+			# `--name value` に変換して再セットする
+			set -- "${option%%=*}" "${option#*=}" ${@+"${@}"}
+			;;
+		# 以降はオプション以外の引数
+		'--')
+			shift
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
+			;;
+		# 複合ショートオプション
+		'-'[!-][!-]*)
+			option=$(printf '%s\n' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s\n' "${1}" | cut -c '3-'; printf '$')
+
+			shift
+			# `-abc` を `-a -bc` に変換して再セットする
+			set -- "-${option%?$}" "-${options%?$}" ${@+"${@}"}
+			;;
+		# その他の無効なオプション
+		'-'*)
+			cat <<- EOF 1>&2
+				${0##*/}: invalid option -- '${1}'
+				Try '${0##*/} --help' for more information.
+			EOF
+
+			exitStatus="${EX_USAGE}"; exit
+			;;
+		# その他のオプション以外の引数
+		*)
+			args="${args}$(quoteEscape "${1}")"
+			shift
+			;;
+	esac
+done
+
+eval set -- "${args}"
+
+action="${1}"
+variableName="${2}"
+
+if expr "${variableName}" ':' '[_A-Za-z][_0-9A-Za-z]*$' >'/dev/null'; then :; else
+	cat <<- EOF 1>&2
+		${0##*/}: invalid variable name -- '${variableName}'
+		Try '${0##*/} --help' for more information.
+	EOF
+
+	exitStatus="${EX_USAGE}"; exit
+fi
+
+value=$(eval printf '%s' "\"\${${variableName}-}\""; printf '$')
+
+case "${encodeType}" in
+	'base64')
+		value=$(printf '%s' "${value%$}" | base64 -d; printf '$')
+		;;
+	'urlencode')
+		value=$(printf '%s' "${value%$}" | urldecode; printf '$')
+		;;
+esac
+
+value="${value%$}"
+
+case "${value}" in '')
+	httpResponseW3mBack.sh
+	exit
+	;;
+esac
+
+case "${action}" in
+	'addBookmark')
+		printRedirect.sh "${value}" 'W3m-control: ADD_BOOKMARK'
+		;;
+	'decrementURI')
+		printRedirect.sh "$(incrementuri -n '-1' -- "${value}")"
+		;;
+	'incrementURI')
+		printRedirect.sh "$(incrementuri -- "${value}")"
+		;;
+	'parentUriPath')
+		printRedirect.sh "$(parenturipath -- "${value}")"
+		;;
+	'prevTab')
+		printRedirect.sh "${value}" 'W3m-control: PREV_TAB'
+		;;
+	'register')
+		printf '%s' "${value}" | register
+		;;
+	'search')
+		printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${value}" | urlencode)"
+		;;
+	'sendEmail')
+		printRedirect.sh "mailto:?body=$(printf '%s' "${value}" | urlencode)"
+		;;
+	'show')
+		httpResponseW3mBack.sh "W3m-control: READ_SHELL printf '%s' '$(printf '%s' "${value}" | base64)' | base64 -d"
+		;;
+	'viewSource')
+		printRedirect.sh "${value}" 'W3m-control: VIEW'
+		;;
+	'viewSourceExternally')
+		printRedirect.sh "${value}" 'W3m-control: VIEW' 'W3m-control: EDIT_SCREEN' 'W3m-control: VIEW'
+		;;
+	'yank')
+		yank.sh -- "${value}"
+		;;
+	*)
+		printHtml.sh --title 'Problem loading page' <<- 'EOF'
+			<h1>The address isn't valid</h1>
+
+			<p>The URL is not valid and cannot be loaded.</p>
+
+			<ul>
+				<li>Web addresses are usually written like <strong>http://www.example.com/</strong></li>
+				<li>Make sure that you're using forward slashes (i.e. /).</li>
+			</ul>
+		EOF
+		;;
+esac

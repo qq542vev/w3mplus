@@ -1,19 +1,20 @@
 #!/usr/bin/env sh
 
-## File: register
+## File: setRegister
 ##
 ## Set register for w3m.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   register [OPTION]... [FILE]...
+##   setRegister [OPTION]... [FILE]...
 ##   (end)
 ##
 ## Options:
 ##
-##   -h, --help    - display this help and exit.
-##   -v, --version - output version information and exit.
+##   -c, --config=FILE - register file
+##   -h, --help        - display this help and exit.
+##   -v, --version     - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -24,7 +25,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-04-04
+##   date - 2020-04-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -45,10 +46,15 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 tmpDir=$(mktemp -d)
+config="${W3MPLUS_PATH}/register"
 args=''
 
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
+		'-c' | '--congig')
+			config="${2}"
+			shift 2
+			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
@@ -105,6 +111,10 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
+: >>"${config}"
+
 eval set -- "${args}"
 
 # 引数の個数が過小である
@@ -112,29 +122,79 @@ case "${#}" in '0')
 	tmpFile=$(mktemp -p "${tmpDir}")
 	cat >"${tmpFile}"
 
-	set -- "${tmpFile}"
+	set -- '0' "${tmpFile}"
 	;;
 esac
 
-{
-	i=$((9 - ${#}))
-	while [ 0 -le "${i}" ]; do
-		item=$(eval printf '%s' "\"\${W3MPLUS_REGISTER_${i}-}\"")
+date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 
-		case "${item}" in ?*)
-			printf 'W3m-control: SETENV W3MPLUS_REGISTER_%s=%s\n' "$((i + ${#}))" "${item}"
+while [ 1 -le "${#}" ]; do
+	key="${1}"
+	file="${2}"
+
+	case "${key}" in
+		'+')
+			case "${file}" in
+				'')
+					sed -e "/^[0-9]	/d" -- "${config}"
+					;;
+				*)
+					awk -F '\t' -- '
+						BEGIN {
+							split("", data)
+							count = 0
+						}
+
+						count < 9 && count == $1 {
+							count++
+						}
+
+						{
+							data[$1] = $2 "\t" $3
+						}
+
+						END {
+							for(i = count; 1 <= i; i--) {
+								data[i] = data[i - 1]
+							}
+
+							delete data[0]
+
+							for(key in data) {
+								printf("%s\t%s\n", key, data[key])
+							}
+						}
+					' "${config}"
+
+					printf '%s\t%s\t%s\n' '0' "$(base64 "${file}")" "${date}"
+					;;
+			esac
 			;;
-		esac
+		'+'*)
+			reg=$(getRegister -c "${config}" -- "${key#+}" || :; printf '$')
+			reg="${reg%$}"
 
-		i=$((i - 1))
-	done
+			if [ -n "${file}" ]; then
+				sed -e "/^${key#+}	/d" -- "${config}"
 
-	i='1'
-	for file in ${@+"${@}"}; do
-		if [ "$((${#} - i))" -le 9 ]; then
-			printf 'W3m-control: SETENV W3MPLUS_REGISTER_%s=%s\n' "$((${#} - i))" "$(base64 ${file} | tr -d '\n')"
-		fi
+				printf '%s\t%s\t%s\n' "${key#+}" "$(
+				{
+					printf '%s' "${reg}"
+					cat -- "${file}"
+				} | base64)" "${date}"
+			elif [ -n "${reg}" ]; then
+				cat -- "${config}"
+			fi
+			;;
+		*)
+			sed -e "/^${key}	/d" -- "${config}"
 
-		i=$((i + 1))
-	done
-} | httpResponseW3mBack.sh -
+			case "${file}" in ?*)
+				printf '%s\t%s\t%s\n' "${key}" "$(base64 "${file}")" "${date}"
+				;;
+			esac
+			;;
+	esac | sort -o "${config}"
+
+	shift 2
+done
