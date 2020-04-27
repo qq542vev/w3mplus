@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-04-15
+##   version - 1.1.0
+##   date - 2020-04-27
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -44,6 +44,31 @@ export 'IFS'
 # initファイルの読み込み
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
+
+toEscapeSequence () (
+	(cat ${@+"${@}"}; echo) | awk -- '
+		BEGIN {
+			getline
+			printf("%s", toEscapeSequence($0))
+
+			while(0 < getline) {
+				printf("\\n%s", toEscapeSequence($0))
+			}
+		}
+
+		function toEscapeSequence(string) {
+			gsub("\\", "\\\\\\\\", string)
+			gsub("\a", "\\\\a", string)
+			gsub("\b", "\\\\b", string)
+			gsub("\t", "\\\\t", string)
+			gsub("\v", "\\\\v", string)
+			gsub("\f", "\\\\f", string)
+			gsub("\r", "\\\\r", string)
+
+			return string
+		}
+	'
+)
 
 tmpDir=$(mktemp -d)
 config="${W3MPLUS_PATH}/register"
@@ -166,7 +191,7 @@ while [ 1 -le "${#}" ]; do
 						}
 					' "${config}"
 
-					printf '%s\t%s\t%s\n' '0' "$(base64 "${file}")" "${date}"
+					printf '%s\t%s\t%s\n' '0' "$(toEscapeSequence "${file}")" "${date}"
 					;;
 			esac
 			;;
@@ -181,7 +206,7 @@ while [ 1 -le "${#}" ]; do
 				{
 					printf '%s' "${reg}"
 					cat -- "${file}"
-				} | base64)" "${date}"
+				} | toEscapeSequence)" "${date}"
 			elif [ -n "${reg}" ]; then
 				cat -- "${config}"
 			fi
@@ -190,7 +215,7 @@ while [ 1 -le "${#}" ]; do
 			sed -e "/^${key}	/d" -- "${config}"
 
 			case "${file}" in ?*)
-				printf '%s\t%s\t%s\n' "${key}" "$(base64 "${file}")" "${date}"
+				printf '%s\t%s\t%s\n' "${key}" "$(toEscapeSequence "${file}")" "${date}"
 				;;
 			esac
 			;;

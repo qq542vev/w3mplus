@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-04-15
+##   version - 1.1.0
+##   date - 2020-04-27
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -64,7 +64,7 @@ while [ 1 -le "${#}" ]; do
 			regexpFlag='1'
 			shift
 			;;
-		'-r' | '-row')
+		'-r' | '--row')
 			rowFlag='1'
 			shift
 			;;
@@ -146,7 +146,7 @@ awkScript='
 	}
 
 	END {
-		printf("%s", "$")
+		printf("$")
 		exit exitStatus
 	}
 '
@@ -157,7 +157,8 @@ for pattern in ${@+"${@}"}; do
 	if result=$(awk -F '\t' -v "pattern=$(printf '%s' "${pattern}" | octalEncode)" -v "regexpFlag=${regexpFlag}" -v "rowFlag=${rowFlag}" -- "${awkScript}" "${config}"); then
 		case "${rowFlag}" in
 			'0')
-				printf '%s' "${result%$}" | base64 -d
+				result=$(printf '%s' "${result%$}" | sed -e 's/%/%%/g'; printf '$')
+				printf "${result%$}"
 				exit
 				;;
 			*)

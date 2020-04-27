@@ -22,7 +22,7 @@
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.4.1
 ##   date - 2020-04-20
-##   since - 2019-05-29
+##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
