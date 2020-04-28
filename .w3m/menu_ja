@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.9.0
-##   date - 2020-03-25
+##   version - 1.10.0
+##   date - 2020-03-29
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -1287,4 +1287,568 @@ menu ToggleOption
 	func "u  ページ内の URL をリンクに(変換 / 非変換)" SET_OPTION "u" "mark_all_pages=toggle"
 	func "w  テキストファイルの行折り返しを(有効/ 無効)" COMMAND "w" "SET_OPTION fold_line=toggle; RESHAPE"
 	func "W  折り返し検索を(有効 / 無効)" WRAP_TOGGLE "W"
+end
+
+menu register0
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=0&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=0&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=0&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=0&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=0&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=0&value=W3M_CURRENT_WORD"
+end
+
+menu register1
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=1&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=1&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=1&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=1&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=1&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=1&value=W3M_CURRENT_WORD"
+end
+
+menu register2
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=2&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=2&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=2&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=2&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=2&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=2&value=W3M_CURRENT_WORD"
+end
+
+menu register3
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=3&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=3&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=3&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=3&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=3&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=3&value=W3M_CURRENT_WORD"
+end
+
+menu register4
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=4&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=4&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=4&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=4&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=4&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=4&value=W3M_CURRENT_WORD"
+end
+
+menu register5
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=5&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=5&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=5&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=5&run=show"	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=5&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=5&value=W3M_CURRENT_WORD"
+end
+
+menu register6
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=6&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=6&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=6&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=6&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=6&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=6&value=W3M_CURRENT_WORD"
+end
+
+menu register7
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=7&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=7&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=7&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=7&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=7&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=7&value=W3M_CURRENT_WORD"
+end
+
+menu register8
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=9&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=9&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=9&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=9&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=9&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=9&value=W3M_CURRENT_WORD"
+end
+
+menu register9
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=9&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=9&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=9&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=9&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=9&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=9&value=W3M_CURRENT_WORD"
+end
+
+menu registera
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=a&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=a&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=a&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=a&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=a&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=a&value=W3M_CURRENT_WORD"
+end
+
+menu registerb
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=b&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=b&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=b&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=b&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=b&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=b&value=W3M_CURRENT_WORD"
+end
+
+menu registerc
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=c&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=c&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=c&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=c&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=c&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=c&value=W3M_CURRENT_WORD"
+end
+
+menu registerd
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=d&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=d&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=d&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=d&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=d&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=d&value=W3M_CURRENT_WORD"
+end
+
+menu registere
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=e&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=e&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=e&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=e&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=e&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=e&value=W3M_CURRENT_WORD"
+end
+
+menu registerf
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=f&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=f&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=f&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=f&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=f&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=f&value=W3M_CURRENT_WORD"
+end
+
+menu registerg
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=g&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=g&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=g&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=g&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=g&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=g&value=W3M_CURRENT_WORD"
+end
+
+menu registerh
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=h&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=h&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=h&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=h&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=h&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=h&value=W3M_CURRENT_WORD"
+end
+
+menu registeri
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=i&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=i&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=i&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=i&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=i&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=i&value=W3M_CURRENT_WORD"
+end
+
+menu registerj
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=j&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=j&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=j&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=j&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=j&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=j&value=W3M_CURRENT_WORD"
+end
+
+menu registerk
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=k&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=k&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=k&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=k&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=k&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=k&value=W3M_CURRENT_WORD"
+end
+
+menu registerl
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=l&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=l&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=l&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=l&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=l&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=l&value=W3M_CURRENT_WORD"
+end
+
+menu registerm
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=m&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=m&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=m&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=m&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=m&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=m&value=W3M_CURRENT_WORD"
+end
+
+menu registern
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=n&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=n&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=n&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=n&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=n&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=n&value=W3M_CURRENT_WORD"
+end
+
+menu registero
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=o&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=o&value=W3M_CURRENT_WORD"
+end
+
+menu registerp
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=o&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=o&value=W3M_CURRENT_WORD"
+end
+
+menu registerq
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=q&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=q&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=q&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=q&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=q&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=q&value=W3M_CURRENT_WORD"
+end
+
+menu registerr
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=r&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=r&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=r&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=r&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=r&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=r&value=W3M_CURRENT_WORD"
+end
+
+menu registers
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=s&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=s&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=s&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=s&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=s&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=s&value=W3M_CURRENT_WORD"
+end
+
+menu registert
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=t&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=t&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=t&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=t&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=t&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=t&value=W3M_CURRENT_WORD"
+end
+
+menu registeru
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=u&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=u&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=u&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=u&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=u&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=u&value=W3M_CURRENT_WORD"
+end
+
+menu registerv
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=v&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=v&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=v&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=v&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=v&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=v&value=W3M_CURRENT_WORD"
+end
+
+menu registerw
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=w&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=w&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=w&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=w&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=w&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=w&value=W3M_CURRENT_WORD"
+end
+
+menu registerx
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=x&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=x&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=x&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=x&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=x&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=x&value=W3M_CURRENT_WORD"
+end
+
+menu registery
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=y&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=y&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=y&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=y&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=y&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=y&value=W3M_CURRENT_WORD"
+end
+
+menu registerz
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=z&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=z&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=z&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=z&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=z&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=z&value=W3M_CURRENT_WORD"
+end
+
+menu registerA
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=a&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=a&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=a&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=a&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Ba&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Ba&value=W3M_CURRENT_WORD"
+end
+
+menu registerB
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=b&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=b&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=b&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=b&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bb&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bb&value=W3M_CURRENT_WORD"
+end
+
+menu registerC
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=c&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=c&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=c&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=c&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bc&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bc&value=W3M_CURRENT_WORD"
+end
+
+menu registerD
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=d&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=d&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=d&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=d&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bd&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bd&value=W3M_CURRENT_WORD"
+end
+
+menu registerE
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=e&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=e&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=e&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=e&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Be&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Be&value=W3M_CURRENT_WORD"
+end
+
+menu registerF
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=f&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=f&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=f&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=f&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bf&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bf&value=W3M_CURRENT_WORD"
+end
+
+menu registerG
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=g&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=g&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=g&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=g&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bg&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bg&value=W3M_CURRENT_WORD"
+end
+
+menu registerH
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=h&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=h&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=h&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=h&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bh&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bh&value=W3M_CURRENT_WORD"
+end
+
+menu registerI
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=i&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=i&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=i&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=i&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bi&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bi&value=W3M_CURRENT_WORD"
+end
+
+menu registerJ
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=j&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=j&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=j&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=j&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bj&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bj&value=W3M_CURRENT_WORD"
+end
+
+menu registerK
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=k&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=k&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=k&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=k&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bk&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bk&value=W3M_CURRENT_WORD"
+end
+
+menu registerL
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=l&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=l&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=l&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=l&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bl&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bl&value=W3M_CURRENT_WORD"
+end
+
+menu registerM
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=m&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=m&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=m&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=m&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bm&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bm&value=W3M_CURRENT_WORD"
+end
+
+menu registerN
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=n&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=n&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=n&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=n&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bn&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bn&value=W3M_CURRENT_WORD"
+end
+
+menu registerO
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=o&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bo&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bo&value=W3M_CURRENT_WORD"
+end
+
+menu registerP
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=p&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=p&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=p&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=p&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bp&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bp&value=W3M_CURRENT_WORD"
+end
+
+menu registerQ
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=q&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=q&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=q&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=q&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bq&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bq&value=W3M_CURRENT_WORD"
+end
+
+menu registerR
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=r&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=r&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=r&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=r&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Br&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Br&value=W3M_CURRENT_WORD"
+end
+
+menu registerS
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=s&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=s&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=s&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=s&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bs&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bs&value=W3M_CURRENT_WORD"
+end
+
+menu registerT
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=t&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=t&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=t&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=t&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bt&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bt&value=W3M_CURRENT_WORD"
+end
+
+menu registerU
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=u&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=u&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=u&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=u&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bu&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bu&value=W3M_CURRENT_WORD"
+end
+
+menu registerV
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=v&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=v&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=v&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=v&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bv&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bv&value=W3M_CURRENT_WORD"
+end
+
+menu registerW
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=w&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=w&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=w&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=w&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bw&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bw&value=W3M_CURRENT_WORD"
+end
+
+menu registerX
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=X&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=X&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=X&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=X&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2BX&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2BX&value=W3M_CURRENT_WORD"
+end
+
+menu registerY
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=y&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=y&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=y&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=y&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2By&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2By&value=W3M_CURRENT_WORD"
+end
+
+menu registerZ
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=z&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=z&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=z&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=z&run=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bz&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2Bz&value=W3M_CURRENT_WORD"
+end
+
+menu registerCurrent
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=runVariable&run=search&variable=W3M_URL"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&run=search&variable=W3M_URL&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_URL"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&run=show&variable=W3M_URL"
 end
