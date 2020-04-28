@@ -20,9 +20,9 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.5.0
-##   date - 2020-04-20
-##   since - 2020-05-25
+##   version - 1.7.0
+##   date - 2020-04-29
+##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -219,6 +219,11 @@ if result=$(
 			if [ -n "${uri}" ]; then
 				setQuickMark.sh --config "${W3MPLUS_PATH}/localmarkGoto" --line "${line}" -- "${query_key}" "${uri}"
 			fi
+			;;
+		'registers')
+			: >>"${W3MPLUS_PATH}/register"
+
+			printRedirect.sh "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/register"
 			;;
 		'getRegister')
 			register=$(getRegister "${query_key-0}"; printf '$')

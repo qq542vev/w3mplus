@@ -1085,6 +1085,7 @@ keymap "gx" COMMAND "MARK_URL; GOTO_LINK"
 keymap "V" GOTO "file:///cgi-bin/w3mplus?action=lineVisualMode"
 
 keymap ":r" PIPE_SHELL
+keymap ":\"" GOTO "file:///cgi-bin/w3mplus?action=registers"
 
 keymap "!" MENU "filter"
 keymap "g~" MENU "switchcase"
