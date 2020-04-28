@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.10.0
-##   date - 2020-03-25
+##   version - 1.11.0
+##   date - 2020-03-29
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -1112,6 +1112,61 @@ keymap "\"6" MENU "register6"
 keymap "\"7" MENU "register7"
 keymap "\"8" MENU "register8"
 keymap "\"9" MENU "register9"
+
+keymap "\"a" MENU "registera"
+keymap "\"b" MENU "registerb"
+keymap "\"c" MENU "registerc"
+keymap "\"d" MENU "registerd"
+keymap "\"e" MENU "registere"
+keymap "\"f" MENU "registerf"
+keymap "\"g" MENU "registerg"
+keymap "\"h" MENU "registerh"
+keymap "\"i" MENU "registeri"
+keymap "\"j" MENU "registerj"
+keymap "\"k" MENU "registerk"
+keymap "\"l" MENU "registerl"
+keymap "\"m" MENU "registerm"
+keymap "\"n" MENU "registern"
+keymap "\"o" MENU "registero"
+keymap "\"p" MENU "registerp"
+keymap "\"q" MENU "registerq"
+keymap "\"r" MENU "registerr"
+keymap "\"s" MENU "registers"
+keymap "\"t" MENU "registert"
+keymap "\"u" MENU "registeru"
+keymap "\"v" MENU "registerv"
+keymap "\"w" MENU "registerw"
+keymap "\"x" MENU "registerx"
+keymap "\"y" MENU "registery"
+keymap "\"z" MENU "registerz"
+
+keymap "\"A" MENU "registerA"
+keymap "\"B" MENU "registerB"
+keymap "\"C" MENU "registerC"
+keymap "\"D" MENU "registerD"
+keymap "\"E" MENU "registerE"
+keymap "\"F" MENU "registerF"
+keymap "\"G" MENU "registerG"
+keymap "\"H" MENU "registerH"
+keymap "\"I" MENU "registerI"
+keymap "\"J" MENU "registerJ"
+keymap "\"K" MENU "registerK"
+keymap "\"L" MENU "registerL"
+keymap "\"M" MENU "registerM"
+keymap "\"N" MENU "registerN"
+keymap "\"O" MENU "registerO"
+keymap "\"P" MENU "registerP"
+keymap "\"Q" MENU "registerQ"
+keymap "\"R" MENU "registerR"
+keymap "\"S" MENU "registerS"
+keymap "\"T" MENU "registerT"
+keymap "\"U" MENU "registerU"
+keymap "\"V" MENU "registerV"
+keymap "\"W" MENU "registerW"
+keymap "\"X" MENU "registerX"
+keymap "\"Y" MENU "registerY"
+keymap "\"Z" MENU "registerZ"
+
 keymap "\"%" MENU "registerCurrent"
 
 # w3mplus Key Map #
