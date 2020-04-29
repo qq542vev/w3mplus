@@ -12,8 +12,8 @@
 ##
 ## Options:
 ##
-## -h, --help                - display this help and exit.
-## -v, --version             - output version information and exit.
+##   -h, --help    - display this help and exit.
+##   -v, --version - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -25,6 +25,7 @@
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.2
 ##   date - 2020-03-21
+##   since - 2019-07-13
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
