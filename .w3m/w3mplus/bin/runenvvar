@@ -26,6 +26,7 @@
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 2.0.0
 ##   date - 2020-04-05
+##   since - 2019-07-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -164,9 +165,6 @@ case "${action}" in
 		;;
 	'prevTab')
 		printRedirect.sh "${value}" 'W3m-control: PREV_TAB'
-		;;
-	'register')
-		printf '%s' "${value}" | register
 		;;
 	'search')
 		printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${value}" | urlencode)"
