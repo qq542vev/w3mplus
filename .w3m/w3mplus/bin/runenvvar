@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.0.0
-##   date - 2020-04-05
+##   version - 2.1.0
+##   date - 2020-05-02
 ##   since - 2019-07-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -182,7 +182,8 @@ case "${action}" in
 		printRedirect.sh "${value}" 'W3m-control: VIEW' 'W3m-control: EDIT_SCREEN' 'W3m-control: VIEW'
 		;;
 	'yank')
-		yank.sh -- "${value}"
+		printf '%s' "${value}" | eval "${W3MPLUS_YANK}"
+		httpResponseW3mBack.sh
 		;;
 	*)
 		printHtml.sh --title 'Problem loading page' <<- 'EOF'
