@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.0
-##   date - 2020-04-27
+##   version - 1.1.1
+##   date - 2020-05-05
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -156,12 +156,13 @@ date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 while [ 1 -le "${#}" ]; do
 	key="${1}"
 	file="${2}"
+	escapedKey=$(printf '%s' "${key#+}" | sed -e 's/\([].\*/[]\)/\\\1/g')
 
 	case "${key}" in
 		'+')
 			case "${file}" in
 				'')
-					sed -e "/^[0-9]	/d" -- "${config}"
+					sed -e '/^[0-9]	/d' -- "${config}"
 					;;
 				*)
 					awk -F '\t' -- '
@@ -200,7 +201,7 @@ while [ 1 -le "${#}" ]; do
 			reg="${reg%$}"
 
 			if [ -n "${file}" ]; then
-				sed -e "/^${key#+}	/d" -- "${config}"
+				sed -e "/^${escapedKey}	/d" -- "${config}"
 
 				printf '%s\t%s\t%s\n' "${key#+}" "$(
 				{
@@ -212,7 +213,7 @@ while [ 1 -le "${#}" ]; do
 			fi
 			;;
 		*)
-			sed -e "/^${key}	/d" -- "${config}"
+			sed -e "/^${escapedKey}	/d" -- "${config}"
 
 			case "${file}" in ?*)
 				printf '%s\t%s\t%s\n' "${key}" "$(toEscapeSequence "${file}")" "${date}"

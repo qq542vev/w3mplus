@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.10.0
-##   date - 2020-03-29
+##   version - 1.11.0
+##   date - 2020-05-05
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -1339,6 +1339,7 @@ menu register5
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=5&run=search&redirect=1"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=5&run=sendEmail"
 	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=5&run=show"	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=5&value=W3M_URL"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=5&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=5&value=W3M_CURRENT_WORD"
 end
 
@@ -1851,4 +1852,11 @@ menu registerCurrent
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&run=search&variable=W3M_URL&redirect=1"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_URL"
 	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&run=show&variable=W3M_URL"
+end
+
+menu registerSearch
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=%2F&run=search"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=%2F&run=search&redirect=1"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=%2F&run=sendEmail"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=%2F&run=show"
 end

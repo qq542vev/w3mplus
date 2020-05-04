@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.12.1
-##   date - 2020-05-04
+##   version - 1.13.1
+##   date - 2020-05-05
 ##   since - 2019-06-30
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -1852,4 +1852,11 @@ menu registerCurrent
 	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=runVariable&run=search&variable=W3M_URL&redirect=1"
 	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=runVariable&run=sendEmail&variable=W3M_URL"
 	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=runVariable&run=show&variable=W3M_URL"
+end
+
+menu registerSearch
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=getRegister&key=%2F&run=search"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=getRegister&key=%2F&run=search&redirect=1"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=getRegister&key=%2F&run=sendEmail"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=getRegister&key=%2F&run=show"
 end

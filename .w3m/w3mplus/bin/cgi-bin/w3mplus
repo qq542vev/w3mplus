@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.7.1
-##   date - 2020-04-29
+##   version - 1.8.0
+##   date - 2020-05-05
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -279,11 +279,20 @@ if result=$(
 			EOF
 			;;
 		'search')
+			case "${query_query-}" in ?*)
+				printf '%s' "${query_query}" | setRegister '/' -
+			esac
+
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${query_query-}" | urlencode)"
 			;;
 		'dictWordSearch')
-			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${query_query#?}" | urlencode)" ${query_prevtab+"W3m-control: PREV_TAB"}
+			search="${query_query#?}"
 
+			case "${search}" in ?*)
+				printf '%s' "${search}" | setRegister '/' -
+			esac
+
+			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${search}" | urlencode)" ${query_prevtab+"W3m-control: PREV_TAB"}
 			;;
 		'selectLine')
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
