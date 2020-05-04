@@ -1168,6 +1168,7 @@ keymap "\"X" MENU "registerX"
 keymap "\"Y" MENU "registerY"
 keymap "\"Z" MENU "registerZ"
 
+keymap "\"\"" MENU "register0"
 keymap "\"%" MENU "registerCurrent"
 keymap "\"/" MENU "registerSearch"
 
