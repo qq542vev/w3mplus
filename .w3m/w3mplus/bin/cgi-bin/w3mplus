@@ -20,7 +20,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.7.0
+##   version - 1.7.1
 ##   date - 2020-04-29
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
@@ -227,14 +227,13 @@ if result=$(
 			;;
 		'getRegister')
 			register=$(getRegister "${query_key-0}"; printf '$')
-
 			W3MPLUS_REGISTER_TMP="${register%$}" runenvvar "${query_run}" 'W3MPLUS_REGISTER_TMP'
 			;;
 		'setRegister')
 			value=$(expand "${query_value-W3M_URL}")
 
 			case "${value}" in ?*)
-				printf '%s' "${value}" | setRegister "${query_key-0}" -
+				printf '%s' "${value}" | setRegister "${query_key-+}" -
 				;;
 			esac
 

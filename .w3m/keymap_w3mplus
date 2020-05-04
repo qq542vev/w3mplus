@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.11.0
-##   date - 2020-03-29
+##   version - 1.11.1
+##   date - 2020-05-04
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -696,8 +696,8 @@ keymap ":f" FRAME
 
 ### Copying text ###
 
-keymap "y" COMMAND "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2B&value=W3M_URL&back=0; BACK; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_URL"
-keymap "Y" COMMAND "GOTO file:///cgi-bin/w3mplus?action=setRegister&key=%2B&value=W3M_CURRENT_WORD&back=0; BACK; GOTO file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
+keymap "y" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_URL"
+keymap "Y" GOTO "file:///cgi-bin/w3mplus?action=runVariable&run=yank&variable=W3M_CURRENT_WORD"
 
 ## Command Line mode ##
 

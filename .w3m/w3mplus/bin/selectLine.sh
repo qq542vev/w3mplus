@@ -25,7 +25,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.6
+##   version - 1.2.0
 ##   date - 2020-05-04
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -250,6 +250,7 @@ case "${action}" in
 		EOF
 		;;
 	'yank')
+		sed -e "${startLine},${endLine}!d" -- "${file}" | setRegister '+' -
 		sed -e "${startLine},${endLine}!d" -- "${file}" | eval "${W3MPLUS_YANK}"
 		httpResponseW3mBack.sh
 		;;
