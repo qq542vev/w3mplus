@@ -254,6 +254,7 @@ menu MenuTools
 	nop   "-----------------"
 	popup "Cookie の管理 (k)" MenuCookieManager "Kk"
 	popup "User Agent    (u)" MenuUserAgent "Uu"
+	func  "httpsのみ     (s)" GOTO "Ss" "file:///cgi-bin/w3mplus?action=httpsEverywhere"
 	func  "設定          (p)" OPTIONS "Pp"
 end
 

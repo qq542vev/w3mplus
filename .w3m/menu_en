@@ -5,7 +5,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.13.1
+##   version - 1.14.0
 ##   date - 2020-05-05
 ##   since - 2019-06-30
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
@@ -254,6 +254,7 @@ menu MenuTools
 	nop   "------------------"
 	popup "Cookie Manager (k)" MenuCookieManager "Kk"
 	popup "User Agent     (u)" MenuUserAgent "Uu"
+	func  "Only https     (s)" GOTO "Ss" "file:///cgi-bin/w3mplus?action=httpsEverywhere"
 	func  "Preferences    (p)" OPTIONS "Pp"
 end
 
