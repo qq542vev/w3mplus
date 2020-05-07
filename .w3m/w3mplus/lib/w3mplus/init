@@ -36,6 +36,8 @@
 : "${W3MPLUS_ZOOM_MAX:=300}"
 : "${W3MPLUS_ZOOM_MIN:=30}"
 : "${W3MPLUS_W3M_CONFIG:=${HOME}/.w3m/config}"
+: "${W3MPLUS_CAPTIVEPORTAL:=0}"
+
 : "${W3MPLUS_TEMPLATE_HTTP:=${W3MPLUS_PATH}/lib/w3mplus/template/http}"
 : "${W3MPLUS_TEMPLATE_HTML:=${W3MPLUS_PATH}/lib/w3mplus/template/html}"
 : "${W3MPLUS_TEMPLATE_FRAMESET:=${W3MPLUS_PATH}/lib/w3mplus/template/frameset}"

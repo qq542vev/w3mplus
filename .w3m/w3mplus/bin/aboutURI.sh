@@ -195,7 +195,7 @@ case "${1-about:about}" in
 		header='pid=,ppid=,pcpu=,vsz=,nice=,etime=,time=,args='
 		awkScript='
 			BEGIN {
-				headerCount = split("Process ID,Parent process ID,Ratio of CPU time,Memory usage,Nice value,Elapsed time,Cumulative CPU time,Command", header, /,/)
+				headerCount = split("Process ID,Parent process ID,Ratio of CPU time,Memory usage,Nice value,Elapsed time,Cumulative CPU time,Command", header, ",")
 				split("S M H DT", timeUnit)
 			}
 
