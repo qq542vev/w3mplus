@@ -1,21 +1,22 @@
 #!/usr/bin/env sh
 
-## File: getQuickMark.sh
+## File: setqmark
 ##
-## Get a quick mark.
+## Set a quick mark.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   getQuickMark.sh [OPTION]... [PATTERN]...
+##   setqmark [OPTION]... KEY [URI]...
 ##   (end)
 ##
 ## Options:
 ##
-##   -c, --config=FILE     - quick mark file
-##   -E, --extended-regexp - PATTERNS are extended regular expressions
-##   -h, --help            - display this help and exit.
-##   -v, --version         - output version information and exit.
+##   -c, --config=FILE    quick mark file
+##   -C, --colmun=NUMBER  colmun number
+##   -l, --line=NUMBER    line number
+##   -h, --help           display this help and exit.
+##   -v, --version        output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -25,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.0.0
-##   date - 2020-03-21
+##   version - 1.1.4
+##   date - 2020-02-27
 ##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -49,21 +50,37 @@ export 'IFS'
 
 # 各変数に既定値を代入する
 config="${W3MPLUS_PATH}/quickmark"
-moveColmun='0'
-moveLine='0'
-regexpFlag='0'
-args=''
+colmun='1'
+line='1'
+fields=''
+addList=''
+date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+unset 'key'
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-c' | '--config')
+		'-c' | '--congig')
 			config="${2}"
 			shift 2
 			;;
-		'-E' | '--extended-regexp')
-			regexpFlag='1'
-			shift
+		'-C' | '--colmun')
+			if [ "${2}" = '0' ] || expr -- "${2}" ':' '-\{0,1\}[1-9][0-9]*$' >'/dev/null'; then
+				colmun="${2}"
+				shift 2
+			else
+				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+				exitStatus="${EX_USAGE}"; exit
+			fi
+			;;
+		'-l' | '--line')
+			if [ "${2}" = '0' ] || expr -- "${2}" ':' '-\{0,1\}[1-9][0-9]*$' >'/dev/null'; then
+				line="${2}"
+				shift 2
+			else
+				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+				exitStatus="${EX_USAGE}"; exit
+			fi
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -85,8 +102,6 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-			args="${args}$(quoteEscape ${@+"${@}"})"
-			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -108,8 +123,19 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			args="${args}$(quoteEscape "${1}")"
-			shift
+			case "${key+1}" in
+				'1')
+					fields=$(printf '%s%s\t%s\t%d\t%d\t%s\n$' "${fields}" "${key}" "${1}" "${line}" "${colmun}" "${date}")
+					fields="${fields%$}"
+					escapedURI=$(printf '%s' "${1}" | htmlescape)
+					addList="${addList}<li><a href=\"${escapedURI}\">${escapedURI}</a></li>"
+					;;
+				*)
+					key="${1}"
+					;;
+				esac
+
+				shift
 			;;
 	esac
 done
@@ -118,41 +144,26 @@ directory=$(dirname -- "${config}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
-# オプション以外の引数を再セットする
-eval set -- "${args}"
+escapedKey=$(printf '%s' "${key}" | sed 's/[].\*/[]/\\&/g')
 
-# 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
-	set -- $(cat)
+deleteList=$(grep -e "^${escapedKey}	" -- "${config}" | cut -f '2' | htmlescape | sed -e 's/^.*$/<li><a href="&">&<\/a><\/li>/')
+
+if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
+	httpResposeW3mBack.sh
+	exit
 fi
 
-result=$(for pattern in ${@+"${@}"}; do
-	printf '%s\n' "${pattern}"
-done | awk -v "config=${config}" -v "regexpFlag=${regexpFlag}" -- '
-	{
-		pattern = $0
+{
+	sed -e "/^\$/d; /^${escapedKey}	/d" -- "${config}"
+	printf '%s' "${fields}"
+} | sort -o "${config}"
 
-		if(!regexpFlag) {
-			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
-		}
+if [ -n "${addList}" ]; then
+	addList="<h1>Added Quick Mark</h1><ul>${addList}</ul>"
+fi
 
-		pattern = "^" pattern "$"
+if [ -n "${deleteList}" ]; then
+	deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
+fi
 
-		while(0 < (getline < config)) {
-			if($1 ~ pattern) {
-				printf("%s\n", $0)
-			}
-		}
-
-		close(config)
-	}
-')
-
-case "${result}" in
-	'')
-		exitStatus='1'
-		;;
-	*)
-		printf '%s\n' "${result}"
-		;;
-esac
+printf "<p>Set Quick Mark '<strong>%s</strong>'</p>%s" "${key}" "${addList}${deleteList}" | printHtml.sh  --title "Set Quick Mark '${key}'" --http-template ''

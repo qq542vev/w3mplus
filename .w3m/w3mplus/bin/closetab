@@ -1,22 +1,22 @@
 #!/usr/bin/env sh
 
-## File: setQuickMark.sh
+## File: closetab
 ##
-## Set a quick mark.
+## Close the tab and record the URI.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   setQuickMark.sh [OPTION]... KEY [URI]...
+##   closetab [OPTION]... [URI]...
 ##   (end)
 ##
 ## Options:
 ##
-##   -c, --config=FILE    quick mark file
-##   -C, --colmun=NUMBER  colmun number
-##   -l, --line=NUMBER    line number
-##   -h, --help           display this help and exit.
-##   -v, --version        output version information and exit.
+##   -c, --config=FILE   - restore file
+##   -C, --colmun=NUMBER - colmun number
+##   -l, --line=NUMBER   - line number
+##   -h, --help          - display this help and exit.
+##   -v, --version       - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -26,9 +26,9 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.4
+##   version - 2.1.1
 ##   date - 2020-02-27
-##   since - 2019-07-29
+##   since 2019-08-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -49,18 +49,28 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
-config="${W3MPLUS_PATH}/quickmark"
+config="${W3MPLUS_PATH}/tabRestore"
 colmun='1'
 line='1'
 fields=''
-addList=''
-date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
-unset 'key'
+datetime=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+
+setFieldList() {
+	for uri in ${@+"${@}"}; do
+		if uricheck -f '' "${uri}"; then
+			fields=$(printf '%s%s\t%d\t%d\t%s\n$' "${fields}" "${uri}" "${line}" "${colmun}" "${datetime}")
+			fields="${fields%$}"
+		else
+			printf "%s: not URI -- '%s'\\n" "${0##*/}" "${1}" 1>&2
+			exitStatus="${EX_USAGE}"; exit
+		fi
+	done
+}
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-c' | '--congig')
+		'-c' | '--config')
 			config="${2}"
 			shift 2
 			;;
@@ -92,6 +102,10 @@ while [ 1 -le "${#}" ]; do
 			version
 			exit
 			;;
+		# 標準入力を処理する
+		'-')
+			setFieldList $(cat)
+			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
 			option="${1}"
@@ -102,6 +116,8 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
+			setFieldList ${@+"${@}"}
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -123,19 +139,8 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			case "${key+1}" in
-				'1')
-					fields=$(printf '%s%s\t%s\t%d\t%d\t%s\n$' "${fields}" "${key}" "${1}" "${line}" "${colmun}" "${date}")
-					fields="${fields%$}"
-					escapedURI=$(printf '%s' "${1}" | htmlescape)
-					addList="${addList}<li><a href=\"${escapedURI}\">${escapedURI}</a></li>"
-					;;
-				*)
-					key="${1}"
-					;;
-				esac
-
-				shift
+			setFieldList "${1}"
+			shift
 			;;
 	esac
 done
@@ -144,26 +149,33 @@ directory=$(dirname -- "${config}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
-escapedKey=$(printf '%s' "${key}" | sed 's/[].\*/[]/\\&/g')
-
-deleteList=$(grep -e "^${escapedKey}	" -- "${config}" | cut -f '2' | htmlescape | sed -e 's/^.*$/<li><a href="&">&<\/a><\/li>/')
-
-if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
-	httpResposeW3mBack.sh
-	exit
-fi
+tmpFile=$(mktemp)
 
 {
-	sed -e "/^\$/d; /^${escapedKey}	/d" -- "${config}"
+	cat -- "${config}"
 	printf '%s' "${fields}"
-} | sort -o "${config}"
+} | awk '
+	BEGIN {
+		split("", previous)
+	}
 
-if [ -n "${addList}" ]; then
-	addList="<h1>Added Quick Mark</h1><ul>${addList}</ul>"
-fi
+	function printArray(array) {
+		if(array[1] != "") {
+			printf("%s\t%s\t%s\t%s\n", array[1], array[2], array[3], array[4])
+		}
+	}
 
-if [ -n "${deleteList}" ]; then
-	deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
-fi
+	NF == 4 {
+		if($1 != previous[1]) {
+			printArray(previous)
+		}
 
-printf "<p>Set Quick Mark '<strong>%s</strong>'</p>%s" "${key}" "${addList}${deleteList}" | printHtml.sh  --title "Set Quick Mark '${key}'" --http-template ''
+		split($0, previous, FS)
+	}
+
+	END {
+		printArray(previous)
+	}
+' >"${tmpFile}"
+
+cp -fp -- "${tmpFile}" "${config}"

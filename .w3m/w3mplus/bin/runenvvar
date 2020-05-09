@@ -182,7 +182,7 @@ case "${action}" in
 		printRedirect.sh "${value}" 'W3m-control: VIEW' 'W3m-control: EDIT_SCREEN' 'W3m-control: VIEW'
 		;;
 	'yank')
-		printf '%s' "${value}" | setRegister '+' -
+		printf '%s' "${value}" | setreg '+' -
 		printf '%s' "${value}" | eval "${W3MPLUS_YANK}"
 		httpResponseW3mBack.sh
 		;;

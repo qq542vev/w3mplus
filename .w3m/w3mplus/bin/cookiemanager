@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: cookieManager.sh
+## File: cookiemanager
 ##
 ## Cookie management.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   cookieManager.sh [OPTION]... [DOMAIN]...
+##   cookiemanager [OPTION]... [DOMAIN]...
 ##   (end)
 ##
 ## Options:

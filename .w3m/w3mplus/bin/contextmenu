@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: contextMenu.sh
+## File: contextmenu
 ##
 ## Show w3m context menu.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   contextMenu.sh
+##   contextmenu
 ##   (end)
 ##
 ## Options:

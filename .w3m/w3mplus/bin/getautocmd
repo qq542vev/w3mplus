@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: getAutoCommand.sh
+## File: getautocmd
 ##
 ## Execute the command according to the site.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   getAutoCommand.sh [OPTION]... [[CALL] [STRING]]...
+##   getautocmd [OPTION]... [[CALL] [STRING]]...
 ##   (end)
 ##
 ## Options:

@@ -1,21 +1,21 @@
 #!/usr/bin/env sh
 
-## File: moveParagraph.sh
+## File: getqmark
 ##
-## Move to the next paragraph.
+## Get a quick mark.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   moveParagraph.sh [OPTION]... FILE
+##   getqmark [OPTION]... [PATTERN]...
 ##   (end)
 ##
 ## Options:
 ##
-##   -l, --line=NUMBER   - line number
-##   -n, --number=NUMBER - number of paragraph moves
-##   -h, --help          - display this help and exit.
-##   -v, --version       - output version information and exit.
+##   -c, --config=FILE     - quick mark file
+##   -E, --extended-regexp - PATTERNS are extended regular expressions
+##   -h, --help            - display this help and exit.
+##   -v, --version         - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -25,9 +25,9 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.5
-##   date - 2020-02-20
-##   since - 2019-08-02
+##   version - 2.0.0
+##   date - 2020-03-21
+##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -48,29 +48,22 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
-line='1'
-number='+1'
+config="${W3MPLUS_PATH}/quickmark"
+moveColmun='0'
+moveLine='0'
+regexpFlag='0'
 args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-l' | '--line')
-			if expr -- "${2}" ':' '[1-9][0-9]*$' >'/dev/null'; then
-				line="${2}"
-				shift 2
-			else
-				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
-				exitStatus="${EX_USAGE}"; exit
-			fi
-			;;
-		'-n' | '--number')
-			if [ "$(expr -- "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
-				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
-			fi
-
-			number="${2}"
+		'-c' | '--config')
+			config="${2}"
 			shift 2
+			;;
+		'-E' | '--extended-regexp')
+			regexpFlag='1'
+			shift
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -121,41 +114,45 @@ while [ 1 -le "${#}" ]; do
 	esac
 done
 
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
+: >>"${config}"
+
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-file="${1}"
-
-# 引数の個数が過大である
-if [ 1 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0##*/}: too many arguments
-		Try '${0##*/} --help' for more information.
-	EOF
-
-	exitStatus="${EX_USAGE}"; exit
+# 引数の個数が過小である
+if [ "${#}" -eq 0 ]; then
+	set -- $(cat)
 fi
 
-while [ "${number}" -ne 0 ]; do
-	if [ 0 -lt "${number}" ]; then
-		line=$(sed -n -e "${line},\$!d; /^\$/{N; /^\\n$/D; =; q}" -- "${file}")
+result=$(for pattern in ${@+"${@}"}; do
+	printf '%s\n' "${pattern}"
+done | awk -v "config=${config}" -v "regexpFlag=${regexpFlag}" -- '
+	{
+		pattern = $0
 
-		if [ -z "${line}" ]; then
-			line=$(grep -c -e '^' -- "${file}")
-			break
-		fi
+		if(!regexpFlag) {
+			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
+		}
 
-		number=$((number - 1))
-	else
-		line=$(sed -n "1{/./=}; ${line}q; /^\$/{N; ${line}q; /^\\n*\$/D; =}" -- "${file}" | tail -n '1')
+		pattern = "^" pattern "$"
 
-		if [ -z "${line}" ]; then
-			line='1'
-			break
-		fi
+		while(0 < (getline < config)) {
+			if($1 ~ pattern) {
+				printf("%s\n", $0)
+			}
+		}
 
-		number=$((number + 1))
-	fi
-done
+		close(config)
+	}
+')
 
-moveColmun.sh -l "${line}" -n '0' -s "${file}"
+case "${result}" in
+	'')
+		exitStatus='1'
+		;;
+	*)
+		printf '%s\n' "${result}"
+		;;
+esac

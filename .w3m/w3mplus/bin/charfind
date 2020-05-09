@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: find.sh
+## File: charfind
 ##
 ## Search for a word.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   find.sh [OPTION]... [WORD]...
+##   charfind [OPTION]... [WORD]...
 ##   (end)
 ##
 ## Options:

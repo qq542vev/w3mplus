@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: setAutoCommand.sh
+## File: setautocmd
 ##
 ## Set a auto command.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   setAutoCommand.sh [OPTION]... CALL [CHECK] [COMMAND]...
+##   setautocmd [OPTION]... CALL [CHECK] [COMMAND]...
 ##   (end)
 ##
 ## Options:

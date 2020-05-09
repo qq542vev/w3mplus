@@ -111,11 +111,11 @@ if result=$(
 		'autoCommand')
 			string=$(expand "${query_string-W3M_URL}")
 
-			getAutoCommand.sh -- "${query_call-manual}" ${string:+"${string}"}
+			getautocmd -- "${query_call-manual}" ${string:+"${string}"}
 			;;
 		'closeTab')
 			if [ -n "${W3M_URL}" ]; then
-				closeTab.sh --line "${W3M_CURRENT_LINE}" --colmun "${W3M_CURRENT_COLUMN}" -- "${W3M_URL}"
+				closetab --line "${W3M_CURRENT_LINE}" --colmun "${W3M_CURRENT_COLUMN}" -- "${W3M_URL}"
 			fi
 
 			printf 'W3m-control: CLOSE_TAB' | httpResponseW3mBack.sh -
@@ -127,7 +127,7 @@ if result=$(
 				query_number="@$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)"
 			esac
 
-			undoTab.sh ${query_number+'--number' "${query_number}"} ${query_count+'--count' "${query_count}"} | gotoMove '1'
+			undotab ${query_number+'--number' "${query_number}"} ${query_count+'--count' "${query_count}"} | gotoMove '1'
 			;;
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"
@@ -138,13 +138,13 @@ if result=$(
 			printRedirect.sh "${WWW_HOME-about:home}"
 			;;
 		'aboutURI')
-			aboutURI.sh ${query_uri+"${query_uri}"}
+			abouturi ${query_uri+"${query_uri}"}
 			;;
 		'moveColmun')
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				moveColmun.sh --line "${line}" ${query_percent+'--number' "${query_percent}"} --skip -- "${query_file}"
+				mvcolmun --line "${line}" ${query_percent+'--number' "${query_percent}"} --skip -- "${query_file}"
 			else
 				addPrintCache
 			fi
@@ -153,7 +153,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				moveParagraph.sh --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_file}"
+				mvpara --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_file}"
 			else
 				addPrintCache
 			fi
@@ -162,7 +162,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				movePercent.sh --line "${line}" ${query_percent+'--number' "${query_percent}"} -- "${query_file}"
+				mvpercent --line "${line}" ${query_percent+'--number' "${query_percent}"} -- "${query_file}"
 			else
 				addPrintCache
 			fi
@@ -170,12 +170,12 @@ if result=$(
 		'stringFind')
 			word=$(expand "${query_word-W3M_CURRENT_WORD}")
 
-			find.sh ${query_number+'--number' "${query_number}"} -- "${word}"
+			charfind ${query_number+'--number' "${query_number}"} -- "${word}"
 			;;
 		'wordFind')
 			word=$(expand "${query_word-W3M_CURRENT_WORD}")
 
-			find.sh --exact ${query_number+'--number' "${query_number}"} -- "${word}"
+			charfind --exact ${query_number+'--number' "${query_number}"} -- "${word}"
 			;;
 		'qmarks')
 			: >>"${W3MPLUS_PATH}/quickmark"
@@ -183,14 +183,14 @@ if result=$(
 			printRedirect.sh "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/quickmark"
 			;;
 		'getQuickMark')
-			getQuickMark.sh -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove
+			getqmark -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove
 			;;
 		'setQuickMark')
 			uri=$(expand "${query_uri-W3M_URL}")
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -n "${uri}" ]; then
-				setQuickMark.sh --line "${line}" -- "${query_key}" "${uri}"
+				setqmark --line "${line}" -- "${query_key}" "${uri}"
 			fi
 			;;
 		'marks')
@@ -199,25 +199,25 @@ if result=$(
 			printRedirect.sh "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/localmark"
 			;;
 		'getLocalMark')
-			getAutoCommand.sh --config "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
+			getautocmd --config "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
 			;;
 		'setLocalMark')
 			uri=$(expand "${query_uri-W3M_URL}")
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -n "${uri}" ]; then
-				setAutoCommand.sh --config "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
+				setautocmd --config "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
 			fi
 			;;
 		'getLocalMarkGoto')
-			getQuickMark.sh --config "${W3MPLUS_PATH}/localmarkGoto" -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove '1'
+			getqmark --config "${W3MPLUS_PATH}/localmarkGoto" -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove '1'
 			;;
 		'setLocalMarkGoto')
 			uri=$(expand "${query_uri-W3M_URL}")
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -n "${uri}" ]; then
-				setQuickMark.sh --config "${W3MPLUS_PATH}/localmarkGoto" --line "${line}" -- "${query_key}" "${uri}"
+				setqmark --config "${W3MPLUS_PATH}/localmarkGoto" --line "${line}" -- "${query_key}" "${uri}"
 			fi
 			;;
 		'registers')
@@ -225,22 +225,22 @@ if result=$(
 
 			printRedirect.sh "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/register"
 			;;
-		'getRegister')
-			register=$(getRegister "${query_key-0}"; printf '$')
+		'getreg')
+			register=$(getreg "${query_key-0}"; printf '$')
 			W3MPLUS_REGISTER_TMP="${register%$}" runenvvar "${query_run}" 'W3MPLUS_REGISTER_TMP'
 			;;
-		'setRegister')
+		'setreg')
 			value=$(expand "${query_value-W3M_URL}")
 
 			case "${value}" in ?*)
-				printf '%s' "${value}" | setRegister "${query_key-+}" -
+				printf '%s' "${value}" | setreg "${query_key-+}" -
 				;;
 			esac
 
 			httpResponseW3mBack.sh
 			;;
 		'contextMenu')
-			contextMenu.sh
+			contextmenu
 			;;
 		'linkSetOpen')
 			if [ -n "${W3M_CURRENT_LINK}" ]; then
@@ -265,7 +265,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				lineVisualMode.sh --line "${line}" -- "${query_file}"
+				visualmode --line "${line}" -- "${query_file}"
 			else
 				addPrintCache
 			fi
@@ -280,7 +280,7 @@ if result=$(
 			;;
 		'search')
 			case "${query_query-}" in ?*)
-				printf '%s' "${query_query}" | setRegister '/' -
+				printf '%s' "${query_query}" | setreg '/' -
 			esac
 
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${query_query-}" | urlencode)"
@@ -289,7 +289,7 @@ if result=$(
 			search="${query_query#?}"
 
 			case "${search}" in ?*)
-				printf '%s' "${search}" | setRegister '/' -
+				printf '%s' "${search}" | setreg '/' -
 			esac
 
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${search}" | urlencode)" ${query_prevtab+"W3m-control: PREV_TAB"}
@@ -298,7 +298,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				selectLine.sh --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_subaction}" "${query_file}"
+				selectline --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_subaction}" "${query_file}"
 			else
 				addPrintCache
 			fi
@@ -318,18 +318,18 @@ if result=$(
 			url=$(expand "${query_url-W3M_URL}")
 
 			if [ -n "${url}" ]; then
-				cookieManager.sh ${query_blacklist+'--blacklist' "${query_blacklist}"} ${query_whitelist+'--whitelist' "${query_whitelist}"} ${query_subdomain+'--subdomain'} -- "${url}"
+				cookiemanager ${query_blacklist+'--blacklist' "${query_blacklist}"} ${query_whitelist+'--whitelist' "${query_whitelist}"} ${query_subdomain+'--subdomain'} -- "${url}"
 			fi
 			;;
 		'bookmarkBar')
 			uri=$(expand "${query_url-W3M_URL}")
 
-			bookmarkBar.sh ${uri:+'--uri' "${uri}"} ${query_type:+'--type' "${query_type}"}
+			bmarkbar ${uri:+'--uri' "${uri}"} ${query_type:+'--type' "${query_type}"}
 			;;
 		'historyBar')
 			uri=$(expand "${query_url-W3M_URL}")
 
-			historyBar.sh ${uri:+'--uri' "${uri}"} ${query_type:+'--type' "${query_type}"}
+			histbar ${uri:+'--uri' "${uri}"} ${query_type:+'--type' "${query_type}"}
 			;;
 		'httpsEverywhere')
 			siteconf=$(mktemp)

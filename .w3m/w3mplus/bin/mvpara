@@ -1,20 +1,21 @@
 #!/usr/bin/env sh
 
-## File: lineVisualMode.sh
+## File: mvpara
 ##
-## Start visual mode.
+## Move to the next paragraph.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   lineVisualMode.sh [OPTION]... FILE
+##   mvpara [OPTION]... FILE
 ##   (end)
 ##
 ## Options:
 ##
-##   -l, --line=NUMBER - line number
-##   -h, --help        - display this help and exit.
-##   -v, --version     - output version information and exit.
+##   -l, --line=NUMBER   - line number
+##   -n, --number=NUMBER - number of paragraph moves
+##   -h, --help          - display this help and exit.
+##   -v, --version       - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -24,7 +25,7 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.4
+##   version - 1.1.5
 ##   date - 2020-02-20
 ##   since - 2019-08-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
@@ -48,6 +49,7 @@ export 'IFS'
 
 # 各変数に既定値を代入する
 line='1'
+number='+1'
 args=''
 
 # コマンドライン引数の解析する
@@ -61,6 +63,14 @@ while [ 1 -le "${#}" ]; do
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
 				exitStatus="${EX_USAGE}"; exit
 			fi
+			;;
+		'-n' | '--number')
+			if [ "$(expr -- "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
+				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
+			fi
+
+			number="${2}"
+			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -115,7 +125,6 @@ done
 eval set -- "${args}"
 
 file="${1}"
-checksum=$(cksum -- "${file}" | cut -d ' ' -f '1-2' | tr ' ' '-')
 
 # 引数の個数が過大である
 if [ 1 -lt "${#}" ]; then
@@ -127,18 +136,26 @@ if [ 1 -lt "${#}" ]; then
 	exitStatus="${EX_USAGE}"; exit
 fi
 
-: "${W3MPLUS_VISUALSTART:=0	0	0}"
+while [ "${number}" -ne 0 ]; do
+	if [ 0 -lt "${number}" ]; then
+		line=$(sed -n -e "${line},\$!d; /^\$/{N; /^\\n$/D; =; q}" -- "${file}")
 
-startChecksum=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 1)
-startLine=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 2)
-startTime=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 3 | tr -d 'TZ:-' | TZ='UTC+0' utconv)
+		if [ -z "${line}" ]; then
+			line=$(grep -c -e '^' -- "${file}")
+			break
+		fi
 
-if [ "${checksum}" = "${startChecksum}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)" -lt "$((startTime + W3MPLUS_VISUAL_TIMEOUT))" ]; then
-	selectLine.sh -l "${startLine}" -n "${line}" 'yank' "${file}"
-	printf 'W3m-control: SETENV W3MPLUS_VISUALSTART=\r\n'
-else
-	httpResponseW3mBack.sh - <<- EOF
-		W3m-control: SETENV W3MPLUS_VISUALSTART=${checksum}	${line}	$(date -u '+%Y-%m-%dT%H:%M:%SZ')
-		W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'
-	EOF
-fi
+		number=$((number - 1))
+	else
+		line=$(sed -n "1{/./=}; ${line}q; /^\$/{N; ${line}q; /^\\n*\$/D; =}" -- "${file}" | tail -n '1')
+
+		if [ -z "${line}" ]; then
+			line='1'
+			break
+		fi
+
+		number=$((number + 1))
+	fi
+done
+
+mvcolmun -l "${line}" -n '0' -s "${file}"

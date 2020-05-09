@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: selectLine.sh
+## File: selectline
 ##
 ## Performs an action on the selected row.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   selectLine.sh [OPTION]... ACTION FILE
+##   selectline [OPTION]... ACTION FILE
 ##   (end)
 ##
 ## Options:
@@ -250,7 +250,7 @@ case "${action}" in
 		EOF
 		;;
 	'yank')
-		sed -e "${startLine},${endLine}!d" -- "${file}" | setRegister '+' -
+		sed -e "${startLine},${endLine}!d" -- "${file}" | setreg '+' -
 		sed -e "${startLine},${endLine}!d" -- "${file}" | eval "${W3MPLUS_YANK}"
 		httpResponseW3mBack.sh
 		;;

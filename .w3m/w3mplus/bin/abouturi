@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: aboutURI.sh
+## File: abouturi
 ##
 ## Displays a page about w3m.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   aboutURI.sh [ABOUT_URI]
+##   abouturi [ABOUT_URI]
 ##   (end)
 ##
 ## Options:

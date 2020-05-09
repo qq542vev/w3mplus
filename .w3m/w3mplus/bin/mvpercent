@@ -1,22 +1,21 @@
 #!/usr/bin/env sh
 
-## File: moveColmun.sh
+## File: mvpercent
 ##
-## Move column n%.
+## Display HTTP Response that moves to n% with w3m.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   moveColmun.sh [OPTION]... FILE
+##   mvpercent [OPTION]... FILE
 ##   (end)
 ##
 ## Options:
 ##
-##   -l, --line=NUNBER   - line number
-##   -n, --number=NUMBER - move column percent
-##   -s, --skip          - ignores whitespace at the beginning and end of lines
-##   -h, --help          - display this help and exit.
-##   -v, --version       - output version information and exit.
+##   -l, --line    - line number
+##   -n, --number  - move percent 0 - 100
+##   -h, --help    - display this help and exit.
+##   -v, --version - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -26,9 +25,9 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.5
+##   version - 1.1.3
 ##   date - 2020-02-20
-##   sinse - 2019-07-15
+##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -50,8 +49,7 @@ export 'IFS'
 
 # 各変数に既定値を代入する
 line='1'
-number='0'
-skipFlag='0'
+percent='50'
 args=''
 
 # コマンドライン引数の解析する
@@ -68,19 +66,15 @@ while [ 1 -le "${#}" ]; do
 			;;
 		'-n' | '--number')
 			case "${2}" in
-				[0-9] | [1-9][0-9] | '100')
-					number="${2}"
+				[0-9] | [1-9][0-9] | '100' | [+-][0-9] | [+-][0-9][0-9] | [+-]'100')
+					percent="${2}"
 					shift 2
 					;;
 				*)
 					printf 'The value must be a number between 0 and 100\n' 1>&2
-					exit 64 # EX_USAGE </usr/include/sysexits.h
+					exitStatus="${EX_USAGE}"; exit
 					;;
 			esac
-			;;
-		'-s' | '--skip')
-			skipFlag='1'
-			shift
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -102,8 +96,13 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-			args="${args}$(quoteEscape ${@+"${@}"})"
-			shift "${#}"
+
+			while [ 1 -le "${#}" ]; do
+				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+
+				args="${args}${args:+ }'${arg%?$}'"
+				shift
+			done
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -125,7 +124,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			args="${args}$(quoteEscape "${1}")"
+			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
+
+			args="${args}${args:+ }'${arg%?$}'"
 			shift
 			;;
 	esac
@@ -135,6 +136,7 @@ done
 eval set -- "${args}"
 
 file="${1}"
+lineCount=$(grep -c -e '^' -- "${file}" || :)
 
 # 引数の個数が過大である
 if [ 1 -lt "${#}" ]; then
@@ -146,19 +148,15 @@ if [ 1 -lt "${#}" ]; then
 	exitStatus="${EX_USAGE}"; exit
 fi
 
-{
-	row=$(sed -n -e "${line}{p; q}" -- "${file}")
+case "${percent}" in [+-]*)
+	percent=$(((((line - 1) * 100) / (lineCount - 1)) + percent))
 
-	printf 'W3m-control: GOTO_LINE %d\n' "${line}"
-
-	if [ "${skipFlag}" -eq 1 ]; then
-		printf '%s' "${row}" | sed -e 's/^\([\t ]*\).*$/\1/; s/[\t ]/W3m-control: MOVE_RIGHT1\n/g'
-		row=$(printf '%s' "${row}" | sed -e 's/^[\t ]*//; s/[\t ]*$//')
+	if [ "${percent}" -lt 0 ]; then
+		percent='0'
+	elif [ 100 -lt "${percent}" ]; then
+		percent='100'
 	fi
+	;;
+esac
 
-	if [ -n "${row}" ]; then
-		moveCount=$((($(printf '%s' "${row}" | wc -m) - 1) * number / 100))
-
-		printf 'W3m-control: MOVE_RIGHT1 %d\n' "${moveCount}"
-	fi
-} | httpResponseW3mBack.sh -
+printf 'W3m-control: GOTO_LINE %d' "$((( ( lineCount - 1 ) * percent / 100 ) + 1))" | httpResponseW3mBack.sh -

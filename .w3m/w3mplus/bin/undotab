@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: undoTab.sh
+## File: undotab
 ##
 ## Restore w3m tabs.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   undoTab.sh [OPTION]...
+##   undotab [OPTION]...
 ##   (end)
 ##
 ## Options:

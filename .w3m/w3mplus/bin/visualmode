@@ -1,22 +1,20 @@
 #!/usr/bin/env sh
 
-## File: closeTab.sh
+## File: visualmode
 ##
-## Close the tab and record the URI.
+## Start visual mode.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   closeTab.sh [OPTION]... [URI]...
+##   visualmode [OPTION]... FILE
 ##   (end)
 ##
 ## Options:
 ##
-##   -c, --config=FILE   - restore file
-##   -C, --colmun=NUMBER - colmun number
-##   -l, --line=NUMBER   - line number
-##   -h, --help          - display this help and exit.
-##   -v, --version       - output version information and exit.
+##   -l, --line=NUMBER - line number
+##   -h, --help        - display this help and exit.
+##   -v, --version     - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -26,9 +24,9 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.1.1
-##   date - 2020-02-27
-##   since 2019-08-02
+##   version - 1.1.4
+##   date - 2020-02-20
+##   since - 2019-08-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -49,42 +47,14 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
-config="${W3MPLUS_PATH}/tabRestore"
-colmun='1'
 line='1'
-fields=''
-datetime=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
-
-setFieldList() {
-	for uri in ${@+"${@}"}; do
-		if uricheck -f '' "${uri}"; then
-			fields=$(printf '%s%s\t%d\t%d\t%s\n$' "${fields}" "${uri}" "${line}" "${colmun}" "${datetime}")
-			fields="${fields%$}"
-		else
-			printf "%s: not URI -- '%s'\\n" "${0##*/}" "${1}" 1>&2
-			exitStatus="${EX_USAGE}"; exit
-		fi
-	done
-}
+args=''
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-c' | '--config')
-			config="${2}"
-			shift 2
-			;;
-		'-C' | '--colmun')
-			if [ "${2}" = '0' ] || expr -- "${2}" ':' '-\{0,1\}[1-9][0-9]*$' >'/dev/null'; then
-				colmun="${2}"
-				shift 2
-			else
-				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
-				exitStatus="${EX_USAGE}"; exit
-			fi
-			;;
 		'-l' | '--line')
-			if [ "${2}" = '0' ] || expr -- "${2}" ':' '-\{0,1\}[1-9][0-9]*$' >'/dev/null'; then
+			if expr -- "${2}" ':' '[1-9][0-9]*$' >'/dev/null'; then
 				line="${2}"
 				shift 2
 			else
@@ -102,10 +72,6 @@ while [ 1 -le "${#}" ]; do
 			version
 			exit
 			;;
-		# 標準入力を処理する
-		'-')
-			setFieldList $(cat)
-			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
 			option="${1}"
@@ -116,7 +82,7 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-			setFieldList ${@+"${@}"}
+			args="${args}$(quoteEscape ${@+"${@}"})"
 			shift "${#}"
 			;;
 		# 複合ショートオプション
@@ -139,43 +105,40 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			setFieldList "${1}"
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
 done
 
-directory=$(dirname -- "${config}"; printf '$')
-mkdir -p -- "${directory%?$}"
-: >>"${config}"
+# オプション以外の引数を再セットする
+eval set -- "${args}"
 
-tmpFile=$(mktemp)
+file="${1}"
+checksum=$(cksum -- "${file}" | cut -d ' ' -f '1-2' | tr ' ' '-')
 
-{
-	cat -- "${config}"
-	printf '%s' "${fields}"
-} | awk '
-	BEGIN {
-		split("", previous)
-	}
+# 引数の個数が過大である
+if [ 1 -lt "${#}" ]; then
+	cat <<- EOF 1>&2
+		${0##*/}: too many arguments
+		Try '${0##*/} --help' for more information.
+	EOF
 
-	function printArray(array) {
-		if(array[1] != "") {
-			printf("%s\t%s\t%s\t%s\n", array[1], array[2], array[3], array[4])
-		}
-	}
+	exitStatus="${EX_USAGE}"; exit
+fi
 
-	NF == 4 {
-		if($1 != previous[1]) {
-			printArray(previous)
-		}
+: "${W3MPLUS_VISUALSTART:=0	0	0}"
 
-		split($0, previous, FS)
-	}
+startChecksum=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 1)
+startLine=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 2)
+startTime=$(printf '%s' "${W3MPLUS_VISUALSTART}" | cut -f 3 | tr -d 'TZ:-' | TZ='UTC+0' utconv)
 
-	END {
-		printArray(previous)
-	}
-' >"${tmpFile}"
-
-cp -fp -- "${tmpFile}" "${config}"
+if [ "${checksum}" = "${startChecksum}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)" -lt "$((startTime + W3MPLUS_VISUAL_TIMEOUT))" ]; then
+	selectline -l "${startLine}" -n "${line}" 'yank' "${file}"
+	printf 'W3m-control: SETENV W3MPLUS_VISUALSTART=\r\n'
+else
+	httpResponseW3mBack.sh - <<- EOF
+		W3m-control: SETENV W3MPLUS_VISUALSTART=${checksum}	${line}	$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+		W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'
+	EOF
+fi
