@@ -144,7 +144,10 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				mvcolmun --line "${line}" ${query_percent+'--number' "${query_percent}"} --skip -- "${query_file}"
+				cat <<- EOF | httpResponseW3mBack.sh -
+					W3m-control: GOTO_LINE $(printf '%d' "${line}")
+					W3m-control: MOVE_RIGHT1 $(mvcolmun --line "${line}" ${query_percent+'--number' "${query_percent}"} --skip -- "${tmpFile}")
+				EOF
 			else
 				addPrintCache
 			fi
@@ -153,7 +156,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				mvpara --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_file}"
+				mvpara --line "${line}" ${query_number+'--number' "${query_number}"} -- "${tmpFile}"
 			else
 				addPrintCache
 			fi
@@ -162,7 +165,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				mvpercent --line "${line}" ${query_percent+'--number' "${query_percent}"} -- "${query_file}"
+				mvpercent --line "${line}" ${query_percent+'--number' "${query_percent}"} -- "$(grep -c -e '^' -- "${tmpFile}" || :)"
 			else
 				addPrintCache
 			fi
@@ -265,7 +268,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				visualmode --line "${line}" -- "${query_file}"
+				visualmode --line "${line}" -- "${tmpFile}"
 			else
 				addPrintCache
 			fi
@@ -298,7 +301,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				selectline --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_subaction}" "${query_file}"
+				selectline --line "${line}" ${query_number+'--number' "${query_number}"} -- "${query_subaction}" "${tmpFile}"
 			else
 				addPrintCache
 			fi

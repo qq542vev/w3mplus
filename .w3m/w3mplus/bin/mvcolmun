@@ -146,19 +146,13 @@ if [ 1 -lt "${#}" ]; then
 	exitStatus="${EX_USAGE}"; exit
 fi
 
-{
-	row=$(sed -n -e "${line}{p; q}" -- "${file}")
+moveCount='0'
+row=$(sed -n -e "${line}{p; q}" -- "${file}")
 
-	printf 'W3m-control: GOTO_LINE %d\n' "${line}"
+case "${skipFlag}" in '1')
+	moveCount=$(printf '%s' "${row}" | sed -e 's/^\([	 ]*\).*$/\1/' | wc -m)
+	row=$(printf '%s' "${row}" | sed -e 's/^[	 ]*//; s/[	 ]*$//')
+	;;
+esac
 
-	if [ "${skipFlag}" -eq 1 ]; then
-		printf '%s' "${row}" | sed -e 's/^\([\t ]*\).*$/\1/; s/[\t ]/W3m-control: MOVE_RIGHT1\n/g'
-		row=$(printf '%s' "${row}" | sed -e 's/^[\t ]*//; s/[\t ]*$//')
-	fi
-
-	if [ -n "${row}" ]; then
-		moveCount=$((($(printf '%s' "${row}" | wc -m) - 1) * number / 100))
-
-		printf 'W3m-control: MOVE_RIGHT1 %d\n' "${moveCount}"
-	fi
-} | httpResponseW3mBack.sh -
+printf '%d\n' "$(((($(printf '%s' "${row}" | wc -m) - 1) * number / 100) + moveCount))"
