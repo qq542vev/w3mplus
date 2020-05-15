@@ -144,8 +144,7 @@ directory=$(dirname -- "${config}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
-escapedKey=$(printf '%s' "${key}" | sed 's/[].\*/[]/\\&/g')
-
+escapedKey=$(sedEscape "${key}")
 deleteList=$(grep -e "^${escapedKey}	" -- "${config}" | cut -f '2' | htmlescape | sed -e 's/^.*$/<li><a href="&">&<\/a><\/li>/')
 
 if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then

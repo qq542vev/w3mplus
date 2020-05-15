@@ -149,3 +149,9 @@ octalEncode() (
 			;;
 	esac | od -v -A 'n' -t 'o1' | tr -d '\n' | sed 's/[[:blank:]]*$//; s/[[:blank:]]\{1,\}/\\/g'
 )
+
+sedEscape () (
+	for string in ${@+"${@}"}; do
+		printf '%s' "${string}" | sed -e 's/[].\*/[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/'
+	done
+)

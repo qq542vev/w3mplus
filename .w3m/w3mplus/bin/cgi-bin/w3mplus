@@ -283,19 +283,97 @@ if result=$(
 			;;
 		'search')
 			case "${query_query-}" in ?*)
+				printf '%s\n' "${query_query}" >>"${W3MPLUS_PATH}/searhhistory"
 				printf '%s' "${query_query}" | setreg '/' -
 			esac
 
 			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${query_query-}" | urlencode)"
 			;;
 		'dictWordSearch')
-			search="${query_query#?}"
+			keyword="${query_query#?}"
 
-			case "${search}" in ?*)
-				printf '%s' "${search}" | setreg '/' -
+			searchhist () {
+				case "${histword}" in '')
+					printHtml.sh --title 'Event not found' --status-code '400 Bad Request' <<- EOF
+						<p>search: ${keyword}: event not found</p>
+					EOF
+
+					exit
+				esac
+
+				keyword="$(printf '%s' "${histword}" | urldecode)${keyword#${hist}}"
+			}
+
+			case "${keyword}" in
+				'!')
+					awkScript=$(
+						cat <<- 'EOF'
+						BEGIN {
+							printf("<pre typeof=\"rdf:Seq\" rel=\"rdf:li\"><samp>")
+						}
+
+						function htmlEscape(string) {
+							gsub("&", "\\&amp;", string)
+							gsub("<", "\\&lt;", string)
+							gsub(">", "\\&gt;", string)
+							gsub("\"", "\\&quot;", string)
+
+							return string
+						}
+
+						{
+							command = "printf '%s' '" $1 "' | urldecode"
+							command | getline keyword
+							close(command)
+
+							printf("<span typeof=\"\">%4d  <date property=\"dc:created\" datatype=\"dc:W3CDTF\">%s</date>  <a property=\"dc:subject\" rel=\"dc:relation\" href=\"%s\">%s</a></span>\n", NR, $3, htmlEscape($2 $1), htmlEscape(keyword))
+						}
+
+						END {
+							printf("</samp></pre>")
+						}
+						EOF
+					)
+
+					awk -F '\t' -- "${awkScript}" "${W3MPLUS_PATH}/searhhistory" | printHtml.sh --title 'Search History'
+
+					exit
+					;;
+				'!!'*)
+					hist='!!'
+					histword=$(sed -n -e '${p; q}' -- "${W3MPLUS_PATH}/searhhistory" | cut -f '1')
+					searchhist
+					;;
+				'!'[1-9]*)
+					hist=$(expr "${keyword}" ':' '\(![1-9][0-9]*\)')
+					histword=$(sed -n -e "${hist#!}{p; q}" -- "${W3MPLUS_PATH}/searhhistory" | cut -f '1')
+					searchhist
+					;;
+				'!-'[1-9]*)
+					hist=$(expr "${keyword}" ':' '\(!-[1-9][0-9]*\)')
+					histword=$(tail -n "${hist#!-}" -- "${W3MPLUS_PATH}/searhhistory" | head -n '1' | cut -f '1')
+					searchhist
+					;;
+				'!?'[!?]*'?'*)
+					hist=$(expr "${keyword}" ':' '\(!?[^?]\{1,\}?\)')
+					histword=$(cut -f '2-' -- "${W3MPLUS_PATH}/searhhistory" | grep -F -e "$(printf '%s' "${hist%?}" | cut -c '3-')" | tail -n '1')
+					searchhist
+					;;
+				'!'[!\	\ ]*)
+					hist=$(expr "${keyword}" ':' '\(![^	 ]\{1,\}\)')
+					histword=$(cut -f '2-' -- "${W3MPLUS_PATH}/searhhistory" | grep -e "^$(sedEscape "${hist#!}")" | tail -n '1')
+					searchhist
+					;;
 			esac
 
-			printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${search}" | urlencode)" ${query_prevtab+"W3m-control: PREV_TAB"}
+			encoded=$(printf '%s' "${keyword}" | urlencode)
+
+			case "${keyword}" in ?*)
+				printf '%s\t%s\t%s\n' "${encoded}" "${W3MPLUS_SEARCH_URI}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${W3MPLUS_PATH}/searhhistory"
+				printf '%s\n' "${keyword}" | setreg '/' -
+			esac
+
+			printRedirect.sh "${W3MPLUS_SEARCH_URI}${encoded}" ${query_prevtab+'W3m-control: PREV_TAB'}
 			;;
 		'selectLine')
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")

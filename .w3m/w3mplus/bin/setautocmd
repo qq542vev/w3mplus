@@ -156,7 +156,7 @@ else
 	fi
 fi
 
-escaped=$(printf '%s\t%s' "${call}" "${check-}${check:+	}" | sed -e 's/[].\*/[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/')
+escaped=$(sedEscape "${call}	${check-}${check:+	}")
 field=''
 
 case "${command+1}" in '1')

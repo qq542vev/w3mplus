@@ -157,7 +157,7 @@ date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 while [ 1 -le "${#}" ]; do
 	key="${1}"
 	file="${2}"
-	escapedKey=$(printf '%s' "${key#+}" | sed -e 's/\([].\*/[]\)/\\\1/g')
+	escapedKey=$(sedEscape "${key#+}")
 
 	case "${key}" in
 		'+')
