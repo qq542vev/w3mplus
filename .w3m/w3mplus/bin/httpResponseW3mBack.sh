@@ -44,9 +44,13 @@ export 'IFS'
 
 headerFields=$(
 	{
-		case "${W3MPLUS_BACK-1}" in '1')
-			printf 'W3m-control: BACK\n'
-			;;
+		case "${W3MPLUS_BACK-1}" in
+			'1')
+				printf 'W3m-control: BACK\n'
+				;;
+			'2')
+				printf 'W3m-control: DELETE_PREVBUF\n'
+				;;
 		esac
 
 		while [ '1' -le "${#}" ]; do

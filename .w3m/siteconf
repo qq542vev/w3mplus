@@ -19,19 +19,19 @@
 ##   * README.siteconf - <https://github.com/tats/w3m/blob/master/doc-jp/README.siteconf>
 
 url /^bing:/
-substitute_url "https://www.bing.com/search?q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=bing&redirect=3&query="
 no_referer_from on
 
 url /^bing-image:/
-substitute_url "https://www.bing.com/images/search?q=
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=bing-image&redirect=3&query="
 no_referer_from on
 
 url /^bing-video:/
-substitute_url "https://www.bing.com/videos/search?q=
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=bing&redirect=3&query="
 no_referer_from on
 
 url /^bing-news:/
-substitute_url "https://www.bing.com/news/search?q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=bing-news&redirect=3&query="
 no_referer_from on
 
 # HTML frame の場合 HTTP refererを送信してしまうため無効
@@ -39,39 +39,39 @@ url /^data:/
 no_referer_from on
 
 url /^duckduckgo:/
-substitute_url "https://duckduckgo.com/?q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=duckduckgo&redirect=3&query="
 no_referer_from on
 
 url /^github:/
-substitute_url "https://github.com/search?q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=github&redirect=3&query="
 no_referer_from on
 
 url /^google:/
-substitute_url "https://www.google.com/search?ie=UTF-8&oe=UTF-8&q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=google&redirect=3&query="
 no_referer_from on
 
 url /^google-image:/
-substitute_url "https://www.google.com/search?tbm=isch&ie=UTF-8&oe=UTF-8&q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=google-image&redirect=3&query="
 no_referer_from on
 
 url /^google-video:/
-substitute_url "https://www.google.com/search?tbm=vid&ie=UTF-8&oe=UTF-8&q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=google-video&redirect=3&query="
 no_referer_from on
 
 url /^google-news:/
-substitute_url "https://news.google.com/search?q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=google-news&redirect=3&query="
 no_referer_from on
 
 url /^pkgs.org:/
-substitute_url "https://pkgs.org/download/"
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=pkgs.org&redirect=3&query="
 no_referer_from on
 
 url /^startpage:/
-substitute_url "https://www.startpage.com/do/search?query="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=startpage&redirect=3&query="
 no_referer_from on
 
 url /^twitter:/
-substitute_url "https://twitter.com/search?q="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=twitter&redirect=3&query="
 no_referer_from on
 
 url m@^urn:isbn:@i
@@ -83,27 +83,27 @@ substitute_url "https://www.worldcat.org/search?q=n2%3A"
 no_referer_from on
 
 url /^wikipedia-en:/
-substitute_url "https://en.wikipedia.org/w/index.php?search="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=wikipedia-en&redirect=3&query="
 no_referer_from on
 
 url /^wikipedia-ja:/
-substitute_url "https://ja.wikipedia.org/w/index.php?search="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=wikipedia-ja&redirect=3&query="
 no_referer_from on
 
 url /^yandex:/
-substitute_url "https://yandex.com/search/?text="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=yandex&redirect=3&query="
 no_referer_from on
 
 url /^yandex-image:/
-substitute_url "https://yandex.com/images/search?text="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=yandex-image&redirect=3&query="
 no_referer_from on
 
 url /^yandex-video:/
-substitute_url "https://yandex.com/video/search?text="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=yandex-video&redirect=3&query="
 no_referer_from on
 
 url /^youtube:/
-substitute_url "https://www.youtube.com/results?search_query="
+substitute_url "file:///cgi-bin/w3mplus?action=search&engine=youtube&redirect=3&query="
 no_referer_from on
 
 url /^view-source:/

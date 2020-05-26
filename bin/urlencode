@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-("$(dirname "${0}")/misc-tools/urlencode" -r ${@+"${@}"}; echo) | awk -- 'BEGIN{
+("$(dirname "${0}")/misc-tools/urlencode" -r ${@+"${@}"}; echo) | awk -- 'BEGIN {
 	getline line
 	printf("%s", line)
 

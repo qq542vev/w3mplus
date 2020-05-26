@@ -119,22 +119,45 @@ eval set -- "${args}"
 for uri in ${@+"${@}"}; do
 	if uricheck -f '' "${uri}"; then
 		case "${W3MPLUS_REDIRECT_TYPE-0}" in
-			'1')
+			'-1')
 				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
+				;;
+			'1')
+				cat <<- EOF
+					W3m-control: BACK
+					W3m-control: TAB_GOTO "${uri}"
+				EOF
+
+				W3MPLUS_REDIRECT_TYPE='-1'
 				;;
 			'2')
 				cat <<- EOF
+					W3m-control: BACK
 					W3m-control: NEW_TAB
 					W3m-control: GOTO ${uri}
 					W3m-control: DELETE_PREVBUF
 				EOF
+
+				W3MPLUS_REDIRECT_TYPE='-1'
+				;;
+			'3')
+				cat <<- EOF
+					W3m-control: GOTO ${uri}
+					W3m-control: DELETE_PREVBUF
+				EOF
+
+				W3MPLUS_REDIRECT_TYPE='-1'
 				;;
 			*)
-				printf 'W3m-control: GOTO %s\n' "${uri}"
-				W3MPLUS_REDIRECT_TYPE='1'
+				cat <<- EOF
+					W3m-control: BACK
+					W3m-control: GOTO ${uri}
+				EOF
+
+				W3MPLUS_REDIRECT_TYPE='-1'
 				;;
 		esac
 	else
 		printf '%s\n' "${uri}"
 	fi
-done | httpResponseW3mBack.sh -
+done | W3MPLUS_BACK=0 httpResponseW3mBack.sh -

@@ -29,7 +29,7 @@
 : "${W3MPLUS_YANK:=( exec 3>&1 >>'${HOME}/w3mplusyank'; date '+# %Y-%m-%d %H:%M:%S %Z'; cat; printf '\\n'; exec 1>&3 3>&- )}"
 : "${W3MPLUS_UNDO_TIMEOUT:=86400}"
 : "${W3MPLUS_VISUAL_TIMEOUT:=600}"
-: "${W3MPLUS_SEARCH_URI:=google:}"
+: "${W3MPLUS_SEARCH_ENGINE:=google}"
 : "${W3MPLUS_OPERATORFUNC:=cat}"
 : "${W3MPLUS_FORMATPRG:=cat}"
 : "${W3MPLUS_EQUALPRG:=}"

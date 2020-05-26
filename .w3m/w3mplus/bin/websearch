@@ -1,0 +1,270 @@
+#!/usr/bin/env sh
+
+## File: websearch
+##
+## webserch.
+##
+## Usage:
+##
+##   (start code)
+##   websearch [OPTION]... [FILE]..
+##   (end)
+##
+## Options:
+##
+##   -c, --config=FILE   - search url file.
+##   -e, --engine=STRING - search engine.
+##   -H, --history=FILE  - search history file.
+##   -h, --help          - display this help and exit.
+##   -v, --version       - output version information and exit.
+##
+## Exit Status:
+##
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2020-05-16
+##   since - 2019-05-16
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
+# 初期化
+set -efu
+umask '0022'
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
+
+# initファイルの読み込み
+: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
+. "${W3MPLUS_PATH}/lib/w3mplus/init"
+
+tmpDir="$(mktemp -d)"
+config="${W3MPLUS_PATH}/searchurl"
+engine="${W3MPLUS_SEARCH_ENGINE}"
+history="${W3MPLUS_PATH}/searchhistory"
+args=''
+
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-c' | '--config')
+			config="${2}"
+			shift 2
+			;;
+		'-e' | '--engine')
+			engine="${2}"
+			shift 2
+			;;
+		'-H' | '--history')
+			history="${2}"
+			shift 2
+			;;
+		# 標準入力を処理する
+		'-')
+			tmpFile=$(mktemp -p "${tmpDir}")
+			cat >"${tmpFile}"
+			shift
+			set -- "${tmpFile}" ${@+"${@}"}
+			;;
+		# ヘルプメッセージを表示して終了する
+		'-h' | '--help')
+			usage
+			exit
+			;;
+		# バージョン情報を表示して終了する
+		'-v' | '--version')
+			version
+			exit
+			;;
+		# `--name=value` 形式のロングオプション
+		'--'[!-]*'='*)
+			option="${1}"
+			shift
+			# `--name value` に変換して再セットする
+			set -- "${option%%=*}" "${option#*=}" ${@+"${@}"}
+			;;
+		# 以降はオプション以外の引数
+		'--')
+			shift
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
+			;;
+		# 複合ショートオプション
+		'-'[!-][!-]*)
+			option=$(printf '%s\n' "${1}" | cut -c '2'; printf '$')
+			options=$(printf '%s\n' "${1}" | cut -c '3-'; printf '$')
+
+			shift
+			# `-abc` を `-a -bc` に変換して再セットする
+			set -- "-${option%?$}" "-${options%?$}" ${@+"${@}"}
+			;;
+		# その他の無効なオプション
+		'-'*)
+			cat <<- EOF 1>&2
+				${0##*/}: invalid option -- '${1}'
+				Try '${0##*/} --help' for more information.
+			EOF
+
+			exitStatus="${EX_USAGE}"; exit
+			;;
+		# その他のオプション以外の引数
+		*)
+			args="${args}$(quoteEscape "${1}")"
+			shift
+			;;
+	esac
+done
+
+directory=$(dirname -- "${config}"; printf '$')
+mkdir -p -- "${directory%?$}"
+: >>"${config}"
+
+directory=$(dirname -- "${history}"; printf '$')
+mkdir -p -- "${directory%?$}"
+: >>"${history}"
+
+eval set -- "${args}"
+
+case "${#}" in '0')
+	tmpFile=$(mktemp -p "${tmpDir}")
+	cat >"${tmpFile}"
+
+	set -- "${tmpFile}" ${@+"${@}"}
+	;;
+esac
+
+for file in ${@+"${@}"}; do
+	keyword=$(cat -- "${file}"; printf '$')
+	keyword="${keyword%$}"
+	prefix=''
+
+	case "${keyword}" in
+		'!!'*)
+			prefix='!!'
+			histword=$(tail -n '1' -- "${history}" | cut -f '1')
+			;;
+		'!'[1-9]*)
+			prefix=$(expr "${keyword}" ':' '\(![1-9][0-9]*\)')
+			histword=$(cut -f '1' -- "${history}" | sed -n -e "${prefix#!}{p; q}")
+			;;
+		'!-'[1-9]*)
+			prefix=$(expr "${keyword}" ':' '\(!-[1-9][0-9]*\)')
+			histword=$(tail -n "${prefix#!-}" -- "${history}" | head -n '1' | cut -f '1')
+			;;
+		'!?'[!?]*'?'*)
+			prefix=$(expr "${keyword}" ':' '\(!?[^?]\{1,\}?\)')
+			histword=$(cut -f '1' -- "${history}" | grep -F -e "$(printf '%s' "${prefix%?}" | cut -c '3-' | urlencode)" | tail -n '1')			;;
+		'!'[!\	\ ]*)
+			prefix=$(expr "${keyword}" ':' '\(![^	 ]\{1,\}\)')
+			histword=$(cut -f '1' -- "${history}" | grep -e "^$(printf '%s' "${prefix#!}" | urlencode)" | tail -n '1')
+			;;
+	esac
+
+	case "${prefix}" in ?*)
+		case "${histword}" in '')
+			message=$("${W3MPLUS_TEMPLATE_HTML}" -t 'event not found' -c "${0##*/}: '${prefix}' event not found"; printf '$')
+
+			printf '%s\n' "data:text/html;base64,$(printf '%s' "${message%$}" | base64 | tr -d '\n')"
+
+			continue
+		esac
+
+		keyword=$(printf '%s' "${histword}" | urldecode | awk -v "keyword=$(printf '%s' "${keyword#${prefix}}" | octalEncode)" -- '
+			function printColumn(start, end, separator) {
+				if(start == "") {
+					start = 1
+				}
+
+				if(end == "") {
+					end = NF
+				}
+
+				if(separator == "") {
+					separator = " "
+				}
+
+				for(; start <= end; start++) {
+					printf("%s", $start (start == end ? "" : separator))
+				}
+			}
+
+			{
+				if(match(keyword, /^:[1-9][0-9]*/)) {
+					start = substr(keyword, RSTART + 1, RLENGTH - 1)
+					keyword = substr(keyword, RLENGTH + 1)
+
+					if(match(keyword, /^-[1-9][0-9]*/)) {
+						printColumn(start, substr(keyword, RSTART + 1, RLENGTH - 1))
+						keyword = substr(keyword, RLENGTH + 1)
+					} else if(index(keyword, "-$") == 1) {
+						printColumn(start)
+						keyword = substr(keyword, 3)
+					} else if(index(keyword, "-") == 1) {
+						printColumn(start, NF - 1)
+						keyword = substr(keyword, 2)
+					} else {
+						printColumn(start, start)
+					}
+				} else if(index(keyword, ":$") == 1) {
+					printColumn(NF, NF)
+					keyword = substr(keyword, 3)
+				} else {
+					printf("%s", $0)
+				}
+			}
+
+			END {
+				printf("%s", keyword)
+			}
+		')
+		;;
+	esac
+
+	encoded=$(printf '%s' "${keyword}" | urlencode)
+
+	case "${keyword}" in ?*)
+		printf '%s\t%s\t%s\n' "${encoded}" "$(printf '%s' "${engine}" | urlencode)" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${history}"
+		printf '%s\n' "${keyword}" | setreg '/' -
+		;;
+	esac
+
+	awkScript=$(
+		cat <<- 'EOF'
+		BEGIN {
+			split("", recode)
+		}
+
+		{
+			recode[$1, "template"] = $2
+			recode[$1, "command"] = $3
+		}
+
+		END {
+			engineCount = split(engine, engineArray, ",")
+
+			for(i = 1; i <= engineCount; i++) {
+				if((engineArray[i], "template") in recode) {
+					gsub("{searchTerms}", encoded, recode[engineArray[i], "template"])
+
+					printf("%s\n", recode[engineArray[i], "template"])
+
+					if(recode[engineArray[i], "command"] != "") {
+						printf("W3m-control: %s\n", recode[engineArray[i], "command"])
+					}
+				}
+			}
+		}
+		EOF
+	)
+
+	awk -F '\t' -v "engine=${engine}" -v "encoded=${encoded}" -- "${awkScript}" "${config}"
+done | printRedirect.sh -
