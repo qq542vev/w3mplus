@@ -2,7 +2,7 @@
 
 ## File: websearch
 ##
-## webserch.
+## Returns the search for w3m.
 ##
 ## Usage:
 ##
@@ -28,7 +28,7 @@
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
 ##   date - 2020-05-16
-##   since - 2019-05-16
+##   since - 2019-05-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -171,9 +171,9 @@ for file in ${@+"${@}"}; do
 
 	case "${prefix}" in ?*)
 		case "${histword}" in '')
-			message=$("${W3MPLUS_TEMPLATE_HTML}" -t 'event not found' -c "${0##*/}: '${prefix}' event not found"; printf '$')
+			html=$("${W3MPLUS_TEMPLATE_HTML}" -t 'event not found' -c "${0##*/}: '${prefix}' event not found"; printf '$')
 
-			printf '%s\n' "data:text/html;base64,$(printf '%s' "${message%$}" | base64 | tr -d '\n')"
+			printf '%s\n' "data:text/html;base64,$(printf '%s' "${html%$}" | base64 | tr -d '\n')"
 
 			continue
 		esac
@@ -233,7 +233,7 @@ for file in ${@+"${@}"}; do
 
 	case "${keyword}" in ?*)
 		printf '%s\t%s\t%s\n' "${encoded}" "$(printf '%s' "${engine}" | urlencode)" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${history}"
-		printf '%s\n' "${keyword}" | setreg '/' -
+		printf '%s' "${keyword}" | setreg '/' -
 		;;
 	esac
 
