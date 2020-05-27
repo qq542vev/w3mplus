@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.9.0
-##   date - 2020-05-05
+##   version - 1.10.0
+##   date - 2020-05-28
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -297,11 +297,29 @@ if result=$(
 					printRedirect.sh "file://${SCRIPT_NAME}?action=searchhistory"
 					;;
 				*)
-					printf '%s' "${query_query#?}" | search ${query_engine+--engine "${query_engine}"}
+					engine="${query_engine-${W3MPLUS_SEARCH_ENGINE}}"
+
+					printf '%s' "${query_query#?}" | search --engine "${engine}" | awk -v "engine=${query_prevtab+$(printf '%s' "${engine}" | octalEncode)}" -- '
+						$0 == "\r" {
+							exit
+						}
+
+						{
+							printf("%s\n", $0)
+						}
+
+						END {
+							count = split(engine, array, /,+/)
+
+							for(; 0 < count; count--) {
+								printf "W3m-control: PREV_TAB\r\n"
+							}
+
+							printf "\r\n"
+						}
+					'
 					;;
 			esac
-
-			#printRedirect.sh "${W3MPLUS_SEARCH_URI}${encoded}" ${query_prevtab+'W3m-control: PREV_TAB'}
 			;;
 		'searchhistory')
 			awkScript=$(
