@@ -12,11 +12,11 @@
 ##
 ## Options:
 ##
-##   -c, --charset=STRING           - header charset
-##   -i, --in-place=SUFFIX          - edit files in place (makes backup if SUFFIX supplied)
-##   -o, --output=STRING            - start, header, body
-##   -u, --uncombined=HEADER_NAME   - uncombined headers
-##   -U, --unstructured=HEADER_NAME - unstructured headers
+##   -c, --charset=STRING           - header charset.
+##   -i, --in-place=SUFFIX          - edit files in place (makes backup if SUFFIX supplied).
+##   -o, --output=STRING            - start, header, body.
+##   -u, --uncombined=HEADER_NAME   - uncombined headers.
+##   -U, --unstructured=HEADER_NAME - unstructured headers.
 ##   -h, --help                     - display this help and exit.
 ##   -v, --version                  - output version information and exit.
 ##

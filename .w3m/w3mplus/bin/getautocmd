@@ -12,8 +12,8 @@
 ##
 ## Options:
 ##
-##   -c, --config=FILE     - configuration file
-##   -E, --extended-regexp - PATTERNS are extended regular expressions
+##   -c, --config=FILE     - configuration file.
+##   -E, --extended-regexp - PATTERNS are extended regular expressions.
 ##   -h, --help            - display this help and exit.
 ##   -v, --version         - output version information and exit.
 ##

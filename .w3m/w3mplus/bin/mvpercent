@@ -12,8 +12,8 @@
 ##
 ## Options:
 ##
-##   -l, --line    - line number
-##   -n, --number  - move percent 0 - 100
+##   -l, --line    - line number.
+##   -n, --number  - move percent (0 - 100).
 ##   -h, --help    - display this help and exit.
 ##   -v, --version - output version information and exit.
 ##

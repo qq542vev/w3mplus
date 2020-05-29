@@ -12,8 +12,8 @@
 ##
 ## Options:
 ##
-##   -l, --line=NUMBER   - line number
-##   -n, --number=NUMBER - cut line
+##   -l, --line=NUMBER   - line number.
+##   -n, --number=NUMBER - cut line.
 ##   -h, --help          - display this help and exit.
 ##   -v, --version       - output version information and exit.
 ##

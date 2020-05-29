@@ -12,9 +12,9 @@
 ##
 ## Options:
 ##
-##   -l, --line=NUNBER   - line number
-##   -n, --number=NUMBER - move column percent
-##   -s, --skip          - ignores whitespace at the beginning and end of lines
+##   -l, --line=NUNBER   - line number.
+##   -n, --number=NUMBER - move column percent.
+##   -s, --skip          - ignores whitespace at the beginning and end of lines.
 ##   -h, --help          - display this help and exit.
 ##   -v, --version       - output version information and exit.
 ##
