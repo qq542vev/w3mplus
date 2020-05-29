@@ -200,7 +200,7 @@ menu MenuView
 end
 
 menu MenuToolbars
-	func "Bookmarks Toolbar (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmarkBar&type=topToolbar"
+	func "Bookmarks Toolbar (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmarkBar&position=top"
 end
 
 menu MenuSidebar

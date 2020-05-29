@@ -12,10 +12,10 @@
 ##
 ## Options:
 ##
-##   -b, --blacklist=TYPE - black list type (add, delete, toggle)
-##   -c, --config=FILE    - w3m configuration file
-##   -s, --subdomain      - also applies to subdomains
-##   -w, --whitelist=TYPE - white list type (add, delete, toggle)
+##   -b, --blacklist=TYPE - black list type (add, delete, toggle).
+##   -c, --config=FILE    - w3m configuration file.
+##   -s, --subdomain      - also applies to subdomains.
+##   -w, --whitelist=TYPE - white list type (add, delete, toggle).
 ##   -h, --help           - display this help and exit.
 ##   -v, --version        - output version information and exit.
 ##

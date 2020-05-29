@@ -21,7 +21,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.4.1
-##   date - 2020-04-20
+##   date - 2020-05-30
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -48,12 +48,12 @@ case "${1-about:about}" in
 		;;
 	'about:about')
 		printHtml.sh --title 'About About' <<- 'EOF'
-			<section>
-				<h1>About About</h1>
+			<section typeof="rdf:Bag">
+				<h1 property="dc:title">About About</h1>
 
-				<p>This is a list of “about” pages for your convenience.</p>
+				<p property="dc:description">This is a list of “about” pages for your convenience.</p>
 
-				<ul>
+				<ul rel="rdf:li">
 					<li><a href="about:">about:</a></li>
 					<li><a href="about:about">about:about</a></li>
 					<li><a href="about:blank">about:blank</a></li>

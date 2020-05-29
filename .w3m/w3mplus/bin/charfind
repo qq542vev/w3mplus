@@ -12,8 +12,8 @@
 ##
 ## Options:
 ##
-##   -e, --exact         - exact search
-##   -n, --number=NUMBER - search count
+##   -e, --exact         - exact search.
+##   -n, --number=NUMBER - search count.
 ##   -h, --help          - display this help and exit.
 ##   -v, --version       - output version information and exit.
 ##

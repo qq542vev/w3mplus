@@ -383,7 +383,7 @@ if result=$(
 		'bookmarkBar')
 			uri=$(expand "${query_url-W3M_URL}")
 
-			bmarkbar ${uri:+'--uri' "${uri}"} ${query_type:+'--type' "${query_type}"}
+			bmarkbar ${uri:+'--uri' "${uri}"} ${query_position:+'--position' "${query_position}"}
 			;;
 		'historyBar')
 			uri=$(expand "${query_url-W3M_URL}")

@@ -2,7 +2,7 @@
 
 ## File: bmarkbar
 ##
-## Displays a page about w3m.
+## Displays a Bookmark bar.
 ##
 ## Usage:
 ##
@@ -11,6 +11,11 @@
 ##   (end)
 ##
 ## Options:
+##
+##   -s, --size     - bookmark bar display size.
+##   -p, --position - bookmark bar display position.
+##   -h, --help     - display this help and exit.
+##   -v, --version  - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -21,7 +26,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.2
-##   date - 2020-03-26
+##   date - 2020-05-30
 ##   since - 2020-02-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -54,7 +59,7 @@ toolbar () (
 # 各変数に既定値を代入する
 file="${HOME}/.w3m/bookmark.html"
 size='35'
-type='leftSidebar'
+position='leftSidebar'
 uri='data:text/plain,'
 args=''
 
@@ -74,10 +79,10 @@ while [ 1 -le "${#}" ]; do
 				exitStatus="${EX_USAGE}"; exit
 			fi
 			;;
-		'-t' | '--type')
+		'-p' | '--position')
 			case "${2}" in
-				'leftSidebar'| 'rightSidebar' | 'topToolbar' | 'bottomToolbar')
-					type="${2}"
+				'left'| 'right' | 'top' | 'bottom')
+					position="${2}"
 					shift 2
 					;;
 				*)
@@ -153,23 +158,23 @@ esac
 col=$((size * pixelPerChar))
 main="<frame name=\"main\" title=\"Main Content\" src=\"$(printf '%s' "${uri}" | htmlescape)\" />"
 
-case "${type}" in
-	'leftSidebar')
+case "${position}" in
+	'left')
 		menu=$(sidebar "${file}")
 		attribute="cols=\"${col},*\""
 		frames="${menu}${main}"
 		;;
-	'rightSidebar')
+	'right')
 		menu=$(sidebar "${file}")
 		attribute="cols=\"*,${col}\""
 		frames="${main}${menu}"
 		;;
-	'topToolbar')
+	'top')
 		menu=$(toolbar "${file}")
 		attribute="rows=\"*,*\""
 		frames="${menu}${main}"
 		;;
-	'bottomToolbar')
+	'bottom')
 		menu=$(toolbar "${file}")
 		attribute="rows=\"*,*\""
 		frames="${main}${menu}"
