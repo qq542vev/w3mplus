@@ -155,3 +155,9 @@ sedEscape () (
 		printf '%s' "${string}" | sed -e 's/[].\*/[]/\\&/g; 1s/^^/\\^/; $s/$$/\\$/'
 	done
 )
+
+pathtourl () (
+	for path in ${@+"${@}"}; do
+		printf 'file://%s\n' "$(printf '%s' "${path}" | urlencode | fsed '%2F' '/')"
+	done
+)

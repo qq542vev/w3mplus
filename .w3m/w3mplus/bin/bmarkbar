@@ -181,7 +181,7 @@ case "${position}" in
 		;;
 esac
 
-: | printHtml.sh --html-template "${W3MPLUS_TEMPLATE_FRAMESET}" --http-template '' --header-field "$(
+: | printhtml --html-template "${W3MPLUS_TEMPLATE_FRAMESET}" --http-template '' --header-field "$(
 	cat <<- 'EOF'
 		W3m-control: SET_OPTION frame=1
 		W3m-control: SET_OPTION target_self=1

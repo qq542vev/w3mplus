@@ -186,4 +186,4 @@ if [ -n "${deleteList}" ]; then
 	deleteList="<h1>Deleted auto command </h1>${deleteList}"
 fi
 
-printf '%s' "${addList}${deleteList}" | printHtml.sh  --title "Set auto command '${call}'" --http-template ''
+printf '%s' "${addList}${deleteList}" | printhtml  --title "Set auto command '${call}'" --http-template ''

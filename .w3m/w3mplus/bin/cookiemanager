@@ -221,4 +221,4 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 	headerField="${headerField%$}"
 done
 
-printf '<ul>%s</ul>' "${listitem}" | printHtml.sh --header-field "${headerField}" --title 'Cookie Manager' --http-template ''
+printf '<ul>%s</ul>' "${listitem}" | printhtml --header-field "${headerField}" --title 'Cookie Manager' --http-template ''

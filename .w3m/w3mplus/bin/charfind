@@ -162,4 +162,4 @@ case "${keyword}" in ?*)
 			printf 'W3m-control: MOVE_RIGHT1\n'
 		fi
 	done
-esac | httpResponseW3mBack.sh -
+esac | httpresponse -

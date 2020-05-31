@@ -137,7 +137,7 @@ if [ "${checksum}" = "${startChecksum}" ] && [ "$(date -u '+%Y%m%d%H%M%S' | TZ='
 	selectline -l "${startLine}" -n "${line}" 'yank' "${file}"
 	printf 'W3m-control: SETENV W3MPLUS_VISUALSTART=\r\n'
 else
-	httpResponseW3mBack.sh - <<- EOF
+	httpresponse - <<- EOF
 		W3m-control: SETENV W3MPLUS_VISUALSTART=${checksum}	${line}	$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 		W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'
 	EOF

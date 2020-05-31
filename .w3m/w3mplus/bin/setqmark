@@ -165,4 +165,4 @@ if [ -n "${deleteList}" ]; then
 	deleteList="<h1>Deleted Quick Mark</h1><ul>${deleteList}</ul>"
 fi
 
-printf "<p>Set Quick Mark '<strong>%s</strong>'</p>%s" "${key}" "${addList}${deleteList}" | printHtml.sh  --title "Set Quick Mark '${key}'" --http-template ''
+printf "<p>Set Quick Mark '<strong>%s</strong>'</p>%s" "${key}" "${addList}${deleteList}" | printhtml  --title "Set Quick Mark '${key}'" --http-template ''

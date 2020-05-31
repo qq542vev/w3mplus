@@ -145,49 +145,63 @@ esac
 value="${value%$}"
 
 case "${value}" in '')
-	httpResponseW3mBack.sh
+	httpresponse
 	exit
 	;;
 esac
 
 case "${action}" in
 	'addBookmark')
-		printRedirect.sh "${value}" 'W3m-control: ADD_BOOKMARK'
+		cat <<- EOF | redirect -
+			${value}
+			W3m-control: ADD_BOOKMARK
+		EOF
 		;;
 	'decrementURI')
-		printRedirect.sh "$(incrementuri -n '-1' -- "${value}")"
+		incrementuri -n '-1' -- "${value}" | redirect -
 		;;
 	'incrementURI')
-		printRedirect.sh "$(incrementuri -- "${value}")"
+		incrementuri -- "${value}" | redirect -
 		;;
 	'parentUriPath')
-		printRedirect.sh "$(parenturipath -- "${value}")"
+		parenturipath -- "${value}" | redirect -
 		;;
 	'prevTab')
-		printRedirect.sh "${value}" 'W3m-control: PREV_TAB'
+		cat <<- EOF | redirect -
+			${value}
+			W3m-control: PREV_TAB
+		EOF
 		;;
 	'search')
-		printRedirect.sh "${W3MPLUS_SEARCH_URI}$(printf '%s' "${value}" | urlencode)"
+		printf '%s' "${W3MPLUS_SEARCH_URI}$(printf '%s' "${value}" | urlencode)" | redirect -
 		;;
 	'sendEmail')
-		printRedirect.sh "mailto:?body=$(printf '%s' "${value}" | urlencode)"
+		printf "mailto:?body=%s" "$(printf '%s' "${value}" | urlencode)" | redirect -
 		;;
 	'show')
-		httpResponseW3mBack.sh "W3m-control: READ_SHELL printf '%s' '$(printf '%s' "${value}" | base64 | tr -d '\n')' | base64 -d"
+		printf "W3m-control: READ_SHELL printf '%%s' '%s' | base64 -d\\n" "$(printf '%s' "${value}" | base64 | tr -d '\n')" | httpresponse -
 		;;
 	'viewSource')
-		printRedirect.sh "${value}" 'W3m-control: VIEW'
+		cat <<- EOF | redirect -
+			${value}
+			W3m-control: VIEW
+		EOF
 		;;
 	'viewSourceExternally')
-		printRedirect.sh "${value}" 'W3m-control: VIEW' 'W3m-control: EDIT_SCREEN' 'W3m-control: VIEW'
+		cat <<- EOF | redirect -
+			${value}
+			W3m-control: VIEW
+			W3m-control: EDIT_SCREEN
+			W3m-control: VIEW
+		EOF
 		;;
 	'yank')
 		printf '%s' "${value}" | setreg '+' -
 		printf '%s' "${value}" | eval "${W3MPLUS_YANK}"
-		httpResponseW3mBack.sh
+		httpresponse
 		;;
 	*)
-		printHtml.sh --title 'Problem loading page' <<- 'EOF'
+		printhtml --title 'Problem loading page' <<- 'EOF'
 			<h1>The address isn't valid</h1>
 
 			<p>The URL is not valid and cannot be loaded.</p>

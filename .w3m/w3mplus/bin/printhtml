@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: printHtml.sh
+## File: printhtml
 ##
 ## Print HTTP message for HTML.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   printHtml.sh [OPTION]... [FILE]...
+##   printhtml [OPTION]... [FILE]...
 ##   (end)
 ##
 ## Options:
@@ -62,11 +62,11 @@ args=''
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
 		'-H' | '--header-field')
-			headerFields="${2}"
+			headerFields=$(printf '%s\n%s' "${headerFields}" "${2}")
 			shift 2
 			;;
 		'-m' | '--meta-data')
-			metaData="${2}"
+			metaData=$(printf '%s\n%s' "${metaData}" "${2}")
 			shift 2
 			;;
 		'-s' | '--status-code')
@@ -99,7 +99,6 @@ while [ 1 -le "${#}" ]; do
 			tmpFile=$(mktemp)
 			cat >"${tmpFile}"
 			shift
-
 			set -- "${tmpFile}" ${@+"${@}"}
 			;;
 		# `--name=value` 形式のロングオプション
@@ -151,14 +150,6 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-# 引数の個数が過小である
-if [ "${#}" -eq 0 ]; then
-	tmpFile=$(mktemp)
-	cat >"${tmpFile}"
-
-	set -- "${tmpFile}"
-fi
-
 mainContent=$(cat -- ${@+"${@}"}; printf '$')
 mainContent="${mainContent%$}"
 
@@ -166,10 +157,12 @@ messageBody=$("${htmlTemplate}" -t "${title}" -m "${metaData}" -c "${mainContent
 messageBody="${messageBody%$}"
 
 if [ -z "${httpTemplate}" ]; then
-	printf '%s' "${headerFields}" | printRedirect.sh - "data:text/html;base64,$(printf '%s' "${messageBody}" | base64 | tr -d '\n')"
+	printf '%s' "${headerFields}" | redirect - "data:text/html;base64,$(printf '%s' "${messageBody}" | base64 | tr -d '\n')"
 else
-	headerFields=$(printf 'Content-Type: text/html; charset=UTF-8\n%s\n' "${headerFields}" | sed -e "/^$(printf '\r')*\$/d" | normalizehttpmsg --uncombined 'W3m-control'; printf '$')
-	headerFields="${headerFields%$}"
+	W3MPLUS_BACK='0' httpresponse --status-code "${statusCode}" - <<- EOF
+		Content-Type: text/html; charset=UTF-8
+		${headerFields}
+	EOF
 
-	"${httpTemplate}" -b "${messageBody}" -h "${headerFields}" -s "${statusCode}"
+	printf '%s' "${messageBody}"
 fi

@@ -157,4 +157,4 @@ while [ 1 -le "${#}" ]; do
 			break
 		fi
 	done
-done | httpResponseW3mBack.sh -
+done | httpresponse -

@@ -52,4 +52,4 @@ else
 	menu='Main'
 fi
 
-httpResponseW3mBack.sh "W3m-control: MENU ${menu}"
+printf 'W3m-control: MENU %s\n' "${menu}" | httpresponse -

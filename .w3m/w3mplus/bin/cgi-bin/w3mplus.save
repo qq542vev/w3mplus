@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.10.0
-##   date - 2020-05-28
+##   version - 1.9.0
+##   date - 2020-05-05
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -49,10 +49,7 @@ expand () (
 addPrintCache () (
 	tmpFile=$(mktemp -u)
 
-	httpresponse - <<- EOF
-		W3m-control: PRINT ${tmpFile}
-		W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmpFile}" | urlencode)
-	EOF
+	httpresponse "W3m-control: PRINT ${tmpFile}" "W3m-control: GOTO file://${SCRIPT_NAME}?${QUERY_STRING}${QUERY_STRING:+&}file=$(printf '%s' "${tmpFile}" | urlencode)"
 )
 
 gotoMove () (
@@ -121,7 +118,7 @@ if result=$(
 				closetab --line "${W3M_CURRENT_LINE}" --colmun "${W3M_CURRENT_COLUMN}" -- "${W3M_URL}"
 			fi
 
-			printf 'W3m-control: CLOSE_TAB\n' | httpresponse -
+			printf 'W3m-control: CLOSE_TAB' | httpresponse -
 			;;
 		'undoTab')
 			export 'W3MPLUS_REDIRECT_TYPE=1'
@@ -135,10 +132,10 @@ if result=$(
 		'undoTabs')
 			: >>"${W3MPLUS_PATH}/tabRestore"
 
-			pathtourl "${W3MPLUS_PATH}/tabRestore" | redirect -
+			redirect "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/tabRestore"
 			;;
 		'homepage')
-			printf '%s' "${WWW_HOME-about:home}" | redirect -
+			redirect "${WWW_HOME-about:home}"
 			;;
 		'aboutURI')
 			abouturi ${query_uri+"${query_uri}"}
@@ -147,7 +144,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				httpresponse - <<- EOF
+				cat <<- EOF | httpresponse -
 					W3m-control: GOTO_LINE $(printf '%d' "${line}")
 					W3m-control: MOVE_RIGHT1 $(mvcolmun --line "${line}" ${query_percent+'--number' "${query_percent}"} --skip -- "${tmpFile}")
 				EOF
@@ -186,7 +183,7 @@ if result=$(
 		'qmarks')
 			: >>"${W3MPLUS_PATH}/quickmark"
 
-			pathtourl "${W3MPLUS_PATH}/quickmark" | redirect -
+			redirect "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/quickmark"
 			;;
 		'getQuickMark')
 			getqmark -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove
@@ -202,7 +199,7 @@ if result=$(
 		'marks')
 			: >>"${W3MPLUS_PATH}/localmark"
 
-			pathtourl "${W3MPLUS_PATH}/localmark" | redirect -
+			redirect "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/localmark"
 			;;
 		'getLocalMark')
 			getautocmd --config "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
@@ -229,13 +226,13 @@ if result=$(
 		'registers')
 			: >>"${W3MPLUS_PATH}/register"
 
-			pathtourl "${W3MPLUS_PATH}/register" | redirect -
+			redirect "file://$(printf '%s' "${W3MPLUS_PATH}" | urlencode | fsed '%2F' '/')/register"
 			;;
-		'getRegister')
+		'getreg')
 			register=$(getreg "${query_key-0}"; printf '$')
 			W3MPLUS_REGISTER_TMP="${register%$}" runenvvar "${query_run}" 'W3MPLUS_REGISTER_TMP'
 			;;
-		'setRegister')
+		'setreg')
 			value=$(expand "${query_value-W3M_URL}")
 
 			case "${value}" in ?*)
@@ -287,7 +284,7 @@ if result=$(
 		'search')
 			case "${query_query-}" in
 				'!')
-					printf '%s' "file://${SCRIPT_NAME}?action=searchhistory" | redirect -
+					redirect "file://${SCRIPT_NAME}?action=searchhistory"
 					;;
 				*)
 					printf '%s' "${query_query-}" | search ${query_engine+--engine "${query_engine}"}
@@ -297,30 +294,20 @@ if result=$(
 		'dictWordSearch')
 			case "${query_query#?}" in
 				'!')
-					printf '%s' "file://${SCRIPT_NAME}?action=searchhistory" | redirect -
+					redirect "file://${SCRIPT_NAME}?action=searchhistory"
 					;;
 				*)
-					engine="${query_engine-${W3MPLUS_SEARCH_ENGINE}}"
+echo
+echo
+					printf '%s' "${query_query#?}" | search ${query_engine+--engine "${query_engine}"} | sed -e '/^[[:space:]]*$/q'
 
-					printf '%s' "${query_query#?}" | search --engine "${engine}" | awk -v "engine=${query_prevtab+$(printf '%s' "${engine}" | octalEncode)}" -- '
-						$0 == "\r" {
-							exit
-						}
+cprintf 'xxxxxx\r\n'
+					case "${query_prevtab}" in ?*)
+:
+#						printf 'W3m-control: PREV_TAB\r\n'
+					esac
 
-						{
-							printf("%s\n", $0)
-						}
-
-						END {
-							count = split(engine, array, /,+/)
-
-							for(; 0 < count; count--) {
-								printf "W3m-control: PREV_TAB\r\n"
-							}
-
-							printf "\r\n"
-						}
-					'
+#					printf '\r\n'
 					;;
 			esac
 			;;
@@ -386,7 +373,7 @@ if result=$(
 		'bookmarkBar')
 			uri=$(expand "${query_url-W3M_URL}")
 
-			bmarkbar ${uri:+'--uri' "${uri}"} ${query_position:+'--position' "${query_position}"}
+			bmarkbar ${uri:+'--uri' "${uri}"} ${query_type:+'--type' "${query_type}"}
 			;;
 		'historyBar')
 			uri=$(expand "${query_url-W3M_URL}")

@@ -1,19 +1,16 @@
 #!/usr/bin/env sh
 
-## File: printRedirect.sh
+## File: httpresponse
 ##
-## Print redirect message.
+## Displays a w3m back.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   printRedirect.sh [[OPTION]... [URI]]...
+##   httpresponse [HEADER_FIELD | FIELD_NAME FIELD_VALUE]...
 ##   (end)
 ##
 ## Options:
-##
-##   -h, --help    - display this help and exit.
-##   -v, --version - output version information and exit.
 ##
 ## Exit Status:
 ##
@@ -23,9 +20,9 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.2
-##   date - 2020-03-21
-##   since - 2019-07-13
+##   version - 1.1.2
+##   date - 2020-03-05
+##   since - 2019-07-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -46,10 +43,17 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
+tmpDir=$(mktemp -d)
+statusCode='200 OK'
 args=''
 
+# コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
+		'-s' | '--status-code')
+			statusCode="${2}"
+			shift 2
+			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
@@ -62,17 +66,10 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
+			tmpFile=$(mktemp -p "${tmpDir}")
+			cat >"${tmpFile}"
 			shift
-
-			awkScript=$(cat <<- 'EOF'
-				$0 != "" {
-					gsub(/'+/, "'\"&\"'", $0)
-					printf("'%s' ", $0)
-				}
-			EOF
-			)
-
-			args="${args}$(awk "${awkScript}")"
+			set -- "${tmpFile}" ${@+"${@}"}
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -116,48 +113,18 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-for uri in ${@+"${@}"}; do
-	if uricheck -f '' "${uri}"; then
-		case "${W3MPLUS_REDIRECT_TYPE-0}" in
-			'-1')
-				printf 'W3m-control: TAB_GOTO %s\n' "${uri}"
-				;;
-			'1')
-				cat <<- EOF
-					W3m-control: BACK
-					W3m-control: TAB_GOTO "${uri}"
-				EOF
-
-				W3MPLUS_REDIRECT_TYPE='-1'
-				;;
-			'2')
-				cat <<- EOF
-					W3m-control: BACK
-					W3m-control: NEW_TAB
-					W3m-control: GOTO ${uri}
-					W3m-control: DELETE_PREVBUF
-				EOF
-
-				W3MPLUS_REDIRECT_TYPE='-1'
-				;;
-			'3')
-				cat <<- EOF
-					W3m-control: GOTO ${uri}
-					W3m-control: DELETE_PREVBUF
-				EOF
-
-				W3MPLUS_REDIRECT_TYPE='-1'
-				;;
-			*)
-				cat <<- EOF
-					W3m-control: BACK
-					W3m-control: GOTO ${uri}
-				EOF
-
-				W3MPLUS_REDIRECT_TYPE='-1'
-				;;
+headerFields=$(
+	{
+		case "${W3MPLUS_BACK-1}" in '1')
+			printf 'W3m-control: BACK\n';;
 		esac
-	else
-		printf '%s\n' "${uri}"
-	fi
-done | W3MPLUS_BACK=0 httpResponseW3mBack.sh -
+
+		case "${#}" in [1-9]*)
+			cat -- ${@+"${@}"}
+		esac
+	} | sed -e '/^[[:cntrl:]]*$/d' | normalizehttpmsg --uncombined 'W3m-control' --unstructured 'W3m-control'
+
+	printf '$'
+)
+
+"${W3MPLUS_TEMPLATE_HTTP}" -h "${headerFields%$}"

@@ -1,19 +1,17 @@
 #!/usr/bin/env sh
 
-## File: mvpercent
+## File: redirect
 ##
-## Display HTTP Response that moves to n% with w3m.
+## Print redirect message.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   mvpercent [OPTION]... COUNT
+##   redirect [[OPTION]... [URI]]...
 ##   (end)
 ##
 ## Options:
 ##
-##   -l, --line    - line number.
-##   -n, --number  - move percent (0 - 100).
 ##   -h, --help    - display this help and exit.
 ##   -v, --version - output version information and exit.
 ##
@@ -25,9 +23,9 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2020-02-20
-##   since - 2019-07-29
+##   version - 1.0.2
+##   date - 2020-03-21
+##   since - 2019-07-13
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -48,34 +46,11 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
-line='1'
-percent='50'
+tmpDir=$(mktemp -d)
 args=''
 
-# コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
-		'-l' | '--line')
-			if expr -- "${2}" ':' '[1-9][0-9]*$' >'/dev/null'; then
-				line="${2}"
-				shift 2
-			else
-				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
-				exitStatus="${EX_USAGE}"; exit
-			fi
-			;;
-		'-n' | '--number')
-			case "${2}" in
-				[0-9] | [1-9][0-9] | '100' | [+-][0-9] | [+-][0-9][0-9] | [+-]'100')
-					percent="${2}"
-					shift 2
-					;;
-				*)
-					printf 'The value must be a number between 0 and 100\n' 1>&2
-					exitStatus="${EX_USAGE}"; exit
-					;;
-			esac
-			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
@@ -85,6 +60,13 @@ while [ 1 -le "${#}" ]; do
 		'-v' | '--version')
 			version
 			exit
+			;;
+		# 標準入力を処理する
+		'-')
+			tmpFile=$(mktemp -p "${tmpDir}")
+			cat >"${tmpFile}"
+			shift
+			set -- "${tmpFile}" ${@+"${@}"}
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -96,13 +78,8 @@ while [ 1 -le "${#}" ]; do
 		# 以降はオプション以外の引数
 		'--')
 			shift
-
-			while [ 1 -le "${#}" ]; do
-				arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-				args="${args}${args:+ }'${arg%?$}'"
-				shift
-			done
+			args="${args}$(quoteEscape ${@+"${@}"})"
+			shift "${#}"
 			;;
 		# 複合ショートオプション
 		'-'[!-][!-]*)
@@ -124,9 +101,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# その他のオプション以外の引数
 		*)
-			arg=$(printf '%s\n' "${1}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$');
-
-			args="${args}${args:+ }'${arg%?$}'"
+			args="${args}$(quoteEscape "${1}")"
 			shift
 			;;
 	esac
@@ -135,27 +110,40 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-lineCount="${1}"
+awkScript=$(
+	cat <<- 'EOF'
+	{
+		gsub(/'+/, "'\"&\"'", $0)
+		command = "uricheck --normalize -- '" $0 "'"
+		command | getline uri
 
-# 引数の個数が過大である
-if [ 1 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0##*/}: too many arguments
-		Try '${0##*/} --help' for more information.
+		if(uri == "") {
+			printf("%s\n", $0)
+		} else {
+			if(redirect == -1) {
+				printf("W3m-control: TAB_GOTO %s\n", uri)
+			} else if(redirect == 1) {
+				printf("W3m-control: BACK\n")
+				printf("W3m-control: TAB_GOTO %s\n", uri)
+			}	else if(redirect == 2) {
+				printf("W3m-control: BACK\n")
+				printf("W3m-control: NEW_TAB\n")
+				printf("W3m-control: GOTO %s\n", uri)
+				printf("W3m-control: DELETE_PREVBUF\n")
+			}	else if(redirect == 3) {
+				printf("W3m-control: GOTO %s\n", uri)
+				printf("W3m-control: DELETE_PREVBUF\n")
+			} else {
+				printf("W3m-control: BACK\n")
+				printf("W3m-control: GOTO %s\n", uri)
+			}
+
+			redirect = -1
+		}
+	}
 	EOF
+)
 
-	exitStatus="${EX_USAGE}"; exit
-fi
-
-case "${percent}" in [+-]*)
-	percent=$(((((line - 1) * 100) / (lineCount - 1)) + percent))
-
-	if [ "${percent}" -lt 0 ]; then
-		percent='0'
-	elif [ 100 -lt "${percent}" ]; then
-		percent='100'
-	fi
-	;;
-esac
-
-printf 'W3m-control: GOTO_LINE %d' "$((( ( lineCount - 1 ) * percent / 100 ) + 1))" | httpresponse -
+case "${#}" in [1-9]*)
+	awk -v "redirect=${W3MPLUS_REDIRECT_TYPE-0}" -- "${awkScript}" ${@+"${@}"};;
+esac | W3MPLUS_BACK=0 httpresponse -

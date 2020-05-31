@@ -181,7 +181,7 @@ case "${action}" in
 
 		sed -e "${startLine},${endLine}!d" -- "${file}" >"${selectLineTmpFile}"
 
-		printf "W3m-control: EXEC_SHELL cat -- '%s' | %s; rm -f -- '%s'\\n" "${selectLineTmpFile}" "${W3MPLUS_OPERATORFUNC}" "${selectLineTmpFile}" | httpResponseW3mBack.sh -
+		printf "W3m-control: EXEC_SHELL cat -- '%s' | %s; rm -f -- '%s'\\n" "${selectLineTmpFile}" "${W3MPLUS_OPERATORFUNC}" "${selectLineTmpFile}" | httpresponse -
 		;;
 	'formatPrg')
 		command=$(
@@ -195,14 +195,14 @@ case "${action}" in
 			printf "sed -e '%s' -- \"\${file}\";" "$((endLine + 1)),\$!d"
 		)
 
-		httpResponseW3mBack.sh - <<-EOF
+		httpresponse - <<-EOF
 			W3m-control: PIPE_BUF ${command}
 			W3m-control: GOTO_LINE ${startLine}
 		EOF
 		;;
 	'filter')
 		if [ "${startLine}" -eq 1 ] && [ "${lineCount}" -le "${endLine}" ]; then
-			httpResponseW3mBack.sh 'W3m-control: PIPE_BUF'
+			printf 'W3m-control: PIPE_BUF\n' | httpresponse -
 		else
 			selectLineTmpFile=$(mktemp)
 			cp -f -- "${file}" "${selectLineTmpFile}"
@@ -217,7 +217,7 @@ case "${action}" in
 				printf "rm -f -- '%s';" "${selectLineTmpFile}"
 			)
 
-			httpResponseW3mBack.sh - <<- EOF
+			httpresponse - <<- EOF
 				W3m-control: PIPE_BUF	sed -e "${startLine},${endLine}!d" -- %s
 				W3m-control: PIPE_BUF
 				W3m-control: PIPE_BUF ${commands}
@@ -227,25 +227,25 @@ case "${action}" in
 		fi
 		;;
 	'uppercase')
-		httpResponseW3mBack.sh - <<- EOF
+		httpresponse - <<- EOF
 			W3m-control: PIPE_BUF sed -e "${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/" -- %s
 			W3m-control: GOTO_LINE ${startLine}
 		EOF
 		;;
 	'lowercase')
-		httpResponseW3mBack.sh - <<- EOF
+		httpresponse - <<- EOF
 			W3m-control: PIPE_BUF sed -e "${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/" -- %s
 			W3m-control: GOTO_LINE ${startLine}
 		EOF
 		;;
 	'switchcase')
-		httpResponseW3mBack.sh - <<- EOF
+		httpresponse - <<- EOF
 			W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/' -- %s
 			W3m-control: GOTO_LINE ${startLine}
 		EOF
 		;;
 	'rot13')
-		httpResponseW3mBack.sh - <<- EOF
+		httpresponse - <<- EOF
 			W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/' -- %s
 			W3m-control: GOTO_LINE ${startLine}
 		EOF
@@ -253,6 +253,6 @@ case "${action}" in
 	'yank')
 		sed -e "${startLine},${endLine}!d" -- "${file}" | setreg '+' -
 		sed -e "${startLine},${endLine}!d" -- "${file}" | eval "${W3MPLUS_YANK}"
-		httpResponseW3mBack.sh
+		httpresponse
 		;;
 esac
