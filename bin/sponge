@@ -1,0 +1,67 @@
+#!/usr/bin/env sh
+
+## File: sponge
+##
+## sponge - soak up standard input and write to a file
+##
+## Usage:
+##
+##   (start code)
+##   sed '...' file | grep '...' | sponge [-a] file
+##   (end)
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2020-06-03
+##   since - 2020-06-03
+##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
+##   licence - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * Project Homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+set -efu
+
+for command in '/usr/local/bin/sponge' '/usr/bin/sponge'; do
+	if [ "${0}" '!=' "${command}" ] && [ -x "${command}" ]; then
+		"${command}" ${@+"${@}"}
+		exit
+	fi
+done
+
+appendFlag='0'
+
+while getopt 'a' option; do
+	case "${option}" in
+		'a') appendFlag='1';;
+		*)
+			printf "sponge: invalid option -- '%s'\\n" "${option}"
+			exit 1
+			;;
+	esac
+done
+
+shift "$((OPTIND - 1))"
+
+tmpFile=$(mktemp)
+cat >"${tmpFile}"
+
+case "${#}" in
+	'0')
+		cat -- "${tmpFile}"
+		;;
+	*)
+		output="${1}"
+
+		case "${appendFlag}" in
+			'0') cat -- "${tmpFile}" >"${output}";;
+			'1') cat -- "${tmpFile}" >>"${output}";;
+		esac
+		;;
+esac
+
+rm -f -- "${tmpFile}"

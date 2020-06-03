@@ -113,9 +113,12 @@ eval set -- "${args}"
 awkScript=$(
 	cat <<- 'EOF'
 	{
-		gsub(/'+/, "'\"&\"'", $0)
-		command = "uricheck --normalize -- '" $0 "'"
+		arguri = $0
+		uri = ""
+		gsub(/'+/, "'\"&\"'", arguri)
+		command = "uricheck --normalize -- '" arguri "'"
 		command | getline uri
+		close(command)
 
 		if(uri == "") {
 			printf("%s\n", $0)

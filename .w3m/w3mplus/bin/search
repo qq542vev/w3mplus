@@ -26,10 +26,10 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-05-16
-##   since - 2019-05-26
-##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   version - 1.1.0
+##   date - 2020-06-04
+##   since - 2020-05-26
+##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
@@ -48,10 +48,11 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
-tmpDir="$(mktemp -d)"
+tmpDir=$(mktemp -d)
 config="${W3MPLUS_PATH}/searchurl"
 engine="${W3MPLUS_SEARCH_ENGINE}"
 history="${W3MPLUS_PATH}/searchhistory"
+size="${W3MPLUS_SEARCH_HISTSIZE}"
 args=''
 
 while [ 1 -le "${#}" ]; do
@@ -67,6 +68,15 @@ while [ 1 -le "${#}" ]; do
 		'-H' | '--history')
 			history="${2}"
 			shift 2
+			;;
+		'-s' | '--size')
+			if [ "${2}" = '0' ] || expr -- "${2}" ':' '[1-9][0-9]*$' >'/dev/null'; then
+				size="${2}"
+				shift 2
+			else
+				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+				exitStatus="${EX_USAGE}"; exit
+			fi
 			;;
 		# 標準入力を処理する
 		'-')
@@ -232,7 +242,11 @@ for file in ${@+"${@}"}; do
 	encoded=$(printf '%s' "${keyword}" | urlencode)
 
 	case "${keyword}" in ?*)
-		printf '%s\t%s\t%s\n' "${encoded}" "$(printf '%s' "${engine}" | urlencode)" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >>"${history}"
+		(
+			cat -- "${history}"
+			printf '%s\t%s\t%s\n' "${encoded}" "$(printf '%s' "${engine}" | urlencode)" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+		) | tail -n "${size}" | sponge -- "${history}"
+
 		printf '%s' "${keyword}" | setreg '/' -
 		;;
 	esac

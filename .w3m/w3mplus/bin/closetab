@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.1.1
-##   date - 2020-02-27
+##   version - 2.2.0
+##   date - 2020-06-04
 ##   since 2019-08-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -49,9 +49,10 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
-config="${W3MPLUS_PATH}/tabRestore"
+config="${W3MPLUS_UNDO_FILE}"
 colmun='1'
 line='1'
+size="${W3MPLUS_UNDO_HISTSIZE}"
 fields=''
 datetime=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 
@@ -79,13 +80,22 @@ while [ 1 -le "${#}" ]; do
 				colmun="${2}"
 				shift 2
 			else
-				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
+				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
 				exitStatus="${EX_USAGE}"; exit
 			fi
 			;;
 		'-l' | '--line')
 			if [ "${2}" = '0' ] || expr -- "${2}" ':' '-\{0,1\}[1-9][0-9]*$' >'/dev/null'; then
 				line="${2}"
+				shift 2
+			else
+				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
+				exitStatus="${EX_USAGE}"; exit
+			fi
+			;;
+		'-s' | '--size')
+			if [ "${2}" = '0' ] || expr -- "${2}" ':' '[1-9][0-9]*$' >'/dev/null'; then
+				size="${2}"
 				shift 2
 			else
 				printf 'The option "%s" must be a positive integer.\n' "${1}" 1>&2
@@ -149,8 +159,6 @@ directory=$(dirname -- "${config}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
-tmpFile=$(mktemp)
-
 {
 	cat -- "${config}"
 	printf '%s' "${fields}"
@@ -176,6 +184,4 @@ tmpFile=$(mktemp)
 	END {
 		printArray(previous)
 	}
-' >"${tmpFile}"
-
-cp -fp -- "${tmpFile}" "${config}"
+' | tail -n "${size}" | sponge -- "${config}"
