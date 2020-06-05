@@ -20,10 +20,10 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-03-25
+##   version - 1.0.1
+##   date - 2020-06-06
 ##   since - 2020-03-22
-##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
@@ -206,12 +206,7 @@ case "${type}" in
 		;;
 esac
 
-: | printhtml --html-template "${W3MPLUS_TEMPLATE_FRAMESET}" --http-template '' --header-field "$(
-	cat <<- 'EOF'
-		W3m-control: SET_OPTION frame=1
-		W3m-control: SET_OPTION target_self=1
-	EOF
-)" --title 'History' --meta-data "$(
+printhtml --html-template "${W3MPLUS_TEMPLATE_FRAMESET}" --http-template '' --header-field 'W3m-control: SET_OPTION frame=1' --header-field 'W3m-control: SET_OPTION target_self=1' --title 'History' --meta-data "$(
 	cat <<- EOF
 	<frameset ${attribute}>
 		${frames}

@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.4.1
-##   date - 2020-05-30
+##   version - 1.4.2
+##   date - 2020-06-05
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -44,10 +44,10 @@ export 'IFS'
 
 case "${1-about:about}" in
 	'about:')
-		printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "$(w3m -version | htmlescape)" | printhtml --title 'About:'
+		printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "$(w3m -version | htmlescape)" | printhtml --title 'About:' -
 		;;
 	'about:about')
-		printhtml --title 'About About' <<- 'EOF'
+		printhtml --title 'About About' - <<- 'EOF'
 			<section typeof="rdf:Bag">
 				<h1 property="dc:title">About About</h1>
 
@@ -76,7 +76,7 @@ case "${1-about:about}" in
 		EOF
 		;;
 	'about:blank')
-		: | printhtml --title 'about:blank'
+		printhtml --title 'about:blank'
 		;;
 	'about:bookmark')
 		printf 'W3m-control: VIEW_BOOKMARK\n' | httpresponse -
@@ -131,7 +131,7 @@ case "${1-about:about}" in
 			EOF
 		)
 
-		printhtml --title 'Network Cache Storage Information' <<- EOF
+		printhtml --title 'Network Cache Storage Information' - <<- EOF
 			<table typeof="rdf:Seq">
 				<caption property="dcterms:title">w3m Cache Files in '<a rel="dcterms:relation" href="${fileurl}">${w3mhome}</a>'</caption>
 				<thead>
@@ -161,7 +161,7 @@ case "${1-about:about}" in
 		printf 'W3m-control: HISTORY\n' | httpresponse -
 		;;
 	'about:home')
-		printhtml --title 'w3m Start Page' --header-field 'W3m-control: BEGIN' --header-field 'W3m-control: NEXT_LINK' <<- EOF
+		printhtml --title 'w3m Start Page' --header-field 'W3m-control: BEGIN' --header-field 'W3m-control: NEXT_LINK' - <<- EOF
 			<form action="file:///cgi-bin/w3mplus" method="get" accept-charset="UTF-8">
 				<p align="center">
 					<input type="hidden" name="action" value="search" />
@@ -244,7 +244,7 @@ case "${1-about:about}" in
 					$(ps -o "${header}" | awk -v "pid=${w3mid}" -- '($1 != pid) && ($8 == "w3m") { print $0 }'| htmlescape | awk -- "${awkScript}")
 				</section>
 			EOF
-		fi | printhtml --title 'w3m processes'
+		fi | printhtml --title 'w3m processes' -
 		;;
 	'about:message')
 		printf 'W3m-control: MSGS\n' | httpresponse -
@@ -253,13 +253,13 @@ case "${1-about:about}" in
 		printf 'W3m-control: TAB_GOTO about:blank\n' | httpresponse -
 		;;
 	'about:permissions')
-		pathtourl "${HOME}/siteconf" | redirect -
+		pathtourl "${W3MPLUS_W3M_SITECONF}" | redirect -
 		;;
 	'about:preferences')
-		printf 'W3m-control: OPTIONS\n' | httpresponse
+		printf 'W3m-control: OPTIONS\n' | httpresponse -
 		;;
 	'about:private')
-		printhtml --title 'Private Browsing' <<- 'EOF'
+		printhtml --title 'Private Browsing' - <<- 'EOF'
 			<h1>Private Browsing</h1>
 
 			<p>w3m won't remember any history for this window.</p>
@@ -272,7 +272,7 @@ case "${1-about:about}" in
 		EOF
 		;;
 	*)
-		printhtml --title 'Problem loading page' --status-code '400 Bad Request' <<- 'EOF'
+		printhtml --title 'Problem loading page' --status-code '400 Bad Request' - <<- 'EOF'
 			<h1>The address isn't valid</h1>
 
 			<p>The URL is not valid and cannot be loaded.</p>

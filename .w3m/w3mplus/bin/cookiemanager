@@ -28,7 +28,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.3
-##   date - 2020-02-27
+##   date - 2020-06-06
 ##   since - 2020-01-27
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -163,7 +163,6 @@ eval set -- "${args}"
 uriPattern='^\(\([^:/?#]\{1,\}\):\)\{0,1\}\(\/\/\([^@/?#]@\)\{0,1\}\([^/?#]*\)\(:[^/?#]*\)\{0,1\}\)\{0,1\}\([^?#]*\)\(?\([^#]*\)\)\{0,1\}\(#\(.*\)\)\{0,1\}$'
 hostPattern='^([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?\.)*[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?$'
 ipPattern='^(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$'
-tmpFile=$(mktemp)
 listitem=''
 headerField=''
 
@@ -214,11 +213,10 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 	fieldValue="${fieldValue#,}"
 	fieldValue="${fieldValue%,}"
 
-	sed -e "/^${name}[	 ]/c ${name} ${fieldValue}" -- "${config}" >"${tmpFile}"
-	cp -fp "${tmpFile}" "${config}"
+	sed -e "/^${name}[	 ]/c ${name} ${fieldValue}" -- "${config}" | sponge -- "${config}"
 
 	headerField=$(printf '%sW3m-control: SET_OPTION %s=%s\n$' "${headerField}" "${name}" "${fieldValue}")
 	headerField="${headerField%$}"
 done
 
-printf '<ul>%s</ul>' "${listitem}" | printhtml --header-field "${headerField}" --title 'Cookie Manager' --http-template ''
+printf '<ul>%s</ul>' "${listitem}" | printhtml --header-field "${headerField}" --title 'Cookie Manager' --http-template '' -

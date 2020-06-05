@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.10.0
-##   date - 2020-05-28
+##   version - 1.11.0
+##   date - 2020-06-06
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -133,9 +133,9 @@ if result=$(
 			undotab ${query_number+'--number' "${query_number}"} ${query_count+'--count' "${query_count}"} | gotoMove '1'
 			;;
 		'undoTabs')
-			: >>"${W3MPLUS_PATH}/tabRestore"
+			: >>"${W3MPLUS_UNDO_FILE}"
 
-			pathtourl "${W3MPLUS_PATH}/tabRestore" | redirect -
+			pathtourl "${W3MPLUS_UNDO_FILE}" | redirect -
 			;;
 		'homepage')
 			printf '%s' "${WWW_HOME-about:home}" | redirect -
@@ -184,9 +184,9 @@ if result=$(
 			charfind --exact ${query_number+'--number' "${query_number}"} -- "${word}"
 			;;
 		'qmarks')
-			: >>"${W3MPLUS_PATH}/quickmark"
+			: >>"${W3MPLUS_QUICKMARK_FILE}"
 
-			pathtourl "${W3MPLUS_PATH}/quickmark" | redirect -
+			pathtourl "${W3MPLUS_QUICKMARK_FILE}" | redirect -
 			;;
 		'getQuickMark')
 			getqmark -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove
@@ -200,36 +200,37 @@ if result=$(
 			fi
 			;;
 		'marks')
-			: >>"${W3MPLUS_PATH}/localmark"
+			: >>"${W3MPLUS_LOCALMARK_FILE}"
+			: >>"${W3MPLUS_LOCALMARKGOTO_FILE}"
 
-			pathtourl "${W3MPLUS_PATH}/localmark" | redirect -
+			pathtourl "${W3MPLUS_LOCALMARK_FILE}" "${W3MPLUS_LOCALMARKGOTO_FILE}" | redirect -
 			;;
 		'getLocalMark')
-			getautocmd --config "${W3MPLUS_PATH}/localmark" -- "${query_key}" "${W3M_URL%%#*}"
+			getautocmd -- "${query_key}" "${W3M_URL%%#*}"
 			;;
 		'setLocalMark')
 			uri=$(expand "${query_uri-W3M_URL}")
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -n "${uri}" ]; then
-				setautocmd --config "${W3MPLUS_PATH}/localmark" -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
+				setautocmd -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
 			fi
 			;;
 		'getLocalMarkGoto')
-			getqmark --config "${W3MPLUS_PATH}/localmarkGoto" -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove '1'
+			getqmark --config "${W3MPLUS_LOCALMARKGOTO_FILE}" -- ${query_key+"${query_key}"} | cut -f '2-4' | gotoMove '1'
 			;;
 		'setLocalMarkGoto')
 			uri=$(expand "${query_uri-W3M_URL}")
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -n "${uri}" ]; then
-				setqmark --config "${W3MPLUS_PATH}/localmarkGoto" --line "${line}" -- "${query_key}" "${uri}"
+				setqmark --config "${W3MPLUS_LOCALMARKGOTO_FILE}" --line "${line}" -- "${query_key}" "${uri}"
 			fi
 			;;
 		'registers')
-			: >>"${W3MPLUS_PATH}/register"
+			: >>"${W3MPLUS_REGISTER_FILE}"
 
-			pathtourl "${W3MPLUS_PATH}/register" | redirect -
+			pathtourl "${W3MPLUS_REGISTER_FILE}" | redirect -
 			;;
 		'getRegister')
 			register=$(getreg "${query_key-0}"; printf '$')
@@ -354,7 +355,7 @@ if result=$(
 				EOF
 			)
 
-			awk -F '\t' -v "url=file://${SCRIPT_NAME}?action=search" -- "${awkScript}" "${W3MPLUS_PATH}/searchhistory" | printhtml --title 'Search History'
+			awk -F '\t' -v "url=file://${SCRIPT_NAME}?action=search" -- "${awkScript}" "${W3MPLUS_SEARCH_CONFIG}" | printhtml --title 'Search History' -
 			;;
 		'selectLine')
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
@@ -371,7 +372,7 @@ if result=$(
 					w3m -dump "${W3M_SOURCEFILE}" | eval "${W3MPLUS_EQUALPRG}"
 				fi
 			else
-				printhtml --title 'Bad Request' --status-code '400 Bad Request' <<- 'EOF'
+				printhtml --title 'Bad Request' --status-code '400 Bad Request' - <<- 'EOF'
 					<p>The value of the environment variable <strong><var>W3MPLUS_EQUALPRG</var></strong> is empty.</p>
 				EOF
 			fi
@@ -394,18 +395,13 @@ if result=$(
 			histbar ${uri:+'--uri' "${uri}"} ${query_type:+'--type' "${query_type}"}
 			;;
 		'httpsEverywhere')
-			siteconf=$(mktemp)
-			cp -f -- "${HOME}/.w3m/siteconf" "${siteconf}"
-
-			if sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${siteconf}" | grep -Fqx '# url m@^http://@'; then
-				sed -e '/^# HTTPS Everywhere$/,/^$/{s/^# url/url/; s/^# substitute_url/substitute_url/}' -- "${siteconf}" >"${HOME}/.w3m/siteconf"
+			if sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${W3MPLUS_W3M_SITECONF}" | grep -Fqx '# url m@^http://@'; then
+				sed -e '/^# HTTPS Everywhere$/,/^$/{s/^# url/url/; s/^# substitute_url/substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" | sponge -- "${W3MPLUS_W3M_SITECONF}"
 				printf 'W3m-control: REINIT\n'
-			elif sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${siteconf}" | grep -Fqx 'url m@^http://@'; then
-				sed -e '/^# HTTPS Everywhere$/,/^$/{s/^url/# url/; s/^substitute_url/# substitute_url/}' -- "${siteconf}" >"${HOME}/.w3m/siteconf"
+			elif sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${W3MPLUS_W3M_SITECONF}" | grep -Fqx 'url m@^http://@'; then
+				sed -e '/^# HTTPS Everywhere$/,/^$/{s/^url/# url/; s/^substitute_url/# substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" | sponge -- "${W3MPLUS_W3M_SITECONF}"
 				printf 'W3m-control: REINIT\n'
 			fi | httpresponse -
-
-			rm -f -- "${siteconf}"
 			;;
 		'zMove')
 			if [ "${query_move}" = 'b' ]; then
@@ -421,7 +417,7 @@ if result=$(
 			EOF
 			;;
 		*)
-			printhtml --title 'Bad Request' --status-code '400 Bad Request' <<- EOF
+			printhtml --title 'Bad Request' --status-code '400 Bad Request' - <<- EOF
 				<dl>
 					<dt>autoCommand</dt>
 					<dd>file://${SCRIPT_NAME}?action=autoCommand&amp;call={call-type}</dd>
@@ -519,7 +515,7 @@ if result=$(
 		printf '%s' "${result%$}"
 	fi
 else
-	printhtml --title '500 Internal Server Error' --status-code '500 Internal Server Error' <<- EOF
+	printhtml --title '500 Internal Server Error' --status-code '500 Internal Server Error' - <<- EOF
 	<p>An unexpected error occurred during request processing.</p>
 
 	<section id="error-message">

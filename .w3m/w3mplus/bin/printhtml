@@ -29,8 +29,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.1.0
-##   date - 2020-02-26
+##   version - 2.1.1
+##   date - 2020-06-06
 ##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -51,6 +51,7 @@ export 'IFS'
 : "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
+tmpDir=$(mktemp -d)
 headerFields=''
 metaData=''
 statusCode='200 OK'
@@ -96,7 +97,7 @@ while [ 1 -le "${#}" ]; do
 			exit
 			;;
 		'-')
-			tmpFile=$(mktemp)
+			tmpFile=$(mktemp -p "${tmpDir}")
 			cat >"${tmpFile}"
 			shift
 			set -- "${tmpFile}" ${@+"${@}"}
@@ -150,8 +151,16 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-mainContent=$(cat -- ${@+"${@}"}; printf '$')
-mainContent="${mainContent%$}"
+case "${#}" in
+	'0')
+		mainContent=''
+		;;
+	*)
+		mainContent=$(cat -- ${@+"${@}"}; printf '$')
+		mainContent="${mainContent%$}"
+		;;
+esac
+
 
 messageBody=$("${htmlTemplate}" -t "${title}" -m "${metaData}" -c "${mainContent}"; printf '$')
 messageBody="${messageBody%$}"

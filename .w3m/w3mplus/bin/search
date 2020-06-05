@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.0
-##   date - 2020-06-04
+##   version - 1.2.0
+##   date - 2020-06-06
 ##   since - 2020-05-26
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -49,9 +49,9 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 tmpDir=$(mktemp -d)
-config="${W3MPLUS_PATH}/searchurl"
+config="${W3MPLUS_SEARCH_CONFIG}"
 engine="${W3MPLUS_SEARCH_ENGINE}"
-history="${W3MPLUS_PATH}/searchhistory"
+history="${W3MPLUS_SEARCH_HISTFILE}"
 size="${W3MPLUS_SEARCH_HISTSIZE}"
 args=''
 
@@ -242,10 +242,10 @@ for file in ${@+"${@}"}; do
 	encoded=$(printf '%s' "${keyword}" | urlencode)
 
 	case "${keyword}" in ?*)
-		(
+		{
 			cat -- "${history}"
 			printf '%s\t%s\t%s\n' "${encoded}" "$(printf '%s' "${engine}" | urlencode)" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-		) | tail -n "${size}" | sponge -- "${history}"
+		} | tail -n "${size}" | sponge -- "${history}"
 
 		printf '%s' "${keyword}" | setreg '/' -
 		;;

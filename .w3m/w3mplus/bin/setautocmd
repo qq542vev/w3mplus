@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.4
-##   date - 2020-02-27
+##   version - 1.1.0
+##   date - 2020-06-06
 ##   since 2019-12-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -67,7 +67,7 @@ outputHtml () {
 }
 
 # 各変数に既定値を代入する
-config="${W3MPLUS_PATH}/autoCommand"
+config="${W3MPLUS_AUTOCMD_FILE}"
 
 # コマンドライン引数の解析する
 while [ 1 -le "${#}" ]; do
@@ -186,4 +186,4 @@ if [ -n "${deleteList}" ]; then
 	deleteList="<h1>Deleted auto command </h1>${deleteList}"
 fi
 
-printf '%s' "${addList}${deleteList}" | printhtml  --title "Set auto command '${call}'" --http-template ''
+printf '%s' "${addList}${deleteList}" | printhtml  --title "Set auto command '${call}'" --http-template '' -
