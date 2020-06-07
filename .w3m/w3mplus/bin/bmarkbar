@@ -26,7 +26,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.3
-##   date - 2020-06-05
+##   date - 2020-06-06
 ##   since - 2020-02-26
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -147,7 +147,7 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-pattern='^pixel_per_char[	 ]\{1,\}\([0-9]\{1,\}\)[	 ]*$'
+		pattern='^pixel_per_char[[:blank:]]\{1,\}\([0-9]\{1,\}\)[[:blank:]]*$'
 pixelPerChar=$(sed -n -e "/${pattern}/{s/${pattern}/\\1/p; q}" -- "${W3MPLUS_W3M_CONFIG}")
 
 case "${pixelPerChar}" in '')

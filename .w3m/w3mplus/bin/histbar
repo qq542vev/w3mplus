@@ -137,7 +137,7 @@ directory=$(dirname -- "${file}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${file}"
 
-pattern='^pixel_per_char[	 ]\{1,\}\([0-9]\{1,\}\)[	 ]*$'
+pattern='^pixel_per_char[[:blank:]]\{1,\}\([0-9]\{1,\}\)[[:blank:]]*$'
 pixelPerChar=$(sed -n -e "/${pattern}/{s/${pattern}/\\1/p; q}" -- "${W3MPLUS_W3M_CONFIG}")
 
 case "${pixelPerChar}" in '')

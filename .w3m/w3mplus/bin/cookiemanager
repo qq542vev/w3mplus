@@ -169,13 +169,13 @@ headerField=''
 for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"cookie_accept_domains ${whitelist}"}; do
 	name="${value% *}"
 	action="${value#* }"
-	field=$(sed -e "/^${name}[	 ]/!d; q" -- "${config}")
+	field=$(sed -e "/^${name}[[:blank:]]/!d; q" -- "${config}")
 
 	if [ -z "${field}" ]; then
 		fieldValue=''
 		printf '%s \n' "${name}" >>"${config}"
 	else
-		fieldValue=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[	 ,]\\{1,\\}/,/" | tr 'A-Z' 'a-z')
+		fieldValue=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[[:blank:],]\\{1,\\}/,/" | tr 'A-Z' 'a-z')
 	fi
 
 	for domain in ${@+"${@}"}; do
@@ -213,7 +213,7 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 	fieldValue="${fieldValue#,}"
 	fieldValue="${fieldValue%,}"
 
-	sed -e "/^${name}[	 ]/c ${name} ${fieldValue}" -- "${config}" | sponge -- "${config}"
+	sed -e "/^${name}[[:blank:]]/c ${name} ${fieldValue}" -- "${config}" | sponge -- "${config}"
 
 	headerField=$(printf '%sW3m-control: SET_OPTION %s=%s\n$' "${headerField}" "${name}" "${fieldValue}")
 	headerField="${headerField%$}"

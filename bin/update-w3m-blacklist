@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 4.1.1
-##   date - 2020-04-03
+##   version - 4.1.2
+##   date - 2020-06-06
 ##   since - 2019-10-31
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -196,12 +196,10 @@ awkScript=$(
 		split("", properties)
 
 		while((0 < getline) && ($0 ~ /^#+[	 ]+@[a-z]+[	 ]+/)) {
-			if($0 ~ /^#+[	 ]+@[a-z]+[	 ]+/) {
-				printf("%s\n", $0)
+			printf("%s\n", $0)
 
-				sub(/@/, "", $2)
-				properties[$2] = joinField(3, NF, " ")
-			}
+			sub(/@/, "", $2)
+			properties[$2] = joinField(3, NF, " ")
 		}
 
 		query = arrayToQuery(properties)
@@ -254,7 +252,5 @@ awkScript=$(
 )
 
 for file in ${@+"${@}"}; do
-	awk -v "beginMessage=${beginMessage}" -v "endMessage=${endMessage}" -v "redirect=${redirect}" -v "tmpDir=${tmpDir}" "${awkScript}" "${file}" >"${tmpDir}/siteconf"
-
-	cp -fp -- "${tmpDir}/siteconf" "${file}"
+	awk -v "beginMessage=$(printf '%s' "${beginMessage}" | octalEncode)" -v "endMessage=$(printf '%s' "${endMessage}" | octalEncode)" -v "redirect=${redirect}" -v "tmpDir=${tmpDir}" "${awkScript}" "${file}" | sponge -- "${file}"
 done

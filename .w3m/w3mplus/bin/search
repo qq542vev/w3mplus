@@ -174,7 +174,7 @@ for file in ${@+"${@}"}; do
 			prefix=$(expr "${keyword}" ':' '\(!?[^?]\{1,\}?\)')
 			histword=$(cut -f '1' -- "${history}" | grep -F -e "$(printf '%s' "${prefix%?}" | cut -c '3-' | urlencode)" | tail -n '1')			;;
 		'!'[!\	\ ]*)
-			prefix=$(expr "${keyword}" ':' '\(![^	 ]\{1,\}\)')
+			prefix=$(expr "${keyword}" ':' '\(![^[:blank:]]\{1,\}\)')
 			histword=$(cut -f '1' -- "${history}" | grep -e "^$(printf '%s' "${prefix#!}" | urlencode)" | tail -n '1')
 			;;
 	esac
