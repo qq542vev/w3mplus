@@ -159,7 +159,7 @@ octalEncode() (
 				cat -- "${file}"
 			done
 			;;
-	esac | od -v -A 'n' -t 'o1' | tr -d '\n' | sed 's/[[:blank:]]*$//; s/[[:blank:]]\{1,\}/\\/g'
+	esac | od -v -A 'n' -t 'o1' | tr -d -- '\n' | sed 's/[[:blank:]]*$//; s/[[:blank:]]\{1,\}/\\/g'
 )
 
 sedEscape () (
@@ -173,3 +173,6 @@ pathtourl () (
 		printf 'file://%s\n' "$(printf '%s' "${path}" | urlencode | fsed '%2F' '/')"
 	done
 )
+
+datauri () (
+	printf 'data:%s;base64,%s\n' "${1-}" "$(base64 | tr -d -- '\n')")

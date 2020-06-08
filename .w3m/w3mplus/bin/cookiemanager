@@ -28,7 +28,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.3
-##   date - 2020-06-06
+##   date - 2020-06-08
 ##   since - 2020-01-27
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -175,7 +175,7 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 		fieldValue=''
 		printf '%s \n' "${name}" >>"${config}"
 	else
-		fieldValue=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[[:blank:],]\\{1,\\}/,/" | tr 'A-Z' 'a-z')
+		fieldValue=$(printf '%s,' "${field}" | sed -e "s/^${name}//; s/[[:blank:],]\\{1,\\}/,/g" | tr -- 'A-Z' 'a-z')
 	fi
 
 	for domain in ${@+"${@}"}; do

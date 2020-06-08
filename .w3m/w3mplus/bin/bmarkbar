@@ -26,7 +26,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.3
-##   date - 2020-06-06
+##   date - 2020-06-08
 ##   since - 2020-02-26
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -48,12 +48,12 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 sidebar () (
-	printf '<frame name="menu" title="Bookmark Menu" src="data:text/html;base64,%s" />\n' "$(sed -e 's/<a /<a target="main" /' "${1}" | base64 | tr -d '\n')"
+	printf '<frame name="menu" title="Bookmark Menu" src="%s" />\n' "$(sed -e 's/<a /<a target="main" /' "${1}" | datauri 'text/html')"
 )
 
 toolbar () (
 		links=$(sed -e '/<h2>Bookmarks Toolbar<\/h2>/,/<\/ul>/!d; /<li>/!d; s/<\/\{0,1\}li>//g; s/<a /<a target="main"/' "${file}" | sed -e '1!s/^/| /')
-		printf '<frame name="toolbar" title="Bookmark Toolbar" src="data:text/html;base64,%s" />' "$(${W3MPLUS_TEMPLATE_HTML} -t 'Bookmark' -c "<p>${links}</p>" | base64 | tr -d '\n')"
+		printf '<frame name="toolbar" title="Bookmark Toolbar" src="%s" />' "$(${W3MPLUS_TEMPLATE_HTML} -t 'Bookmark' -c "<p>${links}</p>" | datauri 'text/html')"
 )
 
 # 各変数に既定値を代入する

@@ -166,7 +166,10 @@ messageBody=$("${htmlTemplate}" -t "${title}" -m "${metaData}" -c "${mainContent
 messageBody="${messageBody%$}"
 
 if [ -z "${httpTemplate}" ]; then
-	printf '%s' "${headerFields}" | redirect - "data:text/html;base64,$(printf '%s' "${messageBody}" | base64 | tr -d '\n')"
+	{
+		printf '%s\n' "${headerFields}"
+		printf '%s' "${messageBody}" | datauri 'text/html'
+	} | redirect -
 else
 	W3MPLUS_BACK='0' httpresponse --status-code "${statusCode}" - <<- EOF
 		Content-Type: text/html; charset=UTF-8

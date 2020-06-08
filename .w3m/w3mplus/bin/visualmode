@@ -115,7 +115,7 @@ done
 eval set -- "${args}"
 
 file="${1}"
-checksum=$(cksum -- "${file}" | cut -d ' ' -f '1-2' | tr ' ' '-')
+checksum=$(cksum -- "${file}" | cut -d ' ' -f '1-2' | tr -- ' ' '-')
 
 # 引数の個数が過大である
 if [ 1 -lt "${#}" ]; then

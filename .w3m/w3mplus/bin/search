@@ -183,7 +183,7 @@ for file in ${@+"${@}"}; do
 		case "${histword}" in '')
 			html=$("${W3MPLUS_TEMPLATE_HTML}" -t 'event not found' -c "${0##*/}: '${prefix}' event not found"; printf '$')
 
-			printf '%s\n' "data:text/html;base64,$(printf '%s' "${html%$}" | base64 | tr -d '\n')"
+			printf '%s\n' "$(printf '%s' "${html%$}" | datauri 'text/html')"
 
 			continue
 		esac

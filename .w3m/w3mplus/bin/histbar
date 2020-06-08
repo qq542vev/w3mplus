@@ -192,7 +192,7 @@ list=$(uricheck -f 'scheme!,authority,path,query!,fragment!' - <"${file}" | grep
 		}
 	}
 ')
-menu="<frame name=\"menu\" title=\"History Menu\" src=\"data:text/html;base64,$("${W3MPLUS_TEMPLATE_HTML}" -t 'History' -c "${list}" | base64 | tr -d '\n')\" />"
+menu="<frame name=\"menu\" title=\"History Menu\" src=\"$("${W3MPLUS_TEMPLATE_HTML}" -t 'History' -c "${list}" | datauri 'text/html')\" />"
 main="<frame name=\"main\" title=\"Main Content\" src=\"$(printf '%s' "${uri}" | htmlescape)\" />"
 
 case "${type}" in

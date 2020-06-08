@@ -26,7 +26,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.3.0
-##   date - 2020-04-20
+##   date - 2020-06-08
 ##   since - 2019-05-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -141,7 +141,7 @@ for uri in ${@+"${@}"}; do
 			;;
 		esac
 
-		printf '%s\n' "$(uricheck --field 'scheme!,authority!' --normalize -- "${uri}" | tr -d '\t')${path}"
+		printf '%s\n' "$(uricheck --field 'scheme!,authority!' --normalize -- "${uri}" | tr -d -- '\t')${path}"
 	else
 		printf "%s: not a URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
 		exitStatus='1'
