@@ -28,8 +28,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.1
-##   date - 2020-03-23
+##   version - 1.2.2
+##   date - 2020-06-23
 ##   since - 2020-02-21
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -98,7 +98,7 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			args="${args}$(quoteEscape $(cat))"
+			args="${args}$(quoteEscape $(tr -- '[:space:]' ' '))"
 			shift
 			;;
 		# `--name=value` 形式のロングオプション
