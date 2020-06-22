@@ -130,7 +130,7 @@ eval set -- "${args}"
 awkScript=$(
 	cat <<- 'EOF'
 	BEGIN {
-		RS = "[\t\r\n ]+"
+		RS = "[\t\n\r ]+"
 		exitStatus = 0
 		gsub(/'+/, "'\"&\"'", progname)
 	}
