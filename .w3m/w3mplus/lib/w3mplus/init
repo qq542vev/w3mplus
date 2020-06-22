@@ -175,4 +175,5 @@ pathtourl () (
 )
 
 datauri () (
-	printf 'data:%s;base64,%s\n' "${1-}" "$(base64 | tr -d -- '\n')")
+	printf 'data:%s;base64,%s\n' "${1-}" "$(base64 | tr -d -- '\n')"
+)

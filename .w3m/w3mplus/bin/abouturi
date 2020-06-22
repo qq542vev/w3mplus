@@ -83,7 +83,7 @@ case "${1-about:about}" in
 		;;
 	'about:cache')
 		w3mhome="${HOME}/.w3m"
-		fileurl="file://$(printf '%s' ${w3mhome} | urlencode | fsed '%2F' '/')/"
+		fileurl="file://$(printf '%s' "${w3mhome}" | urlencode | fsed '%2F' '/')/"
 
 		awkScript=$(
 			cat <<- 'EOF'

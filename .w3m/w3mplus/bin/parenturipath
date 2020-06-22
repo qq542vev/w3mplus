@@ -25,8 +25,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.0
-##   date - 2020-06-08
+##   version - 1.3.1
+##   date - 2020-06-22
 ##   since - 2019-05-26
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -48,6 +48,7 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
+tmpDir=$(mktemp -d)
 count='1'
 args=''
 
@@ -79,8 +80,10 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			args="${args}$(quoteEscape $(cat))"
+			tmpFile=$(mktemp -p "${tmpDir}")
+			cat >"${tmpFile}"
 			shift
+			set -- "${tmpFile}" ${@+"${@}"}
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -124,26 +127,47 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-awkScript='
-	{
-		for(i = 1; i <= count; i++) {
-			gsub(/[^\/]*\/?$/, "", $0)
+awkScript=$(
+	cat <<- 'EOF'
+	BEGIN {
+		RS = "[\t\r\n ]+"
+		exitStatus = 0
+		gsub(/'+/, "'\"&\"'", progname)
+	}
+
+	function parentPath(path, count) {
+		if(count && !match(path, /^[^\/]*\/?$/)) {
+			gsub(/[^\/]*\/?$/, "", path)
+
+			return parentPath(path, count - 1)
 		}
 
-		printf("%s", $0)
+		return path
 	}
-'
 
-for uri in ${@+"${@}"}; do
-	if path=$(uricheck --field 'path' --normalize -- "${uri}"); then
-		case "${path}" in *'/'*)
-			path="${path%%/*}/$(printf '%s' "${path#*/}" | awk -v "count=${count}" -- "${awkScript}")"
-			;;
-		esac
+	{
+		gsub(/'+/, "'\"&\"'", $0)
 
-		printf '%s\n' "$(uricheck --field 'scheme!,authority!' --normalize -- "${uri}" | tr -d -- '\t')${path}"
-	else
-		printf "%s: not a URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
-		exitStatus='1'
-	fi
-done
+		command = "path=$(uricheck --field 'path' --normalize -- '" $0 "'); printf '%d\n%s\n' \"${?}\" \"${path}\""
+		command | getline status
+
+		if(!status) {
+			command | getline path
+
+			system("uricheck --field 'scheme!,authority!' --normalize -- '" $0 "' | tr -d -- '\t\n'")
+			printf("%s\n", parentPath(path, count))
+		} else {
+			system("printf \"%s: not a URI -- '%s'\n\" '" progname "' '" $0 "' 1>&2")
+			exitStatus = 1
+		}
+
+		close(command)
+	}
+
+	END {
+		exit exitStatus
+	}
+	EOF
+)
+
+awk -v "progname=$(printf '%s' "${0}" | octalEncode)" -v "count=${count}" -- "${awkScript}" ${@+"${@}"}

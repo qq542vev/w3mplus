@@ -59,7 +59,7 @@ toolbar () (
 # 各変数に既定値を代入する
 file="${HOME}/.w3m/bookmark.html"
 size='35'
-position='leftSidebar'
+position='left'
 uri='data:text/plain,'
 args=''
 

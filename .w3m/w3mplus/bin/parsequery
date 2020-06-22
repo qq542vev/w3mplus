@@ -146,7 +146,8 @@ eval set -- "${args}"
 awkScript=$(
 	cat <<- 'EOF'
 	BEGIN {
-		RS = "[&;]"
+		RS = "[\t\n ]+"
+		FS = "[&;]+"
 		split("", names)
 		split("", values)
 		count = 0
@@ -154,13 +155,13 @@ awkScript=$(
 
 	function uriDecode(string, output,line) {
 		gsub(/'+/, "'\"&\"'", string)
-		command = "printf '%s' '" string "' | urldecode; printf '&'"
+		command = "printf '%s' '" string "' | urldecode"
 
 		command | getline line
 		output = line
 
 		while(0 < (command | getline line)) {
-			output = output "&" line
+			output = output "\n" line
 		}
 
 		close(command)
@@ -168,35 +169,47 @@ awkScript=$(
 		return output
 	}
 
-	$0 != "" {
-		start = index($0, "=")
+	function quoteEscape(string) {
+		gsub(/'+/, "'\"&\"'", string)
+		string = "'" string "'"
 
-		count++
-
-		if(start) {
-			names[count] = uriDecode(substr($0, 1, start - 1))
-			values[count] = uriDecode(substr($0, start + 1))
-		} else {
-			names[count] = uriDecode($0)
-			values[count] = ""
+		if(string != "''") {
+			gsub(/^''|''$/, "", string)
 		}
 
-		gsub(/'+/, "'\"&\"'", names[count])
-		gsub(/'+/, "'\"&\"'", values[count])
+		return string
+	}
+
+	{
+		for(i = 1; i <= NF; i++) {
+			if($i != "") {
+				start = index($i, "=")
+
+				count++
+
+				if(start) {
+					names[count] = uriDecode(substr($i, 1, start - 1))
+					values[count] = uriDecode(substr($i, start + 1))
+				} else {
+					names[count] = uriDecode($i)
+					values[count] = ""
+				}
+			}
+		}
 	}
 
 	END {
 		for(i = 1; i <= count; i++) {
-			if(prefix == "" && suffix == "") {
-				printf("'%s' '%s'%s", names[i], values[i], (i == count ? "\n" : " "))
-			} else if(encode) {
-				command = "printf '%s' '" names[i] "' | urlencode | fsed '-' '%2D' | fsed '.' '%2E' | fsed '_' '%5F' | fsed '~' '%7E' | fsed '%' '_'"
+			if(encode) {
+				command = "printf '%s' " quoteEscape(names[i]) " | urlencode | fsed '-' '%2D' | fsed '.' '%2E' | fsed '_' '%5F' | fsed '~' '%7E' | fsed '%' '_'"
 				command | getline line
 				close(command)
 
-				printf("%s='%s'\n", prefix line suffix, values[i])
+				printf("%s=%s\n", prefix line suffix, quoteEscape(values[i]))
+			} else if(prefix == "" && suffix == "") {
+				printf("%s %s%s", quoteEscape(names[i]), quoteEscape(values[i]), (i == count ? "\n" : " "))
 			} else if(names[i] ~ /^[_A-Za-z0-9]+$/) {
-				printf("%s='%s'\n", prefix names[i] suffix, values[i])
+				printf("%s='%s'\n", prefix names[i] suffix, quoteEscape(values[i]))
 			}
 		}
 	}

@@ -127,4 +127,4 @@ headerFields=$(
 	printf '$'
 )
 
-"${W3MPLUS_TEMPLATE_HTTP}" -h "${headerFields%$}"
+"${W3MPLUS_TEMPLATE_HTTP}" -s "${statusCode}" -h "${headerFields%$}"
