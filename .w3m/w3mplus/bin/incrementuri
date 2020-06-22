@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.0
-##   date - 2020-03-02
+##   version - 1.3.1
+##   date - 2020-06-23
 ##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -49,6 +49,7 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
+tmpDir=$(mktemp -d)
 number='+1'
 position='-1'
 args=''
@@ -94,8 +95,10 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			args="${args}$(quoteEscape $(cat))"
+			tmpFile=$(mktemp -p "${tmpDir}")
+			cat >"${tmpFile}"
 			shift
+			set -- "${tmpFile}" ${@+"${@}"}
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -141,6 +144,12 @@ eval set -- "${args}"
 
 awkScript=$(
 	cat <<- 'EOF'
+	BEGIN {
+		RS = "[\t\n\r ]+"
+		exitStatus = 0
+		gsub(/'+/, "'\"&\"'", progname)
+	}
+
 	function nonNegativeInteger(string, number) {
 		if(string ~ /^[0-9]+$/) {
 			if(number ~ /^[+-]/) {
@@ -200,20 +209,29 @@ awkScript=$(
 	}
 
 	{
-		if(1 <= position) {
-			printf("%s\n", forwardIncrement($0, number, position))
-		} else if(position <= -1) {
-			printf("%s\n", backwardIncrement($0, number, position * -1))
+		gsub(/'+/, "'\"&\"'", $0)
+
+		uri = ""
+		command = "uricheck --normalize -- '" $0 "'"
+		command | getline uri
+		close(command)
+
+		if(uri != "") {
+			if(1 <= position) {
+				printf("%s\n", forwardIncrement(uri, number, position))
+			} else if(position <= -1) {
+				printf("%s\n", backwardIncrement(uri, number, position * -1))
+			}
+		} else {
+			system("printf \"%s: not a URI -- '%s'\n\" '" progname "' '" $0 "' 1>&2")
+			exitStatus = 1
 		}
+	}
+
+	END {
+		exit exitStatus
 	}
 	EOF
 )
 
-for uri in ${@+"${@}"}; do
-	if normalized=$(uricheck --normalize "${uri}"); then
-		printf '%s' "${normalized}" | awk -v "number=${number}" -v "position=${position}" -- "${awkScript}"
-	else
-		printf "%s: not a URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
-		exitStatus='1'
-	fi
-done
+awk -v "number=${number}" -v "position=${position}" -v "progname=$(printf '%s' "${0##*/}" | octalEncode)" -- "${awkScript}" ${@+"${@}"}

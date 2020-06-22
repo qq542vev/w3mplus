@@ -170,4 +170,4 @@ awkScript=$(
 	EOF
 )
 
-awk -v "progname=$(printf '%s' "${0}" | octalEncode)" -v "count=${count}" -- "${awkScript}" ${@+"${@}"}
+awk -v "count=${count}" -v "progname=$(printf '%s' "${0##*/}" | octalEncode)" -- "${awkScript}" ${@+"${@}"}
