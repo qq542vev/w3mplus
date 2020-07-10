@@ -14,7 +14,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-06-11
+##   date - 2020-07-11
 ##   since - 2020-06-11
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -26,44 +26,79 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 Describe 'Test abouturi'
-	setup() {
-		command='../../.w3m/w3mplus/bin/abouturi'
+	abouturi () {
+		env "W3MPLUS_TEMPLATE_HTTP=${SHELLSPEC_PROJECT_ROOT}/template/http" '../../.w3m/w3mplus/bin/abouturi' ${@+"${@}"}
 	}
 
-  Before 'setup'
+	output () {
+		cat <<- EOF
+			HTTP/1.1 200 OK${SHELLSPEC_CR}
+			Date: Wed, 21 Oct 2015 07:28:00 GMT${SHELLSPEC_CR}
+		EOF
+
+		for field in ${@+"${@}"}; do
+			printf '%s\r\n' "${field}"
+		done
+
+		printf '\r\n'
+	}
 
 	Example 'No arguments'
-		When call "${command}"
-		The line 1 of output should equal "HTTP/1.1 200 OK${SHELLSPEC_CR}"
+		When call abouturi
+		The output should start with "$(output 'Content-Type: text/html; charset=UTF-8')"
 	End
 
 	Example 'Bad request'
-		When call "${command}" 'about:bad'
-		The line 1 of output should equal "HTTP/1.1 400 Bad Request${SHELLSPEC_CR}"
+		output () {
+			%text:expand
+			#|HTTP/1.1 400 Bad Request${SHELLSPEC_CR}
+			#|Date: Wed, 21 Oct 2015 07:28:00 GMT${SHELLSPEC_CR}
+			#|Content-Type: text/html; charset=UTF-8${SHELLSPEC_CR}
+			#|${SHELLSPEC_CR}
+		}
+
+		When call abouturi 'about:bad'
+		The output should start with "$(output)"
 	End
 
-	Parameters
-		'about:'
-		'about:about'
-		'about:blank'
-		'about:bookmark'
-		'about:cache'
-		'about:config'
-		'about:cookie'
-		'about:downloads'
-		'about:help'
-		'about:history'
-		'about:home'
-		'about:memory'
-		'about:message'
-		'about:newtab'
-		'about:permissions'
-		'about:private'
-		'about:preferences'
+	Example "Test about:home"
+		When call abouturi 'about:home'
+		The output should start with "$(output 'Content-Type: text/html; charset=UTF-8' 'W3m-control: BEGIN' 'W3m-control: NEXT_LINK')"
 	End
 
-	Example 'About URLs'
-		When call "${command}" "${1}"
-		The line 1 of output should equal "HTTP/1.1 200 OK${SHELLSPEC_CR}"
+	Describe 'Test abouturi'
+		Parameters
+			'about:bookmark' 'VIEW_BOOKMARK'
+			'about:config' "GOTO file://${HOME}/.w3m/config"
+			'about:cookie' 'COOKIE'
+			'about:downloads' 'DOWNLOAD_LIST'
+			'about:help' 'HELP'
+			'about:history' 'HISTORY'
+			'about:message' 'MSGS'
+			'about:newtab' 'TAB_GOTO about:blank'
+			'about:permissions' "GOTO file://${HOME}/.w3m/siteconf"
+			'about:preferences' 'OPTIONS'
+		End
+
+		Example "Test ${1}"
+			When call abouturi "${1}"
+			The output should equal "$(output 'W3m-control: BACK' "W3m-control: ${2}")"
+		End
+	End
+
+	Describe 'Test abouturi'
+		Parameters
+			'about:'
+			'about:about'
+			'about:blank'
+			'about:cache'
+			'about:memory'
+			'about:private'
+		End
+
+		Example "Test ${1}"
+			When call abouturi "${1}"
+			The output should start with "$(output 'Content-Type: text/html; charset=UTF-8')"
+		End
 	End
 End
