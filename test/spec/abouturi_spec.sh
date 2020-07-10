@@ -45,7 +45,7 @@ Describe 'Test abouturi'
 
 	Example 'No arguments'
 		When call abouturi
-		The output should start with "$(output 'Content-Type: text/html; charset=UTF-8')"
+		The output should equal "$(abouturi 'about:about')"
 	End
 
 	Example 'Bad request'
