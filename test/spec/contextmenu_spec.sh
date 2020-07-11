@@ -2,7 +2,7 @@
 
 ## File: contextmenu_spec.sh
 ##
-## Test uricheck.
+## Test contextmenu.
 ##
 ## Usage:
 ##
@@ -14,7 +14,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-06-28
+##   date - 2020-07-11
 ##   since - 2020-06-28
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -26,34 +26,28 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 Describe 'Test contextmenu'
-	setup() {
-		command='../../.w3m/w3mplus/bin/contextmenu'
-		newline="${SHELLSPEC_CR}${SHELLSPEC_LF}${SHELLSPEC_CR}${SHELLSPEC_LF}"
+	contextmenu () {
+		env "W3MPLUS_TEMPLATE_HTTP=${SHELLSPEC_PROJECT_ROOT}/template/http" ${@+"${@}"} '../../.w3m/w3mplus/bin/contextmenu'
 	}
 
-  Before 'setup'
+	output () {
+		%text:expand
+		#|HTTP/1.1 200 OK${SHELLSPEC_CR}
+		#|Date: Wed, 21 Oct 2015 07:28:00 GMT${SHELLSPEC_CR}
+		#|W3m-control: BACK${SHELLSPEC_CR}
+		#|W3m-control: MENU ${1}${SHELLSPEC_CR}
+		#|${SHELLSPEC_CR}
+	}
 
-	Example 'Basic'
-		When call "${command}"
-		The line 1 of output should equal "HTTP/1.1 200 OK${SHELLSPEC_CR}"
-		The entire output should end with "W3m-control: MENU Main${newline}"
+	Parameters
+		'Basic' '' '' 'Main'
+		'Link' 'http://www.example.com/' '' 'ContextMenuLink'
+		'Image' '' 'http://www.example.com/test.jpg' 'ContextMenuImage'
+		'Link & Image' 'http://www.example.com/' 'http://www.example.com/test.jpg' 'ContextMenuLinkImage'
 	End
 
-	Example 'Image'
-		When call env 'W3M_CURRENT_IMG=http://www.example.com/' "${command}"
-		The line 1 of output should equal "HTTP/1.1 200 OK${SHELLSPEC_CR}"
-		The entire output should end with "W3m-control: MENU ContextMenuImage${newline}"
-	End
-
-	Example 'Link'
-		When call env 'W3M_CURRENT_LINK=http://www.example.com/' "${command}"
-		The line 1 of output should equal "HTTP/1.1 200 OK${SHELLSPEC_CR}"
-		The entire output should end with "W3m-control: MENU ContextMenuLink${newline}"
-	End
-
-	Example 'Link & Image'
-		When call env 'W3M_CURRENT_LINK=http://www.example.com/' 'W3M_CURRENT_IMG=http://www.example.com/' "${command}"
-		The line 1 of output should equal "HTTP/1.1 200 OK${SHELLSPEC_CR}"
-		The entire output should end with "W3m-control: MENU ContextMenuLinkImage${newline}"
+	Example "Test ${1} Context Menu"
+		When call contextmenu "W3M_CURRENT_LINK=${2}" "W3M_CURRENT_IMG=${3}"
+		The output should equal "$(output "${4}")"
 	End
 End
