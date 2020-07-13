@@ -170,6 +170,6 @@ awkStatus="${?}"
 set -e
 
 case "${awkStatus}" in
-	'1') exitStatus="${awkStatus}";;
+	'1') exitStatus="${awkStatus}"; exit;;
 	*) exit "${awkStatus}";;
 esac
