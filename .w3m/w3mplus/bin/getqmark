@@ -134,7 +134,7 @@ fi
 
 set +e
 
-printf '%s\n' ${@+"${@}"} | awk -v "config=${config}" -v "regexpFlag=${regexpFlag}" -- '
+printf '%s\n' ${@+"${@}"} | awk -F '\t' -v "config=$(printf '%s' "${config}" | octalEncode)" -v "regexpFlag=${regexpFlag}" -- '
 	BEGIN {
 		exitStatus = 0
 	}
@@ -143,16 +143,14 @@ printf '%s\n' ${@+"${@}"} | awk -v "config=${config}" -v "regexpFlag=${regexpFla
 		outputFlag = 0
 		pattern = $0
 
-		if(!regexpFlag) {
-			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
+		if(regexpFlag) {
+			pattern = "^" pattern "$"
 		}
 
-		pattern = "^" pattern "$"
-
 		while(0 < (getline < config)) {
-			if($1 ~ pattern) {
-				printf("%s\n", $0)
+			if((regexpFlag && $1 ~ pattern) || (!regexpFlag && $1 ==  pattern)) {
 				outputFlag = 1
+				printf("%s\n", $0)
 			}
 		}
 

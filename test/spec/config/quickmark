@@ -3,3 +3,5 @@ b	http://www.exaple.com/page/b	4	5	2020-07-08T00:00:00Z
 c	http://www.exaple.com/page/c	8	10	2020-07-08T00:00:00Z
 d	http://www.exaple.com/page/d1	0	0	2020-07-08T00:00:00Z
 d	http://www.exaple.com/page/d2	0	0	2020-07-08T00:00:00Z
+*	http://www.exaple.com/page/d1	0	0	2020-07-08T00:00:00Z
+-	http://www.exaple.com/page/d2	0	0	2020-07-08T00:00:00Z

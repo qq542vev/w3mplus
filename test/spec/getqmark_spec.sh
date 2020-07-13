@@ -94,4 +94,22 @@ Describe 'Test getqmark'
 		The output should equal "$(output)"
 		The status should equal '1'
 	End
+
+	Example 'Test: -'
+		output () {
+			grep -e '^-' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+		}
+
+		When call getqmark -- '-'
+		The output should equal "$(output)"
+	End
+
+	Example 'Test: [a-z]'
+		output () {
+			grep -e '^[a-z]' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+		}
+
+		When call getqmark --extended-regexp '[a-z]'
+		The output should equal "$(output)"
+	End
 End
