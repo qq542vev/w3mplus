@@ -14,7 +14,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-06-13
+##   date - 2020-07-14
 ##   since - 2020-06-13
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -26,19 +26,24 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 Describe 'Test htmlescape'
-	setup() {
-env
-		command='../../.w3m/w3mplus/bin/htmlescape'
+	htmlescape () {
+		'../../.w3m/w3mplus/bin/htmlescape' ${@+"${@}"}
 	}
 
-  Before 'setup'
-
-	Data
-		#|&'"<>
-	End
+	Data "&'\"<>"
 
 	Example 'Basic HTML Escape'
-		When call "${command}"
+		When call htmlescape
 		The output should equal '&amp;&#x27;&quot;&lt;&gt;'
+	End
+
+	Example 'Single Quote Escape'
+		When call htmlescape --escape 'single'
+		The output should equal '&amp;&#x27;"&lt;&gt;'
+	End
+
+ 	Example 'Double Quote Escape'
+		When call htmlescape --escape 'double'
+		The output should equal "&amp;'&quot;&lt;&gt;"
 	End
 End
