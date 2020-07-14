@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2020-06-22
+##   version - 1.2.1
+##   date - 2020-07-14
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -201,6 +201,7 @@ awkScript=$(
 	END {
 		for(i = 1; i <= count; i++) {
 			if(encode) {
+				line = ""
 				command = "printf '%s' " quoteEscape(names[i]) " | urlencode | fsed '-' '%2D' | fsed '.' '%2E' | fsed '_' '%5F' | fsed '~' '%7E' | fsed '%' '_'"
 				command | getline line
 				close(command)
@@ -209,7 +210,7 @@ awkScript=$(
 			} else if(prefix == "" && suffix == "") {
 				printf("%s %s%s", quoteEscape(names[i]), quoteEscape(values[i]), (i == count ? "\n" : " "))
 			} else if(names[i] ~ /^[_A-Za-z0-9]+$/) {
-				printf("%s='%s'\n", prefix names[i] suffix, quoteEscape(values[i]))
+				printf("%s=%s\n", prefix names[i] suffix, quoteEscape(values[i]))
 			}
 		}
 	}
