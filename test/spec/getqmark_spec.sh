@@ -57,7 +57,7 @@ Describe 'Test getqmark'
 		The output should equal "$(output)"
 	End
 
-	Example 'Test key: b a a c'
+	Example 'Test: b a a c'
 		output () {
 			grep -e '^b' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
 			grep -e '^a' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
@@ -70,7 +70,7 @@ Describe 'Test getqmark'
 		The output should equal "$(output)"
 	End
 
-	Example 'Test key: d'
+	Example 'Test: d'
 		output () {
 			grep -e '^d' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
 		}
@@ -79,13 +79,13 @@ Describe 'Test getqmark'
 		The output should equal "$(output)"
 	End
 
-	Example 'Test key: z'
+	Example 'Test: z'
 		When call getqmark 'z'
 		The output should equal ''
 		The status should equal '1'
 	End
 
-	Example 'Test key: z a'
+	Example 'Test: z a'
 		output () {
 			grep -e '^a' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
 		}
