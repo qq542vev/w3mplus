@@ -23,8 +23,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.2
-##   date - 2020-06-06
+##   version - 1.1.0
+##   date - 2020-07-15
 ##   since - 2019-07-13
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -47,10 +47,15 @@ export 'IFS'
 
 # 各変数に既定値を代入する
 tmpDir=$(mktemp -d)
+httpTemplate="${W3MPLUS_TEMPLATE_HTTP}"
 args=''
 
 while [ 1 -le "${#}" ]; do
 	case "${1}" in
+		'--http-template')
+			httpTemplate="${2}"
+			shift 2
+			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
 			usage
@@ -149,4 +154,4 @@ awkScript=$(
 
 case "${#}" in [1-9]*)
 	awk -v "redirect=${W3MPLUS_REDIRECT_TYPE-0}" -- "${awkScript}" ${@+"${@}"};;
-esac | W3MPLUS_BACK=0 httpresponse -
+esac | W3MPLUS_BACK=0 httpresponse --http-template "${httpTemplate}" -
