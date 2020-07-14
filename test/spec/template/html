@@ -1,0 +1,84 @@
+#!/usr/bin/env sh
+
+## File: html
+##
+## Default HTML template for w3mplus.
+##
+## Usage:
+##
+##   (start code)
+##   html [OPTION]...
+##   (end)
+##
+## Options:
+##
+##   -c - main content
+##   -m - meta data
+##   -t - title
+##
+## Exit Status:
+##
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.3
+##   date - 2020-03-03
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
+# 初期化
+set -efu
+umask '0022'
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
+
+mainContent=''
+metaData=''
+title='No title'
+
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-c')
+			mainContent="${2}"
+			shift 2
+			;;
+		'-m')
+			metaData="${2}"
+			shift 2
+			;;
+		'-t')
+			title="${2}"
+			shift 2
+			;;
+		*)
+			# 引数の個数が過大である
+			if [ 0 -lt "${#}" ]; then
+				cat <<- EOF 1>&2
+					${0##*/}: too many arguments
+					Try '${0##*/} --help' for more information.
+				EOF
+
+				exitStatus="${EX_USAGE}"; exit
+			fi
+			;;
+	esac
+done
+
+cat <<- EOF
+	<html>
+		<head>
+			<title>$(printf '%s' "${title}" | htmlescape)</title>
+			${metaData}
+		</head>
+		<body>${mainContent}</body>
+	</html>
+EOF

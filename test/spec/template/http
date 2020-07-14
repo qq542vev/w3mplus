@@ -1,0 +1,80 @@
+#!/usr/bin/env sh
+
+## File: http
+##
+## Default HTTP message template for w3mplus.
+##
+## Usage:
+##
+##   (start code)
+##   http [OPTION]...
+##   (end)
+##
+## Options:
+##
+##   -b - HTTP message body
+##   -h - HTTP header field
+##   -s - HTTP status code
+##
+## Exit Status:
+##
+##   0 - Program terminated normally.
+##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+##
+## Metadata:
+##
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 1.0.2
+##   date - 2020-03-03
+##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
+# 初期化
+set -efu
+umask '0022'
+IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
+export 'IFS'
+
+body=''
+header=''
+status='200 OK'
+
+while [ 1 -le "${#}" ]; do
+	case "${1}" in
+		'-b')
+			body="${2}"
+			shift 2
+			;;
+		'-h')
+			header="${2}"
+			shift 2
+			;;
+		'-s')
+			status="${2}"
+			shift 2
+			;;
+		*)
+			# 引数の個数が過大である
+			if [ 0 -lt "${#}" ]; then
+				cat <<- EOF 1>&2
+					${0##*/}: too many arguments
+					Try '${0##*/} --help' for more information.
+				EOF
+
+				exitStatus="${EX_USAGE}"; exit
+			fi
+			;;
+	esac
+done
+
+printf 'HTTP/1.1 %s\r\n' "${status}"
+
+printf 'Date: Wed, 21 Oct 2015 07:28:00 GMT\r\n'
+
+printf '%s\r\n%s' "${header}" "${body}"
