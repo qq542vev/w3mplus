@@ -14,7 +14,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-06-28
+##   date - 2020-07-15
 ##   since - 2020-06-28
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -26,11 +26,9 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 Describe 'Test normalizehttpmsg'
-	setup() {
-		command='../../.w3m/w3mplus/bin/normalizehttpmsg'
+	normalizehttpmsg () {
+		'../../.w3m/w3mplus/bin/normalizehttpmsg' ${@+"${@}"}
 	}
-
-  Before 'setup'
 
 	Data
 		#|HTTP/1.1 200 OK
@@ -60,7 +58,7 @@ Describe 'Test normalizehttpmsg'
 			#|<html></html>
 		}
 
-		When call "${command}"
+		When call normalizehttpmsg
 		The output should equal "$(expected)"
 	End
 
@@ -79,7 +77,7 @@ Describe 'Test normalizehttpmsg'
 			#|<html></html>
 		}
 
-		When call "${command}" --uncombined 'Set-Cookie,W3m-control'
+		When call normalizehttpmsg --uncombined 'Set-Cookie,W3m-control'
 		The output should equal "$(expected)"
 	End
 
@@ -98,7 +96,7 @@ Describe 'Test normalizehttpmsg'
 			#|<html></html>
 		}
 
-		When call "${command}"  --uncombined 'Set-Cookie,W3m-control' --unstructured 'W3m-control'
+		When call normalizehttpmsg  --uncombined 'Set-Cookie,W3m-control' --unstructured 'W3m-control'
 		The output should equal "$(expected)"
 	End
 End
