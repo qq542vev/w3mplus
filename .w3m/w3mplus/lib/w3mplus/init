@@ -65,7 +65,7 @@ trap 'endCall 130' 2 # SIGINT
 trap 'endCall 131' 3 # SIGQUIT
 trap 'endCall 143' 15 # SIGTERM
 
-endCall() {
+endCall () {
 	previousExitStatus="${?}"
 
 	rm -fr -- ${tmpDir+"${tmpDir}"} ${tmpFile+"${tmpFile}"}
@@ -79,7 +79,7 @@ endCall() {
 	exit "${exitStatus-0}"
 }
 
-usage() {
+usage () {
 	sed -e '/^## *(start code)/,/^## *(end)/!d' -- "${0}" | sed -e '1d; $d; s/^## */Usage: /'
 
 	sed -e '/^## File:/,/^## .*:$/!d' -- "${0}" | sed -e '1d; $d; s/^## *//'
@@ -93,7 +93,7 @@ usage() {
 	sed -n -e '/^## *[0-9]\{1,\}.* - /s/^## */  /p' -- "${0}"
 }
 
-version() {
+version () {
 	cat <<- EOF
 		$(sed -n -e 's/^## File: //p' -- "${0}") ($(sed -n -e 's/^## *package - //p' -- "${0}")) $(sed -n -e 's/^## *version - //p' -- "${0}") (Last update: $(sed -n -e 's/^## *date - //p' -- "${0}"))
 		$(sed -n -e 's/^## *copyright - //p' -- "${0}")
@@ -102,7 +102,7 @@ version() {
 	EOF
 }
 
-quoteEscape() (
+quoteEscape () (
 	for arg in ${@+"${@}"}; do
 		result=$(printf '%s\n' "${arg}" | sed -e "s/'\\{1,\\}/'\"&\"'/g"; printf '$')
 
@@ -110,7 +110,7 @@ quoteEscape() (
 	done
 )
 
-ancestorProsess() (
+ancestorProsess () (
 	pid="${1}"
 	find="${2}"
 
@@ -149,7 +149,7 @@ ancestorProsess() (
 	'
 )
 
-octalEncode() (
+octalEncode () (
 	case "${#}" in
 		'0')
 			cat
