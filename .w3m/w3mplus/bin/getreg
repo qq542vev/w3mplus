@@ -14,6 +14,7 @@
 ##
 ##   -c, --config=FILE     - register file.
 ##   -E, --extended-regexp - PATTERNS are extended regular expressions.
+##   -r, --row             - print row data.
 ##   -h, --help            - display this help and exit.
 ##   -v, --version         - output version information and exit.
 ##
@@ -26,8 +27,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.0
-##   date - 2020-06-06
+##   version - 1.3.1
+##   date - 2020-07-17
 ##   since - 2020-04-20
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -130,43 +131,50 @@ case "${#}" in '0')
 	exit
 esac
 
-awkScript='
+set +e
+
+printf '%s\n' ${@+"${@}"} | awk -F '\t' -v "config=$(printf '%s' "${config}" | octalEncode)" -v "regexpFlag=${regexpFlag}" -v "rowFlag=${rowFlag}" -- '
 	BEGIN {
-		exitStatus = 1
+		exitStatus = 0
 	}
 
-	(regexpFlag && $1 ~ ("^" pattern "$")) || (!regexpFlag && $1 == pattern) {
-		exitStatus = 0
+	{
+		outputFlag = 0
+		pattern = $0
 
-		if(rowFlag) {
-			printf("%s\n", $0)
-		} else {
-			printf("%s", $2)
-			exit
+		if(regexpFlag) {
+			pattern = "^" pattern "$"
+		}
+
+		while(0 < (getline < config)) {
+			if((regexpFlag && $1 ~ pattern) || (!regexpFlag && $1 ==  pattern)) {
+				if(rowFlag) {
+					printf("%s\n", $0)
+				} else {
+					gsub(/%/, "%%", $2)
+					printf("%s", $2)
+				}
+
+				outputFlag = 1
+			}
+		}
+
+		close(config)
+
+		if(!outputFlag) {
+			exitStatus = 1
 		}
 	}
 
 	END {
-		printf("$")
 		exit exitStatus
 	}
 '
 
-status='1'
+awkStatus="${?}"
+set -e
 
-for pattern in ${@+"${@}"}; do
-	if result=$(awk -F '\t' -v "pattern=$(printf '%s' "${pattern}" | octalEncode)" -v "regexpFlag=${regexpFlag}" -v "rowFlag=${rowFlag}" -- "${awkScript}" "${config}"); then
-		case "${rowFlag}" in
-			'0')
-				result=$(printf '%s' "${result%$}" | sed -e 's/%/%%/g'; printf '$')
-				printf "${result%$}"
-				exit
-				;;
-			*)
-				printf '%s' "${result%$}"
-				status='0'
-		esac
-	fi
-done
-
-exitStatus="${status}"; exit
+case "${awkStatus}" in
+	'1') exitStatus="${awkStatus}"; exit;;
+	*) exit "${awkStatus}";;
+esac
