@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-## File: websearch
+## File: search
 ##
 ## Returns the search for w3m.
 ##
 ## Usage:
 ##
 ##   (start code)
-##   websearch [OPTION]... [FILE]..
+##   search [OPTION]... [FILE]..
 ##   (end)
 ##
 ## Options:
@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2020-06-06
+##   version - 1.2.1
+##   date - 2020-07-17
 ##   since - 2020-05-26
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
