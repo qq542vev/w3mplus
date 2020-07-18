@@ -26,13 +26,19 @@
 ##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 Describe 'Test getqmark'
+	setup () {
+		config="${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+	}
+
+	Before 'setup'
+
 	getqmark () {
-		'../../.w3m/w3mplus/bin/getqmark' --config "${SHELLSPEC_PROJECT_ROOT}/config/quickmark" ${@+"${@}"}
+		'../../.w3m/w3mplus/bin/getqmark' --config "${config}" ${@+"${@}"}
 	}
 
 	Example 'Test no argument'
 		output () {
-			cat -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+			cat -- "${config}"
 		}
 
 		When call getqmark
@@ -41,7 +47,7 @@ Describe 'Test getqmark'
 
 	Example 'Test: a'
 		output () {
-			grep -e '^a' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+			grep -e '^a' -- "${config}"
 		}
 
 		When call getqmark 'a'
@@ -50,7 +56,7 @@ Describe 'Test getqmark'
 
 	Example 'Test: b c'
 		output () {
-			grep -e '^b' -e '^c' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+			grep -e '^b' -e '^c' -- "${config}"
 		}
 
 		When call getqmark 'b' 'c'
@@ -59,9 +65,9 @@ Describe 'Test getqmark'
 
 	Example 'Test: b a a c'
 		output () {
-			grep -e '^b' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
-			grep -e '^a' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
-			grep -e '^a' -e '^c' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+			grep -e '^b' -- "${config}"
+			grep -e '^a' -- "${config}"
+			grep -e '^a' -e '^c' -- "${config}"
 		}
 
 		Data 'b' 'a'
@@ -72,7 +78,7 @@ Describe 'Test getqmark'
 
 	Example 'Test: d'
 		output () {
-			grep -e '^d' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+			grep -e '^d' -- "${config}"
 		}
 
 		When call getqmark 'd'
@@ -87,7 +93,7 @@ Describe 'Test getqmark'
 
 	Example 'Test: z a'
 		output () {
-			grep -e '^a' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+			grep -e '^a' -- "${config}"
 		}
 
 		When call getqmark 'z' 'a'
@@ -97,7 +103,7 @@ Describe 'Test getqmark'
 
 	Example 'Test: -'
 		output () {
-			grep -e '^-' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+			grep -e '^-' -- "${config}"
 		}
 
 		When call getqmark -- '-'
@@ -106,7 +112,7 @@ Describe 'Test getqmark'
 
 	Example 'Test: [a-z]'
 		output () {
-			grep -e '^[a-z]' -- "${SHELLSPEC_PROJECT_ROOT}/config/quickmark"
+			grep -e '^[a-z]' -- "${config}"
 		}
 
 		When call getqmark --extended-regexp '[a-z]'
