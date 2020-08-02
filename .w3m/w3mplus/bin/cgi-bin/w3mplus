@@ -21,7 +21,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.11.0
-##   date - 2020-06-06
+##   date - 2020-08-02
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -114,7 +114,7 @@ if result=$(
 		'autoCommand')
 			string=$(expand "${query_string-W3M_URL}")
 
-			getautocmd -- "${query_call-manual}" ${string:+"${string}"}
+			getautocmd -- "${query_call-manual}" ${string:+"${string}"} | httpresponse -
 			;;
 		'closeTab')
 			if [ -n "${W3M_URL}" ]; then
@@ -206,14 +206,14 @@ if result=$(
 			pathtourl "${W3MPLUS_LOCALMARK_FILE}" "${W3MPLUS_LOCALMARKGOTO_FILE}" | redirect -
 			;;
 		'getLocalMark')
-			getautocmd -- "${query_key}" "${W3M_URL%%#*}"
+			getautocmd --config "${W3MPLUS_LOCALMARK_FILE}" -- "${query_key}" "${W3M_URL%%#*}" | httpresponse -
 			;;
 		'setLocalMark')
 			uri=$(expand "${query_uri-W3M_URL}")
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -n "${uri}" ]; then
-				setautocmd -- "${query_key}" "grep -Fx -e '$(printf '%s' "${uri%%#*}" | sed -e "s/'\\{1,\\}/'\"&\"'/g")'" "GOTO_LINE ${line}"
+				setautocmd --config "${W3MPLUS_LOCALMARK_FILE}" -- "${query_key}" "grep -Fx -e $(quoteEscape "${uri%%#*}")&& echo 'W3m-control: GOTO_LINE ${line}'"
 			fi
 			;;
 		'getLocalMarkGoto')

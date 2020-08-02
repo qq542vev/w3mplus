@@ -26,7 +26,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.4.0
-##   date - 2020-06-06
+##   date - 2020-08-02
 ##   since - 2019-07-31
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -125,19 +125,41 @@ mkdir -p -- "${directory%?$}"
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-awkScript=$(cat <<- 'EOF'
+tmpFile=$(mktemp)
+awkScript=$(
+	cat <<- 'EOF'
 	BEGIN {
-		if(!regexpFlag) {
-			sub(/[].\*+?|(){}[]/, "\\\\&", pattern)
+		if(regexpFlag) {
+			pattern = "^" pattern "$"
 		}
 
-		pattern = "^" pattern "$"
+		exitStatus = 1
+
+		gsub(/'+/, "'\"&\"'", tmpFile)
 	}
 
-	$1 ~ pattern {
-		print $0
+	(regexpFlag && $1 ~ pattern) || (!regexpFlag && $1 == pattern) {
+		status = system("printf '%s' '" string "' | ( " $2 " ) >'" tmpFile "' 2>'/dev/null'")
+
+		if(!status) {
+			command = "cat -- '" tmpFile "'"
+			command | getline line
+
+			printf("%s", line)
+
+			while(0 < (command | getline line)) {
+				printf("\n%s", line)
+			}
+
+			exitStatus = 0
+			exit
+		}
 	}
-EOF
+
+	END {
+		#exit exitStatus
+	}
+	EOF
 )
 
 while [ 1 -le "${#}" ]; do
@@ -146,15 +168,5 @@ while [ 1 -le "${#}" ]; do
 
 	shift 2
 
-	awk -v "pattern=${pattern}" -v "regexpFlag=${regexpFlag}" -- "${awkScript}" "${config}" | while IFS='	' read -r 'call' 'check' 'command' 'date'; do
-		if result=$(printf '%s' "${string}" | sh -c "${check}" 'sh' "${call}" "${command}" "${date}" 2>'/dev/null'); then
-			if [ -z "${command}" ]; then
-				printf 'W3m-control: %s\n' "${result}"
-			else
-				printf 'W3m-control: %s\n' "${command}"
-			fi
-
-			break
-		fi
-	done
-done | httpresponse -
+	awk -F '\t' -v "tmpFile=$(printf '%s' "${tmpFile}" | octalEncode)" -v "string=$(printf '%s' "${string}" | octalEncode)" -v "pattern=$(printf '%s' "${pattern}" | octalEncode)" -v "regexpFlag=${regexpFlag}" -- "${awkScript}" "${config}"
+done

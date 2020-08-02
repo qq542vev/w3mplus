@@ -7,7 +7,7 @@
 ## Usage:
 ##
 ##   (start code)
-##   setautocmd [OPTION]... CALL [CHECK] [COMMAND]...
+##   setautocmd [OPTION]... CALL [CHECK]...
 ##   (end)
 ##
 ## Options:
@@ -25,7 +25,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.1.0
-##   date - 2020-06-06
+##   date - 2020-08-02
 ##   since 2019-12-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -47,23 +47,24 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 outputHtml () {
-	while IFS='	' read -r 'call' 'check' 'command' 'date'; do
-		cat <<- EOF
-			<dl>
-				<dt>call type</dt>
-				<dd>$(printf '%s' "${call}" | htmlescape)</dd>
+	htmlescape - | awk -F '\t' '{
+		call = $1
+		check = $2
+		date = $3
 
-				<dt>check command</dt>
-				<dd><code>$(printf '%s' "${check}" | htmlescape)</code></dd>
+		printf("<dl>")
 
-				<dt>w3m command</dt>
-				<dd><code>$(printf '%s' "${command}" | htmlescape)</code></dd>
+		printf("<dt>call type</dt>")
+		printf("<dd>%s</dd>", call)
 
-				<dt>date</dt>
-				<dd><date>$(printf '%s' "${date}" | htmlescape)</date></dd>
-			</dl>
-		EOF
-	done
+		printf("<dt>check command</dt>")
+		printf("<dd><code>%s</code></dd>", check)
+
+		printf("<dt>date</dt>")
+		printf("<dd><date>%s</date></dd>", date)
+
+		printf("</dl>")
+	}'
 }
 
 # 各変数に既定値を代入する
@@ -127,49 +128,27 @@ directory=$(dirname -- "${config}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
+case "${#}" in '0')
+	cat -- "${config}"
+	exit
+esac
+
 call="${1}"
-
-if [ "${#}" -eq 2 ]; then
-	check="${2}"
-elif [ "${#}" -eq 3 ]; then
-	check="${2}"
-	command="${3}"
-else
-	shift
-
-	while [ 1 -le "${#}" ]; do
-		if [ "${1}" = ';' ]; then
-			shift
-			break
-		fi
-
-		check="${check-}${check+ }${1}"
-		shift
-	done
-
-	for arg in ${@+"${@}"}; do
-		command="${command-}${command+; }${arg}"
-	done
-
-	if [ 2 -le "${#}" ]; then
-		command="COMMAND ${command}"
-	fi
-fi
+shift
+check=${@+"${@}"}
 
 escaped=$(sedEscape "${call}	${check-}${check:+	}")
-field=''
-
-case "${command+1}" in '1')
-	field=$(printf '%s\t%s\t%s\t%s\n$' "${call}" "${check}" "${command}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')")
-	field="${field%$}"
-	;;
-esac
+field=$(
+	if [ '1' -le "${#}" ]; then
+			printf '%s\t%s\t%s' "${call}" "${check}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+	fi
+)
 
 addList=$(printf '%s' "${field}" | outputHtml)
 deleteList=$(sed -e "/^${escaped}/!d" "${config}" | outputHtml)
 
 if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
-		httpResposeW3mBack.sh
+		httpresponse
 		exit
 fi
 
