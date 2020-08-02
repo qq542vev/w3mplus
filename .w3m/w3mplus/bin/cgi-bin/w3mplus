@@ -213,7 +213,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -n "${uri}" ]; then
-				setautocmd --config "${W3MPLUS_LOCALMARK_FILE}" -- "${query_key}" "grep -Fx -e $(quoteEscape "${uri%%#*}")&& echo 'W3m-control: GOTO_LINE ${line}'"
+				setautocmd --config "${W3MPLUS_LOCALMARK_FILE}" -- "${query_key}" "grep -Fqx -e $(quoteEscape "${uri%%#*}")&& echo 'W3m-control: GOTO_LINE ${line}'"
 			fi
 			;;
 		'getLocalMarkGoto')
