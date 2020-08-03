@@ -143,12 +143,9 @@ awkScript=$(
 
 		if(!status) {
 			command = "cat -- '" tmpFile "'"
-			command | getline line
-
-			printf("%s", line)
 
 			while(0 < (command | getline line)) {
-				printf("\n%s", line)
+				printf("%s\n", line)
 			}
 
 			exitStatus = 0

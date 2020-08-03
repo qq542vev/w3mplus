@@ -1,0 +1,4 @@
+a	grep -Fqx 'https://www.example.com/a1' && echo 'a1'	2019-12-15T11:49:12Z
+a	grep -Fqx 'https://www.example.com/a2' && echo 'a2'		2019-12-15T11:49:12Z
+b	grep -Fqx 'https://www.example.com/b1' && echo 'b1'		2019-12-15T11:49:12Z
+b	grep -Fqx 'https://www.example.com/b1' && echo 'b1-1'		2019-12-15T11:49:12Z
