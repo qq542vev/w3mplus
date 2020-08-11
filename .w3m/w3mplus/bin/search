@@ -80,10 +80,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			tmpFile=$(mktemp -p "${tmpDir}")
-			cat >"${tmpFile}"
 			shift
-			set -- "${tmpFile}" ${@+"${@}"}
+			set -- "$(mktemp -p "${tmpDir}")" ${@+"${@}"}
+			cat >"${1}"
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -145,10 +144,8 @@ mkdir -p -- "${directory%?$}"
 eval set -- "${args}"
 
 case "${#}" in '0')
-	tmpFile=$(mktemp -p "${tmpDir}")
-	cat >"${tmpFile}"
-
-	set -- "${tmpFile}" ${@+"${@}"}
+	set -- "$(mktemp -p "${tmpDir}")"
+	cat >"${1}"
 	;;
 esac
 

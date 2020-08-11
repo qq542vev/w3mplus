@@ -80,10 +80,9 @@ while [ 1 -le "${#}" ]; do
 			;;
 		# 標準入力を処理する
 		'-')
-			tmpFile=$(mktemp -p "${tmpDir}")
-			cat >"${tmpFile}"
 			shift
-			set -- "${tmpFile}" ${@+"${@}"}
+			set -- "$(mktemp -p "${tmpDir}")" ${@+"${@}"}
+			cat >"${1}"
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
