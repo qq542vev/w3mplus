@@ -25,8 +25,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.5
-##   date - 2020-02-20
+##   version - 1.1.6
+##   date - 2020-08-11
 ##   since - 2019-08-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -48,6 +48,7 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
+tmpDir=$(mktemp -d)
 line='1'
 number='+1'
 args=''
@@ -65,12 +66,13 @@ while [ 1 -le "${#}" ]; do
 			fi
 			;;
 		'-n' | '--number')
-			if [ "$(expr -- "${2}" ':' '[+-][1-9][0-9]*$')" -eq 0 ]; then
+			if expr -- "${2}" ':' '[+-][1-9][0-9]*$' >'/dev/null'; then
+				number="${2}"
+				shift 2
+			else
 				printf 'The option "%s" must be a integer.\n' "${1}" 1>&2
+				exitStatus="${EX_USAGE}"; exit
 			fi
-
-			number="${2}"
-			shift 2
 			;;
 		# ヘルプメッセージを表示して終了する
 		'-h' | '--help')
@@ -81,6 +83,12 @@ while [ 1 -le "${#}" ]; do
 		'-v' | '--version')
 			version
 			exit
+			;;
+		# 標準入力を処理する
+		'-')
+			shift
+			set -- "$(mktemp -p "${tmpDir}")" ${@+"${@}"}
+			cat >"${1}"
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
@@ -124,17 +132,8 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-file="${1}"
-
-# 引数の個数が過大である
-if [ 1 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0##*/}: too many arguments
-		Try '${0##*/} --help' for more information.
-	EOF
-
-	exitStatus="${EX_USAGE}"; exit
-fi
+file=$(mktemp -p "${tmpDir}")
+cat -- ${@+"${@}"} >"${file}"
 
 while [ "${number}" -ne 0 ]; do
 	if [ 0 -lt "${number}" ]; then
@@ -158,4 +157,7 @@ while [ "${number}" -ne 0 ]; do
 	fi
 done
 
-mvcolmun -l "${line}" -n '0' -s "${file}"
+httpresponse - <<- EOF
+	W3m-control: GOTO_LINE ${line}
+	W3m-control: MOVE_RIGHT1 $(mvcolmun --line "${line}" --number '0' --skip -- "${file}")
+EOF
