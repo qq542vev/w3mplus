@@ -49,6 +49,7 @@ export 'IFS'
 . "${W3MPLUS_PATH}/lib/w3mplus/init"
 
 # 各変数に既定値を代入する
+tmpDir=$(mktemp -d)
 line='1'
 number='0'
 skipFlag='0'
@@ -92,6 +93,12 @@ while [ 1 -le "${#}" ]; do
 			version
 			exit
 			;;
+		# 標準入力を処理する
+		'-')
+			shift
+			set -- "$(mktemp -p "${tmpDir}")" ${@+"${@}"}
+			cat >"${1}"
+			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)
 			option="${1}"
@@ -134,7 +141,8 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-file="${1}"
+file=$(mktemp -p "${tmpDir}")
+cat -- ${@+"${@}"} >"${file}"
 
 # 引数の個数が過大である
 if [ 1 -lt "${#}" ]; then
