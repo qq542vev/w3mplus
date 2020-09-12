@@ -13,8 +13,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-07-15
+##   version - 1.0.1
+##   date - 2020-09-12
 ##   since - 2020-07-06
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -33,7 +33,7 @@ Describe 'Test printhtml'
   Before 'setup'
 
 	redirect () {
-		env ${@+"${@}"} '../../.w3m/w3mplus/bin/redirect' --http-template "${SHELLSPEC_PROJECT_ROOT}/template/http" -
+		env ${@+"${@}"} "${W3MPLUS_PATH}/bin/redirect" --http-template 'template/http' -
 	}
 
 	Data

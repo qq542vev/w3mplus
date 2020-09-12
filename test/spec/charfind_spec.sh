@@ -13,8 +13,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-08-10
+##   version - 1.0.1
+##   date - 2020-09-12
 ##   since - 2020-08-07
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -27,7 +27,7 @@
 
 Describe 'Test charfind'
 	charfind () {
-		env "W3MPLUS_TEMPLATE_HTTP=${SHELLSPEC_PROJECT_ROOT}/template/http" '../../.w3m/w3mplus/bin/charfind' ${@+"${@}"}
+		env 'W3MPLUS_TEMPLATE_HTTP=template/http' "${W3MPLUS_PATH}/bin/charfind" ${@+"${@}"}
 	}
 
 	output () {

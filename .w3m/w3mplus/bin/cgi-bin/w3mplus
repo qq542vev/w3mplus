@@ -20,8 +20,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.11.0
-##   date - 2020-08-02
+##   version - 1.11.1
+##   date - 2020-09-12
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -168,7 +168,7 @@ if result=$(
 			line=$(expand "${query_line-W3M_CURRENT_LINE}")
 
 			if [ -f "${tmpFile}" ]; then
-				mvpercent --line "${line}" ${query_percent+'--number' "${query_percent}"} -- "$(grep -c -e '^' -- "${tmpFile}" || :)"
+				printf 'W3m-control: GOTO_LINE %d' "$(mvpercent --line "${line}" ${query_percent+'--number' "${query_percent}"} -- "${tmpFile}")" | httpresponse -
 			else
 				addPrintCache
 			fi

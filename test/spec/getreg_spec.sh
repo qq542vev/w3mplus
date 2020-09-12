@@ -13,8 +13,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-07-15
+##   version - 1.0.1
+##   date - 2020-09-12
 ##   since - 2020-07-15
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -27,13 +27,13 @@
 
 Describe 'Test getreg'
 	setup () {
-		config="${SHELLSPEC_PROJECT_ROOT}/config/register"
+		config='config/register'
 	}
 
 	Before 'setup'
 
 	getreg () {
-		'../../.w3m/w3mplus/bin/getreg' --config "${config}" ${@+"${@}"}
+		"${W3MPLUS_PATH}/bin/getreg" --config "${config}" ${@+"${@}"}
 	}
 
 	Example 'Test no argument'

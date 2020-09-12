@@ -7,7 +7,7 @@
 ## Usage:
 ##
 ##   (start code)
-##   mvcolmun [OPTION]... FILE
+##   mvcolmun [OPTION]... [FILE]...
 ##   (end)
 ##
 ## Options:
@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.5
-##   date - 2020-06-06
+##   version - 1.1.6
+##   date - 2020-09-12
 ##   since - 2019-07-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -141,21 +141,8 @@ done
 # オプション以外の引数を再セットする
 eval set -- "${args}"
 
-file=$(mktemp -p "${tmpDir}")
-cat -- ${@+"${@}"} >"${file}"
-
-# 引数の個数が過大である
-if [ 1 -lt "${#}" ]; then
-	cat <<- EOF 1>&2
-		${0##*/}: too many arguments
-		Try '${0##*/} --help' for more information.
-	EOF
-
-	exitStatus="${EX_USAGE}"; exit
-fi
-
 moveCount='0'
-row=$(sed -n -e "${line}{p; q}" -- "${file}")
+row=$(sed -n -e "${line}{p; q}" -- ${@+"${@}"})
 
 case "${skipFlag}" in '1')
 	moveCount=$(printf '%s' "${row}" | sed -e 's/^\([[:blank:]]*\).*$/\1/' | wc -m)

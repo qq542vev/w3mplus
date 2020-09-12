@@ -13,8 +13,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-08-04
+##   version - 1.0.1
+##   date - 2020-09-12
 ##   since - 2020-07-19
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -27,13 +27,13 @@
 
 Describe 'Test getautocmd'
 	setup () {
-		config="${SHELLSPEC_PROJECT_ROOT}/config/autocommand"
+		config='config/autocommand'
 	}
 
 	Before setup
 
 	getautocmd () {
-	'../../.w3m/w3mplus/bin/getautocmd' --config "${config}" -- ${@+"${@}"}
+		"${W3MPLUS_PATH}/bin/getautocmd" --config "${config}" -- ${@+"${@}"}
 	}
 
 	Example 'Test a1'

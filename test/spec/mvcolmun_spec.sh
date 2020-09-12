@@ -13,8 +13,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-08-11
+##   version - 1.0.1
+##   date - 2020-09-12
 ##   since - 2020-08-11
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -27,10 +27,10 @@
 
 Describe 'Test mvcolmun'
 	mvcolmun () {
-		'../../.w3m/w3mplus/bin/mvcolmun' ${@+"${@}"}
+		"${W3MPLUS_PATH}/bin/mvcolmun" ${@+"${@}"}
 	}
 
-	Data:raw
+	Data
 		#|Paragraph 1
 		#|
 		#|  Paragraph 2

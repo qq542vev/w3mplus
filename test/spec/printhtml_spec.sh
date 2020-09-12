@@ -14,7 +14,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-07-15
+##   date - 2020-09-12
 ##   since - 2020-06-11
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -33,7 +33,7 @@ Describe 'Test printhtml'
   Before 'setup'
 
 	printhtml () {
-		'../../.w3m/w3mplus/bin/printhtml' --http-template "${SHELLSPEC_PROJECT_ROOT}/template/http" --html-template "${SHELLSPEC_PROJECT_ROOT}/template/html" ${@+"${@}"}
+		"${W3MPLUS_PATH}/bin/printhtml" --http-template 'template/http' --html-template 'template/html' ${@+"${@}"}
 	}
 
 	Example 'Test no argument'
