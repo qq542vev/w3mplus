@@ -7,7 +7,7 @@
 ## Usage:
 ##
 ##   (start code)
-##   setautocmd [OPTION]... CALL [CHECK]...
+##   setautocmd [OPTION]... CALL [COMMAND_ARG]...
 ##   (end)
 ##
 ## Options:
