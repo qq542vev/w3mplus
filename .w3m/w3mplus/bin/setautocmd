@@ -148,8 +148,8 @@ addList=$(printf '%s' "${field}" | outputHtml)
 deleteList=$(sed -e "/^${escaped}/!d" "${config}" | outputHtml)
 
 if [ -z "${addList}" ] && [ -z "${deleteList}" ]; then
-		httpresponse
-		exit
+	httpresponse
+	exit
 fi
 
 {
