@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.3.2
-##   date - 2020-09-22
+##   version - 1.3.3
+##   date - 2020-09-24
 ##   since - 2020-04-06
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -144,7 +144,7 @@ eval set -- "${args}"
 
 # 引数の個数が過小である
 case "${#}" in '0')
-	${VISUAL-${EDITOR-vi}} "${config}"
+	${VISUAL:-${EDITOR:-vi}} "${config}"
 	exit
 	;;
 esac
