@@ -144,6 +144,12 @@ directory=$(dirname -- "${config}"; printf '$')
 mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
+case "${key+1}" in '')
+	${VISUAL-${EDITOR-vi}} "${config}"
+	exit
+	;;
+esac
+
 escapedKey=$(sedEscape "${key}")
 deleteList=$(grep -e "^${escapedKey}	" -- "${config}" | cut -f '2' | htmlescape | sed -e 's/^.*$/<li><a href="&">&<\/a><\/li>/')
 
