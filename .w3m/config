@@ -85,8 +85,8 @@ extbrowser2 firefox %s &
 extbrowser3 url=%s && ${MAILER:-mutt --} "mailto:?body=$(printf '%s' "${url}" | urlencode)"
 extbrowser4 url=%s && printf '%s' "${url}" | xsel && printf '%s' "${url}" | xsel -b &
 extbrowser5 
-extbrowser6 curl -L -O -C - %s &
-extbrowser7 wget -b -c -- %s
+extbrowser6 curl -L -O -sS - %s &
+extbrowser7 wget -b -- %s
 extbrowser8 w3m %s
 extbrowser9 w3m-private %s
 bgextviewer 1
