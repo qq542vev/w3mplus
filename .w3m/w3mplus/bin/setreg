@@ -7,7 +7,7 @@
 ## Usage:
 ##
 ##   (start code)
-##   setreg [OPTION]... [FILE]...
+##   setreg [OPTION]... [KEY FILE]...
 ##   (end)
 ##
 ## Options:
