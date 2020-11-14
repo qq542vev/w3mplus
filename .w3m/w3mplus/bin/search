@@ -278,4 +278,4 @@ for file in ${@+"${@}"}; do
 	)
 
 	awk -F '\t' -v "engine=${engine}" -v "encoded=${encoded}" -- "${awkScript}" "${config}"
-done | redirect -
+done

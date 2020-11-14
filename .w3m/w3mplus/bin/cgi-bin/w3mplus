@@ -291,7 +291,7 @@ if result=$(
 					printf '%s' "file://${SCRIPT_NAME}?action=searchhistory" | redirect -
 					;;
 				*)
-					printf '%s' "${query_query-}" | search ${query_engine+--engine "${query_engine}"}
+					printf '%s' "${query_query-}" | search ${query_engine+--engine "${query_engine}"} - | redirect -
 					;;
 			esac
 			;;
@@ -303,25 +303,16 @@ if result=$(
 				*)
 					engine="${query_engine-${W3MPLUS_SEARCH_ENGINE}}"
 
-					printf '%s' "${query_query#?}" | search --engine "${engine}" | awk -v "engine=${query_prevtab+$(printf '%s' "${engine}" | octalEncode)}" -- '
-						$0 == "\r" {
-							exit
-						}
-
-						{
-							printf("%s\n", $0)
-						}
-
-						END {
-							count = split(engine, array, /,+/)
-
-							for(; 0 < count; count--) {
-								printf "W3m-control: PREV_TAB\r\n"
+					{
+						printf '%s' "${query_query#?}" | search --engine "${engine}" -
+						printf '%s' ${query_prevtab+"${engine}"} | awk -F ',' -- '
+							{
+								for(i = 0; i < NF; i++) {
+									printf "W3m-control: PREV_TAB\n"
+								}
 							}
-
-							printf "\r\n"
-						}
-					'
+						'
+					} | redirect -
 					;;
 			esac
 			;;
