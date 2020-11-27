@@ -7,7 +7,7 @@
 ## Usage:
 ##
 ##   (start code)
-##   setqmark [OPTION]... KEY [URI]...
+##   setqmark [OPTION]... KEY [[--line=NUMBER] [--colmun=NUMBER] URI]...
 ##   (end)
 ##
 ## Options:
