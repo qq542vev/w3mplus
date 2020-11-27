@@ -165,11 +165,16 @@ for file in ${@+"${@}"}; do
 			;;
 		'!-'[1-9]*)
 			prefix=$(expr "${keyword}" ':' '\(!-[1-9][0-9]*\)')
-			histword=$(tail -n "${prefix#!-}" -- "${history}" | head -n '1' | cut -f '1')
+			histword=$(
+				if [ "${prefix#!-}" -le "$(grep -c -e '^' -- "${history}")" ]; then
+					tail -n "${prefix#!-}" -- "${history}" | head -n '1' | cut -f '1'
+				fi
+			)
 			;;
 		'!?'[!?]*'?'*)
 			prefix=$(expr "${keyword}" ':' '\(!?[^?]\{1,\}?\)')
-			histword=$(cut -f '1' -- "${history}" | grep -F -e "$(printf '%s' "${prefix%?}" | cut -c '3-' | urlencode)" | tail -n '1')			;;
+			histword=$(cut -f '1' -- "${history}" | grep -F -e "$(printf '%s' "${prefix%?}" | cut -c '3-' | tr -d '\n' | urlencode)" | tail -n '1')
+			;;
 		'!'[!\	\ ]*)
 			prefix=$(expr "${keyword}" ':' '\(![^[:blank:]]\{1,\}\)')
 			histword=$(cut -f '1' -- "${history}" | grep -e "^$(printf '%s' "${prefix#!}" | urlencode)" | tail -n '1')
@@ -188,11 +193,11 @@ for file in ${@+"${@}"}; do
 		keyword=$(printf '%s' "${histword}" | urldecode | awk -v "keyword=$(printf '%s' "${keyword#${prefix}}" | octalEncode)" -- '
 			function printColumn(start, end, separator) {
 				if(start == "") {
-					start = 1
+					start = 0
 				}
 
-				if(end == "") {
-					end = NF
+				if((end == "") || (NF <= end)) {
+					end = NF - 1
 				}
 
 				if(separator == "") {
@@ -200,29 +205,38 @@ for file in ${@+"${@}"}; do
 				}
 
 				for(; start <= end; start++) {
-					printf("%s", $start (start == end ? "" : separator))
+					printf("%s", $(start + 1) (start == end ? "" : separator))
 				}
 			}
 
 			{
-				if(match(keyword, /^:[1-9][0-9]*/)) {
+				if(match(keyword, /^:(0|[1-9][0-9]*)/)) {
 					start = substr(keyword, RSTART + 1, RLENGTH - 1)
 					keyword = substr(keyword, RLENGTH + 1)
 
-					if(match(keyword, /^-[1-9][0-9]*/)) {
+					if(match(keyword, /^-(0|[1-9][0-9]*)/)) {
 						printColumn(start, substr(keyword, RSTART + 1, RLENGTH - 1))
 						keyword = substr(keyword, RLENGTH + 1)
 					} else if(index(keyword, "-$") == 1) {
 						printColumn(start)
 						keyword = substr(keyword, 3)
 					} else if(index(keyword, "-") == 1) {
-						printColumn(start, NF - 1)
+						printColumn(start, NF - 2)
 						keyword = substr(keyword, 2)
 					} else {
 						printColumn(start, start)
 					}
+				} else if(match(keyword, /^:-(0|[1-9][0-9]*)/)) {
+					printColumn(0, substr(keyword, RSTART + 2, RLENGTH - 2))
+					keyword = substr(keyword, RLENGTH + 2)
+				} else if(index(keyword, ":-$") == 1) {
+					printColumn()
+					keyword = substr(keyword, 4)
 				} else if(index(keyword, ":$") == 1) {
-					printColumn(NF, NF)
+					printColumn(NF - 1)
+					keyword = substr(keyword, 3)
+				} else if(index(keyword, ":*") == 1) {
+					printColumn(1)
 					keyword = substr(keyword, 3)
 				} else {
 					printf("%s", $0)
