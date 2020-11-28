@@ -48,7 +48,7 @@ Describe 'Test search'
 	}
 
 	cleanup () {
-		rm -f "${tmpFile}"
+		rm -f "${tmpHistoryFile}" "${tmpConfigFile}"
 	}
 
 	Before 'setup'
