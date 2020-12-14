@@ -28,8 +28,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.2
-##   date - 2020-06-23
+##   version - 1.3.0
+##   date - 2020-12-15
 ##   since - 2020-02-21
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -55,7 +55,8 @@ fieldPattern='(original|scheme!?|authority!?|userinfo!?|host|port!?|path|query!?
 # 各変数に既定値を代入する
 field='original'
 type='match'
-normalize='0'
+normalizeFlag='0'
+silentFlag='0'
 args=''
 
 # コマンドライン引数の解析する
@@ -79,7 +80,11 @@ while [ 1 -le "${#}" ]; do
 			shift
 			;;
 		'-n' | '--normalize')
-			normalize='1'
+			normalizeFlag='1'
+			shift
+			;;
+		'-s' | '--silent')
+			silentFlag='1'
 			shift
 			;;
 		'-V' | '--invert')
@@ -188,7 +193,7 @@ awkScript='
 	}
 
 	{
-		if(normalize == 1) {
+		if(normalizeFlag == 1) {
 			$1 = tolower($1)
 
 			if($2 != "") {
@@ -287,20 +292,30 @@ for uri in ${@+"${@}"}; do
 	if [ "$(printf '%s' "${uri}" | wc -l)" -eq 0 ] && printf '%s' "${uri}" | grep -Eq -e "${uriPattern}"; then
 		case "${type}" in
 			'match')
-				case "${normalize}" in '1')
+				case "${normalizeFlag}" in '1')
 					uri=$(printf '%s' "${uri}" | awk -- "${normalizePercent}")
 					;;
 				esac
 
-				printf '%s' "${uri}" | sed -e "s/${uriSplitPattern}/\\1|\\2|\\3|\\4|\\5|\\6|\\7|\\8/" | awk -v "field=${field}" -v "normalize=${normalize}" -F '|' -- "${awkScript}"
+				printf '%s' "${uri}" | sed -e "s/${uriSplitPattern}/\\1|\\2|\\3|\\4|\\5|\\6|\\7|\\8/" | awk -v "field=${field}" -v "normalizeFlag=${normalizeFlag}" -F '|' -- "${awkScript}"
 				;;
 			'invert')
+				case "${silentFlag}" in '0')
+					printf "%s: URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
+					;;
+				esac
+
 				exitStatus='1'
 				;;
 		esac
 	else
 		case "${type}" in
 			'match')
+				case "${silentFlag}" in '0')
+					printf "%s: not URI -- '%s'\\n" "${0##*/}" "${uri}" 1>&2
+					;;
+				esac
+
 				exitStatus='1'
 				;;
 			'invert')

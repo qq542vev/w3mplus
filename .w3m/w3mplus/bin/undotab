@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.2.0
-##   date - 2020-06-04
+##   version - 3.0.0
+##   date - 2020-12-15
 ##   since - 2019-08-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -51,8 +51,8 @@ export 'IFS'
 # 各変数に既定値を代入する
 null='/dev/null'
 config="${W3MPLUS_UNDO_FILE}"
-count='-1'
-number='0'
+count='+1'
+number='+1'
 args=''
 
 # コマンドライン引数の解析する
@@ -63,7 +63,7 @@ while [ 1 -le "${#}" ]; do
 			shift 2
 			;;
 		'-C' | '--count')
-			if expr -- "${2}" ':' '@\{0,1\}[+-]0$' >"${null}" || expr -- "${2}" ':' '@\{0,1\}[+-][1-9][0-9]*$' >"${null}"; then
+			if ( expr -- "${2}" ':' '[+-]0$' || expr -- "${2}" ':' '[+-][1-9][0-9]*$' || expr -- "${2}" ':' '@[+-]\{0,1\}0$' || expr -- "${2}" ':' '@[+-]\{0,1\}[1-9][0-9]*$' ) >"${null}"; then
 				count="${2}"
 				shift 2
 			else
@@ -72,7 +72,7 @@ while [ 1 -le "${#}" ]; do
 			fi
 			;;
 		'-n' | '--number')
-			if [ "${2}" = '0' ] || [ "${2}" = '@0' ] || expr -- "${2}" ':' '@\{0,1\}[1-9][0-9]*$' >"${null}"; then
+			if ( expr -- "${2}" ':' '[+-][1-9][0-9]*$' || [ "${2}" = '@0' ] || expr -- "${2}" ':' '@[1-9][0-9]*$' ) >"${null}"; then
 				number="${2}"
 				shift 2
 			else
@@ -149,131 +149,13 @@ fi
 
 limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - W3MPLUS_UNDO_TIMEOUT))
 lineCount=$(grep -c -e '^' -- "${config}" || :)
-tmpFile=$(mktemp)
 
-case "${number}" in '@'*)
-	case "${count}" in
-		'@'*)
-			result=$(sed '1!G; h; $!d' -- "${config}" | awk -v "timePosition=${number#@}" -v "timeCount=${count#@}" -- "$(
-				cat <<- 'EOF'
-				BEGIN {
-					position = -1
-					count = -1
-
-					if(0 <= timeCount) {
-						start = timePosition + timeCount
-						end = timePosition
-					} else {
-						start = timePosition
-						end = timePosition + timeCount
-					}
-				}
-
-				{
-					datetime = $NF
-
-					gsub(/[TZ:-]/, "", datetime)
-					gsub(/'+/, "'\"&\"'", datetime)
-
-					command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
-					command | getline timestamp
-					close(command)
-
-					if(position < 0 && timestamp <= start) {
-						position = NR - 1
-					}
-
-					if(0 <= position && timestamp < end) {
-						count = NR - position - 1
-						exit
-					}
-				}
-
-				END {
-					if(position < 0) {
-						position = NR
-					}
-
-					if(count < 0) {
-						count = NR - position
-					}
-
-					printf("%d %s%d\n", position, (position || count) ? "-" : "+", count)
-				}
-				EOF
-			)")
-			number="${result% *}"
-			count="${result#* }"
-			;;
-		*)
-			number=$(sed '1!G; h; $!d' -- "${config}" | awk -v "time=${number#@}" -v "sign=${count%%[0-9]*}" -- "$(
-				cat <<- 'EOF'
-				BEGIN {
-					number = -1
-				}
-
-				{
-					datetime = $NF
-
-					gsub(/[TZ:-]/, "", datetime)
-					gsub(/'+/, "'\"&\"'", datetime)
-
-					command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
-					command | getline timestamp
-					close(command)
-
-					if((("+" == sign) && (timestamp < time)) || (("-" == sign) && (timestamp <= time))) {
-						number = NR - 1
-						exit
-					}
-				}
-
-				END {
-					printf("%d", (0 <= number) ? number : NR)
-				}
-				EOF
-			)")
-			;;
-	esac
-	;;
-esac
-
-case "${count}" in
-	'+0')
-		count="${number}"
-		number='0'
-		;;
-	'+'*)
-		if [ "${number}" -lt "${count}" ]; then
-			count="${number}"
-		fi
-
-		number=$((number - count))
-		count=$((count))
-		;;
-	'-0')
-		count="${lineCount}"
-		;;
-	'-'*)
-		count=$((count * -1))
-		;;
-esac
-
-head -n "-$((number + count))" -- "${config}" >>"${tmpFile}"
-
-head -n "-${number}" -- "${config}" | tail -n "${count}" | sed '1!G; h; $!d' | awk -v "limitTime=${limitTime}" -v "file=${tmpFile}" -- "$(
-	cat <<- 'EOF'
+awk -F '\t' -v "limitTime=${limitTime}" -v "file=${config}" -- "$(
+	cat <<-'EOF'
 	{
-		datetime = $NF
+		unixtime = $NF
 
-		gsub(/[TZ:-]/, "", datetime)
-		gsub(/'+/, "'\"&\"'", datetime)
-
-		command = "printf '%s' '" datetime "' | TZ='UTC+0' utconv"
-		command | getline timestamp
-		close(command)
-
-		if(timestamp <= limitTime) {
+		if(unixtime <= limitTime) {
 			gsub(/'+/, "'\"&\"'", file)
 			system(": >'" file "'")
 			exit
@@ -282,8 +164,116 @@ head -n "-${number}" -- "${config}" | tail -n "${count}" | sed '1!G; h; $!d' | a
 		printf("%s\n", $0)
 	}
 	EOF
-)"
+)" "${config}" | sponge -- "${config}"
 
-tail -n "${number}" -- "${config}" >>"${tmpFile}"
+case "${number}" in
+	'@'*)
+		case "${count}" in
+			'@'*)
+				result=$(awk -v "timePosition=${number#@}" -v "timeCount=${count#@}" -v "lineCount=${lineCount}" -- "$(
+					cat <<-'EOF'
+					BEGIN {
+						position = 0
+						count = 0
+						starttime = timePosition
+						endtime = (index(timeCount, "+") || index(timeCount, "-")) ? (timePosition + timeCount) : timeCount
 
-cp -fp -- "${tmpFile}" "${config}"
+						if(starttime < endtime) {
+							tmpVar = starttime
+							starttime = endtime
+							endtime = tmpVar
+						}
+					}
+
+					{
+						unixtime = $NF
+
+						if(position == 0 && unixtime <= starttime) {
+							position = NR
+						}
+
+						if(0 < position && unixtime < endtime) {
+							count = NR - position
+
+							if(count == 0) {
+								position = 0
+							}
+
+							exit
+						}
+					}
+
+					END {
+						if(position == 0) {
+							position = lineCount
+						} else if(count == 0) {
+							count = NR
+						}
+
+						printf("%d %d\n", position, count)
+					}
+					EOF
+				)" "${config}")
+
+				number="${result% *}"
+				count="${result#* }"
+				;;
+			*)
+				number=$(awk -v "starttime=${number#@}" -- "$(
+					cat <<-'EOF'
+					{
+						unixtime = $NF
+
+						if(unixtime <= starttime) {
+							exit
+						}
+					}
+
+					END {
+						printf("%d", NR)
+					}
+					EOF
+				)" "${config}")
+				;;
+		esac
+		;;
+	'+'*)
+		number=$((number))
+		;;
+	'-'*)
+		number=$((lineCount + number + 2))
+
+		if [ "${number}" -lt '1' ]; then
+			number='1'
+		fi
+		;;
+esac
+
+case "${count}" in
+	'+0')
+		count="${lineCount}"
+		;;
+	'+'*)
+		count=$((count))
+		;;
+	'-0')
+		count=$((number - 1))
+		number='1'
+		;;
+	'-'*)
+		if [ '1' -le "$((number + count))" ]; then
+			number=$((number + count))
+			count=$((count * -1))
+		else
+			count=$((number - 1))
+			number='1'
+		fi
+		;;
+esac
+
+tail -n "+${number}" -- "${config}" | head -n "${count}"
+
+{
+	head -n "$((number - 1))" -- "${config}"
+	tail -n "+$((number + count))" -- "${config}"
+} | sponge -- "${config}"

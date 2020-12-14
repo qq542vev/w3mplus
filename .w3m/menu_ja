@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.11.0
-##   date - 2020-05-05
+##   version - 1.11.1
+##   date - 2020-12-15
 ##   since - 2020-03-04
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -229,8 +229,8 @@ end
 
 menu MenuUndoClosedTabs
 	func "1個のタブを復元      (u)" GOTO "Uu" "file:///cgi-bin/w3mplus?action=undoTab"
-	func "5個のタブを復元      (f)" GOTO "Ff" "file:///cgi-bin/w3mplus?action=undoTab&count=-5"
-	func "10個のタブを復元     (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=undoTab&count=-10"
+	func "5個のタブを復元      (f)" GOTO "Ff" "file:///cgi-bin/w3mplus?action=undoTab&count=5"
+	func "10個のタブを復元     (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=undoTab&count=10"
 	nop  "------------------------"
 	func "10分以内のタブを復元 (1)" GOTO "1" "file:///cgi-bin/w3mplus?action=undoTab&count=%40-600"
 	func "30分以内のタブを復元 (3)" GOTO "3" "file:///cgi-bin/w3mplus?action=undoTab&count=%40-1800"

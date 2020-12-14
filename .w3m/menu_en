@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.14.0
-##   date - 2020-05-05
+##   version - 1.14.1
+##   date - 2020-12-15
 ##   since - 2019-06-30
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -229,14 +229,14 @@ end
 
 menu MenuUndoClosedTabs
 	func "Undo Closed Tab     (u)" GOTO "uU" "file:///cgi-bin/w3mplus?action=undoTab"
-	func "Undo 5 Closed Tabs  (f)" GOTO "Ff" "file:///cgi-bin/w3mplus?action=undoTab&count=-5"
-	func "Undo 10 Closed Tabs (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=undoTab&count=-10"
+	func "Undo 5 Closed Tabs  (f)" GOTO "Ff" "file:///cgi-bin/w3mplus?action=undoTab&count=5"
+	func "Undo 10 Closed Tabs (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=undoTab&count=10"
 	nop  "-----------------------"
 	func "within 10 minutes   (1)" GOTO "1" "file:///cgi-bin/w3mplus?action=undoTab&count=%40-600"
 	func "within 30 minutes   (3)" GOTO "3" "file:///cgi-bin/w3mplus?action=undoTab&count=%40-1800"
 	func "within 60 minutes   (6)" GOTO "6" "file:///cgi-bin/w3mplus?action=undoTab&count=%40-3600"
 	nop  "-----------------------"
-	func "Undo All Tabs       (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=undoTab&count=-0"
+	func "Undo All Tabs       (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=undoTab&count=0"
 end
 
 menu MenuBookmarks

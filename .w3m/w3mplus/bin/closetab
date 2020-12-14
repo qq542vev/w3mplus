@@ -26,8 +26,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.2.0
-##   date - 2020-06-04
+##   version - 3.0.0
+##   date - 2020-12-15
 ##   since 2019-08-02
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -54,17 +54,15 @@ colmun='1'
 line='1'
 size="${W3MPLUS_UNDO_HISTSIZE}"
 fields=''
-datetime=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+unixtime=$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv -r)
 
 setFieldList() {
-	for uri in ${@+"${@}"}; do
-		if uricheck -f '' "${uri}"; then
-			fields=$(printf '%s%s\t%d\t%d\t%s\n$' "${fields}" "${uri}" "${line}" "${colmun}" "${datetime}")
-			fields="${fields%$}"
-		else
-			printf "%s: not URI -- '%s'\\n" "${0##*/}" "${1}" 1>&2
-			exitStatus="${EX_USAGE}"; exit
-		fi
+	if uris=$(uricheck ${@+"${@}"}); then :; else
+		exitStatus="${EX_USAGE}"
+	fi
+
+	for uri in ${uris}; do
+		fields=$(printf '%s\t%d\t%d\t%s\n%s' "${uri}" "${line}" "${colmun}" "${unixtime}" "${fields}")
 	done
 }
 
@@ -160,28 +158,29 @@ mkdir -p -- "${directory%?$}"
 : >>"${config}"
 
 {
-	cat -- "${config}"
-	printf '%s' "${fields}"
-} | awk '
-	BEGIN {
-		split("", previous)
-	}
-
-	function printArray(array) {
-		if(array[1] != "") {
-			printf("%s\t%s\t%s\t%s\n", array[1], array[2], array[3], array[4])
+	{
+		printf '%s\n' "${fields}"
+		head -n '1' -- "${config}"
+	} | awk '
+		BEGIN {
+			split("", previous)
 		}
-	}
 
-	NF == 4 {
-		if($1 != previous[1]) {
+		function printArray(array) {
+			if(array[1] != "") {
+				printf("%s\t%s\t%s\t%s\n", array[1], array[2], array[3], array[4])
+			}
+		}
+
+		$1 != previous[1] {
+			printArray(previous)
+			split($0, previous, FS)
+		}
+
+		END {
 			printArray(previous)
 		}
+	'
 
-		split($0, previous, FS)
-	}
-
-	END {
-		printArray(previous)
-	}
-' | tail -n "${size}" | sponge -- "${config}"
+	tail -n '+2' -- "${config}"
+} | head -n "${size}" | sponge -- "${config}"
