@@ -57,7 +57,7 @@ fields=''
 unixtime=$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv -r)
 
 setFieldList() {
-	if uris=$(uricheck ${@+"${@}"}); then :; else
+	if uris=$(uricheck --verbose ${@+"${@}"}); then :; else
 		exitStatus="${EX_USAGE}"
 	fi
 

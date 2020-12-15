@@ -28,7 +28,7 @@
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
 ##   version - 1.0.3
-##   date - 2020-06-08
+##   date - 2020-12-15
 ##   since - 2020-01-27
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -179,7 +179,7 @@ for value in ${blacklist:+"cookie_reject_domains ${blacklist}"} ${whitelist:+"co
 	fi
 
 	for domain in ${@+"${@}"}; do
-		if host=$(uricheck -f 'host' "${domain}"); then
+		if host=$(uricheck --field 'host' -- "${domain}"); then
 			domain="${host}"
 		fi
 
