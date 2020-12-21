@@ -54,7 +54,7 @@ colmun='1'
 line='1'
 size="${W3MPLUS_UNDO_HISTSIZE}"
 fields=''
-unixtime=$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv -r)
+unixtime=$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)
 
 setFieldList() {
 	if uris=$(uricheck --verbose ${@+"${@}"}); then :; else
@@ -113,6 +113,7 @@ while [ 1 -le "${#}" ]; do
 		# 標準入力を処理する
 		'-')
 			setFieldList $(cat)
+			shift
 			;;
 		# `--name=value` 形式のロングオプション
 		'--'[!-]*'='*)

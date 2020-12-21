@@ -47,7 +47,7 @@ message='success'
 
 if [ "${W3MPLUS_CAPTIVEPORTAL}" = '0' ] || (
 	result=$(w3m -dump -no-cookie "${detectURL}" 2>'/dev/null' || :)
-	[ -z "${result}" ] || [ "${result}" == "${message}" ]
+	[ -z "${result}" ] || [ "${result}" = "${message}" ]
 ); then
 	w3m ${@+"${@}"}
 else

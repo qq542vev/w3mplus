@@ -7,14 +7,14 @@
 ## Usage:
 ##
 ##   (start code)
-##   sed '...' file | grep '...' | sponge [-a] file
+##   sed '...' file | grep '...' | sponge [-a] [file]...
 ##   (end)
 ##
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2020-06-03
+##   version - 1.1.0
+##   date - 2020-12-17
 ##   since - 2020-06-03
 ##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
 ##   licence - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -35,9 +35,11 @@ done
 
 appendFlag='0'
 
-while getopt 'a' option; do
+while getopts 'a' option; do
 	case "${option}" in
-		'a') appendFlag='1';;
+		'a')
+			appendFlag='1'
+			;;
 		*)
 			printf "sponge: invalid option -- '%s'\\n" "${option}"
 			exit 1
@@ -47,21 +49,27 @@ done
 
 shift "$((OPTIND - 1))"
 
-tmpFile=$(mktemp)
-cat >"${tmpFile}"
-
 case "${#}" in
 	'0')
-		cat -- "${tmpFile}"
+		cat
 		;;
 	*)
-		output="${1}"
+		tmpFile=$(mktemp)
+		cat >"${tmpFile}"
 
 		case "${appendFlag}" in
-			'0') cat -- "${tmpFile}" >"${output}";;
-			'1') cat -- "${tmpFile}" >>"${output}";;
+			'1')
+				for output in ${@+"${@}"}; do
+					 cat -- "${tmpFile}" >>"${output}"
+				done
+				;;
+			*)
+				for output in ${@+"${@}"}; do
+					 cat -- "${tmpFile}" >"${output}"
+				done
+				;;
 		esac
+
+		rm -f -- "${tmpFile}"
 		;;
 esac
-
-rm -f -- "${tmpFile}"
