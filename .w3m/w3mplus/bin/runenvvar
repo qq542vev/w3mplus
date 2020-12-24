@@ -24,8 +24,8 @@
 ## Metadata:
 ##
 ##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 2.2.1
-##   date - 2020-06-06
+##   version - 2.2.2
+##   date - 2020-12-25
 ##   since - 2019-07-15
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
 ##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
@@ -158,13 +158,13 @@ case "${action}" in
 		EOF
 		;;
 	'decrementURI')
-		incrementuri -n '-1' -- "${value}" | redirect -
+		printf "%s" "${value}" | incrementuri -n '-1' - | redirect -
 		;;
 	'incrementURI')
-		incrementuri -- "${value}" | redirect -
+		printf "%s" "${value}" | incrementuri - | redirect -
 		;;
 	'parentUriPath')
-		parenturipath -- "${value}" | redirect -
+		printf "%s" "${value}" | parenturipath - | redirect -
 		;;
 	'prevTab')
 		cat <<- EOF | redirect -
