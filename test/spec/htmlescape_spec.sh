@@ -27,7 +27,7 @@
 
 Describe 'Test htmlescape'
 	htmlescape () {
-		"${W3MPLUS_HOME}/bin/htmlescape" ${@+"${@}"}
+		"${W3MPLUS_PATH}/bin/htmlescape" ${@+"${@}"}
 	}
 
 	Data "&'\"<>"

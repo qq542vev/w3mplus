@@ -1,0 +1,243 @@
+#!/usr/bin/env sh
+
+### Script: popuri
+##
+## 履歴から URI を取り出す。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 3.1.0
+##   date - 2022-06-28
+##   since - 2019-08-02
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='popuri 3.1.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]..." \
+		'' 'Options:'
+
+	param config  -c --config  init:'config="${HOME}/.w3mplus/tabrestore"' var:FILE -- '設定ファイルを指定する'
+	param count   -C --count   init:='-1' validate:'regex_match "${OPTARG}" "^(@[+-]?|[+-])(0|[1-9][0-9]*)$"' var:'@SIGNED_INTEGER | SIGNED_INTEGER' -- '範囲の秒数または行数を指定する'
+	param number  -n --number  init:='-1' validate:'regex_match "${OPTARG}" "^(@(0|[1-9][0-9]*)|[+-][1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- '開始する秒数または行を指定する'
+	param timeout -t --timeout init:='+86400' validate:'regex_match "${OPTARG}" "^(@|[+-])(0|[1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- 'タイムアウトする秒数または時間を指定する'
+	disp  :usage  -h --help     -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version  -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+if [ -d "${config}" ]; then
+	printf "'%s' is directory.\\n" "${config}" >&2
+	endCall "${EX_CANTCREAT}"
+fi
+
+if [ '!' -e "${config}" ]; then
+	configDir=$(dirname -- "${config}"; printf '$')
+	mkdir -p -- "${configDir%?$}"
+
+	: >"${config}"
+fi
+
+tmpDir=$(mktemp -d)
+
+# 引数の個数が過大である
+case "${#}" in
+	[!0])
+		cat <<-EOF >&2
+			${0##*/}: too many arguments
+			Try '${0##*/} --help' for more information.
+		EOF
+
+		endCall "${EX_USAGE}"
+		;;
+esac
+
+case "${timeout}" in
+	'@'*)
+		limitTime="${timeout#@}"
+		awkScript='$NF <= limitTime { printf("%s\n", $0) }'
+		;;
+	*)
+		limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - (timeout)))
+		awkScript='limitTime < $NF { printf("%s\n", $0) }'
+		;;
+esac
+
+awk -F '\t' \
+	-v "limitTime=${timeout#@}" \
+	-- "${awkScript}" "${config}" \
+	>"${tmpDir}/file"
+
+lineCount=$(grep -c -e '^' -- "${tmpDir}/file" || :)
+
+case "${number}" in
+	'@'*)
+		case "${count}" in
+			'@'*)
+				result=$(awk -v "starttime=${number#@}" -v "endtime=${count#@}" -- "$(
+					cat <<-'EOF'
+					BEGIN {
+						position = 0
+						count = 0
+						endtime = (index(endtime, "+") || index(endtime, "-")) ? (starttime + endtime) : endtime
+
+						if(endtime < starttime) {
+							tmpVar = starttime
+							starttime = endtime
+							endtime = tmpVar
+						}
+					}
+
+					{
+						unixtime = $NF
+
+						if(position == 0 && starttime <= unixtime) {
+							position = NR
+						}
+
+						if(endtime < unixtime) {
+							count = NR - position
+
+							if(count == 0) {
+								position = 0
+							}
+
+							exit
+						}
+					}
+
+					END {
+						if(position == 0) {
+							position = 1
+						} else if(count == 0) {
+							count = NR
+						}
+
+						printf("%d %d\n", position, count)
+					}
+					EOF
+				)" "${tmpDir}/file")
+
+				number="${result% *}"
+				count="${result#* }"
+				;;
+			*)
+				number=$(awk -v "starttime=${number#@}" -- "$(
+					cat <<-'EOF'
+					BEGIN {
+						position = 0
+					}
+
+					{
+						unixtime = $NF
+
+						if(starttime <= unixtime) {
+							position = NR
+							exit
+						}
+					}
+
+					END {
+						printf("%d", (position ? position : NR + 1))
+					}
+					EOF
+				)" "${tmpDir}/file")
+				;;
+		esac
+		;;
+	'+'*)
+		number=$((number))
+		;;
+	'-'*)
+		number=$((lineCount + number + 2))
+
+		if [ "${number}" -lt '1' ]; then
+			if [ "${count}" = '+0' ]; then
+				number='1'
+			elif [ '1' -lt "$((number + count))" ]; then
+				count="$((number + count - 1))"
+				number='1'
+			else
+				number='1'
+				count="0"
+			fi
+		fi
+		;;
+esac
+
+case "${count}" in
+	'+0')
+		count="${lineCount}"
+		;;
+	'+'*)
+		if [ "${number}" -lt '1' ]; then
+			number='1'
+		fi
+
+		count=$((count))
+		;;
+	'-0')
+		count=$((number - 1))
+		number='1'
+		;;
+	'-'*)
+		if [ '1' -le "$((number + count))" ]; then
+			number=$((number + count))
+			count=$((count * -1))
+		else
+			count=$((number - 1))
+			number='1'
+		fi
+		;;
+esac
+
+tail -n "+${number}" -- "${tmpDir}/file" | head -n "${count}"
+
+{
+	head -n "$((number - 1))" -- "${tmpDir}/file"
+	tail -n "+$((number + count))" -- "${tmpDir}/file"
+} >"${config}"

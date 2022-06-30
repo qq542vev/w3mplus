@@ -1,0 +1,208 @@
+#!/usr/bin/env sh
+
+### Script: selectline
+##
+## 選択された行を元に処理を実行する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2019-11-22
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='selectline 2.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+. 'singlequote_escape.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [ACTION] [COMMAND_ARG]..." \
+		'' 'Options:'
+
+	param line    -l --line    init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:UNSIGNED_INTEGER -- '行番号を指定する'
+	param number  -n --number  init:='0' validate:'regex_match "${OPTARG}" "^([0$]|[+]?-?[1-9][0-9]*)$"' var:'[0$] | SIGNED_INTEGER' -- '選択範囲を指定する'
+	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'ACTION:'
+
+	cmd operatorFunc -- '選択範囲を EXEC_SHELL で実行する'
+	cmd formatPrg    -- '選択範囲を PIPE_BUF で実行する'
+	cmd filter       -- '選択範囲を任意のコマンドで実行する'
+	cmd uppercase    -- '選択範囲をアルファベットを大文字に変換する'
+	cmd lowercase    -- '選択範囲をアルファベットを小文字に変換する'
+	cmd switchcase   -- '選択範囲のアルファベットを大文字と小文字に変換する'
+	cmd rot13        -- '選択範囲のアルファベットを ROT13 で変換する'
+	cmd yank         -- '選択範囲をヤンクする'
+	cmd display      -- '選択範囲を表示する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+action="${1-display}"
+
+case "${#}" in
+	'1') shift; set -- 'cat';;
+	[!0]) shift;;
+esac
+
+singlequote_escape 'command' "${*}"
+
+case "${number}" in
+	'+-'* | '+'* | '-'* | '0')
+		case "${number}" in
+			'+-'*)
+				line=$((line + ${number#??}))
+				number=$((${number#??} * -2))
+				;;
+		esac
+
+		number=$((line + number))
+
+		if [ "${number}" -lt 1 ]; then
+			number='1'
+		fi
+		;;
+esac
+
+if [ "${number}" = '$' ] || [ "${line}" -le "${number}" ]; then
+	startLine="${line}"
+	endLine="${number}"
+else
+	startLine="${number}"
+	endLine="${line}"
+fi
+
+case "${action}" in
+	'operatorFunc')
+		displayTmp=$(mktemp -d)
+		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PRINT ${displayTmp}/file" \
+			-H "W3m-control: EXEC_SHELL sed -e '${startLine},${endLine}!d' -- '${displayTmp}/file' | sh -c 'eval \"\$(echo \"${command}\" | base64 -d)\"'; rm -fr -- '${displayTmp}'"
+		;;
+	'formatPrg')
+		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
+		formatCommand=$(
+			cat <<-EOF | tr -d '\n'
+			file=%s;
+			head -n '$((startLine - 1))' -- "\${file}";
+			sed -e '${startLine},${endLine}!d' -- "\${file}" | sh -c 'eval "\$(echo "${command}" | base64 -d)"';
+			EOF
+		)
+
+		case "${endLine}" in
+			[1-9]*) formatCommand="${formatCommand} tail -n '+$((endLine + 1))' -- \"\${file}\";";;
+		esac
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PIPE_BUF ${formatCommand}" \
+			-H "W3m-control: GOTO_LINE ${startLine}"
+		;;
+	'filter')
+		displayTmp=$(mktemp -d)
+		filterCommand=$(
+			cat <<-EOF | tr -d '\n'
+			head -n '$((startLine - 1))' -- '${displayTmp}/file';
+			cat -- %s;
+			EOF
+		)
+
+		case "${endLine}" in
+			[1-9]*) filterCommand="${filterCommand} tail -n '+$((endLine + 1))' -- '${displayTmp}/file';";;
+		esac
+
+		filterCommand="${filterCommand} rm -fr -- '${displayTmp}';"
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PRINT ${displayTmp}/file" \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d'" \
+			-H 'W3m-control: PIPE_BUF' \
+			-H "W3m-control: PIPE_BUF ${filterCommand}" \
+			-H 'W3m-control: DELETE_PREVBUF' \
+			-H "W3m-control: GOTO_LINE ${startLine}"
+		;;
+	'uppercase')
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/'" \
+			-H "W3m-control: GOTO_LINE ${startLine}"
+		;;
+	'lowercase')
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'" \
+			-H "W3m-control: GOTO_LINE ${startLine}"
+		;;
+	'switchcase')
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/'" \
+			-H "W3m-control: GOTO_LINE ${startLine}"
+		;;
+	'rot13')
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/'" \
+			-H "W3m-control: GOTO_LINE ${startLine}"
+		;;
+	'yank')
+		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d' | sh -c 'eval \"\$(echo \"${command}\" | base64 -d)\"'" \
+			-H 'W3m-control: BACK'
+		;;
+	'display')
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d'"
+		;;
+esac

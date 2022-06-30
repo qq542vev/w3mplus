@@ -1,0 +1,126 @@
+#!/usr/bin/env sh
+
+### Script: protectionpage
+##
+## アクセス拒否のページを表示する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.2.0
+##   date - 2022-06-28
+##   since - 2019-10-31
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <about:blocked at about:blocked>
+
+VERSION='protectionpage 1.2.0'
+
+: ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
+: ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
+: ${W3MPLUS_PATH:="${W3MPLUS_HOME}/bin"}
+: ${W3MPLUS_LIB:="${W3MPLUS_HOME}/lib"}
+
+: ${SCRIPT_NAME:="cgi-bin/${0##*/}"}
+: ${QUERY_STRING:=''}
+: ${REQUEST_URI:="${SCRIPT_NAME}${QUERY_STRING:+?}${QUERY_STRING-}"}
+
+export PATH="${W3MPLUS_PATH}:${W3MPLUS_LIB}${PATH:+:}${PATH-}"
+export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'html_escape.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:error no:0 help:usage \
+		-- 'Usage:' "  QUERY_STRING='type={malware|phishing|spam}&source={url}&url={url}' ${2##*/}" \
+		'' 'Options:'
+
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+eval "$(parsequery --prefix 'query_' "${QUERY_STRING%%url=*}")"
+
+html_escape 'url' "${QUERY_STRING#*url=}"
+html_escape 'source' "${query_source-}"
+html_escape 'name' "${query_name-${query_source-}}"
+
+case "${query_category-}" in
+	'phishing')
+		title='Reported Web Forgery!'
+		message='
+			<p>Web forgeries are designed to trick you into revealing personal or financial information by imitating sources you may trust.</p>
+
+			<p>Entering any information on this web page may result in identity theft or other fraud.</p>
+		'
+		;;
+	'malware')
+		title='Reported Attack Page!'
+		message='
+			<p>Attack pages try to install programs that steal private information, use your computer to attack others, or damage your system.</p>
+
+			<p>Some attack pages intentionally distribute harmful software, but many are compromised without the knowledge or permission of their owners.</p>
+		'
+		;;
+	'unwanted-software')
+		title='Reported Unwanted Software Page!'
+		message='<p>Unwanted software pages try to install software that can be deceptive and affect your system in unexpected ways.</p>'
+		;;
+	'ad')
+		title='Reported Advertisement Page!'
+		message=''
+		;;
+	*)
+		title='Forbidden Site'
+		message=''
+		;;
+esac
+
+printhtml --title 'Forbidden Site' - <<-EOF | httpresponse - -H 'Content-Type: text/html; charset=UTF-8'
+	<h1>${title}</h1>
+
+	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${name}</a></p>
+
+	${message}
+
+	<p>To access this web page, change <a href="about:permissions">about:permissions</a> settings.</p>
+EOF

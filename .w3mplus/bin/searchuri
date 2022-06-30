@@ -1,0 +1,301 @@
+#!/usr/bin/env sh
+
+### Script: searchuri
+##
+## 検索結果の URI を表示する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2020-05-26
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='searchuri 2.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+. 'awkv_escape.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [KEYWORD]..." \
+		'' 'Options:'
+
+	param config  -c --config  init:'config="${HOME}/.w3mplus/search-config"' var:FILE -- '設定ファイルを指定する'
+	param engine  -e --engine  init:='google' validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_.-]+(,[0-9A-Za-z_.-]+)*$"' var:NAME -- '検索エンジンを指定する'
+	param history -H --history init:'history="${HOME}/.w3mplus/search-history"' var:FILE -- '検索履歴をログファイルを指定する'
+	param size    -s --size    init:='50000' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- '記録する検索履歴数を指定する'
+	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'    1 - search engine not found' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+tmpDir=$(mktemp -d)
+
+if [ -d "${config}" ]; then
+	printf "'%s' is directory.\\n" "${config}" >&2
+	endCall "${EX_CANTCREAT}"
+fi
+
+if [ -d "${history}" ]; then
+	printf "'%s' is directory.\\n" "${history}" >&2
+	endCall "${EX_CANTCREAT}"
+fi
+
+case "${config}" in
+	'') config="${tmpDir}/config"
+esac
+
+if [ '!' -e "${config}" ]; then
+	configDir=$(dirname -- "${config}"; printf '$')
+	mkdir -p -- "${configDir%?$}"
+
+	: >"${config}"
+fi
+
+if [ '!' -s "${config}" ]; then
+	cat <<-'EOF' >"${config}"
+		bing	https://www.bing.com/search?q={searchTerms}
+		google	https://www.google.com/search?ie=UTF-8&oe=UTF-8&q={searchTerms}
+	EOF
+fi
+
+case "${history}" in
+	'') history="${tmpDir}/history"
+esac
+
+if [ '!' -e "${history}" ]; then
+	historyDir=$(dirname -- "${history}"; printf '$')
+	mkdir -p -- "${historyDir%?$}"
+
+	: >"${history}"
+fi
+
+case "${#}" in
+	'0')
+		set -- "$(cat; printf '$')"
+		set -- "${1%$}"
+		;;
+esac
+
+awkScript=$(
+	cat <<-'EOF'
+	@include "url_encode.awk"
+	@include "singlequote_escape.awk"
+	@include "array_print.awk"
+
+	BEGIN {
+		tac = sprintf("sed -e '1!G;h;$!d' -- '%s'", singlequote_escape(history))
+		ret = ""
+
+		for(i = 1; i < ARGC; i++) {
+			arg = ARGV[i]
+			keyword = ""
+
+			if(event(arg, "^![1-9][0-9]*(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?$", result)) {
+				number = substr(result["event"], 2)
+
+				for(nr = 1; 0 < (getline < history); nr++) {
+					if(nr == number) {
+						keyword = designators($1, result["designators"])
+						break
+					}
+				}
+
+				close(history)
+			} else if(event(arg, "^!(!|-[1-9][0-9]*)(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?$", result)) {
+				if(result["event"] ~ /^!!/) {
+					number = 1
+				} else {
+					number = substr(result["event"], 3)
+				}
+
+				for(nr = 1; 0 < (tac | getline); nr++) {
+					if(nr == number) {
+						keyword = designators($1, result["designators"])
+						break
+					}
+				}
+
+				close(tac)
+			} else if(event(arg, "^!\\?[^?]+\\?(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?$", result)) {
+				search = url_encode(substr(result["event"], 3, length(result["event"]) - 3))
+
+				while(0 < (tac | getline)) {
+					if($1 ~ search) {
+						keyword = designators($1, result["designators"])
+						break
+					}
+				}
+
+				close(tac)
+			} else if(event(arg, "^![^\t\n\r :]+(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?$", result)) {
+				search = url_encode(substr(result["event"], 2))
+
+				while(0 < (tac | getline)) {
+					if($1 ~ "^" search) {
+						keyword = designators($1, result["designators"])
+						break
+					}
+				}
+
+				close(tac)
+			} else {
+				keyword = url_encode(arg)
+			}
+
+			if(keyword != "") {
+				ret = ret "%20" keyword
+			} else if(result["event"] != "") {
+				system("printf '%s: event not found\n' '" arg "' >&2")
+				exit 64
+			}
+		}
+
+		printf("%s", substr(ret, 4))
+
+		exit
+	}
+
+	function event(string, pattern, result,  position) {
+		split("", result)
+
+		if(string ~ pattern) {
+			if(position = index(string, ":")) {
+				result["event"] = substr(string, 1, position - 1)
+				result["designators"] = substr(string, position)
+			} else {
+				result["event"] = string
+				result["designators"] = ""
+			}
+
+			return 1
+		}
+
+		return 0
+	}
+
+	function designators(string, des,  words,count,position) {
+		if(match(des, /^:(\$|[1-9][0-9]*(-$|-[1-9][0-9]*)?|-($|-[1-9][0-9]*))$/)) {
+			count = split(string, words, /(%09|%0A|%0a|%0D|%0d|%20)+/)
+			position = index(des, "-")
+
+			if(position) {
+				start = substr(des, 2, position - 2)
+				end = substr(des, position + 1)
+			} else {
+				start = end = substr(des, 2)
+			}
+
+			if(start == "") {
+				start = 1
+			} else if(start == "$") {
+				start = count
+			}
+
+			if(end == "" || end == "$") {
+				end = count
+			}
+
+			return array_print(words, start, end, "%20")
+		}
+
+		return string
+	}
+	EOF
+)
+
+awkv_escape 'awkHistory' "${history}"
+encoded=$(awk -v "history=${awkHistory}" "${awkScript}" ${@+"${@}"}) || endCall "${?}"
+
+case "${encoded}" in
+	?*)
+		{
+			cat -- "${history}"
+			printf '%s\t%s\t%s\n' "${encoded}" "${engine}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+		} | tail -n "${size}" >"${tmpDir}/history"
+
+		cat "${tmpDir}/history" >"${history}"
+		;;
+esac
+
+awkScript=$(
+	cat <<-'EOF'
+	BEGIN {
+		FS = "\t"
+		exitStatus = 0
+
+		count = split(engine, engines, ",")
+		split("", template)
+	}
+
+	{
+		template[$1] = $2
+	}
+
+	END {
+		for(i = 1; i <= count; i++) {
+			if(engines[i] in template) {
+				url = template[engines[i]]
+				gsub(/\{searchTerms\}/, terms, url)
+
+				printf("%s\n", url)
+			} else {
+				system("printf \"Search engine '%s' not found.\n\" '" engines[i] "' >&2")
+				exitStatus = 1
+			}
+		}
+
+		exit exitStatus
+	}
+	EOF
+)
+
+awk \
+	-v "terms=${encoded}" \
+	-v "engine=${engine}" \
+	-- "${awkScript}" \
+	"${config}" \
+|| endCall "${?}"

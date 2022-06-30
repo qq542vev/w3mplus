@@ -1,0 +1,171 @@
+#!/usr/bin/env sh
+
+### Script: incrementuri
+##
+## URI の数値部分を増分する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.4.0
+##   date - 2022-06-28
+##   since - 2019-07-29
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='incrementuri 1.4.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
+		'' 'Options:'
+
+	param number   -n --number   init:='+1' validate:'regex_match "${OPTARG}" "^(0|[+*/-]?[1-9][0-9]*)$"' var:'[+*/-]?UNSIGNED_INTEGER' -- '演算を指定する'
+	param position -p --position init:='-1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"' var:SIGNED_INTEGER -- 'URI の被演算子の位置を指定する'
+	disp  :usage   -h --help     -- 'このヘルプを表示して終了する'
+	disp  VERSION  -v --version  -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'    1 - not URI' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+awkScript=$(
+	cat <<-'EOF'
+	@include "uri_check.awk"
+	@include "singlequote_escape.awk"
+	@include "uri_parse.awk"
+	@include "uri_normalize.awk"
+
+	function nonNegativeInteger(string, number) {
+		if(string ~ /^[0-9]+$/) {
+			if(number ~ /^[+-]/) {
+				number = string + (number)
+			} else if(number ~ /^\*/) {
+				number = string * substr(number, 2)
+			} else if(number ~ /^\//) {
+				number = string / substr(number, 2)
+			}
+
+			return (0 <= number ? int(number) : 0)
+		}
+
+		return string
+	}
+
+	function forwardIncrement(string, number, position,  count,segment,mLength) {
+		if(number == "") {
+			number = "+1"
+		}
+
+		if(position == "") {
+			position = 1
+		}
+
+		if(count == "") {
+			count = 1
+		}
+
+		if(match(string, /^[^:\/?#[\]@!$&'()*+,;=._~-]*[:\/?#[\]@!$&'()*+,;=._~-]/)) {
+			mLength = RLENGTH
+			segment = substr(string, 1, mLength - 1)
+
+			return forwardIncrement(segment, number, position, count) substr(string, mLength, 1) forwardIncrement(substr(string, mLength + 1), number, position, count + (segment ~ /^[0-9]+$/))
+		}
+
+		return (position == count) ? nonNegativeInteger(string, number) : string
+	}
+
+	function backwardIncrement(string, number, position,  count,segment,mStart) {
+		if(number == "") {
+			number = "+1"
+		}
+
+		if(position == "") {
+			position = 1
+		}
+
+		if(count == "") {
+			count = 1
+		}
+
+		if(match(string, /[:\/?#[\]@!$&'()*+,;=._~-][^:\/?#[\]@!$&'()*+,;=._~-]*$/)) {
+			mStart = RSTART
+			segment = substr(string, mStart + 1)
+
+			return backwardIncrement(substr(string, 1, mStart - 1), number, position, count + (segment ~ /^[0-9]+$/)) substr(string, mStart, 1) backwardIncrement(segment, number, position, count)
+		}
+
+		return (position == count) ? nonNegativeInteger(string, number) : string
+	}
+
+	BEGIN {
+		exitStatus = 0
+
+		for(i = 1; i < ARGC; i++) {
+			uri = ARGV[i]
+
+			if(uri_check(uri)) {
+				uri = uri_normalize(uri)
+
+				if(1 <= position) {
+					printf("%s\n", forwardIncrement(uri, number, position))
+				} else if(position <= -1) {
+					printf("%s\n", backwardIncrement(uri, number, position * -1))
+				}
+			} else {
+				system("printf 'not URI: %s\n\" ' '" singlequote_escape($0) "' >&2")
+				exitStatus = 1
+			}
+		}
+
+		exit exitStatus
+	}
+	EOF
+)
+
+awk \
+	-v "number=${number}" \
+	-v "position=${position}" \
+	-- "${awkScript}" \
+	${@+"${@}"} \
+|| endCall 1

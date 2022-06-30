@@ -1,23 +1,23 @@
-## File: urimethodmap
+### File: urimethodmap
 ##
 ## URI method configuration.
 ##
 ## Metadata:
 ##
-##   author - qq542vev <https://purl.org/meta/me/>
+##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 1.0.0
 ##   date - 2020-02-20
 ##   since - 2019-06-28
-##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
 ## See Also:
 ##
-##   * Project homepage - <https://github.com/qq542vev/w3mplus>
-##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * <Project homepage at https://github.com/qq542vev/vim-style-newsboat>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
-about: file:///cgi-bin/w3mplus?action=aboutURI&uri=%s
+about: file:///cgi-bin/w3mplus?action=about-uri&about=%s
 tp: ht%s
 tps: ht%s
 ttp: h%s

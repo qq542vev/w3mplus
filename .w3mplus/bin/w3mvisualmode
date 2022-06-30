@@ -1,0 +1,117 @@
+#!/usr/bin/env sh
+
+### Script: w3mvisualmode
+##
+## ビジュアルモードを(開始 / 終了)する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2019-08-02
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='w3mvisualmode 2.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... ID" \
+		'' 'Options:'
+
+	param line     -l --line     init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:UNSIGNED_INTEGER -- '行番号を指定する'
+	param variable -V --variable init:='W3MPLUS_VISUALMODE_START' validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_]+$"' var:VARIABLE_NAME -- '一時的に使用する変数名を指定する'
+	param timeout  -t --timeout  init:='+600' validate:'regex_match "${OPTARG}" "^(@|[+-])(0|[1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- 'タイムアウトする秒数または時間を指定する'
+	disp  :usage   -h --help     -- 'このヘルプを表示して終了する'
+	disp  VERSION  -v --version  -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+id=$(printf '%s' "${1}" | base64 | tr -d '\n')
+shift
+
+eval "start=\"\${${variable}-}\""
+
+startId="${start%% *}"
+startLine="${start#* }"; startLine="${startLine%% *}"
+startTime="${start##* }"
+
+case "${timeout}" in
+	'@'*)
+		limitTime="${timeout#@}"
+		operator='-ge'
+		;;
+	'+'* | '-'*)
+		limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - (timeout)))
+		operator='-lt'
+		;;
+esac
+
+if [ "${id}" = "${startId}" ] && [ "${limitTime}" "${operator}" "${startTime}" ]; then
+	awkScript=$(
+		cat <<-'EOF'
+		BEGIN {
+			flag = 0
+		}
+
+		{
+			if($0 == "\r" && !flag) {
+				printf("W3m-control: SETENV %s=\r\n", variable)
+				flag = 1
+			}
+
+			printf("%s\n", $0)
+		}
+		EOF
+	)
+
+	w3mselectline -l "${line}" -n "${startLine}" ${@+"${@}"} \
+	| awk -v "variable=${variable}" -- "${awkScript}"
+else
+	httpresponse \
+		-H 'W3m-control: BACK' \
+		-H "W3m-control: SETENV ${variable}=${id} ${line} $(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)" \
+		-H "W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'"
+fi

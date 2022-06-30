@@ -1,0 +1,151 @@
+#!/usr/bin/env sh
+
+### Script: cookiemanager
+##
+## 特定ドメインの Cookie を(許可 / 拒否)する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2020-01-27
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='cookiemanager 2.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+. 'append_array_posix.sh'
+
+validation_param() {
+	awk -- '
+		@include "domain_check.awk"
+
+		BEGIN {
+			position = index(ARGV[1], "=")
+			exit !((ARGV[1] ~ /^add=|^delete=|^toggle=/) && domain_check(substr(ARGV[1], position + 1)))
+		}
+	' "${1}"
+}
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
+		'' 'Options:'
+
+	param :'append_array_posix accept "accept-${OPTARG}"' -a --accept validate:'validation_param "${OPTARG}"' var:'{add|reject|toggle}=DOMAIN' -- 'cookie_accept_domains に DOMAIN をセットする'
+	flag  accept    --no-accept         init:@no on: no: -- '--accept をリセットする'
+	flag  placeFlag -i --{no-}in-place  init:@no -- 'FILE を更新して保存する'
+	param :'append_array_posix reject "reject-${OPTARG}"' -r --reject validate:'validation_param "${OPTARG}"' var:'{add|reject|toggle}=DOMAIN' -- 'cookie_reject_domains に DOMAIN をセットする'
+	flag  reject    --no-reject         init:@no on: no: -- '--reject をリセットする'
+	flag  subdomain -s --{no-}subdomain init:@no -- 'サブドメインを有効にする'
+	disp  :usage     -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION    -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+tmpDir=$(mktemp -d)
+awkScript=$(
+	cat <<-'EOF'
+	@include "regex_escape.awk"
+
+	BEGIN {
+		split("", key)
+		count = split("", value)
+
+		key["cookie_accept_domains"] = "accept"
+		key["cookie_reject_domains"] = "reject"
+
+		for(i = 1; i < ARGC; i++) {
+			if(ARGV[i] == "--") {
+					delete ARGV[i]
+					break
+			}
+
+			position = index(ARGV[i], "=")
+
+			count++
+			value[count, "type"] = substr(ARGV[i], 1, position - 1)
+			value[count, "uri"] = (subdomain ? "." : "") substr(ARGV[i], position + 1)
+
+			delete ARGV[i]
+			#([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}
+		}
+	}
+
+	$1 in key {
+		name = key[$1]
+
+		for(i = 1; i <= count; i++) {
+			escaped = regex_escape(value[i, "uri"])
+			flag = $2 ~ "(^|,)" escaped "(,|$)"
+
+			if((value[i, "type"] ==  name "-add" || value[i, "type"] == name "-toggle") && !flag) {
+				$2 = $2 ($2 == "" ? "" : ",") value[i, "uri"]
+			} else if((value[i, "type"] == name "-delete" || value[i, "type"] == name "-toggle") && flag) {
+				gsub("(^|,)" escaped "(,|$)", "", $2)
+			}
+		}
+
+		printf("%s %s\n", $1, $2)
+
+		next
+	}
+
+	{
+		printf("%s\n", $0)
+	}
+	EOF
+)
+
+command='awk -v "subdomain=${subdomain}" -- "${awkScript}"'" ${accept} ${reject} --"
+
+case "${placeFlag}" in
+	'0') eval "${command}" '${@+"${@}"}';;
+	*)
+		for config in ${@+"${@}"}; do
+			eval "${command}" '"${config}"' >"${tmpDir}/config"
+			cat -- "${tmpDir}/config" >"${config}"
+		done
+		;;
+esac

@@ -1,0 +1,204 @@
+#!/usr/bin/env sh
+
+### Script: w3m-updatedenylist
+##
+## w3m のアクセス拒否リストを更新する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 5.0.0
+##   date - 2022-06-28
+##   since - 2019-10-31
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='w3m-updatedenylist 5.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'awkv_escape.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:error no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [FILE]" \
+		'' 'Options:'
+
+	param beginMsg  -b --begin         init:='^# BEGIN - Denylist$' var:TEXT -- 'リストの開始テキストを指定する'
+	param endMsg    -e --end           init:='^# END - Denylist$' var:TEXT -- 'リストの終了テキストを指定する'
+	flag  placeFlag -i --{no-}in-place init:@no -- 'FILE を更新する'
+	param redirect  -r --redirect      init:='file:///cgi-bin/protectionpage?' var:URI -- 'リダイレクト先の URI を指定する'
+
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+# 引数の個数が過小である
+case "${#}" in
+	'0') set -- "${HOME}/.w3m/siteconf";;
+esac
+
+tmpDir=$(mktemp -d)
+awkScript=$(
+	cat <<-'EOF'
+	@include "uri_check.awk"
+	@include "url_encode.awk"
+	@include "domain_check.awk"
+	@include "singlequote_escape.awk"
+
+	BEGIN {
+		split("http https", protocols, " ")
+	}
+
+	function joinField(start, end, delimiter) {
+		if(start <= end) {
+			return $start ((start == end) ? "" : delimiter) joinField(start + 1, end, delimiter)
+		}
+
+		return ""
+	}
+
+	function array_to_query(array,  result) {
+		result = ""
+
+		for(key in array) {
+			result = result (result == "" ? "" : "&") url_encode(key) "=" url_encode(array[key])
+		}
+
+		return result
+	}
+
+	function print_redirect(url, redirect, exact) {
+		printf("url \"%s\"%s\n", url, (exact ? " exact" : ""))
+		printf("substitute_url \"%s\"\n", redirect url)
+		printf("\n")
+	}
+
+	$0 ~ beginMsg {
+		printf("%s\n", $0)
+
+		split("", properties)
+
+		while((0 < getline) && ($0 ~ /^#+[\t ]+@[a-z-]+[\t ]+/)) {
+			printf("%s\n", $0)
+
+			sub(/@/, "", $2)
+			properties[$2] = joinField(3, NF, " ")
+		}
+
+		query = array_to_query(properties)
+
+		printf("Downloading... %s\n", properties["source"]) | "cat >&2"
+
+		status = system( \
+			sprintf( \
+				"w3m -dump_source -o 'auto_uncompress=1' '%s' | tr -- '\\r' '\\n' >'%s' && [ -s '%s' ]", \
+				singlequote_escape(properties["source"]), \
+				singlequote_escape(tmpFile), \
+				singlequote_escape(tmpFile) \
+			) \
+		)
+
+		if(status) {
+			printf("Download failed. Skip and proceed to the next.\n") | "cat >&2"
+		} else {
+			printf("Converting...\n") | "cat >&2"
+		}
+
+		while(0 < (getline address < tmpFile)) {
+			if(uri_check(address)) {
+				print_redirect(address, redirect query "&url=", 1)
+			} else if(domain_check(address)) {
+				for(key in protocols) {
+					print_redirect(protocols[key] "://" address "/", redirect query "&url=")
+				}
+			} else {
+				split(address, fields)
+
+				if((fields[1] == "0.0.0.0" || fields[1] == "127.0.0.1") && domain_check(fields[2])) {
+					for(key in protocols) {
+						print_redirect(protocols[key] "://" fields[2] "/", redirect query "&url=")
+					}
+				}
+			}
+		}
+
+		close(tmpFile)
+
+		do {
+			if($0 ~ endMsg) {
+				break
+			}
+
+			if(status) {
+				printf("%s\n", $0)
+			}
+		}	while(0 < getline)
+	}
+
+	{
+		printf("%s\n", $0)
+	}
+	EOF
+)
+
+awkv_escape 'beginMsg' "${beginMsg}"
+awkv_escape 'endMsg' "${endMsg}"
+awkv_escape 'redirect' "${redirect}"
+awkv_escape 'tmpFile' "${tmpDir}/download"
+
+command='awk \
+	-v "beginMsg=${beginMsg}" \
+	-v "endMsg=${endMsg}" \
+	-v "redirect=${redirect}" \
+	-v "tmpFile=${tmpFile}" \
+	-- "${awkScript}" \
+'
+
+case "${placeFlag}" in
+	'0') eval "${command}" '${@+"${@}"}';;
+	*)
+		for file in ${@+"${@}"}; do
+			eval "${command}" '"${file}"' >"${tmpDir}/file"
+			cat -- "${tmpDir}/file" >"${file}"
+		done
+		;;
+esac

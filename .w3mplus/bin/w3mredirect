@@ -1,0 +1,171 @@
+#!/usr/bin/env sh
+
+### Script: w3mredirect
+##
+## w3m のリダイレクトを行う。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2019-07-13
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='w3mredirect 2.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'control_character.sh'
+. 'regex_match.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [KEYWORD]..." \
+		'' 'Options:'
+
+	param :'eval "${1#--}=\"\${OPTARG}\""' --a1 --a2 --a3 --a4 --a5 --a6 --a7 --a8 --a9 validate:'regex_match "${OPTARG}" "^[A-Z]+[^${CHAR_HT}${CHAR_LF}]*$"' var:W3M_COMMAND -- 'n個目の URI アクセス後に W3M_COMMAND を実行する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --b1 --b2 --b3 --b4 --b5 --b6 --b7 --b8 --b9 validate:'regex_match "${OPTARG}" "^[A-Z]+[^${CHAR_HT}${CHAR_LF}]*$"' var:W3M_COMMAND -- 'n個目の URI アクセス前に W3M_COMMAND を実行する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --c1 --c2 --c3 --c4 --c5 --c6 --c7 --c8 --c9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:INTEGER	-- '指定列に移動する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --l1 --l2 --l3 --l4 --l5 --l6 --l7 --l8 --l9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:INTEGER	-- '指定行に移動する'
+	param tab      -t --tab      init:='current' pattern:'current | del-prebuf | newtab | open-newtab' var:'current | del-prebuf | newtab | open-newtab' -- 'タブの動作を指定する'
+	param template -T --template init:='' var:FILE -- 'テンプレートファイルを指定する'
+	disp  :usage   -h --help     -- 'このヘルプを表示して終了する'
+	disp  VERSION  -v --version  -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+awkScript=$(
+	cat <<-'EOF'
+	BEGIN {
+		FS = "\t"
+
+		if(tab != "del-prebuf") {
+			print_header("BACK")
+		}
+	}
+
+	function print_header(field) {
+		printf(" -H \"W3m-control: %s\"", field)
+	}
+
+	{
+		uri = $1
+		line = $2
+		colmun = $3
+		before = $4
+		after = $5
+
+		if(before != "") {
+			print_header(before)
+		}
+
+		if(tab == "newtab") {
+			print_header("TAB_GOTO " uri)
+		} else if(tab == "open-newtab") {
+			print_header("NEW_TAB")
+			print_header("GOTO " uri)
+			print_header("DELETE_PREVBUF")
+		} else {
+			print_header("GOTO " uri)
+		}
+
+		if(line ~ /^[1-9][0-9]*$/) {
+			print_header("BEGIN")
+
+			if(1 < line) {
+				print_header("MOVE_DOWN " (line - 1))
+			}
+		} else if(line ~ /^-[1-9][0-9]*$/) {
+			print_header("END")
+
+			if(line < -1) {
+				print_header("MOVE_UP " ((line * -1) - 1))
+			}
+		}
+
+		if(tab == "del-prebuf") {
+			print_header("DELETE_PREVBUF")
+		}
+
+		if(colmun ~ /^[1-9][0-9]*$/) {
+			print_header("LINE_BEGIN")
+
+			if(1 < colmun) {
+				print_header("MOVE_RIGHT " (colmun - 1))
+			}
+		} else if(colmun ~ /^-[1-9][0-9]*$/) {
+			print_header("LINE_END")
+
+			if(colmun < -1) {
+				print_header("MOVE_LEFT " ((colmun * -1) - 1))
+			}
+		}
+
+		if(after != "") {
+			print_header(after)
+		}
+
+		tab = "open-newtab"
+	}
+	EOF
+)
+
+option=$(
+	case "${#}" in
+		'0') cat;;
+		*)
+			for uri in ${@+"${@}"}; do
+				i=$((${i-0} + 1))
+				eval "line=\${l${i}-}"
+				eval "colmun=\${c${i}-}"
+				eval "before=\${b${i}-}"
+				eval "after=\${a${i}-}"
+
+				printf '%s\t%d\t%d\t%s\t%s\n' "${uri}" "${line}" "${colmun}" "${before}" "${after}"
+			done
+			;;
+	esac | awk -v "tab=${tab}" -- "${awkScript}"
+)
+
+eval httpresponse \
+	'${template:+--template "${template}"}' \
+	"${option}"

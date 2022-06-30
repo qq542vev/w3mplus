@@ -1,135 +1,96 @@
 #!/usr/bin/env sh
 
-## File: w3m-cleanup
+### Script: w3m-cleanup
 ##
-## Cleanup the w3m configuration directory.
+## w3m の設定ディレクトリ内を掃除する。
 ##
-## Delete cache files and temporary files in the w3m configuration directory.
-## Do not execute this command while w3m is running.
-##
-## Usage:
-##
-##   (start code)
-##   w3m-cleanup [OPTION]... [CONFIG_DIRECTORY]...
-##   (end)
-##
-## Options:
-##
-##   -c, --cookie  - delete cookies
-##   -H, --history - delete histories
-##   -h, --help    - display this help and exit
-##   -v, --version - output version information and exit
-##
-## Exit Status:
-##
-##   0 - Program terminated normally.
-##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+## w3m の設定ディレクトリ内のキャッシュファイル、テンポラリファイルを削除する。
+## このコマンドは w3m 実行中に実行してはならない。
 ##
 ## Metadata:
 ##
-##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.1.5
-##   date - 2020-02-24
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.1.6
+##   date - 2022-06-28
 ##   since - 2019-07-23
 ##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
 ## See Also:
 ##
-##   * Project homepage - <https://github.com/qq542vev/w3mplus>
-##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
-# 初期化
-set -efu
-umask '0022'
-IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
-export 'IFS'
+VERSION='w3m-cleanup 1.1.6'
 
-# initファイルの読み込み
-: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/lib/w3mplus/init"
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
 
-# 各変数に既定値を代入する
-cookie='0'
-history='0'
-args=''
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [CONFIG_DIRECTORY]..." \
+		'' 'Options:'
 
-# コマンドライン引数の解析する
-while [ 1 -le "${#}" ]; do
-	case "${1}" in
-		'-c' | '--cookie')
-			cookie='1'
-			shift
-			;;
-		'-H' | '--history')
-			history='1'
-			shift
-			;;
-		# ヘルプメッセージを表示して終了する
-		'-h' | '--help')
-			usage
-			exit
-			;;
-		# バージョン情報を表示して終了する
-		'-v' | '--version')
-			version
-			exit
-			;;
-		# `--name=value` 形式のロングオプション
-		'--'[!-]*'='*)
-			option="${1}"
-			shift
-			# `--name value` に変換して再セットする
-			set -- "${option%%=*}" "${option#*=}" ${@+"${@}"}
-			;;
-		# 以降はオプション以外の引数
-		'--')
-			shift
-			args="${args}$(quoteEscape ${@+"${@}"})"
-			shift "${#}"
-			;;
-		# 複合ショートオプション
-		'-'[!-][!-]*)
-			option=$(printf '%s\n' "${1}" | cut -c '2'; printf '$')
-			options=$(printf '%s\n' "${1}" | cut -c '3-'; printf '$')
+	flag  cookieFlag  -c --{no-}cookie  init:@no -- 'Cookie を削除する'
+	flag  historyFlag -H --{no-}history init:@no -- '閲覧履歴を削除をする'
+	disp  :usage      -h --help -- 'このヘルプを表示して終了する'
+	disp  VERSION     -v --version -- 'バージョン情報を表示して終了する'
 
-			shift
-			# `-abc` を `-a -bc` に変換して再セットする
-			set -- "-${option%?$}" "-${options%?$}" ${@+"${@}"}}
-			;;
-		# その他の無効なオプション
-		'-'*)
-			cat <<- EOF 1>&2
-				${0##*/}: invalid option -- '${1}'
-				Try '${0##*/} --help' for more information.
-			EOF
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
 
-			exitStatus="${EX_USAGE}"; exit
-			;;
-		# その他のオプション以外の引数
-		*)
-			args="${args}$(quoteEscape "${1}")"
-			shift
-			;;
-	esac
-done
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
 
-# オプション以外の引数を再セットする
-eval set -- "${args}"
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
 
-if [ "${#}" -eq 0 ]; then
-	set -- "${HOME}/.w3m"
-fi
+case "${#}" in
+	'0') set -- "${HOME}/.w3m";;
+esac
 
 for directory in ${@+"${@}"}; do
-	find -- "${directory}" '(' -name 'w3mcache*' -o -name 'w3mcookie*' -o -name 'w3mframe*' -o -name 'w3msrc*' -o -name 'w3mtmp*' ')' -prune -exec 'rm' '-fr' '--' '{}' '+'
+	find \
+		-- "${directory}" \
+		'(' \
+			-name 'w3mcache*' \
+			-o -name 'w3mcookie*' \
+			-o -name 'w3mframe*' \
+			-o -name 'w3msrc*' \
+			-o -name 'w3mtmp*' \
+		')' \
+		-prune -exec 'rm' '-fr' '--' '{}' '+'
 
-	if [ "${cookie}" -eq 1 ]; then
-		rm -fr -- "${directory}/cookie"
-	fi
+	case "${cookieFlag}" in
+		'1') rm -fr -- "${directory}/cookie";;
+	esac
 
-	if [ "${history}" -eq 1 ]; then
-		rm -fr -- "${directory}/history" "${directory}/request.log"
-	fi
+	case "${historyFlag}" in
+		'1') rm -fr -- "${directory}/history" "${directory}/request.log";;
+	esac
 done

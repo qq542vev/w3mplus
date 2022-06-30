@@ -1,0 +1,174 @@
+#!/usr/bin/env sh
+
+### Script: framelinkmenu
+##
+## サイドバー付きの HTML フレームページを作成する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2020-03-22
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='framelinkmenu 2.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+. 'append_array_posix.sh'
+. 'path_to_fileurl.sh'
+
+option_category() {
+	case "${OPTARG}" in
+		'scheme') category='1';;
+		'authority') category='2';;
+		'path') category='3';;
+		'query') category='4';;
+		'fragment') category='5';;
+	esac
+}
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
+		'' 'Options:'
+
+	param :'append_array_posix attribute -a "${OPTARG}"' -a --attribute init:='cols=200,*' validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:NANE=VALUE -- 'frameset要素に属性を追加する'
+	flag  attribute --no-attribute init:@none on: no: -- '--attribute をリセットする'
+	param :option_category -c --category init:='scheme' pattern:'scheme | authority | path | query | fragment' var:'scheme | authority | path | query | fragment' -- 'サイドバーの URI を分類する'
+	param main      -m --main      init:='data:text/plain,' var:URI -- 'メインページの URI を指定する'
+	param output    --menu-output  init:'output="${HOME}/.w3mplus/cache/"' var:PATH -- 'サイドバーの内容を PATH に出力する'
+	param position  -p --position  init:='left' pattern:'left | right' var:'left | right' -- 'サイドバーの位置を指定する'
+	param size      -s --size      init:='20'   validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:POSITIVE_INTEGER -- 'サイドバーの文字列を切り詰める'
+	param title     -t --title     init:='Links' var:TITLE -- 'フレームページのタイトルを指定する'
+	disp  :usage    -h --help      -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version   -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+tmpDir=$(mktemp -d)
+awkScript=$(
+	cat <<-'EOF'
+	@include "html_escape.awk"
+	@include "url_decode.awk"
+
+	BEGIN {
+		split("", previous)
+	}
+
+	{
+		uri = ""
+
+		for(i = 1; i < start; i++) {
+			uri = uri $i
+		}
+
+		for(i = start; i <= 5; i++) {
+			segment = $i
+			uri = uri segment
+
+			if(segment != previous[i]) {
+				for(j = i + 1; previous[j] != ""; j++) {
+					printf("</li></ul>")
+					previous[j] = ""
+				}
+
+				if(previous[i] == "") {
+					printf("<ul>")
+				} else {
+					printf("</li>")
+				}
+
+				printf("<li><a title=\"%s\" target=\"main\" href=\"%s\">%s%s</a>", html_escape(url_decode(segment)), html_escape(uri), html_escape(substr(segment, 1, size)), size < length(segment) ? "..." : "")
+
+				previous[i] = segment
+			}
+		}
+	}
+
+	END {
+		for(j = start; previous[j] != ""; j++) {
+			printf("</li></ul>")
+		}
+	}
+	EOF
+)
+
+sed -e '/["[:blank:]]/d; s/^/"/; s/$/"/' -- ${@+"${@}"} \
+| xargs -E "" uricheck --field 'scheme!,authority!,path,query!,fragment!' \
+| sort | uniq \
+| sort -k "${category}" \
+| awk -v "size=${size}" -v "start=${category}" -- "${awkScript}" \
+| printhtml --title 'Menu page' - >"${tmpDir}/file"
+
+case "${output}" in
+	*/) output="${output}/menu-$(cksum "${tmpDir}/file" | cut -d ' ' -f '1-2' | tr ' ' '-').html";;
+esac
+
+case "${output}" in
+	'')
+		output="data:text/html;charset=UTF-8;base64,$(base64 -- "${tmpDir}/file")"
+		;;
+	*)
+		if [ -d "${output}" ]; then
+			printf "'%s' is directory.\\n" "${output}" >&2
+			endCall "${EX_CANTCREAT}"
+		elif [ '!' -e "${output}" ]; then
+			outputDir=$(dirname -- "${output}"; printf '$')
+			mkdir -p -- "${outputDir%?$}"
+		fi
+
+		cat -- "${tmpDir}/file" >"${output}"
+
+		path_to_fileurl 'menu' "${output}"
+		;;
+esac
+
+case "${position}" in
+	'left')
+		eval "htmlframe ${attribute} --title \"\${title}\" --n1 'menu' --n2 'main' --t1 'Menu page' --t2 'Main page' -- \"\${menu}\" \"\${main}\""
+		;;
+	'right')
+		eval "htmlframe ${attribute} --title \"\${title}\" --n1 'main' --n2 'menu' --t1 'Main page' --t2 'Menu page' -- \"\${main}\" \"\${menu}\""
+		;;
+esac

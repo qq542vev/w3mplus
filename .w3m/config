@@ -27,7 +27,7 @@ pseudo_inlines 1
 auto_image 1
 max_load_image 4
 ext_image_viewer 1
-image_scale 120
+image_scale 100
 imgdisplay w3mimgdisplay
 image_map_list 1
 fold_line 1
@@ -72,7 +72,7 @@ preserve_timestamp 1
 keymap_file keymap
 document_root 
 personal_document_root 
-cgi_bin ~/w3m/cgi-bin:~/.w3m/w3mplus/bin/cgi-bin
+cgi_bin ~/w3m/cgi-bin:~/.w3mplus/bin/cgi-bin
 index_file 
 mime_types ~/.w3m/mime.types, /etc/mime.types
 mailcap ~/.w3m/mailcap, /etc/w3m/mailcap, /etc/mailcap

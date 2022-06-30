@@ -1,0 +1,169 @@
+#!/usr/bin/env sh
+
+### Script: setregister
+##
+## レジスタに値を登録する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2020-04-06
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='setregister 2.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'awkv_escape.sh'
+. 'control_character.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [KEY VALUE]..." \
+		'' 'Options:'
+
+	param config  -c --config  init:'config="${HOME}/.w3mplus/register"' var:FILE -- '設定ファイルを指定する'
+	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+if [ -d "${config}" ]; then
+	printf "'%s' is directory.\\n" "${config}" >&2
+	endCall "${EX_CANTCREAT}"
+fi
+
+if [ '!' -e "${config}" ]; then
+	configDir=$(dirname -- "${config}"; printf '$')
+	mkdir -p -- "${configDir%?$}"
+
+	: >"${config}"
+fi
+
+case "${#}" in
+	'0')
+		${VISUAL:-${EDITOR:-vi}} "${config}"
+		exit
+		;;
+esac
+
+for key in ${@+"${@}"}; do
+	index=$((${index-0} + 1))
+
+	case "$((index % 2))" in
+		'1') continue;;
+	esac
+
+	case "${key}" in
+		*"${CHAR_HT}"* | *"${CHAR_LF}"*)
+			cat <<-EOF >&2
+				${0##*/}: invalid key -- '${key}'
+				Try '${0##*/} --help' for more information.
+			EOF
+
+			endCall "${EX_USAGE}"
+			;;
+	esac
+done
+
+date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+awkScript=$(
+	cat <<-'EOF'
+	@include "backslash_escape.awk"
+
+	BEGIN {
+		FS = "\t"
+		split("", array)
+
+		while(0 < (getline < config)) {
+			array[$1] = $2 "\t" $3
+		}
+
+		close(config)
+
+		for(i = 1; i < ARGC; i++) {
+			name = ARGV[i]
+			value = backslash_escape(ARGV[i + 1])
+
+			if(name == "+") {
+				delete array[9]
+
+				for(count = 8; 0 <= count; count--) {
+					if(value == "") {
+						delete array[count]
+					} else if(count in array) {
+						array[count + 1] = array[count]
+					}
+				}
+
+				name = 0
+			} else if(name ~ /^\+/) {
+				name = substr(name, 2)
+				split(array[name], data)
+				value = data[1] value
+			}
+
+			if(value == "") {
+				delete array[name]
+			} else {
+				array[name] = value "\t" date
+				array["\""] = value "\t" date
+			}
+		}
+
+		for(key in array) {
+			printf("%s\t%s\n", key, array[key])
+		}
+
+		exit
+	}
+	EOF
+)
+
+awkv_escape 'awkvConfig' "${config}"
+
+awk \
+	-v "config=${awkvConfig}" \
+	-v "date=${date}" \
+	-- "${awkScript}" ${@+"${@}"} \
+| sort -o "${config}"

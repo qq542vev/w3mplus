@@ -1,0 +1,755 @@
+#!/usr/bin/env sh
+
+### Script: w3mplus
+##
+## w3m のためのレスポンスを表示する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2019-05-25
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='w3mplus 2.0.0'
+
+: ${W3MPLUS_W3M_HOME:="${HOME}/.w3m"}
+: ${W3MPLUS_W3M_BOOKMARK:="${W3MPLUS_W3M_HOME}/bookmark.html"}
+: ${W3MPLUS_W3M_CONFIG:="${W3MPLUS_W3M_HOME}/config"}
+: ${W3MPLUS_W3M_HISTORY:="${W3MPLUS_W3M_HOME}/history"}
+: ${W3MPLUS_W3M_SITECONF:="${W3MPLUS_W3M_HOME}/siteconf"}
+
+: ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
+: ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
+: ${W3MPLUS_PATH:="${W3MPLUS_HOME}/bin"}
+: ${W3MPLUS_LIB:="${W3MPLUS_HOME}/lib"}
+
+: ${W3MPLUS_YANK:='v=$(cat; printf "_"); v="${v%_}"; "${HOME}/.w3mplus/bin/setreg" "+" "${v}"; exec 3>&1 >>"${HOME}/w3mplusyank"; date "+# %Y-%m-%d %H:%M:%S %Z"; echo "${v}"; exec 1>&3 3>&-'}
+: ${W3MPLUS_UNDO_TIMEOUT:='+86400'}
+: ${W3MPLUS_UNDO_HISTSIZE:='2000'}
+: ${W3MPLUS_UNDO_FILE:="${W3MPLUS_HOME}/tabrestore"}
+: ${W3MPLUS_VISUAL_TIMEOUT:='+600'}
+: ${W3MPLUS_SEARCH_CONFIGFILE:="${W3MPLUS_HOME}/search-config"}
+: ${W3MPLUS_SEARCH_ENGINE:='google'}
+: ${W3MPLUS_SEARCH_HISTSIZE:='2000'}
+: ${W3MPLUS_SEARCH_HISTFILE:="${W3MPLUS_HOME}/search-history"}
+: ${W3MPLUS_REGISTER_FILE:="${W3MPLUS_HOME}/register"}
+: ${W3MPLUS_OPERATORFUNC:='cat'}
+: ${W3MPLUS_FORMATPRG:='cat'}
+: ${W3MPLUS_EQUALPRG:='cat'}
+: ${W3MPLUS_ZOOM_MAX:='300'}
+: ${W3MPLUS_ZOOM_MIN:='30'}
+: ${W3MPLUS_CAPTIVEPORTAL:='0'}
+: ${W3MPLUS_CLEANUP:='w3m-cleanup'}
+: ${W3MPLUS_QUICKMARK_FILE:="${W3MPLUS_HOME}/quickmark"}
+: ${W3MPLUS_LOCALMARK_FILE:="${W3MPLUS_HOME}/localmark"}
+: ${W3MPLUS_URLMARK_FILE:="${W3MPLUS_HOME}/urlmark"}
+: ${W3MPLUS_USERCOMMAND_FILE:="${W3MPLUS_HOME}/usercommand"}
+: ${W3MPLUS_SIDEBAR_SIZE:='200'}
+: ${W3MPLUS_SIDEBAR_POSITION:='left'}
+
+: ${W3MPLUS_TEMPLATE_HTTP:=}
+: ${W3MPLUS_TEMPLATE_HTML:=}
+: ${W3MPLUS_TEMPLATE_FRAMESET:=}
+
+: ${SCRIPT_NAME:="cgi-bin/${0##*/}"}
+: ${QUERY_STRING:=''}
+: ${REQUEST_URI:="${SCRIPT_NAME}${QUERY_STRING:+?}${QUERY_STRING-}"}
+
+: ${W3MPLUS_DEBUGMODE:='1'}
+
+export PATH="${W3MPLUS_PATH}:${W3MPLUS_LIB}${PATH:+:}${PATH-}"
+export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'datauri.sh'
+. 'singlequote_escape.sh'
+. 'path_to_fileurl.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:error no:0 help:usage \
+		-- 'Usage:' "  QUERY_STRING='action={action}' ${2##*/}" \
+		'' 'Options:'
+
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+add_printtmp() {
+	if [ ! -f "${query_printtmp-}" ]; then
+		printtmp=$(TMPDIR="${W3MPLUS_CACHE}" mktemp -u)
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PRINT ${printtmp}" \
+			-H "W3m-control: GOTO file://${REQUEST_URI}&printtmp=$(printf ${printtmp} | urlencode)"
+
+		exit
+	fi
+}
+
+error_meesage() {
+	httpresponse --status-code '500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' - <<-EOF
+		An unexpected error occurred during request processing.
+
+		# Error message
+
+		$(cat -- ${@+"${@}"})
+
+		# Environment variable
+
+		$(env)
+	EOF
+}
+
+expand() {
+	case "${2}" in
+		'' | *[!0-9A-Za-z_]*) eval "${1}=";;
+		*) eval "${1}=\${${2}-}";;
+	esac
+}
+
+tmpDir=$(mktemp -d)
+
+case "${W3MPLUS_DEBUGMODE}" in
+	'1')
+		: >>"${tmpDir}/stdout"
+		: >>"${tmpDir}/stderr"
+
+		exec 3>&1 4>&2 1>"${tmpDir}/stdout" 2>"${tmpDir}/stderr"
+
+		trap '
+			case "${?}" in
+				0)
+					exec 1>&3 2>&4 3>&- 4>&-
+					cat -- "${tmpDir}/stdout"
+					endCall 0
+					;;
+				*)
+					exec 1>&3 2>&4 3>&- 4>&-
+					error_meesage "${tmpDir}/stderr"
+					endCall "${EX_SOFTWARE}"
+					;;
+			esac
+		' 0 # EXIT
+		;;
+	'2')
+		exec 2>&1
+		printf 'Content-Type: text/plain; charset=UTF-8\r\n\r\n'
+		set -x
+esac
+
+eval "$(parsequery --prefix 'query_' "${QUERY_STRING-}")"
+
+case "${query_action-}" in
+	'execute-user-command')
+		expand 'string' "${query_string-W3M_URL}"
+
+		executeusercommand -- "${query_call-manual}" ${string:+"${string}"} || case "${?}" in
+			'1') httpresponse -H 'W3m-control: BACK';;
+			*) exit "${?}";;
+		esac
+		;;
+	'close-tab')
+		expand 'uri' "${query_uri-W3M_URL}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}"
+
+		case "${uri}" in
+			?*)
+				pushuri \
+					${line:+--l1 "${line}"} \
+					${colmun:+--c1 "${colmun}"} \
+					-- "${uri}"
+			;;
+		esac
+
+		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: CLOSE_TAB'
+		;;
+	'undo-tab')
+		case "${query_count-}" in
+			'@'*) query_number="@$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)";;
+		esac
+
+		popuri \
+			${query_number+--number "${query_number}"} \
+			${query_count+--count "${query_count}"} \
+			--timeout "${W3MPLUS_UNDO_TIMEOUT}" \
+		| cut -f '1-2' \
+		| w3mredirect --tab 'open-newtab'
+		;;
+	'show-tab-history')
+		: >>"${W3MPLUS_UNDO_FILE}"
+		path_to_fileurl 'uri' "${W3MPLUS_UNDO_FILE}"
+
+		w3mredirect -- "${uri}"
+		;;
+	'homepage')
+		w3mredirect ${query_tab+--tab "${query_tab}"} -- "${WWW_HOME-about:home}"
+		;;
+	'about-uri')
+		w3mabouturi ${query_about+"${query_about}"}
+		;;
+	'goto-paragraph')
+		add_printtmp
+
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		jump=$(
+			gotoparagraph \
+				${line:+--line "${line}"} \
+				${query_number+--number "${query_number}"} \
+				-- "${query_printtmp}"
+		) || case "${?}" in
+			[!1]* | 1?*) exit "${?}";;
+		esac
+
+		rm -f -- "${query_printtmp}"
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			${jump:+-H "W3m-control: GOTO_LINE ${jump}"}
+		;;
+	'goto-line')
+		add_printtmp
+
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		jump=$(gotoline \
+			${line:+--line "${line}"} \
+			${query_number+--number "${query_number}"} \
+			-- "${query_printtmp}"
+		)
+
+		rm -f -- "${query_printtmp}"
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: GOTO_LINE ${jump}"
+		;;
+	'find-string' | 'find-word')
+		expand 'word' "${query_word-W3M_CURRENT_WORD}"
+
+		case "${query_action}" in
+			'find-word') exact='--exact';;
+		esac
+
+		case "${word}" in
+			?*)
+				w3mfindinpage \
+					${exact-} \
+					${query_number+--number "${query_number}"} \
+					-- "${word}"
+				;;
+			*) httpresponse -H 'W3m-control: BACK';;
+		esac
+		;;
+	'show-quick-mark')
+		: >>"${W3MPLUS_QUICKMARK_FILE}"
+		path_to_fileurl 'uri' "${W3MPLUS_QUICKMARK_FILE}"
+
+		w3mredirect -- "${uri}"
+		;;
+	'get-quick-mark')
+		getquickmark \
+			--config "${W3MPLUS_QUICKMARK_FILE}" \
+			-- "${query_key}" \
+		| cut -f '2' \
+		| w3mredirect ${query_tab+--tab "${query_tab}"}
+		;;
+	'set-quick-mark')
+		expand 'uri' "${query_uri-W3M_URL}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}"
+
+		case "${uri}" in
+			?*)
+				setquickmark \
+					--config "${W3MPLUS_QUICKMARK_FILE}" \
+					${line:+--l1 "${line}"} \
+					${colmun:+--c1 "${colmun}"} \
+					-- "${query_key}" "${uri}"
+				;;
+			*) printf 'This page cannot be registered.\n';;
+		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
+		;;
+	'marks')
+		: >>"${W3MPLUS_LOCALMARK_FILE}"
+		: >>"${W3MPLUS_LOCALMARKGOTO_FILE}"
+
+		path_to_fileurl 'mark1' "${W3MPLUS_LOCALMARK_FILE}"
+		path_to_fileurl 'mark2' "${W3MPLUS_LOCALMARKGOTO_FILE}"
+
+		w3mredirect -- "${mark1}" "${mark2}"
+		;;
+	'get-local-mark')
+		expand 'uri' "${query_uri-W3M_URL}"
+
+		executeusercommand \
+			--config "${W3MPLUS_LOCALMARK_FILE}" \
+			-- "${query_key}" "${uri%%#*}" \
+		|| case "${?}" in
+			'1') httpresponse -H 'W3m-control: BACK';;
+			*) exit "${?}";;
+		esac
+		;;
+	'set-local-mark')
+		expand 'uri' "${query_uri-W3M_URL}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		singlequote_escape 'pattern' "${uri%%#*}"
+
+		case "${uri}" in
+			?*)
+				setusercommand \
+					--config "${W3MPLUS_LOCALMARK_FILE}" \
+					-- "${query_key}" >'/dev/null'
+
+				setusercommand \
+					--config "${W3MPLUS_LOCALMARK_FILE}" \
+					-- "${query_key}" \
+					"grep -Fqx -e '${pattern}' && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line:-1}'"
+				;;
+			*) printf 'This page cannot be registered.\n';;
+		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
+		;;
+	'get-url-mark')
+		getquickmark \
+			--config "${W3MPLUS_URLMARK}" \
+			-- "${query_key}" \
+		| cut -f '2-3' | w3mredirect
+		;;
+	'set-url-mark')
+		expand 'uri' "${query_uri-W3M_URL}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}"
+
+		case "${uri}" in
+			?*)
+				setquickmark \
+					--config "${W3MPLUS_URLMARK}" \
+					${line:+--l1 "${line}"} \
+					${colmun:+--c1 "${colmun}"} \
+					-- "${query_key}" "${uri}"
+				;;
+			*) printf 'This page cannot be registered.\n';;
+		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
+		;;
+	'show-register')
+		: >>"${W3MPLUS_REGISTER_FILE}"
+		path_to_fileurl 'uri' "${W3MPLUS_REGISTER_FILE}"
+
+		w3mredirect -- "${uri}"
+		;;
+	'get-register')
+		register=$(getregister --config "${W3MPLUS_REGISTER_FILE}" -- "${query_key-0}" && printf '$') || case "${?}" in
+			[!1]* | 1?*) exit "${?}";;
+		esac
+
+		QUERY_STRING="${QUERY_STRING}&action=runVariable&variable=W3MPLUS_REGISTER_TMP" W3MPLUS_REGISTER_TMP="${register%$}" "${0}" ${@+"${@}"}
+		;;
+	'set-register')
+		expand 'value' "${query_value-W3M_URL}"
+
+		case "${value}" in
+			?*)
+				setregister \
+					--config "${W3MPLUS_REGISTER_FILE}" \
+					-- "${query_key-+}" "${value}"
+				;;
+		esac
+
+		httpresponse -H 'W3m-control: BACK'
+		;;
+	'context-menu')
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: MENU $(contextmenu)"
+		;;
+	'link-goto' | 'link-tabgoto')
+		case "${query_action}" in
+			'link-goto') command='GOTO';;
+			'link-tabgoto') command='TAB_GOTO';;
+		esac
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			${W3M_CURRENT_LINK:+-H 'W3m-control: SET_OPTION default_url=2' -H "W3m-control: ${command}"}
+		;;
+	'execute-env-var')
+		case "${query_run}" in
+			'addBookmark' | 'goto' | 'viewSource' | 'viewSourceExternally')
+				runCommand='${query_tab+--tab "${query_tab}"}';;
+			'incrementURI' | 'parentUriPath')
+				runCommand='${query_number+--number "${query_number}"} ${query_tab+--tab "${query_tab}"}';;
+			'redirect') runCommand='${query_tab+--tab "${query_tab}"} "${query_redirect-file://${SCRIPT_NAME}?action=search&tab=del-prebuf&query=}"';;
+			'yank') runCommand='"${W3MPLUS_YANK}"';;
+		esac
+
+		eval w3maction \
+			'"${query_run}"' \
+			'"${query_variable-W3M_URL}"' \
+			"${runCommand-}"
+		;;
+	'visual-mode')
+		expand 'id' "${query_id-W3M_URL}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+
+		case "${query_subaction}" in
+			'operatorFunc') commandArg="${W3MPLUS_OPERATORFUNC}";;
+			'formatPrg') commandArg="${W3MPLUS_FORMATPRG}";;
+			'yank') commandArg="${W3MPLUS_YANK}";;
+		esac
+
+		w3mvisualmode \
+			${line:+--line "${line}"} \
+			--timeout "${W3MPLUS_VISUAL_TIMEOUT}" \
+			-- "${id}" "${query_subaction}" \
+			${commandArg+"${commandArg}"}
+		;;
+	'zoom')
+		changeconfig \
+			--max "${W3MPLUS_ZOOM_MAX}" \
+			--min "${W3MPLUS_ZOOM_MIN}" \
+			--param "image_scale=${query_zoom-100}" \
+			--in-place \
+			-- "${W3MPLUS_W3M_CONFIG}"
+		zoom=$(grep -e '^image_scale ' -- "${W3MPLUS_W3M_CONFIG}" | cut -d ' ' -f 2)
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: SET_OPTION image_scale=${zoom}" \
+			-H 'W3m-control: RESHAPE'
+		;;
+	'search' | 'dict-word')
+		case "${query_action}${query_query:+_}" in
+			'dict-word_') query_query="${query_query#?}"
+		esac
+
+		case "${query_query-}" in
+			'!')
+				w3mredirect -- "file://${SCRIPT_NAME}?action=searchhistory"
+				;;
+			*)
+				url=$(searchuri \
+					--engine "${W3MPLUS_SEARCH_ENGINE}" \
+					--config "${W3MPLUS_SEARCH_CONFIGFILE}" \
+					--history "${W3MPLUS_SEARCH_HISTFILE}" \
+					-- ${query_query:+"${query_query}"}
+				)
+
+				setregister \
+					--config "${W3MPLUS_REGISTER_FILE}" \
+					-- '/' "${query_query-}"
+
+				w3mredirect \
+					${query_tab+--tab "${query_tab}"} \
+					${query_before+--b1 "${query_before}"} \
+					${query_after+--a1 "${query_after}"} \
+					-- "${url}"
+				;;
+		esac
+		;;
+	'show-search-history')
+		awkScript=$(
+			cat <<-'EOF'
+			@include "html_escape.awk"
+			@include "url_decode.awk"
+
+			BEGIN {
+				FS = "\t"
+				printf("<pre><samp>")
+			}
+
+			{
+				printf("<span>%4d %s <a href=\"%s\">%s</a></span>\n", NR, $3, html_escape(url "&query=" $1 "&engine=" $2), html_escape(url_decode($1)))
+			}
+
+			END {
+				printf("</samp></pre>")
+			}
+			EOF
+		)
+
+		awk \
+			-v "url=file://${SCRIPT_NAME}?action=search" \
+			-- "${awkScript}" "${W3MPLUS_SEARCH_HISTFILE}" \
+		| printhtml --title 'Search History' - \
+		| httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
+		;;
+	'select-line')
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+
+		case "${query_subaction}" in
+			'operatorFunc') commandArg="${W3MPLUS_OPERATORFUNC}";;
+			'formatPrg') commandArg="${W3MPLUS_FORMATPRG}";;
+			'yank') commandArg="${W3MPLUS_YANK}";;
+		esac
+
+		w3mselectline \
+			${line:+--line "${line}"} \
+			${query_number+'--number' "${query_number}"} \
+			"${query_subaction}" \
+			${commandArg+"${commandArg}"}
+			;;
+	'equalprg')
+		expand 'source' "${query_sourcefile-W3M_SOURCEFILE}"
+		expand 'charset' "${query_charset-W3M_CHARSET}"
+		expand 'type' "${query_type-W3M_TYPE}"
+
+		if [ -f "${source}" ] && [ -n "${charset}" ] && [ -n "${type}" ]; then
+			equalprg=$(printf '%s' "${W3MPLUS_EQUALPRG}" | base64 | tr -d '\n')
+
+			httpresponse \
+				-H 'W3m-control: BACK' \
+				-H "W3m-control: EXEC_SHELL w3m -I '${charset}' -O '${charset}' -T 'text/plain' -dump '${source}' | sh -c 'eval \"\$(echo \"${equalprg}\" | base64 -d)\"' | w3m -I '${charset}' -T '${type}'"
+		else
+			httpresponse -H 'W3m-control: BACK'
+		fi
+		;;
+	'cookie-config')
+		expand 'uri' "${query_uri-W3M_URL}"
+		host=$(uricheck -f 'host' "${uri}" || :)
+
+		case "${host}" in
+			?*)
+				w3mcookieconfig \
+					${query_accept+'--accept' "${query_accept}=${host}"} \
+					${query_reject+'--reject' "${query_reject}=${host}"} \
+					${query_subdomain+'--subdomain'} \
+					--in-place \
+					-- "${W3MPLUS_W3M_CONFIG}"
+
+				accept=$(grep -e '^cookie_accept_domains[[:blank:]]' -- "${W3MPLUS_W3M_CONFIG}" | cut -d ' ' -f 2)
+				reject=$(grep -e '^cookie_reject_domains[[:blank:]]' -- "${W3MPLUS_W3M_CONFIG}" | cut -d ' ' -f 2)
+
+				httpresponse \
+					${query_accept+-H "W3m-control: SET_OPTION cookie_accept_domains=${accept}"} \
+					${query_rejrct+-H "W3m-control: SET_OPTION cookie_reject_domains=${rejrct}"} \
+					-H 'W3m-control: BACK' \
+					-H "W3m-control: EXEC_SHELL grep -Ee '^cookie_(accept|reject)_domains[[:blank:]]' '${W3MPLUS_W3M_CONFIG}'"
+				;;
+			*) httpresponse -H 'W3m-control: BACK';;
+		esac
+		;;
+	'bookmark-bar')
+		expand 'uri' "${query_uri-W3M_URL}"
+		: >>"${W3MPLUS_W3M_BOOKMARK}"
+
+		sed \
+			-e 's/<a href=/<a target="main" href=/g' \
+			-- "${W3MPLUS_W3M_BOOKMARK}" >"${tmpDir}/bookmark"
+
+		output="${W3MPLUS_CACHE}/menu-$(cksum "${tmpDir}/bookmark" | cut -d ' ' -f '1-2' | tr ' ' '-').html"
+		path_to_fileurl 'menu' "${output}"
+
+		cat -- "${tmpDir}/bookmark" >"${output}"
+
+		case "${W3MPLUS_SIDEBAR_POSITION}" in
+			'right')
+				htmlframe \
+					--attribute "cols=*,${W3MPLUS_SIDEBAR_SIZE}" \
+					--n1 'main' --n2 'menu' \
+					--t1 'Main page' --t2 'Menu page' \
+					--title 'Bookmark' \
+					-- "${uri:-data:text/plain,}" "${menu}"
+				;;
+			'left')
+				htmlframe \
+					--attribute "cols=${W3MPLUS_SIDEBAR_SIZE},*" \
+					--n1 'menu' --n2 'main' \
+					--t1 'Menu page' --t2 'Main page' \
+					--title 'Bookmark' \
+					-- "${menu}" "${uri:-data:text/plain,}"
+			;;
+		esac | datauri 'text/html' | w3mredirect
+		;;
+	'history-bar')
+		expand 'uri' "${query_uri-W3M_URL}"
+		: >>"${W3MPLUS_W3M_HISTORY}"
+
+		grep -v -e '^data:' -e '^file:///cgi-bin/' -- "${W3MPLUS_W3M_HISTORY}" \
+		| framelinkmenu \
+			${uri:+'--main' "${uri}"} \
+			--position "${W3MPLUS_SIDEBAR_POSITION}" \
+			--title 'History' \
+		| datauri 'text/html' \
+		| w3mredirect
+		;;
+	'toggle-https-everywhere')
+		if sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${W3MPLUS_W3M_SITECONF}" | grep -Fqx '# url m@^http://@'; then
+			sed -e '/^# HTTPS Everywhere$/,/^$/{s/^# url/url/; s/^# substitute_url/substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" | sponge -- "${W3MPLUS_W3M_SITECONF}"
+
+			httpresponse \
+				-H 'W3m-control: BACK' \
+				-H 'W3m-control: REINIT'
+		elif sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${W3MPLUS_W3M_SITECONF}" | grep -Fqx 'url m@^http://@'; then
+			sed -e '/^# HTTPS Everywhere$/,/^$/{s/^url/# url/; s/^substitute_url/# substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" | sponge -- "${W3MPLUS_W3M_SITECONF}"
+
+			httpresponse \
+				-H 'W3m-control: BACK' \
+				-H 'W3m-control: REINIT'
+		else
+			httpresponse -H 'W3m-control: BACK'
+		fi
+		;;
+	'scroll-zt' | 'scroll-zb')
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+
+		case "${query_action}" in
+			'scroll-zt') move='NEXT_HALF_PAGE';;
+			'scroll-zb') move='PREV_HALF_PAGE';;
+		esac
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H 'W3m-control: CENTER_V' \
+			-H "W3m-control: ${move}" \
+			-H "W3m-control: GOTO_LINE ${line:-1}"
+		;;
+	*)
+		printhtml --title 'Bad Request' - <<-EOF | httpresponse --status-code '400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -
+			<dl>
+				<dt>autoCommand</dt>
+				<dd>file://${SCRIPT_NAME}?action=autoCommand&amp;call={call-type}&amp;string={VARIABLE}</dd>
+
+				<dt>closeTab</dt>
+				<dd>file://${SCRIPT_NAME}?action=closeTab&amp;uri={VARIABLE}&amp;line={VARIABLE}&amp;colmun={VARIABLE}</dd>
+
+				<dt>undoTab</dt>
+				<dd>file://${SCRIPT_NAME}?action=undoTab&amp;number={number}&amp;count={number}</dd>
+
+				<dt>undoTabs</dt>
+				<dd>file://${SCRIPT_NAME}?action=undoTabs</dd>
+
+				<dt>homepage</dt>
+				<dd>file://${SCRIPT_NAME}?action=homepage</dd>
+
+				<dt>aboutURI</dt>
+				<dd>file://${SCRIPT_NAME}?action=aboutURI&amp;uri={about-uri}</dd>
+
+				<dt>moveParagraph</dt>
+				<dd>file://${SCRIPT_NAME}?action=moveParagraph&amp;line={VARIABLE}&amp;number={SIGNED_INTEGER}</dd>
+
+				<dt>movePercent</dt>
+				<dd>file://${SCRIPT_NAME}?action=movePercent&amp;line={VARIABLE}&amp;number={[+*/-]NUMBER[%]?}</dd>
+
+				<dt>stringFind</dt>
+				<dd>file://${SCRIPT_NAME}?action=stringFind&amp;word={VARIABLE}&amp;number={SIGNED_INTEGER}</dd>
+
+				<dt>wordFind</dt>
+				<dd>file://${SCRIPT_NAME}?action=wordFind&amp;word={VARIABLE}&amp;number={SIGNED_INTEGER}</dd>
+
+				<dt>qmarks</dt>
+				<dd>file://${SCRIPT_NAME}?action=qmarks</dd>
+
+				<dt>getQuickMark</dt>
+				<dd>file://${SCRIPT_NAME}?action=getQuickMarkgetRegister&amp;tab={TAB_PARAM}</dd>
+
+				<dt>setQuickMark</dt>
+				<dd>file://${SCRIPT_NAME}?action=setQuickMark&amp;uri={VARIABLE}&amp;line={VARIABLE}&amp;colmun={VARIABLE}&amp;key={KEY}</dd>
+
+				<dt>marks</dt>
+				<dd>file://${SCRIPT_NAME}?action=marks</dd>
+
+				<dt>getLocalMark</dt>
+				<dd>file://${SCRIPT_NAME}?action=getLocalMark&amp;uri={VARIABLE}&amp;key={PATTERN}</dd>
+
+				<dt>setLocalMark</dt>
+				<dd>file://${SCRIPT_NAME}?action=setLocalMark&amp;uri={VARIABLE}&amp;line={VARIABLE}&amp;key={KEY}</dd>
+
+				<dt>getLocalMarkGoto</dt>
+				<dd>file://${SCRIPT_NAME}?action=getLocalMarkGoto&amp;key={PATTERN}</dd>
+
+				<dt>setLocalMarkGoto</dt>
+				<dd>file://${SCRIPT_NAME}?action=setLocalMarkGoto&amp;uri={VARIABLE}&amp;line={VARIABLE}&amp;colmun={VARIABLE}&amp;key={KEY}</dd>
+
+				<dt>registers</dt>
+				<dd>file://${SCRIPT_NAME}?action=registers</dd>
+
+				<dt>getRegister</dt>
+				<dd>file://${SCRIPT_NAME}?action=getRegister&amp;key={PATTERN}</dd>
+
+				<dt>setRegister</dt>
+				<dd>file://${SCRIPT_NAME}?action=setRegister&amp;value={VARIABLE}&amp;key={KEY}</dd>
+
+				<dt>linkSetOpen</dt>
+				<dd>file://${SCRIPT_NAME}?action=linkSetOpen</dd>
+
+				<dt>linkSetTabopen</dt>
+				<dd>file://${SCRIPT_NAME}?action=linkSetTabopen</dd>
+
+
+				<dt>contextMenu</dt>
+				<dd>file://${SCRIPT_NAME}?action=contextMenu</dd>
+
+				<dt>runVariable</dt>
+				<dd>file://${SCRIPT_NAME}?action=runVariable&run={ACTION}</dd>
+
+				<dt>lineVisualMode</dt>
+				<dd>file://${SCRIPT_NAME}?action=lineVisualMode&amp;id={ID}&amp;line={VARIABLE}</dd>
+
+				<dt>yankSelection</dt>
+				<dd>file://${SCRIPT_NAME}?action=yankSelection</dd>
+
+				<dt>zoom</dt>
+				<dd>file://${SCRIPT_NAME}?action=zoom&amp;zoom={ZOOM}</dd>
+
+				<dt>search</dt>
+				<dd>file://${SCRIPT_NAME}?action=search&amp;query={query}</dd>
+
+				<dt>dictWordSearch</dt>
+				<dd>file://${SCRIPT_NAME}?action=dictWordSearch&amp;query={query}</dd>
+
+				<dt>selectLine</dt>
+				<dd>file://${SCRIPT_NAME}?action=selectLine&amp;subaction={subaction}&amp;number={number}&amp;file={file}</dd>
+
+				<dt>equalPrg</dt>
+				<dd>file://${SCRIPT_NAME}?action=equalPrg</dd>
+
+				<dt>httpsEverywhere</dt>
+				<dd>file://${SCRIPT_NAME}?action=httpsEverywhere</dd>
+
+				<dt>zMove</dt>
+				<dd>file://${SCRIPT_NAME}?action=zMove&amp;line={VARIABLE}</dd>
+			</dl>
+		EOF
+		;;
+esac

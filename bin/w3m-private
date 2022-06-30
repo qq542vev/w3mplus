@@ -1,104 +1,137 @@
 #!/usr/bin/env sh
 
-## File: w3m-private
+### Script: w3m-private
 ##
-## Start w3m in private mode.
+## プライベートモードの w3m を実行する。
 ##
-## Cache files, temporary files, cookies, and history are deleted when w3m ends.
-##
-## Usage:
-##
-##   (start code)
-##   w3m-private [--exclude PATTERN] [W3MARG]...
-##   (end)
-##
-## Options:
-##
-##   --exclude=PATTERN - files not shared with profiles.
-##
-## Exit Status:
-##
-##   0 - Program terminated normally.
-##   64<= and <=78 - Program terminated abnormally. See </usr/include/sysexits.h> for the returned value.
+## キャッシュファイル、テンポラリファイル、 Cookie 、閲覧履歴は w3m 終了後に削除される。
 ##
 ## Metadata:
 ##
-##   author - qq542vev <https://purl.org/meta/me/>
-##   version - 1.2.1
-##   date - 2020-03-20
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
 ##   since - 2019-07-29
-##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
 ## See Also:
 ##
-##   * Project homepage - <https://github.com/qq542vev/w3mplus>
-##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
-# 初期化
-set -efu
-umask '0022'
-IFS=$(printf ' \t\n$'); IFS="${IFS%$}"
-export 'IFS'
+VERSION='w3m-private 2.0.0'
 
-# initファイルの読み込み
-: "${W3MPLUS_PATH:=${HOME}/.w3m/w3mplus}"
-. "${W3MPLUS_PATH}/lib/w3mplus/init"
+ORIGINAL_LC_ALL="${LC_ALL-}"
 
-expression='! ( ( -path ./cookie -o -path ./history -o -path ./request.log -o -path ./w3mcache* -o -path ./w3mcookie* -o -path ./w3mframe* -o -path ./w3msrc* -o -path ./w3mtmp* ) -prune )'
-linkExpr='-path ./bookmark.html'
-awkScript=$(
-	cat <<- 'EOF'
-	BEGIN {
-		output = ""
-	}
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'append_array_posix.sh'
 
-	{
-		for(i = 1; i <= NF; i++) {
-			if(output) {
-				output = output " -o "
-			}
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:error no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... -- [W3M_ARG]" \
+		'' 'Options:'
 
-			gsub(/'+/, "'\"&\"'", $i)
-			output = output sprintf("-path %s", $i)
-		}
-	}
+	param :'append_array_posix copy "-o" "-path" "${OPTARG}"' -c --copy var:PATTERN -- 'PATTERN に一致するファイルをコピーする'
+	flag  copy      --no-copy    init:@no on: no: -- '--copy をリセットする'
+	param :'append_array_posix link "-o" "-path" "${OPTARG}"' -l --link var:PATTERN -- 'PATTERN に一致するファイルへのシンボリックリンクを作成する'
+	flag  link      --no-link    init:@no on: no: -- '--link をリセットする'
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
 
-	END {
-		if(output) {
-			printf("( %s )", output)
-		}
-	}
-	EOF
-)
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
 
-case "${1-}" in
-	'--exclude')
-		expression="! ( $(printf '%s' "${2}" | awk "${awkScript}") -prune )"
-		shift 2
-		;;
-	'--include')
-		expression=$(printf '%s' "${2}" | awk "${awkScript}")
-		shift 2
-		;;
-esac
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
 
-case "${1-}" in '--link')
-	linkExpr=$(printf '%s' "${2}" | awk "${awkScript}")
-	shift 2
-	;;
-esac
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
 
 tmpDir=$(mktemp -d)
 mkdir -p -- "${tmpDir}/.w3m"
+shellScript=$(
+	cat <<-'EOF'
+	type="${1}"
+	dest="${2}"
+	shift 2
 
-(
-	cd "${HOME}/.w3m"
+	for item in ${@+"${@}"}; do
+		dir=$(dirname -- "${item}"; printf '_')
+		dir="${dir%?_}"
 
-	find -L -- '.' ${expression} -type d -exec 'mkdir' '-p' "${tmpDir}/.w3m/{}" ';'
-	find -L -- '.' ${expression} -type f -exec 'cp' '-fp' '{}' "${tmpDir}/.w3m/{}" ';'
-	find -L -- '.' ${linkExpr} -type f -exec 'ln' '-fs' "$(pwd)/{}" "${tmpDir}/.w3m/{}" ';'
+		mkdir -p -- "${dest}/${dir}"
+
+		case "${type}" in
+			'copy') cp -fpR "${item}" "${dest}/${dir}";;
+			'link') ln -fs "${PWD}/${item}" "${dest}/${dir}";;
+		esac
+	done
+	EOF
 )
 
-HOME="${tmpDir}" w3m -o 'save_hist=0' ${@+"${@}"}
+(
+	cd -- "${HOME}/.w3m"
+
+	find -- '.' \
+		'!' '(' \
+			-name 'bookmark.html' \
+			-o -name 'cookie' \
+			-o -name 'history' \
+			-o -name 'passwd' \
+			-o -name 'pre_form' \
+			-o -name 'request.log' \
+			-o -name 'w3mcache*' \
+			-o -name 'w3mcookie*' \
+			-o -name 'w3mframe*' \
+			-o -name 'w3msrc*' \
+			-o -name 'w3mtmp*' \
+		')' \
+		-path './*' -prune \
+		-exec 'cp' '-fLpR' -- '{}' "${tmpDir}/.w3m" ';'
+
+	cd -- "${HOME}"
+
+	for type in 'copy' 'link'; do
+		eval "oprands=\${${type}}"
+		eval set -- "${oprands}"
+
+		case "${#}" in
+			[1-9]*)
+				shift
+				eval "find -- '.' '(' ${*} ')' -exec sh -c \"\${shellScript}\" 'script' '${type}' \"${tmpDir}\" '{}' '+'"
+				;;
+		esac
+	done
+)
+
+env \
+	HOME="${tmpDir}" \
+	LC_ALL="${ORIGINAL_LC_ALL}" \
+	w3m ${@+"${@}"}

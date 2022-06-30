@@ -1,24 +1,24 @@
-## File: keymap_lynx
+### File: keymap_lynx
 ##
 ## Lynx like keymap.
 ##
 ## Metadata:
 ##
-##   author - qq542vev <https://purl.org/meta/me/>
+##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2020-03-20
+##   date - 2022-06-28
 ##   since - 2020-03-20
-##   copyright - Copyright (C) 2020 qq542vev. Some rights reserved.
-##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
-##   source - keymap.lynx <https://github.com/tats/w3m/blob/master/doc/keymap.lynx>
+##   source - <keymap.lynx at https://github.com/tats/w3m/blob/master/doc/keymap.lynx>
 ##
 ## See Also:
 ##
-##   * Project homepage - <https://github.com/qq542vev/w3mplus>
-##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
-##   * README.keymap - <https://github.com/tats/w3m/blob/master/doc-jp/README.keymap>
-##   * Table of function-keys for XTerm and other Terminal Emulators - <https://invisible-island.net/xterm/xterm-function-keys.html>
+##   * <Project homepage at https://github.com/qq542vev/vim-style-newsboat>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <README.keymap at https://github.com/tats/w3m/blob/master/doc-jp/README.keymap>
+##   * <Table of function-keys for XTerm and other Terminal Emulators at https://invisible-island.net/xterm/xterm-function-keys.html>
 
 # Ctrl  : C-, ^
 # Escape: ESC-, M-, ^[

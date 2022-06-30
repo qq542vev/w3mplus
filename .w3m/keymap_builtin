@@ -1,1 +1,518 @@
-keymap_w3m
+### File: keymap_w3m
+##
+## Default w3m keymap.
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.3
+##   date - 2022-06-28
+##   since - 2020-03-06
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##   source - <keymap.default at https://github.com/tats/w3m/blob/master/doc/keymap.default>
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/vim-style-newsboat>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <README.keymap at https://github.com/tats/w3m/blob/master/doc-jp/README.keymap>
+##   * <Table of function-keys for XTerm and other Terminal Emulators at https://invisible-island.net/xterm/xterm-function-keys.html>
+
+# Ctrl  : C-, ^
+# Escape: ESC-, M-, ^[
+# Space : SPC, ' '
+# Tab   : TAB, ^i, ^I
+# Delete: DEL, ^?
+# Up    : UP, ^[[A
+# Down  : DOWN, ^[[B
+# Right : RIGHT, ^[[C
+# Left  : LEFT, ^[[D
+
+# Reset keymap #
+
+## ASCII characters ##
+
+### Printable characters ###
+
+keymap "SPC" NULL
+keymap "!" NULL
+keymap "\"" NULL
+keymap "#" NULL
+keymap "$" NULL
+keymap "%" NULL
+keymap "&" NULL
+keymap "'" NULL
+keymap "(" NULL
+keymap ")" NULL
+keymap "*" NULL
+keymap "+" NULL
+keymap "," NULL
+keymap "-" NULL
+keymap "." NULL
+keymap "/" NULL
+keymap "0" NULL
+keymap "1" NULL
+keymap "2" NULL
+keymap "3" NULL
+keymap "4" NULL
+keymap "5" NULL
+keymap "6" NULL
+keymap "7" NULL
+keymap "8" NULL
+keymap "9" NULL
+keymap ":" NULL
+keymap ";" NULL
+keymap "<" NULL
+keymap "=" NULL
+keymap ">" NULL
+keymap "?" NULL
+keymap "@" NULL
+keymap "A" NULL
+keymap "B" NULL
+keymap "C" NULL
+keymap "D" NULL
+keymap "E" NULL
+keymap "F" NULL
+keymap "G" NULL
+keymap "H" NULL
+keymap "I" NULL
+keymap "J" NULL
+keymap "K" NULL
+keymap "L" NULL
+keymap "M" NULL
+keymap "N" NULL
+keymap "O" NULL
+keymap "P" NULL
+keymap "Q" NULL
+keymap "R" NULL
+keymap "S" NULL
+keymap "T" NULL
+keymap "U" NULL
+keymap "V" NULL
+keymap "W" NULL
+keymap "X" NULL
+keymap "Y" NULL
+keymap "Z" NULL
+keymap "[" NULL
+keymap "]" NULL
+keymap "\^" NULL
+keymap "_" NULL
+keymap "`" NULL
+keymap "a" NULL
+keymap "b" NULL
+keymap "c" NULL
+keymap "d" NULL
+keymap "e" NULL
+keymap "f" NULL
+keymap "g" NULL
+keymap "h" NULL
+keymap "i" NULL
+keymap "j" NULL
+keymap "k" NULL
+keymap "l" NULL
+keymap "m" NULL
+keymap "n" NULL
+keymap "o" NULL
+keymap "p" NULL
+keymap "q" NULL
+keymap "r" NULL
+keymap "s" NULL
+keymap "t" NULL
+keymap "u" NULL
+keymap "v" NULL
+keymap "w" NULL
+keymap "x" NULL
+keymap "y" NULL
+keymap "z" NULL
+keymap "{" NULL
+keymap "|" NULL
+keymap "}" NULL
+keymap "~" NULL
+
+### Control characters ###
+
+keymap "C-@" NULL
+keymap "C-a" NULL
+keymap "C-b" NULL
+keymap "C-c" NULL
+keymap "C-d" NULL
+keymap "C-e" NULL
+keymap "C-f" NULL
+keymap "C-g" NULL
+keymap "C-h" NULL
+keymap "C-i" NULL
+keymap "C-j" NULL
+keymap "C-k" NULL
+keymap "C-l" NULL
+keymap "C-m" NULL
+keymap "C-n" NULL
+keymap "C-o" NULL
+keymap "C-p" NULL
+keymap "C-q" NULL
+keymap "C-r" NULL
+keymap "C-s" NULL
+keymap "C-t" NULL
+keymap "C-u" NULL
+keymap "C-v" NULL
+keymap "C-w" NULL
+keymap "C-x" NULL
+keymap "C-y" NULL
+keymap "C-z" NULL
+#keymap "C-[" NULL
+keymap "C-\\" NULL
+keymap "C-]" NULL
+keymap "C-^" NULL
+keymap "C-_" NULL
+keymap "C-?" NULL
+
+## ESC + ASCII printable characters ##
+
+keymap "M-SPC" NULL
+keymap "M-!" NULL
+keymap "M-\"" NULL
+keymap "M-#" NULL
+keymap "M-$" NULL
+keymap "M-%" NULL
+keymap "M-&" NULL
+keymap "M-'" NULL
+keymap "M-(" NULL
+keymap "M-)" NULL
+keymap "M-*" NULL
+keymap "M-+" NULL
+keymap "M-," NULL
+keymap "M--" NULL
+keymap "M-." NULL
+keymap "M-/" NULL
+keymap "M-0" NULL
+keymap "M-1" NULL
+keymap "M-2" NULL
+keymap "M-3" NULL
+keymap "M-4" NULL
+keymap "M-5" NULL
+keymap "M-6" NULL
+keymap "M-7" NULL
+keymap "M-8" NULL
+keymap "M-9" NULL
+keymap "M-:" NULL
+keymap "M-;" NULL
+keymap "M-<" NULL
+keymap "M-=" NULL
+keymap "M->" NULL
+keymap "M-?" NULL
+keymap "M-@" NULL
+keymap "M-A" NULL
+keymap "M-B" NULL
+keymap "M-C" NULL
+keymap "M-D" NULL
+keymap "M-E" NULL
+keymap "M-F" NULL
+keymap "M-G" NULL
+keymap "M-H" NULL
+keymap "M-I" NULL
+keymap "M-J" NULL
+keymap "M-K" NULL
+keymap "M-L" NULL
+keymap "M-M" NULL
+keymap "M-N" NULL
+#keymap "M-O" NULL
+keymap "M-P" NULL
+keymap "M-Q" NULL
+keymap "M-R" NULL
+keymap "M-S" NULL
+keymap "M-T" NULL
+keymap "M-U" NULL
+keymap "M-V" NULL
+keymap "M-W" NULL
+keymap "M-X" NULL
+keymap "M-Y" NULL
+keymap "M-Z" NULL
+keymap "M-[" NULL
+keymap "M-]" NULL
+keymap "M-\^" NULL
+keymap "M-_" NULL
+keymap "M-`" NULL
+keymap "M-a" NULL
+keymap "M-b" NULL
+keymap "M-c" NULL
+keymap "M-d" NULL
+keymap "M-e" NULL
+keymap "M-f" NULL
+keymap "M-g" NULL
+keymap "M-h" NULL
+keymap "M-i" NULL
+keymap "M-j" NULL
+keymap "M-k" NULL
+keymap "M-l" NULL
+keymap "M-m" NULL
+keymap "M-n" NULL
+keymap "M-o" NULL
+keymap "M-p" NULL
+keymap "M-q" NULL
+keymap "M-r" NULL
+keymap "M-s" NULL
+keymap "M-t" NULL
+keymap "M-u" NULL
+keymap "M-v" NULL
+keymap "M-w" NULL
+keymap "M-x" NULL
+keymap "M-y" NULL
+keymap "M-z" NULL
+keymap "M-{" NULL
+keymap "M-|" NULL
+keymap "M-}" NULL
+keymap "M-~" NULL
+
+## ESC + ASCII Control characters ##
+
+keymap "M-C-@" NULL
+keymap "M-C-a" NULL
+keymap "M-C-b" NULL
+keymap "M-C-c" NULL
+keymap "M-C-d" NULL
+keymap "M-C-e" NULL
+keymap "M-C-f" NULL
+keymap "M-C-g" NULL
+keymap "M-C-h" NULL
+keymap "M-C-i" NULL
+keymap "M-C-j" NULL
+keymap "M-C-k" NULL
+keymap "M-C-l" NULL
+keymap "M-C-m" NULL
+keymap "M-C-n" NULL
+keymap "M-C-o" NULL
+keymap "M-C-p" NULL
+keymap "M-C-q" NULL
+keymap "M-C-r" NULL
+keymap "M-C-s" NULL
+keymap "M-C-t" NULL
+keymap "M-C-u" NULL
+keymap "M-C-v" NULL
+keymap "M-C-w" NULL
+keymap "M-C-x" NULL
+keymap "M-C-y" NULL
+keymap "M-C-z" NULL
+keymap "M-C-[" NULL
+keymap "M-C-\\" NULL
+keymap "M-C-]" NULL
+keymap "M-C-^" NULL
+keymap "M-C-_" NULL
+keymap "M-C-?" NULL
+
+## Special keys ##
+
+### Navigation keys ###
+
+#### Arrow keys ####
+
+keymap "UP" NULL
+keymap "DOWN" NULL
+keymap "RIGHT" NULL
+keymap "LEFT" NULL
+
+#### Page Up key ####
+
+keymap "^[[5~" NULL
+keymap "^[[I" NULL
+
+#### Page Down key ####
+
+keymap "^[[6~" NULL
+keymap "^[[G" NULL
+
+#### Home key ####
+
+keymap "^[OH" NULL
+keymap "^[[1~" NULL
+keymap "^[[7~" NULL
+keymap "^[[H" NULL
+
+#### End key ####
+
+keymap "^[OF" NULL
+keymap "^[[4~" NULL
+keymap "^[[8~" NULL
+keymap "^[[F" NULL
+
+### Editing keys ###
+
+#### Insert key ####
+
+keymap "^[[2~" NULL
+keymap "^[[L" NULL
+
+#### Delete key ####
+
+keymap "^[[3~" NULL
+
+### Function keys (F1 key - F20 key) ###
+
+keymap "^[OP" NULL
+keymap "^[[11~" NULL
+keymap "^[OQ" NULL
+keymap "^[[12~" NULL
+keymap "^[OR" NULL
+keymap "^[[13~" NULL
+keymap "^[OS" NULL
+keymap "^[[14~" NULL
+keymap "^[[15~" NULL
+keymap "^[[17~" NULL
+keymap "^[[18~" NULL
+keymap "^[[19~" NULL
+keymap "^[[20~" NULL
+keymap "^[[21~" NULL
+keymap "^[[22~" NULL
+keymap "^[[23~" NULL
+keymap "^[[24~" NULL
+keymap "^[[25~" NULL
+keymap "^[[26~" NULL
+keymap "^[[27~" NULL
+keymap "^[[28~" NULL
+keymap "^[[29~" NULL
+keymap "^[[30~" NULL
+keymap "^[[31~" NULL
+keymap "^[[32~" NULL
+keymap "^[[33~" NULL
+keymap "^[[34~" NULL
+
+### Key used in w3m ###
+
+keymap "^[[E" NULL
+keymap "^[[L" NULL
+keymap "^[[Z" NULL
+
+# Defining a w3m default keymap #
+
+keymap "C-@" MARK
+keymap "C-a" LINE_BEGIN
+keymap "C-b" MOVE_LEFT
+keymap "C-e" LINE_END
+keymap "C-f" MOVE_RIGHT
+keymap "C-g" LINE_INFO
+keymap "C-h" HISTORY
+keymap "TAB" NEXT_LINK
+keymap "C-j" GOTO_LINK
+keymap "C-k" COOKIE
+keymap "C-l" REDRAW
+keymap "C-m" GOTO_LINK
+keymap "C-n" MOVE_DOWN
+keymap "C-p" MOVE_UP
+keymap "C-q" CLOSE_TAB
+keymap "C-r" ISEARCH_BACK
+keymap "C-s" ISEARCH
+keymap "C-t" TAB_LINK
+keymap "C-u" PREV_LINK
+keymap "C-v" NEXT_PAGE
+keymap "C-w" WRAP_TOGGLE
+keymap "C-z" SUSPEND
+
+keymap "SPC" NEXT_PAGE
+keymap "!" SHELL
+keymap "\"" REG_MARK
+keymap "#" PIPE_SHELL
+keymap "$" LINE_END
+keymap "(" UNDO
+keymap ")" REDO
+keymap "+" NEXT_PAGE
+keymap "," LEFT
+keymap "-" PREV_PAGE
+keymap "." RIGHT
+keymap "/" SEARCH
+keymap ":" MARK_URL
+keymap ";" MARK_WORD
+keymap "<" SHIFT_LEFT
+keymap "=" INFO
+keymap ">" SHIFT_RIGHT
+keymap "?" SEARCH_BACK
+keymap "@" READ_SHELL
+keymap "B" BACK
+keymap "D" DOWNLOAD_LIST
+keymap "E" EDIT
+keymap "F" FRAME
+keymap "G" END
+keymap "H" HELP
+keymap "I" VIEW_IMAGE
+keymap "J" UP
+keymap "K" DOWN
+keymap "L" LIST
+keymap "M" EXTERN
+keymap "N" SEARCH_PREV
+keymap "Q" EXIT
+keymap "R" RELOAD
+keymap "S" SAVE_SCREEN
+keymap "T" NEW_TAB
+keymap "U" GOTO
+keymap "V" LOAD
+keymap "W" PREV_WORD
+keymap "Z" CENTER_H
+keymap "[" LINK_BEGIN
+keymap "]" LINK_END
+keymap "\^" LINE_BEGIN
+keymap "a" SAVE_LINK
+keymap "b" PREV_PAGE
+keymap "c" PEEK
+keymap "g" BEGIN
+keymap "h" MOVE_LEFT
+keymap "i" PEEK_IMG
+keymap "j" MOVE_DOWN
+keymap "k" MOVE_UP
+keymap "l" MOVE_RIGHT
+keymap "m" MOUSE_TOGGLE
+keymap "n" SEARCH_NEXT
+keymap "o" OPTIONS
+keymap "q" QUIT
+keymap "r" VERSION
+keymap "s" SELECT_MENU
+keymap "u" PEEK_LINK
+keymap "v" VIEW
+keymap "w" NEXT_WORD
+keymap "z" CENTER_V
+keymap "{" PREV_TAB
+keymap "|" PIPE_BUF
+keymap "}" NEXT_TAB
+
+keymap "M-TAB" PREV_LINK
+keymap "M-C-j" SAVE_LINK
+keymap "M-C-m" SAVE_LINK
+
+keymap "M-:" MARK_MID
+keymap "M-<" BEGIN
+keymap "M->" END
+keymap "M-I" SAVE_IMAGE
+keymap "M-M" EXTERN_LINK
+keymap "M-W" DICT_WORD_AT
+keymap "M-a" ADD_BOOKMARK
+keymap "M-b" BOOKMARK
+keymap "M-c" COMMAND
+keymap "M-e" EDIT_SCREEN
+keymap "M-g" GOTO_LINE
+keymap "M-k" DEFINE_KEY
+keymap "M-l" LIST_MENU
+keymap "M-m" MOVE_LIST_MENU
+keymap "M-n" NEXT_MARK
+keymap "M-o" SET_OPTION
+keymap "M-p" PREV_MARK
+keymap "M-s" SAVE
+keymap "M-t" TAB_MENU
+keymap "M-u" GOTO_RELATIVE
+keymap "M-v" PREV_PAGE
+keymap "M-w" DICT_WORD
+
+keymap "UP" MOVE_UP
+keymap "DOWN" MOVE_DOWN
+keymap "RIGHT" MOVE_RIGHT
+keymap "LEFT" MOVE_LEFT
+
+keymap "M-[E" MENU
+keymap "M-[L" MENU
+keymap "M-[Z" PREV_LINK
+
+keymap "M-[1~" BEGIN
+keymap "M-[2~" MENU
+keymap "M-[4~" END
+keymap "M-[5~" PREV_PAGE
+keymap "M-[6~" NEXT_PAGE
+keymap "M-[28~" MENU
+
+keymap "M-C-b" SET_OPTION "keymap_file=keymap_w3mplus"

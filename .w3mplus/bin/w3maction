@@ -1,0 +1,237 @@
+#!/usr/bin/env sh
+
+### Script: w3maction
+##
+## 環境変数を元に処理を実行する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.3.0
+##   date - 2022-06-28
+##   since - 2019-07-15
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='w3maction 2.3.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:error no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... ACTION VARIABLE_NAME" \
+		'' 'Options:'
+
+	param data     -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:'raw | base64 | urlencode' -- '変数のエンコードタイプを指定する'
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'ACTION:'
+
+	cmd addBookmark          -- 'VARIABLE_NAME をブックマークに追加する'
+	cmd copy                 -- 'VARIABLE_NAME を別の変数に代入する'
+	cmd goto                 -- 'VARIABLE_NAME にアクセスする'
+	cmd incrementURI         -- 'VARIABLE_NAME の値を演算してアクセスする'
+	cmd parentUriPath        -- 'VARIABLE_NAME の上位 URI にアクセスする'
+	cmd prevTab              -- 'VARIABLE_NAME にアクセス後に前のタブに移動する'
+	cmd redirect             -- 'VARIABLE_NAME の値を URL エンコードしリダイレクトする'
+	cmd show                 -- 'VARIABLE_NAME の値を表示する'
+	cmd viewSource           -- 'VARIABLE_NAME のソースを表示する'
+	cmd viewSourceExternally -- 'VARIABLE_NAME のソースを外部プログラムで表示する'
+	cmd yank                 -- 'VARIABLE_NAME の値をヤンクする'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+
+parser_definition_redirect() {
+	setup REST abbr:true error:error plus:true no:0
+	param tab -t --tab init:='current' pattern:'current | newtab | open-newtab'
+}
+
+parser_definition_incrementURI() {
+	setup REST abbr:true error:error plus:true no:0
+	param number   -n --number   init:='+1' validate:'regex_match "${OPTARG}" "^(0|[+-][1-9][0-9]*)$"'
+	param position -p --position init:='-1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"'
+	param tab      -t --tab     init:='current' pattern:'current | newtab | open-newtab'
+}
+
+parser_definition_parentUriPath() {
+	setup REST abbr:true error:error plus:true no:0
+	param number -n --number init:='1' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"'
+	param tab    -t --tab    init:='current' pattern:'current | newtab | open-newtab'
+}
+
+parser_definition_copy() {
+	setup REST abbr:true error:error plus:true no:0
+	param encode -e --encode-type init:='raw' pattern:'raw | base64 | urlencode'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+action="${1}"
+variableName="${2}"
+shift 2
+
+case "${action}" in
+	'addBookmark' | 'goto' | 'redirect' | 'viewSource' | 'viewSourceExternally')
+# @gengetoptions parser -i parser_definition_redirect parse
+# @end
+
+		eval "$(getoptions parser_definition_redirect parse)"
+		parse ${@+"${@}"}
+		eval "set -- ${REST}"
+		;;
+	'incrementURI')
+# @gengetoptions parser -i parser_definition_incrementURI parse
+# @end
+
+		eval "$(getoptions parser_definition_incrementURI parse)"
+		parse ${@+"${@}"}
+		eval "set -- ${REST}"
+		;;
+	'parentUriPath')
+# @gengetoptions parser -i parser_definition_parentUriPath parse
+# @end
+
+		eval "$(getoptions parser_definition_parentUriPath parse)"
+		parse ${@+"${@}"}
+		eval "set -- ${REST}"
+		;;
+	'copy')
+# @gengetoptions parser -i parser_definition_copy parse
+# @end
+
+		eval "$(getoptions parser_definition_copy parse)"
+		parse ${@+"${@}"}
+		eval "set -- ${REST}"
+		;;
+esac
+
+if regex_match "${variableName}" '^[_A-Za-z][_0-9A-Za-z]*$'; then :; else
+	cat <<-EOF 1>&2
+		${0##*/}: invalid variable name -- '${variableName}'
+		Try '${0##*/} --help' for more information.
+	EOF
+
+	endCall "${EX_USAGE}"
+fi
+
+eval "value=\"\${${variableName}-}\""
+
+case "${data}" in
+	'base64')
+		value=$(printf '%s' "${value}" | base64 -d; printf '$')
+		value="${value%$}"
+		;;
+	'urlencode')
+		value=$(printf '%s' "${value}" | urldecode; printf '$')
+		value="${value%$}"
+		;;
+esac
+
+case "${value}" in
+	'')
+		httpresponse -H 'W3m-control: BACK'
+		exit
+		;;
+esac
+
+case "${action}" in
+	'addBookmark')
+		w3mredirect \
+			--tab "${tab}" \
+			--a1 'ADD_BOOKMARK' \
+			-- "${value}"
+		;;
+	'copy')
+		case "${encode}" in
+			'base64') value=$(printf '%s' "${value}" | base64 | tr -d '\n');;
+			'urlencode') value=$(printf '%s' "${value}" | urlencode);;
+		esac
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: SETENV ${1}=${value}"
+		;;
+	'goto')
+		w3mredirect \
+			--tab "${tab}" \
+			-- "${value}"
+		;;
+	'incrementURI')
+		w3mredirect \
+			--tab "${tab}" \
+			-- "$(incrementuri --number "${number}" --position "${position}" -- "${value}")"
+		;;
+	'parentUriPath')
+		w3mredirect \
+			--tab "${tab}" \
+			-- "$(parenturipath --number "${number}" -- "${value}")"
+		;;
+	'prevTab')
+		w3mredirect \
+			--a1 'PREV_TAB' \
+			--tab 'open-newtab' \
+			-- "${value}"
+		;;
+	'redirect')
+		w3mredirect \
+			--tab "${tab}" \
+			-- "${1}$(printf '%s' "${value}" | urlencode)"
+		;;
+	'show')
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: READ_SHELL printf '%s' '$(printf '%s' "${value}" | base64 | tr -d '\n')' | base64 -d"
+		;;
+	'viewSource')
+		w3mredirect --tab "${tab}" --a1 'VIEW' -- "${value}"
+		;;
+	'viewSourceExternally')
+		w3mredirect \
+			--tab "${tab}" \
+			--a1 'COMMAND VIEW; EDIT_SCREEN; VIEW' \
+			-- "${value}"
+		;;
+	'yank')
+		printf '%s' "${value}" | sh -c -- "${*}" || :
+
+		httpresponse -H 'W3m-control: BACK'
+		;;
+esac

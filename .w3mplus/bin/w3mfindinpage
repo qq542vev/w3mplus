@@ -1,0 +1,109 @@
+#!/usr/bin/env sh
+
+### Script: w3mfindinpage
+##
+## ページ内の検索を行う。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.1.4
+##   date - 2022-06-28
+##   since - 2019-08-10
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='w3mfindinpage 1.1.4'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+. 'regex_escape.sh'
+. 'control_character.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [TEXT]..." \
+		'' 'Options:'
+
+	flag  exactFlag -e --{no-}exact init:@no -- '単語ごとに検索を行う'
+	param :'number=$((OPTARG))' -n --number init:='+1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"' var:SIGNED_INTEGER -- "指定回数検索を行う"
+	disp  :usage    -h --help       -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version    -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+search=''
+header=''
+
+for keyword in ${@+"${@}"}; do
+	case "${keyword}" in
+		?*)
+			regex_escape 'keyword' "${keyword}" 'ERE'
+			search="${search}${search:+|}$(printf '%s' "${keyword}" | tr -- '\n' ' ' | tr -d -- '\r')"
+			;;
+	esac
+done
+
+case "${search}" in ?*)
+	case "${exactFlag}" in
+		'1') search="(^|[${CHAR_HT} ])(${search})([${CHAR_HT} ]|\$)";;
+	esac
+
+	while [ "${number}" -ne 0 ]; do
+		if [ "${exactFlag}" -eq 1 ] && [ "${number}" -lt 0 ]; then
+			header="${header} -H 'W3m-control: MOVE_LEFT1'"
+		fi
+
+		if [ "${number}" -lt 0 ]; then
+			header="${header} -H \"W3m-control: SEARCH_BACK \${search}\""
+			number=$((number + 1))
+		else
+			header="${header} -H \"W3m-control: SEARCH \${search}\""
+			number=$((number - 1))
+		fi
+
+		if [ "${exactFlag}" -eq 1 ]; then
+			header="${header} -H 'W3m-control: MOVE_RIGHT1'"
+		fi
+	done
+esac
+
+eval "httpresponse -H 'W3m-control: BACK' ${header}"

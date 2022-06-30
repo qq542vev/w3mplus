@@ -1,0 +1,93 @@
+#!/usr/bin/env sh
+
+### Script: gotoline
+##
+## 行を移動を行う。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.0.0
+##   date - 2022-06-28
+##   since - 2019-07-29
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='gotoline 2.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
+		'' 'Options:'
+
+	param line    -l --line    init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:UNSIGNED_INTEGER -- '行番号を指定する'
+	param number  -n --number  init:='1' validate:'regex_match "${OPTARG}" "^([1-9][0-9]*|[+*/-][1-9][0-9]*(\\\\.[0-9]+)?|[+-]?(0|[1-9][0-9]?)(\\\\.[0-9]+)?%|[+-]?100(\\\\.0+)?%)$"' var:'[+*/-]NUMBER[%]?' -- '指定した行数移動する'
+	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+lineCount=$(grep -c -e '^' --  ${@+"${@}"})
+
+case "${number}" in
+	*%)
+		number="${number%?}"
+
+		case "${number}" in
+			[+-]*) number=$(awk -- "BEGIN { print ${line} + int(((${lineCount} - 1) * (${number} / 100)) + 1) }");;
+			*) number=$(awk -- "BEGIN { print int(((${lineCount} - 1) * (${number} / 100)) + 1) }");;
+		esac
+		;;
+	[+*/-]*) number=$(awk -- "BEGIN { print int(${line} ${number}) }");;
+esac
+
+if [ "${number}" -lt 1 ]; then
+	number='1'
+fi
+
+if [ "${lineCount}" -lt "${number}" ]; then
+	number="${lineCount}"
+fi
+
+printf '%d\n' "${number}"

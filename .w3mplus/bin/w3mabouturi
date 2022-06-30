@@ -1,0 +1,354 @@
+#!/usr/bin/env sh
+
+### Script: w3mabouturi
+##
+## w3m のための about URI を処理する
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.4.4
+##   date - 2022-06-28
+##   since - 2019-05-28
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='w3mabouturi 1.4.4'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'html_escape.sh'
+. 'path_to_fileurl.sh'
+
+: "${W3MPLUS_W3M_HOME:=${HOME}/.w3m}"
+: "${W3MPLUS_W3M_CONFIG:=${W3MPLUS_W3M_HOME}/config}"
+: "${W3MPLUS_W3M_SITECONF:=${W3MPLUS_W3M_HOME}/siteconf}"
+
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:error no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [ABOUT_URI]" \
+		'' 'Options:'
+
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+case "${1-about:about}" in
+	'about:')
+		html_escape 'version' "$(w3m -version)"
+
+		printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "${version}" | printhtml --title 'About:' - | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
+		;;
+	'about:about')
+		printhtml --title 'About About' - <<-'EOF' | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
+			<section>
+				<h1>About About</h1>
+
+				<p>This is a list of “about” pages for your convenience.</p>
+
+				<ul>
+					<li><a href="about:">about:</a></li>
+					<li><a href="about:about">about:about</a></li>
+					<li><a href="about:blank">about:blank</a></li>
+					<li><a href="about:bookmark">about:bookmark</a></li>
+					<li><a href="about:cache">about:cache</a></li>
+					<li><a href="about:config">about:config</a></li>
+					<li><a href="about:cookie">about:cookie</a></li>
+					<li><a href="about:downloads">about:downloads</a></li>
+					<li><a href="about:help">about:help</a></li>
+					<li><a href="about:history">about:history</a></li>
+					<li><a href="about:home">about:home</a></li>
+					<li><a href="about:memory">about:memory</a></li>
+					<li><a href="about:message">about:message</a></li>
+					<li><a href="about:newtab">about:newtab</a></li>
+					<li><a href="about:permissions">about:permissions</a></li>
+					<li><a href="about:private">about:private</a></li>
+					<li><a href="about:preferences">about:preferences</a></li>
+				</ul>
+			</section>
+		EOF
+		;;
+	'about:blank')
+		printhtml --title 'about:blank' - | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
+		;;
+	'about:bookmark')
+		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: VIEW_BOOKMARK'
+		;;
+	'about:cache')
+		path_to_fileurl 'baseURL' "${W3MPLUS_W3M_HOME}"
+
+		awkScript=$(
+			cat <<-'EOF'
+			BEGIN {
+				month["Jan"] = 1; month["Feb"] = 2; month["Mar"] = 3;
+				month["Apr"] = 4; month["May"] = 5; month["Jun"] = 6;
+				month["Jul"] = 7; month["Aug"] = 8; month["Sep"] = 9;
+				month["Oct"] = 10; month["Nov"] = 11; month["Dec"] =12;
+
+				command = "date '+%Y %m'"
+				command | getline
+				close(command)
+
+				currentYear = $1
+				currentMonth = $2
+
+				totalSize = 0
+
+				printf("<tbody>")
+			}
+
+			$0 ~ /^-/ && $7 ~ /^w3m(cache|cookie|frame|src|tmp)[.0-9A-Z_a-z-]*$/ {
+				fileSize = $3
+				fileMonth = month[$4]
+				fileDay = $5
+				fileTime = $6
+				fileName = $7
+
+				totalSize += fileSize
+
+				if(index(fileTime, ":")) {
+					fileYear = currentYear - (currentMonth < fileMonth)
+				} else {
+					fileYear = fileTime
+					fileTime = ""
+				}
+
+				fileDate = sprintf("%04d-%02d-%02d", fileYear, fileMonth, fileDay)
+
+				printf("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%s</td><td align=\"right\"><time datetime=\"%s\">%s</time></td></tr>", baseURL fileName, fileName, fileSize, fileDate, fileDate (fileTime ? " " fileTime : ""))
+			}
+
+			END {
+				printf("</tbody>")
+				printf("<tfoot><tr><th scope=\"row\">Total Item / Total Size</th><td colspan=\"2\" align=\"right\">%d / %d</td></tr></tfoot>", NR, totalSize)
+			}
+			EOF
+		)
+
+		printhtml --title 'Network Cache Storage Information' - <<-EOF | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
+			<table>
+				<caption>w3m Cache Files in '<a href="${baseURL}">${W3MPLUS_W3M_HOME}</a>'</caption>
+				<thead>
+					<tr>
+						<th scope="col">File Name</th>
+						<th scope="col">Size (Byte)</th>
+						<th scope="col">Modified</th>
+					</tr>
+				</thead>
+				$(
+					ls -gko -- "${W3MPLUS_W3M_HOME}" 2>'/dev/null' | \
+					awk -v "baseURL=${baseURL}/" -- "${awkScript}"
+				)
+			</table>
+		EOF
+		;;
+	'about:config')
+		path_to_fileurl 'uri' "${W3MPLUS_W3M_CONFIG}"
+
+		w3mredirect "${uri}"
+		;;
+	'about:cookie')
+		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: COOKIE'
+		;;
+	'about:downloads')
+		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: DOWNLOAD_LIST'
+		;;
+	'about:help')
+		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: HELP'
+		;;
+	'about:history')
+		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: HISTORY'
+		;;
+	'about:home')
+		html_escape 'server' "${SERVER_SOFTWARE:-w3m}"
+		path_to_fileurl 'homeurl' "${HOME}"
+
+		printhtml --title 'w3m Start Page' - <<-EOF | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -H 'W3m-control: BEGIN' -H 'W3m-control: NEXT_LINK' -
+			<form action="file:///cgi-bin/w3mplus" method="get" accept-charset="UTF-8">
+				<p align="center">
+					<input type="hidden" name="action" value="search" />
+					<input accesskey="s" type="text" name="query" size="30" placeholder="Search Keywords" />
+				</p>
+			</form>
+
+			<p align="center">
+				<a accesskey="~" href="${homeurl}">Home</a> -
+				<a accesskey="b" href="about:bookmark">Bookmarks</a> -
+				<a accesskey="h" href="about:history">History</a> -
+				<a accesskey="d" href="about:downloads">Downloads</a>
+			</p>
+
+			<p align="center">
+				<a accesskey="?" href="about:help">Help</a> -
+				<a accesskey="o" href="about:preferences">Options</a> -
+				<a accesskey="c" href="about:cookie">Cookies</a> -
+				<a accesskey="m" href="about:message">Messages</a>
+			</p>
+
+			<p align="center"><samp>${server}</samp></p>
+		EOF
+		;;
+	'about:memory')
+		header='pid=,ppid=,pcpu=,vsz=,nice=,etime=,time=,args='
+		awkScript=$(
+			cat <<-'EOF'
+			@include "html_escape.awk"
+
+			BEGIN {
+				hCount = split("", headers)
+
+				headers[++hCount] = "Process ID"
+				headers[++hCount] = "Parent process ID"
+				headers[++hCount] = "Ratio of CPU time"
+				headers[++hCount] = "Memory usage"
+				headers[++hCount] = "Nice value"
+				headers[++hCount] = "Elapsed time"
+				headers[++hCount] = "Cumulative CPU time"
+				headers[++hCount] = "Command"
+
+				split("S M H DT", timeUnit)
+			}
+
+			{
+				printf("<table><tbody>")
+
+				for(i = 1; i <= hCount; i++) {
+					printf("<tr><th>%s</th><td>", headers[i])
+
+					if(i == 3) {
+						printf("%s%%", $i)
+					} else if(i == 4) {
+						printf("%s KiB", $i)
+					} else if((i == 6) || (i == 7)) {
+						count = split($i, time, /[:-]/)
+
+						datetime = (count == 4 ? "P" : "PT")
+						for(j = 1; j <= count; j++) {
+							datetime = datetime (time[j] + 0) timeUnit[count - j + 1]
+						}
+
+						printf("<time datetime=\"%s\">%s</time>", datetime, $i)
+					} else if(i == hCount) {
+						printf("%s", $i)
+
+						for(j = hCount + 1; j <= NF; j++) {
+							printf(" %s", html_escape($j))
+						}
+					} else {
+						printf("%s", $i)
+					}
+
+					printf("</td></tr>")
+				}
+
+				printf("</tbody></table>")
+			}
+			EOF
+		)
+
+		w3mid=$(
+			psrelative -o 'pid,comm' 'ancestor' "${$}" \
+			| awk -- '$2 == "w3m" { printf("%d", $1); exit }'
+		)
+
+		printhtml --title 'w3m processes' - <<-EOF | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
+			<section>
+				<h1>Current w3m process</h1>
+
+				$(
+					case "${w3mid}" in
+						[0-9]*) ps -o "${header}" -p "${w3mid}" | awk -- "${awkScript}";;
+					esac
+				)
+			</section>
+
+			<section>
+				<h1>Other w3m processes</h1>
+
+				$(
+					ps -o "${header}" -u "${USER}" \
+					| awk -v "pid=${w3mid}" -- '($1 != pid) && ($8 == "w3m") { print $0 }' \
+					| awk -- "${awkScript}"
+				)
+			</section>
+		EOF
+		;;
+	'about:message')
+		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: MSGS'
+		;;
+	'about:newtab')
+		w3mredirect -t 'newtab' 'about:blank'
+		;;
+	'about:permissions')
+		path_to_fileurl 'uri' "${W3MPLUS_W3M_SITECONF}"
+
+		w3mredirect "${url}"
+		;;
+	'about:preferences')
+		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: OPTIONS'
+		;;
+	'about:private')
+		printhtml --title 'Private Browsing' - <<-'EOF' | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
+			<h1>Private Browsing</h1>
+
+			<p>w3m won't remember any history for this window.</p>
+
+			<p>In a Private Browsing window, w3m won't keep any browser history, search history, download history, web form history, cookies, or temporary internet files. However, files you download and bookmarks you make will be kept.</p>
+
+			<p>To stop Private Browsing, you can close this window.</p>
+
+			<p>While this computer won't have a record of your browsing history, your internet service provider or employer can still track the pages you visit.</p>
+		EOF
+		;;
+	*)
+		printhtml --title 'Problem loading page' - <<-'EOF' | httpresponse --status-code '400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -
+			<h1>The address isn't valid</h1>
+
+			<p>The URL is not valid and cannot be loaded.</p>
+
+			<ul>
+				<li>Web addresses are usually written like <strong>http://www.example.com/</strong></li>
+				<li>Make sure that you're using forward slashes (i.e. /).</li>
+			</ul>
+		EOF
+
+		endCall 1
+		;;
+esac

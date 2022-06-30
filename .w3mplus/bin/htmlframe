@@ -1,0 +1,139 @@
+#!/usr/bin/env sh
+
+### Script: htmlframe
+##
+## HTML のフレームページを作成する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2022-06-28
+##   since - 2022-06-28
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='htmlframe 1.0.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+. 'regex_match.sh'
+. 'append_array_posix.sh'
+. 'html_escape.sh'
+
+option_set() {
+	eval "${1}=\${${1}-}\${${1}:+\${3-}}\${2-}"
+}
+
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:error no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
+		'' 'Options:'
+
+	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:NANE=VALUE -- 'frameset要素に属性を追加する'
+	flag  attribute --no-attribute init:@no on: no: -- '--attribute をリセットする'
+	param :'option_set "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
+	flag  head      --no-head      init:@no on: no: --  '--head をリセットする'
+	param title     -t --title     init:='No Title' var:TITLE -- 'フレームページのタイトルを指定する'
+	param W3MPLUS_TEMPLATE_FRAMESET -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --n1 --n2 --n3 --n4 --n5 --n6 --n7 --n8 --n9 validate:'regex_match "${OPTARG}" "^([A-Za-z][0-9A-Za-z\\-_:.]*)?$"' var:NAME -- 'n個目の URI に対応するname属性を指定する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --t1 --t2 --t3 --t4 --t5 --t6 --t7 --t8 --t9 var:TITLE -- 'n個目の URI に対応するタイトルを指定する'
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+awkScript=$(
+	cat <<-'EOF'
+	@include "html_escape.awk"
+
+	BEGIN {
+		split("", attribute)
+
+		for(i = 1; i < ARGC; i += 2) {
+			attribute[ARGV[i]] = ARGV[i + 1]
+		}
+
+		for(name in attribute) {
+			printf(" %s=\"%s\"", name, html_escape(attribute[name]))
+		}
+	}
+	EOF
+)
+
+html_escape 'title' "${title}"
+
+for uri in ${@+"${@}"}; do
+	i=$((${i-0} + 1))
+
+	html_escape 'uri' "${uri}"
+
+	eval "name=\${n${i}-}"
+	eval "ftitle=\${t${i}-}"
+
+	case "${name}" in
+		?*)
+			html_escape 'name' "${name}"
+			nameAttr=" name=\"${name}\""
+			;;
+	esac
+
+	case "${ftitle}" in
+		?*)
+			html_escape 'ftitle' "${ftitle}"
+			titleAttr=" title=\"${ftitle}\""
+			list="${list-}<li><a href=\"${uri}\">${ftitle}</a></li>"
+			;;
+		*) list="${list-}<li><a href=\"${uri}\">${uri}</a></li>";;
+	esac
+
+	frame="${frame-}<frame${nameAttr-}${titleAttr-} src=\"${uri}\" />"
+done
+
+attribute=$(eval "awk -- \"\${awkScript}\" ${attribute}")
+
+frameset="<frameset${attribute}>${frame-}<noframes><body><p>The frame cannot be displayed on your Web browser.</p><p>Please enable HTML Frame.</p><p>Frame page list</p><ul>${list-}</ul></body></noframes></frameset>"
+
+case "${W3MPLUS_TEMPLATE_FRAMESET-}" in
+	'')
+		printf '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>%s</title>%s</head>%s</html>' "${title}" "${head}" "${frameset}"
+		;;
+	*) . "${W3MPLUS_TEMPLATE_FRAMESET}";;
+esac
