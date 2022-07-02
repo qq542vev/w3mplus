@@ -338,7 +338,7 @@ case "${1-about:about}" in
 		EOF
 		;;
 	*)
-		printhtml --title 'Problem loading page' - <<-'EOF' | httpresponse --status-code '400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -
+		printhtml --title 'Problem loading page' - <<-'EOF' | httpresponse --status-line 'HTTP/1.1 400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -
 			<h1>The address isn't valid</h1>
 
 			<p>The URL is not valid and cannot be loaded.</p>

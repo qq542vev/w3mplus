@@ -74,8 +74,8 @@ if [ -d "${config}" ]; then
 fi
 
 if [ '!' -e "${config}" ]; then
-	configDir=$(dirname -- "${config}"; printf '$')
-	mkdir -p -- "${configDir%?$}"
+	configDir=$(dirname -- "${config}"; printf '_')
+	mkdir -p -- "${configDir%?_}"
 
 	: >"${config}"
 fi

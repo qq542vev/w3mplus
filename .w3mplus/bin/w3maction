@@ -32,7 +32,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... ACTION VARIABLE_NAME" \
 		'' 'Options:'
 
-	param data     -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:'raw | base64 | urlencode' -- '変数のエンコードタイプを指定する'
+	param data     -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:"'raw' | 'base64' | 'urlencode'" -- '変数のエンコードタイプを指定する'
 	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
 	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
 
@@ -156,12 +156,12 @@ eval "value=\"\${${variableName}-}\""
 
 case "${data}" in
 	'base64')
-		value=$(printf '%s' "${value}" | base64 -d; printf '$')
-		value="${value%$}"
+		value=$(printf '%s' "${value}" | base64 -d; printf '_')
+		value="${value%_}"
 		;;
 	'urlencode')
-		value=$(printf '%s' "${value}" | urldecode; printf '$')
-		value="${value%$}"
+		value=$(printf '%s' "${value}" | urldecode; printf '_')
+		value="${value%_}"
 		;;
 esac
 

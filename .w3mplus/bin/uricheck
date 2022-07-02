@@ -32,7 +32,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 
-	param field         -f --field          init:='original' validate:validate_field var:'original | scheme | authority | userinfo | host | port | path | query | fragment' -- '表示する URI のフィールドを指定する'
+	param field         -f --field          init:='original' validate:validate_field var:"'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'?" -- '表示する URI のフィールドを指定する'
 	flag  normalizeFlag -n --{no-}normalize init:@no -- 'URI を正規化する'
 	flag  invertFlag    -V --{no-}invert    init:@no -- 'URI ではない引数を表示する'
 	flag  verboseFlag   --{no-}verbose      init:@no -- '詳細な表示を行う'

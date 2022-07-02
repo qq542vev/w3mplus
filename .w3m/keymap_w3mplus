@@ -426,7 +426,7 @@ keymap "C-s" DOWNLOAD
 
 ## Editing ##
 
-keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=yank&variable=W3M_CURRENT_WORD"
+keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
 keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD_AT"
 keymap "C-y" REDO
 keymap "C-z" UNDO
@@ -551,8 +551,8 @@ keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-w
 keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&tab=open-newtab&query=; DICT_WORD_AT"
 keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&tab=open-newtab&after=PREV_TAB&query=; DICT_WORD_AT"
 
-keymap "C-x" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=incrementURI&variable=W3M_URL&number=-1"
-keymap "C-a" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=incrementURI&variable=W3M_URL"
+keymap "C-x" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=incrementURI&variable=W3M_URL&number=-1"
+keymap "C-a" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=incrementURI&variable=W3M_URL"
 
 ### History ###
 
@@ -573,7 +573,7 @@ keymap "~" LOAD "~"
 keymap "gh" GOTO "file:///cgi-bin/w3mplus?action=homepage"
 keymap "gH" GOTO "file:///cgi-bin/w3mplus?action=homepage&tab=open-newtab"
 
-keymap "gu" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=parentUriPath&variable=W3M_URL"
+keymap "gu" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=parentUriPath&variable=W3M_URL"
 keymap "gU" GOTO_RELATIVE "/"
 
 ### Reloading ###
@@ -610,7 +610,9 @@ keymap "gF" COMMAND "VIEW; EDIT_SCREEN; VIEW"
 ### Motion commands ###
 
 keymap "0" LINE_BEGIN
+keymap "\^" GOTO "file:///cgi-bin/w3mplus?action=line-begin-non-blake"
 keymap "$" LINE_END
+keymap "g_" GOTO "file:///cgi-bin/w3mplus?action=line-end-non-blake"
 
 keymap "gg" BEGIN
 # Home key
@@ -694,8 +696,8 @@ keymap ":f" FRAME
 
 ### Copying text ###
 
-keymap "y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=yank&variable=W3M_URL"
-keymap "Y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=yank&variable=W3M_CURRENT_WORD"
+keymap "y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_URL"
+keymap "Y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
 
 ## Command Line mode ##
 
@@ -780,16 +782,16 @@ keymap ";?" LINE_INFO
 keymap ";s" SAVE_LINK
 keymap ";o" GOTO_LINK
 keymap ";t" TAB_LINK
-keymap ";b" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=prevTab&variable=W3M_CURRENT_LINK"
+keymap ";b" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=prevTab&variable=W3M_CURRENT_LINK"
 keymap ";w" EXTERN_LINK "w3m %s"
 keymap ";O" GOTO "file:///cgi-bin/w3mplus?action=link-goto"
 keymap ";T" GOTO "file:///cgi-bin/w3mplus?action=link-tabgoto"
 keymap ";W" EXTERN_LINK
-keymap ";a" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=addBookmark&variable=W3M_CURRENT_LINK"
-keymap ";v" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=viewSource&variable=W3M_CURRENT_LINK"
-keymap ";V" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=viewSourceExternally&variable=W3M_CURRENT_LINK"
-keymap ";y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=yank&variable=W3M_CURRENT_LINK"
-keymap ";Y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&run=yank&variable=W3M_CURRENT_WORD"
+keymap ";a" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
+keymap ";v" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=viewSource&variable=W3M_CURRENT_LINK"
+keymap ";V" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=viewSourceExternally&variable=W3M_CURRENT_LINK"
+keymap ";y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
+keymap ";Y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
 keymap ";c" GOTO "file:///cgi-bin/w3mplus?action=context-menu"
 keymap ";i" VIEW_IMAGE
 keymap ";I" SAVE_IMAGE
@@ -945,6 +947,8 @@ keymap "`X" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=X"
 keymap "`Y" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=Y"
 keymap "`Z" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=Z"
 
+keymap ":M" GOTO "file:///cgi-bin/w3mplus?action=show-url-mark"
+
 keymap "ma" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=a"
 keymap "mb" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=b"
 keymap "mc" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=c"
@@ -999,11 +1003,11 @@ keymap "`x" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=x"
 keymap "`y" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=y"
 keymap "`z" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=z"
 
-keymap ":m" GOTO "file:///cgi-bin/w3mplus?action=marks"
+keymap ":m" GOTO "file:///cgi-bin/w3mplus?action=show-local-mark"
 
 ## Automatic commands ##
 
-keymap ":D" GOTO "file:///cgi-bin/w3mplus?action=execute-user-command&call=manual"
+keymap ":D" GOTO "file:///cgi-bin/w3mplus?action=execute-user-command&key=manual"
 
 ## w3m UI ##
 
@@ -1021,7 +1025,7 @@ keymap ":C" MENU MenuStyle
 
 ## Error and informational messages ##
 
-keymap ":M" MSGS
+keymap ":G" MSGS
 
 ## Privacy and sensitive information ##
 
@@ -1064,6 +1068,7 @@ keymap "B" PREV_WORD
 keymap "zt" GOTO "file:///cgi-bin/w3mplus?action=scroll-zt"
 keymap "zb" GOTO "file:///cgi-bin/w3mplus?action=scroll-zb"
 
+keymap "z." COMMAND "CENTER_V; GOTO file:///cgi-bin/w3mplus?action=line-begin-non-blake"
 keymap "zz" CENTER_V
 
 keymap "zh" LEFT

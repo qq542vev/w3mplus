@@ -89,8 +89,8 @@ case "${config}" in
 esac
 
 if [ '!' -e "${config}" ]; then
-	configDir=$(dirname -- "${config}"; printf '$')
-	mkdir -p -- "${configDir%?$}"
+	configDir=$(dirname -- "${config}"; printf '_')
+	mkdir -p -- "${configDir%?_}"
 
 	: >"${config}"
 fi
@@ -107,16 +107,16 @@ case "${history}" in
 esac
 
 if [ '!' -e "${history}" ]; then
-	historyDir=$(dirname -- "${history}"; printf '$')
-	mkdir -p -- "${historyDir%?$}"
+	historyDir=$(dirname -- "${history}"; printf '_')
+	mkdir -p -- "${historyDir%?_}"
 
 	: >"${history}"
 fi
 
 case "${#}" in
 	'0')
-		set -- "$(cat; printf '$')"
-		set -- "${1%$}"
+		set -- "$(cat; printf '_')"
+		set -- "${1%_}"
 		;;
 esac
 

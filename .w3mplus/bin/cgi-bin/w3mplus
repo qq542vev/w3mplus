@@ -129,7 +129,7 @@ add_printtmp() {
 }
 
 error_meesage() {
-	httpresponse --status-code '500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' - <<-EOF
+	httpresponse --status-line 'HTTP/1.1 500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' - <<-EOF
 		An unexpected error occurred during request processing.
 
 		# Error message
@@ -182,10 +182,16 @@ esac
 eval "$(parsequery --prefix 'query_' "${QUERY_STRING-}")"
 
 case "${query_action-}" in
-	'execute-user-command')
-		expand 'string' "${query_string-W3M_URL}"
+	'show-user-command')
+		: >>"${W3MPLUS_USERCOMMAND_FILE}"
+		path_to_fileurl 'uri' "${W3MPLUS_USERCOMMAND_FILE}"
 
-		executeusercommand -- "${query_call-manual}" ${string:+"${string}"} || case "${?}" in
+		w3mredirect -- "${uri}"
+		;;
+	'execute-user-command')
+		expand 'input' "${query_string-W3M_URL}"
+
+		executeusercommand --config "${W3MPLUS_USERCOMMAND_FILE}" -- "${query_key-manual}" "${input}" || case "${?}" in
 			'1') httpresponse -H 'W3m-control: BACK';;
 			*) exit "${?}";;
 		esac
@@ -204,7 +210,9 @@ case "${query_action-}" in
 			;;
 		esac
 
-		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: CLOSE_TAB'
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H 'W3m-control: CLOSE_TAB'
 		;;
 	'undo-tab')
 		case "${query_count-}" in
@@ -311,14 +319,12 @@ case "${query_action-}" in
 			*) printf 'This page cannot be registered.\n';;
 		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
 		;;
-	'marks')
+	'show-local-mark')
 		: >>"${W3MPLUS_LOCALMARK_FILE}"
-		: >>"${W3MPLUS_LOCALMARKGOTO_FILE}"
 
-		path_to_fileurl 'mark1' "${W3MPLUS_LOCALMARK_FILE}"
-		path_to_fileurl 'mark2' "${W3MPLUS_LOCALMARKGOTO_FILE}"
+		path_to_fileurl 'mark' "${W3MPLUS_LOCALMARK_FILE}"
 
-		w3mredirect -- "${mark1}" "${mark2}"
+		w3mredirect -- "${mark}"
 		;;
 	'get-local-mark')
 		expand 'uri' "${query_uri-W3M_URL}"
@@ -350,9 +356,16 @@ case "${query_action-}" in
 			*) printf 'This page cannot be registered.\n';;
 		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
 		;;
+	'show-url-mark')
+		: >>"${W3MPLUS_URLMARK_FILE}"
+
+		path_to_fileurl 'mark' "${W3MPLUS_URLMARK_FILE}"
+
+		w3mredirect -- "${mark}"
+		;;
 	'get-url-mark')
 		getquickmark \
-			--config "${W3MPLUS_URLMARK}" \
+			--config "${W3MPLUS_URLMARK_FILE}" \
 			-- "${query_key}" \
 		| cut -f '2-3' | w3mredirect
 		;;
@@ -364,7 +377,7 @@ case "${query_action-}" in
 		case "${uri}" in
 			?*)
 				setquickmark \
-					--config "${W3MPLUS_URLMARK}" \
+					--config "${W3MPLUS_URLMARK_FILE}" \
 					${line:+--l1 "${line}"} \
 					${colmun:+--c1 "${colmun}"} \
 					-- "${query_key}" "${uri}"
@@ -379,11 +392,15 @@ case "${query_action-}" in
 		w3mredirect -- "${uri}"
 		;;
 	'get-register')
-		register=$(getregister --config "${W3MPLUS_REGISTER_FILE}" -- "${query_key-0}" && printf '$') || case "${?}" in
-			[!1]* | 1?*) exit "${?}";;
+		register=$(getregister --config "${W3MPLUS_REGISTER_FILE}" -- "${query_key-0}" && printf '_') || case "${?}" in
+			'1')
+				httpresponse -H 'W3m-control: BACK'
+				exit
+				;;
+			*) exit "${?}";;
 		esac
 
-		QUERY_STRING="${QUERY_STRING}&action=runVariable&variable=W3MPLUS_REGISTER_TMP" W3MPLUS_REGISTER_TMP="${register%$}" "${0}" ${@+"${@}"}
+		QUERY_STRING="${QUERY_STRING}&action=execute-env-var&variable=W3MPLUS_REGISTER_TMP" W3MPLUS_REGISTER_TMP="${register%_}" "${0}" ${@+"${@}"}
 		;;
 	'set-register')
 		expand 'value' "${query_value-W3M_URL}"
@@ -414,7 +431,7 @@ case "${query_action-}" in
 			${W3M_CURRENT_LINK:+-H 'W3m-control: SET_OPTION default_url=2' -H "W3m-control: ${command}"}
 		;;
 	'execute-env-var')
-		case "${query_run}" in
+		case "${query_subaction}" in
 			'addBookmark' | 'goto' | 'viewSource' | 'viewSourceExternally')
 				runCommand='${query_tab+--tab "${query_tab}"}';;
 			'incrementURI' | 'parentUriPath')
@@ -424,7 +441,7 @@ case "${query_action-}" in
 		esac
 
 		eval w3maction \
-			'"${query_run}"' \
+			'"${query_subaction}"' \
 			'"${query_variable-W3M_URL}"' \
 			"${runCommand-}"
 		;;
@@ -644,111 +661,158 @@ case "${query_action-}" in
 			-H "W3m-control: ${move}" \
 			-H "W3m-control: GOTO_LINE ${line:-1}"
 		;;
+	'line-begin-non-blake')
+		add_printtmp
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+
+		count=$(sed -n -e "${line:-1}"'{s/^\([[:blank:]]*\).*$/\1/; p; q}' -- "${query_printtmp}" | tr -d '\n' | wc	-m)
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: GOTO_LINE ${line:-1}" \
+			-H 'W3m-control: LINE_BEGIN' \
+			-H "W3m-control: MOVE_RIGHT1 ${count}"
+		;;
+	'line-end-non-blake')
+		add_printtmp
+		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+
+		count=$(sed -n -e "${line:-1}"'{s/.*[^[:blank:]]\{1,\}\([[:blank:]]*\)$/\1/; p; q}' -- "${query_printtmp}" | tr -d '\n' | wc	-m)
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: GOTO_LINE ${line:-1}" \
+			-H 'W3m-control: LINE_END' \
+			-H "W3m-control: MOVE_LEFT1 ${count}"
+		;;
 	*)
-		printhtml --title 'Bad Request' - <<-EOF | httpresponse --status-code '400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -
+		printhtml --title 'Bad Request' - <<-EOF | httpresponse --status-line 'HTTP/1.1 400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -
 			<dl>
-				<dt>autoCommand</dt>
-				<dd>file://${SCRIPT_NAME}?action=autoCommand&amp;call={call-type}&amp;string={VARIABLE}</dd>
+				<dt>show-user-command</dt>
+				<dd>file://${SCRIPT_NAME}?action=show-user-command</dd>
 
-				<dt>closeTab</dt>
-				<dd>file://${SCRIPT_NAME}?action=closeTab&amp;uri={VARIABLE}&amp;line={VARIABLE}&amp;colmun={VARIABLE}</dd>
+				<dt>execute-user-command</dt>
+				<dd>file://${SCRIPT_NAME}?action=execute-user-command&amp;key={PATTERN}&amp;input={VARIABLE_NAME}</dd>
 
-				<dt>undoTab</dt>
-				<dd>file://${SCRIPT_NAME}?action=undoTab&amp;number={number}&amp;count={number}</dd>
+				<dt>close-tab</dt>
+				<dd>file://${SCRIPT_NAME}?action=close-tab&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}</dd>
 
-				<dt>undoTabs</dt>
-				<dd>file://${SCRIPT_NAME}?action=undoTabs</dd>
+				<dt>undo-tab</dt>
+				<dd>file://${SCRIPT_NAME}?action=undo-tab&amp;number={SIGNED_INTEGER}&amp;count={@INTEGER | SIGNED_INTEGER}</dd>
+
+				<dt>show-tab-history</dt>
+				<dd>file://${SCRIPT_NAME}?action=show-tab-history</dd>
 
 				<dt>homepage</dt>
 				<dd>file://${SCRIPT_NAME}?action=homepage</dd>
 
-				<dt>aboutURI</dt>
-				<dd>file://${SCRIPT_NAME}?action=aboutURI&amp;uri={about-uri}</dd>
+				<dt>about-uri</dt>
+				<dd>file://${SCRIPT_NAME}?action=about-uri&amp;about={ABOUT_URI}</dd>
 
-				<dt>moveParagraph</dt>
-				<dd>file://${SCRIPT_NAME}?action=moveParagraph&amp;line={VARIABLE}&amp;number={SIGNED_INTEGER}</dd>
+				<dt>goto-paragraph</dt>
+				<dd>file://${SCRIPT_NAME}?action=goto-paragraph&amp;line={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
 
-				<dt>movePercent</dt>
-				<dd>file://${SCRIPT_NAME}?action=movePercent&amp;line={VARIABLE}&amp;number={[+*/-]NUMBER[%]?}</dd>
+				<dt>goto-line</dt>
+				<dd>file://${SCRIPT_NAME}?action=goto-line&amp;line={VARIABLE_NAME}&amp;number={[+*/-]? NUMBER '%'?}</dd>
 
-				<dt>stringFind</dt>
-				<dd>file://${SCRIPT_NAME}?action=stringFind&amp;word={VARIABLE}&amp;number={SIGNED_INTEGER}</dd>
+				<dt>find-string</dt>
+				<dd>file://${SCRIPT_NAME}?action=find-string&amp;word={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
 
-				<dt>wordFind</dt>
-				<dd>file://${SCRIPT_NAME}?action=wordFind&amp;word={VARIABLE}&amp;number={SIGNED_INTEGER}</dd>
+				<dt>find-word</dt>
+				<dd>file://${SCRIPT_NAME}?action=find-word&amp;word={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
 
-				<dt>qmarks</dt>
-				<dd>file://${SCRIPT_NAME}?action=qmarks</dd>
+				<dt>show-quick-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=show-quick-mark</dd>
 
-				<dt>getQuickMark</dt>
-				<dd>file://${SCRIPT_NAME}?action=getQuickMarkgetRegister&amp;tab={TAB_PARAM}</dd>
+				<dt>get-quick-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=get-quick-mark&amp;key={PATTERN}&amp;tab={TAB_PARAM}</dd>
 
-				<dt>setQuickMark</dt>
-				<dd>file://${SCRIPT_NAME}?action=setQuickMark&amp;uri={VARIABLE}&amp;line={VARIABLE}&amp;colmun={VARIABLE}&amp;key={KEY}</dd>
+				<dt>set-quick-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=setQuickMark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;key={KEY}</dd>
 
-				<dt>marks</dt>
-				<dd>file://${SCRIPT_NAME}?action=marks</dd>
+				<dt>show-local-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=show-local-mark</dd>
 
-				<dt>getLocalMark</dt>
-				<dd>file://${SCRIPT_NAME}?action=getLocalMark&amp;uri={VARIABLE}&amp;key={PATTERN}</dd>
+				<dt>get-local-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=get-local-mark&amp;uri={VARIABLE_NAME}&amp;key={PATTERN}</dd>
 
-				<dt>setLocalMark</dt>
-				<dd>file://${SCRIPT_NAME}?action=setLocalMark&amp;uri={VARIABLE}&amp;line={VARIABLE}&amp;key={KEY}</dd>
+				<dt>set-local-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=set-local-mark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;key={KEY}</dd>
 
-				<dt>getLocalMarkGoto</dt>
-				<dd>file://${SCRIPT_NAME}?action=getLocalMarkGoto&amp;key={PATTERN}</dd>
+				<dt>show-url-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=show-url-mark</dd>
 
-				<dt>setLocalMarkGoto</dt>
-				<dd>file://${SCRIPT_NAME}?action=setLocalMarkGoto&amp;uri={VARIABLE}&amp;line={VARIABLE}&amp;colmun={VARIABLE}&amp;key={KEY}</dd>
+				<dt>get-url-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=get-url-mark&amp;key={PATTERN}</dd>
 
-				<dt>registers</dt>
-				<dd>file://${SCRIPT_NAME}?action=registers</dd>
+				<dt>set-url-mark</dt>
+				<dd>file://${SCRIPT_NAME}?action=set-url-mark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;key={KEY}</dd>
 
-				<dt>getRegister</dt>
-				<dd>file://${SCRIPT_NAME}?action=getRegister&amp;key={PATTERN}</dd>
+				<dt>show-register</dt>
+				<dd>file://${SCRIPT_NAME}?action=show-register</dd>
 
-				<dt>setRegister</dt>
-				<dd>file://${SCRIPT_NAME}?action=setRegister&amp;value={VARIABLE}&amp;key={KEY}</dd>
+				<dt>get-register</dt>
+				<dd>file://${SCRIPT_NAME}?action=get-register&amp;key={PATTERN}&amp;subaction={ACTION}</dd>
 
-				<dt>linkSetOpen</dt>
-				<dd>file://${SCRIPT_NAME}?action=linkSetOpen</dd>
+				<dt>set-register</dt>
+				<dd>file://${SCRIPT_NAME}?action=set-register&amp;value={VARIABLE_NAME}&amp;key={KEY}</dd>
 
-				<dt>linkSetTabopen</dt>
-				<dd>file://${SCRIPT_NAME}?action=linkSetTabopen</dd>
+				<dt>link-goto</dt>
+				<dd>file://${SCRIPT_NAME}?action=link-goto</dd>
 
+				<dt>link-tabgoto</dt>
+				<dd>file://${SCRIPT_NAME}?action=link-tabgoto</dd>
 
-				<dt>contextMenu</dt>
-				<dd>file://${SCRIPT_NAME}?action=contextMenu</dd>
+				<dt>context-menu</dt>
+				<dd>file://${SCRIPT_NAME}?action=context-menu</dd>
 
-				<dt>runVariable</dt>
-				<dd>file://${SCRIPT_NAME}?action=runVariable&run={ACTION}</dd>
+				<dt>execute-env-var</dt>
+				<dd>file://${SCRIPT_NAME}?action=execute-env-var&amp;subaction={ACTION}&amp;VARIABLE_NAME={VARIABLE_NAME}</dd>
 
-				<dt>lineVisualMode</dt>
-				<dd>file://${SCRIPT_NAME}?action=lineVisualMode&amp;id={ID}&amp;line={VARIABLE}</dd>
-
-				<dt>yankSelection</dt>
-				<dd>file://${SCRIPT_NAME}?action=yankSelection</dd>
+				<dt>visual-mode</dt>
+				<dd>file://${SCRIPT_NAME}?action=visual-mode&amp;id={TEXT}&amp;line={VARIABLE_NAME}&amp;subaction={subaction}</dd>
 
 				<dt>zoom</dt>
-				<dd>file://${SCRIPT_NAME}?action=zoom&amp;zoom={ZOOM}</dd>
+				<dd>file://${SCRIPT_NAME}?action=zoom&amp;zoom={([+*/-] '=')? UNSIGNED_INTEGER}</dd>
 
 				<dt>search</dt>
-				<dd>file://${SCRIPT_NAME}?action=search&amp;query={query}</dd>
+				<dd>file://${SCRIPT_NAME}?action=search&amp;query={TEXT}&amp;tab={TAB}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
-				<dt>dictWordSearch</dt>
-				<dd>file://${SCRIPT_NAME}?action=dictWordSearch&amp;query={query}</dd>
+				<dt>dict-word</dt>
+				<dd>file://${SCRIPT_NAME}?action=dict-word&amp;query={'?' TEXT}&amp;tab={TAB}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
-				<dt>selectLine</dt>
-				<dd>file://${SCRIPT_NAME}?action=selectLine&amp;subaction={subaction}&amp;number={number}&amp;file={file}</dd>
+				<dt>show-search-history</dt>
+				<dd>file://${SCRIPT_NAME}?action=show-search-history</dd>
 
-				<dt>equalPrg</dt>
-				<dd>file://${SCRIPT_NAME}?action=equalPrg</dd>
+				<dt>select-line</dt>
+				<dd>file://${SCRIPT_NAME}?action=select-line&amp;line={VARIABLE_NAME}&amp;subaction={ACTION}&amp;number={'0' | '$' | SIGNED_INTEGER}</dd>
 
-				<dt>httpsEverywhere</dt>
-				<dd>file://${SCRIPT_NAME}?action=httpsEverywhere</dd>
+				<dt>equalprg</dt>
+				<dd>file://${SCRIPT_NAME}?action=equalprg</dd>
 
-				<dt>zMove</dt>
-				<dd>file://${SCRIPT_NAME}?action=zMove&amp;line={VARIABLE}</dd>
+				<dt>cookie-config</dt>
+				<dd>file://${SCRIPT_NAME}?action=cookie-copnfig&amp;uri={VARIABLE_NAME}&amp;accept={'add' | 'delete' | 'toggle'}&amp;reject={'add' | 'delete' | 'toggle'}</dd>
+
+				<dt>bookmark-bar</dt>
+				<dd>file://${SCRIPT_NAME}?action=bookmark-bar&amp;uri={VARIABLE_NAME}</dd>
+
+				<dt>history-bar</dt>
+				<dd>file://${SCRIPT_NAME}?action=history-bar&amp;uri={VARIABLE_NAME}</dd>
+
+				<dt>toggle-https-everywhere</dt>
+				<dd>file://${SCRIPT_NAME}?action=toggle-https-everywhere</dd>
+
+				<dt>scroll-zt</dt>
+				<dd>file://${SCRIPT_NAME}?action=scroll-zt&amp;line={VARIABLE_NAME}</dd>
+
+				<dt>scroll-zb</dt>
+				<dd>file://${SCRIPT_NAME}?action=scroll-zb&amp;line={VARIABLE_NAME}</dd>
+
+				<dt>line-begin-non-blake</dt>
+				<dd>file://${SCRIPT_NAME}?action=line-begin-non-blake&amp;line={VARIABLE_NAME}</dd>
+
+				<dt>line-end-non-blake</dt>
+				<dd>file://${SCRIPT_NAME}?action=line-end-non-blake&amp;line={VARIABLE_NAME}</dd>
 			</dl>
 		EOF
 		;;

@@ -37,10 +37,9 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param :'option_set "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:NAME=VALUE -- 'HTTP フィールドを追加する'
+	param :'option_set "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
 	flag  header      --no-header      init:@no on: no: -- '--header をリセットする'
-	param statusCode  -s --status-code init:='200 OK' validate:'regex_match "${OPTARG}" "^[0-9]{3} [\\\\t !#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]*$"' var:STATUS_CODE -- 'HTTP のステータスコードを指定する'
-	param httpVersion -V --http-version init:='1.1' validate:'regex_match "${OPTARG}" "^[0-9]\.[0-9]$"' var:VERSION -- 'HTTP のバージョンを指定する'
+	param statusLine  -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
 	param W3MPLUS_TEMPLATE_HTTP -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp  :usage      -h --help    -- 'このヘルプを表示して終了する'
 	disp  VERSION     -v --version -- 'バージョン情報を表示して終了する'
@@ -83,7 +82,7 @@ eval "set -- ${REST}"
 case "${W3MPLUS_TEMPLATE_HTTP-}" in
 	'')
 		cat <<-EOF
-		HTTP/${httpVersion} ${statusCode}${CHAR_CR}
+		${statusLine}${CHAR_CR}
 		Date: $(date -u '+%a, %d %b %Y %H:%M:%S GMT')${CHAR_CR}
 		${header}${CHAR_CR}
 		EOF

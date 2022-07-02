@@ -38,14 +38,14 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 
-	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:NANE=VALUE -- 'frameset要素に属性を追加する'
+	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:"NANE '=' VALUE" -- 'frameset要素に属性を追加する'
 	flag  attribute --no-attribute init:@no on: no: -- '--attribute をリセットする'
 	param :'option_set "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
 	flag  head      --no-head      init:@no on: no: --  '--head をリセットする'
-	param title     -t --title     init:='No Title' var:TITLE -- 'フレームページのタイトルを指定する'
+	param title     -t --title     init:='No Title' var:TEXT -- 'フレームページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_FRAMESET -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	param :'eval "${1#--}=\"\${OPTARG}\""' --n1 --n2 --n3 --n4 --n5 --n6 --n7 --n8 --n9 validate:'regex_match "${OPTARG}" "^([A-Za-z][0-9A-Za-z\\-_:.]*)?$"' var:NAME -- 'n個目の URI に対応するname属性を指定する'
-	param :'eval "${1#--}=\"\${OPTARG}\""' --t1 --t2 --t3 --t4 --t5 --t6 --t7 --t8 --t9 var:TITLE -- 'n個目の URI に対応するタイトルを指定する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --t1 --t2 --t3 --t4 --t5 --t6 --t7 --t8 --t9 var:TEXT -- 'n個目の URI に対応するタイトルを指定する'
 	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
 	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
 
