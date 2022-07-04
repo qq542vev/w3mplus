@@ -631,13 +631,15 @@ case "${query_action-}" in
 		;;
 	'toggle-https-everywhere')
 		if sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${W3MPLUS_W3M_SITECONF}" | grep -Fqx '# url m@^http://@'; then
-			sed -e '/^# HTTPS Everywhere$/,/^$/{s/^# url/url/; s/^# substitute_url/substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" | sponge -- "${W3MPLUS_W3M_SITECONF}"
+			sed -e '/^# HTTPS Everywhere$/,/^$/{s/^# url/url/; s/^# substitute_url/substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" >"${tmpDir}/siteconf"
+			cat -- "${tmpDir}/siteconf" >"${W3MPLUS_W3M_SITECONF}"
 
 			httpresponse \
 				-H 'W3m-control: BACK' \
 				-H 'W3m-control: REINIT'
 		elif sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${W3MPLUS_W3M_SITECONF}" | grep -Fqx 'url m@^http://@'; then
-			sed -e '/^# HTTPS Everywhere$/,/^$/{s/^url/# url/; s/^substitute_url/# substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" | sponge -- "${W3MPLUS_W3M_SITECONF}"
+			sed -e '/^# HTTPS Everywhere$/,/^$/{s/^url/# url/; s/^substitute_url/# substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" >"${tmpDir}/siteconf"
+			cat -- "${tmpDir}/siteconf" >"${W3MPLUS_W3M_SITECONF}"
 
 			httpresponse \
 				-H 'W3m-control: BACK' \
