@@ -174,8 +174,8 @@ menu MenuView
 end
 
 menu MenuSidebar
-	func "Bookmarks (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmark-bar"
-	func "History   (h)" GOTO "Hh" "file:///cgi-bin/w3mplus?action=history-bar"
+	func "Bookmarks (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=sidebar-bookmark"
+	func "History   (h)" GOTO "Hh" "file:///cgi-bin/w3mplus?action=sidebar-history"
 end
 
 menu MenuZoom
@@ -328,7 +328,7 @@ menu Commands
 	func  "s  Set w3m option" SET_OPTION "s"
 	func  "S  Start a shell" EXEC_SHELL "S" "${SHELL}"
 	func  "t  Open URL in a new tab" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
-	func  "u  Recently closed tabs" GOTO "u" "file:///cgi-bin/w3mplus?action=undo-tabs"
+	func  "u  Recently closed tabs" GOTO "u" "file:///cgi-bin/w3mplus?action=show-tab-history"
 	popup "U  Change the user agent" MenuUserAgent "U"
 	func  "v  Show version information" VERSION "v"
 	func  "w  Save current document to disk" DOWNLOAD "w"
@@ -1033,6 +1033,7 @@ menu filter
 	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=1"
 	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%24"
 	func  "*      All lines" PIPE_BUF "*"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?action=visual-mode&subaction=filter"
 	nop   "----------------------"
 	popup "1      1 line" filter1Line "1"
 	popup "2      2 lines" filter2Line "2"
@@ -1106,6 +1107,7 @@ menu switchcase
 	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=1"
 	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%24"
 	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?action=visual-mode&subaction=switchcase"
 	nop   "----------------------"
 	popup "1      1 line" switchcase1Line "1"
 	popup "2      2 lines" switchcase2Line "2"
@@ -1179,16 +1181,17 @@ menu rot13
 	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=1"
 	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%24"
 	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?action=visual-mode&subaction=rot13"
 	nop   "----------------------"
-	popup "1      1 line" switchcase1Line "1"
-	popup "2      2 lines" switchcase2Line "2"
-	popup "3      3 lines" switchcase3Line "3"
-	popup "4      4 lines" switchcase4Line "4"
-	popup "5      5 lines" switchcase5Line "5"
-	popup "6      6 lines" switchcase6Line "6"
-	popup "7      7 lines" switchcase7Line "7"
-	popup "8      8 lines" switchcase8Line "8"
-	popup "9      9 lines" switchcase9Line "9"
+	popup "1      1 line" rot13-1Line "1"
+	popup "2      2 lines" rot13-2Line "2"
+	popup "3      3 lines" rot13-3Line "3"
+	popup "4      4 lines" rot13-4Line "4"
+	popup "5      5 lines" rot13-5Line "5"
+	popup "6      6 lines" rot13-6Line "6"
+	popup "7      7 lines" rot13-7Line "7"
+	popup "8      8 lines" rot13-8Line "8"
+	popup "9      9 lines" rot13-9Line "9"
 end
 
 menu rot13-1Line

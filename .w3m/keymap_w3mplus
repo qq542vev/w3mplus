@@ -472,13 +472,13 @@ keymap "M-9" COMMAND "NEW_TAB; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_R
 
 ## History ##
 
-keymap "C-h" GOTO "file:///cgi-bin/w3mplus?action=history-bar"
+keymap "C-h" GOTO "file:///cgi-bin/w3mplus?action=sidebar-history"
 keymap "M-C-h" HISTORY
 
 ## Bookmarks ##
 
 keymap "C-d" ADD_BOOKMARK
-keymap "C-b" GOTO "file:///cgi-bin/w3mplus?action=bookmark-bar"
+keymap "C-b" GOTO "file:///cgi-bin/w3mplus?action=sidebar-bookmark"
 keymap "M-C-b" BOOKMARK
 
 ## Tools ##
@@ -770,7 +770,7 @@ keymap "C-to" COMMAND "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TA
 keymap "u" GOTO "file:///cgi-bin/w3mplus?action=undo-tab"
 keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undo-tab&count=-0"
 
-keymap ":u" GOTO "file:///cgi-bin/w3mplus?action=undo-tabs"
+keymap ":u" GOTO "file:///cgi-bin/w3mplus?action=show-tab-history"
 
 ## Hints ##
 

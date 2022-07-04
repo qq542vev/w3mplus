@@ -40,15 +40,15 @@ parser_definition() {
 
 	msg -- '' 'ACTION:'
 
-	cmd operatorFunc -- '選択範囲を EXEC_SHELL で実行する'
-	cmd formatPrg    -- '選択範囲を PIPE_BUF で実行する'
-	cmd filter       -- '選択範囲を任意のコマンドで実行する'
-	cmd uppercase    -- '選択範囲をアルファベットを大文字に変換する'
-	cmd lowercase    -- '選択範囲をアルファベットを小文字に変換する'
-	cmd switchcase   -- '選択範囲のアルファベットを大文字と小文字に変換する'
-	cmd rot13        -- '選択範囲のアルファベットを ROT13 で変換する'
-	cmd yank         -- '選択範囲をヤンクする'
 	cmd display      -- '選択範囲を表示する'
+	cmd filter       -- '選択範囲を任意のコマンドで実行する'
+	cmd formatPrg    -- '選択範囲を PIPE_BUF で実行する'
+	cmd lowercase    -- '選択範囲をアルファベットを小文字に変換する'
+	cmd operatorFunc -- '選択範囲を EXEC_SHELL で実行する'
+	cmd rot13        -- '選択範囲のアルファベットを ROT13 で変換する'
+	cmd switchcase   -- '選択範囲のアルファベットを大文字と小文字に変換する'
+	cmd uppercase    -- '選択範囲をアルファベットを大文字に変換する'
+	cmd yank         -- '選択範囲をヤンクする'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -116,33 +116,10 @@ else
 fi
 
 case "${action}" in
-	'operatorFunc')
-		displayTmp=$(mktemp -d)
-		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
-
+	'display')
 		httpresponse \
 			-H 'W3m-control: BACK' \
-			-H "W3m-control: PRINT ${displayTmp}/file" \
-			-H "W3m-control: EXEC_SHELL sed -e '${startLine},${endLine}!d' -- '${displayTmp}/file' | sh -c 'eval \"\$(echo \"${command}\" | base64 -d)\"'; rm -fr -- '${displayTmp}'"
-		;;
-	'formatPrg')
-		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
-		formatCommand=$(
-			cat <<-EOF | tr -d '\n'
-			file=%s;
-			head -n '$((startLine - 1))' -- "\${file}";
-			sed -e '${startLine},${endLine}!d' -- "\${file}" | sh -c 'eval "\$(echo "${command}" | base64 -d)"';
-			EOF
-		)
-
-		case "${endLine}" in
-			[1-9]*) formatCommand="${formatCommand} tail -n '+$((endLine + 1))' -- \"\${file}\";";;
-		esac
-
-		httpresponse \
-			-H 'W3m-control: BACK' \
-			-H "W3m-control: PIPE_BUF ${formatCommand}" \
-			-H "W3m-control: GOTO_LINE ${startLine}"
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d'"
 		;;
 	'filter')
 		displayTmp=$(mktemp -d)
@@ -168,10 +145,23 @@ case "${action}" in
 			-H 'W3m-control: DELETE_PREVBUF' \
 			-H "W3m-control: GOTO_LINE ${startLine}"
 		;;
-	'uppercase')
+	'formatPrg')
+		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
+		formatCommand=$(
+			cat <<-EOF | tr -d '\n'
+			file=%s;
+			head -n '$((startLine - 1))' -- "\${file}";
+			sed -e '${startLine},${endLine}!d' -- "\${file}" | sh -c 'eval "\$(echo "${command}" | base64 -d)"';
+			EOF
+		)
+
+		case "${endLine}" in
+			[1-9]*) formatCommand="${formatCommand} tail -n '+$((endLine + 1))' -- \"\${file}\";";;
+		esac
+
 		httpresponse \
 			-H 'W3m-control: BACK' \
-			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/'" \
+			-H "W3m-control: PIPE_BUF ${formatCommand}" \
 			-H "W3m-control: GOTO_LINE ${startLine}"
 		;;
 	'lowercase')
@@ -180,16 +170,31 @@ case "${action}" in
 			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'" \
 			-H "W3m-control: GOTO_LINE ${startLine}"
 		;;
+	'operatorFunc')
+		displayTmp=$(mktemp -d)
+		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PRINT ${displayTmp}/file" \
+			-H "W3m-control: EXEC_SHELL sed -e '${startLine},${endLine}!d' -- '${displayTmp}/file' | sh -c 'eval \"\$(echo \"${command}\" | base64 -d)\"'; rm -fr -- '${displayTmp}'"
+		;;
+	'rot13')
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/'" \
+			-H "W3m-control: GOTO_LINE ${startLine}"
+		;;
 	'switchcase')
 		httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/'" \
 			-H "W3m-control: GOTO_LINE ${startLine}"
 		;;
-	'rot13')
+	'uppercase')
 		httpresponse \
 			-H 'W3m-control: BACK' \
-			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/'" \
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/'" \
 			-H "W3m-control: GOTO_LINE ${startLine}"
 		;;
 	'yank')
@@ -199,10 +204,5 @@ case "${action}" in
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d' | sh -c 'eval \"\$(echo \"${command}\" | base64 -d)\"'" \
 			-H 'W3m-control: BACK'
-		;;
-	'display')
-		httpresponse \
-			-H 'W3m-control: BACK' \
-			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d'"
 		;;
 esac

@@ -174,8 +174,8 @@ menu MenuView
 end
 
 menu MenuSidebar
-	func "ブックマーク (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=bookmark-bar"
-	func "履歴         (h)" GOTO "Hh" "file:///cgi-bin/w3mplus?action=history-bar"
+	func "ブックマーク (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=sidebar-bookmark"
+	func "履歴         (h)" GOTO "Hh" "file:///cgi-bin/w3mplus?action=sidebar-history"
 end
 
 menu MenuZoom
@@ -328,7 +328,7 @@ menu Commands
 	func  "s  w3m のオプションを設定" SET_OPTION "s"
 	func  "S  シェルを開始" EXEC_SHELL "S" "${SHELL}"
 	func  "t  新しいタブで URL を開く" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
-	func  "u  最近閉じたタブの一覧" GOTO "u" "file:///cgi-bin/w3mplus?action=undo-tabs"
+	func  "u  最近閉じたタブの一覧" GOTO "u" "file:///cgi-bin/w3mplus?action=show-tab-history"
 	popup "U  ユーザーエージェントを変更" MenuUserAgent "U"
 	func  "v  バージョン情報を表示" VERSION "v"
 	func  "w  現在のページをディスクに保存" DOWNLOAD "w"
@@ -1033,6 +1033,7 @@ menu filter
 	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=1"
 	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%24"
 	func  "*      すべての行" PIPE_BUF "*"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?action=visual-mode&subaction=filter"
 	nop   "---------------------"
 	popup "1      1行" filter1Line "1"
 	popup "2      2行" filter2Line "2"
@@ -1106,6 +1107,7 @@ menu switchcase
 	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=1"
 	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%24"
 	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?action=visual-mode&subaction=switchcase"
 	nop   "---------------------"
 	popup "1      1行" switchcase1Line "1"
 	popup "2      2行" switchcase2Line "2"
@@ -1179,16 +1181,17 @@ menu rot13
 	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=1"
 	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%24"
 	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?action=visual-mode&subaction=rot13"
 	nop   "---------------------"
-	popup "1      1行" switchcase1Line "1"
-	popup "2      2行" switchcase2Line "2"
-	popup "3      3行" switchcase3Line "3"
-	popup "4      4行" switchcase4Line "4"
-	popup "5      5行" switchcase5Line "5"
-	popup "6      6行" switchcase6Line "6"
-	popup "7      7行" switchcase7Line "7"
-	popup "8      8行" switchcase8Line "8"
-	popup "9      9行" switchcase9Line "9"
+	popup "1      1行" rot13-1Line "1"
+	popup "2      2行" rot13-2Line "2"
+	popup "3      3行" rot13-3Line "3"
+	popup "4      4行" rot13-4Line "4"
+	popup "5      5行" rot13-5Line "5"
+	popup "6      6行" rot13-6Line "6"
+	popup "7      7行" rot13-7Line "7"
+	popup "8      8行" rot13-8Line "8"
+	popup "9      9行" rot13-9Line "9"
 end
 
 menu rot13-1Line

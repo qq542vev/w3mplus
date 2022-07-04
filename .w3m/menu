@@ -1,1 +1,1970 @@
-menu_en
+### File: menu_en
+##
+## English menu configuration.
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.14.2
+##   date - 2022-06-28
+##   since - 2019-06-30
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/vim-style-newsboat>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <README.menu at https://github.com/tats/w3m/blob/master/doc-jp/README.menu>
+
+# menu MENU_ID
+#  func  LABEL FUNCTION KEYS
+#  popup LABEL MENU_ID  KEYS
+#  nop   LABEL
+# end
+#
+# MENU_ID
+#  Main:   Main menu
+#  Select: Buffer selection menu
+
+menu Main
+	func "Back               (b)" PREV "Bb"
+	func "Forward            (f)" NEXT "Ff"
+	func "Reload             (r)" RELOAD "Rr"
+	nop  "----------------------"
+	func "Bookmark This Page (m)" ADD_BOOKMARK "Mm"
+	func "Save Page As...    (p)" SAVE "Pp"
+	func "Send Page Link...  (e)" GOTO "Ee" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_URL"
+	nop  "----------------------"
+	func "View Page Source   (v)" VIEW "Vv"
+	func "View Page Info     (i)" INFO "Ii"
+end
+
+menu ContextMenuLink
+	func "Open Link in New Tab            (t)" TAB_LINK "Tt"
+	func "Open Link in New Window         (w)" EXTERN_LINK "Ww" "w3m %s"
+	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3mplus' -- %s"
+	func "Open Link in Current Tab        (o)" GOTO_LINK "Oo"
+	nop  "-----------------------------------"
+	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
+	func "Save Link As...                 (k)" SAVE_LINK "Kk"
+	func "Send Link...                    (d)" GOTO "Dd" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_CURRENT_LINK"
+	func "Copy Link Location              (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
+end
+
+menu ContextMenuImage
+	func "View Image          (i)" VIEW_IMAGE "Ii"
+	func "Copy Image Location (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_IMG"
+	nop  "-----------------------"
+	func "Save Image As...    (v)" SAVE_IMAGE "Vv"
+	func "Email Image...      (g)" GOTO "Gg" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_CURRENT_IMG"
+end
+
+menu ContextMenuLinkImage
+	func "Open Link in New Tab            (t)" TAB_LINK "Tt"
+	func "Open Link in New Window         (w)" EXTERN_LINK "Ww" "w3m %s"
+	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3mplus' -- %s"
+	func "Open Link in Current Tab        (O)" GOTO_LINK "O"
+	nop  "-----------------------------------"
+	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
+	func "Save Link As...                 (k)" SAVE_LINK "Kk"
+	func "Send Link...                    (d)" GOTO "Dd" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_CURRENT_LINK"
+	func "Copy Link Location              (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
+	nop  "-----------------------------------"
+	func "View Image                      (i)" VIEW_IMAGE "Ii"
+	func "Copy Image Location             (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_IMG"
+	nop  "-----------------------------------"
+	func "Save Image As...                (v)" SAVE_IMAGE "Vv"
+	func "Email Image...                  (g)" GOTO "Gg" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_CURRENT_IMG"
+end
+
+menu ContextMenuTab
+	func "New Tab                       (n)" NEW_TAB "Nn"
+	func "Reload Tab                    (t)" RELOAD "Tt"
+	func "Move to New Window            (w)" EXTERN "Ww" "w3m %s"
+	nop  "---------------------------------"
+	func "Undo Closed Tab               (u)" GOTO "u" "file:///cgi-bin/w3mplus?action=undo-tab"
+	func "Close Tab                     (c)" COMMAND "Cc" "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=close-tab"
+	func "Close Other Tabs              (o)" COMMAND "Oo" "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; PREV_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB"
+	nop  "---------------------------------"
+	func "Move Left Along Tab Bar       (l)" TAB_LEFT "l"
+	func "Move Right Along Tab Bar      (r)" TAB_RIGHT "r"
+	nop  "---------------------------------"
+	func "Move Left Most Along Tab Bar  (L)" COMMAND "L" "TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT"
+	func "Move Right Most Along Tab Bar (R)" COMMAND "R" "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT"
+	nop  "---------------------------------"
+	func "Show All Tabs                 (a)" TAB_MENU "Aa"
+end
+
+menu ContextMenuSearch
+	func  "Bing" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func  "Google" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func  "DuckDuckGo" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=duckduckgo; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func  "Startpage" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=startpage; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func  "Twitter" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=twitter; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func  "Wikipedia (en)" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=wikipedia-en; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func  "Wikipedia (ja)" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=wikipedia-ja; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	popup "Other Search" ContextMenuSearchOther ""
+end
+
+menu ContextMenuSearchOther
+	func "Bing Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "Bing Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "Bing News" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-news; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "GitHub" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=github; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "Google Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "Google Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "Google News" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-news; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "pkgs.org" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=pkgs.org; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "Yandex" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "Yandex Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "Yandex Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+	func "YouTube" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=youtube; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
+end
+
+menu Menu
+	popup "File      (f)" MenuFile "Ff"
+	popup "Edit      (e)" MenuEdit "Ee"
+	popup "View      (v)" MenuView "Vv"
+	popup "History   (s)" MenuHistory "Ss"
+	popup "Bookmarks (b)" MenuBookmarks "Bb"
+	popup "Tools     (t)" MenuTools "Tt"
+	popup "Help      (h)" MenuHelp "Hh"
+end
+
+menu MenuFile
+	func "New Tab            (t)" NEW_TAB "Tt"
+	func "New Window         (n)" EXTERN "Nn" "w3m ${WWW_HOME-about:home} #"
+	func "New Private Window (w)" EXTERN "Ww" "w3m-private  --link './.w3mplus' -- 'about:private' #"
+	func "Open File...       (o)" LOAD "Oo"
+	nop  "----------------------"
+	func "Save Page As...    (a)" DOWNLOAD "Aa"
+	func "Email Link...      (e)" GOTO "Ee" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_URL"
+	nop  "----------------------"
+	func "Print              (p)" PRINT "Pp"
+	nop  "----------------------"
+	func "Reinitialize       (r)" REINIT "Rr"
+	func "Suspend            (s)" SUSPEND "Ss"
+	func "Quit               (q)" EXIT "Qq"
+end
+
+menu MenuEdit
+	func "Undo      (u)" UNDO "Uu"
+	func "Redo      (r)" REDO "Rr"
+	nop  "-------------"
+	func "Copy      (c)" GOTO "Cc" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
+	func "Mark      (m)" MARK "Mm"
+	nop  "-------------"
+	func "Find      (f)" ISEARCH "Ff"
+	func "Highlight (h)" REG_MARK "Hh"
+end
+
+menu MenuView
+	popup "Sidebar            (e)" MenuSidebar "Ee"
+	nop   "----------------------"
+	popup "Style & Color      (s)" MenuStyle "Ss"
+	popup "Zoom               (z)" MenuZoom "Zz"
+	func  "Character Encoding (c)" CHARSET "Cc"
+	nop   "----------------------"
+	func  "Navigation Link    (n)" LINK_MENU "Nn"
+	func  "Show All Link      (l)" LIST_MENU "Ll"
+	nop   "----------------------"
+	func  "Show All Tabs      (a)" TAB_MENU "Aa"
+end
+
+menu MenuSidebar
+	func "Bookmarks (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?action=sidebar-bookmark"
+	func "History   (h)" GOTO "Hh" "file:///cgi-bin/w3mplus?action=sidebar-history"
+end
+
+menu MenuZoom
+	func "Zoom In  (i)" GOTO "Ii" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D20"
+	func "Zoom Out (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D20"
+	nop  "------------"
+	func "Reset    (r)" GOTO "Rr" "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
+end
+
+menu MenuStyle
+	func "lynx       (l)" COMMAND "Ll" "SET_OPTION display_ins_del=1; SET_OPTION color=1; SET_OPTION basic_color=terminal; SET_OPTION anchor_color=green; SET_OPTION image_color=yellow; SET_OPTION form_color=white; SET_OPTION mark_color=cyan; SET_OPTION bg_color=terminal; SET_OPTION active_style=1; SET_OPTION active_color=yellow; SET_OPTION visited_anchor=0"
+	func "Monochrome (m)" COMMAND "Mm" "SET_OPTION display_ins_del=1; SET_OPTION color=0; SET_OPTION basic_color=terminal; SET_OPTION bg_color=terminal"
+	func "Reset      (r)" COMMAND "Rr" "SET_OPTION display_ins_del=2; SET_OPTION color=1; SET_OPTION basic_color=terminal; SET_OPTION anchor_color=blue; SET_OPTION image_color=green; SET_OPTION form_color=red; SET_OPTION mark_color=yellow; SET_OPTION bg_color=terminal; SET_OPTION active_style=1; SET_OPTION active_color=cyan; SET_OPTION visited_anchor=1; SET_OPTION visited_color=magenta"
+end
+
+menu MenuHistory
+	func  "Show All History (h)" HISTORY "Hh"
+	func  "Buffer History   (b)" SELECT_MENU "Bb"
+	popup "Undo Closed Tab  (u)" MenuUndoClosedTabs "Uu"
+end
+
+menu MenuUndoClosedTabs
+	func "Undo Closed Tab     (u)" GOTO "uU" "file:///cgi-bin/w3mplus?action=undo-tab"
+	func "Undo 5 Closed Tabs  (f)" GOTO "Ff" "file:///cgi-bin/w3mplus?action=undo-tab&count=-5"
+	func "Undo 10 Closed Tabs (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?action=undo-tab&count=-10"
+	nop  "-----------------------"
+	func "within 10 minutes   (1)" GOTO "1" "file:///cgi-bin/w3mplus?action=undo-tab&count=%40-600"
+	func "within 30 minutes   (3)" GOTO "3" "file:///cgi-bin/w3mplus?action=undo-tab&count=%40-1800"
+	func "within 60 minutes   (6)" GOTO "6" "file:///cgi-bin/w3mplus?action=undo-tab&count=%40-3600"
+	nop  "-----------------------"
+	func "Undo All Tabs       (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?action=undo-tab&count=-0"
+end
+
+menu MenuBookmarks
+	func "Bookmark This Page (m)" ADD_BOOKMARK "Mm"
+	func "View Bookmark      (v)" VIEW_BOOKMARK "Vv"
+end
+
+menu MenuTools
+	func  "Downloads      (d)" DOWNLOAD_LIST "Dd"
+	func  "Cookies        (c)" COOKIE "Cc"
+	func  "Permissions    (m)" GOTO "Mm" "about:permissions"
+	nop   "------------------"
+	popup "Web Developer  (w)" MenuWebDeveloper "Ww"
+	func  "Page Info      (i)" INFO "Ii"
+	nop   "------------------"
+	popup "Cookie Manager (k)" MenuCookieManager "Kk"
+	popup "User Agent     (u)" MenuUserAgent "Uu"
+	func  "Only https     (s)" GOTO "Ss" "file:///cgi-bin/w3mplus?action=toggle-https-everywhere"
+	func  "Preferences    (p)" OPTIONS "Pp"
+end
+
+menu MenuWebDeveloper
+	func "Web Console       (w)" PIPE_BUF "Ww"
+	func "Network           (n)" LOAD "Nn" "~/.w3m/request.log"
+	nop  "---------------------"
+	func "Developer Toolbar (v)" COMMAND "Vv"
+	func "Scratchpad        (s)" EXEC_SHELL "Ss"
+	func "Page Source       (o)" VIEW "Oo"
+	func "Error Console     (c)" MSGS "Cc"
+end
+
+menu MenuCookieManager
+	nop  "-- Toggle the domain to blacklist --"
+	func "Apply to the sub-domain          (b)" GOTO "b" "file:///cgi-bin/w3mplus?action=cookie-config&reject=toggle&subdomain=1"
+	func "Apply to only the domain of page (B)" GOTO "B" "file:///cgi-bin/w3mplus?action=cookie-config&reject=toggle"
+	nop  "-- Toggle the domain to whitelist --"
+	func "Apply to the sub-domain          (w)" GOTO "w" "file:///cgi-bin/w3mplus?action=cookie-config&accept=toggle&subdomain=1"
+	func "Apply to only the domain of page (W)" GOTO "W" "file:///cgi-bin/w3mplus?action=cookie-config&accept=toggle"
+end
+
+menu MenuUserAgent
+	nop  "-- CLI Web Browser ---"
+	func "w3m                (3)" SET_OPTION "3" "user_agent="
+	func "lynx               (l)" SET_OPTION "l" "user_agent=Lynx/2.8.9rel.1 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/3.6.5"
+	nop  "-- GUI Web Browser ---"
+	func "Internet Explorer  (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; rv:11.0) like Gecko"
+	func "Microsoft Edge     (e)" SET_OPTION "e" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.35g38.102 Safari/537.36 Edge/18.18363"
+	func "Safari             (s)" SET_OPTION "s" "user_agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A"
+	func "Google Chrome      (c)" SET_OPTION "c" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
+	func "Mozilla Firefox    (f)" SET_OPTION "f" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0"
+	func "PaleMoon           (p)" SET_OPTION "p" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.9) Goanna/4.4 PaleMoon/28.8.0"
+	func "NetSurf            (n)" SET_OPTION "n" "user_agent=NetSurf/3.6 (Linux; x86_64)"
+	nop  "-- Mobile Web Browser "
+	func "android (Chrome)   (a)" SET_OPTION "a" "user_agent=Mozilla/5.0 (Linux; U; Android 6.0) AppleWebKit/537.16 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.16 Chrome/33.0.0.0"
+	func "iPhone  (Safari)   (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+	func "Firefox for Mobile (F)" SET_OPTION "F" "user_agent=Mozilla/5.0 (Android 6.0.1; Mobile; rv:68.0) Gecko/68.0 Firefox/68.0"
+	func "Windows 10 Mobile  (w)" SET_OPTION "w" "user_agent=Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; Lumia 950 XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Mobile Safari/537.36 Edge/14.14393"
+	nop  "-- Web Crawler -------"
+	func "Googlebot          (g)" SET_OPTION "g" "user_agent=Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+	func "Bingbot            (b)" SET_OPTION "b" "user_agent=Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+	func "Baiduspider        (B)" SET_OPTION "B" "user_agent=Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
+	nop  "-- Download Utility --"
+	func "Wget               (W)" SET_OPTION "W" "user_agent=Wget/1.20.1 (linux-gnueabihf)"
+	func "curl               (C)" SET_OPTION "C" "user_agent=curl/7.64.0"
+end
+
+menu MenuHelp
+	func "w3m Help  (h)" HELP "Hh"
+	func "Man w3m   (m)" EXEC_SHELL "Mm" "man w3m"
+	nop  "-------------"
+	func "About w3m (a)" VERSION "Aa"
+end
+
+menu ExtendedHints
+	func ";  Focus link" MOVE_LIST_MENU ";"
+	func "?  Show information for line" LINE_INFO "?"
+	func "s  Save hint" SAVE_LINK "s"
+	func "o  Open link" GOTO_LINK "o"
+	func "t  Open link in a new tab" TAB_LINK "t"
+	func "b  Open link in a background tab" GOTO "b" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=prevTab&variable=W3M_CURRENT_LINK&redirect=2"
+	func "w  Open link in a new window" EXTERN_LINK "w" "w3m %s"
+	func "O  Generate a ':o URL' prompt" GOTO "O" "file:///cgi-bin/w3mplus?action=link-goto"
+	func "T  Generate a ':t URL' prompt" GOTO "T" "file:///cgi-bin/w3mplus?action=link-tabgoto"
+	func "W  Open link in external browser" EXTERN_LINK "W"
+	func "a  Add a bookmark" GOTO "a" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
+	func "v  View link source" GOTO "v" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=viewSource&variable=W3M_CURRENT_LINK"
+	func "V  View link source in external editor" GOTO "V" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=viewSourceExternally&variable=W3M_CURRENT_LINK"
+	func "y  Yank link location" GOTO "y" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
+	func "Y  Yank link description" GOTO "Y" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
+	func "c  Open context menu" MENU "c"
+	func "i  Show image" VIEW_IMAGE "i"
+	func "I  Save image" SAVE_IMAGE "I"
+end
+
+menu Commands
+	func  "!  Run a shell command" EXEC_SHELL "!"
+	func  ":  Run a w3m command" COMMAND ":"
+	func  "b  Open bookmarks" VIEW_BOOKMARK "b"
+	func  "c  Change cookie permissions for sites" COOKIE "c"
+	popup "C  Load a color scheme" MenuStyle "C"
+	func  "d  Display the downloads list" DOWNLOAD_LIST "d"
+	func  "D  Apply the autocommands matching the specified URL pattern" GOTO "D" "file:///cgi-bin/w3mplus?action=execute-user-command&key=manual"
+	func  "e  Open w3m menu" MENU "e" Menu
+	func  "f  Toggle rendering HTML frames" FRAME "f"
+	func  "G  Display previously shown messages" MSGS "G"
+	func  "h  Open the introductory help page" HELP "h"
+	func  "H  Show recently visited URLs" HISTORY "H"
+	func  "j  Show jumplist" SELECT_MENU "j"
+	popup "l  Show list commands" LCommands "l"
+	func  "L  Set environment variable" SETENV "L"
+	func  "m  Show the local marks" GOTO "m" "file:///cgi-bin/w3mplus?action=show-local-mark"
+	func  "M  Show the URL marks" GOTO "M" "file:///cgi-bin/w3mplus?action=show-url-mark"
+	func  "n  Map a key sequence in Normal mode" DEFINE_KEY "n"
+	func  "o  Open URL in the current tab" COMMAND "o" "SET_OPTION default_url=0; GOTO"
+	func  "p  Show w3m preferences" OPTIONS "p"
+	func  "q  Quit w3m" QUIT "q"
+	func  "Q  Show the specified QuickMarks" GOTO "Q" "file:///cgi-bin/w3mplus?action=show-quick-mark"
+	func  "r  Execute shell command and display output" PIPE_SHELL "r"
+	func  "s  Set w3m option" SET_OPTION "s"
+	func  "S  Start a shell" EXEC_SHELL "S" "${SHELL}"
+	func  "t  Open URL in a new tab" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
+	func  "u  Recently closed tabs" GOTO "u" "file:///cgi-bin/w3mplus?action=show-tab-history"
+	popup "U  Change the user agent" MenuUserAgent "U"
+	func  "v  Show version information" VERSION "v"
+	func  "w  Save current document to disk" DOWNLOAD "w"
+	func  "W  Print current document" PRINT "W"
+	func  "x  Quit w3m" EXIT "x"
+	popup "z  Set zoom value" Zoom "z"
+end
+
+menu LCommands
+	popup "c  List all Ex commands along with their short descriptions" Commands "c"
+	func  "K  List all mappings along with their short descriptions" HELP "k"
+	func  "o  List all options along with their short descriptions" PIPE_SHELL "o" "w3m -show-option"
+end
+
+menu Zoom
+	popup "0    0% -  90%" Zoom0Percents "0"
+	popup "1  100% - 190%" Zoom100Percents "1"
+	popup "2  200% - 290%" Zoom200Percents "2"
+	popup "3  300% - 390%" Zoom300Percents "3"
+	popup "4  400% - 490%" Zoom400Percents "4"
+	popup "+  Zoom in" ZoomIn "+"
+	popup "-  Zoom out" ZoomOut "-"
+end
+
+menu Zoom0Percents
+	func "0   0%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=0"
+	func "1  10%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=10"
+	func "2  20%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=20"
+	func "3  30%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=30"
+	func "4  40%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=40"
+	func "5  50%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=50"
+	func "6  60%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=60"
+	func "7  70%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=70"
+	func "8  80%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=80"
+	func "9  90%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=90"
+end
+
+menu Zoom100Percents
+	func "0  100%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
+	func "1  110%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=110"
+	func "2  120%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=120"
+	func "3  130%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=130"
+	func "4  140%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=140"
+	func "5  150%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=150"
+	func "6  160%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=160"
+	func "7  170%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=170"
+	func "8  180%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=180"
+	func "9  190%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=190"
+end
+
+menu Zoom200Percents
+	func "0  200%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=200"
+	func "1  210%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=210"
+	func "2  220%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=220"
+	func "3  230%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=230"
+	func "4  240%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=240"
+	func "5  250%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=250"
+	func "6  260%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=260"
+	func "7  270%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=270"
+	func "8  280%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=280"
+	func "9  290%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=290"
+end
+
+menu Zoom300Percents
+	func "0  300%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=300"
+	func "1  310%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=310"
+	func "2  320%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=320"
+	func "3  330%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=330"
+	func "4  340%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=340"
+	func "5  350%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=350"
+	func "6  360%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=360"
+	func "7  370%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=370"
+	func "8  380%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=380"
+	func "9  390%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=390"
+end
+
+menu Zoom400Percents
+	func "0  400%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=400"
+	func "1  410%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=410"
+	func "2  420%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=420"
+	func "3  430%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=430"
+	func "4  440%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=440"
+	func "5  450%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=450"
+	func "6  460%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=460"
+	func "7  470%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=470"
+	func "8  480%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=480"
+	func "9  490%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=490"
+end
+
+menu ZoomIn
+	func "1  +10%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D10"
+	func "2  +20%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D20"
+	func "3  +30%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D30"
+	func "4  +40%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D40"
+	func "5  +50%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D50"
+	func "6  +60%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D60"
+	func "7  +70%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D70"
+	func "8  +80%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D80"
+	func "9  +90%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D90"
+	func "0  +100%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D100"
+end
+
+menu ZoomOut
+	func "1  -10%" GOTO "1" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D10"
+	func "2  -20%" GOTO "2" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D20"
+	func "3  -30%" GOTO "3" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D30"
+	func "4  -40%" GOTO "4" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D40"
+	func "5  -50%" GOTO "5" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D50"
+	func "6  -60%" GOTO "6" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D60"
+	func "7  -70%" GOTO "7" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D70"
+	func "8  -80%" GOTO "8" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D80"
+	func "9  -90%" GOTO "9" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D90"
+	func "0  -100%" GOTO "0" "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D100"
+end
+
+menu Percents
+	popup "0   0% -  9%" 0Percents "0"
+	popup "1  10% - 19%" 10Percents "1"
+	popup "2  20% - 29%" 20Percents "2"
+	popup "3  30% - 39%" 30Percents "3"
+	popup "4  40% - 49%" 40Percents "4"
+	popup "5  50% - 59%" 50Percents "5"
+	popup "6  60% - 69%" 60Percents "6"
+	popup "7  70% - 79%" 70Percents "7"
+	popup "8  80% - 89%" 80Percents "8"
+	popup "9  90% - 99%" 90Percents "9"
+	func  "$  100%" END "$"
+	popup "+  move +n%"  plusPercents "+"
+	popup "-  move -n%"  minusPercents "-"
+end
+
+menu 0Percents
+	func "0  0%" BEGIN "0"
+	func "1  1%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=1%25"
+	func "2  2%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=2%25"
+	func "3  3%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=3%25"
+	func "4  4%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=4%25"
+	func "5  5%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=5%25"
+	func "6  6%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=6%25"
+	func "7  7%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=7%25"
+	func "8  8%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=8%25"
+	func "9  9%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=9%25"
+end
+
+menu 10Percents
+	func "0  10%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=10%25"
+	func "1  11%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=11%25"
+	func "2  12%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=12%25"
+	func "3  13%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=13%25"
+	func "4  14%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=14%25"
+	func "5  15%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=15%25"
+	func "6  16%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=16%25"
+	func "7  17%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=17%25"
+	func "8  18%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=18%25"
+	func "9  19%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=19%25"
+end
+
+menu 20Percents
+	func "0  20%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=20%25"
+	func "1  21%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=21%25"
+	func "2  22%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=22%25"
+	func "3  23%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=23%25"
+	func "4  24%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=24%25"
+	func "5  25%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=25%25"
+	func "6  26%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=26%25"
+	func "7  27%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=27%25"
+	func "8  28%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=28%25"
+	func "9  29%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=29%25"
+end
+
+menu 30Percents
+	func "0  30%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=30%25"
+	func "1  31%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=31%25"
+	func "2  32%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=32%25"
+	func "3  33%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=33%25"
+	func "4  34%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=34%25"
+	func "5  35%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=35%25"
+	func "6  36%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=36%25"
+	func "7  37%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=37%25"
+	func "8  38%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=38%25"
+	func "9  39%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=39%25"
+end
+
+menu 40Percents
+	func "0  40%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=40%25"
+	func "1  41%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=41%25"
+	func "2  42%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=42%25"
+	func "3  43%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=43%25"
+	func "4  44%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=44%25"
+	func "5  45%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=45%25"
+	func "6  46%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=46%25"
+	func "7  47%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=47%25"
+	func "8  48%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=48%25"
+	func "9  49%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=49%25"
+end
+
+menu 50Percents
+	func "0  50%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=50%25"
+	func "1  51%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=51%25"
+	func "2  52%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=52%25"
+	func "3  53%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=53%25"
+	func "4  54%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=54%25"
+	func "5  55%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=55%25"
+	func "6  56%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=56%25"
+	func "7  57%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=57%25"
+	func "8  58%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=58%25"
+	func "9  59%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=59%25"
+end
+
+menu 60Percents
+	func "0  60%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=60%25"
+	func "1  61%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=61%25"
+	func "2  62%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=62%25"
+	func "3  63%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=63%25"
+	func "4  64%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=64%25"
+	func "5  65%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=65%25"
+	func "6  66%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=66%25"
+	func "7  67%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=67%25"
+	func "8  68%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=68%25"
+	func "9  69%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=69%25"
+end
+
+menu 70Percents
+	func "0  70%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=70%25"
+	func "1  71%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=71%25"
+	func "2  72%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=72%25"
+	func "3  73%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=73%25"
+	func "4  74%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=74%25"
+	func "5  75%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=75%25"
+	func "6  76%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=76%25"
+	func "7  77%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=77%25"
+	func "8  78%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=78%25"
+	func "9  79%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=79%25"
+end
+
+menu 80Percents
+	func "0  80%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=80%25"
+	func "1  81%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=81%25"
+	func "2  82%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=82%25"
+	func "3  83%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=83%25"
+	func "4  84%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=84%25"
+	func "5  85%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=85%25"
+	func "6  86%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=86%25"
+	func "7  87%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=87%25"
+	func "8  88%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=88%25"
+	func "9  89%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=89%25"
+end
+
+menu 90Percents
+	func "0  90%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=90%25"
+	func "1  91%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=91%25"
+	func "2  92%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=92%25"
+	func "3  93%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=93%25"
+	func "4  94%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=94%25"
+	func "5  95%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=95%25"
+	func "6  96%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=96%25"
+	func "7  97%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=97%25"
+	func "8  98%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=98%25"
+	func "9  99%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=99%25"
+end
+
+menu plusPercents
+	popup "0   +0% -  +9%" plus0Percents "0"
+	popup "1  +10% - +19%" plus10Percents "1"
+	popup "2  +20% - +29%" plus20Percents "2"
+	popup "3  +30% - +39%" plus30Percents "3"
+	popup "4  +40% - +49%" plus40Percents "4"
+	popup "5  +50% - +59%" plus50Percents "5"
+	popup "6  +60% - +69%" plus60Percents "6"
+	popup "7  +70% - +79%" plus70Percents "7"
+	popup "8  +80% - +89%" plus80Percents "8"
+	popup "9  +90% - +99%" plus90Percents "9"
+	func  "$  +100%" END "$"
+end
+
+menu plus0Percents
+	func "0  +0%" NULL "0"
+	func "1  +1%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B1%25"
+	func "2  +2%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B2%25"
+	func "3  +3%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B3%25"
+	func "4  +4%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B4%25"
+	func "5  +5%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B5%25"
+	func "6  +6%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B6%25"
+	func "7  +7%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B7%25"
+	func "8  +8%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B8%25"
+	func "9  +9%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B9%25"
+end
+
+menu plus10Percents
+	func "0  +10%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B10%25"
+	func "1  +11%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B11%25"
+	func "2  +12%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B12%25"
+	func "3  +13%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B13%25"
+	func "4  +14%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B14%25"
+	func "5  +15%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B15%25"
+	func "6  +16%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B16%25"
+	func "7  +17%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B17%25"
+	func "8  +18%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B18%25"
+	func "9  +19%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B19%25"
+end
+
+menu plus20Percents
+	func "0  +20%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B20%25"
+	func "1  +21%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B21%25"
+	func "2  +22%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B22%25"
+	func "3  +23%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B23%25"
+	func "4  +24%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B24%25"
+	func "5  +25%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B25%25"
+	func "6  +26%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B26%25"
+	func "7  +27%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B27%25"
+	func "8  +28%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B28%25"
+	func "9  +29%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B29%25"
+end
+
+menu plus30Percents
+	func "0  +30%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B30%25"
+	func "1  +31%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B31%25"
+	func "2  +32%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B32%25"
+	func "3  +33%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B33%25"
+	func "4  +34%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B34%25"
+	func "5  +35%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B35%25"
+	func "6  +36%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B36%25"
+	func "7  +37%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B37%25"
+	func "8  +38%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B38%25"
+	func "9  +39%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B39%25"
+end
+
+menu plus40Percents
+	func "0  +40%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B40%25"
+	func "1  +41%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B41%25"
+	func "2  +42%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B42%25"
+	func "3  +43%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B43%25"
+	func "4  +44%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B44%25"
+	func "5  +45%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B45%25"
+	func "6  +46%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B46%25"
+	func "7  +47%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B47%25"
+	func "8  +48%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B48%25"
+	func "9  +49%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B49%25"
+end
+
+menu plus50Percents
+	func "0  +50%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B50%25"
+	func "1  +51%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B51%25"
+	func "2  +52%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B52%25"
+	func "3  +53%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B53%25"
+	func "4  +54%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B54%25"
+	func "5  +55%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B55%25"
+	func "6  +56%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B56%25"
+	func "7  +57%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B57%25"
+	func "8  +58%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B58%25"
+	func "9  +59%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B59%25"
+end
+
+menu plus60Percents
+	func "0  +60%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B60%25"
+	func "1  +61%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B61%25"
+	func "2  +62%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B62%25"
+	func "3  +63%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B63%25"
+	func "4  +64%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B64%25"
+	func "5  +65%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B65%25"
+	func "6  +66%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B66%25"
+	func "7  +67%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B67%25"
+	func "8  +68%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B68%25"
+	func "9  +69%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B69%25"
+end
+
+menu plus70Percents
+	func "0  +70%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B70%25"
+	func "1  +71%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B71%25"
+	func "2  +72%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B72%25"
+	func "3  +73%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B73%25"
+	func "4  +74%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B74%25"
+	func "5  +75%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B75%25"
+	func "6  +76%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B76%25"
+	func "7  +77%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B77%25"
+	func "8  +78%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B78%25"
+	func "9  +79%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B79%25"
+end
+
+menu plus80Percents
+	func "0  +80%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B80%25"
+	func "1  +81%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B81%25"
+	func "2  +82%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B82%25"
+	func "3  +83%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B83%25"
+	func "4  +84%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B84%25"
+	func "5  +85%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B85%25"
+	func "6  +86%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B86%25"
+	func "7  +87%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B87%25"
+	func "8  +88%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B88%25"
+	func "9  +89%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B89%25"
+end
+
+menu plus90Percents
+	func "0  +90%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B90%25"
+	func "1  +91%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B91%25"
+	func "2  +92%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B92%25"
+	func "3  +93%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B93%25"
+	func "4  +94%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B94%25"
+	func "5  +95%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B95%25"
+	func "6  +96%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B96%25"
+	func "7  +97%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B97%25"
+	func "8  +98%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B98%25"
+	func "9  +99%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=%2B99%25"
+end
+
+menu minusPercents
+	popup "0   -0% -  -9%" minus0Percents "0"
+	popup "1  -10% - -19%" minus10Percents "1"
+	popup "2  -20% - -29%" minus20Percents "2"
+	popup "3  -30% - -39%" minus30Percents "3"
+	popup "4  -40% - -49%" minus40Percents "4"
+	popup "5  -50% - -59%" minus50Percents "5"
+	popup "6  -60% - -69%" minus60Percents "6"
+	popup "7  -70% - -79%" minus70Percents "7"
+	popup "8  -80% - -89%" minus80Percents "8"
+	popup "9  -90% - -99%" minus90Percents "9"
+	func  "$  -100%" BEGIN "$"
+end
+
+menu minus0Percents
+	func "0  -0%" NULL "0"
+	func "1  -1%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-1%25"
+	func "2  -2%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-2%25"
+	func "3  -3%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-3%25"
+	func "4  -4%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-4%25"
+	func "5  -5%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-5%25"
+	func "6  -6%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-6%25"
+	func "7  -7%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-7%25"
+	func "8  -8%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-8%25"
+	func "9  -9%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-9%25"
+end
+
+menu minus10Percents
+	func "0  -10%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-10%25"
+	func "1  -11%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-11%25"
+	func "2  -12%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-12%25"
+	func "3  -13%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-13%25"
+	func "4  -14%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-14%25"
+	func "5  -15%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-15%25"
+	func "6  -16%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-16%25"
+	func "7  -17%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-17%25"
+	func "8  -18%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-18%25"
+	func "9  -19%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-19%25"
+end
+
+menu minus20Percents
+	func "0  -20%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-20%25"
+	func "1  -21%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-21%25"
+	func "2  -22%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-22%25"
+	func "3  -23%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-23%25"
+	func "4  -24%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-24%25"
+	func "5  -25%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-25%25"
+	func "6  -26%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-26%25"
+	func "7  -27%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-27%25"
+	func "8  -28%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-28%25"
+	func "9  -29%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-29%25"
+end
+
+menu minus30Percents
+	func "0  -30%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-30%25"
+	func "1  -31%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-31%25"
+	func "2  -32%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-32%25"
+	func "3  -33%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-33%25"
+	func "4  -34%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-34%25"
+	func "5  -35%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-35%25"
+	func "6  -36%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-36%25"
+	func "7  -37%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-37%25"
+	func "8  -38%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-38%25"
+	func "9  -39%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-39%25"
+end
+
+menu minus40Percents
+	func "0  -40%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-40%25"
+	func "1  -41%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-41%25"
+	func "2  -42%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-42%25"
+	func "3  -43%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-43%25"
+	func "4  -44%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-44%25"
+	func "5  -45%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-45%25"
+	func "6  -46%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-46%25"
+	func "7  -47%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-47%25"
+	func "8  -48%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-48%25"
+	func "9  -49%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-49%25"
+end
+
+menu minus50Percents
+	func "0  -50%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-50%25"
+	func "1  -51%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-51%25"
+	func "2  -52%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-52%25"
+	func "3  -53%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-53%25"
+	func "4  -54%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-54%25"
+	func "5  -55%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-55%25"
+	func "6  -56%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-56%25"
+	func "7  -57%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-57%25"
+	func "8  -58%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-58%25"
+	func "9  -59%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-59%25"
+end
+
+menu minus60Percents
+	func "0  -60%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-60%25"
+	func "1  -61%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-61%25"
+	func "2  -62%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-62%25"
+	func "3  -63%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-63%25"
+	func "4  -64%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-64%25"
+	func "5  -65%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-65%25"
+	func "6  -66%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-66%25"
+	func "7  -67%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-67%25"
+	func "8  -68%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-68%25"
+	func "9  -69%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-69%25"
+end
+
+menu minus70Percents
+	func "0  -70%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-70%25"
+	func "1  -71%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-71%25"
+	func "2  -72%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-72%25"
+	func "3  -73%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-73%25"
+	func "4  -74%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-74%25"
+	func "5  -75%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-75%25"
+	func "6  -76%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-76%25"
+	func "7  -77%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-77%25"
+	func "8  -78%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-78%25"
+	func "9  -79%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-79%25"
+end
+
+menu minus80Percents
+	func "0  -80%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-80%25"
+	func "1  -81%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-81%25"
+	func "2  -82%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-82%25"
+	func "3  -83%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-83%25"
+	func "4  -84%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-84%25"
+	func "5  -85%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-85%25"
+	func "6  -86%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-86%25"
+	func "7  -87%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-87%25"
+	func "8  -88%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-88%25"
+	func "9  -89%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-89%25"
+end
+
+menu minus90Percents
+	func "0  -90%" GOTO "0" "file:///cgi-bin/w3mplus?action=goto-line&number=-90%25"
+	func "1  -91%" GOTO "1" "file:///cgi-bin/w3mplus?action=goto-line&number=-91%25"
+	func "2  -92%" GOTO "2" "file:///cgi-bin/w3mplus?action=goto-line&number=-92%25"
+	func "3  -93%" GOTO "3" "file:///cgi-bin/w3mplus?action=goto-line&number=-93%25"
+	func "4  -94%" GOTO "4" "file:///cgi-bin/w3mplus?action=goto-line&number=-94%25"
+	func "5  -95%" GOTO "5" "file:///cgi-bin/w3mplus?action=goto-line&number=-95%25"
+	func "6  -96%" GOTO "6" "file:///cgi-bin/w3mplus?action=goto-line&number=-96%25"
+	func "7  -97%" GOTO "7" "file:///cgi-bin/w3mplus?action=goto-line&number=-97%25"
+	func "8  -98%" GOTO "8" "file:///cgi-bin/w3mplus?action=goto-line&number=-98%25"
+	func "9  -99%" GOTO "9" "file:///cgi-bin/w3mplus?action=goto-line&number=-99%25"
+end
+
+menu operatorFunc
+	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=0"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?action=visual-mode&subaction=operatorFunc"
+	nop   "----------------------"
+	popup "1      1 line" operatorFunc1Line "1"
+	popup "2      2 lines" operatorFunc2Line "2"
+	popup "3      3 lines" operatorFunc3Line "3"
+	popup "4      4 lines" operatorFunc4Line "4"
+	popup "5      5 lines" operatorFunc5Line "5"
+	popup "6      6 lines" operatorFunc6Line "6"
+	popup "7      7 lines" operatorFunc7Line "7"
+	popup "8      8 lines" operatorFunc8Line "8"
+	popup "9      9 lines" operatorFunc9Line "9"
+end
+
+menu operatorFunc1Line
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-1"
+end
+
+menu operatorFunc2Line
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-2"
+end
+
+menu operatorFunc3Line
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-3"
+end
+
+menu operatorFunc4Line
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-4"
+end
+
+menu operatorFunc5Line
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-5"
+end
+
+menu operatorFunc6Line
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-6"
+end
+
+menu operatorFunc7Line
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-7"
+end
+
+menu operatorFunc8Line
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-8"
+end
+
+menu operatorFunc9Line
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=operatorFunc&number=%2B-9"
+end
+
+menu formatPrg
+	func  "q,h,l  Current line" GOTO "qhl" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=0"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?action=visual-mode&subaction=formatPrg"
+	nop   "----------------------"
+	popup "1      1 line" formatPrg1Line "1"
+	popup "2      2 lines" formatPrg2Line "2"
+	popup "3      3 lines" formatPrg3Line "3"
+	popup "4      4 lines" formatPrg4Line "4"
+	popup "5      5 lines" formatPrg5Line "5"
+	popup "6      6 lines" formatPrg6Line "6"
+	popup "7      7 lines" formatPrg7Line "7"
+	popup "8      8 lines" formatPrg8Line "8"
+	popup "9      9 lines" formatPrg9Line "9"
+end
+
+menu formatPrg1Line
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-1"
+end
+
+menu formatPrg2Line
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-2"
+end
+
+menu formatPrg3Line
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-3"
+end
+
+menu formatPrg4Line
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-4"
+end
+
+menu formatPrg5Line
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-5"
+end
+
+menu formatPrg6Line
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-6"
+end
+
+menu formatPrg7Line
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-7"
+end
+
+menu formatPrg8Line
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-8"
+end
+
+menu formatPrg9Line
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=formatPrg&number=%2B-9"
+end
+
+menu filter
+	func  "!,h,l  Current line" GOTO "!hl" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=0"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%24"
+	func  "*      All lines" PIPE_BUF "*"
+	nop   "----------------------"
+	popup "1      1 line" filter1Line "1"
+	popup "2      2 lines" filter2Line "2"
+	popup "3      3 lines" filter3Line "3"
+	popup "4      4 lines" filter4Line "4"
+	popup "5      5 lines" filter5Line "5"
+	popup "6      6 lines" filter6Line "6"
+	popup "7      7 lines" filter7Line "7"
+	popup "8      8 lines" filter8Line "8"
+	popup "9      9 lines" filter9Line "9"
+end
+
+menu filter1Line
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-1"
+end
+
+menu filter2Line
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-2"
+end
+
+menu filter3Line
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-3"
+end
+
+menu filter4Line
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-4"
+end
+
+menu filter5Line
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-5"
+end
+
+menu filter6Line
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-6"
+end
+
+menu filter7Line
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-7"
+end
+
+menu filter8Line
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-8"
+end
+
+menu filter9Line
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=filter&number=%2B-9"
+end
+
+menu switchcase
+	func  "~,h,l  Current line" GOTO "~hl" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=0"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&line=&number=%24"
+	nop   "----------------------"
+	popup "1      1 line" switchcase1Line "1"
+	popup "2      2 lines" switchcase2Line "2"
+	popup "3      3 lines" switchcase3Line "3"
+	popup "4      4 lines" switchcase4Line "4"
+	popup "5      5 lines" switchcase5Line "5"
+	popup "6      6 lines" switchcase6Line "6"
+	popup "7      7 lines" switchcase7Line "7"
+	popup "8      8 lines" switchcase8Line "8"
+	popup "9      9 lines" switchcase9Line "9"
+end
+
+menu switchcase1Line
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-1"
+end
+
+menu switchcase2Line
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-2"
+end
+
+menu switchcase3Line
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-3"
+end
+
+menu switchcase4Line
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-4"
+end
+
+menu switchcase5Line
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-5"
+end
+
+menu switchcase6Line
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-6"
+end
+
+menu switchcase7Line
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-7"
+end
+
+menu switchcase8Line
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-8"
+end
+
+menu switchcase9Line
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=switchcase&number=%2B-9"
+end
+
+menu rot13
+	func  "?,h,l  Current line" GOTO "?hl" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=0"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&line=&number=%24"
+	nop   "----------------------"
+	popup "1      1 line" switchcase1Line "1"
+	popup "2      2 lines" switchcase2Line "2"
+	popup "3      3 lines" switchcase3Line "3"
+	popup "4      4 lines" switchcase4Line "4"
+	popup "5      5 lines" switchcase5Line "5"
+	popup "6      6 lines" switchcase6Line "6"
+	popup "7      7 lines" switchcase7Line "7"
+	popup "8      8 lines" switchcase8Line "8"
+	popup "9      9 lines" switchcase9Line "9"
+end
+
+menu rot13-1Line
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-1"
+end
+
+menu rot13-2Line
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-2"
+end
+
+menu rot13-3Line
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-3"
+end
+
+menu rot13-4Line
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-4"
+end
+
+menu rot13-5Line
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-5"
+end
+
+menu rot13-6Line
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-6"
+end
+
+menu rot13-7Line
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-7"
+end
+
+menu rot13-8Line
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-8"
+end
+
+menu rot13-9Line
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?action=select-line&subaction=rot13&number=%2B-9"
+end
+
+menu ToggleOption
+	func "b  (Interpret / Ignore) the table border value" COMMAND "b" "SET_OPTION display_borders=toggle; RESHAPE"
+	func "c  (Do not) Use HTTP cookie" SET_OPTION "c" "use_cookie=toggle"
+	func "f  Display HTML frame (automatically / manually)" SET_OPTION "f" "frame=toggle"
+	func "h  (Enable / Disable) history function" SET_OPTION "h" "save_hist=toggle"
+	func "i  (Do not) Show inline images" SET_OPTION "i" "display_image=toggle"
+	func "I  Search case (sensitive / insensitive)" SET_OPTION "I" "ignorecase_search=toggle"
+	func "m  (Enable / Disable) mouse function" MOUSE_TOGGLE "m"
+	func "M  Display in (monochrome / color)" SET_OPTION "M" "color=toggle"
+	func "n  (Do not) Show line numbers" SET_OPTION "n" "show_lnum=toggle"
+	func "p  (Do not) Use network proxy" SET_OPTION "p" "use_proxy=toggle"
+	func "r  (Do not) Send HTTP referer" SET_OPTION "r" "no_referer=toggle"
+	func "u  (Do not) Convert URLs in page to links" SET_OPTION "u" "mark_all_pages=toggle"
+	func "w  (Enable / Disable) line wrapping in text file" COMMAND "w" "SET_OPTION fold_line=toggle; RESHAPE"
+	func "W  (Enable / Disable) wrap search" WRAP_TOGGLE "W"
+end
+
+menu register0
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=0&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=0&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=0&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=0&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=0&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=0&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=0&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=0&value=W3M_CURRENT_WORD"
+end
+
+menu register1
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=1&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=1&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=1&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=1&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=1&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=1&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=1&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=1&value=W3M_CURRENT_WORD"
+end
+
+menu register2
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=2&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=2&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=2&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=2&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=2&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=2&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=2&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=2&value=W3M_CURRENT_WORD"
+end
+
+menu register3
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=3&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=3&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=3&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=3&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=3&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=3&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=3&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=3&value=W3M_CURRENT_WORD"
+end
+
+menu register4
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=4&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=4&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=4&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=4&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=4&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=4&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=4&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=4&value=W3M_CURRENT_WORD"
+end
+
+menu register5
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=5&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=5&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=5&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=5&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=5&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=5&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=5&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=5&value=W3M_CURRENT_WORD"
+end
+
+menu register6
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=6&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=6&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=6&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=6&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=6&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=6&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=6&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=6&value=W3M_CURRENT_WORD"
+end
+
+menu register7
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=7&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=7&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=7&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=7&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=7&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=7&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=7&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=7&value=W3M_CURRENT_WORD"
+end
+
+menu register8
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=8&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=8&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=8&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=8&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=8&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=8&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=8&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=8&value=W3M_CURRENT_WORD"
+end
+
+menu register9
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=9&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=9&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=9&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=9&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=9&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=9&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=9&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=9&value=W3M_CURRENT_WORD"
+end
+
+menu registera
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=a&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=a&value=W3M_CURRENT_WORD"
+end
+
+menu registerb
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=b&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=b&value=W3M_CURRENT_WORD"
+end
+
+menu registerc
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=c&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=c&value=W3M_CURRENT_WORD"
+end
+
+menu registerd
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=d&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=d&value=W3M_CURRENT_WORD"
+end
+
+menu registere
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=e&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=e&value=W3M_CURRENT_WORD"
+end
+
+menu registerf
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=f&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=f&value=W3M_CURRENT_WORD"
+end
+
+menu registerg
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=g&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=g&value=W3M_CURRENT_WORD"
+end
+
+menu registerh
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=h&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=h&value=W3M_CURRENT_WORD"
+end
+
+menu registeri
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=i&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=i&value=W3M_CURRENT_WORD"
+end
+
+menu registerj
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=j&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=j&value=W3M_CURRENT_WORD"
+end
+
+menu registerk
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=k&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=k&value=W3M_CURRENT_WORD"
+end
+
+menu registerl
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=l&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=l&value=W3M_CURRENT_WORD"
+end
+
+menu registerm
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=m&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=m&value=W3M_CURRENT_WORD"
+end
+
+menu registern
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=n&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=n&value=W3M_CURRENT_WORD"
+end
+
+menu registero
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=o&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=o&value=W3M_CURRENT_WORD"
+end
+
+menu registerp
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=p&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=p&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=o&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=o&value=W3M_CURRENT_WORD"
+end
+
+menu registerq
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=q&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=q&value=W3M_CURRENT_WORD"
+end
+
+menu registerr
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=r&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=r&value=W3M_CURRENT_WORD"
+end
+
+menu registers
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=s&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=s&value=W3M_CURRENT_WORD"
+end
+
+menu registert
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=t&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=t&value=W3M_CURRENT_WORD"
+end
+
+menu registeru
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=u&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=u&value=W3M_CURRENT_WORD"
+end
+
+menu registerv
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=v&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=v&value=W3M_CURRENT_WORD"
+end
+
+menu registerw
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=w&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=w&value=W3M_CURRENT_WORD"
+end
+
+menu registerx
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=x&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=x&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=x&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=x&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=x&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=x&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=x&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=x&value=W3M_CURRENT_WORD"
+end
+
+menu registery
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=y&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=y&value=W3M_CURRENT_WORD"
+end
+
+menu registerz
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=z&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=z&value=W3M_CURRENT_WORD"
+end
+
+menu registerA
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=a&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Ba&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Ba&value=W3M_CURRENT_WORD"
+end
+
+menu registerB
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=b&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bb&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bb&value=W3M_CURRENT_WORD"
+end
+
+menu registerC
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=c&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bc&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bc&value=W3M_CURRENT_WORD"
+end
+
+menu registerD
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=d&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bd&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bd&value=W3M_CURRENT_WORD"
+end
+
+menu registerE
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=e&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Be&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Be&value=W3M_CURRENT_WORD"
+end
+
+menu registerF
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=f&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bf&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bf&value=W3M_CURRENT_WORD"
+end
+
+menu registerG
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=g&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bg&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bg&value=W3M_CURRENT_WORD"
+end
+
+menu registerH
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=h&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bh&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bh&value=W3M_CURRENT_WORD"
+end
+
+menu registerI
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=i&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bi&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bi&value=W3M_CURRENT_WORD"
+end
+
+menu registerJ
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=j&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bj&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bj&value=W3M_CURRENT_WORD"
+end
+
+menu registerK
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=k&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bk&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bk&value=W3M_CURRENT_WORD"
+end
+
+menu registerL
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=l&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bl&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bl&value=W3M_CURRENT_WORD"
+end
+
+menu registerM
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=m&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bm&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bm&value=W3M_CURRENT_WORD"
+end
+
+menu registerN
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=n&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bn&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bn&value=W3M_CURRENT_WORD"
+end
+
+menu registerO
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=o&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bo&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bo&value=W3M_CURRENT_WORD"
+end
+
+menu registerP
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=p&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=p&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=p&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=p&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=p&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=p&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bp&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bp&value=W3M_CURRENT_WORD"
+end
+
+menu registerQ
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=q&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bq&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bq&value=W3M_CURRENT_WORD"
+end
+
+menu registerR
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=r&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Br&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Br&value=W3M_CURRENT_WORD"
+end
+
+menu registerS
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=s&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bs&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bs&value=W3M_CURRENT_WORD"
+end
+
+menu registerT
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=t&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bt&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bt&value=W3M_CURRENT_WORD"
+end
+
+menu registerU
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=u&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bu&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bu&value=W3M_CURRENT_WORD"
+end
+
+menu registerV
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=v&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bv&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bv&value=W3M_CURRENT_WORD"
+end
+
+menu registerW
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=w&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bw&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bw&value=W3M_CURRENT_WORD"
+end
+
+menu registerX
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=x&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=x&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=X&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=X&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=X&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=X&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2BX&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2BX&value=W3M_CURRENT_WORD"
+end
+
+menu registerY
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=y&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2By&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2By&value=W3M_CURRENT_WORD"
+end
+
+menu registerZ
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=z&subaction=show"
+	func "y  URL Yank" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bz&value=W3M_URL"
+	func "Y  Word Yank" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?action=set-register&key=%2Bz&value=W3M_CURRENT_WORD"
+end
+
+menu registerCurrent
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&variable=W3M_URL"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&variable=W3M_URL&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=redirect&variable=W3M_URL&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=show&variable=W3M_URL"
+end
+
+menu registerSearch
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=%2F&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=%2F&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=%2F&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=%2F&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=%2F&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=%2F&subaction=show"
+end
+
+menu registerUnnamed
+	func "o  Goto (Current Tab)" GOTO "o" "file:///cgi-bin/w3mplus?action=get-register&key=%22&subaction=goto"
+	func "t  Goto (New Tab)" GOTO "t" "file:///cgi-bin/w3mplus?action=get-register&key=%22&subaction=goto&tab=newtab"
+	func "p  Search (Current Tab)" GOTO "p" "file:///cgi-bin/w3mplus?action=get-register&key=%22&subaction=redirect"
+	func "P  Search (New Tab)" GOTO "P" "file:///cgi-bin/w3mplus?action=get-register&key=%22&subaction=redirect&tab=open-newtab"
+	func "s  Send Email" GOTO "s" "file:///cgi-bin/w3mplus?action=get-register&key=%22&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  Show" GOTO "S" "file:///cgi-bin/w3mplus?action=get-register&key=%22&subaction=show"
+end
