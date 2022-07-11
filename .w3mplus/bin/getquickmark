@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 2.2.1
-##   date - 2022-06-28
+##   date - 2022-07-12
 ##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -70,7 +70,11 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 if [ -d "${config}" ]; then
-	printf "'%s' is directory.\\n" "${config}" >&2
+	cat <<-EOF >&2
+		${0##*/}: '${config}' はディレクトリです。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
 	endCall "${EX_CANTCREAT}"
 fi
 
@@ -90,6 +94,8 @@ esac
 
 awkScript=$(
 	cat <<-'EOF'
+	@include "backslash_unescape.awk"
+
 	BEGIN {
 		FS = "\t"
 		exitStatus = 1
@@ -98,7 +104,9 @@ awkScript=$(
 			pattern = ARGV[i]
 
 			while(0 < (getline < config)) {
-				if((regexpFlag && $1 ~ pattern) || (!regexpFlag && $1 == pattern)) {
+				key = backslash_unescape($1)
+
+				if((regexpFlag && key ~ pattern) || (!regexpFlag && key == pattern)) {
 					printf("%s\n", $0)
 					exitStatus = 0
 				}
@@ -118,4 +126,4 @@ awk \
 	-v "config=${config}" \
 	-v "regexpFlag=${regexpFlag}" \
 	-- "${awkScript}" ${@+"${@}"} \
-|| endCall 1
+|| endCall "${?}"

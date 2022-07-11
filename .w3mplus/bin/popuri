@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 3.1.0
-##   date - 2022-06-28
+##   date - 2022-07-12
 ##   since - 2019-08-02
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -71,7 +71,11 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 if [ -d "${config}" ]; then
-	printf "'%s' is directory.\\n" "${config}" >&2
+	cat <<-EOF >&2
+		${0##*/}: '${config}' はディレクトリです。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
 	endCall "${EX_CANTCREAT}"
 fi
 
@@ -88,8 +92,8 @@ tmpDir=$(mktemp -d)
 case "${#}" in
 	[!0])
 		cat <<-EOF >&2
-			${0##*/}: too many arguments
-			Try '${0##*/} --help' for more information.
+			${0##*/}: 引数が過大です。
+			詳細については '${0##*/} --help' を実行してください。
 		EOF
 
 		endCall "${EX_USAGE}"

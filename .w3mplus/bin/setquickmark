@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 2.0.0
-##   date - 2022-06-28
+##   date - 2022-07-12
 ##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -24,9 +24,9 @@ VERSION='setquickmark 2.0.0'
 . 'init.sh'
 . 'sysexits.sh'
 . 'usage.sh'
-. 'control_character.sh'
 . 'regex_match.sh'
-. 'regex_escape.sh'
+. 'awkv_escape.sh'
+. 'control_character.sh'
 
 # @getoptions
 parser_definition() {
@@ -72,7 +72,11 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 if [ -d "${config}" ]; then
-	printf "'%s' is directory.\\n" "${config}" >&2
+	cat <<-EOF >&2
+		${0##*/}: '${config}' はディレクトリです。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
 	endCall "${EX_CANTCREAT}"
 fi
 
@@ -85,56 +89,87 @@ fi
 
 case "${#}" in
 	'0')
-		${VISUAL:-${EDITOR:-vi}} "${config}"
+		${VISUAL:-${EDITOR:-vi --}} "${config}"
 		exit
 		;;
 esac
 
-key="${1}"
+awkv_escape 'key' "${1}"
 shift
-
-case "${key}" in
-	*"${CHAR_HT}"* | *"${CHAR_LF}"*)
-		cat <<-EOF 1>&2
-			${0##*/}: invalid key -- '${key}'
-			Try '${0##*/} --help' for more information.
-		EOF
-
-		endCall "${EX_USAGE}"
-		;;
-esac
 
 uricheck --verbose -- ${@+"${@}"} >'/dev/null' || endCall "${EX_USAGE}"
 
-regex_escape 'escaped' "${key}" 'SED-BRE'
-date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
-deleteList=$(sed -En -e "s/^${escaped}${CHAR_HT}([^${CHAR_HT}]*)${CHAR_HT}.*$/ * \\1/p" -- "${config}")
+tmpDir="$(mktemp -d)"
 
-for uri in ${@+"${@}"}; do
-	i=$((${i-0} + 1))
-	eval "line=\"\${l${i}-1}\""
-	eval "colmun=\"\${c${i}-1}\""
+case "${#}" in
+	'0')
+		awkScript=$(
+			cat <<-'EOF'
+			@include "backslash_escape.awk"
 
-	row="${row-}${key}${CHAR_HT}${uri}${CHAR_HT}${line}${CHAR_HT}${colmun}${CHAR_HT}${date}${CHAR_LF}"
-	addList="${addList-} * ${uri}${CHAR_LF}"
-done
+			BEGIN {
+				FS = "\t"
+				esKey = backslash_escape(key)
+			}
 
-{
-	sed -e "/^\$/d; /^${escaped}\\t/d" -- "${config}"
+			{
+				if($1 == esKey) {
+					printf("%s\n", $0) >>del
+				} else {
+					printf("%s\n", $0)
+				}
+			}
+			EOF
+		)
+		awkv_escape 'del' "${tmpDir}/del"
 
-	printf '%s' "${row-}"
-} | sort -o "${config}"
-
-case "${addList-}" in
-	?*) printf 'Added Quick Mark\n\n%s' "${addList}";;
-esac
-
-case "${deleteList}" in
-	?*)
-		case "${addList-}" in
-			?*) echo;;
-		esac
-
-		printf 'Deleted Quick Mark\n\n%s\n' "${deleteList}"
+		awk \
+			-v "key=${key}" -v "del=${del}" \
+			-- "${awkScript}" "${config}"
 		;;
-esac
+	*)
+		key=$(awk -v "key=${key}" -- '
+			@include "backslash_escape.awk"
+
+			BEGIN {
+				printf("%s", backslash_escape(key))
+			}
+		')
+		date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+
+		cat -- "${config}"
+
+		for uri in ${@+"${@}"}; do
+			i=$((${i-0} + 1))
+			eval "line=\"\${l${i}-1}\""
+			eval "colmun=\"\${c${i}-1}\""
+
+			printf \
+				'%s\t%s\t%s\t%s\t%s\n' \
+				"${key}" "${uri}" \
+				"${line}" "${colmun}" "${date}"
+		done | tee "${tmpDir}/add"
+		;;
+esac | sort -k '1,1' -k '3,3' -t "${CHAR_HT}" -o "${config}"
+
+awkScript=$(
+	cat <<-'EOF'
+	BEGIN {
+		FS = "\t"
+	}
+
+	{
+		printf(" * %s\n", $2)
+	}
+	EOF
+)
+
+if [ -s "${tmpDir}/del" ]; then
+	printf 'Deleted Quick Mark\n\n'
+
+	awk -- "${awkScript}" "${tmpDir}/del"
+elif [ -s "${tmpDir}/add" ]; then
+	printf 'Added Quick Mark\n\n'
+
+	awk -- "${awkScript}" "${tmpDir}/add"
+fi

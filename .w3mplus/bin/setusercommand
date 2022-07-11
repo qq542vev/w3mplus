@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 1.1.3
-##   date - 2022-06-28
+##   date - 2022-07-12
 ##   since - 2019-12-15
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -24,7 +24,7 @@ VERSION='setusercommand 1.1.3'
 . 'init.sh'
 . 'sysexits.sh'
 . 'usage.sh'
-. 'regex_escape.sh'
+. 'awkv_escape.sh'
 . 'control_character.sh'
 
 output() {
@@ -85,7 +85,11 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 if [ -d "${config}" ]; then
-	printf "'%s' is directory.\\n" "${config}" >&2
+	cat <<-EOF >&2
+		${0##*/}: '${config}' はディレクトリです。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
 	endCall "${EX_CANTCREAT}"
 fi
 
@@ -98,53 +102,102 @@ fi
 
 case "${#}" in
 	'0')
-		${VISUAL:-${EDITOR:-vi}} "${config}"
+		${VISUAL:-${EDITOR:-vi --}} "${config}"
 		exit
 		;;
 esac
 
-for arg in ${@+"${@}"}; do
-	case "${arg}" in
-		*"${CHAR_HT}"* | *"${CHAR_LF}"*)
-			cat <<-EOF 1>&2
-				${0##*/}: invalid arg -- '${arg}'
-				Try '${0##*/} --help' for more information.
-			EOF
-
-			endCall "${EX_USAGE}"
-			;;
-	esac
-done
-
-call="${1}"
+awkv_escape 'key' "${1}"
 shift
 
-command="${*}"
-regex_escape 'escaped' "${call}${CHAR_HT}${command}${command:+${CHAR_HT}}" 'SED-BRE'
+awkv_escape 'command' "${*}"
+tmpDir="$(mktemp -d)"
 
 case "${#}" in
 	'0')
-		row=''
-		deleteList=$(sed -e "/^${escaped}/!d" "${config}" | output)
+		awkScript=$(
+			cat <<-'EOF'
+			@include "backslash_escape.awk"
+
+			BEGIN {
+				FS = "\t"
+				esKey = backslash_escape(key)
+			}
+
+			{
+				if($1 == esKey) {
+					printf("%s\n", $0) >>del
+				} else {
+					printf("%s\n", $0)
+				}
+			}
+			EOF
+		)
+		awkv_escape 'del' "${tmpDir}/del"
+
+		awk \
+			-v "key=${key}" -v "del=${del}" \
+			-- "${awkScript}" "${config}"
 		;;
 	*)
-		row=$(printf '%s\t%s\t%s\n$' "${call}" "${command}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')")
-		row="${row%$}"
-		;;
-esac
+		awkScript=$(
+			cat <<-'EOF'
+			@include "backslash_escape.awk"
 
-{
-	sed -e "/^\$/d; /^${escaped}/d" -- "${config}"
-	printf '%s' "${row}"
-} | sort -k '1,1' -k '3,3' -t "${CHAR_HT}" -o "${config}"
+			BEGIN {
+				FS = "\t"
+				esKey = backslash_escape(key)
+				esCommand = backslash_escape(command)
+			}
 
-case "${#}" in
-	'0')
-		case "${deleteList}" in
-			?*) printf 'Deleted auto command\n\n%s\n' "${deleteList}";;
-		esac
+			$1 != esKey || $2 != esCommand {
+				printf("%s\n", $0)
+			}
+
+			END {
+				printf("%s\t%s\t%s\n", esKey, esCommand, date)
+				printf("%s\t%s\t%s\n", esKey, esCommand, date) >>add
+			}
+			EOF
+		)
+		awkv_escape 'add' "${tmpDir}/add"
+
+		awk \
+			-v "key=${key}" -v "command=${command}" \
+			-v "date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')" -v "add=${add}" \
+			-- "${awkScript}" "${config}"
 		;;
-		*) printf 'Added auto command\n\n%s\n' "$(printf '%s' "${row}" | output)";;
-	*)
-	;;
-esac
+esac | sort -k '1,1' -k '3,3' -t "${CHAR_HT}" -o "${config}"
+
+awkScript=$(
+	cat <<-'EOF'
+
+	BEGIN {
+		FS = "\t"
+	}
+
+	{
+		call = $1
+		command = $2
+		date = $3
+
+		if(NR != 1) {
+			printf("\n")
+		}
+
+		printf("call type: %s\n", call)
+		printf("check command: %s\n", command)
+		printf("date: %s\n", date)
+	}
+	EOF
+)
+
+if [ -s "${tmpDir}/del" ]; then
+	printf 'Deleted user command\n\n'
+
+	awk -- "${awkScript}" "${tmpDir}/del"
+elif [ -s "${tmpDir}/add" ]; then
+	printf 'Added user command\n\n'
+
+	awk -- "${awkScript}" "${tmpDir}/add"
+fi

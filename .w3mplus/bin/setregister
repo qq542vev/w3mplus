@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 2.0.0
-##   date - 2022-06-28
+##   date - 2022-07-12
 ##   since - 2020-04-06
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -25,7 +25,6 @@ VERSION='setregister 2.0.0'
 . 'sysexits.sh'
 . 'usage.sh'
 . 'awkv_escape.sh'
-. 'control_character.sh'
 
 # @getoptions
 parser_definition() {
@@ -69,7 +68,11 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 if [ -d "${config}" ]; then
-	printf "'%s' is directory.\\n" "${config}" >&2
+	cat <<-EOF >&2
+		${0##*/}: '${config}' はディレクトリです。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
 	endCall "${EX_CANTCREAT}"
 fi
 
@@ -82,29 +85,10 @@ fi
 
 case "${#}" in
 	'0')
-		${VISUAL:-${EDITOR:-vi}} "${config}"
+		${VISUAL:-${EDITOR:-vi --}} "${config}"
 		exit
 		;;
 esac
-
-for key in ${@+"${@}"}; do
-	index=$((${index-0} + 1))
-
-	case "$((index % 2))" in
-		'1') continue;;
-	esac
-
-	case "${key}" in
-		*"${CHAR_HT}"* | *"${CHAR_LF}"*)
-			cat <<-EOF >&2
-				${0##*/}: invalid key -- '${key}'
-				Try '${0##*/} --help' for more information.
-			EOF
-
-			endCall "${EX_USAGE}"
-			;;
-	esac
-done
 
 date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 awkScript=$(
@@ -121,8 +105,8 @@ awkScript=$(
 
 		close(config)
 
-		for(i = 1; i < ARGC; i++) {
-			name = ARGV[i]
+		for(i = 1; i < ARGC; i += 2) {
+			name = backslash_escape(ARGV[i])
 			value = backslash_escape(ARGV[i + 1])
 
 			if(name == "+") {

@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 2.3.0
-##   date - 2022-06-28
+##   date - 2022-07-12
 ##   since - 2019-07-15
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -104,6 +104,17 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
+case "${#}" in
+	'0' | '1')
+		cat <<-EOF >&2
+			${0##*/}: 引数が不足しています。
+			詳細については '${0##*/} --help' を実行してください。
+		EOF
+
+		endCall "${EX_USAGE}"
+		;;
+esac
+
 action="${1}"
 variableName="${2}"
 shift 2
@@ -144,9 +155,9 @@ case "${action}" in
 esac
 
 if regex_match "${variableName}" '^[_A-Za-z][_0-9A-Za-z]*$'; then :; else
-	cat <<-EOF 1>&2
-		${0##*/}: invalid variable name -- '${variableName}'
-		Try '${0##*/} --help' for more information.
+	cat <<-EOF >&2
+		${0##*/}: '${variableName}' -- VARIABLE_NAME の値が不正です。
+		詳細については '${0##*/} --help' を実行してください。
 	EOF
 
 	endCall "${EX_USAGE}"

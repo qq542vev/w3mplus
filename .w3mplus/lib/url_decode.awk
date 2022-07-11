@@ -1,4 +1,6 @@
 function url_decode(string, httpDecode,  p2c,result) {
+	split("", p2c)
+
 	p2c["00"] = "\000"; p2c["01"] = "\001";
 	p2c["02"] = "\002"; p2c["03"] = "\003";
 	p2c["04"] = "\004"; p2c["05"] = "\005";

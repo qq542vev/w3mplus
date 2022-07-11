@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 1.0.0
-##   date - 2022-06-28
+##   date - 2022-07-12
 ##   since - 2022-06-28
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -80,8 +80,8 @@ case "${axes}" in
 	'ancestor' | 'ancestor-or-self' | 'child' | 'descendant' | 'descendant-or-self' | 'parent' | 'sibling') ;;
 	*)
 		cat <<-EOF >&2
-			${0##*/}: invalid axes -- '${axes}'
-			Try '${0##*/} --help' for more information.
+			${0##*/}: '${axes}' -- AXES の値が不正です。
+			詳細については '${0##*/} --help' を実行してください。
 		EOF
 
 		endCall "${EX_USAGE}"
