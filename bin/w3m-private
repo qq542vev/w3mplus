@@ -10,7 +10,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 2.0.0
-##   date - 2022-06-28
+##   date - 2022-07-13
 ##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -37,11 +37,11 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_array_posix copy "-o" "-path" "${OPTARG}"' -c --copy var:PATTERN -- 'PATTERN に一致するファイルをコピーする'
-	flag  copy      --no-copy    init:@no on: no: -- '--copy をリセットする'
+	flag  copy    --no-copy    init:@no on: no: -- '--copy をリセットする'
 	param :'append_array_posix link "-o" "-path" "${OPTARG}"' -l --link var:PATTERN -- 'PATTERN に一致するファイルへのシンボリックリンクを作成する'
-	flag  link      --no-link    init:@no on: no: -- '--link をリセットする'
-	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+	flag  link    --no-link    init:@no on: no: -- '--link をリセットする'
+	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 2.0.0
-##   date - 2022-07-12
+##   date - 2022-07-13
 ##   since - 2020-03-22
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -47,13 +47,13 @@ parser_definition() {
 	param :'append_array_posix attribute -a "${OPTARG}"' -a --attribute init:='cols=200,*' validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:"NANE '=' VALUE" -- 'frameset要素に属性を追加する'
 	flag  attribute --no-attribute init:@none on: no: -- '--attribute をリセットする'
 	param :option_category -c --category init:='scheme' pattern:'scheme | authority | path | query | fragment' var:"'scheme' | 'authority' | 'path' | 'query' | 'fragment'" -- 'サイドバーの URI を分類する'
-	param main      -m --main      init:='data:text/plain,' var:URI -- 'メインページの URI を指定する'
-	param output    --menu-output  init:'output="${HOME}/.w3mplus/cache/"' var:PATH -- 'サイドバーの内容を PATH に出力する'
-	param position  -p --position  init:='left' pattern:'left | right' var:"'left' | 'right'" -- 'サイドバーの位置を指定する'
-	param size      -s --size      init:='20'   validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- 'サイドバーの文字列を切り詰める'
-	param title     -t --title     init:='Links' var:TEXT -- 'フレームページのタイトルを指定する'
-	disp  :usage    -h --help      -- 'このヘルプを表示して終了する'
-	disp  VERSION   -v --version   -- 'バージョン情報を表示して終了する'
+	param main      -m --main        init:='data:text/plain,' var:URI -- 'メインページの URI を指定する'
+	param output    -o --menu-output init:'output="${HOME}/.w3mplus/cache"' var:PATH -- 'サイドバーの内容を PATH に出力する'
+	param position  -p --position    init:='left' pattern:'left | right' var:"'left' | 'right'" -- 'サイドバーの位置を指定する'
+	param size      -s --size        init:='20'   validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- 'サイドバーの文字列を切り詰める'
+	param title     -t --title       init:='Links' var:TEXT -- 'フレームページのタイトルを指定する'
+	disp  :usage    -h --help        -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version     -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -142,31 +142,33 @@ sed -e '/["[:blank:]]/d; s/^/"/; s/$/"/' -- ${@+"${@}"} \
 | printhtml --title 'Menu page' - >"${tmpDir}/file"
 
 case "${output}" in
-	*/) output="${output}/menu-$(cksum "${tmpDir}/file" | cut -d ' ' -f '1-2' | tr ' ' '-').html";;
-esac
-
-case "${output}" in
 	'')
 		output="data:text/html;charset=UTF-8;base64,$(base64 -- "${tmpDir}/file")"
 		;;
 	*)
+		if [ '!' -e "${output}" ]; then
+			outputDir=$(dirname -- "${output}"; printf '_')
+			mkdir -p -- "${outputDir%?_}"
+
+			: >"${output}"
+		fi
+
 		if [ -d "${output}" ]; then
+			output="${output}/menu-$(cksum "${tmpDir}/file" | cut -d ' ' -f '1-2' | tr ' ' '-').html"
+		elif [ -f "${output}" ]; then
+			cat -- "${tmpDir}/file" >"${output}"
+		else
 			cat <<-EOF >&2
-				${0##*/}: '${output}' はディレクトリです。
+				${0##*/}: '${output}' は通常ファイルではありません。
 				詳細については '${0##*/} --help' を実行してください。
 			EOF
 
 			endCall "${EX_CANTCREAT}"
-		elif [ '!' -e "${output}" ]; then
-			outputDir=$(dirname -- "${output}"; printf '_')
-			mkdir -p -- "${outputDir%?_}"
 		fi
-
-		cat -- "${tmpDir}/file" >"${output}"
-
-		path_to_fileurl 'menu' "${output}"
 		;;
 esac
+
+path_to_fileurl 'menu' "${output}"
 
 case "${position}" in
 	'left')

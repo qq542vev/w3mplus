@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 2.0.0
-##   date - 2022-06-28
+##   date - 2022-07-13
 ##   since - 2020-01-27
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -32,8 +32,8 @@ validation_param() {
 		@include "domain_check.awk"
 
 		BEGIN {
-			position = index(ARGV[1], "=")
-			exit !((ARGV[1] ~ /^add=|^delete=|^toggle=/) && domain_check(substr(ARGV[1], position + 1)))
+			split(ARGV[1], value, "=")
+			exit !((value[1] == "add" | value[1] == "delete" || value[1] == "toggle") && domain_check(value[2]))
 		}
 	' "${1}"
 }

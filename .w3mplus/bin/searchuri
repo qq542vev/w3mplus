@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 2.0.0
-##   date - 2022-07-12
+##   date - 2022-07-13
 ##   since - 2020-05-26
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -74,24 +74,6 @@ eval "set -- ${REST}"
 
 tmpDir=$(mktemp -d)
 
-if [ -d "${config}" ]; then
-	cat <<-EOF >&2
-		${0##*/}: '${config}' はディレクトリです。
-		詳細については '${0##*/} --help' を実行してください。
-	EOF
-
-	endCall "${EX_CANTCREAT}"
-fi
-
-if [ -d "${history}" ]; then
-	cat <<-EOF >&2
-		${0##*/}: '${history}' はディレクトリです。
-		詳細については '${0##*/} --help' を実行してください。
-	EOF
-
-	endCall "${EX_CANTCREAT}"
-fi
-
 case "${config}" in
 	'') config="${tmpDir}/config"
 esac
@@ -101,6 +83,22 @@ if [ '!' -e "${config}" ]; then
 	mkdir -p -- "${configDir%?_}"
 
 	: >"${config}"
+fi
+
+if [ '!' -f "${config}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${config}' は通常ファイルではありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_CANTCREAT}"
+elif [ '!' -r "${config}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${config}' の読み込み許可がありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_CANTCREAT}"
 fi
 
 if [ '!' -s "${config}" ]; then
@@ -119,6 +117,22 @@ if [ '!' -e "${history}" ]; then
 	mkdir -p -- "${historyDir%?_}"
 
 	: >"${history}"
+fi
+
+if [ '!' -f "${history}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${history}' は通常ファイルではありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_CANTCREAT}"
+elif [ '!' -r "${history}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${history}' の読み込み許可がありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_CANTCREAT}"
 fi
 
 case "${#}" in

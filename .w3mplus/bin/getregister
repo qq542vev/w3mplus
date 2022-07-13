@@ -8,7 +8,7 @@
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
 ##   version - 1.3.3
-##   date - 2022-07-12
+##   date - 2022-07-13
 ##   since - 2020-04-20
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -71,20 +71,27 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-if [ -d "${config}" ]; then
-	cat <<-EOF >&2
-		${0##*/}: '${config}' はディレクトリです。
-		詳細については '${0##*/} --help' を実行してください。
-	EOF
-
-	endCall "${EX_CANTCREAT}"
-fi
-
 if [ '!' -e "${config}" ]; then
 	configDir=$(dirname -- "${config}"; printf '_')
 	mkdir -p -- "${configDir%?_}"
 
 	: >"${config}"
+fi
+
+if [ '!' -f "${config}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${config}' は通常ファイルではありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_CANTCREAT}"
+elif [ '!' -r "${config}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${config}' の読み込み許可がありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_CANTCREAT}"
 fi
 
 case "${#}" in
