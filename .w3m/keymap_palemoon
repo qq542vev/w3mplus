@@ -425,8 +425,8 @@ keymap "C-s" DOWNLOAD
 
 ## Editing ##
 
-keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
-keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD_AT"
+keymap "C-c" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
+keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD_AT"
 keymap "C-y" REDO
 keymap "C-z" UNDO
 
@@ -442,15 +442,15 @@ keymap "^[[28~" SEARCH_PREV
 keymap "M-C-g" SEARCH_PREV
 keymap "'" LIST_MENU
 keymap "/" ISEARCH
-keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
-keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&tab=open-newtab&query=; DICT_WORD"
+keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
+keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&query=; DICT_WORD"
 # F4 key
 keymap "^[OS" MENU ContextMenuSearch
 keymap "^[[14~" MENU ContextMenuSearch
 
 ## Windows & Tabs ##
 
-keymap "C-w" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=close-tab"
+keymap "C-w" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=close-tab"
 keymap "M-C-w" QUIT
 keymap "C-q" EXIT
 keymap "C-t" TAB_GOTO "about:blank"
@@ -458,7 +458,7 @@ keymap "C-n" EXTERN "w3m ${WWW_HOME-about:home} #"
 keymap "M-C-p" EXTERN "w3m-private --link './.w3mplus' -- 'about:private' #"
 keymap "C-j" GOTO_LINK
 keymap "C-m" GOTO_LINK
-keymap "M-C-t" GOTO "file:///cgi-bin/w3mplus?action=undo-tab"
+keymap "M-C-t" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab"
 keymap "M-1" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; CLOSE_TAB"
 keymap "M-2" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
 keymap "M-3" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
@@ -471,13 +471,13 @@ keymap "M-9" COMMAND "NEW_TAB; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_R
 
 ## History ##
 
-keymap "C-h" GOTO "file:///cgi-bin/w3mplus?action=sidebar-history"
+keymap "C-h" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=sidebar-history"
 keymap "M-C-h" HISTORY
 
 ## Bookmarks ##
 
 keymap "C-d" ADD_BOOKMARK
-keymap "C-b" GOTO "file:///cgi-bin/w3mplus?action=sidebar-bookmark"
+keymap "C-b" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=sidebar-bookmark"
 keymap "M-C-b" BOOKMARK
 
 ## Tools ##

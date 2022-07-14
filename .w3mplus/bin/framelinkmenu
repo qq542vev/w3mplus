@@ -139,7 +139,7 @@ sed -e '/["[:blank:]]/d; s/^/"/; s/$/"/' -- ${@+"${@}"} \
 | sort | uniq \
 | sort -k "${category}" \
 | awk -v "size=${size}" -v "start=${category}" -- "${awkScript}" \
-| printhtml --title 'Menu page' - >"${tmpDir}/file"
+| printhtml --title 'Menu page' -- - >"${tmpDir}/file"
 
 case "${output}" in
 	'')
@@ -163,7 +163,7 @@ case "${output}" in
 				詳細については '${0##*/} --help' を実行してください。
 			EOF
 
-			endCall "${EX_CANTCREAT}"
+			endCall "${EX_DATAERR}"
 		fi
 		;;
 esac

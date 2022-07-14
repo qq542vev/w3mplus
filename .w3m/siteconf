@@ -19,19 +19,19 @@
 ##   * <README.siteconf at https://github.com/tats/w3m/blob/master/doc-jp/README.siteconf>
 
 url /^bing:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=bing&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing&tab=del-prebuf&query="
 no_referer_from on
 
 url /^bing-image:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=bing-image&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing-image&tab=del-prebuf&query="
 no_referer_from on
 
 url /^bing-video:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=bing&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing&tab=del-prebuf&query="
 no_referer_from on
 
 url /^bing-news:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=bing-news&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing-news&tab=del-prebuf&query="
 no_referer_from on
 
 # HTML frame の場合 HTTP refererを送信してしまうため無効
@@ -39,39 +39,39 @@ url /^data:/
 no_referer_from on
 
 url /^duckduckgo:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=duckduckgo&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=duckduckgo&tab=del-prebuf&query="
 no_referer_from on
 
 url /^github:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=github&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=github&tab=del-prebuf&query="
 no_referer_from on
 
 url /^google:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=google&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=google&tab=del-prebuf&query="
 no_referer_from on
 
 url /^google-image:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=google-image&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=google-image&tab=del-prebuf&query="
 no_referer_from on
 
 url /^google-video:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=google-video&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=google-video&tab=del-prebuf&query="
 no_referer_from on
 
 url /^google-news:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=google-news&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=google-news&tab=del-prebuf&query="
 no_referer_from on
 
 url /^pkgs.org:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=pkgs.org&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=pkgs.org&tab=del-prebuf&query="
 no_referer_from on
 
 url /^startpage:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=startpage&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=startpage&tab=del-prebuf&query="
 no_referer_from on
 
 url /^twitter:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=twitter&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=twitter&tab=del-prebuf&query="
 no_referer_from on
 
 url m@^urn:isbn:@i
@@ -83,31 +83,31 @@ substitute_url "https://www.worldcat.org/search?q=n2%3A"
 no_referer_from on
 
 url /^wikipedia-en:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=wikipedia-en&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=wikipedia-en&tab=del-prebuf&query="
 no_referer_from on
 
 url /^wikipedia-ja:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=wikipedia-ja&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=wikipedia-ja&tab=del-prebuf&query="
 no_referer_from on
 
 url /^yandex:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=yandex&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=yandex&tab=del-prebuf&query="
 no_referer_from on
 
 url /^yandex-image:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=yandex-image&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=yandex-image&tab=del-prebuf&query="
 no_referer_from on
 
 url /^yandex-video:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=yandex-video&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=yandex-video&tab=del-prebuf&query="
 no_referer_from on
 
 url /^youtube:/
-substitute_url "file:///cgi-bin/w3mplus?action=search&engine=youtube&tab=del-prebuf&query="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=youtube&tab=del-prebuf&query="
 no_referer_from on
 
 url /^view-source:/
-substitute_url "file:///cgi-bin/w3mplus?redirect=2&action=uri&subaction=viewSource&uri="
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&redirect=2&action=uri&subaction=viewSource&uri="
 
 # HTTPS Everywhere
 # url m@^http://@

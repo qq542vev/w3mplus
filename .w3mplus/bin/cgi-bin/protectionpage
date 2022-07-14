@@ -115,7 +115,7 @@ case "${query_category-}" in
 		;;
 esac
 
-printhtml --title 'Forbidden Site' - <<-EOF | httpresponse - -H 'Content-Type: text/html; charset=UTF-8'
+printhtml --title 'Forbidden Site' -- - <<-EOF | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 	<h1>${title}</h1>
 
 	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${name}</a></p>

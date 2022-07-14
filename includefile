@@ -1,0 +1,215 @@
+#!/usr/bin/env sh
+
+### Script: includefile
+##
+## ファイルをインクルードする。
+##
+## Metadata:
+##
+##	 author - qq542vev <https://purl.org/meta/me/>
+##	 version - 0.1.0
+##	 date - 2022-07-05
+##	 since - 2022-07-05
+##	 copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##	 license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##	 package - w3mplus
+##
+## See Also:
+##
+##	 * Project homepage - <https://github.com/qq542vev/w3mplus>
+##	 * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='includefile 0.1.0'
+
+. 'init.sh'
+. 'sysexits.sh'
+. 'usage.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... OUTPUT_DIR [FILE]..." \
+		'' 'Options:'
+
+	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+case "${#}" in
+	'0')
+		cat <<-EOF >&2
+			${0##*/}: 引数が不足しています。
+			詳細については '${0##*/} --help' を実行してください。
+		EOF
+
+		endCall "${EX_USAGE}"
+		;;
+esac
+
+output="${1}"
+shift
+
+mkdir -p "${output}"
+
+includeShellscript=$(
+	cat <<-'EOF'
+	BEGIN {
+		for(i = 1; i < ARGC; i++) {
+			read_file(ARGV[i])
+		}
+	}
+
+	function pathto(file,  len,pathlist,i,result,tmp) {
+		if(index(file, "/") != 0) {
+			return file
+		}
+
+		len = split(ENVIRON["PATH"], pathlist, ":")
+
+		for(i = 1; i <= len; i++) {
+			result = (pathlist[i] == "" ? "." : pathlist[i]) "/" file
+
+			if(0 < (getline tmp < result)) {
+				close(result)
+				return result
+			}
+		}
+
+		return ""
+	}
+
+	function read_file(file,  record,fields) {
+		while(0 < (getline record < file)) {
+			split(record, fields)
+
+			if(fields[1] == ".") {
+				gsub(/["']/, "", fields[2])
+				fpath = pathto(fields[2])
+
+				if(fpath == "") {
+					printf("awk: %s: cannot find %s\n", file, fields[2]) | "cat >&2"
+					exit
+				}
+
+				read_file(fpath)
+			} else {
+				printf("%s\n", record)
+			}
+		}
+
+		close(file)
+	}
+	EOF
+)
+
+includeAwkscript=$(
+	cat <<-'EOF'
+	BEGIN {
+		split("", include)
+
+		for(i = 1; i < ARGC; i++) {
+			read_file(ARGV[i], include)
+		}
+	}
+
+	function pathto(file,  len,pathlist,i,result,tmp) {
+		if(index(file, "/") != 0) {
+			return file
+		}
+
+		len = split(ENVIRON["AWKPATH"], pathlist, ":")
+
+		for(i = 1; i <= len; i++) {
+			result = (pathlist[i] == "" ? "." : pathlist[i]) "/" file
+
+			if(0 < (getline tmp < result)) {
+				close(result)
+				return result
+			}
+		}
+
+		return ""
+	}
+
+	function read_file(file, include,  record,fields) {
+		include[file] = 1
+
+		while(0 < (getline record < file)) {
+			split(record, fields)
+
+			if(fields[1] == "@include") {
+				gsub(/"/, "", fields[2])
+				fpath = pathto(fields[2])
+
+				if(fpath == "") {
+					printf("awk: %s: cannot find %s\n", file, fields[2]) | "cat >&2"
+					exit
+				}
+
+				if(!(fpath in include)) {
+					read_file(fpath, include)
+				}
+			} else if(fields[1] == "EOF" || fields[1] == "'") {
+				split("", include)
+				printf("%s\n", record)
+			} else {
+				printf("%s\n", record)
+			}
+		}
+
+		close(file)
+	}
+	EOF
+)
+
+for file in ${@+"${@}"}; do
+	if [ '!' -f "${file}" ]; then
+		cat <<-EOF >&2
+			${0##*/}: '${file}' は通常ファイルではありません。
+		EOF
+
+		continue
+	elif [ '!' -r "${file}" ]; then
+		cat <<-EOF >&2
+			${0##*/}: '${file}' の読み込み許可がありません。
+		EOF
+
+		continue
+	fi
+
+	gengetoptions embed "${file}" \
+	| sed -e '/eval .*getoptions/{ s/^/#/; }' \
+	| awk -- "${includeShellscript}" - \
+	| awk -- "${includeAwkscript}" - \
+	| shfmt -mn -ln 'posix' >"${output}/${file##*/}"
+done

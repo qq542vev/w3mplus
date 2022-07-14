@@ -426,8 +426,8 @@ keymap "C-s" DOWNLOAD
 
 ## Editing ##
 
-keymap "C-c" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
-keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD_AT"
+keymap "C-c" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
+keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD_AT"
 keymap "C-y" REDO
 keymap "C-z" UNDO
 
@@ -443,15 +443,15 @@ keymap "^[[28~" SEARCH_PREV
 keymap "M-C-g" SEARCH_PREV
 keymap "'" LIST_MENU
 keymap "/" ISEARCH
-keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
-keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&tab=open-newtab&query=; DICT_WORD"
+keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
+keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&query=; DICT_WORD"
 # F4 key
 keymap "^[OS" MENU ContextMenuSearch
 keymap "^[[14~" MENU ContextMenuSearch
 
 ## Windows & Tabs ##
 
-keymap "C-w" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=close-tab"
+keymap "C-w" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=close-tab"
 keymap "M-C-w" QUIT
 keymap "C-q" EXIT
 keymap "C-t" TAB_GOTO "about:blank"
@@ -459,7 +459,7 @@ keymap "C-n" EXTERN "w3m ${WWW_HOME-about:home} #"
 keymap "M-C-p" EXTERN "w3m-private --link './.w3mplus' -- 'about:private' #"
 keymap "C-j" GOTO_LINK
 keymap "C-m" GOTO_LINK
-keymap "M-C-t" GOTO "file:///cgi-bin/w3mplus?action=undo-tab"
+keymap "M-C-t" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab"
 keymap "M-1" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; CLOSE_TAB"
 keymap "M-2" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
 keymap "M-3" COMMAND "NEW_TAB; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; CLOSE_TAB"
@@ -472,13 +472,13 @@ keymap "M-9" COMMAND "NEW_TAB; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_R
 
 ## History ##
 
-keymap "C-h" GOTO "file:///cgi-bin/w3mplus?action=sidebar-history"
+keymap "C-h" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=sidebar-history"
 keymap "M-C-h" HISTORY
 
 ## Bookmarks ##
 
 keymap "C-d" ADD_BOOKMARK
-keymap "C-b" GOTO "file:///cgi-bin/w3mplus?action=sidebar-bookmark"
+keymap "C-b" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=sidebar-bookmark"
 keymap "M-C-b" BOOKMARK
 
 ## Tools ##
@@ -539,20 +539,20 @@ keymap ":t" COMMAND "SET_OPTION default_url=0; TAB_GOTO"
 keymap "O" COMMAND "SET_OPTION default_url=1; GOTO"
 keymap "T" COMMAND "SET_OPTION default_url=1; TAB_GOTO"
 
-keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD"
-keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&tab=open-newtab&query=; DICT_WORD"
+keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
+keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&query=; DICT_WORD"
 
 keymap "C-td" NEW_TAB
 
 keymap "w" EXTERN "w3m ${WWW_HOME-about:home} #"
 keymap "W" EXTERN
 
-keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; DICT_WORD_AT"
-keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&tab=open-newtab&query=; DICT_WORD_AT"
-keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&tab=open-newtab&after=PREV_TAB&query=; DICT_WORD_AT"
+keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD_AT"
+keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&query=; DICT_WORD_AT"
+keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&after=PREV_TAB&query=; DICT_WORD_AT"
 
-keymap "C-x" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=incrementURI&variable=W3M_URL&number=-1"
-keymap "C-a" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=incrementURI&variable=W3M_URL"
+keymap "C-x" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=incrementURI&variable=W3M_URL&number=-1"
+keymap "C-a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=incrementURI&variable=W3M_URL"
 
 ### History ###
 
@@ -570,10 +570,10 @@ keymap ":H" HISTORY
 ### Navigating ###
 
 keymap "~" LOAD "~"
-keymap "gh" GOTO "file:///cgi-bin/w3mplus?action=homepage"
-keymap "gH" GOTO "file:///cgi-bin/w3mplus?action=homepage&tab=open-newtab"
+keymap "gh" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=homepage"
+keymap "gH" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=homepage&tab=open-newtab"
 
-keymap "gu" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=parentUriPath&variable=W3M_URL"
+keymap "gu" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=parentUriPath&variable=W3M_URL"
 keymap "gU" GOTO_RELATIVE "/"
 
 ### Reloading ###
@@ -610,9 +610,9 @@ keymap "gF" COMMAND "VIEW; EDIT_SCREEN; VIEW"
 ### Motion commands ###
 
 keymap "0" LINE_BEGIN
-keymap "\^" GOTO "file:///cgi-bin/w3mplus?action=line-begin-non-blake"
+keymap "\^" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=line-begin-non-blake"
 keymap "$" LINE_END
-keymap "g_" GOTO "file:///cgi-bin/w3mplus?action=line-end-non-blake"
+keymap "g_" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=line-end-non-blake"
 
 keymap "gg" BEGIN
 # Home key
@@ -673,20 +673,20 @@ keymap "gi" COMMAND "SEARCH '\[..* \]'; MOVE_RIGHT1"
 keymap "[[" SEARCH "[Pp][Rr][Ee][Vv]|<<|«|前へ"
 keymap "]]" SEARCH "[Nn][Ee][Xx][Tt]|>>|»|次へ"
 
-keymap "{" GOTO "file:///cgi-bin/w3mplus?action=goto-paragraph&number=-1"
-keymap "}" GOTO "file:///cgi-bin/w3mplus?action=goto-paragraph&number=%2B1"
+keymap "{" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-paragraph&number=-1"
+keymap "}" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-paragraph&number=%2B1"
 
 ### Zooming ###
 
-keymap "ZI" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D20"
-keymap "+" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D20"
-keymap "ZM" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=%2B%3D60"
+keymap "ZI" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D20"
+keymap "+" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D20"
+keymap "ZM" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D60"
 
-keymap "ZO" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D20"
-keymap "-" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D20"
-keymap "ZR" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=-%3D60"
+keymap "ZO" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D20"
+keymap "-" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D20"
+keymap "ZR" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D60"
 
-keymap "zZ" GOTO "file:///cgi-bin/w3mplus?action=zoom&zoom=100"
+keymap "zZ" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=100"
 
 keymap ":z" MENU Zoom
 
@@ -696,8 +696,8 @@ keymap ":f" FRAME
 
 ### Copying text ###
 
-keymap "y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_URL"
-keymap "Y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
+keymap "y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_URL"
+keymap "Y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
 
 ## Command Line mode ##
 
@@ -725,11 +725,11 @@ keymap "?" ISEARCH_BACK
 keymap "n" SEARCH_NEXT
 keymap "N" SEARCH_PREV
 
-keymap "#" GOTO "file:///cgi-bin/w3mplus?action=find-word&number=-1"
-keymap "*" GOTO "file:///cgi-bin/w3mplus?action=find-word&number=%2B1"
+keymap "#" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=find-word&number=-1"
+keymap "*" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=find-word&number=%2B1"
 
-keymap "g#" GOTO "file:///cgi-bin/w3mplus?action=find-string&number=-1"
-keymap "g*" GOTO "file:///cgi-bin/w3mplus?action=find-string&number=%2B1"
+keymap "g#" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=find-string&number=-1"
+keymap "g*" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=find-string&number=%2B1"
 
 ## Tabs and buffers ##
 
@@ -762,15 +762,15 @@ keymap "C-t$" COMMAND "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TA
 
 ### Closing tabs ###
 
-keymap "d" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?action=close-tab"
-keymap "D" GOTO "file:///cgi-bin/w3mplus?action=close-tab"
+keymap "d" COMMAND "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=close-tab"
+keymap "D" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=close-tab"
 
 keymap "C-to" COMMAND "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; PREV_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB;"
 
-keymap "u" GOTO "file:///cgi-bin/w3mplus?action=undo-tab"
-keymap "U" GOTO "file:///cgi-bin/w3mplus?action=undo-tab&count=-0"
+keymap "u" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab"
+keymap "U" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab&count=-0"
 
-keymap ":u" GOTO "file:///cgi-bin/w3mplus?action=show-tab-history"
+keymap ":u" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-tab-history"
 
 ## Hints ##
 
@@ -782,17 +782,17 @@ keymap ";?" LINE_INFO
 keymap ";s" SAVE_LINK
 keymap ";o" GOTO_LINK
 keymap ";t" TAB_LINK
-keymap ";b" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=prevTab&variable=W3M_CURRENT_LINK"
+keymap ";b" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=prevTab&variable=W3M_CURRENT_LINK"
 keymap ";w" EXTERN_LINK "w3m %s"
-keymap ";O" GOTO "file:///cgi-bin/w3mplus?action=link-goto"
-keymap ";T" GOTO "file:///cgi-bin/w3mplus?action=link-tabgoto"
+keymap ";O" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-goto"
+keymap ";T" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-tabgoto"
 keymap ";W" EXTERN_LINK
-keymap ";a" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
-keymap ";v" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=viewSource&variable=W3M_CURRENT_LINK"
-keymap ";V" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=viewSourceExternally&variable=W3M_CURRENT_LINK"
-keymap ";y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
-keymap ";Y" GOTO "file:///cgi-bin/w3mplus?action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
-keymap ";c" GOTO "file:///cgi-bin/w3mplus?action=context-menu"
+keymap ";a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
+keymap ";v" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=viewSource&variable=W3M_CURRENT_LINK"
+keymap ";V" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=viewSourceExternally&variable=W3M_CURRENT_LINK"
+keymap ";y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
+keymap ";Y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
+keymap ";c" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=context-menu"
 keymap ";i" VIEW_IMAGE
 keymap ";I" SAVE_IMAGE
 
@@ -803,8 +803,8 @@ keymap ";TAB" MENU ExtendedHints
 
 ### Bypassing Pentadactyl ###
 
-keymap "M-b" COMMAND "SET_OPTION default_url=0; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; SET_OPTION keymap_file=keymap_builtin-onetime"
-keymap "M-C-b" COMMAND "SET_OPTION default_url=0; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?action=dict-word&query=; SET_OPTION keymap_file=keymap_builtin"
+keymap "M-b" COMMAND "SET_OPTION default_url=0; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; SET_OPTION keymap_file=keymap_builtin-onetime"
+keymap "M-C-b" COMMAND "SET_OPTION default_url=0; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; SET_OPTION keymap_file=keymap_builtin"
 keymap "C-v" SET_OPTION "keymap_file=keymap_palemoon-onetime"
 keymap "M-C-v" SET_OPTION "keymap_file=keymap_palemoon"
 
@@ -817,73 +817,73 @@ keymap ":b" VIEW_BOOKMARK
 
 ### QuickMarks ###
 
-keymap "M0" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=0"
-keymap "M1" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=1"
-keymap "M2" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=2"
-keymap "M3" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=3"
-keymap "M4" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=4"
-keymap "M5" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=5"
-keymap "M6" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=6"
-keymap "M7" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=7"
-keymap "M8" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=8"
-keymap "M9" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=9"
-keymap "MA" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=A"
-keymap "MB" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=B"
-keymap "MC" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=C"
-keymap "MD" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=D"
-keymap "ME" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=E"
-keymap "MF" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=F"
-keymap "MG" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=G"
-keymap "MH" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=H"
-keymap "MI" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=I"
-keymap "MJ" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=J"
-keymap "MK" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=K"
-keymap "ML" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=L"
-keymap "MM" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=M"
-keymap "MN" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=N"
-keymap "MO" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=O"
-keymap "MP" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=P"
-keymap "MQ" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=Q"
-keymap "MR" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=R"
-keymap "MS" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=S"
-keymap "MT" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=T"
-keymap "MU" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=U"
-keymap "MV" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=V"
-keymap "MW" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=W"
-keymap "MX" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=X"
-keymap "MY" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=Y"
-keymap "MZ" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=Z"
-keymap "Ma" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=a"
-keymap "Mb" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=b"
-keymap "Mc" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=c"
-keymap "Md" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=d"
-keymap "Me" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=e"
-keymap "Mf" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=f"
-keymap "Mg" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=g"
-keymap "Mh" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=h"
-keymap "Mi" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=i"
-keymap "Mj" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=j"
-keymap "Mk" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=k"
-keymap "Ml" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=l"
-keymap "Mm" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=m"
-keymap "Mn" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=n"
-keymap "Mo" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=o"
-keymap "Mp" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=p"
-keymap "Mq" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=q"
-keymap "Mr" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=r"
-keymap "Ms" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=s"
-keymap "Mt" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=t"
-keymap "Mu" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=u"
-keymap "Mv" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=v"
-keymap "Mw" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=w"
-keymap "Mx" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=x"
-keymap "My" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=y"
-keymap "Mz" GOTO "file:///cgi-bin/w3mplus?action=set-quick-mark&key=z"
+keymap "M0" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=0"
+keymap "M1" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=1"
+keymap "M2" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=2"
+keymap "M3" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=3"
+keymap "M4" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=4"
+keymap "M5" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=5"
+keymap "M6" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=6"
+keymap "M7" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=7"
+keymap "M8" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=8"
+keymap "M9" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=9"
+keymap "MA" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=A"
+keymap "MB" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=B"
+keymap "MC" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=C"
+keymap "MD" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=D"
+keymap "ME" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=E"
+keymap "MF" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=F"
+keymap "MG" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=G"
+keymap "MH" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=H"
+keymap "MI" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=I"
+keymap "MJ" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=J"
+keymap "MK" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=K"
+keymap "ML" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=L"
+keymap "MM" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=M"
+keymap "MN" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=N"
+keymap "MO" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=O"
+keymap "MP" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=P"
+keymap "MQ" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=Q"
+keymap "MR" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=R"
+keymap "MS" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=S"
+keymap "MT" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=T"
+keymap "MU" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=U"
+keymap "MV" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=V"
+keymap "MW" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=W"
+keymap "MX" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=X"
+keymap "MY" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=Y"
+keymap "MZ" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=Z"
+keymap "Ma" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=a"
+keymap "Mb" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=b"
+keymap "Mc" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=c"
+keymap "Md" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=d"
+keymap "Me" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=e"
+keymap "Mf" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=f"
+keymap "Mg" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=g"
+keymap "Mh" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=h"
+keymap "Mi" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=i"
+keymap "Mj" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=j"
+keymap "Mk" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=k"
+keymap "Ml" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=l"
+keymap "Mm" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=m"
+keymap "Mn" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=n"
+keymap "Mo" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=o"
+keymap "Mp" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=p"
+keymap "Mq" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=q"
+keymap "Mr" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=r"
+keymap "Ms" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=s"
+keymap "Mt" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=t"
+keymap "Mu" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=u"
+keymap "Mv" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=v"
+keymap "Mw" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=w"
+keymap "Mx" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=x"
+keymap "My" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=y"
+keymap "Mz" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=z"
 
 keymap "go" SET_OPTION "keymap_file=keymap_w3mplus-quickmark"
 keymap "gn" SET_OPTION "keymap_file=keymap_w3mplus-newquickmark"
 
-keymap ":Q" GOTO "file:///cgi-bin/w3mplus?action=show-quick-mark"
+keymap ":Q" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-quick-mark"
 
 ### Local marks and URL marks ###
 
@@ -893,123 +893,123 @@ keymap "m@" REG_MARK
 keymap "['" PREV_MARK
 keymap "]'" NEXT_MARK
 
-keymap "mA" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=A"
-keymap "mB" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=B"
-keymap "mC" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=C"
-keymap "mD" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=D"
-keymap "mE" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=E"
-keymap "mF" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=F"
-keymap "mG" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=G"
-keymap "mH" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=H"
-keymap "mI" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=I"
-keymap "mJ" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=J"
-keymap "mK" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=K"
-keymap "mL" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=L"
-keymap "mM" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=M"
-keymap "mN" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=N"
-keymap "mO" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=O"
-keymap "mP" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=P"
-keymap "mQ" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=Q"
-keymap "mR" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=R"
-keymap "mS" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=S"
-keymap "mT" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=T"
-keymap "mU" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=U"
-keymap "mV" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=V"
-keymap "mW" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=W"
-keymap "mX" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=X"
-keymap "mY" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=Y"
-keymap "mZ" GOTO "file:///cgi-bin/w3mplus?action=set-url-mark&key=Z"
+keymap "mA" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=A"
+keymap "mB" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=B"
+keymap "mC" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=C"
+keymap "mD" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=D"
+keymap "mE" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=E"
+keymap "mF" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=F"
+keymap "mG" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=G"
+keymap "mH" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=H"
+keymap "mI" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=I"
+keymap "mJ" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=J"
+keymap "mK" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=K"
+keymap "mL" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=L"
+keymap "mM" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=M"
+keymap "mN" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=N"
+keymap "mO" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=O"
+keymap "mP" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=P"
+keymap "mQ" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=Q"
+keymap "mR" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=R"
+keymap "mS" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=S"
+keymap "mT" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=T"
+keymap "mU" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=U"
+keymap "mV" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=V"
+keymap "mW" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=W"
+keymap "mX" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=X"
+keymap "mY" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=Y"
+keymap "mZ" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=Z"
 
-keymap "`A" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=A&tab=open-newtab"
-keymap "`B" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=B&tab=open-newtab"
-keymap "`C" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=C&tab=open-newtab"
-keymap "`D" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=D&tab=open-newtab"
-keymap "`E" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=E&tab=open-newtab"
-keymap "`F" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=F&tab=open-newtab"
-keymap "`G" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=G&tab=open-newtab"
-keymap "`H" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=H&tab=open-newtab"
-keymap "`I" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=I&tab=open-newtab"
-keymap "`J" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=J&tab=open-newtab"
-keymap "`K" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=K&tab=open-newtab"
-keymap "`L" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=L&tab=open-newtab"
-keymap "`M" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=M&tab=open-newtab"
-keymap "`N" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=N&tab=open-newtab"
-keymap "`O" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=O&tab=open-newtab"
-keymap "`P" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=P&tab=open-newtab"
-keymap "`Q" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=Q&tab=open-newtab"
-keymap "`R" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=R&tab=open-newtab"
-keymap "`S" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=S&tab=open-newtab"
-keymap "`T" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=T&tab=open-newtab"
-keymap "`U" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=U&tab=open-newtab"
-keymap "`V" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=V&tab=open-newtab"
-keymap "`W" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=W&tab=open-newtab"
-keymap "`X" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=X&tab=open-newtab"
-keymap "`Y" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=Y&tab=open-newtab"
-keymap "`Z" GOTO "file:///cgi-bin/w3mplus?action=get-url-mark&key=Z&tab=open-newtab"
+keymap "`A" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=A&tab=open-newtab"
+keymap "`B" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=B&tab=open-newtab"
+keymap "`C" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=C&tab=open-newtab"
+keymap "`D" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=D&tab=open-newtab"
+keymap "`E" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=E&tab=open-newtab"
+keymap "`F" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=F&tab=open-newtab"
+keymap "`G" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=G&tab=open-newtab"
+keymap "`H" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=H&tab=open-newtab"
+keymap "`I" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=I&tab=open-newtab"
+keymap "`J" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=J&tab=open-newtab"
+keymap "`K" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=K&tab=open-newtab"
+keymap "`L" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=L&tab=open-newtab"
+keymap "`M" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=M&tab=open-newtab"
+keymap "`N" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=N&tab=open-newtab"
+keymap "`O" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=O&tab=open-newtab"
+keymap "`P" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=P&tab=open-newtab"
+keymap "`Q" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=Q&tab=open-newtab"
+keymap "`R" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=R&tab=open-newtab"
+keymap "`S" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=S&tab=open-newtab"
+keymap "`T" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=T&tab=open-newtab"
+keymap "`U" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=U&tab=open-newtab"
+keymap "`V" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=V&tab=open-newtab"
+keymap "`W" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=W&tab=open-newtab"
+keymap "`X" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=X&tab=open-newtab"
+keymap "`Y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=Y&tab=open-newtab"
+keymap "`Z" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-url-mark&key=Z&tab=open-newtab"
 
-keymap ":M" GOTO "file:///cgi-bin/w3mplus?action=show-url-mark"
+keymap ":M" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-url-mark"
 
-keymap "ma" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=a"
-keymap "mb" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=b"
-keymap "mc" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=c"
-keymap "md" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=d"
-keymap "me" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=e"
-keymap "mf" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=f"
-keymap "mg" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=g"
-keymap "mh" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=h"
-keymap "mi" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=i"
-keymap "mj" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=j"
-keymap "mk" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=k"
-keymap "ml" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=l"
-keymap "mm" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=m"
-keymap "mn" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=n"
-keymap "mo" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=o"
-keymap "mp" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=p"
-keymap "mq" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=q"
-keymap "mr" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=r"
-keymap "ms" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=s"
-keymap "mt" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=t"
-keymap "mu" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=u"
-keymap "mv" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=v"
-keymap "mw" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=w"
-keymap "mx" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=x"
-keymap "my" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=y"
-keymap "mz" GOTO "file:///cgi-bin/w3mplus?action=set-local-mark&key=z"
+keymap "ma" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=a"
+keymap "mb" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=b"
+keymap "mc" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=c"
+keymap "md" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=d"
+keymap "me" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=e"
+keymap "mf" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=f"
+keymap "mg" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=g"
+keymap "mh" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=h"
+keymap "mi" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=i"
+keymap "mj" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=j"
+keymap "mk" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=k"
+keymap "ml" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=l"
+keymap "mm" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=m"
+keymap "mn" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=n"
+keymap "mo" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=o"
+keymap "mp" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=p"
+keymap "mq" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=q"
+keymap "mr" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=r"
+keymap "ms" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=s"
+keymap "mt" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=t"
+keymap "mu" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=u"
+keymap "mv" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=v"
+keymap "mw" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=w"
+keymap "mx" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=x"
+keymap "my" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=y"
+keymap "mz" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-local-mark&key=z"
 
-keymap "`a" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=a"
-keymap "`b" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=b"
-keymap "`c" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=c"
-keymap "`d" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=d"
-keymap "`e" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=e"
-keymap "`f" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=f"
-keymap "`g" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=g"
-keymap "`h" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=h"
-keymap "`i" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=i"
-keymap "`j" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=j"
-keymap "`k" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=k"
-keymap "`l" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=l"
-keymap "`m" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=m"
-keymap "`n" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=n"
-keymap "`o" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=o"
-keymap "`p" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=p"
-keymap "`q" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=q"
-keymap "`r" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=r"
-keymap "`s" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=s"
-keymap "`t" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=t"
-keymap "`u" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=u"
-keymap "`v" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=v"
-keymap "`w" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=w"
-keymap "`x" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=x"
-keymap "`y" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=y"
-keymap "`z" GOTO "file:///cgi-bin/w3mplus?action=get-local-mark&key=z"
+keymap "`a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=a"
+keymap "`b" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=b"
+keymap "`c" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=c"
+keymap "`d" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=d"
+keymap "`e" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=e"
+keymap "`f" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=f"
+keymap "`g" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=g"
+keymap "`h" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=h"
+keymap "`i" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=i"
+keymap "`j" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=j"
+keymap "`k" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=k"
+keymap "`l" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=l"
+keymap "`m" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=m"
+keymap "`n" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=n"
+keymap "`o" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=o"
+keymap "`p" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=p"
+keymap "`q" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=q"
+keymap "`r" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=r"
+keymap "`s" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=s"
+keymap "`t" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=t"
+keymap "`u" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=u"
+keymap "`v" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=v"
+keymap "`w" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=w"
+keymap "`x" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=x"
+keymap "`y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=y"
+keymap "`z" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=z"
 
-keymap "`'" GOTO "file:///cgi-bin/w3mplus?action=undo-redo"
+keymap "`'" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-redo"
 
-keymap ":m" GOTO "file:///cgi-bin/w3mplus?action=show-local-mark"
+keymap ":m" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-local-mark"
 
 ## Automatic commands ##
 
-keymap ":D" GOTO "file:///cgi-bin/w3mplus?action=execute-user-command&key=manual"
+keymap ":D" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-user-command&key=manual"
 
 ## w3m UI ##
 
@@ -1067,10 +1067,10 @@ keymap "^[[L" EDIT_SCREEN
 keymap "E" NEXT_WORD
 keymap "B" PREV_WORD
 
-keymap "zt" GOTO "file:///cgi-bin/w3mplus?action=scroll-zt"
-keymap "zb" GOTO "file:///cgi-bin/w3mplus?action=scroll-zb"
+keymap "zt" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=scroll-zt"
+keymap "zb" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=scroll-zb"
 
-keymap "z." COMMAND "CENTER_V; GOTO file:///cgi-bin/w3mplus?action=line-begin-non-blake"
+keymap "z." COMMAND "CENTER_V; GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=line-begin-non-blake"
 keymap "zz" CENTER_V
 
 keymap "zh" LEFT
@@ -1083,17 +1083,17 @@ keymap "zH" SHIFT_LEFT
 
 keymap "gx" COMMAND "MARK_URL; GOTO_LINK"
 
-keymap "V" GOTO "file:///cgi-bin/w3mplus?action=visual-mode&subaction=yank"
+keymap "V" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=yank"
 
 keymap ":r" PIPE_SHELL
-keymap ":\"" GOTO "file:///cgi-bin/w3mplus?action=show-register"
+keymap ":\"" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-register"
 
 keymap "!" MENU "filter"
 keymap "g~" MENU "switchcase"
 keymap "g?" MENU "rot13"
 keymap "g@" MENU "operatorFunc"
 keymap "gq" MENU "formatPrg"
-keymap "=" GOTO "file:///cgi-bin/w3mplus?action=equalprg"
+keymap "=" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=equalprg"
 
 keymap "g:" GOTO_LINE
 

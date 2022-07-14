@@ -13,7 +13,7 @@ display_lineinfo 1
 ext_dirlist 1
 dirlist_cmd file:///$LIB/dirlist.cgi
 use_dictcommand 1
-dictcommand file:///cgi-bin/w3mplus?action=dictWordSearch&query=
+dictcommand file:///cgi-bin/w3mplus?pass=$(PASS)&action=dictWordSearch&query=
 multicol 0
 alt_entity 0
 graphic_char 2

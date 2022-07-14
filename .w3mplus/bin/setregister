@@ -80,14 +80,14 @@ if [ '!' -f "${config}" ]; then
 		詳細については '${0##*/} --help' を実行してください。
 	EOF
 
-	endCall "${EX_CANTCREAT}"
+	endCall "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
 	cat <<-EOF >&2
 		${0##*/}: '${config}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
 	EOF
 
-	endCall "${EX_CANTCREAT}"
+	endCall "${EX_NOINPUT}"
 fi
 
 case "${#}" in
