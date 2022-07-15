@@ -24,13 +24,13 @@
 
 VERSION='w3m-cleanup 1.1.6'
 
-. 'init.sh'
+. 'initialize.sh'
 . 'sysexits.sh'
-. 'usage.sh'
+. 'option_error.sh'
 
 # @getoptions
 parser_definition() {
-	setup REST abbr:true error:error plus:true no:0 help:usage \
+	setup REST abbr:true error:optuon_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [CONFIG_DIRECTORY]..." \
 		'' 'Options:'
 

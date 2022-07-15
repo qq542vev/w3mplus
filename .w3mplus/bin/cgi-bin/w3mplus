@@ -71,7 +71,7 @@ VERSION='w3mplus 2.0.0'
 export PATH="${W3MPLUS_PATH}:${W3MPLUS_LIB}${PATH:+:}${PATH-}"
 export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
 
-. 'init.sh'
+. 'initialize.sh'
 . 'sysexits.sh'
 . 'datauri.sh'
 . 'singlequote_escape.sh'
@@ -79,7 +79,7 @@ export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
 
 # @getoptions
 parser_definition() {
-	setup REST plus:true abbr:true error:error no:0 help:usage \
+	setup REST plus:true abbr:true error:optuon_error no:0 help:usage \
 		-- 'Usage:' "  QUERY_STRING='action={action}' ${2##*/}" \
 		'' 'Options:'
 

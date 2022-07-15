@@ -21,14 +21,14 @@
 
 VERSION='executeusercommand 1.5.0'
 
-. 'init.sh'
+. 'initialize.sh'
 . 'sysexits.sh'
-. 'usage.sh'
+. 'option_error.sh'
 . 'awkv_escape.sh'
 
 # @getoptions
 parser_definition() {
-	setup REST abbr:true error:error plus:true no:0 help:usage \
+	setup REST abbr:true error:optuon_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [PATTERN CHECK_STRING]..." \
 		'' 'Options:'
 

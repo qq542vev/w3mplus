@@ -25,14 +25,14 @@ VERSION='w3m-private 2.0.0'
 
 ORIGINAL_LC_ALL="${LC_ALL-}"
 
-. 'init.sh'
+. 'initialize.sh'
 . 'sysexits.sh'
-. 'usage.sh'
+. 'option_error.sh'
 . 'append_array_posix.sh'
 
 # @getoptions
 parser_definition() {
-	setup REST plus:true abbr:true error:error no:0 help:usage \
+	setup REST plus:true abbr:true error:optuon_error no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... -- [W3M_ARG]" \
 		'' 'Options:'
 

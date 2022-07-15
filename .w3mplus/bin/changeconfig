@@ -21,16 +21,16 @@
 
 VERSION='changeconfig 3.0.0'
 
-. 'init.sh'
+. 'initialize.sh'
 . 'sysexits.sh'
-. 'usage.sh'
+. 'option_error.sh'
 . 'regex_match.sh'
 . 'awkv_escape.sh'
 . 'append_array_posix.sh'
 
 # @getoptions
 parser_definition() {
-	setup REST abbr:true error:error plus:true no:0 help:usage \
+	setup REST abbr:true error:optuon_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 

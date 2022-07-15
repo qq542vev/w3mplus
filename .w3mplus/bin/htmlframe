@@ -21,9 +21,9 @@
 
 VERSION='htmlframe 1.0.0'
 
-. 'init.sh'
+. 'initialize.sh'
 . 'sysexits.sh'
-. 'usage.sh'
+. 'option_error.sh'
 . 'regex_match.sh'
 . 'append_array_posix.sh'
 . 'html_escape.sh'
@@ -34,7 +34,7 @@ option_set() {
 
 # @getoptions
 parser_definition() {
-	setup REST plus:true abbr:true error:error no:0 help:usage \
+	setup REST plus:true abbr:true error:optuon_error no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 

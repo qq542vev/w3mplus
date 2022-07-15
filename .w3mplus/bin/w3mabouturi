@@ -21,7 +21,7 @@
 
 VERSION='w3mabouturi 1.4.4'
 
-. 'init.sh'
+. 'initialize.sh'
 . 'sysexits.sh'
 . 'html_escape.sh'
 . 'path_to_fileurl.sh'
@@ -32,7 +32,7 @@ VERSION='w3mabouturi 1.4.4'
 
 # @getoptions
 parser_definition() {
-	setup REST plus:true abbr:true error:error no:0 help:usage \
+	setup REST plus:true abbr:true error:optuon_error no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [ABOUT_URI]" \
 		'' 'Options:'
 

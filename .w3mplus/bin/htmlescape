@@ -21,13 +21,13 @@
 
 VERSION='htmlescape 1.0.3'
 
-. 'init.sh'
+. 'initialize.sh'
 . 'sysexits.sh'
-. 'usage.sh'
+. 'option_error.sh'
 
 # @getoptions
 parser_definition() {
-	setup REST plus:true abbr:true error:error no:0 help:usage \
+	setup REST plus:true abbr:true error:optuon_error no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 

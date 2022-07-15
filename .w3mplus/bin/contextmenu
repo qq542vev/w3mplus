@@ -21,11 +21,11 @@
 
 VERSION='contextmenu 1.1.0'
 
-. 'init.sh'
+. 'initialize.sh'
 
 # @getoptions
 parser_definition() {
-	setup REST plus:true abbr:true error:error no:0 help:usage \
+	setup REST plus:true abbr:true error:optuon_error no:0 help:usage \
 		-- 'Usage:' "  ${2##*/}" \
 		'' 'Options:'
 
