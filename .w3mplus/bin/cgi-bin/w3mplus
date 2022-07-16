@@ -31,7 +31,7 @@ VERSION='w3mplus 2.0.0'
 : ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
 : ${W3MPLUS_PATH:="${W3MPLUS_HOME}/bin"}
 : ${W3MPLUS_LIB:="${W3MPLUS_HOME}/lib"}
-: ${W3MPLUS_PASS:="${W3MPLUS_HOME}/pass"}
+: ${W3MPLUS_PASS_FILE:="${W3MPLUS_HOME}/pass"}
 
 : ${W3MPLUS_YANK:='v=$(cat; printf "_"); v="${v%_}"; "${HOME}/.w3mplus/bin/setreg" "+" "${v}"; exec 3>&1 >>"${HOME}/w3mplusyank"; date "+# %Y-%m-%d %H:%M:%S %Z"; echo "${v}"; exec 1>&3 3>&-'}
 : ${W3MPLUS_UNDO_TIMEOUT:='+86400'}
@@ -120,11 +120,12 @@ eval "set -- ${REST}"
 add_printtmp() {
 	if [ ! -f "${query_printtmp-}" ]; then
 		printtmp=$(TMPDIR="${W3MPLUS_CACHE}" mktemp -u)
+		path_to_fileurl.sh 'filepath' "${SCRIPT_NAME}"
 
 		httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: PRINT ${printtmp}" \
-			-H "W3m-control: GOTO file://${REQUEST_URI}&printtmp=$(printf ${printtmp} | urlencode)"
+			-H "W3m-control: GOTO ${filepath}?${QUERY_STRING}&printtmp=$(printf '%s' "${printtmp}" | urlencode)"
 
 		exit
 	fi
@@ -183,7 +184,9 @@ esac
 
 eval "$(parsequery --prefix 'query_' "${QUERY_STRING-}")"
 
-if [ -f "${W3MPLUS_PASS}" ] && [ "${query_pass-}" '!=' "$(cat -- "${W3MPLUS_PASS}")" ]; then
+export "W3MPLUS_PASS_VALUE=${query_pass-}"
+
+if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '=' "$(cat -- "${W3MPLUS_PASS}")" ]; then
 	httpresponse \
 		--status-line 'HTTP/1.1 400 Bad Request' \
 		-H 'Content-Type: text/plain; charset=UTF-8' \
@@ -268,7 +271,10 @@ case "${query_action-}" in
 			'incrementURI' | 'parentUriPath')
 				commandArg='${query_number+--number "${query_number}"} ${query_tab+--tab "${query_tab}"}';;
 			'redirect')
-				commandArg='${query_tab+--tab "${query_tab}"} "${query_redirect-file://${SCRIPT_NAME}?action=search&tab=del-prebuf&query=}"';;
+				pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
+				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
+
+				commandArg='${query_tab+--tab "${query_tab}"} "${query_redirect-${filepath}?pass=${pass}&action=search&tab=del-prebuf&query=}"';;
 			'yank')
 				commandArg='"${W3MPLUS_YANK}"';;
 		esac
@@ -431,7 +437,10 @@ case "${query_action-}" in
 
 		case "${query_query-}" in
 			'!')
-				w3mredirect -- "file://${SCRIPT_NAME}?action=searchhistory"
+				pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
+				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
+
+				w3mredirect -- "${filepath}?pass=${pass}&action=show-search-history"
 				;;
 			*)
 				url=$(searchuri \
@@ -575,9 +584,11 @@ case "${query_action-}" in
 			}
 			EOF
 		)
+		pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
+		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
 		awk \
-			-v "url=file://${SCRIPT_NAME}?action=search" \
+			-v "url=${filepath}?pass=${pass}&action=search" \
 			-- "${awkScript}" "${W3MPLUS_SEARCH_HISTFILE}" \
 		| printhtml --title 'Search History' -- - \
 		| httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
@@ -724,6 +735,8 @@ case "${query_action-}" in
 			-H 'W3m-control: RESHAPE'
 		;;
 	*)
+		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
+
 		printhtml \
 			--title 'Bad Request' \
 			-- - <<-EOF \
@@ -733,133 +746,133 @@ case "${query_action-}" in
 			-- -
 			<dl>
 				<dt>about-uri</dt>
-				<dd>file://${SCRIPT_NAME}?action=about-uri&amp;about={ABOUT_URI}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=about-uri&amp;about={ABOUT_URI}</dd>
 
 				<dt>close-tab</dt>
-				<dd>file://${SCRIPT_NAME}?action=close-tab&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=close-tab&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}</dd>
 
 				<dt>context-menu</dt>
-				<dd>file://${SCRIPT_NAME}?action=context-menu</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=context-menu</dd>
 
 				<dt>cookie-config</dt>
-				<dd>file://${SCRIPT_NAME}?action=cookie-copnfig&amp;uri={VARIABLE_NAME}&amp;accept={'add' | 'delete' | 'toggle'}&amp;reject={'add' | 'delete' | 'toggle'}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=cookie-copnfig&amp;uri={VARIABLE_NAME}&amp;accept={'add' | 'delete' | 'toggle'}&amp;reject={'add' | 'delete' | 'toggle'}</dd>
 
 				<dt>dict-word</dt>
-				<dd>file://${SCRIPT_NAME}?action=dict-word&amp;query={'?' TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=dict-word&amp;query={'?' TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
 				<dt>equalprg</dt>
-				<dd>file://${SCRIPT_NAME}?action=equalprg</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=equalprg</dd>
 
 				<dt>execute-env-var</dt>
-				<dd>file://${SCRIPT_NAME}?action=execute-env-var&amp;subaction={ACTION}&amp;VARIABLE_NAME={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=execute-env-var&amp;subaction={ACTION}&amp;VARIABLE_NAME={VARIABLE_NAME}</dd>
 
 				<dt>execute-user-command</dt>
-				<dd>file://${SCRIPT_NAME}?action=execute-user-command&amp;key={PATTERN}&amp;input={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=execute-user-command&amp;key={PATTERN}&amp;input={VARIABLE_NAME}</dd>
 
 				<dt>find-string</dt>
-				<dd>file://${SCRIPT_NAME}?action=find-string&amp;word={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=find-string&amp;word={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
 
 				<dt>find-word</dt>
-				<dd>file://${SCRIPT_NAME}?action=find-word&amp;word={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=find-word&amp;word={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
 
 				<dt>get-local-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=get-local-mark&amp;uri={VARIABLE_NAME}&amp;key={PATTERN}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=get-local-mark&amp;uri={VARIABLE_NAME}&amp;key={PATTERN}</dd>
 
 				<dt>get-quick-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=get-quick-mark&amp;key={PATTERN}&amp;tab={TAB_PARAM}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=get-quick-mark&amp;key={PATTERN}&amp;tab={TAB_PARAM}</dd>
 
 				<dt>get-register</dt>
-				<dd>file://${SCRIPT_NAME}?action=get-register&amp;key={PATTERN}&amp;subaction={ACTION}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=get-register&amp;key={PATTERN}&amp;subaction={ACTION}</dd>
 
 				<dt>get-url-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=get-url-mark&amp;key={PATTERN}&amp;tab={TAB_PARAM}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=get-url-mark&amp;key={PATTERN}&amp;tab={TAB_PARAM}</dd>
 
 				<dt>goto-line</dt>
-				<dd>file://${SCRIPT_NAME}?action=goto-line&amp;line={VARIABLE_NAME}&amp;number={[+*/-]? NUMBER '%'?}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=goto-line&amp;line={VARIABLE_NAME}&amp;number={[+*/-]? NUMBER '%'?}</dd>
 
 				<dt>goto-paragraph</dt>
-				<dd>file://${SCRIPT_NAME}?action=goto-paragraph&amp;line={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=goto-paragraph&amp;line={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
 
 				<dt>homepage</dt>
-				<dd>file://${SCRIPT_NAME}?action=homepage</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=homepage</dd>
 
 				<dt>line-begin-non-blake</dt>
-				<dd>file://${SCRIPT_NAME}?action=line-begin-non-blake&amp;line={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-begin-non-blake&amp;line={VARIABLE_NAME}</dd>
 
 				<dt>line-end-non-blake</dt>
-				<dd>file://${SCRIPT_NAME}?action=line-end-non-blake&amp;line={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-end-non-blake&amp;line={VARIABLE_NAME}</dd>
 
 				<dt>link-goto</dt>
-				<dd>file://${SCRIPT_NAME}?action=link-goto</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=link-goto</dd>
 
 				<dt>link-tabgoto</dt>
-				<dd>file://${SCRIPT_NAME}?action=link-tabgoto</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=link-tabgoto</dd>
 
 				<dt>scroll-zb</dt>
-				<dd>file://${SCRIPT_NAME}?action=scroll-zb&amp;line={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=scroll-zb&amp;line={VARIABLE_NAME}</dd>
 
 				<dt>scroll-zt</dt>
-				<dd>file://${SCRIPT_NAME}?action=scroll-zt&amp;line={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=scroll-zt&amp;line={VARIABLE_NAME}</dd>
 
 				<dt>search</dt>
-				<dd>file://${SCRIPT_NAME}?action=search&amp;query={TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=search&amp;query={TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
 				<dt>select-line</dt>
-				<dd>file://${SCRIPT_NAME}?action=select-line&amp;line={VARIABLE_NAME}&amp;subaction={ACTION}&amp;number={'0' | '$' | SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=select-line&amp;line={VARIABLE_NAME}&amp;subaction={ACTION}&amp;number={'0' | '$' | SIGNED_INTEGER}</dd>
 
 				<dt>set-local-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=set-local-mark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;key={KEY}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-local-mark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;key={KEY}</dd>
 
 				<dt>set-register</dt>
-				<dd>file://${SCRIPT_NAME}?action=set-register&amp;value={VARIABLE_NAME}&amp;key={KEY}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-register&amp;value={VARIABLE_NAME}&amp;key={KEY}</dd>
 
 				<dt>set-quick-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=setQuickMark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;key={KEY}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=setQuickMark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;key={KEY}</dd>
 
 				<dt>set-url-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=set-url-mark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;key={KEY}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-url-mark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;key={KEY}</dd>
 
 				<dt>show-local-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=show-local-mark</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-local-mark</dd>
 
 				<dt>show-quick-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=show-quick-mark</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-quick-mark</dd>
 
 				<dt>show-register</dt>
-				<dd>file://${SCRIPT_NAME}?action=show-register</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-register</dd>
 
 				<dt>show-search-history</dt>
-				<dd>file://${SCRIPT_NAME}?action=show-search-history</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-search-history</dd>
 
 				<dt>show-tab-history</dt>
-				<dd>file://${SCRIPT_NAME}?action=show-tab-history</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-tab-history</dd>
 
 				<dt>show-url-mark</dt>
-				<dd>file://${SCRIPT_NAME}?action=show-url-mark</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-url-mark</dd>
 
 				<dt>show-user-command</dt>
-				<dd>file://${SCRIPT_NAME}?action=show-user-command</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-user-command</dd>
 
 				<dt>sidebar-bookmark</dt>
-				<dd>file://${SCRIPT_NAME}?action=sidebar-bookmark&amp;uri={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=sidebar-bookmark&amp;uri={VARIABLE_NAME}</dd>
 
 				<dt>sidebar-history</dt>
-				<dd>file://${SCRIPT_NAME}?action=sidebar-history&amp;uri={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=sidebar-history&amp;uri={VARIABLE_NAME}</dd>
 
 				<dt>toggle-https-everywhere</dt>
-				<dd>file://${SCRIPT_NAME}?action=toggle-https-everywhere</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=toggle-https-everywhere</dd>
 
 				<dt>undo-redo</dt>
-				<dd>file://${SCRIPT_NAME}?action=undo-redo</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=undo-redo</dd>
 
 				<dt>undo-tab</dt>
-				<dd>file://${SCRIPT_NAME}?action=undo-tab&amp;number={SIGNED_INTEGER}&amp;count={@INTEGER | SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=undo-tab&amp;number={SIGNED_INTEGER}&amp;count={@INTEGER | SIGNED_INTEGER}</dd>
 
 				<dt>visual-mode</dt>
-				<dd>file://${SCRIPT_NAME}?action=visual-mode&amp;id={TEXT}&amp;line={VARIABLE_NAME}&amp;subaction={subaction}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=visual-mode&amp;id={TEXT}&amp;line={VARIABLE_NAME}&amp;subaction={subaction}</dd>
 
 				<dt>zoom</dt>
-				<dd>file://${SCRIPT_NAME}?action=zoom&amp;zoom={([+*/-] '=')? UNSIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=zoom&amp;zoom={([+*/-] '=')? UNSIGNED_INTEGER}</dd>
 			</dl>
 		EOF
 		;;
