@@ -427,7 +427,7 @@ keymap "C-s" DOWNLOAD
 ## Editing ##
 
 keymap "C-c" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
-keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD_AT"
+keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD_AT"
 keymap "C-y" REDO
 keymap "C-z" UNDO
 
@@ -443,8 +443,8 @@ keymap "^[[28~" SEARCH_PREV
 keymap "M-C-g" SEARCH_PREV
 keymap "'" LIST_MENU
 keymap "/" ISEARCH
-keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&query=; DICT_WORD"
+keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&tab=open-newtab&query=; DICT_WORD"
 # F4 key
 keymap "^[OS" MENU ContextMenuSearch
 keymap "^[[14~" MENU ContextMenuSearch
@@ -539,17 +539,17 @@ keymap ":t" COMMAND "SET_OPTION default_url=0; TAB_GOTO"
 keymap "O" COMMAND "SET_OPTION default_url=1; GOTO"
 keymap "T" COMMAND "SET_OPTION default_url=1; TAB_GOTO"
 
-keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&query=; DICT_WORD"
+keymap "s" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+keymap "S" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&tab=open-newtab&query=; DICT_WORD"
 
 keymap "C-td" NEW_TAB
 
 keymap "w" EXTERN "w3m ${WWW_HOME-about:home} #"
 keymap "W" EXTERN
 
-keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD_AT"
-keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&query=; DICT_WORD_AT"
-keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&after=PREV_TAB&query=; DICT_WORD_AT"
+keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD_AT"
+keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&tab=open-newtab&query=; DICT_WORD_AT"
+keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&tab=open-newtab&after=PREV_TAB&query=; DICT_WORD_AT"
 
 keymap "C-x" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=incrementURI&variable=W3M_URL&number=-1"
 keymap "C-a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=incrementURI&variable=W3M_URL"
@@ -803,8 +803,8 @@ keymap ";TAB" MENU ExtendedHints
 
 ### Bypassing Pentadactyl ###
 
-keymap "M-b" COMMAND "SET_OPTION default_url=0; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; SET_OPTION keymap_file=keymap_builtin-onetime"
-keymap "M-C-b" COMMAND "SET_OPTION default_url=0; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; SET_OPTION keymap_file=keymap_builtin"
+keymap "M-b" COMMAND "SET_OPTION default_url=0; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; SET_OPTION keymap_file=keymap_builtin-onetime"
+keymap "M-C-b" COMMAND "SET_OPTION default_url=0; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; SET_OPTION keymap_file=keymap_builtin"
 keymap "C-v" SET_OPTION "keymap_file=keymap_palemoon-onetime"
 keymap "M-C-v" SET_OPTION "keymap_file=keymap_palemoon"
 

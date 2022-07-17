@@ -426,7 +426,7 @@ keymap "C-s" DOWNLOAD
 ## Editing ##
 
 keymap "C-c" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
-keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD_AT"
+keymap "C-v" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD_AT"
 keymap "C-y" REDO
 keymap "C-z" UNDO
 
@@ -442,8 +442,8 @@ keymap "^[[28~" SEARCH_PREV
 keymap "M-C-g" SEARCH_PREV
 keymap "'" LIST_MENU
 keymap "/" ISEARCH
-keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&tab=open-newtab&query=; DICT_WORD"
+keymap "C-k" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+keymap "C-e" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&tab=open-newtab&query=; DICT_WORD"
 # F4 key
 keymap "^[OS" MENU ContextMenuSearch
 keymap "^[[14~" MENU ContextMenuSearch

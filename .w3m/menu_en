@@ -98,29 +98,29 @@ menu ContextMenuTab
 end
 
 menu ContextMenuSearch
-	func  "Bing" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func  "Google" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func  "DuckDuckGo" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=duckduckgo; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func  "Startpage" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=startpage; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func  "Twitter" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=twitter; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func  "Wikipedia (en)" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=wikipedia-en; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func  "Wikipedia (ja)" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=wikipedia-ja; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
+	func  "Bing" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Google" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "DuckDuckGo" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=duckduckgo; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Startpage" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=startpage; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Twitter" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=twitter; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Wikipedia (en)" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=wikipedia-en; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Wikipedia (ja)" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=wikipedia-ja; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
 	popup "Other Search" ContextMenuSearchOther ""
 end
 
 menu ContextMenuSearchOther
-	func "Bing Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "Bing Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "Bing News" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-news; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "GitHub" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=github; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "Google Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "Google Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "Google News" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-news; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "pkgs.org" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=pkgs.org; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "Yandex" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "Yandex Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "Yandex Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
-	func "YouTube" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=youtube; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&query=; DICT_WORD"
+	func "Bing Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Bing Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Bing News" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-news; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "GitHub" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=github; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Google Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Google Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Google News" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-news; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "pkgs.org" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=pkgs.org; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Yandex" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Yandex Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Yandex Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "YouTube" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=youtube; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
 end
 
 menu Menu

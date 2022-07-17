@@ -34,6 +34,7 @@ parser_definition() {
 		'' 'Options:'
 
 	param config  -c --config  init:'config="${HOME}/.w3mplus/search-config"' var:FILE -- '設定ファイルを指定する'
+	param edFlag  -d --designator init:='disable' pattern:'disable | event | all' var:"'disable' | 'event' | 'all'" -- 'イベント指示子を有効にする'
 	param engine  -e --engine  init:='google' validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_.-]+(,[0-9A-Za-z_.-]+)*$"' var:NAME -- '検索エンジンを指定する'
 	param history -H --history init:'history="${HOME}/.w3mplus/search-history"' var:FILE -- '検索履歴をログファイルを指定する'
 	param size    -s --size    init:='50000' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- '記録する検索履歴数を指定する'
@@ -149,74 +150,77 @@ awkScript=$(
 	@include "array_print.awk"
 
 	BEGIN {
-		tac = sprintf("sed -e '1!G;h;$!d' -- '%s'", singlequote_escape(history))
-		ret = ""
+		reverse = sprintf("sort -k '1,1nr' -t '\t' -- '%s'", singlequote_escape(history))
+		dPattern = "(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?"
+		output = ""
 
 		for(i = 1; i < ARGC; i++) {
 			arg = ARGV[i]
 			keyword = ""
 
-			if(event(arg, "^![1-9][0-9]*(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?$", result)) {
+			if((edFlag == "event" && event(arg, "^!#$", result)) || (edFlag == "all" && event(arg, "^!#" dPattern "$", result))) {
+				keyword = designators(substr(output, 4), result["designators"])
+			} else if((edFlag == "event" && event(arg, "^![1-9][0-9]*$", result)) || (edFlag == "all" && event(arg, "^![1-9][0-9]*" dPattern "$", result))) {
 				number = substr(result["event"], 2)
 
-				for(nr = 1; 0 < (getline < history); nr++) {
-					if(nr == number) {
-						keyword = designators($1, result["designators"])
+				while(0 < (getline < history)) {
+					if($1 == number) {
+						keyword = designators($2, result["designators"])
 						break
 					}
 				}
 
 				close(history)
-			} else if(event(arg, "^!(!|-[1-9][0-9]*)(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?$", result)) {
+			} else if((edFlag == "event" && event(arg, "^!(!|-[1-9][0-9]*)$", result)) || (edFlag == "all" && event(arg, "^!(!|-[1-9][0-9]*)" dPattern "$", result))) {
 				if(result["event"] ~ /^!!/) {
 					number = 1
 				} else {
 					number = substr(result["event"], 3)
 				}
 
-				for(nr = 1; 0 < (tac | getline); nr++) {
+				for(nr = 1; 0 < (reverse | getline); nr++) {
 					if(nr == number) {
-						keyword = designators($1, result["designators"])
+						keyword = designators($2, result["designators"])
 						break
 					}
 				}
 
-				close(tac)
-			} else if(event(arg, "^!\\?[^?]+\\?(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?$", result)) {
+				close(reverse)
+			} else if((edFlag == "event" && event(arg, "^!\\?[^?]+\\$", result)) || (edFlag == "all" && event(arg, "^!\\?[^?]+\\?" dPattern "$", result))) {
 				search = url_encode(substr(result["event"], 3, length(result["event"]) - 3))
 
-				while(0 < (tac | getline)) {
-					if($1 ~ search) {
-						keyword = designators($1, result["designators"])
+				while(0 < (reverse | getline)) {
+					if($2 ~ search) {
+						keyword = designators($2, result["designators"])
 						break
 					}
 				}
 
-				close(tac)
-			} else if(event(arg, "^![^\t\n\r :]+(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?$", result)) {
+				close(reverse)
+			} else if((edFlag == "event" && event(arg, "^![^\t\n\r :]+$", result)) || (edFlag == "all" && event(arg, "^![^\t\n\r :]+" dPattern "$", result))) {
 				search = url_encode(substr(result["event"], 2))
 
-				while(0 < (tac | getline)) {
-					if($1 ~ "^" search) {
-						keyword = designators($1, result["designators"])
+				while(0 < (reverse | getline)) {
+					if($2 ~ "^" search) {
+						keyword = designators($2, result["designators"])
 						break
 					}
 				}
 
-				close(tac)
+				close(reverse)
 			} else {
 				keyword = url_encode(arg)
 			}
 
 			if(keyword != "") {
-				ret = ret "%20" keyword
+				output = output "%20" keyword
 			} else if(result["event"] != "") {
 				system("printf '%s: event not found\n' '" arg "' >&2")
 				exit 64
 			}
 		}
 
-		printf("%s", substr(ret, 4))
+		printf("%s", substr(output, 4))
 
 		exit
 	}
@@ -269,17 +273,37 @@ awkScript=$(
 	EOF
 )
 
-awkv_escape 'awkHistory' "${history}"
-encoded=$(awk -v "history=${awkHistory}" "${awkScript}" ${@+"${@}"}) || endCall "${?}"
+awkv_escape 'awkvHistory' "${history}"
+encoded=$(
+	awk \
+		-v "history=${awkvHistory}" \
+		-v "edFlag=${edFlag}" \
+		"${awkScript}" ${@+"${@}"}
+) || endCall "${?}"
+newNumber=$(
+	cat <<-'EOF'
+	BEGIN {
+		number = 1
+	}
+
+	{
+		number = $1 + 1
+	}
+
+	END {
+		printf("%d", number)
+	}
+	EOF
+)
 
 case "${encoded}" in
 	?*)
 		{
 			cat -- "${history}"
-			printf '%s\t%s\t%s\n' "${encoded}" "${engine}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+			printf '%d\t%s\t%s\t%s\n' "$(tail -n 1 -- "${history}" | awk -- "${newNumber}")" "${encoded}" "${engine}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 		} | tail -n "${size}" >"${tmpDir}/history"
 
-		cat "${tmpDir}/history" >"${history}"
+		cat -- "${tmpDir}/history" >"${history}"
 		;;
 esac
 

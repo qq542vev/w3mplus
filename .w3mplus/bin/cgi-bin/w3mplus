@@ -186,7 +186,7 @@ eval "$(parsequery --prefix 'query_' "${QUERY_STRING-}")"
 
 export "W3MPLUS_PASS_VALUE=${query_pass-}"
 
-if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '=' "$(cat -- "${W3MPLUS_PASS}")" ]; then
+if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${W3MPLUS_PASS_FILE}")" ]; then
 	httpresponse \
 		--status-line 'HTTP/1.1 400 Bad Request' \
 		-H 'Content-Type: text/plain; charset=UTF-8' \
@@ -432,35 +432,35 @@ case "${query_action-}" in
 		;;
 	'search' | 'dict-word')
 		case "${query_action}${query_query:+_}" in
-			'dict-word_') query_query="${query_query#?}"
-		esac
-
-		case "${query_query-}" in
-			'!')
-				pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
-				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
-
-				w3mredirect -- "${filepath}?pass=${pass}&action=show-search-history"
-				;;
-			*)
-				url=$(searchuri \
-					--engine "${W3MPLUS_SEARCH_ENGINE}" \
-					--config "${W3MPLUS_SEARCH_CONFIGFILE}" \
-					--history "${W3MPLUS_SEARCH_HISTFILE}" \
-					-- ${query_query:+"${query_query}"}
-				)
-
-				setregister \
-					--config "${W3MPLUS_REGISTER_FILE}" \
-					-- '/' "${query_query-}"
-
-				w3mredirect \
-					${query_tab+--tab "${query_tab}"} \
-					${query_before+--b1 "${query_before}"} \
-					${query_after+--a1 "${query_after}"} \
-					-- "${url}"
+			'dict-word_')
+				query_query="${query_query#?}"
 				;;
 		esac
+
+		if [ -n "${query_designator-}" ] && [ "${query_query}" '=' '!' ]; then
+			pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
+			path_to_fileurl 'filepath' "${SCRIPT_NAME}"
+
+			w3mredirect -- "${filepath}?pass=${pass}&action=show-search-history"
+		else
+			url=$(searchuri \
+				${query_designator+--designator "${query_designator}"} \
+				--engine "${query_engine-${W3MPLUS_SEARCH_ENGINE}}" \
+				--config "${W3MPLUS_SEARCH_CONFIGFILE}" \
+				--history "${W3MPLUS_SEARCH_HISTFILE}" \
+				-- ${query_query-}
+			)
+
+			setregister \
+				--config "${W3MPLUS_REGISTER_FILE}" \
+				-- '/' "${query_query-}"
+
+			w3mredirect \
+				${query_tab+--tab "${query_tab}"} \
+				${query_before+--b1 "${query_before}"} \
+				${query_after+--a1 "${query_after}"} \
+				-- "${url}"
+		fi
 		;;
 	'select-line')
 		expand 'line' "${query_line-W3M_CURRENT_LINE}"
@@ -576,7 +576,7 @@ case "${query_action-}" in
 			}
 
 			{
-				printf("<span>%4d %s <a href=\"%s\">%s</a></span>\n", NR, $3, html_escape(url "&query=" $1 "&engine=" $2), html_escape(url_decode($1)))
+				printf("<span>%6d %s <a href=\"%s\">%s</a></span>\n", $1, $4, html_escape(url "&query=" $2 "&engine=" $3), html_escape(url_decode($2)))
 			}
 
 			END {
@@ -758,7 +758,7 @@ case "${query_action-}" in
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=cookie-copnfig&amp;uri={VARIABLE_NAME}&amp;accept={'add' | 'delete' | 'toggle'}&amp;reject={'add' | 'delete' | 'toggle'}</dd>
 
 				<dt>dict-word</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=dict-word&amp;query={'?' TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=dict-word&amp;designator={'disable' | 'event' | 'all'}&amp;engine={COMMA_LIST}&amp;query={'?' TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
 				<dt>equalprg</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=equalprg</dd>
@@ -815,7 +815,7 @@ case "${query_action-}" in
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=scroll-zt&amp;line={VARIABLE_NAME}</dd>
 
 				<dt>search</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=search&amp;query={TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=search&amp;designator={'disable' | 'event' | 'all'}&amp;engine={COMMA_LIST}&amp;query={TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
 				<dt>select-line</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=select-line&amp;line={VARIABLE_NAME}&amp;subaction={ACTION}&amp;number={'0' | '$' | SIGNED_INTEGER}</dd>
