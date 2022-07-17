@@ -10,6 +10,8 @@ POSIXLY_CORRECT='1' # GNU Coreutils POSIX mode
 COMMAND_MODE='unix2003' # macOS UNIX 03 mode
 export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
 
+. 'sysexits.sh'
+
 trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
 trap 'endCall 129' 1  # SIGHUP
 trap 'endCall 130' 2  # SIGINT
@@ -20,9 +22,4 @@ endCall() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
-}
-
-awk() {
-	unset 'POSIXLY_CORRECT'
-	gawk ${@+"${@}"}
 }

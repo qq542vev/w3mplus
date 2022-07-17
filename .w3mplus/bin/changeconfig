@@ -22,7 +22,6 @@
 VERSION='changeconfig 3.0.0'
 
 . 'initialize.sh'
-. 'sysexits.sh'
 . 'option_error.sh'
 . 'regex_match.sh'
 . 'awkv_escape.sh'
@@ -30,7 +29,7 @@ VERSION='changeconfig 3.0.0'
 
 # @getoptions
 parser_definition() {
-	setup REST abbr:true error:optuon_error plus:true no:0 help:usage \
+	setup REST abbr:true error:option_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 

@@ -22,13 +22,12 @@
 VERSION='parenturipath 1.3.3'
 
 . 'initialize.sh'
-. 'sysexits.sh'
 . 'option_error.sh'
 . 'regex_match.sh'
 
 # @getoptions
 parser_definition() {
-	setup REST abbr:true error:optuon_error plus:true no:0 help:usage \
+	setup REST abbr:true error:option_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 

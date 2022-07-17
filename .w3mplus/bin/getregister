@@ -22,17 +22,16 @@
 VERSION='getregister 1.3.3'
 
 . 'initialize.sh'
-. 'sysexits.sh'
 . 'option_error.sh'
 . 'awkv_escape.sh'
 
 # @getoptions
 parser_definition() {
-	setup REST abbr:true error:optuon_error plus:true no:0 help:usage \
+	setup REST abbr:true error:option_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [PATTERN]..." \
 		'' 'Options:'
 
-	setup REST abbr:true error:optuon_error plus:true no:0
+	setup REST abbr:true error:option_error plus:true no:0
 	param config     -c --config               init:'config="${HOME}/.w3mplus/register"' var:FILE -- '設定ファイル'
 	flag  regexpFlag -E --{no-}extended-regexp init:@no -- '拡張正規表現を使用する'
 	flag  rowFlag    -r --{no-}row             init:@no -- 'デコードせず行のまま表示する'
