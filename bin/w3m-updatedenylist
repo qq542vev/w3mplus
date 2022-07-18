@@ -31,13 +31,13 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [FILE]" \
 		'' 'Options:'
 
-	param beginMsg  -b --begin         init:='^# BEGIN - Denylist$' var:TEXT -- 'リストの開始テキストを指定する'
-	param endMsg    -e --end           init:='^# END - Denylist$' var:TEXT -- 'リストの終了テキストを指定する'
-	flag  placeFlag -i --{no-}in-place init:@no -- 'FILE を更新する'
-	param redirect  -r --redirect      init:='file:///cgi-bin/protectionpage?' var:URI -- 'リダイレクト先の URI を指定する'
-
-	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+	param beginMsg    -b --begin         init:='^# BEGIN - Denylist$' var:ERE_PATTERN -- 'リストの開始テキストを指定する'
+	param endMsg      -e --end           init:='^# END - Denylist$' var:ERE_PATTERN -- 'リストの終了テキストを指定する'
+	flag  placeFlag   -i --{no-}in-place init:@no -- 'FILE を更新する'
+	param redirect    -r --redirect      init:='file:///cgi-bin/protectionpage?' var:URI -- 'リダイレクト先の URI を指定する'
+	flag  verboseFlag -V --verbose       init:@no -- '冗長な表示を行う'
+	disp  :usage      -h --help          -- 'このヘルプを表示して終了する'
+	disp  VERSION     -v --version       -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -125,7 +125,9 @@ awkScript=$(
 
 		query = array_to_query(properties)
 
-		printf("Downloading... %s\n", properties["source"]) | "cat >&2"
+		if(verboseFlag) {
+			printf("Downloading... %s\n", properties["source"]) | "cat >&2"
+		}
 
 		status = system( \
 			sprintf( \
@@ -136,10 +138,12 @@ awkScript=$(
 			) \
 		)
 
-		if(status) {
-			printf("Download failed. Skip and proceed to the next.\n") | "cat >&2"
-		} else {
-			printf("Converting...\n") | "cat >&2"
+		if(verboseFlag) {
+			if(status) {
+				printf("Download failed. Skip and proceed to the next.\n") | "cat >&2"
+			} else {
+				printf("Converting...\n") | "cat >&2"
+			}
 		}
 
 		while(0 < (getline address < tmpFile)) {
@@ -189,6 +193,7 @@ command='awk \
 	-v "endMsg=${endMsg}" \
 	-v "redirect=${redirect}" \
 	-v "tmpFile=${tmpFile}" \
+	-v "verboseFlag=${verboseFlag}" \
 	-- "${awkScript}" \
 '
 
