@@ -36,7 +36,7 @@ parser_definition() {
 	flag  placeFlag -i --{no-}in-place init:@no -- 'FILE を更新して保存する'
 	param max     --max        validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$"' var:NUMBER -- '計算結果の最大値を指定する'
 	param min     --min        validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$"' var:NUMBER -- '計算結果の最小値を指定する'
-	param :'append_array_posix param "${OPTARG}"' -p --param validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_-]+="' var:"NAME '=' VALUE | NAME '=' ('+' | '-' | '*' | '/') '=' UNSIGNED_NUMBER | NAME '=!'" -- 'NAME の値を更新する'
+	param :'append_array_posix param "${OPTARG}"' -p --param validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_-]+="' var:"NAME '=' VALUE | NAME '=' ('+' | '-' | '*' | '/' | '%' | '^') '=' UNSIGNED_NUMBER | NAME '=!'" -- 'NAME の値を更新する'
 	flag  param   --no-param   init:@no on: no: -- '--param をリセットする'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
 	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
@@ -99,7 +99,7 @@ awkScript=$(
 	}
 
 	{
-		if(match($0, /^[ \t]*[_0-9A-Za-z-]+[ \t]+/)) {
+		if(match($0, /^[ \t]*[0-9A-Za-z-][_.0-9A-Za-z-]+[ \t]+/)) {
 			name = substr($0, RSTERT, RLENGTH)
 			gsub(/[ \t]/, "", name)
 
@@ -107,7 +107,7 @@ awkScript=$(
 			gsub(/[ \t]$/, "", value)
 
 			if(name in param) {
-				if((param[name] ~ /^[+*/-]=[1-9][0-9]*(\.[0-9]+)?$/) && (value ~ /^[+-]?(0|[1-9][0-9]*)(\.[0-9]+)?$/)) {
+				if((param[name] ~ /^[+*/%^-]=[1-9][0-9]*(\.[0-9]+)?$/) && (value ~ /^[+-]?(0|[1-9][0-9]*)(\.[0-9]+)?$/)) {
 					operator = substr(param[name], 1, 1)
 					decimalFlag = index(value, ".")
 
@@ -119,6 +119,10 @@ awkScript=$(
 						value *= substr(param[name], 3)
 					}	else if(operator == "/") {
 						value /= substr(param[name], 3)
+					}	else if(operator == "%") {
+						value %= substr(param[name], 3)
+					}	else if(operator == "^") {
+						value ^= substr(param[name], 3)
 					}
 
 					if(max != "" && max < value) {
