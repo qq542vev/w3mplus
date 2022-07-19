@@ -103,7 +103,7 @@ esac
 awkv_escape 'key' "${1}"
 shift
 
-uricheck --verbose -- ${@+"${@}"} >'/dev/null' || endCall "${EX_USAGE}"
+uricheck -f '' --verbose -- ${@+"${@}"} || endCall "${EX_USAGE}"
 
 tmpDir="$(mktemp -d)"
 
