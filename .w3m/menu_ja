@@ -878,152 +878,152 @@ menu minus90Percents
 	func "9  -99%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-99%25"
 end
 
-menu operatorFunc
-	func  "@,h,l  現在の行" GOTO "@hl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=0"
-	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B1"
-	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-1"
-	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=1"
-	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%24"
-	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&line=&number=%24"
-	func  "V      選択した行" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=operatorFunc"
+menu operatorfunc
+	func  "@,h,l  現在の行" GOTO "@hl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&line=&number=%24"
+	func  "V      選択した行" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=operatorfunc"
 	nop   "---------------------"
-	popup "1      1行" operatorFunc1Line "1"
-	popup "2      2行" operatorFunc2Line "2"
-	popup "3      3行" operatorFunc3Line "3"
-	popup "4      4行" operatorFunc4Line "4"
-	popup "5      5行" operatorFunc5Line "5"
-	popup "6      6行" operatorFunc6Line "6"
-	popup "7      7行" operatorFunc7Line "7"
-	popup "8      8行" operatorFunc8Line "8"
-	popup "9      9行" operatorFunc9Line "9"
+	popup "1      1行" operatorfunc1Line "1"
+	popup "2      2行" operatorfunc2Line "2"
+	popup "3      3行" operatorfunc3Line "3"
+	popup "4      4行" operatorfunc4Line "4"
+	popup "5      5行" operatorfunc5Line "5"
+	popup "6      6行" operatorfunc6Line "6"
+	popup "7      7行" operatorfunc7Line "7"
+	popup "8      8行" operatorfunc8Line "8"
+	popup "9      9行" operatorfunc9Line "9"
 end
 
-menu operatorFunc1Line
-	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B1"
-	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-1"
-	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-1"
+menu operatorfunc1Line
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-1"
 end
 
-menu operatorFunc2Line
-	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B2"
-	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-2"
-	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-2"
+menu operatorfunc2Line
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-2"
 end
 
-menu operatorFunc3Line
-	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B3"
-	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-3"
-	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-3"
+menu operatorfunc3Line
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-3"
 end
 
-menu operatorFunc4Line
-	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B4"
-	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-4"
-	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-4"
+menu operatorfunc4Line
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-4"
 end
 
-menu operatorFunc5Line
-	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B5"
-	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-5"
-	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-5"
+menu operatorfunc5Line
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-5"
 end
 
-menu operatorFunc6Line
-	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B6"
-	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-6"
-	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-6"
+menu operatorfunc6Line
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-6"
 end
 
-menu operatorFunc7Line
-	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B7"
-	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-7"
-	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-7"
+menu operatorfunc7Line
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-7"
 end
 
-menu operatorFunc8Line
-	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B8"
-	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-8"
-	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-8"
+menu operatorfunc8Line
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-8"
 end
 
-menu operatorFunc9Line
-	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B9"
-	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-9"
-	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-9"
+menu operatorfunc9Line
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-9"
 end
 
-menu formatPrg
-	func  "q,h,l  現在の行" GOTO "qhl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=0"
-	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B1"
-	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-1"
-	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=1"
-	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%24"
-	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&line=&number=%24"
-	func  "V      選択した行" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=formatPrg"
+menu formatprg
+	func  "q,h,l  現在の行" GOTO "qhl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&line=&number=%24"
+	func  "V      選択した行" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=formatprg"
 	nop   "---------------------"
-	popup "1      1行" formatPrg1Line "1"
-	popup "2      2行" formatPrg2Line "2"
-	popup "3      3行" formatPrg3Line "3"
-	popup "4      4行" formatPrg4Line "4"
-	popup "5      5行" formatPrg5Line "5"
-	popup "6      6行" formatPrg6Line "6"
-	popup "7      7行" formatPrg7Line "7"
-	popup "8      8行" formatPrg8Line "8"
-	popup "9      9行" formatPrg9Line "9"
+	popup "1      1行" formatprg1Line "1"
+	popup "2      2行" formatprg2Line "2"
+	popup "3      3行" formatprg3Line "3"
+	popup "4      4行" formatprg4Line "4"
+	popup "5      5行" formatprg5Line "5"
+	popup "6      6行" formatprg6Line "6"
+	popup "7      7行" formatprg7Line "7"
+	popup "8      8行" formatprg8Line "8"
+	popup "9      9行" formatprg9Line "9"
 end
 
-menu formatPrg1Line
-	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B1"
-	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-1"
-	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-1"
+menu formatprg1Line
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-1"
 end
 
-menu formatPrg2Line
-	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B2"
-	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-2"
-	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-2"
+menu formatprg2Line
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-2"
 end
 
-menu formatPrg3Line
-	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B3"
-	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-3"
-	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-3"
+menu formatprg3Line
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-3"
 end
 
-menu formatPrg4Line
-	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B4"
-	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-4"
-	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-4"
+menu formatprg4Line
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-4"
 end
 
-menu formatPrg5Line
-	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B5"
-	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-5"
-	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-5"
+menu formatprg5Line
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-5"
 end
 
-menu formatPrg6Line
-	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B6"
-	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-6"
-	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-6"
+menu formatprg6Line
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-6"
 end
 
-menu formatPrg7Line
-	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B7"
-	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-7"
-	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-7"
+menu formatprg7Line
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-7"
 end
 
-menu formatPrg8Line
-	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B8"
-	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-8"
-	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-8"
+menu formatprg8Line
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-8"
 end
 
-menu formatPrg9Line
-	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B9"
-	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-9"
-	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-9"
+menu formatprg9Line
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-9"
 end
 
 menu filter

@@ -41,9 +41,9 @@ parser_definition() {
 
 	cmd display      -- '選択範囲を表示する'
 	cmd filter       -- '選択範囲を任意のコマンドで実行する'
-	cmd formatPrg    -- '選択範囲を PIPE_BUF で実行する'
+	cmd formatprg    -- '選択範囲を PIPE_BUF で実行する'
 	cmd lowercase    -- '選択範囲をアルファベットを小文字に変換する'
-	cmd operatorFunc -- '選択範囲を EXEC_SHELL で実行する'
+	cmd operatorfunc -- '選択範囲を EXEC_SHELL で実行する'
 	cmd rot13        -- '選択範囲のアルファベットを ROT13 で変換する'
 	cmd switchcase   -- '選択範囲のアルファベットを大文字と小文字に変換する'
 	cmd uppercase    -- '選択範囲をアルファベットを大文字に変換する'
@@ -144,7 +144,7 @@ case "${action}" in
 			-H 'W3m-control: DELETE_PREVBUF' \
 			-H "W3m-control: GOTO_LINE ${startLine}"
 		;;
-	'formatPrg')
+	'formatprg')
 		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
 		formatCommand=$(
 			cat <<-EOF | tr -d '\n'
@@ -169,7 +169,7 @@ case "${action}" in
 			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'" \
 			-H "W3m-control: GOTO_LINE ${startLine}"
 		;;
-	'operatorFunc')
+	'operatorfunc')
 		displayTmp=$(mktemp -d)
 		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
 

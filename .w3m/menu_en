@@ -878,152 +878,152 @@ menu minus90Percents
 	func "9  -99%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-99%25"
 end
 
-menu operatorFunc
-	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=0"
-	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B1"
-	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-1"
-	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=1"
-	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%24"
-	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&line=&number=%24"
-	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=operatorFunc"
+menu operatorfunc
+	func  "@,h,l  Current line" GOTO "@hl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=0"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=operatorfunc"
 	nop   "----------------------"
-	popup "1      1 line" operatorFunc1Line "1"
-	popup "2      2 lines" operatorFunc2Line "2"
-	popup "3      3 lines" operatorFunc3Line "3"
-	popup "4      4 lines" operatorFunc4Line "4"
-	popup "5      5 lines" operatorFunc5Line "5"
-	popup "6      6 lines" operatorFunc6Line "6"
-	popup "7      7 lines" operatorFunc7Line "7"
-	popup "8      8 lines" operatorFunc8Line "8"
-	popup "9      9 lines" operatorFunc9Line "9"
+	popup "1      1 line" operatorfunc1Line "1"
+	popup "2      2 lines" operatorfunc2Line "2"
+	popup "3      3 lines" operatorfunc3Line "3"
+	popup "4      4 lines" operatorfunc4Line "4"
+	popup "5      5 lines" operatorfunc5Line "5"
+	popup "6      6 lines" operatorfunc6Line "6"
+	popup "7      7 lines" operatorfunc7Line "7"
+	popup "8      8 lines" operatorfunc8Line "8"
+	popup "9      9 lines" operatorfunc9Line "9"
 end
 
-menu operatorFunc1Line
-	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B1"
-	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-1"
-	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-1"
+menu operatorfunc1Line
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-1"
 end
 
-menu operatorFunc2Line
-	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B2"
-	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-2"
-	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-2"
+menu operatorfunc2Line
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-2"
 end
 
-menu operatorFunc3Line
-	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B3"
-	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-3"
-	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-3"
+menu operatorfunc3Line
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-3"
 end
 
-menu operatorFunc4Line
-	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B4"
-	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-4"
-	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-4"
+menu operatorfunc4Line
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-4"
 end
 
-menu operatorFunc5Line
-	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B5"
-	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-5"
-	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-5"
+menu operatorfunc5Line
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-5"
 end
 
-menu operatorFunc6Line
-	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B6"
-	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-6"
-	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-6"
+menu operatorfunc6Line
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-6"
 end
 
-menu operatorFunc7Line
-	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B7"
-	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-7"
-	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-7"
+menu operatorfunc7Line
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-7"
 end
 
-menu operatorFunc8Line
-	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B8"
-	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-8"
-	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-8"
+menu operatorfunc8Line
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-8"
 end
 
-menu operatorFunc9Line
-	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B9"
-	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=-9"
-	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorFunc&number=%2B-9"
+menu operatorfunc9Line
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-9"
 end
 
-menu formatPrg
-	func  "q,h,l  Current line" GOTO "qhl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=0"
-	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B1"
-	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-1"
-	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=1"
-	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%24"
-	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&line=&number=%24"
-	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=formatPrg"
+menu formatprg
+	func  "q,h,l  Current line" GOTO "qhl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=0"
+	func  "j      1 line below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B1"
+	func  "k      1 line above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-1"
+	func  "g      All lines above" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=1"
+	func  "G      All lines below" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%24"
+	func  "*      All lines" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=formatprg"
 	nop   "----------------------"
-	popup "1      1 line" formatPrg1Line "1"
-	popup "2      2 lines" formatPrg2Line "2"
-	popup "3      3 lines" formatPrg3Line "3"
-	popup "4      4 lines" formatPrg4Line "4"
-	popup "5      5 lines" formatPrg5Line "5"
-	popup "6      6 lines" formatPrg6Line "6"
-	popup "7      7 lines" formatPrg7Line "7"
-	popup "8      8 lines" formatPrg8Line "8"
-	popup "9      9 lines" formatPrg9Line "9"
+	popup "1      1 line" formatprg1Line "1"
+	popup "2      2 lines" formatprg2Line "2"
+	popup "3      3 lines" formatprg3Line "3"
+	popup "4      4 lines" formatprg4Line "4"
+	popup "5      5 lines" formatprg5Line "5"
+	popup "6      6 lines" formatprg6Line "6"
+	popup "7      7 lines" formatprg7Line "7"
+	popup "8      8 lines" formatprg8Line "8"
+	popup "9      9 lines" formatprg9Line "9"
 end
 
-menu formatPrg1Line
-	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B1"
-	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-1"
-	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-1"
+menu formatprg1Line
+	func "j  1 line below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B1"
+	func "k  1 line above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-1"
+	func "*  1 line, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-1"
 end
 
-menu formatPrg2Line
-	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B2"
-	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-2"
-	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-2"
+menu formatprg2Line
+	func "j  2 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B2"
+	func "k  2 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-2"
+	func "*  2 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-2"
 end
 
-menu formatPrg3Line
-	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B3"
-	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-3"
-	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-3"
+menu formatprg3Line
+	func "j  3 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B3"
+	func "k  3 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-3"
+	func "*  3 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-3"
 end
 
-menu formatPrg4Line
-	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B4"
-	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-4"
-	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-4"
+menu formatprg4Line
+	func "j  4 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B4"
+	func "k  4 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-4"
+	func "*  4 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-4"
 end
 
-menu formatPrg5Line
-	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B5"
-	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-5"
-	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-5"
+menu formatprg5Line
+	func "j  5 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B5"
+	func "k  5 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-5"
+	func "*  5 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-5"
 end
 
-menu formatPrg6Line
-	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B6"
-	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-6"
-	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-6"
+menu formatprg6Line
+	func "j  6 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B6"
+	func "k  6 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-6"
+	func "*  6 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-6"
 end
 
-menu formatPrg7Line
-	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B7"
-	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-7"
-	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-7"
+menu formatprg7Line
+	func "j  7 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B7"
+	func "k  7 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-7"
+	func "*  7 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-7"
 end
 
-menu formatPrg8Line
-	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B8"
-	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-8"
-	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-8"
+menu formatprg8Line
+	func "j  8 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B8"
+	func "k  8 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-8"
+	func "*  8 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-8"
 end
 
-menu formatPrg9Line
-	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B9"
-	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=-9"
-	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatPrg&number=%2B-9"
+menu formatprg9Line
+	func "j  9 lines below" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B9"
+	func "k  9 lines above" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-9"
+	func "*  9 lines, above & below" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-9"
 end
 
 menu filter

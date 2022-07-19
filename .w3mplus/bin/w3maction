@@ -38,7 +38,7 @@ parser_definition() {
 	msg -- '' 'ACTION:'
 
 	cmd addBookmark          -- 'VARIABLE_NAME をブックマークに追加する'
-	cmd copy                 -- 'VARIABLE_NAME を別の変数に代入する'
+	cmd setenv               -- 'VARIABLE_NAME を別の変数に代入する'
 	cmd goto                 -- 'VARIABLE_NAME にアクセスする'
 	cmd incrementURI         -- 'VARIABLE_NAME の値を演算してアクセスする'
 	cmd parentUriPath        -- 'VARIABLE_NAME の上位 URI にアクセスする'
@@ -93,7 +93,7 @@ parser_definition_parentUriPath() {
 	param tab    -t --tab    init:='current' pattern:'current | newtab | open-newtab'
 }
 
-parser_definition_copy() {
+parser_definition_setenv() {
 	setup REST abbr:true error:option_error plus:true no:0
 
 	param encode -e --encode-type init:='raw' pattern:'raw | base64 | urlencode'
@@ -147,11 +147,11 @@ case "${action}" in
 		parse ${@+"${@}"}
 		eval "set -- ${REST}"
 		;;
-	'copy')
-# @gengetoptions parser -i parser_definition_copy parse
+	'setenv')
+# @gengetoptions parser -i parser_definition_setenv parse
 # @end
 
-		eval "$(getoptions parser_definition_copy parse)"
+		eval "$(getoptions parser_definition_setenv parse)"
 		parse ${@+"${@}"}
 		eval "set -- ${REST}"
 		;;
@@ -193,7 +193,7 @@ case "${action}" in
 			--a1 'ADD_BOOKMARK' \
 			-- "${value}"
 		;;
-	'copy')
+	'setenv')
 		case "${encode}" in
 			'base64') value=$(printf '%s' "${value}" | base64 | tr -d '\n');;
 			'urlencode') value=$(printf '%s' "${value}" | urlencode);;

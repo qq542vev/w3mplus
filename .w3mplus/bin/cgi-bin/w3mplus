@@ -465,8 +465,8 @@ case "${query_action-}" in
 		expand 'line' "${query_line-W3M_CURRENT_LINE}"
 
 		case "${query_subaction}" in
-			'formatPrg') commandArg="${W3MPLUS_FORMATPRG}";;
-			'operatorFunc') commandArg="${W3MPLUS_OPERATORFUNC}";;
+			'formatprg') commandArg="${W3MPLUS_FORMATPRG}";;
+			'operatorfunc') commandArg="${W3MPLUS_OPERATORFUNC}";;
 			'yank') commandArg="${W3MPLUS_YANK}";;
 		esac
 
@@ -708,8 +708,8 @@ case "${query_action-}" in
 		expand 'line' "${query_line-W3M_CURRENT_LINE}"
 
 		case "${query_subaction}" in
-			'formatPrg') commandArg="${W3MPLUS_FORMATPRG}";;
-			'operatorFunc') commandArg="${W3MPLUS_OPERATORFUNC}";;
+			'formatprg') commandArg="${W3MPLUS_FORMATPRG}";;
+			'operatorfunc') commandArg="${W3MPLUS_OPERATORFUNC}";;
 			'yank') commandArg="${W3MPLUS_YANK}";;
 		esac
 
