@@ -74,11 +74,13 @@ parser_definition() {
 
 parser_definition_redirect() {
 	setup REST abbr:true error:option_error plus:true no:0
+
 	param tab -t --tab init:='current' pattern:'current | newtab | open-newtab'
 }
 
 parser_definition_incrementURI() {
 	setup REST abbr:true error:option_error plus:true no:0
+
 	param number   -n --number   init:='+1' validate:'regex_match "${OPTARG}" "^(0|[+-][1-9][0-9]*)$"'
 	param position -p --position init:='-1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"'
 	param tab      -t --tab     init:='current' pattern:'current | newtab | open-newtab'
@@ -86,12 +88,14 @@ parser_definition_incrementURI() {
 
 parser_definition_parentUriPath() {
 	setup REST abbr:true error:option_error plus:true no:0
+
 	param number -n --number init:='1' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"'
 	param tab    -t --tab    init:='current' pattern:'current | newtab | open-newtab'
 }
 
 parser_definition_copy() {
 	setup REST abbr:true error:option_error plus:true no:0
+
 	param encode -e --encode-type init:='raw' pattern:'raw | base64 | urlencode'
 }
 # @end
