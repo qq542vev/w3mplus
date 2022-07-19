@@ -1,3 +1,4 @@
+@include "uri_parse.awk"
 @include "url_encode_normalize.awk"
 @include "uri_path_remove_dot_segments.awk"
 

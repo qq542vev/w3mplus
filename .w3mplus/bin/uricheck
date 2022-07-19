@@ -28,7 +28,9 @@ VERSION='uricheck 1.3.1'
 # @getoptions
 parser_definition() {
 	setup REST abbr:true error:option_error plus:true no:0 help:usage \
-		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
+		-- 'Usage:' \
+		"  ${2##*/} [OPTION]... [URI]..." \
+		"  ${2##*/} -V [OPTION]... [NOT_URI]..." \
 		'' 'Options:'
 
 	param field         -f --field          init:='original' validate:validate_field var:"'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'?" -- '表示する URI のフィールドを指定する'
@@ -83,7 +85,6 @@ awkScript=$(
 	cat <<-'EOF'
 	@include "uri_check.awk"
 	@include "url_encode_normalize.awk"
-	@include "singlequote_escape.awk"
 	@include "uri_path_remove_dot_segments.awk"
 	@include "uri_parse.awk"
 
@@ -96,14 +97,14 @@ awkScript=$(
 
 			if(uri_check(uri)) {
 				if(normalizeFlag) {
-					uri = uri_encode_normalize(uri)
+					uri = url_encode_normalize(uri)
 				}
 
 				if(invertFlag) {
 					exitStatus = 1
 
 					if(verboseFlag) {
-						system("printf 'URI: %s\n' '" singlequote_escape(uri) "' >&2")
+						printf("URI: %s\n", uri) | "cat >&2"
 					}
 				} else {
 					uri_parse(uri, element)
@@ -155,7 +156,7 @@ awkScript=$(
 					exitStatus = 1
 
 					if(verboseFlag) {
-						system("printf 'not URI: %s\n' '" singlequote_escape(uri) "' >&2")
+						printf("not URI: %s\n", uri) | "cat >&2"
 					}
 				}
 			}
@@ -173,4 +174,4 @@ awk \
 	-v "verboseFlag=${verboseFlag}" \
 	-- "${awkScript}" \
 	${@+"${@}"} \
-|| endCall 1
+|| endCall "${?}"

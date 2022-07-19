@@ -31,14 +31,13 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 
-	param number   -n --number   init:='+1' validate:'regex_match "${OPTARG}" "^(0|[+*/-]?[1-9][0-9]*)$"' var:"[+*/-]? UNSIGNED_INTEGER" -- '演算を指定する'
+	param number   -n --number   init:='+1' validate:'regex_match "${OPTARG}" "^(0|[+*/%^-]?[1-9][0-9]*)$"' var:"[+*/%^-]? UNSIGNED_INTEGER" -- '演算を指定する'
 	param position -p --position init:='-1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"' var:SIGNED_INTEGER -- 'URI の被演算子の位置を指定する'
 	disp  :usage   -h --help     -- 'このヘルプを表示して終了する'
 	disp  VERSION  -v --version  -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
-		'    1 - not URI' \
 		'   64 - command line usage error' \
 		'   65 - data format error' \
 		'   66 - cannot open input' \
@@ -71,18 +70,25 @@ eval "set -- ${REST}"
 awkScript=$(
 	cat <<-'EOF'
 	@include "uri_check.awk"
-	@include "singlequote_escape.awk"
-	@include "uri_parse.awk"
 	@include "uri_normalize.awk"
+	@include "sysexits.awk"
 
-	function nonNegativeInteger(string, number) {
+	function operation(string, number,  operator) {
 		if(string ~ /^[0-9]+$/) {
-			if(number ~ /^[+-]/) {
-				number = string + (number)
-			} else if(number ~ /^\*/) {
+			operator = substr(number, 1, 1)
+
+			if(operator == "+") {
+				number = string + substr(number, 2)
+			} else if(operator == "-") {
+				number = string - substr(number, 2)
+			} else if(operator == "*") {
 				number = string * substr(number, 2)
-			} else if(number ~ /^\//) {
+			} else if(operator == "/") {
 				number = string / substr(number, 2)
+			} else if(operator == "%") {
+				number = string % substr(number, 2)
+			} else if(operator == "^") {
+				number = string ^ substr(number, 2)
 			}
 
 			return (0 <= number ? int(number) : 0)
@@ -111,7 +117,7 @@ awkScript=$(
 			return forwardIncrement(segment, number, position, count) substr(string, mLength, 1) forwardIncrement(substr(string, mLength + 1), number, position, count + (segment ~ /^[0-9]+$/))
 		}
 
-		return (position == count) ? nonNegativeInteger(string, number) : string
+		return (position == count) ? operation(string, number) : string
 	}
 
 	function backwardIncrement(string, number, position,  count,segment,mStart) {
@@ -134,7 +140,7 @@ awkScript=$(
 			return backwardIncrement(substr(string, 1, mStart - 1), number, position, count + (segment ~ /^[0-9]+$/)) substr(string, mStart, 1) backwardIncrement(segment, number, position, count)
 		}
 
-		return (position == count) ? nonNegativeInteger(string, number) : string
+		return (position == count) ? operation(string, number) : string
 	}
 
 	BEGIN {
@@ -152,8 +158,9 @@ awkScript=$(
 					printf("%s\n", backwardIncrement(uri, number, position * -1))
 				}
 			} else {
-				system("printf 'not URI: %s\n\" ' '" singlequote_escape($0) "' >&2")
-				exitStatus = 1
+				printf("not URI: %s\n", uri) | "cat >&2"
+
+				exitStatus = sysexits("EX_USAGE")
 			}
 		}
 
@@ -167,4 +174,4 @@ awk \
 	-v "position=${position}" \
 	-- "${awkScript}" \
 	${@+"${@}"} \
-|| endCall 1
+|| endCall "${?}"

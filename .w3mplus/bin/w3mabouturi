@@ -286,7 +286,7 @@ case "${1-about:about}" in
 
 		w3mid=$(
 			psrelative -o 'pid,comm' 'ancestor' "${$}" \
-			| awk -- '$2 == "w3m" { printf("%d", $1); exit }'
+			| awk -- '$2 == "w3m" { printf("%d", $1); exit; }'
 		)
 
 		printhtml --title 'w3m processes' -- - <<-EOF | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -

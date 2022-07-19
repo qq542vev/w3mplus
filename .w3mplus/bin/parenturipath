@@ -37,7 +37,6 @@ parser_definition() {
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
-		'    1 - not URI' \
 		'   64 - command line usage error' \
 		'   65 - data format error' \
 		'   66 - cannot open input' \
@@ -73,6 +72,7 @@ awkScript=$(
 	@include "url_encode_normalize.awk"
 	@include "uri_check.awk"
 	@include "uri_parse.awk"
+	@include "sysexits.awk"
 
 	BEGIN {
 		exitStatus = 0
@@ -82,12 +82,13 @@ awkScript=$(
 
 			if(uri_check(uri)) {
 				uri_parse(url_encode_normalize(uri), element)
-				element["path"] = path_parent(element["path"], number)
+				element["path"] = uri_path_parent(element["path"], number)
 
 				printf("%s\n", element["scheme"] element["authority"] element["path"])
 			} else {
-				system("printf 'not URI: %s\n' '" singlequote_escape(uri) "' >&2")
-				exitStatus = 1
+				printf("not URI: %s\n", uri) | "cat >&2"
+
+				exitStatus = sysexits("EX_USAGE")
 			}
 		}
 
@@ -100,4 +101,4 @@ awk \
 	-v "number=${number}" \
 	-- "${awkScript}" \
 	${@+"${@}"} \
-|| endCall 1
+|| endCall "${?}"

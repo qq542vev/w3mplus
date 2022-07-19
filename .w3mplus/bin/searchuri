@@ -147,6 +147,7 @@ awkScript=$(
 	@include "url_encode.awk"
 	@include "singlequote_escape.awk"
 	@include "array_print.awk"
+	@include "sysexits.awk"
 
 	BEGIN {
 		reverse = sprintf("sort -k '1,1nr' -t '\t' -- '%s'", singlequote_escape(history))
@@ -214,8 +215,9 @@ awkScript=$(
 			if(keyword != "") {
 				output = output "%20" keyword
 			} else if(result["event"] != "") {
-				system("printf '%s: event not found\n' '" arg "' >&2")
-				exit 64
+				printf("event '%s' not found.\n", arg) | "cat >&2"
+
+				exit sysexits("EX_USAGE")
 			}
 		}
 
@@ -328,8 +330,9 @@ awkScript=$(
 
 				printf("%s\n", url)
 			} else {
-				system("printf \"Search engine '%s' not found.\n\" '" engines[i] "' >&2")
-				exitStatus = 1
+				printf("search engine '%s' not found.\n", engines[i]) | "cat >&2"
+
+				exitStatus = sysexits("EX_UNAVAILABLE")
 			}
 		}
 
