@@ -551,8 +551,8 @@ keymap "p" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&
 keymap "P" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&tab=open-newtab&query=; DICT_WORD_AT"
 keymap "gP" COMMAND "SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&tab=open-newtab&after=PREV_TAB&query=; DICT_WORD_AT"
 
-keymap "C-x" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=incrementURI&variable=W3M_URL&number=-1"
-keymap "C-a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=incrementURI&variable=W3M_URL"
+keymap "C-x" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=increment-uri&variable=W3M_URL&number=-1"
+keymap "C-a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=increment-uri&variable=W3M_URL"
 
 ### History ###
 
@@ -573,7 +573,7 @@ keymap "~" LOAD "~"
 keymap "gh" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=homepage"
 keymap "gH" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=homepage&tab=open-newtab"
 
-keymap "gu" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=parentUriPath&variable=W3M_URL"
+keymap "gu" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=parent-uripath&variable=W3M_URL"
 keymap "gU" GOTO_RELATIVE "/"
 
 ### Reloading ###
@@ -782,14 +782,14 @@ keymap ";?" LINE_INFO
 keymap ";s" SAVE_LINK
 keymap ";o" GOTO_LINK
 keymap ";t" TAB_LINK
-keymap ";b" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=prevTab&variable=W3M_CURRENT_LINK"
+keymap ";b" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&tab=open-newtab&after=PREV_TAB&variable=W3M_CURRENT_LINK"
 keymap ";w" EXTERN_LINK "w3m %s"
 keymap ";O" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-goto"
 keymap ";T" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-tabgoto"
 keymap ";W" EXTERN_LINK
-keymap ";a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
-keymap ";v" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=viewSource&variable=W3M_CURRENT_LINK"
-keymap ";V" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=viewSourceExternally&variable=W3M_CURRENT_LINK"
+keymap ";a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=ADD_BOOKMARK&variable=W3M_CURRENT_LINK"
+keymap ";v" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=VIEW&variable=W3M_CURRENT_LINK"
+keymap ";V" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=COMMAND%20VIEW%3B%20EDIT_SCREEN%3B%20VIEW&variable=W3M_CURRENT_LINK"
 keymap ";y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
 keymap ";Y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
 keymap ";c" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=context-menu"
