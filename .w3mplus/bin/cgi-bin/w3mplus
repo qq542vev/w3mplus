@@ -249,33 +249,67 @@ case "${query_action-}" in
 		esac
 		;;
 	'equalprg')
-		expand 'source' "${query_sourcefile-W3M_SOURCEFILE}"
-		expand 'charset' "${query_charset-W3M_CHARSET}"
-		expand 'type' "${query_type-W3M_TYPE}"
+		expand 'uri' "${query_uri-W3M_URL}"
 
-		if [ -f "${source}" ] && [ -n "${charset}" ] && [ -n "${type}" ]; then
-			equalprg=$(printf '%s' "${W3MPLUS_EQUALPRG}" | base64 | tr -d '\n')
+		case "${uri}" in
+			'') httpresponse -H 'W3m-control: BACK';;
+			*)
+				equalprg=$(printf '%s' "${W3MPLUS_EQUALPRG}" | base64 | tr -d '\n')
+				singlequote_escape 'escapedUri' "${uri}"
 
-			httpresponse \
-				-H 'W3m-control: BACK' \
-				-H "W3m-control: EXEC_SHELL w3m -I '${charset}' -O '${charset}' -T 'text/plain' -dump '${source}' | sh -c 'eval \"\$(echo \"${equalprg}\" | base64 -d)\"' | w3m -I '${charset}' -T '${type}'"
-		else
-			httpresponse -H 'W3m-control: BACK'
-		fi
+				httpresponse \
+					-H 'W3m-control: BACK' \
+					-H "W3m-control: EXEC_SHELL w3m -o 'auto_uncompress=1' -dump_source '${escapedUri}' | sh -c 'eval \"\$(echo \"${equalprg}\" | base64 -d)\"'"
+				;;
+		esac
 		;;
 	'execute-env-var')
 		case "${query_subaction}" in
-			'addBookmark' | 'goto' | 'viewSource' | 'viewSourceExternally')
-				commandArg='${query_tab+--tab "${query_tab}"}';;
-			'incrementURI' | 'parentUriPath')
-				commandArg='${query_number+--number "${query_number}"} ${query_tab+--tab "${query_tab}"}';;
-			'redirect')
-				pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
-				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
-
-				commandArg='${query_tab+--tab "${query_tab}"} "${query_redirect-${filepath}?pass=${pass}&action=search&tab=del-prebuf&query=}"';;
+			'goto' | 'increment-uri' | 'parent-uripath' | 'redirect')
+				commandArg='${query_tab+--tab "${query_tab}"} ${query_before+--b1 "${query_before}"} ${query_after+--a1 "${query_after}"}';;
 			'yank')
 				commandArg='"${W3MPLUS_YANK}"';;
+		esac
+
+		case "${query_subaction}" in
+			'increment-uri')
+				case "${query_number+1}" in
+					'1') singlequote_escape 'query_number' "${query_number}";;
+				esac
+
+				query_subaction='goto'
+				commandArg="${commandArg}$(
+					cat <<-'EOF'
+					-- incrementuri ${query_number+--number "'${query_number}'"}'
+					EOF
+				)"
+				;;
+			'parent-uripath')
+				case "${query_number+1}" in
+					'1') singlequote_escape 'query_number' "${query_number}";;
+				esac
+
+				query_subaction='goto'
+				commandArg="${commandArg}$(
+					cat <<-'EOF'
+					-- parenturipath ${query_number+--number "'${query_number}'"}
+					EOF
+				)"
+				;;
+			'redirect')
+				case "${query_redirect+1}" in
+					'1') singlequote_escape 'query_redirect' "${query_redirect}";;
+				esac
+
+				query_subaction='goto'
+				pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
+				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
+				commandArg="${commandArg}$(
+					cat <<-'EOF'
+					-- printf "'%s%s'" "'${query_redirect-${filepath}?pass=${pass}&action=search&tab=del-prebuf&query=}'" '"$(urlencode)"'
+					EOF
+				)"
+				;;
 		esac
 
 		eval w3maction \
@@ -760,7 +794,7 @@ case "${query_action-}" in
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=dict-word&amp;designator={'disable' | 'event' | 'all'}&amp;engine={COMMA_LIST}&amp;query={'?' TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
 				<dt>equalprg</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=equalprg</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=equalprg&amp;uri={VARIABLE_NAME}</dd>
 
 				<dt>execute-env-var</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=execute-env-var&amp;subaction={ACTION}&amp;VARIABLE_NAME={VARIABLE_NAME}</dd>

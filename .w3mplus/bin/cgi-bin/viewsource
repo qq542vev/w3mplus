@@ -1,0 +1,89 @@
+#!/usr/bin/env sh
+
+### Script: viewsource
+##
+## ソースを表示する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2022-07-23
+##   since - 2022-07-23
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+: ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
+: ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
+: ${W3MPLUS_PATH:="${W3MPLUS_HOME}/bin"}
+: ${W3MPLUS_LIB:="${W3MPLUS_HOME}/lib"}
+: ${W3MPLUS_PASS_FILE:="${W3MPLUS_HOME}/pass"}
+
+: ${SCRIPT_NAME:="cgi-bin/${0##*/}"}
+: ${QUERY_STRING:=''}
+: ${REQUEST_URI:="${SCRIPT_NAME}${QUERY_STRING:+?}${QUERY_STRING-}"}
+
+export PATH="${W3MPLUS_PATH}:${W3MPLUS_LIB}${PATH:+:}${PATH-}"
+export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
+
+. 'initialize.sh'
+. 'singlequote_escape.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:option_error no:0 help:usage \
+		-- 'Usage:' "  QUERY_STRING=URL ${2##*/}" \
+		'' 'Options:'
+
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+url="${QUERY_STRING}"
+
+if uricheck --field '' -- "${url}"; then
+	httpresponse \
+		-H "W3m-control: GOTO ${url}" \
+		-H 'W3m-control: DEL_PREBUF' \
+		-H 'W3m-control: VIEW'
+else
+	httpresponse -H 'Content-type: text/palin; charset=UTF-8' - <<-EOF
+		'${url}' is not URL.
+	EOF
+fi

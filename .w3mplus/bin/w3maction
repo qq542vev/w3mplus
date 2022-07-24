@@ -24,6 +24,7 @@ VERSION='w3maction 2.3.0'
 . 'initialize.sh'
 . 'option_error.sh'
 . 'regex_match.sh'
+. 'append_array_posix.sh'
 
 # @getoptions
 parser_definition() {
@@ -37,16 +38,9 @@ parser_definition() {
 
 	msg -- '' 'ACTION:'
 
-	cmd addBookmark          -- 'VARIABLE_NAME をブックマークに追加する'
-	cmd setenv               -- 'VARIABLE_NAME を別の変数に代入する'
 	cmd goto                 -- 'VARIABLE_NAME にアクセスする'
-	cmd incrementURI         -- 'VARIABLE_NAME の値を演算してアクセスする'
-	cmd parentUriPath        -- 'VARIABLE_NAME の上位 URI にアクセスする'
-	cmd prevTab              -- 'VARIABLE_NAME にアクセス後に前のタブに移動する'
-	cmd redirect             -- 'VARIABLE_NAME の値を URL エンコードしリダイレクトする'
+	cmd setenv               -- 'VARIABLE_NAME を別の変数に代入する'
 	cmd show                 -- 'VARIABLE_NAME の値を表示する'
-	cmd viewSource           -- 'VARIABLE_NAME のソースを表示する'
-	cmd viewSourceExternally -- 'VARIABLE_NAME のソースを外部プログラムで表示する'
 	cmd yank                 -- 'VARIABLE_NAME の値をヤンクする'
 
 	msg -- '' 'Exit Status:' \
@@ -72,35 +66,34 @@ parser_definition() {
 		'  143 - received SIGTERM'
 }
 
-parser_definition_redirect() {
-	setup REST abbr:true error:option_error plus:true no:0
+parser_definition_goto() {
+	setup REST plus:true abbr:true error:option_error no:0 help:usage_goto \
+		-- 'Usage:' "  ${2##*/} [OPTION]... goto VARIABLE_NAME [SUB_OPTION]... [COMMNAD_ARG].." \
+		'' 'Sub options:'
 
-	param tab -t --tab init:='current' pattern:'current | newtab | open-newtab'
-}
-
-parser_definition_incrementURI() {
-	setup REST abbr:true error:option_error plus:true no:0
-
-	param number   -n --number   init:='+1' validate:'regex_match "${OPTARG}" "^(0|[+-][1-9][0-9]*)$"'
-	param position -p --position init:='-1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"'
-	param tab      -t --tab     init:='current' pattern:'current | newtab | open-newtab'
-}
-
-parser_definition_parentUriPath() {
-	setup REST abbr:true error:option_error plus:true no:0
-
-	param number -n --number init:='1' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"'
-	param tab    -t --tab    init:='current' pattern:'current | newtab | open-newtab'
+	param :'append_array_posix "option" "${1}" "${OPTARG}"' --a1 --a2 --a3 --a4 --a5 --a6 --a7 --a8 --a9 var:W3M_COMMAND -- 'n個目の URI アクセス後に W3M_COMMAND を実行する'
+	param :'append_array_posix "option" "${1}" "${OPTARG}"' --b1 --b2 --b3 --b4 --b5 --b6 --b7 --b8 --b9 var:W3M_COMMAND -- 'n個目の URI アクセス前に W3M_COMMAND を実行する'
+	param :'append_array_posix "option" "${1}" "${OPTARG}"' -t --tab var:"'current' | 'del-prebuf' | 'newtab' | 'open-newtab'" -- 'タブの動作を指定する'
+	disp  :usage_goto -h --help -- 'このヘルプを表示して終了する'
 }
 
 parser_definition_setenv() {
-	setup REST abbr:true error:option_error plus:true no:0
+	setup REST plus:true abbr:true error:option_error no:0 help:usage_setenv \
+		-- 'Usage:' "  ${2##*/} [OPTION]... setenv VARIABLE_NAME [SUB_OPTION]..." \
+		'' 'Sub options:'
 
-	param encode -e --encode-type init:='raw' pattern:'raw | base64 | urlencode'
+	param encode        -e --encode-type init:='raw' pattern:'raw | base64 | urlencode'
+	disp  :usage_setenv -h --help        -- 'このヘルプを表示して終了する'
 }
 # @end
 
 # @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+# @gengetoptions parser -i parser_definition_goto parse_goto "${1}"
+# @end
+
+# @gengetoptions parser -i parser_definition_setenv parse_setenv "${1}"
 # @end
 
 eval "$(getoptions parser_definition parse "${0}")"
@@ -121,41 +114,6 @@ esac
 action="${1}"
 variableName="${2}"
 shift 2
-
-case "${action}" in
-	'addBookmark' | 'goto' | 'redirect' | 'viewSource' | 'viewSourceExternally')
-# @gengetoptions parser -i parser_definition_redirect parse
-# @end
-
-		eval "$(getoptions parser_definition_redirect parse)"
-		parse ${@+"${@}"}
-		eval "set -- ${REST}"
-		;;
-	'incrementURI')
-# @gengetoptions parser -i parser_definition_incrementURI parse
-# @end
-
-		eval "$(getoptions parser_definition_incrementURI parse)"
-		parse ${@+"${@}"}
-		eval "set -- ${REST}"
-		;;
-	'parentUriPath')
-# @gengetoptions parser -i parser_definition_parentUriPath parse
-# @end
-
-		eval "$(getoptions parser_definition_parentUriPath parse)"
-		parse ${@+"${@}"}
-		eval "set -- ${REST}"
-		;;
-	'setenv')
-# @gengetoptions parser -i parser_definition_setenv parse
-# @end
-
-		eval "$(getoptions parser_definition_setenv parse)"
-		parse ${@+"${@}"}
-		eval "set -- ${REST}"
-		;;
-esac
 
 if regex_match "${variableName}" '^[_A-Za-z][_0-9A-Za-z]*$'; then :; else
 	cat <<-EOF >&2
@@ -187,13 +145,25 @@ case "${value}" in
 esac
 
 case "${action}" in
-	'addBookmark')
-		w3mredirect \
-			--tab "${tab}" \
-			--a1 'ADD_BOOKMARK' \
-			-- "${value}"
+	'goto')
+		eval "$(getoptions parser_definition_goto parse_goto "${0}")"
+		parse_goto ${@+"${@}"}
+		eval "set -- ${REST}"
+
+		case "${#}" in
+			*[1-9]*)
+				value=$(printf '%s' "${value}" | sh -c "${*}" 'sh' || :; printf '_')
+				value="${value%_}"
+				;;
+		esac
+
+		eval "w3mredirect ${option-} -- \${value}"
 		;;
 	'setenv')
+		eval "$(getoptions parser_definition_setenv parse_setenv "${0}")"
+		parse_setenv ${@+"${@}"}
+		eval "set -- ${REST}"
+
 		case "${encode}" in
 			'base64') value=$(printf '%s' "${value}" | base64 | tr -d '\n');;
 			'urlencode') value=$(printf '%s' "${value}" | urlencode);;
@@ -203,48 +173,13 @@ case "${action}" in
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: SETENV ${1}=${value}"
 		;;
-	'goto')
-		w3mredirect \
-			--tab "${tab}" \
-			-- "${value}"
-		;;
-	'incrementURI')
-		w3mredirect \
-			--tab "${tab}" \
-			-- "$(incrementuri --number "${number}" --position "${position}" -- "${value}")"
-		;;
-	'parentUriPath')
-		w3mredirect \
-			--tab "${tab}" \
-			-- "$(parenturipath --number "${number}" -- "${value}")"
-		;;
-	'prevTab')
-		w3mredirect \
-			--a1 'PREV_TAB' \
-			--tab 'open-newtab' \
-			-- "${value}"
-		;;
-	'redirect')
-		w3mredirect \
-			--tab "${tab}" \
-			-- "${1}$(printf '%s' "${value}" | urlencode)"
-		;;
 	'show')
 		httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: READ_SHELL printf '%s' '$(printf '%s' "${value}" | base64 | tr -d '\n')' | base64 -d"
 		;;
-	'viewSource')
-		w3mredirect --tab "${tab}" --a1 'VIEW' -- "${value}"
-		;;
-	'viewSourceExternally')
-		w3mredirect \
-			--tab "${tab}" \
-			--a1 'COMMAND VIEW; EDIT_SCREEN; VIEW' \
-			-- "${value}"
-		;;
 	'yank')
-		printf '%s' "${value}" | sh -c -- "${*}" || :
+		printf '%s' "${value}" | sh -c -- "${*}" 'sh' || :
 
 		httpresponse -H 'W3m-control: BACK'
 		;;

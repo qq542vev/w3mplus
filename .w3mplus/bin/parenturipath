@@ -66,6 +66,10 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
+case "${#}" in
+	'0') set -- $(cat);;
+esac
+
 awkScript=$(
 	cat <<-'EOF'
 	@include "uri_path_parent.awk"

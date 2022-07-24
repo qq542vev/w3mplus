@@ -74,6 +74,8 @@ eval "set -- ${REST}"
 
 awkScript=$(
 	cat <<-'EOF'
+	@include "singlequote_escape.awk"
+
 	BEGIN {
 		FS = "\t"
 
@@ -83,7 +85,7 @@ awkScript=$(
 	}
 
 	function print_header(field) {
-		printf(" -H 'W3m-control: %s'", field)
+		printf(" -H 'W3m-control: %s'", singlequote_escape(field))
 	}
 
 	{
