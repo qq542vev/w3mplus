@@ -1,0 +1,159 @@
+### File: siteconf
+##
+## Webpage configuration.
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.2.0
+##   date - 2020-04-02
+##   since - 2019-08-03
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/vim-style-newsboat>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <README.siteconf at https://github.com/tats/w3m/blob/master/doc-jp/README.siteconf>
+
+url /^bing:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing&tab=del-prebuf&query="
+no_referer_from on
+
+url /^bing-image:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing-image&tab=del-prebuf&query="
+no_referer_from on
+
+url /^bing-video:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing&tab=del-prebuf&query="
+no_referer_from on
+
+url /^bing-news:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing-news&tab=del-prebuf&query="
+no_referer_from on
+
+# HTML frame の場合 HTTP refererを送信してしまうため無効
+url /^data:/
+no_referer_from on
+
+url /^duckduckgo:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=duckduckgo&tab=del-prebuf&query="
+no_referer_from on
+
+url /^github:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=github&tab=del-prebuf&query="
+no_referer_from on
+
+url /^google:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=google&tab=del-prebuf&query="
+no_referer_from on
+
+url /^google-image:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=google-image&tab=del-prebuf&query="
+no_referer_from on
+
+url /^google-video:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=google-video&tab=del-prebuf&query="
+no_referer_from on
+
+url /^google-news:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=google-news&tab=del-prebuf&query="
+no_referer_from on
+
+url /^pkgs.org:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=pkgs.org&tab=del-prebuf&query="
+no_referer_from on
+
+url /^startpage:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=startpage&tab=del-prebuf&query="
+no_referer_from on
+
+url /^twitter:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=twitter&tab=del-prebuf&query="
+no_referer_from on
+
+url m@^urn:isbn:@i
+substitute_url "https://www.worldcat.org/search?q=bn%3A"
+no_referer_from on
+
+url m@^urn:issn:@i
+substitute_url "https://www.worldcat.org/search?q=n2%3A"
+no_referer_from on
+
+url /^wikipedia-en:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=wikipedia-en&tab=del-prebuf&query="
+no_referer_from on
+
+url /^wikipedia-ja:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=wikipedia-ja&tab=del-prebuf&query="
+no_referer_from on
+
+url /^yandex:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=yandex&tab=del-prebuf&query="
+no_referer_from on
+
+url /^yandex-image:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=yandex-image&tab=del-prebuf&query="
+no_referer_from on
+
+url /^yandex-video:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=yandex-video&tab=del-prebuf&query="
+no_referer_from on
+
+url /^youtube:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=youtube&tab=del-prebuf&query="
+no_referer_from on
+
+url /^view-source:/
+substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&redirect=2&action=uri&subaction=viewSource&uri="
+
+# HTTPS Everywhere
+# url m@^http://@
+# substitute_url "https://"
+
+# SECTION BEGIN - Denylist
+# @name OpenPhish
+# @source https://openphish.com/feed.txt
+# @category phishing
+# SECTION END - Denylist
+
+# SECTION BEGIN - Denylist
+# @name Malvertising filter list by Disconnect
+# @source https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
+# @category malware
+# SECTION END - Denylist
+
+# SECTION BEGIN - Denylist
+# @name Malware Domain List
+# @source https://www.malwaredomainlist.com/hostslist/hosts.txt
+# @category malware
+# SECTION END - Denylist
+
+# SECTION BEGIN - Denylist
+# @name Malware Domain Blocklist
+# @source https://mirror1.malwaredomains.com/files/justdomains
+# @category malware
+# SECTION END - Denylist
+
+# SECTION BEGIN - Denylist
+# @name Spam404
+# @source https://raw.githubusercontent.com/Spam404/lists/master/main-Denylist.txt
+# @category phishing
+# SECTION END - Denylist
+
+# SECTION BEGIN - Denylist
+# @name MVPS HOSTS
+# @source https://winhelp2002.mvps.org/hosts.txt
+# @category ad
+# SECTION END - Denylist
+
+# SECTION BEGIN - Denylist
+# @name Peter Lowe’s Ad and tracking server list
+# @source https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=plain
+# @category ad
+# SECTION END - Denylist
+
+# SECTION BEGIN - Preloading HSTS
+# SECTION END - Preloading HSTS

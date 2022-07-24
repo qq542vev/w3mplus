@@ -1,0 +1,1973 @@
+### File: menu_ja
+##
+## Japanese menu configuration.
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.11.2
+##   date - 2022-06-28
+##   since - 2020-03-04
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/vim-style-newsboat>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <README.menu at https://github.com/tats/w3m/blob/master/doc-jp/README.menu>
+
+# menu MENU_ID
+#  func  LABEL FUNCTION KEYS
+#  popup LABEL MENU_ID  KEYS
+#  nop   LABEL
+# end
+#
+# MENU_ID
+#  Main:   Main menu
+#  Select: Buffer selection menu
+
+menu Main
+	func "戻る                        (b)" PREV "Bb"
+	func "進む                        (f)" NEXT "Ff"
+	func "更新                        (r)" RELOAD "Rr"
+	nop  "-------------------------------"
+	func "このページをブックマーク    (m)" ADD_BOOKMARK "Mm"
+	func "名前を付けてページを保存... (p)" SAVE "Pp"
+	func "ページ URL を送信...        (e)" GOTO "Ee" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_URL"
+	nop  "-------------------------------"
+	func "ページのソースを表示        (v)" VIEW "Vv"
+	func "ページの情報を表示          (i)" INFO "Ii"
+end
+
+menu ContextMenuLink
+	func "リンクを新しいタブで開く                   (t)" TAB_LINK "Tt"
+	func "リンクを新しいウィンドウで開く             (w)" EXTERN_LINK "Ww" "w3m %s"
+	func "リンクを新しいプライベートウィンドウで開く (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3mplus' -- %s"
+	func "選択した URL を開く                        (o)" GOTO_LINK "Oo"
+	nop  "----------------------------------------------"
+	func "このリンクをブックマーク                   (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
+	func "名前を付けてリンク先を保存...              (k)" SAVE_LINK "Kk"
+	func "リンクを送信...                            (d)" GOTO "Dd" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_CURRENT_LINK"
+	func "リンクの URL をコピー                      (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
+end
+
+menu ContextMenuImage
+	func "画像だけを表示               (i)" VIEW_IMAGE "Ii"
+	func "画像の URL をコピー          (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_IMG"
+	nop  "--------------------------------"
+	func "名前を付けて画像を保存...    (v)" SAVE_IMAGE "Vv"
+	func "画像の URL をメールで送信... (g)" GOTO "Gg" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_CURRENT_IMG"
+end
+
+menu ContextMenuLinkImage
+	func "リンクを新しいタブで開く           (t)" TAB_LINK "Tt"
+	func "リンクを新しいウィンドウで開く     (w)" EXTERN_LINK "Ww" "w3m %s"
+	func "新しいプライベートウィンドウで開く (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3mplus' -- %s"
+	func "選択した URL をコピー              (O)" GOTO_LINK "O"
+	nop  "--------------------------------------"
+	func "このリンクをブックマーク           (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
+	func "名前を付けてリンク先を保存...      (k)" SAVE_LINK "Kk"
+	func "リンクを送信...                    (d)" GOTO "Dd" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_CURRENT_LINK"
+	func "リンクの URL をコピー              (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
+	nop  "--------------------------------------"
+	func "画像だけを表示                     (i)" VIEW_IMAGE "Ii"
+	func "画像の URL をコピー                (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_IMG"
+	nop  "--------------------------------------"
+	func "名前を付けて画像を保存...          (v)" SAVE_IMAGE "Vv"
+	func "画像の URL をメールで送信...       (g)" GOTO "Gg" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_CURRENT_IMG"
+end
+
+menu ContextMenuTab
+	func "新しいタブ             (n)" NEW_TAB "Nn"
+	func "タブを再読み込み       (t)" RELOAD "Tt"
+	func "新しいウィンドウへ移動 (w)" EXTERN "Ww" "w3m %s"
+	nop  "--------------------------"
+	func "閉じたタブを元に戻す   (u)" GOTO "u" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab"
+	func "タブを閉じる           (c)" COMMAND "Cc" "TAB_RIGHT; GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=close-tab"
+	func "他のタブをすべて閉じる (o)" COMMAND "Oo" "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; PREV_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB; CLOSE_TAB"
+	nop  "--------------------------"
+	func "タブを左に移動         (l)" TAB_LEFT "l"
+	func "タブを右に移動         (r)" TAB_RIGHT "r"
+	nop  "--------------------------"
+	func "タブを最も左に移動     (L)" COMMAND "L" "TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT; TAB_LEFT"
+	func "タブを最も右に移動     (R)" COMMAND "R" "TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT; TAB_RIGHT"
+	nop  "--------------------------"
+	func "すべてのタブを表示     (a)" TAB_MENU "Aa"
+end
+
+menu ContextMenuSearch
+	func  "Bing" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Google" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "DuckDuckGo" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=duckduckgo; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Startpage" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=startpage; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Twitter" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=twitter; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Wikipedia (en)" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=wikipedia-en; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func  "Wikipedia (ja)" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=wikipedia-ja; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	popup "その他の検索" ContextMenuSearchOther ""
+end
+
+menu ContextMenuSearchOther
+	func "Bing Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Bing Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Bing News" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=bing-news; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "GitHub" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=github; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Google Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Google Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Google News" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=google-news; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "pkgs.org" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=pkgs.org; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Yandex" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Yandex Image" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex-image; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "Yandex Video" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=yandex-video; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+	func "YouTube" COMMAND "" "SETENV W3MPLUS_SEARCH_ENGINE=youtube; SET_OPTION dictcommand=file:///cgi-bin/w3mplus?pass=$(PASS)&action=dict-word&designator=all&query=; DICT_WORD"
+end
+
+menu Menu
+	popup "ファイル     (f)" MenuFile "Ff"
+	popup "編集         (e)" MenuEdit "Ee"
+	popup "表示         (v)" MenuView "Vv"
+	popup "履歴         (s)" MenuHistory "Ss"
+	popup "ブックマーク (b)" MenuBookmarks "Bb"
+	popup "ツール       (t)" MenuTools "Tt"
+	popup "ヘルプ       (h)" MenuHelp "Hh"
+end
+
+menu MenuFile
+	func "新しいタブ                     (t)" NEW_TAB "Tt"
+	func "新しいウィンドウ               (n)" EXTERN "Nn" "w3m ${WWW_HOME-about:home} #"
+	func "新しいプライベートウィンドウ   (w)" EXTERN "Ww" "w3m-private --link './.w3mplus' -- 'about:private' #"
+	func "ファイルを開く...              (o)" LOAD "Oo"
+	nop  "----------------------------------"
+	func "名前を付けてページを保存...    (a)" DOWNLOAD "Aa"
+	func "ページの URL をメールで送信... (e)" GOTO "Ee" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&redirect=mailto%3A%3Fbody%3D&variable=W3M_URL"
+	nop  "----------------------------------"
+	func "印刷                           (p)" PRINT "Pp"
+	nop  "----------------------------------"
+	func "設定の再読み込み               (r)" REINIT "Rr"
+	func "中断                           (s)" SUSPEND "Ss"
+	func "終了                           (q)" EXIT "Qq"
+end
+
+menu MenuEdit
+	func "元に戻す   (u)" UNDO "Uu"
+	func "やり直し   (r)" REDO "Rr"
+	nop  "--------------"
+	func "コピー     (c)" GOTO "Cc" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_WORD"
+	func "マーク     (m)" MARK "Mm"
+	nop  "--------------"
+	func "検索       (f)" ISEARCH "Ff"
+	func "ハイライト (h)" REG_MARK "Hh"
+end
+
+menu MenuView
+	popup "サイドバー           (e)" MenuSidebar "Ee"
+	nop   "------------------------"
+	popup "ズーム               (z)" MenuZoom "Zz"
+	func  "文字エンコーディング (c)" CHARSET "Cc"
+	popup "スタイルと色調       (s)" MenuStyle "Ss"
+	nop   "------------------------"
+	func  "ナビゲーションリンク (n)" LINK_MENU "Nn"
+	func  "すべてのリンクを表示 (l)" LIST_MENU "Ll"
+	nop   "------------------------"
+	func  "すべてのタブを表示   (a)" TAB_MENU "Aa"
+end
+
+menu MenuSidebar
+	func "ブックマーク (b)" GOTO "Bb" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=sidebar-bookmark"
+	func "履歴         (h)" GOTO "Hh" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=sidebar-history"
+end
+
+menu MenuZoom
+	func "拡大     (i)" GOTO "Ii" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D20"
+	func "縮小     (o)" GOTO "Oo" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D20"
+	nop  "------------"
+	func "リセット (r)" GOTO "Rr" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=100"
+end
+
+menu MenuStyle
+	func "lynx         (l)" COMMAND "Ll" "SET_OPTION display_ins_del=1; SET_OPTION color=1; SET_OPTION basic_color=terminal; SET_OPTION anchor_color=green; SET_OPTION image_color=yellow; SET_OPTION form_color=white; SET_OPTION mark_color=cyan; SET_OPTION bg_color=terminal; SET_OPTION active_style=1; SET_OPTION active_color=yellow; SET_OPTION visited_anchor=0"
+	func "モノクローム (m)" COMMAND "Mm" "SET_OPTION display_ins_del=1; SET_OPTION color=0; SET_OPTION basic_color=terminal; SET_OPTION bg_color=terminal"
+	func "リセット     (r)" COMMAND "Rr" "SET_OPTION display_ins_del=2; SET_OPTION color=1; SET_OPTION basic_color=terminal; SET_OPTION anchor_color=blue; SET_OPTION image_color=green; SET_OPTION form_color=red; SET_OPTION mark_color=yellow; SET_OPTION bg_color=terminal; SET_OPTION active_style=1; SET_OPTION active_color=cyan; SET_OPTION visited_anchor=1; SET_OPTION visited_color=magenta"
+end
+
+menu MenuHistory
+	func  "すべての履歴を表示 (h)" HISTORY "Hh"
+	func  "タブの履歴を表示   (b)" SELECT_MENU "Bb"
+	popup "最近閉じたタブ     (u)" MenuUndoClosedTabs "Uu"
+end
+
+menu MenuUndoClosedTabs
+	func "1個のタブを復元      (u)" GOTO "Uu" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab"
+	func "5個のタブを復元      (f)" GOTO "Ff" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab&count=-5"
+	func "10個のタブを復元     (t)" GOTO "Tt" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab&count=-10"
+	nop  "------------------------"
+	func "10分以内のタブを復元 (1)" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab&count=%40-600"
+	func "30分以内のタブを復元 (3)" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab&count=%40-1800"
+	func "60分以内のタブを復元 (6)" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab&count=%40-3600"
+	nop  "------------------------"
+	func "すべてのタブを復元   (a)" GOTO "Aa" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab&count=-0"
+end
+
+menu MenuBookmarks
+	func "このページをブックマーク (m)" ADD_BOOKMARK "Mm"
+	func "ブックマークを表示       (v)" VIEW_BOOKMARK "Vv"
+end
+
+menu MenuTools
+	func  "ダウンロード  (d)" DOWNLOAD_LIST "Dd"
+	func  "Cookies       (c)" COOKIE "Cc"
+	func  "サイト別設定  (m)" GOTO "Mm" "about:permissions"
+	nop   "-----------------"
+	popup "ウェブ開発    (w)" MenuWebDeveloper "Ww"
+	func  "ページの情報  (i)" INFO "Ii"
+	nop   "-----------------"
+	popup "Cookie の管理 (k)" MenuCookieManager "Kk"
+	popup "User Agent    (u)" MenuUserAgent "Uu"
+	func  "httpsのみ     (s)" GOTO "Ss" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=toggle-https-everywhere"
+	func  "設定          (p)" OPTIONS "Pp"
+end
+
+menu MenuWebDeveloper
+	func "ウェブコンソール (w)" PIPE_BUF "Ww"
+	func "ネットワーク     (n)" LOAD "Nn" "~/.w3m/request.log"
+	nop  "--------------------"
+	func "開発ツールバー   (v)" COMMAND "Vv"
+	func "スクラッチパッド (s)" EXEC_SHELL "Ss"
+	func "ページのソース   (o)" VIEW "Oo"
+	func "エラーコンソール (c)" MSGS "Cc"
+end
+
+menu MenuCookieManager
+	nop  "-- ドメインをブラックリストに適用 --"
+	func "サブドメインも適用               (b)" GOTO "b" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=cookie-config&reject=toggle&subdomain=1"
+	func "ページのドメインのみ適用         (B)" GOTO "B" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=cookie-config&reject=toggle"
+	nop  "-- ドメインをホワイトリストに適用 --"
+	func "サブドメインも適用               (w)" GOTO "w" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=cookie-config&accept=toggle&subdomain=1"
+	func "ページのドメインのみ適用         (W)" GOTO "W" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=cookie-config&accept=toggle
+end
+
+menu MenuUserAgent
+	nop  "-- CLI Web ブラウザー ----"
+	func "w3m                    (3)" SET_OPTION "3" "user_agent="
+	func "lynx                   (l)" SET_OPTION "l" "user_agent=Lynx/2.8.9rel.1 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/3.6.5"
+	nop  "-- GUI Web ブラウザー ----"
+	func "Internet Explorer      (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; rv:11.0) like Gecko"
+	func "Microsoft Edge         (e)" SET_OPTION "e" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.35g38.102 Safari/537.36 Edge/18.18363"
+	func "Safari                 (s)" SET_OPTION "s" "user_agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A"
+	func "Google Chrome          (c)" SET_OPTION "c" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
+	func "Mozilla Firefox        (f)" SET_OPTION "f" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0"
+	func "PaleMoon               (p)" SET_OPTION "p" "user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.9) Goanna/4.4 PaleMoon/28.8.0"
+	func "NetSurf                (n)" SET_OPTION "n" "user_agent=NetSurf/3.6 (Linux; x86_64)"
+	nop  "-- モバイル Web ブラウザー"
+	func "android (Chrome)       (a)" SET_OPTION "a" "user_agent=Mozilla/5.0 (Linux; U; Android 6.0) AppleWebKit/537.16 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.16 Chrome/33.0.0.0"
+	func "iPhone  (Safari)       (i)" SET_OPTION "i" "user_agent=Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+	func "Firefox for Mobile     (F)" SET_OPTION "F" "user_agent=Mozilla/5.0 (Android 6.0.1; Mobile; rv:68.0) Gecko/68.0 Firefox/68.0"
+	func "Windows 10 Mobile      (w)" SET_OPTION "w" "user_agent=Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; Lumia 950 XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Mobile Safari/537.36 Edge/14.14393"
+	nop  "-- Web クローラー --------"
+	func "Googlebot              (g)" SET_OPTION "g" "user_agent=Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+	func "Bingbot                (b)" SET_OPTION "b" "user_agent=Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+	func "Baiduspider            (B)" SET_OPTION "B" "user_agent=Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
+	nop  "-- ダウンロードツール ----"
+	func "Wget                   (W)" SET_OPTION "W" "user_agent=Wget/1.20.1 (linux-gnueabihf)"
+	func "curl                   (C)" SET_OPTION "C" "user_agent=curl/7.64.0"
+end
+
+menu MenuHelp
+	func "w3m ヘルプ   (h)" HELP "Hh"
+	func "Man w3m      (m)" EXEC_SHELL "Mm" "man w3m"
+	nop  "----------------"
+	func "w3m について (a)" VERSION "Aa"
+end
+
+menu ExtendedHints
+	func ";  リンクをフォーカス" MOVE_LIST_MENU ";"
+	func "?  行の情報を表示" LINE_INFO "?"
+	func "s  リンク先を保存" SAVE_LINK "s"
+	func "o  リンクを開く" GOTO_LINK "o"
+	func "t  リンクを新しいタブで開く" TAB_LINK "t"
+	func "b  バックグラウンドタブでリンクを開く" GOTO "b" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=prevTab&variable=W3M_CURRENT_LINK&redirect=2"
+	func "w  リンクを新しいウィンドウで開く" EXTERN_LINK "w" "w3m %s"
+	func "O  Generate a ':o URL' prompt" GOTO "O" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-goto"
+	func "T  Generate a ':t URL' prompt" GOTO "T" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-tabgoto"
+	func "W  リンクを外部のブラウザーで開く" EXTERN_LINK "W"
+	func "a  ブックマークに追加" GOTO "a" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=addBookmark&variable=W3M_CURRENT_LINK"
+	func "v  リンク先のソースを表示" GOTO "v" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=viewSource&variable=W3M_CURRENT_LINK"
+	func "V  リンク先のソースを外部エディターで表示" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=viewSourceExternally&variable=W3M_CURRENT_LINK"
+	func "y  リンクの URL をヤンク" GOTO "y" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
+	func "Y  リンクテキストをヤンク" GOTO "Y" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=viewSourceExternally&variable=W3M_CURRENT_WORD"
+	func "c  コンテキストメニューを開く" MENU "c"
+	func "i  画像を表示" VIEW_IMAGE "i"
+	func "I  画像を保存" SAVE_IMAGE "I"
+end
+
+menu Commands
+	func  "!  シェルコマンドを実行" EXEC_SHELL "!"
+	func  ":  w3m のコマンドを実行" COMMAND ":"
+	func  "b  ブックマークを開く" VIEW_BOOKMARK "b"
+	func  "c  サイトのCookieアクセス許可を変更" COOKIE "c"
+	popup "C  カラースキームを読み込む" MenuStyle "C"
+	func  "d  ダウンロードリストを表示" DOWNLOAD_LIST "d"
+	func  "D  指定されたURLパターンに一致するオートコマンドを適用" GOTO "D" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-user-command&key=manual"
+	func  "e  w3m メニューを表示" MENU "e" Menu
+	func  "f  HTML フレームの表示の切り替え" FRAME "f"
+	func  "G  メッセージを表示" MSGS "G"
+	func  "h  入門用のヘルプを開く" HELP "h"
+	func  "H  最近訪れた URL を表示" HISTORY "H"
+	func  "j  ジャンプリストを表示" SELECT_MENU "j"
+	popup "l  リストコマンドを表示" LCommands "l"
+	func  "L  環境変数を設定" SETENV "L"
+	func  "m  ローカルマークを表示" GOTO "m" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-local-mark"
+	func  "M  URL マークを表示" GOTO "M" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-url-mark"
+	func  "n  Map a key sequence in Normal mode" DEFINE_KEY "n"
+	func  "o  現在のタブで URL を開く" COMMAND "o" "SET_OPTION default_url=0; GOTO"
+	func  "q  w3m を終了" QUIT "q"
+	func  "Q  すべてのQuickMarkを表示する" GOTO "Q" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-quick-mark"
+	func  "p  w3m の設定を表示" OPTIONS "p"
+	func  "r  シェルコマンドを実行して出力を表示" PIPE_SHELL "r"
+	func  "s  w3m のオプションを設定" SET_OPTION "s"
+	func  "S  シェルを開始" EXEC_SHELL "S" "${SHELL}"
+	func  "t  新しいタブで URL を開く" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
+	func  "u  最近閉じたタブの一覧" GOTO "u" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-tab-history"
+	popup "U  ユーザーエージェントを変更" MenuUserAgent "U"
+	func  "v  バージョン情報を表示" VERSION "v"
+	func  "w  現在のページをディスクに保存" DOWNLOAD "w"
+	func  "W  現在のページを印刷" PRINT "W"
+	func  "x  w3m を終了" EXIT "x"
+	popup "z  Set zoom value of current web page" Zoom "z"
+end
+
+menu LCommands
+	popup "c  List all Ex commands along with their short descriptions" Commands "c"
+	func  "K  List all mappings along with their short descriptions" HELP "k"
+	func  "o  List all options along with their short descriptions" PIPE_SHELL "o" "w3m -show-option"
+end
+
+menu Zoom
+	popup "0    0% -  90%" Zoom0Percents "0"
+	popup "1  100% - 190%" Zoom100Percents "1"
+	popup "2  200% - 290%" Zoom200Percents "2"
+	popup "3  300% - 390%" Zoom300Percents "3"
+	popup "4  400% - 490%" Zoom400Percents "4"
+	popup "+  拡大" ZoomIn "+"
+	popup "-  縮小" ZoomOut "-"
+end
+
+menu Zoom0Percents
+	func "0   0%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=0"
+	func "1  10%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=10"
+	func "2  20%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=20"
+	func "3  30%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=30"
+	func "4  40%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=40"
+	func "5  50%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=50"
+	func "6  60%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=60"
+	func "7  70%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=70"
+	func "8  80%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=80"
+	func "9  90%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=90"
+end
+
+menu Zoom100Percents
+	func "0  100%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=100"
+	func "1  110%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=110"
+	func "2  120%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=120"
+	func "3  130%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=130"
+	func "4  140%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=140"
+	func "5  150%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=150"
+	func "6  160%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=160"
+	func "7  170%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=170"
+	func "8  180%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=180"
+	func "9  190%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=190"
+end
+
+menu Zoom200Percents
+	func "0  200%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=200"
+	func "1  210%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=210"
+	func "2  220%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=220"
+	func "3  230%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=230"
+	func "4  240%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=240"
+	func "5  250%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=250"
+	func "6  260%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=260"
+	func "7  270%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=270"
+	func "8  280%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=280"
+	func "9  290%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=290"
+end
+
+menu Zoom300Percents
+	func "0  300%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=300"
+	func "1  310%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=310"
+	func "2  320%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=320"
+	func "3  330%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=330"
+	func "4  340%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=340"
+	func "5  350%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=350"
+	func "6  360%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=360"
+	func "7  370%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=370"
+	func "8  380%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=380"
+	func "9  390%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=390"
+end
+
+menu Zoom400Percents
+	func "0  400%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=400"
+	func "1  410%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=410"
+	func "2  420%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=420"
+	func "3  430%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=430"
+	func "4  440%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=440"
+	func "5  450%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=450"
+	func "6  460%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=460"
+	func "7  470%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=470"
+	func "8  480%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=480"
+	func "9  490%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=490"
+end
+
+menu ZoomIn
+	func "1  +10%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D10"
+	func "2  +20%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D20"
+	func "3  +30%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D30"
+	func "4  +40%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D40"
+	func "5  +50%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D50"
+	func "6  +60%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D60"
+	func "7  +70%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D70"
+	func "8  +80%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D80"
+	func "9  +90%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D90"
+	func "0  +100%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D100"
+end
+
+menu ZoomOut
+	func "1  -10%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D10"
+	func "2  -20%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D20"
+	func "3  -30%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D30"
+	func "4  -40%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D40"
+	func "5  -50%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D50"
+	func "6  -60%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D60"
+	func "7  -70%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D70"
+	func "8  -80%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D80"
+	func "9  -90%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D90"
+	func "0  -100%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D100"
+end
+
+menu Percents
+	popup "0   0% -  9%" 0Percents "0"
+	popup "1  10% - 19%" 10Percents "1"
+	popup "2  20% - 29%" 20Percents "2"
+	popup "3  30% - 39%" 30Percents "3"
+	popup "4  40% - 49%" 40Percents "4"
+	popup "5  50% - 59%" 50Percents "5"
+	popup "6  60% - 69%" 60Percents "6"
+	popup "7  70% - 79%" 70Percents "7"
+	popup "8  80% - 89%" 80Percents "8"
+	popup "9  90% - 99%" 90Percents "9"
+	func  "$  100%" END "$"
+	popup "+  +n% 移動"  plusPercents "+"
+	popup "-  -n% 移動"  minusPercents "-"
+end
+
+menu 0Percents
+	func "0  0%" BEGIN "0"
+	func "1  1%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=1%25"
+	func "2  2%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=2%25"
+	func "3  3%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=3%25"
+	func "4  4%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=4%25"
+	func "5  5%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=5%25"
+	func "6  6%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=6%25"
+	func "7  7%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=7%25"
+	func "8  8%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=8%25"
+	func "9  9%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=9%25"
+end
+
+menu 10Percents
+	func "0  10%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=10%25"
+	func "1  11%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=11%25"
+	func "2  12%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=12%25"
+	func "3  13%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=13%25"
+	func "4  14%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=14%25"
+	func "5  15%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=15%25"
+	func "6  16%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=16%25"
+	func "7  17%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=17%25"
+	func "8  18%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=18%25"
+	func "9  19%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=19%25"
+end
+
+menu 20Percents
+	func "0  20%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=20%25"
+	func "1  21%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=21%25"
+	func "2  22%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=22%25"
+	func "3  23%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=23%25"
+	func "4  24%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=24%25"
+	func "5  25%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=25%25"
+	func "6  26%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=26%25"
+	func "7  27%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=27%25"
+	func "8  28%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=28%25"
+	func "9  29%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=29%25"
+end
+
+menu 30Percents
+	func "0  30%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=30%25"
+	func "1  31%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=31%25"
+	func "2  32%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=32%25"
+	func "3  33%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=33%25"
+	func "4  34%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=34%25"
+	func "5  35%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=35%25"
+	func "6  36%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=36%25"
+	func "7  37%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=37%25"
+	func "8  38%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=38%25"
+	func "9  39%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=39%25"
+end
+
+menu 40Percents
+	func "0  40%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=40%25"
+	func "1  41%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=41%25"
+	func "2  42%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=42%25"
+	func "3  43%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=43%25"
+	func "4  44%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=44%25"
+	func "5  45%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=45%25"
+	func "6  46%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=46%25"
+	func "7  47%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=47%25"
+	func "8  48%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=48%25"
+	func "9  49%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=49%25"
+end
+
+menu 50Percents
+	func "0  50%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=50%25"
+	func "1  51%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=51%25"
+	func "2  52%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=52%25"
+	func "3  53%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=53%25"
+	func "4  54%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=54%25"
+	func "5  55%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=55%25"
+	func "6  56%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=56%25"
+	func "7  57%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=57%25"
+	func "8  58%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=58%25"
+	func "9  59%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=59%25"
+end
+
+menu 60Percents
+	func "0  60%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=60%25"
+	func "1  61%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=61%25"
+	func "2  62%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=62%25"
+	func "3  63%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=63%25"
+	func "4  64%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=64%25"
+	func "5  65%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=65%25"
+	func "6  66%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=66%25"
+	func "7  67%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=67%25"
+	func "8  68%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=68%25"
+	func "9  69%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=69%25"
+end
+
+menu 70Percents
+	func "0  70%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=70%25"
+	func "1  71%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=71%25"
+	func "2  72%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=72%25"
+	func "3  73%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=73%25"
+	func "4  74%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=74%25"
+	func "5  75%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=75%25"
+	func "6  76%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=76%25"
+	func "7  77%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=77%25"
+	func "8  78%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=78%25"
+	func "9  79%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=79%25"
+end
+
+menu 80Percents
+	func "0  80%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=80%25"
+	func "1  81%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=81%25"
+	func "2  82%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=82%25"
+	func "3  83%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=83%25"
+	func "4  84%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=84%25"
+	func "5  85%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=85%25"
+	func "6  86%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=86%25"
+	func "7  87%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=87%25"
+	func "8  88%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=88%25"
+	func "9  89%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=89%25"
+end
+
+menu 90Percents
+	func "0  90%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=90%25"
+	func "1  91%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=91%25"
+	func "2  92%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=92%25"
+	func "3  93%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=93%25"
+	func "4  94%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=94%25"
+	func "5  95%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=95%25"
+	func "6  96%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=96%25"
+	func "7  97%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=97%25"
+	func "8  98%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=98%25"
+	func "9  99%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=99%25"
+end
+
+menu plusPercents
+	popup "0   +0% -  +9%" plus0Percents "0"
+	popup "1  +10% - +19%" plus10Percents "1"
+	popup "2  +20% - +29%" plus20Percents "2"
+	popup "3  +30% - +39%" plus30Percents "3"
+	popup "4  +40% - +49%" plus40Percents "4"
+	popup "5  +50% - +59%" plus50Percents "5"
+	popup "6  +60% - +69%" plus60Percents "6"
+	popup "7  +70% - +79%" plus70Percents "7"
+	popup "8  +80% - +89%" plus80Percents "8"
+	popup "9  +90% - +99%" plus90Percents "9"
+	func  "$  +100%" END "$"
+end
+
+menu plus0Percents
+	func "0  +0%" NULL "0"
+	func "1  +1%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B1%25"
+	func "2  +2%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B2%25"
+	func "3  +3%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B3%25"
+	func "4  +4%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B4%25"
+	func "5  +5%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B5%25"
+	func "6  +6%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B6%25"
+	func "7  +7%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B7%25"
+	func "8  +8%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B8%25"
+	func "9  +9%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B9%25"
+end
+
+menu plus10Percents
+	func "0  +10%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B10%25"
+	func "1  +11%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B11%25"
+	func "2  +12%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B12%25"
+	func "3  +13%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B13%25"
+	func "4  +14%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B14%25"
+	func "5  +15%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B15%25"
+	func "6  +16%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B16%25"
+	func "7  +17%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B17%25"
+	func "8  +18%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B18%25"
+	func "9  +19%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B19%25"
+end
+
+menu plus20Percents
+	func "0  +20%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B20%25"
+	func "1  +21%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B21%25"
+	func "2  +22%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B22%25"
+	func "3  +23%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B23%25"
+	func "4  +24%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B24%25"
+	func "5  +25%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B25%25"
+	func "6  +26%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B26%25"
+	func "7  +27%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B27%25"
+	func "8  +28%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B28%25"
+	func "9  +29%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B29%25"
+end
+
+menu plus30Percents
+	func "0  +30%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B30%25"
+	func "1  +31%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B31%25"
+	func "2  +32%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B32%25"
+	func "3  +33%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B33%25"
+	func "4  +34%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B34%25"
+	func "5  +35%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B35%25"
+	func "6  +36%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B36%25"
+	func "7  +37%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B37%25"
+	func "8  +38%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B38%25"
+	func "9  +39%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B39%25"
+end
+
+menu plus40Percents
+	func "0  +40%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B40%25"
+	func "1  +41%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B41%25"
+	func "2  +42%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B42%25"
+	func "3  +43%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B43%25"
+	func "4  +44%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B44%25"
+	func "5  +45%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B45%25"
+	func "6  +46%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B46%25"
+	func "7  +47%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B47%25"
+	func "8  +48%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B48%25"
+	func "9  +49%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B49%25"
+end
+
+menu plus50Percents
+	func "0  +50%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B50%25"
+	func "1  +51%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B51%25"
+	func "2  +52%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B52%25"
+	func "3  +53%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B53%25"
+	func "4  +54%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B54%25"
+	func "5  +55%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B55%25"
+	func "6  +56%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B56%25"
+	func "7  +57%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B57%25"
+	func "8  +58%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B58%25"
+	func "9  +59%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B59%25"
+end
+
+menu plus60Percents
+	func "0  +60%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B60%25"
+	func "1  +61%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B61%25"
+	func "2  +62%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B62%25"
+	func "3  +63%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B63%25"
+	func "4  +64%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B64%25"
+	func "5  +65%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B65%25"
+	func "6  +66%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B66%25"
+	func "7  +67%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B67%25"
+	func "8  +68%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B68%25"
+	func "9  +69%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B69%25"
+end
+
+menu plus70Percents
+	func "0  +70%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B70%25"
+	func "1  +71%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B71%25"
+	func "2  +72%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B72%25"
+	func "3  +73%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B73%25"
+	func "4  +74%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B74%25"
+	func "5  +75%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B75%25"
+	func "6  +76%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B76%25"
+	func "7  +77%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B77%25"
+	func "8  +78%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B78%25"
+	func "9  +79%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B79%25"
+end
+
+menu plus80Percents
+	func "0  +80%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B80%25"
+	func "1  +81%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B81%25"
+	func "2  +82%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B82%25"
+	func "3  +83%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B83%25"
+	func "4  +84%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B84%25"
+	func "5  +85%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B85%25"
+	func "6  +86%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B86%25"
+	func "7  +87%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B87%25"
+	func "8  +88%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B88%25"
+	func "9  +89%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B89%25"
+end
+
+menu plus90Percents
+	func "0  +90%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B90%25"
+	func "1  +91%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B91%25"
+	func "2  +92%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B92%25"
+	func "3  +93%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B93%25"
+	func "4  +94%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B94%25"
+	func "5  +95%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B95%25"
+	func "6  +96%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B96%25"
+	func "7  +97%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B97%25"
+	func "8  +98%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B98%25"
+	func "9  +99%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=%2B99%25"
+end
+
+menu minusPercents
+	popup "0   -0% -  -9%" minus0Percents "0"
+	popup "1  -10% - -19%" minus10Percents "1"
+	popup "2  -20% - -29%" minus20Percents "2"
+	popup "3  -30% - -39%" minus30Percents "3"
+	popup "4  -40% - -49%" minus40Percents "4"
+	popup "5  -50% - -59%" minus50Percents "5"
+	popup "6  -60% - -69%" minus60Percents "6"
+	popup "7  -70% - -79%" minus70Percents "7"
+	popup "8  -80% - -89%" minus80Percents "8"
+	popup "9  -90% - -99%" minus90Percents "9"
+	func  "$  -100%" BEGIN "$"
+end
+
+menu minus0Percents
+	func "0  -0%" NULL "0"
+	func "1  -1%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-1%25"
+	func "2  -2%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-2%25"
+	func "3  -3%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-3%25"
+	func "4  -4%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-4%25"
+	func "5  -5%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-5%25"
+	func "6  -6%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-6%25"
+	func "7  -7%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-7%25"
+	func "8  -8%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-8%25"
+	func "9  -9%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-9%25"
+end
+
+menu minus10Percents
+	func "0  -10%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-10%25"
+	func "1  -11%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-11%25"
+	func "2  -12%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-12%25"
+	func "3  -13%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-13%25"
+	func "4  -14%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-14%25"
+	func "5  -15%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-15%25"
+	func "6  -16%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-16%25"
+	func "7  -17%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-17%25"
+	func "8  -18%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-18%25"
+	func "9  -19%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-19%25"
+end
+
+menu minus20Percents
+	func "0  -20%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-20%25"
+	func "1  -21%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-21%25"
+	func "2  -22%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-22%25"
+	func "3  -23%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-23%25"
+	func "4  -24%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-24%25"
+	func "5  -25%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-25%25"
+	func "6  -26%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-26%25"
+	func "7  -27%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-27%25"
+	func "8  -28%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-28%25"
+	func "9  -29%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-29%25"
+end
+
+menu minus30Percents
+	func "0  -30%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-30%25"
+	func "1  -31%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-31%25"
+	func "2  -32%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-32%25"
+	func "3  -33%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-33%25"
+	func "4  -34%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-34%25"
+	func "5  -35%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-35%25"
+	func "6  -36%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-36%25"
+	func "7  -37%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-37%25"
+	func "8  -38%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-38%25"
+	func "9  -39%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-39%25"
+end
+
+menu minus40Percents
+	func "0  -40%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-40%25"
+	func "1  -41%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-41%25"
+	func "2  -42%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-42%25"
+	func "3  -43%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-43%25"
+	func "4  -44%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-44%25"
+	func "5  -45%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-45%25"
+	func "6  -46%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-46%25"
+	func "7  -47%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-47%25"
+	func "8  -48%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-48%25"
+	func "9  -49%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-49%25"
+end
+
+menu minus50Percents
+	func "0  -50%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-50%25"
+	func "1  -51%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-51%25"
+	func "2  -52%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-52%25"
+	func "3  -53%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-53%25"
+	func "4  -54%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-54%25"
+	func "5  -55%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-55%25"
+	func "6  -56%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-56%25"
+	func "7  -57%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-57%25"
+	func "8  -58%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-58%25"
+	func "9  -59%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-59%25"
+end
+
+menu minus60Percents
+	func "0  -60%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-60%25"
+	func "1  -61%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-61%25"
+	func "2  -62%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-62%25"
+	func "3  -63%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-63%25"
+	func "4  -64%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-64%25"
+	func "5  -65%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-65%25"
+	func "6  -66%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-66%25"
+	func "7  -67%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-67%25"
+	func "8  -68%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-68%25"
+	func "9  -69%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-69%25"
+end
+
+menu minus70Percents
+	func "0  -70%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-70%25"
+	func "1  -71%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-71%25"
+	func "2  -72%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-72%25"
+	func "3  -73%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-73%25"
+	func "4  -74%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-74%25"
+	func "5  -75%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-75%25"
+	func "6  -76%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-76%25"
+	func "7  -77%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-77%25"
+	func "8  -78%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-78%25"
+	func "9  -79%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-79%25"
+end
+
+menu minus80Percents
+	func "0  -80%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-80%25"
+	func "1  -81%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-81%25"
+	func "2  -82%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-82%25"
+	func "3  -83%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-83%25"
+	func "4  -84%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-84%25"
+	func "5  -85%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-85%25"
+	func "6  -86%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-86%25"
+	func "7  -87%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-87%25"
+	func "8  -88%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-88%25"
+	func "9  -89%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-89%25"
+end
+
+menu minus90Percents
+	func "0  -90%" GOTO "0" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-90%25"
+	func "1  -91%" GOTO "1" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-91%25"
+	func "2  -92%" GOTO "2" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-92%25"
+	func "3  -93%" GOTO "3" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-93%25"
+	func "4  -94%" GOTO "4" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-94%25"
+	func "5  -95%" GOTO "5" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-95%25"
+	func "6  -96%" GOTO "6" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-96%25"
+	func "7  -97%" GOTO "7" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-97%25"
+	func "8  -98%" GOTO "8" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-98%25"
+	func "9  -99%" GOTO "9" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-line&number=-99%25"
+end
+
+menu operatorfunc
+	func  "@,h,l  現在の行" GOTO "@hl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&line=&number=%24"
+	func  "V      選択した行" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=operatorfunc"
+	nop   "---------------------"
+	popup "1      1行" operatorfunc1Line "1"
+	popup "2      2行" operatorfunc2Line "2"
+	popup "3      3行" operatorfunc3Line "3"
+	popup "4      4行" operatorfunc4Line "4"
+	popup "5      5行" operatorfunc5Line "5"
+	popup "6      6行" operatorfunc6Line "6"
+	popup "7      7行" operatorfunc7Line "7"
+	popup "8      8行" operatorfunc8Line "8"
+	popup "9      9行" operatorfunc9Line "9"
+end
+
+menu operatorfunc1Line
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-1"
+end
+
+menu operatorfunc2Line
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-2"
+end
+
+menu operatorfunc3Line
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-3"
+end
+
+menu operatorfunc4Line
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-4"
+end
+
+menu operatorfunc5Line
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-5"
+end
+
+menu operatorfunc6Line
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-6"
+end
+
+menu operatorfunc7Line
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-7"
+end
+
+menu operatorfunc8Line
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-8"
+end
+
+menu operatorfunc9Line
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=operatorfunc&number=%2B-9"
+end
+
+menu formatprg
+	func  "q,h,l  現在の行" GOTO "qhl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&line=&number=%24"
+	func  "V      選択した行" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=formatprg"
+	nop   "---------------------"
+	popup "1      1行" formatprg1Line "1"
+	popup "2      2行" formatprg2Line "2"
+	popup "3      3行" formatprg3Line "3"
+	popup "4      4行" formatprg4Line "4"
+	popup "5      5行" formatprg5Line "5"
+	popup "6      6行" formatprg6Line "6"
+	popup "7      7行" formatprg7Line "7"
+	popup "8      8行" formatprg8Line "8"
+	popup "9      9行" formatprg9Line "9"
+end
+
+menu formatprg1Line
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-1"
+end
+
+menu formatprg2Line
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-2"
+end
+
+menu formatprg3Line
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-3"
+end
+
+menu formatprg4Line
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-4"
+end
+
+menu formatprg5Line
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-5"
+end
+
+menu formatprg6Line
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-6"
+end
+
+menu formatprg7Line
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-7"
+end
+
+menu formatprg8Line
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-8"
+end
+
+menu formatprg9Line
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=formatprg&number=%2B-9"
+end
+
+menu filter
+	func  "!,h,l  現在の行" GOTO "!hl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%24"
+	func  "*      すべての行" PIPE_BUF "*"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=filter"
+	nop   "---------------------"
+	popup "1      1行" filter1Line "1"
+	popup "2      2行" filter2Line "2"
+	popup "3      3行" filter3Line "3"
+	popup "4      4行" filter4Line "4"
+	popup "5      5行" filter5Line "5"
+	popup "6      6行" filter6Line "6"
+	popup "7      7行" filter7Line "7"
+	popup "8      8行" filter8Line "8"
+	popup "9      9行" filter9Line "9"
+end
+
+menu filter1Line
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-1"
+end
+
+menu filter2Line
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-2"
+end
+
+menu filter3Line
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-3"
+end
+
+menu filter4Line
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-4"
+end
+
+menu filter5Line
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-5"
+end
+
+menu filter6Line
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-6"
+end
+
+menu filter7Line
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-7"
+end
+
+menu filter8Line
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-8"
+end
+
+menu filter9Line
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=filter&number=%2B-9"
+end
+
+menu switchcase
+	func  "~,h,l  現在の行" GOTO "~hl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=switchcase"
+	nop   "---------------------"
+	popup "1      1行" switchcase1Line "1"
+	popup "2      2行" switchcase2Line "2"
+	popup "3      3行" switchcase3Line "3"
+	popup "4      4行" switchcase4Line "4"
+	popup "5      5行" switchcase5Line "5"
+	popup "6      6行" switchcase6Line "6"
+	popup "7      7行" switchcase7Line "7"
+	popup "8      8行" switchcase8Line "8"
+	popup "9      9行" switchcase9Line "9"
+end
+
+menu switchcase1Line
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-1"
+end
+
+menu switchcase2Line
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-2"
+end
+
+menu switchcase3Line
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-3"
+end
+
+menu switchcase4Line
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-4"
+end
+
+menu switchcase5Line
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-5"
+end
+
+menu switchcase6Line
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-6"
+end
+
+menu switchcase7Line
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-7"
+end
+
+menu switchcase8Line
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-8"
+end
+
+menu switchcase9Line
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=switchcase&number=%2B-9"
+end
+
+menu rot13
+	func  "?,h,l  現在の行" GOTO "?hl" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=0"
+	func  "j      下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B1"
+	func  "k      上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-1"
+	func  "g      すべての上の行" GOTO "g" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=1"
+	func  "G      すべての下の行" GOTO "G" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%24"
+	func  "*      すべての行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&line=&number=%24"
+	func  "V      Select lines" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=rot13"
+	nop   "---------------------"
+	popup "1      1行" rot13-1Line "1"
+	popup "2      2行" rot13-2Line "2"
+	popup "3      3行" rot13-3Line "3"
+	popup "4      4行" rot13-4Line "4"
+	popup "5      5行" rot13-5Line "5"
+	popup "6      6行" rot13-6Line "6"
+	popup "7      7行" rot13-7Line "7"
+	popup "8      8行" rot13-8Line "8"
+	popup "9      9行" rot13-9Line "9"
+end
+
+menu rot13-1Line
+	func "j  下の1行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B1"
+	func "k  上の1行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-1"
+	func "*  上下の1行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-1"
+end
+
+menu rot13-2Line
+	func "j  下の2行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B2"
+	func "k  上の2行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-2"
+	func "*  上下の2行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-2"
+end
+
+menu rot13-3Line
+	func "j  下の3行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B3"
+	func "k  上の3行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-3"
+	func "*  上下の3行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-3"
+end
+
+menu rot13-4Line
+	func "j  下の4行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B4"
+	func "k  上の4行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-4"
+	func "*  上下の4行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-4"
+end
+
+menu rot13-5Line
+	func "j  下の5行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B5"
+	func "k  上の5行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-5"
+	func "*  上下の5行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-5"
+end
+
+menu rot13-6Line
+	func "j  下の6行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B6"
+	func "k  上の6行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-6"
+	func "*  上下の6行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-6"
+end
+
+menu rot13-7Line
+	func "j  下の7行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B7"
+	func "k  上の7行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-7"
+	func "*  上下の7行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-7"
+end
+
+menu rot13-8Line
+	func "j  下の8行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B8"
+	func "k  上の8行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-8"
+	func "*  上下の8行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-8"
+end
+
+menu rot13-9Line
+	func "j  下の9行" GOTO "j" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B9"
+	func "k  上の9行" GOTO "k" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=-9"
+	func "*  上下の9行" GOTO "*" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=select-line&subaction=rot13&number=%2B-9"
+end
+
+menu ToggleOption
+	func "b  table の border 値を(解釈 / 無視)" COMMAND "b" "SET_OPTION display_borders=toggle; RESHAPE"
+	func "c  HTTP cookie を(使用 / 不使用)" SET_OPTION "c" "use_cookie=toggle"
+	func "f  HTML フレームを(自動 / 手動)で表示" SET_OPTION "f" "frame=toggle"
+	func "h  履歴機能を(有効 / 無効)" SET_OPTION "h" "save_hist=toggle"
+	func "i  インライン画像を(表示 / 非表示)" SET_OPTION "i" "display_image=toggle"
+	func "I  大文字小文字を(区別して / 同一で)検索" SET_OPTION "I" "ignorecase_search=toggle"
+	func "m  マウス機能を(有効 / 無効)" MOUSE_TOGGLE "m"
+	func "M  (モノクローム / カラー)で表示" SET_OPTION "M" "color=toggle"
+	func "n  行番号を(表示 / 非表示)" SET_OPTION "n" "show_lnum=toggle"
+	func "p  ネットワークプロキシを(使用 / 不使用)" SET_OPTION "p" "use_proxy=toggle"
+	func "r  HTTP リファラを(送信 / 非送信)" SET_OPTION "r" "no_referer=toggle"
+	func "u  ページ内の URL をリンクに(変換 / 非変換)" SET_OPTION "u" "mark_all_pages=toggle"
+	func "w  テキストファイルの行折り返しを(有効/ 無効)" COMMAND "w" "SET_OPTION fold_line=toggle; RESHAPE"
+	func "W  折り返し検索を(有効 / 無効)" WRAP_TOGGLE "W"
+end
+
+menu register0
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=0&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=0&value=W3M_CURRENT_WORD"
+end
+
+menu register1
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=1&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=1&value=W3M_CURRENT_WORD"
+end
+
+menu register2
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=2&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=2&value=W3M_CURRENT_WORD"
+end
+
+menu register3
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=3&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=3&value=W3M_CURRENT_WORD"
+end
+
+menu register4
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=4&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=4&value=W3M_CURRENT_WORD"
+end
+
+menu register5
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=5&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=5&value=W3M_CURRENT_WORD"
+end
+
+menu register6
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=6&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=6&value=W3M_CURRENT_WORD"
+end
+
+menu register7
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=7&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=7&value=W3M_CURRENT_WORD"
+end
+
+menu register8
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=8&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=8&value=W3M_CURRENT_WORD"
+end
+
+menu register9
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=9&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=9&value=W3M_CURRENT_WORD"
+end
+
+menu registera
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=a&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=a&value=W3M_CURRENT_WORD"
+end
+
+menu registerb
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=b&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=b&value=W3M_CURRENT_WORD"
+end
+
+menu registerc
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=c&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=c&value=W3M_CURRENT_WORD"
+end
+
+menu registerd
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=d&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=d&value=W3M_CURRENT_WORD"
+end
+
+menu registere
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=e&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=e&value=W3M_CURRENT_WORD"
+end
+
+menu registerf
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=f&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=f&value=W3M_CURRENT_WORD"
+end
+
+menu registerg
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=g&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=g&value=W3M_CURRENT_WORD"
+end
+
+menu registerh
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=h&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=h&value=W3M_CURRENT_WORD"
+end
+
+menu registeri
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=i&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=i&value=W3M_CURRENT_WORD"
+end
+
+menu registerj
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=j&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=j&value=W3M_CURRENT_WORD"
+end
+
+menu registerk
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=k&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=k&value=W3M_CURRENT_WORD"
+end
+
+menu registerl
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=l&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=l&value=W3M_CURRENT_WORD"
+end
+
+menu registerm
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=m&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=m&value=W3M_CURRENT_WORD"
+end
+
+menu registern
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=n&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=n&value=W3M_CURRENT_WORD"
+end
+
+menu registero
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=o&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=o&value=W3M_CURRENT_WORD"
+end
+
+menu registerp
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=o&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=o&value=W3M_CURRENT_WORD"
+end
+
+menu registerq
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=q&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=q&value=W3M_CURRENT_WORD"
+end
+
+menu registerr
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=r&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=r&value=W3M_CURRENT_WORD"
+end
+
+menu registers
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=s&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=s&value=W3M_CURRENT_WORD"
+end
+
+menu registert
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=t&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=t&value=W3M_CURRENT_WORD"
+end
+
+menu registeru
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=u&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=u&value=W3M_CURRENT_WORD"
+end
+
+menu registerv
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=v&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=v&value=W3M_CURRENT_WORD"
+end
+
+menu registerw
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=w&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=w&value=W3M_CURRENT_WORD"
+end
+
+menu registerx
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=x&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=x&value=W3M_CURRENT_WORD"
+end
+
+menu registery
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=y&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=y&value=W3M_CURRENT_WORD"
+end
+
+menu registerz
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=z&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=z&value=W3M_CURRENT_WORD"
+end
+
+menu registerA
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Ba&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Ba&value=W3M_CURRENT_WORD"
+end
+
+menu registerB
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bb&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bb&value=W3M_CURRENT_WORD"
+end
+
+menu registerC
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bc&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bc&value=W3M_CURRENT_WORD"
+end
+
+menu registerD
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bd&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bd&value=W3M_CURRENT_WORD"
+end
+
+menu registerE
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Be&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Be&value=W3M_CURRENT_WORD"
+end
+
+menu registerF
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bf&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bf&value=W3M_CURRENT_WORD"
+end
+
+menu registerG
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bg&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bg&value=W3M_CURRENT_WORD"
+end
+
+menu registerH
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bh&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bh&value=W3M_CURRENT_WORD"
+end
+
+menu registerI
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bi&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bi&value=W3M_CURRENT_WORD"
+end
+
+menu registerJ
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bj&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bj&value=W3M_CURRENT_WORD"
+end
+
+menu registerK
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bk&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bk&value=W3M_CURRENT_WORD"
+end
+
+menu registerL
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bl&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bl&value=W3M_CURRENT_WORD"
+end
+
+menu registerM
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bm&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bm&value=W3M_CURRENT_WORD"
+end
+
+menu registerN
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bn&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bn&value=W3M_CURRENT_WORD"
+end
+
+menu registerO
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bo&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bo&value=W3M_CURRENT_WORD"
+end
+
+menu registerP
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bp&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bp&value=W3M_CURRENT_WORD"
+end
+
+menu registerQ
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bq&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bq&value=W3M_CURRENT_WORD"
+end
+
+menu registerR
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Br&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Br&value=W3M_CURRENT_WORD"
+end
+
+menu registerS
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bs&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bs&value=W3M_CURRENT_WORD"
+end
+
+menu registerT
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bt&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bt&value=W3M_CURRENT_WORD"
+end
+
+menu registerU
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bu&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bu&value=W3M_CURRENT_WORD"
+end
+
+menu registerV
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bv&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bv&value=W3M_CURRENT_WORD"
+end
+
+menu registerW
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bw&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bw&value=W3M_CURRENT_WORD"
+end
+
+menu registerX
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2BX&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2BX&value=W3M_CURRENT_WORD"
+end
+
+menu registerY
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2By&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2By&value=W3M_CURRENT_WORD"
+end
+
+menu registerZ
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=show"
+	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bz&value=W3M_URL"
+	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bz&value=W3M_CURRENT_WORD"
+end
+
+menu registerCurrent
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=show&variable=W3M_URL"
+end
+
+menu registerSearch
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=show"
+end
+
+menu registerUnnamed
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=show"
+end

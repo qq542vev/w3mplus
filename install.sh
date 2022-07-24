@@ -22,7 +22,6 @@
 VERSION='install 0.1.0'
 
 . 'initialize.sh'
-. 'sysexits.sh'
 . 'option_error.sh'
 . 'regex_match.sh'
 
