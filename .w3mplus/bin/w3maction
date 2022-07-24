@@ -32,16 +32,16 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... ACTION VARIABLE_NAME" \
 		'' 'Options:'
 
-	param data     -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:"'raw' | 'base64' | 'urlencode'" -- '変数のエンコードタイプを指定する'
-	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+	param data    -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:"'raw' | 'base64' | 'urlencode'" -- '変数のエンコードタイプを指定する'
+	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'ACTION:'
 
-	cmd goto                 -- 'VARIABLE_NAME にアクセスする'
-	cmd setenv               -- 'VARIABLE_NAME を別の変数に代入する'
-	cmd show                 -- 'VARIABLE_NAME の値を表示する'
-	cmd yank                 -- 'VARIABLE_NAME の値をヤンクする'
+	cmd goto   -- 'VARIABLE_NAME にアクセスする'
+	cmd setenv -- 'VARIABLE_NAME を別の変数に代入する'
+	cmd show   -- 'VARIABLE_NAME の値を表示する'
+	cmd yank   -- 'VARIABLE_NAME の値をヤンクする'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
