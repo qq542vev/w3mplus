@@ -280,7 +280,7 @@ case "${query_action-}" in
 				query_subaction='goto'
 				commandArg="${commandArg}$(
 					cat <<-'EOF'
-					-- incrementuri ${query_number+--number "'${query_number}'"}'
+					 -- incrementuri ${query_number+--number "'${query_number}'"}
 					EOF
 				)"
 				;;
@@ -292,7 +292,7 @@ case "${query_action-}" in
 				query_subaction='goto'
 				commandArg="${commandArg}$(
 					cat <<-'EOF'
-					-- parenturipath ${query_number+--number "'${query_number}'"}
+					 -- parenturipath ${query_number+--number "'${query_number}'"}
 					EOF
 				)"
 				;;
@@ -306,7 +306,7 @@ case "${query_action-}" in
 				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 				commandArg="${commandArg}$(
 					cat <<-'EOF'
-					-- printf "'%s%s'" "'${query_redirect-${filepath}?pass=${pass}&action=search&tab=del-prebuf&query=}'" '"$(urlencode)"'
+					 -- printf "'%s%s'" "'${query_redirect-${filepath}?pass=${pass}&action=search&tab=del-prebuf&query=}'" '"$(urlencode)"'
 					EOF
 				)"
 				;;

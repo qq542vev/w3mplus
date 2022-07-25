@@ -1,0 +1,917 @@
+#!/usr/bin/env sh
+
+### Script: searchuri
+##
+## 検索結果の URI を表示する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.1.0
+##   date - 2022-07-17
+##   since - 2020-05-26
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='searchuri 2.0.0'
+
+set -efu
+umask '0022'
+LC_ALL='C'
+IFS=$(printf ' \t\n_')
+IFS="${IFS%_}"
+PATH="${PATH-}${PATH:+:}$(command -p getconf 'PATH')"
+UNIX_STD='2003'         # HP-UX POSIX mode
+XPG_SUS_ENV='ON'        # AIX POSIX mode
+XPG_UNIX98='OFF'        # AIX UNIX 03 mode
+POSIXLY_CORRECT='1'     # GNU Coreutils POSIX mode
+COMMAND_MODE='unix2003' # macOS UNIX 03 mode
+export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
+
+#!/usr/bin/env sh
+
+### Script: sysexits.sh
+##
+## Exit status codes for system programs.
+##
+## This include file attempts to categorize possible error
+## exit statuses for system programs, notably delivermail
+## and the Berkeley network.
+##
+## Error numbers begin at EX__BASE to reduce the possibility of
+## clashing with other exit statuses that random programs may
+## already return.  The meaning of the codes is approximately
+## as follows:
+##
+## EX_USAGE - The command was used incorrectly, e.g., with
+##   the wrong number of arguments, a bad flag, a bad
+##   syntax in a parameter, or whatever.
+## EX_DATAERR - The input data was incorrect in some way.
+##   This should only be used for user's data & not
+##   system files.
+## EX_NOINPUT - An input file (not a system file) did not
+##   exist or was not readable.  This could also include
+##   errors like "No message" to a mailer (if it cared
+##   to catch it).
+## EX_NOUSER - The user specified did not exist.  This might
+##   be used for mail addresses or remote logins.
+## EX_NOHOST - The host specified did not exist.  This is used
+##   in mail addresses or network requests.
+## EX_UNAVAILABLE - A service is unavailable.  This can occur
+##   if a support program or file does not exist.  This
+##   can also be used as a catchall message when something
+##   you wanted to do doesn't work, but you don't know
+##   why.
+## EX_SOFTWARE - An internal software error has been detected.
+##   This should be limited to non-operating system related
+##   errors as possible.
+## EX_OSERR - An operating system error has been detected.
+##   This is intended to be used for such things as "cannot
+##   fork", "cannot create pipe", or the like.  It includes
+##   things like getuid returning a user that does not
+##   exist in the passwd file.
+## EX_OSFILE - Some system file (e.g., /etc/passwd, /etc/utmp,
+##   etc.) does not exist, cannot be opened, or has some
+##   sort of error (e.g., syntax error).
+## EX_CANTCREAT - A (user specified) output file cannot be
+##   created.
+## EX_IOERR - An error occurred while doing I/O on some file.
+## EX_TEMPFAIL - temporary failure, indicating something that
+##   is not really an error.  In sendmail, this means
+##   that a mailer (e.g.) could not create a connection,
+##   and the request should be reattempted later.
+## EX_PROTOCOL - the remote system returned something that
+##   was "not possible" during a protocol exchange.
+## EX_NOPERM - You did not have sufficient permission to
+##   perform the operation.  This is not intended for
+##   file system problems, which should use NOINPUT or
+##   CANTCREAT, but rather for higher level permissions.
+##
+## metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   date - 2020-03-05
+##   version - 1.0.0
+##   copyright - Copyright (c) 1987, 1993
+##     The Regents of the University of California.  All rights reserved.
+##   license - BSD-3-Clause
+##   package - w3mplus
+##   source - <sysexits.h at https://github.com/freebsd/freebsd/blob/master/include/sysexits.h>
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions
+#  are met:
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#  3. Neither the name of the University nor the names of its contributors
+#     may be used to endorse or promote products derived from this software
+#     without specific prior written permission.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+#  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+#  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+#  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+#  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+#  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#  SUCH DAMAGE.
+
+readonly 'EX_OK=0' # successful termination
+
+readonly 'EX__BASE=64' # base value for error messages
+
+readonly 'EX_USAGE=64'       # command line usage error
+readonly 'EX_DATAERR=65'     # data format error
+readonly 'EX_NOINPUT=66'     # cannot open input
+readonly 'EX_NOUSER=67'      # addressee unknown
+readonly 'EX_NOHOST=68'      # host name unknown
+readonly 'EX_UNAVAILABLE=69' # service unavailable
+readonly 'EX_SOFTWARE=70'    # internal software error
+readonly 'EX_OSERR=71'       # system error (e.g., can't fork)
+readonly 'EX_OSFILE=72'      # critical OS file missing
+readonly 'EX_CANTCREAT=73'   # can't create (user) output file
+readonly 'EX_IOERR=74'       # input/output error
+readonly 'EX_TEMPFAIL=75'    # temp failure; user is invited to retry
+readonly 'EX_PROTOCOL=76'    # remote error in protocol
+readonly 'EX_NOPERM=77'      # permission denied
+readonly 'EX_CONFIG=78'      # configuration error
+
+readonly 'EX__MAX=78' # maximum listed value
+
+trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'endCall 129' 1                                                    # SIGHUP
+trap 'endCall 130' 2                                                    # SIGINT
+trap 'endCall 131' 3                                                    # SIGQUIT
+trap 'endCall 143' 15                                                   # SIGTERM
+
+endCall() {
+	trap '' 0 # EXIT
+	rm -fr -- ${tmpDir:+"${tmpDir}"}
+	exit "${1:-0}"
+}
+option_error() {
+	printf '%s: %s\n' "${0##*/}" "${1}" >&2
+	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
+
+	endCall "${EX_USAGE}"
+}
+regex_match() {
+	awk -- '
+		BEGIN {
+			for(i = 2; i < ARGC; i++) {
+				if(ARGV[1] !~ ARGV[i]) {
+					exit 1
+				}
+			}
+
+			exit
+		}
+	' ${@+"${@}"} || return 1
+
+	return 0
+}
+awkv_escape() {
+	set -- "${1}" "${2}" ''
+	until [ "${2#*\\}" = "${2}" ]; do
+		set -- "${1}" "${2#*\\}" "${3}${2%%\\*}\\\\"
+	done
+
+	set -- "${1}" "${3}${2}"
+	case "${2}" in
+	@*) set -- "${1}" "\\100${2#?}" ;;
+	esac
+
+	eval "${1}=\${2}"
+}
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:option_error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [KEYWORD]..." \
+		'' 'Options:'
+
+	param config -c --config init:'config="${HOME}/.w3mplus/search-config"' var:FILE -- '設定ファイルを指定する'
+	param edFlag -d --designator init:='disable' pattern:'disable | event | all' var:"'disable' | 'event' | 'all'" -- 'イベント指示子を有効にする'
+	param engine -e --engine init:='google' validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_.-]+(,[0-9A-Za-z_.-]+)*$"' var:NAME -- '検索エンジンを指定する'
+	param history -H --history init:'history="${HOME}/.w3mplus/search-history"' var:FILE -- '検索履歴をログファイルを指定する'
+	param size -s --size init:='50000' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- '記録する検索履歴数を指定する'
+	disp :usage -h --help -- 'このヘルプを表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'    1 - search engine not found' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# Generated by getoptions (BEGIN)
+# URL: https://github.com/ko1nksm/getoptions (v3.3.0)
+config="${HOME}/.w3mplus/search-config"
+edFlag='disable'
+engine='google'
+history="${HOME}/.w3mplus/search-history"
+size='50000'
+REST=''
+parse() {
+	OPTIND=$(($# + 1))
+	while OPTARG= && [ $# -gt 0 ]; do
+		set -- "${1%%\=*}" "${1#*\=}" "$@"
+		while [ ${#1} -gt 2 ]; do
+			case $1 in *[!a-zA-Z0-9_-]*) break ;; esac
+			case '--config' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --config" ;;
+			esac
+			case '--designator' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --designator" ;;
+			esac
+			case '--engine' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --engine" ;;
+			esac
+			case '--history' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --history" ;;
+			esac
+			case '--size' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --size" ;;
+			esac
+			case '--help' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --help" ;;
+			esac
+			case '--version' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --version" ;;
+			esac
+			break
+		done
+		case ${OPTARG# } in
+		*\ *)
+			eval "set -- $OPTARG $1 $OPTARG"
+			OPTIND=$((($# + 1) / 2)) OPTARG=$1
+			shift
+			while [ $# -gt "$OPTIND" ]; do
+				OPTARG="$OPTARG, $1"
+				shift
+			done
+			set "Ambiguous option: $1 (could be $OPTARG)" ambiguous "$@"
+			option_error "$@" >&2 || exit $?
+			echo "$1" >&2
+			exit 1
+			;;
+		?*)
+			[ "$2" = "$3" ] || OPTARG="$OPTARG=$2"
+			shift 3
+			eval 'set -- "${OPTARG# }"' ${1+'"$@"'}
+			OPTARG=
+			;;
+		*) shift 2 ;;
+		esac
+		case $1 in
+		--?*=*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%%\=*}" "${OPTARG#*\=}"' ${1+'"$@"'}
+			;;
+		--no-* | --without-*) unset OPTARG ;;
+		-[cdeHs]?*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
+			;;
+		-[hv]?*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
+			OPTARG=
+			;;
+		+*) unset OPTARG ;;
+		esac
+		case $1 in
+		'-c' | '--config')
+			[ $# -le 1 ] && set "required" "$1" && break
+			OPTARG=$2
+			config="$OPTARG"
+			shift
+			;;
+		'-d' | '--designator')
+			[ $# -le 1 ] && set "required" "$1" && break
+			OPTARG=$2
+			case $OPTARG in disable | event | all) ;;
+			*)
+				set "pattern:disable | event | all" "$1"
+				break
+				;;
+			esac
+			edFlag="$OPTARG"
+			shift
+			;;
+		'-e' | '--engine')
+			[ $# -le 1 ] && set "required" "$1" && break
+			OPTARG=$2
+			regex_match "${OPTARG}" "^[0-9A-Za-z_.-]+(,[0-9A-Za-z_.-]+)*$" || {
+				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^[0-9A-Za-z_.-]+(,[0-9A-Za-z_.-]+)*$"
+				break
+			}
+			engine="$OPTARG"
+			shift
+			;;
+		'-H' | '--history')
+			[ $# -le 1 ] && set "required" "$1" && break
+			OPTARG=$2
+			history="$OPTARG"
+			shift
+			;;
+		'-s' | '--size')
+			[ $# -le 1 ] && set "required" "$1" && break
+			OPTARG=$2
+			regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$" || {
+				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"
+				break
+			}
+			size="$OPTARG"
+			shift
+			;;
+		'-h' | '--help')
+			usage
+			exit 0
+			;;
+		'-v' | '--version')
+			echo "${VERSION}"
+			exit 0
+			;;
+		--)
+			shift
+			while [ $# -gt 0 ]; do
+				REST="${REST} \"\${$((OPTIND - $#))}\""
+				shift
+			done
+			break
+			;;
+		[-+]?*)
+			set "unknown" "$1"
+			break
+			;;
+		*)
+			REST="${REST} \"\${$((OPTIND - $#))}\""
+			;;
+		esac
+		shift
+	done
+	[ $# -eq 0 ] && {
+		OPTIND=1
+		unset OPTARG
+		return 0
+	}
+	case $1 in
+	unknown) set "Unrecognized option: $2" "$@" ;;
+	noarg) set "Does not allow an argument: $2" "$@" ;;
+	required) set "Requires an argument: $2" "$@" ;;
+	pattern:*) set "Does not match the pattern (${1#*:}): $2" "$@" ;;
+	notcmd) set "Not a command: $2" "$@" ;;
+	*) set "Validation error ($1): $2" "$@" ;;
+	esac
+	option_error "$@" >&2 || exit $?
+	echo "$1" >&2
+	exit 1
+}
+usage() {
+	cat <<'GETOPTIONSHERE'
+Usage:
+  searchuri [OPTION]... [KEYWORD]...
+
+Options:
+  -c,     --config FILE       設定ファイルを指定する
+  -d,     --designator 'disable' | 'event' | 'all' 
+                              イベント指示子を有効にする
+  -e,     --engine NAME       検索エンジンを指定する
+  -H,     --history FILE      検索履歴をログファイルを指定する
+  -s,     --size UNSIGNED_INTEGER 
+                              記録する検索履歴数を指定する
+  -h,     --help              このヘルプを表示して終了する
+  -v,     --version           バージョン情報を表示して終了する
+
+Exit Status:
+    0 - successful termination
+    1 - search engine not found
+   64 - command line usage error
+   65 - data format error
+   66 - cannot open input
+   67 - addressee unknown
+   68 - host name unknown
+   69 - service unavailable
+   70 - internal software error
+   71 - system error (e.g., can't fork)
+   72 - critical OS file missing
+   73 - can't create (user) output file
+   74 - input/output error
+   75 - temp failure; user is invited to retry
+   76 - remote error in protocol
+   77 - permission denied
+   78 - configuration error
+  129 - received SIGHUP
+  130 - received SIGINT
+  131 - received SIGQUIT
+  143 - received SIGTERM
+GETOPTIONSHERE
+}
+# Generated by getoptions (END)
+# @end
+
+#eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+tmpDir=$(mktemp -d)
+
+case "${config}" in
+'') config="${tmpDir}/config" ;;
+esac
+
+if [ '!' -e "${config}" ]; then
+	configDir=$(
+		dirname -- "${config}"
+		printf '_'
+	)
+	mkdir -p -- "${configDir%?_}"
+
+	: >"${config}"
+fi
+
+if [ '!' -f "${config}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${config}' は通常ファイルではありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_DATAERR}"
+elif [ '!' -r "${config}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${config}' の読み込み許可がありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_NOINPUT}"
+fi
+
+if [ '!' -s "${config}" ]; then
+	cat <<-'EOF' >"${config}"
+		bing   https://www.bing.com/search?q={searchTerms}
+		google https://www.google.com/search?ie=UTF-8&oe=UTF-8&q={searchTerms}
+	EOF
+fi
+
+case "${history}" in
+'') history="${tmpDir}/history" ;;
+esac
+
+if [ '!' -e "${history}" ]; then
+	historyDir=$(
+		dirname -- "${history}"
+		printf '_'
+	)
+	mkdir -p -- "${historyDir%?_}"
+
+	: >"${history}"
+fi
+
+if [ '!' -f "${history}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${history}' は通常ファイルではありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_DATAERR}"
+elif [ '!' -r "${history}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${history}' の読み込み許可がありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_NOINPUT}"
+fi
+
+case "${#}" in
+'0')
+	set -- "$(
+		cat
+		printf '_'
+	)"
+	set -- "${1%_}"
+	;;
+esac
+
+awkScript=$(
+	cat <<-'EOF'
+		function url_encode(string, httpEncode,  c2p,len,i,result) {
+			c2p["\000"] = "%00"; c2p["\001"] = "%01"; c2p["\002"] = "%02"; c2p["\003"] = "%03";
+			c2p["\004"] = "%04"; c2p["\005"] = "%05"; c2p["\006"] = "%06"; c2p["\007"] = "%07";
+			c2p["\010"] = "%08"; c2p["\011"] = "%09"; c2p["\012"] = "%0A"; c2p["\013"] = "%0B";
+			c2p["\014"] = "%0C"; c2p["\015"] = "%0D"; c2p["\016"] = "%0E"; c2p["\017"] = "%0F";
+			c2p["\020"] = "%10"; c2p["\021"] = "%11"; c2p["\022"] = "%12"; c2p["\023"] = "%13";
+			c2p["\024"] = "%14"; c2p["\025"] = "%15"; c2p["\026"] = "%16"; c2p["\027"] = "%17";
+			c2p["\030"] = "%18"; c2p["\031"] = "%19"; c2p["\032"] = "%1A"; c2p["\033"] = "%1B";
+			c2p["\034"] = "%1C"; c2p["\035"] = "%1D"; c2p["\036"] = "%1E"; c2p["\037"] = "%1F";
+			c2p["\040"] = "%20"; c2p["\041"] = "%21"; c2p["\042"] = "%22"; c2p["\043"] = "%23";
+			c2p["\044"] = "%24"; c2p["\045"] = "%25"; c2p["\046"] = "%26"; c2p["\047"] = "%27";
+			c2p["\050"] = "%28"; c2p["\051"] = "%29"; c2p["\052"] = "%2A"; c2p["\053"] = "%2B";
+			c2p["\054"] = "%2C"; c2p["\055"] = "-"; c2p["\056"] = "."; c2p["\057"] = "%2F";
+			c2p["\060"] = "0"; c2p["\061"] = "1"; c2p["\062"] = "2"; c2p["\063"] = "3";
+			c2p["\064"] = "4"; c2p["\065"] = "5"; c2p["\066"] = "6"; c2p["\067"] = "7";
+			c2p["\070"] = "8"; c2p["\071"] = "9"; c2p["\072"] = "%3A"; c2p["\073"] = "%3B";
+			c2p["\074"] = "%3C"; c2p["\075"] = "%3D"; c2p["\076"] = "%3E"; c2p["\077"] = "%3F";
+			c2p["\100"] = "%40"; c2p["\101"] = "A"; c2p["\102"] = "B"; c2p["\103"] = "C";
+			c2p["\104"] = "D"; c2p["\105"] = "E"; c2p["\106"] = "F"; c2p["\107"] = "G";
+			c2p["\110"] = "H"; c2p["\111"] = "I"; c2p["\112"] = "J"; c2p["\113"] = "K";
+			c2p["\114"] = "L"; c2p["\115"] = "M"; c2p["\116"] = "N"; c2p["\117"] = "O";
+			c2p["\120"] = "P"; c2p["\121"] = "Q"; c2p["\122"] = "R"; c2p["\123"] = "S";
+			c2p["\124"] = "T"; c2p["\125"] = "U"; c2p["\126"] = "V"; c2p["\127"] = "W";
+			c2p["\130"] = "X"; c2p["\131"] = "Y"; c2p["\132"] = "Z"; c2p["\133"] = "%5B";
+			c2p["\134"] = "%5C"; c2p["\135"] = "%5D"; c2p["\136"] = "%5E"; c2p["\137"] = "_";
+			c2p["\140"] = "%60"; c2p["\141"] = "a"; c2p["\142"] = "b"; c2p["\143"] = "c";
+			c2p["\144"] = "d"; c2p["\145"] = "e"; c2p["\146"] = "f"; c2p["\147"] = "g";
+			c2p["\150"] = "h"; c2p["\151"] = "i"; c2p["\152"] = "j"; c2p["\153"] = "k";
+			c2p["\154"] = "l"; c2p["\155"] = "m"; c2p["\156"] = "n"; c2p["\157"] = "o";
+			c2p["\160"] = "p"; c2p["\161"] = "q"; c2p["\162"] = "r"; c2p["\163"] = "s";
+			c2p["\164"] = "t"; c2p["\165"] = "u"; c2p["\166"] = "v"; c2p["\167"] = "w";
+			c2p["\170"] = "x"; c2p["\171"] = "y"; c2p["\172"] = "z"; c2p["\173"] = "%7B";
+			c2p["\174"] = "%7C"; c2p["\175"] = "%7D"; c2p["\176"] = "~"; c2p["\177"] = "%7F";
+			c2p["\200"] = "%80"; c2p["\201"] = "%81"; c2p["\202"] = "%82"; c2p["\203"] = "%83";
+			c2p["\204"] = "%84"; c2p["\205"] = "%85"; c2p["\206"] = "%86"; c2p["\207"] = "%87";
+			c2p["\210"] = "%88"; c2p["\211"] = "%89"; c2p["\212"] = "%8A"; c2p["\213"] = "%8B";
+			c2p["\214"] = "%8C"; c2p["\215"] = "%8D"; c2p["\216"] = "%8E"; c2p["\217"] = "%8F";
+			c2p["\220"] = "%90"; c2p["\221"] = "%91"; c2p["\222"] = "%92"; c2p["\223"] = "%93";
+			c2p["\224"] = "%94"; c2p["\225"] = "%95"; c2p["\226"] = "%96"; c2p["\227"] = "%97";
+			c2p["\230"] = "%98"; c2p["\231"] = "%99"; c2p["\232"] = "%9A"; c2p["\233"] = "%9B";
+			c2p["\234"] = "%9C"; c2p["\235"] = "%9D"; c2p["\236"] = "%9E"; c2p["\237"] = "%9F";
+			c2p["\240"] = "%A0"; c2p["\241"] = "%A1"; c2p["\242"] = "%A2"; c2p["\243"] = "%A3";
+			c2p["\244"] = "%A4"; c2p["\245"] = "%A5"; c2p["\246"] = "%A6"; c2p["\247"] = "%A7";
+			c2p["\250"] = "%A8"; c2p["\251"] = "%A9"; c2p["\252"] = "%AA"; c2p["\253"] = "%AB";
+			c2p["\254"] = "%AC"; c2p["\255"] = "%AD"; c2p["\256"] = "%AE"; c2p["\257"] = "%AF";
+			c2p["\260"] = "%B0"; c2p["\261"] = "%B1"; c2p["\262"] = "%B2"; c2p["\263"] = "%B3";
+			c2p["\264"] = "%B4"; c2p["\265"] = "%B5"; c2p["\266"] = "%B6"; c2p["\267"] = "%B7";
+			c2p["\270"] = "%B8"; c2p["\271"] = "%B9"; c2p["\272"] = "%BA"; c2p["\273"] = "%BB";
+			c2p["\274"] = "%BC"; c2p["\275"] = "%BD"; c2p["\276"] = "%BE"; c2p["\277"] = "%BF";
+			c2p["\300"] = "%C0"; c2p["\301"] = "%C1"; c2p["\302"] = "%C2"; c2p["\303"] = "%C3";
+			c2p["\304"] = "%C4"; c2p["\305"] = "%C5"; c2p["\306"] = "%C6"; c2p["\307"] = "%C7";
+			c2p["\310"] = "%C8"; c2p["\311"] = "%C9"; c2p["\312"] = "%CA"; c2p["\313"] = "%CB";
+			c2p["\314"] = "%CC"; c2p["\315"] = "%CD"; c2p["\316"] = "%CE"; c2p["\317"] = "%CF";
+			c2p["\320"] = "%D0"; c2p["\321"] = "%D1"; c2p["\322"] = "%D2"; c2p["\323"] = "%D3";
+			c2p["\324"] = "%D4"; c2p["\325"] = "%D5"; c2p["\326"] = "%D6"; c2p["\327"] = "%D7";
+			c2p["\330"] = "%D8"; c2p["\331"] = "%D9"; c2p["\332"] = "%DA"; c2p["\333"] = "%DB";
+			c2p["\334"] = "%DC"; c2p["\335"] = "%DD"; c2p["\336"] = "%DE"; c2p["\337"] = "%DF";
+			c2p["\340"] = "%E0"; c2p["\341"] = "%E1"; c2p["\342"] = "%E2"; c2p["\343"] = "%E3";
+			c2p["\344"] = "%E4"; c2p["\345"] = "%E5"; c2p["\346"] = "%E6"; c2p["\347"] = "%E7";
+			c2p["\350"] = "%E8"; c2p["\351"] = "%E9"; c2p["\352"] = "%EA"; c2p["\353"] = "%EB";
+			c2p["\354"] = "%EC"; c2p["\355"] = "%ED"; c2p["\356"] = "%EE"; c2p["\357"] = "%EF";
+			c2p["\360"] = "%F0"; c2p["\361"] = "%F1"; c2p["\362"] = "%F2"; c2p["\363"] = "%F3";
+			c2p["\364"] = "%F4"; c2p["\365"] = "%F5"; c2p["\366"] = "%F6"; c2p["\367"] = "%F7";
+			c2p["\370"] = "%F8"; c2p["\371"] = "%F9"; c2p["\372"] = "%FA"; c2p["\373"] = "%FB";
+			c2p["\374"] = "%FC"; c2p["\375"] = "%FD"; c2p["\376"] = "%FE"; c2p["\377"] = "%FF";
+
+			if(httpEncode) {
+				c2p[" "] = "+"
+			}
+
+			len = length(string)
+			for(i = 1; i <= len; i++) {
+				result = result c2p[substr(string, i, 1)]
+			}
+
+			return result
+		}
+		function singlequote_escape(string) {
+			gsub(/'+/, "'\"&\"'", string)
+
+			return string
+		}
+		function array_length(array,  count,key) {
+			count = 0
+
+			for(key in array) {
+				count++
+			}
+
+			return count
+		}
+
+		function array_print(array, start, end, separator, format,  result) {
+			if(start == "") {
+				start = 1
+			}
+
+			if(end == "") {
+				end = array_length(array)
+			}
+
+			if(format == "") {
+				format = "%s"
+			}
+
+			for(result = ""; start <= end; start++) {
+				if(start in array) {
+					result = result separator sprintf(format, array[start])
+				}
+			}
+
+			return substr(result, length(separator) + 1)
+		}
+		function sysexits(code,  status) {
+			if(code == "EX_OK") {
+				status = 0
+			} else if(code == "EX_USAGE") {
+				status = 64
+			} else if(code == "EX_DATAERR") {
+				status = 65
+			} else if(code == "EX_NOINPUT") {
+				status = 66
+			} else if(code == "EX_NOUSER") {
+				status = 67
+			} else if(code == "EX_NOHOST") {
+				status = 68
+			} else if(code == "EX_UNAVAILABLE") {
+				status = 69
+			} else if(code == "EX_SOFTWARE") {
+				status = 70
+			} else if(code == "EX_OSERR") {
+				status = 71
+			} else if(code == "EX_OSFILE") {
+				status = 72
+			} else if(code == "EX_CANTCREAT") {
+				status = 73
+			} else if(code == "EX_IOERR") {
+				status = 74
+			} else if(code == "EX_TEMPFAIL") {
+				status = 75
+			} else if(code == "EX_PROTOCOL") {
+				status = 76
+			} else if(code == "EX_NOPERM") {
+				status = 77
+			} else if(code == "EX_CONFIG") {
+				status = 78
+			} else {
+				status = 1
+			}
+
+			return status
+		}
+
+			BEGIN {
+				reverse = sprintf("sort -k '1,1nr' -t '\t' -- '%s'", singlequote_escape(history))
+				dPattern = "(:(\\$|[1-9][0-9]*(-\\$|-[1-9][0-9]*)?|-(\\$|-[1-9][0-9]*)))?"
+				output = ""
+
+				for(i = 1; i < ARGC; i++) {
+					arg = ARGV[i]
+					keyword = ""
+
+					if((edFlag == "event" && event(arg, "^!#$", result)) || (edFlag == "all" && event(arg, "^!#" dPattern "$", result))) {
+						keyword = designators(substr(output, 4), result["designators"])
+					} else if((edFlag == "event" && event(arg, "^![1-9][0-9]*$", result)) || (edFlag == "all" && event(arg, "^![1-9][0-9]*" dPattern "$", result))) {
+						number = substr(result["event"], 2)
+
+						while(0 < (getline < history)) {
+							if($1 == number) {
+								keyword = designators($2, result["designators"])
+								break
+							}
+						}
+
+						close(history)
+					} else if((edFlag == "event" && event(arg, "^!(!|-[1-9][0-9]*)$", result)) || (edFlag == "all" && event(arg, "^!(!|-[1-9][0-9]*)" dPattern "$", result))) {
+						if(result["event"] ~ /^!!/) {
+							number = 1
+						} else {
+							number = substr(result["event"], 3)
+						}
+
+						for(nr = 1; 0 < (reverse | getline); nr++) {
+							if(nr == number) {
+								keyword = designators($2, result["designators"])
+								break
+							}
+						}
+
+						close(reverse)
+					} else if((edFlag == "event" && event(arg, "^!\\?[^?]+\\$", result)) || (edFlag == "all" && event(arg, "^!\\?[^?]+\\?" dPattern "$", result))) {
+						search = url_encode(substr(result["event"], 3, length(result["event"]) - 3))
+
+						while(0 < (reverse | getline)) {
+							if($2 ~ search) {
+								keyword = designators($2, result["designators"])
+								break
+							}
+						}
+
+						close(reverse)
+					} else if((edFlag == "event" && event(arg, "^![^\t\n\r :]+$", result)) || (edFlag == "all" && event(arg, "^![^\t\n\r :]+" dPattern "$", result))) {
+						search = url_encode(substr(result["event"], 2))
+
+						while(0 < (reverse | getline)) {
+							if($2 ~ "^" search) {
+								keyword = designators($2, result["designators"])
+								break
+							}
+						}
+
+						close(reverse)
+					} else {
+						keyword = url_encode(arg)
+					}
+
+					if(keyword != "") {
+						output = output "%20" keyword
+					} else if(result["event"] != "") {
+						printf("event '%s' not found.\n", arg) | "cat >&2"
+
+						exit sysexits("EX_USAGE")
+					}
+				}
+
+				printf("%s", substr(output, 4))
+
+				exit
+			}
+
+			function event(string, pattern, result,  position) {
+				split("", result)
+
+				if(string ~ pattern) {
+					if(position = index(string, ":")) {
+						result["event"] = substr(string, 1, position - 1)
+						result["designators"] = substr(string, position)
+					} else {
+						result["event"] = string
+						result["designators"] = ""
+					}
+
+					return 1
+				}
+
+				return 0
+			}
+
+			function designators(string, des,  words,count,position) {
+				if(match(des, /^:(\$|[1-9][0-9]*(-$|-[1-9][0-9]*)?|-($|-[1-9][0-9]*))$/)) {
+					count = split(string, words, /(%09|%0A|%0a|%0D|%0d|%20)+/)
+					position = index(des, "-")
+
+					if(position) {
+						start = substr(des, 2, position - 2)
+						end = substr(des, position + 1)
+					} else {
+						start = end = substr(des, 2)
+					}
+
+					if(start == "") {
+						start = 1
+					} else if(start == "$") {
+						start = count
+					}
+
+					if(end == "" || end == "$") {
+						end = count
+					}
+
+					return array_print(words, start, end, "%20")
+				}
+
+				return string
+			}
+	EOF
+)
+
+awkv_escape 'awkvHistory' "${history}"
+encoded=$(
+	awk \
+		-v "history=${awkvHistory}" \
+		-v "edFlag=${edFlag}" \
+		"${awkScript}" ${@+"${@}"}
+) || endCall "${?}"
+newNumber=$(
+	cat <<-'EOF'
+		BEGIN {
+			number = 1
+		}
+
+		{
+			number = $1 + 1
+		}
+
+		END {
+			printf("%d", number)
+		}
+	EOF
+)
+
+case "${encoded}" in
+?*)
+	{
+		cat -- "${history}"
+		printf '%d\t%s\t%s\t%s\n' "$(tail -n 1 -- "${history}" | awk -- "${newNumber}")" "${encoded}" "${engine}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+	} | tail -n "${size}" >"${tmpDir}/history"
+
+	cat -- "${tmpDir}/history" >"${history}"
+	;;
+esac
+
+awkScript=$(
+	cat <<-'EOF'
+		BEGIN {
+			FS = "\t"
+			exitStatus = 0
+
+			count = split(engine, engines, ",")
+			split("", template)
+		}
+
+		{
+			template[$1] = $2
+		}
+
+		END {
+			for(i = 1; i <= count; i++) {
+				if(engines[i] in template) {
+					url = template[engines[i]]
+					gsub(/\{searchTerms\}/, terms, url)
+
+					printf("%s\n", url)
+				} else {
+					printf("search engine '%s' not found.\n", engines[i]) | "cat >&2"
+
+					exitStatus = sysexits("EX_UNAVAILABLE")
+				}
+			}
+
+			exit exitStatus
+		}
+	EOF
+)
+
+awk \
+	-v "terms=${encoded}" \
+	-v "engine=${engine}" \
+	-- "${awkScript}" \
+	"${config}" ||
+	endCall "${?}"

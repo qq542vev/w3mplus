@@ -90,12 +90,6 @@ parser_definition_setenv() {
 # @gengetoptions parser -i parser_definition parse "${1}"
 # @end
 
-# @gengetoptions parser -i parser_definition_goto parse_goto "${1}"
-# @end
-
-# @gengetoptions parser -i parser_definition_setenv parse_setenv "${1}"
-# @end
-
 eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
@@ -146,6 +140,9 @@ esac
 
 case "${action}" in
 	'goto')
+# @gengetoptions parser -i parser_definition_goto parse_goto "${1}"
+# @end
+
 		eval "$(getoptions parser_definition_goto parse_goto "${0}")"
 		parse_goto ${@+"${@}"}
 		eval "set -- ${REST}"
@@ -160,6 +157,9 @@ case "${action}" in
 		eval "w3mredirect ${option-} -- \${value}"
 		;;
 	'setenv')
+# @gengetoptions parser -i parser_definition_setenv parse_setenv "${1}"
+# @end
+
 		eval "$(getoptions parser_definition_setenv parse_setenv "${0}")"
 		parse_setenv ${@+"${@}"}
 		eval "set -- ${REST}"

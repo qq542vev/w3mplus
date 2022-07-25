@@ -1,0 +1,952 @@
+#!/usr/bin/env sh
+
+### Script: w3maction
+##
+## 環境変数を元に処理を実行する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 2.3.0
+##   date - 2022-07-12
+##   since - 2019-07-15
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='w3maction 2.3.0'
+
+set -efu
+umask '0022'
+LC_ALL='C'
+IFS=$(printf ' \t\n_')
+IFS="${IFS%_}"
+PATH="${PATH-}${PATH:+:}$(command -p getconf 'PATH')"
+UNIX_STD='2003'         # HP-UX POSIX mode
+XPG_SUS_ENV='ON'        # AIX POSIX mode
+XPG_UNIX98='OFF'        # AIX UNIX 03 mode
+POSIXLY_CORRECT='1'     # GNU Coreutils POSIX mode
+COMMAND_MODE='unix2003' # macOS UNIX 03 mode
+export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
+
+#!/usr/bin/env sh
+
+### Script: sysexits.sh
+##
+## Exit status codes for system programs.
+##
+## This include file attempts to categorize possible error
+## exit statuses for system programs, notably delivermail
+## and the Berkeley network.
+##
+## Error numbers begin at EX__BASE to reduce the possibility of
+## clashing with other exit statuses that random programs may
+## already return.  The meaning of the codes is approximately
+## as follows:
+##
+## EX_USAGE - The command was used incorrectly, e.g., with
+##   the wrong number of arguments, a bad flag, a bad
+##   syntax in a parameter, or whatever.
+## EX_DATAERR - The input data was incorrect in some way.
+##   This should only be used for user's data & not
+##   system files.
+## EX_NOINPUT - An input file (not a system file) did not
+##   exist or was not readable.  This could also include
+##   errors like "No message" to a mailer (if it cared
+##   to catch it).
+## EX_NOUSER - The user specified did not exist.  This might
+##   be used for mail addresses or remote logins.
+## EX_NOHOST - The host specified did not exist.  This is used
+##   in mail addresses or network requests.
+## EX_UNAVAILABLE - A service is unavailable.  This can occur
+##   if a support program or file does not exist.  This
+##   can also be used as a catchall message when something
+##   you wanted to do doesn't work, but you don't know
+##   why.
+## EX_SOFTWARE - An internal software error has been detected.
+##   This should be limited to non-operating system related
+##   errors as possible.
+## EX_OSERR - An operating system error has been detected.
+##   This is intended to be used for such things as "cannot
+##   fork", "cannot create pipe", or the like.  It includes
+##   things like getuid returning a user that does not
+##   exist in the passwd file.
+## EX_OSFILE - Some system file (e.g., /etc/passwd, /etc/utmp,
+##   etc.) does not exist, cannot be opened, or has some
+##   sort of error (e.g., syntax error).
+## EX_CANTCREAT - A (user specified) output file cannot be
+##   created.
+## EX_IOERR - An error occurred while doing I/O on some file.
+## EX_TEMPFAIL - temporary failure, indicating something that
+##   is not really an error.  In sendmail, this means
+##   that a mailer (e.g.) could not create a connection,
+##   and the request should be reattempted later.
+## EX_PROTOCOL - the remote system returned something that
+##   was "not possible" during a protocol exchange.
+## EX_NOPERM - You did not have sufficient permission to
+##   perform the operation.  This is not intended for
+##   file system problems, which should use NOINPUT or
+##   CANTCREAT, but rather for higher level permissions.
+##
+## metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   date - 2020-03-05
+##   version - 1.0.0
+##   copyright - Copyright (c) 1987, 1993
+##     The Regents of the University of California.  All rights reserved.
+##   license - BSD-3-Clause
+##   package - w3mplus
+##   source - <sysexits.h at https://github.com/freebsd/freebsd/blob/master/include/sysexits.h>
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions
+#  are met:
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#  3. Neither the name of the University nor the names of its contributors
+#     may be used to endorse or promote products derived from this software
+#     without specific prior written permission.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+#  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+#  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+#  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+#  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+#  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#  SUCH DAMAGE.
+
+readonly 'EX_OK=0' # successful termination
+
+readonly 'EX__BASE=64' # base value for error messages
+
+readonly 'EX_USAGE=64'       # command line usage error
+readonly 'EX_DATAERR=65'     # data format error
+readonly 'EX_NOINPUT=66'     # cannot open input
+readonly 'EX_NOUSER=67'      # addressee unknown
+readonly 'EX_NOHOST=68'      # host name unknown
+readonly 'EX_UNAVAILABLE=69' # service unavailable
+readonly 'EX_SOFTWARE=70'    # internal software error
+readonly 'EX_OSERR=71'       # system error (e.g., can't fork)
+readonly 'EX_OSFILE=72'      # critical OS file missing
+readonly 'EX_CANTCREAT=73'   # can't create (user) output file
+readonly 'EX_IOERR=74'       # input/output error
+readonly 'EX_TEMPFAIL=75'    # temp failure; user is invited to retry
+readonly 'EX_PROTOCOL=76'    # remote error in protocol
+readonly 'EX_NOPERM=77'      # permission denied
+readonly 'EX_CONFIG=78'      # configuration error
+
+readonly 'EX__MAX=78' # maximum listed value
+
+trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'endCall 129' 1                                                    # SIGHUP
+trap 'endCall 130' 2                                                    # SIGINT
+trap 'endCall 131' 3                                                    # SIGQUIT
+trap 'endCall 143' 15                                                   # SIGTERM
+
+endCall() {
+	trap '' 0 # EXIT
+	rm -fr -- ${tmpDir:+"${tmpDir}"}
+	exit "${1:-0}"
+}
+option_error() {
+	printf '%s: %s\n' "${0##*/}" "${1}" >&2
+	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
+
+	endCall "${EX_USAGE}"
+}
+regex_match() {
+	awk -- '
+		BEGIN {
+			for(i = 2; i < ARGC; i++) {
+				if(ARGV[1] !~ ARGV[i]) {
+					exit 1
+				}
+			}
+
+			exit
+		}
+	' ${@+"${@}"} || return 1
+
+	return 0
+}
+append_array_posix() {
+	while [ 2 -le "${#}" ]; do
+		__append_array_posix "${1}" "${2}"
+		eval "shift 2; set -- '${1}' \"\${@}\""
+	done
+}
+
+__append_array_posix() {
+	set "${1}" "${2-}" ''
+
+	until [ "${2#*\'}" = "${2}" ]; do
+		set -- "${1}" "${2#*\'}" "${3}${2%%\'*}'\"'\"'"
+	done
+
+	eval "${1}=\"\${${1}-}\${${1}:+ }'\${3}\${2}'\""
+}
+
+# @getoptions
+parser_definition() {
+	setup REST plus:true abbr:true error:option_error no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... ACTION VARIABLE_NAME" \
+		'' 'Options:'
+
+	param data -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:"'raw' | 'base64' | 'urlencode'" -- '変数のエンコードタイプを指定する'
+	disp :usage -h --help -- 'このヘルプを表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'ACTION:'
+
+	cmd goto -- 'VARIABLE_NAME にアクセスする'
+	cmd setenv -- 'VARIABLE_NAME を別の変数に代入する'
+	cmd show -- 'VARIABLE_NAME の値を表示する'
+	cmd yank -- 'VARIABLE_NAME の値をヤンクする'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+
+parser_definition_goto() {
+	setup REST plus:true abbr:true error:option_error no:0 help:usage_goto \
+		-- 'Usage:' "  ${2##*/} [OPTION]... goto VARIABLE_NAME [SUB_OPTION]... [COMMNAD_ARG].." \
+		'' 'Sub options:'
+
+	param :'append_array_posix "option" "${1}" "${OPTARG}"' --a1 --a2 --a3 --a4 --a5 --a6 --a7 --a8 --a9 var:W3M_COMMAND -- 'n個目の URI アクセス後に W3M_COMMAND を実行する'
+	param :'append_array_posix "option" "${1}" "${OPTARG}"' --b1 --b2 --b3 --b4 --b5 --b6 --b7 --b8 --b9 var:W3M_COMMAND -- 'n個目の URI アクセス前に W3M_COMMAND を実行する'
+	param :'append_array_posix "option" "${1}" "${OPTARG}"' -t --tab var:"'current' | 'del-prebuf' | 'newtab' | 'open-newtab'" -- 'タブの動作を指定する'
+	disp :usage_goto -h --help -- 'このヘルプを表示して終了する'
+}
+
+parser_definition_setenv() {
+	setup REST plus:true abbr:true error:option_error no:0 help:usage_setenv \
+		-- 'Usage:' "  ${2##*/} [OPTION]... setenv VARIABLE_NAME [SUB_OPTION]..." \
+		'' 'Sub options:'
+
+	param encode -e --encode-type init:='raw' pattern:'raw | base64 | urlencode'
+	disp :usage_setenv -h --help -- 'このヘルプを表示して終了する'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# Generated by getoptions (BEGIN)
+# URL: https://github.com/ko1nksm/getoptions (v3.3.0)
+data='raw'
+REST=''
+parse() {
+	OPTIND=$(($# + 1))
+	while OPTARG= && [ $# -gt 0 ]; do
+		set -- "${1%%\=*}" "${1#*\=}" "$@"
+		while [ ${#1} -gt 2 ]; do
+			case $1 in *[!a-zA-Z0-9_-]*) break ;; esac
+			case '--data-type' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --data-type" ;;
+			esac
+			case '--help' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --help" ;;
+			esac
+			case '--version' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --version" ;;
+			esac
+			break
+		done
+		case ${OPTARG# } in
+		*\ *)
+			eval "set -- $OPTARG $1 $OPTARG"
+			OPTIND=$((($# + 1) / 2)) OPTARG=$1
+			shift
+			while [ $# -gt "$OPTIND" ]; do
+				OPTARG="$OPTARG, $1"
+				shift
+			done
+			set "Ambiguous option: $1 (could be $OPTARG)" ambiguous "$@"
+			option_error "$@" >&2 || exit $?
+			echo "$1" >&2
+			exit 1
+			;;
+		?*)
+			[ "$2" = "$3" ] || OPTARG="$OPTARG=$2"
+			shift 3
+			eval 'set -- "${OPTARG# }"' ${1+'"$@"'}
+			OPTARG=
+			;;
+		*) shift 2 ;;
+		esac
+		case $1 in
+		--?*=*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%%\=*}" "${OPTARG#*\=}"' ${1+'"$@"'}
+			;;
+		--no-* | --without-*) unset OPTARG ;;
+		-[d]?*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
+			;;
+		-[hv]?*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
+			OPTARG=
+			;;
+		+*) unset OPTARG ;;
+		esac
+		case $1 in
+		'-d' | '--data-type')
+			[ $# -le 1 ] && set "required" "$1" && break
+			OPTARG=$2
+			case $OPTARG in raw | base64 | urlencode) ;;
+			*)
+				set "pattern:raw | base64 | urlencode" "$1"
+				break
+				;;
+			esac
+			data="$OPTARG"
+			shift
+			;;
+		'-h' | '--help')
+			usage
+			exit 0
+			;;
+		'-v' | '--version')
+			echo "${VERSION}"
+			exit 0
+			;;
+		--)
+			while [ $# -gt 0 ]; do
+				REST="${REST} \"\${$((OPTIND - $#))}\""
+				shift
+			done
+			break
+			;;
+		[-+]?*)
+			set "unknown" "$1"
+			break
+			;;
+		*)
+			case $1 in 'goto' | 'setenv' | 'show' | 'yank') ;;
+			*)
+				set "notcmd" "$1"
+				break
+				;;
+			esac
+			while [ $# -gt 0 ]; do
+				REST="${REST} \"\${$((OPTIND - $#))}\""
+				shift
+			done
+			break
+			;;
+		esac
+		shift
+	done
+	[ $# -eq 0 ] && {
+		OPTIND=1
+		unset OPTARG
+		return 0
+	}
+	case $1 in
+	unknown) set "Unrecognized option: $2" "$@" ;;
+	noarg) set "Does not allow an argument: $2" "$@" ;;
+	required) set "Requires an argument: $2" "$@" ;;
+	pattern:*) set "Does not match the pattern (${1#*:}): $2" "$@" ;;
+	notcmd) set "Not a command: $2" "$@" ;;
+	*) set "Validation error ($1): $2" "$@" ;;
+	esac
+	option_error "$@" >&2 || exit $?
+	echo "$1" >&2
+	exit 1
+}
+usage() {
+	cat <<'GETOPTIONSHERE'
+Usage:
+  w3maction [OPTION]... ACTION VARIABLE_NAME
+
+Options:
+  -d,     --data-type 'raw' | 'base64' | 'urlencode' 
+                              変数のエンコードタイプを指定する
+  -h,     --help              このヘルプを表示して終了する
+  -v,     --version           バージョン情報を表示して終了する
+
+ACTION:
+  goto      VARIABLE_NAME にアクセスする
+  setenv    VARIABLE_NAME を別の変数に代入する
+  show      VARIABLE_NAME の値を表示する
+  yank      VARIABLE_NAME の値をヤンクする
+
+Exit Status:
+    0 - successful termination
+   64 - command line usage error
+   65 - data format error
+   66 - cannot open input
+   67 - addressee unknown
+   68 - host name unknown
+   69 - service unavailable
+   70 - internal software error
+   71 - system error (e.g., can't fork)
+   72 - critical OS file missing
+   73 - can't create (user) output file
+   74 - input/output error
+   75 - temp failure; user is invited to retry
+   76 - remote error in protocol
+   77 - permission denied
+   78 - configuration error
+  129 - received SIGHUP
+  130 - received SIGINT
+  131 - received SIGQUIT
+  143 - received SIGTERM
+GETOPTIONSHERE
+}
+# Generated by getoptions (END)
+# @end
+
+#eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+case "${#}" in
+'0' | '1')
+	cat <<-EOF >&2
+		${0##*/}: 引数が不足しています。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_USAGE}"
+	;;
+esac
+
+action="${1}"
+variableName="${2}"
+shift 2
+
+if regex_match "${variableName}" '^[_A-Za-z][_0-9A-Za-z]*$'; then :; else
+	cat <<-EOF >&2
+		${0##*/}: '${variableName}' -- VARIABLE_NAME の値が不正です。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_USAGE}"
+fi
+
+eval "value=\"\${${variableName}-}\""
+
+case "${data}" in
+'base64')
+	value=$(
+		printf '%s' "${value}" | base64 -d
+		printf '_'
+	)
+	value="${value%_}"
+	;;
+'urlencode')
+	value=$(
+		printf '%s' "${value}" | urldecode
+		printf '_'
+	)
+	value="${value%_}"
+	;;
+esac
+
+case "${value}" in
+'')
+	httpresponse -H 'W3m-control: BACK'
+	exit
+	;;
+esac
+
+case "${action}" in
+'goto')
+	# @gengetoptions parser -i parser_definition_goto parse_goto "${1}"
+	# Generated by getoptions (BEGIN)
+	# URL: https://github.com/ko1nksm/getoptions (v3.3.0)
+	REST=''
+	parse_goto() {
+		OPTIND=$(($# + 1))
+		while OPTARG= && [ $# -gt 0 ]; do
+			set -- "${1%%\=*}" "${1#*\=}" "$@"
+			while [ ${#1} -gt 2 ]; do
+				case $1 in *[!a-zA-Z0-9_-]*) break ;; esac
+				case '--a1' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a1" ;;
+				esac
+				case '--a2' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a2" ;;
+				esac
+				case '--a3' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a3" ;;
+				esac
+				case '--a4' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a4" ;;
+				esac
+				case '--a5' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a5" ;;
+				esac
+				case '--a6' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a6" ;;
+				esac
+				case '--a7' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a7" ;;
+				esac
+				case '--a8' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a8" ;;
+				esac
+				case '--a9' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --a9" ;;
+				esac
+				case '--b1' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b1" ;;
+				esac
+				case '--b2' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b2" ;;
+				esac
+				case '--b3' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b3" ;;
+				esac
+				case '--b4' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b4" ;;
+				esac
+				case '--b5' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b5" ;;
+				esac
+				case '--b6' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b6" ;;
+				esac
+				case '--b7' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b7" ;;
+				esac
+				case '--b8' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b8" ;;
+				esac
+				case '--b9' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --b9" ;;
+				esac
+				case '--tab' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --tab" ;;
+				esac
+				case '--help' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --help" ;;
+				esac
+				break
+			done
+			case ${OPTARG# } in
+			*\ *)
+				eval "set -- $OPTARG $1 $OPTARG"
+				OPTIND=$((($# + 1) / 2)) OPTARG=$1
+				shift
+				while [ $# -gt "$OPTIND" ]; do
+					OPTARG="$OPTARG, $1"
+					shift
+				done
+				set "Ambiguous option: $1 (could be $OPTARG)" ambiguous "$@"
+				option_error "$@" >&2 || exit $?
+				echo "$1" >&2
+				exit 1
+				;;
+			?*)
+				[ "$2" = "$3" ] || OPTARG="$OPTARG=$2"
+				shift 3
+				eval 'set -- "${OPTARG# }"' ${1+'"$@"'}
+				OPTARG=
+				;;
+			*) shift 2 ;;
+			esac
+			case $1 in
+			--?*=*)
+				OPTARG=$1
+				shift
+				eval 'set -- "${OPTARG%%\=*}" "${OPTARG#*\=}"' ${1+'"$@"'}
+				;;
+			--no-* | --without-*) unset OPTARG ;;
+			-[t]?*)
+				OPTARG=$1
+				shift
+				eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
+				;;
+			-[h]?*)
+				OPTARG=$1
+				shift
+				eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
+				OPTARG=
+				;;
+			+*) unset OPTARG ;;
+			esac
+			case $1 in
+			'--a1' | '--a2' | '--a3' | '--a4' | '--a5' | '--a6' | '--a7' | '--a8' | '--a9')
+				[ $# -le 1 ] && set "required" "$1" && break
+				OPTARG=$2
+				append_array_posix "option" "${1}" "${OPTARG}"
+				shift
+				;;
+			'--b1' | '--b2' | '--b3' | '--b4' | '--b5' | '--b6' | '--b7' | '--b8' | '--b9')
+				[ $# -le 1 ] && set "required" "$1" && break
+				OPTARG=$2
+				append_array_posix "option" "${1}" "${OPTARG}"
+				shift
+				;;
+			'-t' | '--tab')
+				[ $# -le 1 ] && set "required" "$1" && break
+				OPTARG=$2
+				append_array_posix "option" "${1}" "${OPTARG}"
+				shift
+				;;
+			'-h' | '--help')
+				usage_goto
+				exit 0
+				;;
+			--)
+				shift
+				while [ $# -gt 0 ]; do
+					REST="${REST} \"\${$((OPTIND - $#))}\""
+					shift
+				done
+				break
+				;;
+			[-+]?*)
+				set "unknown" "$1"
+				break
+				;;
+			*)
+				REST="${REST} \"\${$((OPTIND - $#))}\""
+				;;
+			esac
+			shift
+		done
+		[ $# -eq 0 ] && {
+			OPTIND=1
+			unset OPTARG
+			return 0
+		}
+		case $1 in
+		unknown) set "Unrecognized option: $2" "$@" ;;
+		noarg) set "Does not allow an argument: $2" "$@" ;;
+		required) set "Requires an argument: $2" "$@" ;;
+		pattern:*) set "Does not match the pattern (${1#*:}): $2" "$@" ;;
+		notcmd) set "Not a command: $2" "$@" ;;
+		*) set "Validation error ($1): $2" "$@" ;;
+		esac
+		option_error "$@" >&2 || exit $?
+		echo "$1" >&2
+		exit 1
+	}
+	usage_goto() {
+		cat <<'GETOPTIONSHERE'
+Usage:
+  w3maction [OPTION]... goto VARIABLE_NAME [SUB_OPTION]... [COMMNAD_ARG]..
+
+Sub options:
+          --a1, --a2, --a3, --a4, --a5, --a6, --a7, --a8, --a9 W3M_COMMAND 
+                              n個目の URI アクセス後に W3M_COMMAND を実行する
+          --b1, --b2, --b3, --b4, --b5, --b6, --b7, --b8, --b9 W3M_COMMAND 
+                              n個目の URI アクセス前に W3M_COMMAND を実行する
+  -t,     --tab 'current' | 'del-prebuf' | 'newtab' | 'open-newtab' 
+                              タブの動作を指定する
+  -h,     --help              このヘルプを表示して終了する
+GETOPTIONSHERE
+	}
+	# Generated by getoptions (END)
+	# @end
+
+	#		eval "$(getoptions parser_definition_goto parse_goto "${0}")"
+	parse_goto ${@+"${@}"}
+	eval "set -- ${REST}"
+
+	case "${#}" in
+	*[1-9]*)
+		value=$(
+			printf '%s' "${value}" | sh -c "${*}" 'sh' || :
+			printf '_'
+		)
+		value="${value%_}"
+		;;
+	esac
+
+	eval "w3mredirect ${option-} -- \${value}"
+	;;
+'setenv')
+	# @gengetoptions parser -i parser_definition_setenv parse_setenv "${1}"
+	# Generated by getoptions (BEGIN)
+	# URL: https://github.com/ko1nksm/getoptions (v3.3.0)
+	encode='raw'
+	REST=''
+	parse_setenv() {
+		OPTIND=$(($# + 1))
+		while OPTARG= && [ $# -gt 0 ]; do
+			set -- "${1%%\=*}" "${1#*\=}" "$@"
+			while [ ${#1} -gt 2 ]; do
+				case $1 in *[!a-zA-Z0-9_-]*) break ;; esac
+				case '--encode-type' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --encode-type" ;;
+				esac
+				case '--help' in
+				"$1")
+					OPTARG=
+					break
+					;;
+				$1*) OPTARG="$OPTARG --help" ;;
+				esac
+				break
+			done
+			case ${OPTARG# } in
+			*\ *)
+				eval "set -- $OPTARG $1 $OPTARG"
+				OPTIND=$((($# + 1) / 2)) OPTARG=$1
+				shift
+				while [ $# -gt "$OPTIND" ]; do
+					OPTARG="$OPTARG, $1"
+					shift
+				done
+				set "Ambiguous option: $1 (could be $OPTARG)" ambiguous "$@"
+				option_error "$@" >&2 || exit $?
+				echo "$1" >&2
+				exit 1
+				;;
+			?*)
+				[ "$2" = "$3" ] || OPTARG="$OPTARG=$2"
+				shift 3
+				eval 'set -- "${OPTARG# }"' ${1+'"$@"'}
+				OPTARG=
+				;;
+			*) shift 2 ;;
+			esac
+			case $1 in
+			--?*=*)
+				OPTARG=$1
+				shift
+				eval 'set -- "${OPTARG%%\=*}" "${OPTARG#*\=}"' ${1+'"$@"'}
+				;;
+			--no-* | --without-*) unset OPTARG ;;
+			-[e]?*)
+				OPTARG=$1
+				shift
+				eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
+				;;
+			-[h]?*)
+				OPTARG=$1
+				shift
+				eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
+				OPTARG=
+				;;
+			+*) unset OPTARG ;;
+			esac
+			case $1 in
+			'-e' | '--encode-type')
+				[ $# -le 1 ] && set "required" "$1" && break
+				OPTARG=$2
+				case $OPTARG in raw | base64 | urlencode) ;;
+				*)
+					set "pattern:raw | base64 | urlencode" "$1"
+					break
+					;;
+				esac
+				encode="$OPTARG"
+				shift
+				;;
+			'-h' | '--help')
+				usage_setenv
+				exit 0
+				;;
+			--)
+				shift
+				while [ $# -gt 0 ]; do
+					REST="${REST} \"\${$((OPTIND - $#))}\""
+					shift
+				done
+				break
+				;;
+			[-+]?*)
+				set "unknown" "$1"
+				break
+				;;
+			*)
+				REST="${REST} \"\${$((OPTIND - $#))}\""
+				;;
+			esac
+			shift
+		done
+		[ $# -eq 0 ] && {
+			OPTIND=1
+			unset OPTARG
+			return 0
+		}
+		case $1 in
+		unknown) set "Unrecognized option: $2" "$@" ;;
+		noarg) set "Does not allow an argument: $2" "$@" ;;
+		required) set "Requires an argument: $2" "$@" ;;
+		pattern:*) set "Does not match the pattern (${1#*:}): $2" "$@" ;;
+		notcmd) set "Not a command: $2" "$@" ;;
+		*) set "Validation error ($1): $2" "$@" ;;
+		esac
+		option_error "$@" >&2 || exit $?
+		echo "$1" >&2
+		exit 1
+	}
+	usage_setenv() {
+		cat <<'GETOPTIONSHERE'
+Usage:
+  w3maction [OPTION]... setenv VARIABLE_NAME [SUB_OPTION]...
+
+Sub options:
+  -e,     --encode-type encode 
+  -h,     --help              このヘルプを表示して終了する
+GETOPTIONSHERE
+	}
+	# Generated by getoptions (END)
+	# @end
+
+	#		eval "$(getoptions parser_definition_setenv parse_setenv "${0}")"
+	parse_setenv ${@+"${@}"}
+	eval "set -- ${REST}"
+
+	case "${encode}" in
+	'base64') value=$(printf '%s' "${value}" | base64 | tr -d '\n') ;;
+	'urlencode') value=$(printf '%s' "${value}" | urlencode) ;;
+	esac
+
+	httpresponse \
+		-H 'W3m-control: BACK' \
+		-H "W3m-control: SETENV ${1}=${value}"
+	;;
+'show')
+	httpresponse \
+		-H 'W3m-control: BACK' \
+		-H "W3m-control: READ_SHELL printf '%s' '$(printf '%s' "${value}" | base64 | tr -d '\n')' | base64 -d"
+	;;
+'yank')
+	printf '%s' "${value}" | sh -c -- "${*}" 'sh' || :
+
+	httpresponse -H 'W3m-control: BACK'
+	;;
+esac

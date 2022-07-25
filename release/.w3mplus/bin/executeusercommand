@@ -1,0 +1,639 @@
+#!/usr/bin/env sh
+
+### Script: executeusercommand
+##
+## 条件に一致するユーザーコマンドを実行し結果を取得する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.5.0
+##   date - 2022-07-13
+##   since - 2019-07-31
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='executeusercommand 1.5.0'
+
+set -efu
+umask '0022'
+LC_ALL='C'
+IFS=$(printf ' \t\n_')
+IFS="${IFS%_}"
+PATH="${PATH-}${PATH:+:}$(command -p getconf 'PATH')"
+UNIX_STD='2003'         # HP-UX POSIX mode
+XPG_SUS_ENV='ON'        # AIX POSIX mode
+XPG_UNIX98='OFF'        # AIX UNIX 03 mode
+POSIXLY_CORRECT='1'     # GNU Coreutils POSIX mode
+COMMAND_MODE='unix2003' # macOS UNIX 03 mode
+export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
+
+#!/usr/bin/env sh
+
+### Script: sysexits.sh
+##
+## Exit status codes for system programs.
+##
+## This include file attempts to categorize possible error
+## exit statuses for system programs, notably delivermail
+## and the Berkeley network.
+##
+## Error numbers begin at EX__BASE to reduce the possibility of
+## clashing with other exit statuses that random programs may
+## already return.  The meaning of the codes is approximately
+## as follows:
+##
+## EX_USAGE - The command was used incorrectly, e.g., with
+##   the wrong number of arguments, a bad flag, a bad
+##   syntax in a parameter, or whatever.
+## EX_DATAERR - The input data was incorrect in some way.
+##   This should only be used for user's data & not
+##   system files.
+## EX_NOINPUT - An input file (not a system file) did not
+##   exist or was not readable.  This could also include
+##   errors like "No message" to a mailer (if it cared
+##   to catch it).
+## EX_NOUSER - The user specified did not exist.  This might
+##   be used for mail addresses or remote logins.
+## EX_NOHOST - The host specified did not exist.  This is used
+##   in mail addresses or network requests.
+## EX_UNAVAILABLE - A service is unavailable.  This can occur
+##   if a support program or file does not exist.  This
+##   can also be used as a catchall message when something
+##   you wanted to do doesn't work, but you don't know
+##   why.
+## EX_SOFTWARE - An internal software error has been detected.
+##   This should be limited to non-operating system related
+##   errors as possible.
+## EX_OSERR - An operating system error has been detected.
+##   This is intended to be used for such things as "cannot
+##   fork", "cannot create pipe", or the like.  It includes
+##   things like getuid returning a user that does not
+##   exist in the passwd file.
+## EX_OSFILE - Some system file (e.g., /etc/passwd, /etc/utmp,
+##   etc.) does not exist, cannot be opened, or has some
+##   sort of error (e.g., syntax error).
+## EX_CANTCREAT - A (user specified) output file cannot be
+##   created.
+## EX_IOERR - An error occurred while doing I/O on some file.
+## EX_TEMPFAIL - temporary failure, indicating something that
+##   is not really an error.  In sendmail, this means
+##   that a mailer (e.g.) could not create a connection,
+##   and the request should be reattempted later.
+## EX_PROTOCOL - the remote system returned something that
+##   was "not possible" during a protocol exchange.
+## EX_NOPERM - You did not have sufficient permission to
+##   perform the operation.  This is not intended for
+##   file system problems, which should use NOINPUT or
+##   CANTCREAT, but rather for higher level permissions.
+##
+## metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   date - 2020-03-05
+##   version - 1.0.0
+##   copyright - Copyright (c) 1987, 1993
+##     The Regents of the University of California.  All rights reserved.
+##   license - BSD-3-Clause
+##   package - w3mplus
+##   source - <sysexits.h at https://github.com/freebsd/freebsd/blob/master/include/sysexits.h>
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions
+#  are met:
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#  3. Neither the name of the University nor the names of its contributors
+#     may be used to endorse or promote products derived from this software
+#     without specific prior written permission.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+#  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+#  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+#  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+#  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+#  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#  SUCH DAMAGE.
+
+readonly 'EX_OK=0' # successful termination
+
+readonly 'EX__BASE=64' # base value for error messages
+
+readonly 'EX_USAGE=64'       # command line usage error
+readonly 'EX_DATAERR=65'     # data format error
+readonly 'EX_NOINPUT=66'     # cannot open input
+readonly 'EX_NOUSER=67'      # addressee unknown
+readonly 'EX_NOHOST=68'      # host name unknown
+readonly 'EX_UNAVAILABLE=69' # service unavailable
+readonly 'EX_SOFTWARE=70'    # internal software error
+readonly 'EX_OSERR=71'       # system error (e.g., can't fork)
+readonly 'EX_OSFILE=72'      # critical OS file missing
+readonly 'EX_CANTCREAT=73'   # can't create (user) output file
+readonly 'EX_IOERR=74'       # input/output error
+readonly 'EX_TEMPFAIL=75'    # temp failure; user is invited to retry
+readonly 'EX_PROTOCOL=76'    # remote error in protocol
+readonly 'EX_NOPERM=77'      # permission denied
+readonly 'EX_CONFIG=78'      # configuration error
+
+readonly 'EX__MAX=78' # maximum listed value
+
+trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'endCall 129' 1                                                    # SIGHUP
+trap 'endCall 130' 2                                                    # SIGINT
+trap 'endCall 131' 3                                                    # SIGQUIT
+trap 'endCall 143' 15                                                   # SIGTERM
+
+endCall() {
+	trap '' 0 # EXIT
+	rm -fr -- ${tmpDir:+"${tmpDir}"}
+	exit "${1:-0}"
+}
+option_error() {
+	printf '%s: %s\n' "${0##*/}" "${1}" >&2
+	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
+
+	endCall "${EX_USAGE}"
+}
+awkv_escape() {
+	set -- "${1}" "${2}" ''
+	until [ "${2#*\\}" = "${2}" ]; do
+		set -- "${1}" "${2#*\\}" "${3}${2%%\\*}\\\\"
+	done
+
+	set -- "${1}" "${3}${2}"
+	case "${2}" in
+	@*) set -- "${1}" "\\100${2#?}" ;;
+	esac
+
+	eval "${1}=\${2}"
+}
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:option_error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [PATTERN CHECK_STRING]..." \
+		'' 'Options:'
+
+	param config -c --config init:'config="${HOME}/.w3mplus/autocmd"' var:FILE -- '設定ファイルを指定する'
+	flag regexpFlag -E --{no-}extended-regexp init:@no -- '拡張正規表現を使用する'
+	disp :usage -h --help -- 'このヘルプを表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'    1 - empty result' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# Generated by getoptions (BEGIN)
+# URL: https://github.com/ko1nksm/getoptions (v3.3.0)
+config="${HOME}/.w3mplus/autocmd"
+regexpFlag='0'
+REST=''
+parse() {
+	OPTIND=$(($# + 1))
+	while OPTARG= && [ $# -gt 0 ]; do
+		set -- "${1%%\=*}" "${1#*\=}" "$@"
+		while [ ${#1} -gt 2 ]; do
+			case $1 in *[!a-zA-Z0-9_-]*) break ;; esac
+			case '--config' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --config" ;;
+			esac
+			case '--extended-regexp' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --extended-regexp" ;;
+			esac
+			case '--no-extended-regexp' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --no-extended-regexp" ;;
+			esac
+			case '--help' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --help" ;;
+			esac
+			case '--version' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --version" ;;
+			esac
+			break
+		done
+		case ${OPTARG# } in
+		*\ *)
+			eval "set -- $OPTARG $1 $OPTARG"
+			OPTIND=$((($# + 1) / 2)) OPTARG=$1
+			shift
+			while [ $# -gt "$OPTIND" ]; do
+				OPTARG="$OPTARG, $1"
+				shift
+			done
+			set "Ambiguous option: $1 (could be $OPTARG)" ambiguous "$@"
+			option_error "$@" >&2 || exit $?
+			echo "$1" >&2
+			exit 1
+			;;
+		?*)
+			[ "$2" = "$3" ] || OPTARG="$OPTARG=$2"
+			shift 3
+			eval 'set -- "${OPTARG# }"' ${1+'"$@"'}
+			OPTARG=
+			;;
+		*) shift 2 ;;
+		esac
+		case $1 in
+		--?*=*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%%\=*}" "${OPTARG#*\=}"' ${1+'"$@"'}
+			;;
+		--no-* | --without-*) unset OPTARG ;;
+		-[c]?*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
+			;;
+		-[Ehv]?*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
+			OPTARG=
+			;;
+		+*) unset OPTARG ;;
+		esac
+		case $1 in
+		'-c' | '--config')
+			[ $# -le 1 ] && set "required" "$1" && break
+			OPTARG=$2
+			config="$OPTARG"
+			shift
+			;;
+		'-E' | '--extended-regexp' | '--no-extended-regexp')
+			[ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+			eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG='0'
+			regexpFlag="$OPTARG"
+			;;
+		'-h' | '--help')
+			usage
+			exit 0
+			;;
+		'-v' | '--version')
+			echo "${VERSION}"
+			exit 0
+			;;
+		--)
+			shift
+			while [ $# -gt 0 ]; do
+				REST="${REST} \"\${$((OPTIND - $#))}\""
+				shift
+			done
+			break
+			;;
+		[-+]?*)
+			set "unknown" "$1"
+			break
+			;;
+		*)
+			REST="${REST} \"\${$((OPTIND - $#))}\""
+			;;
+		esac
+		shift
+	done
+	[ $# -eq 0 ] && {
+		OPTIND=1
+		unset OPTARG
+		return 0
+	}
+	case $1 in
+	unknown) set "Unrecognized option: $2" "$@" ;;
+	noarg) set "Does not allow an argument: $2" "$@" ;;
+	required) set "Requires an argument: $2" "$@" ;;
+	pattern:*) set "Does not match the pattern (${1#*:}): $2" "$@" ;;
+	notcmd) set "Not a command: $2" "$@" ;;
+	*) set "Validation error ($1): $2" "$@" ;;
+	esac
+	option_error "$@" >&2 || exit $?
+	echo "$1" >&2
+	exit 1
+}
+usage() {
+	cat <<'GETOPTIONSHERE'
+Usage:
+  executeusercommand [OPTION]... [PATTERN CHECK_STRING]...
+
+Options:
+  -c,     --config FILE       設定ファイルを指定する
+  -E,     --{no-}extended-regexp 
+                              拡張正規表現を使用する
+  -h,     --help              このヘルプを表示して終了する
+  -v,     --version           バージョン情報を表示して終了する
+
+Exit Status:
+    0 - successful termination
+    1 - empty result
+   64 - command line usage error
+   65 - data format error
+   66 - cannot open input
+   67 - addressee unknown
+   68 - host name unknown
+   69 - service unavailable
+   70 - internal software error
+   71 - system error (e.g., can't fork)
+   72 - critical OS file missing
+   73 - can't create (user) output file
+   74 - input/output error
+   75 - temp failure; user is invited to retry
+   76 - remote error in protocol
+   77 - permission denied
+   78 - configuration error
+  129 - received SIGHUP
+  130 - received SIGINT
+  131 - received SIGQUIT
+  143 - received SIGTERM
+GETOPTIONSHERE
+}
+# Generated by getoptions (END)
+# @end
+
+#eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+if [ '!' -e "${config}" ]; then
+	configDir=$(
+		dirname -- "${config}"
+		printf '_'
+	)
+	mkdir -p -- "${configDir%?_}"
+
+	: >"${config}"
+fi
+
+if [ '!' -f "${config}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${config}' は通常ファイルではありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_DATAERR}"
+elif [ '!' -r "${config}" ]; then
+	cat <<-EOF >&2
+		${0##*/}: '${config}' の読み込み許可がありません。
+		詳細については '${0##*/} --help' を実行してください。
+	EOF
+
+	endCall "${EX_NOINPUT}"
+fi
+
+case "${#}" in
+'0')
+	cat -- "${config}"
+	exit
+	;;
+esac
+
+tmpDir=$(mktemp -d)
+awkScript=$(
+	cat <<-'EOF'
+		function backslash_unescape(string,  p2c,result,escape) {
+			split("", p2c)
+
+			p2c["\\"] = "\\"; p2c["a"] = "\a"; p2c["b"] = "\b"; p2c["f"] = "\f";
+			p2c["n"] = "\n"; p2c["r"] = "\r"; p2c["t"] = "\t"; p2c["v"] = "\v";
+
+			p2c["000"] = "\000"; p2c["001"] = "\001";
+			p2c["002"] = "\002"; p2c["003"] = "\003";
+			p2c["004"] = "\004"; p2c["005"] = "\005";
+			p2c["006"] = "\006"; p2c["007"] = "\007";
+			p2c["010"] = "\010"; p2c["011"] = "\011";
+			p2c["012"] = "\012"; p2c["013"] = "\013";
+			p2c["014"] = "\014"; p2c["015"] = "\015";
+			p2c["016"] = "\016"; p2c["017"] = "\017";
+			p2c["020"] = "\020"; p2c["021"] = "\021";
+			p2c["022"] = "\022"; p2c["023"] = "\023";
+			p2c["024"] = "\024"; p2c["025"] = "\025";
+			p2c["026"] = "\026"; p2c["027"] = "\027";
+			p2c["030"] = "\030"; p2c["031"] = "\031";
+			p2c["032"] = "\032"; p2c["033"] = "\033";
+			p2c["034"] = "\034"; p2c["035"] = "\035";
+			p2c["036"] = "\036"; p2c["037"] = "\037";
+			p2c["040"] = "\040"; p2c["041"] = "\041";
+			p2c["042"] = "\042"; p2c["043"] = "\043";
+			p2c["044"] = "\044"; p2c["045"] = "\045";
+			p2c["046"] = "\046"; p2c["047"] = "\047";
+			p2c["050"] = "\050"; p2c["051"] = "\051";
+			p2c["052"] = "\052"; p2c["053"] = "\053";
+			p2c["054"] = "\054"; p2c["055"] = "\055";
+			p2c["056"] = "\056"; p2c["057"] = "\057";
+			p2c["060"] = "\060"; p2c["061"] = "\061";
+			p2c["062"] = "\062"; p2c["063"] = "\063";
+			p2c["064"] = "\064"; p2c["065"] = "\065";
+			p2c["066"] = "\066"; p2c["067"] = "\067";
+			p2c["070"] = "\070"; p2c["071"] = "\071";
+			p2c["072"] = "\072"; p2c["073"] = "\073";
+			p2c["074"] = "\074"; p2c["075"] = "\075";
+			p2c["076"] = "\076"; p2c["077"] = "\077";
+			p2c["100"] = "\100"; p2c["101"] = "\101";
+			p2c["102"] = "\102"; p2c["103"] = "\103";
+			p2c["104"] = "\104"; p2c["105"] = "\105";
+			p2c["106"] = "\106"; p2c["107"] = "\107";
+			p2c["110"] = "\110"; p2c["111"] = "\111";
+			p2c["112"] = "\112"; p2c["113"] = "\113";
+			p2c["114"] = "\114"; p2c["115"] = "\115";
+			p2c["116"] = "\116"; p2c["117"] = "\117";
+			p2c["120"] = "\120"; p2c["121"] = "\121";
+			p2c["122"] = "\122"; p2c["123"] = "\123";
+			p2c["124"] = "\124"; p2c["125"] = "\125";
+			p2c["126"] = "\126"; p2c["127"] = "\127";
+			p2c["130"] = "\130"; p2c["131"] = "\131";
+			p2c["132"] = "\132"; p2c["133"] = "\133";
+			p2c["134"] = "\134"; p2c["135"] = "\135";
+			p2c["136"] = "\136"; p2c["137"] = "\137";
+			p2c["140"] = "\140"; p2c["141"] = "\141";
+			p2c["142"] = "\142"; p2c["143"] = "\143";
+			p2c["144"] = "\144"; p2c["145"] = "\145";
+			p2c["146"] = "\146"; p2c["147"] = "\147";
+			p2c["150"] = "\150"; p2c["151"] = "\151";
+			p2c["152"] = "\152"; p2c["153"] = "\153";
+			p2c["154"] = "\154"; p2c["155"] = "\155";
+			p2c["156"] = "\156"; p2c["157"] = "\157";
+			p2c["160"] = "\160"; p2c["161"] = "\161";
+			p2c["162"] = "\162"; p2c["163"] = "\163";
+			p2c["164"] = "\164"; p2c["165"] = "\165";
+			p2c["166"] = "\166"; p2c["167"] = "\167";
+			p2c["170"] = "\170"; p2c["171"] = "\171";
+			p2c["172"] = "\172"; p2c["173"] = "\173";
+			p2c["174"] = "\174"; p2c["175"] = "\175";
+			p2c["176"] = "\176"; p2c["177"] = "\177";
+			p2c["200"] = "\200"; p2c["201"] = "\201";
+			p2c["202"] = "\202"; p2c["203"] = "\203";
+			p2c["204"] = "\204"; p2c["205"] = "\205";
+			p2c["206"] = "\206"; p2c["207"] = "\207";
+			p2c["210"] = "\210"; p2c["211"] = "\211";
+			p2c["212"] = "\212"; p2c["213"] = "\213";
+			p2c["214"] = "\214"; p2c["215"] = "\215";
+			p2c["216"] = "\216"; p2c["217"] = "\217";
+			p2c["220"] = "\220"; p2c["221"] = "\221";
+			p2c["222"] = "\222"; p2c["223"] = "\223";
+			p2c["224"] = "\224"; p2c["225"] = "\225";
+			p2c["226"] = "\226"; p2c["227"] = "\227";
+			p2c["230"] = "\230"; p2c["231"] = "\231";
+			p2c["232"] = "\232"; p2c["233"] = "\233";
+			p2c["234"] = "\234"; p2c["235"] = "\235";
+			p2c["236"] = "\236"; p2c["237"] = "\237";
+			p2c["240"] = "\240"; p2c["241"] = "\241";
+			p2c["242"] = "\242"; p2c["243"] = "\243";
+			p2c["244"] = "\244"; p2c["245"] = "\245";
+			p2c["246"] = "\246"; p2c["247"] = "\247";
+			p2c["250"] = "\250"; p2c["251"] = "\251";
+			p2c["252"] = "\252"; p2c["253"] = "\253";
+			p2c["254"] = "\254"; p2c["255"] = "\255";
+			p2c["256"] = "\256"; p2c["257"] = "\257";
+			p2c["260"] = "\260"; p2c["261"] = "\261";
+			p2c["262"] = "\262"; p2c["263"] = "\263";
+			p2c["264"] = "\264"; p2c["265"] = "\265";
+			p2c["266"] = "\266"; p2c["267"] = "\267";
+			p2c["270"] = "\270"; p2c["271"] = "\271";
+			p2c["272"] = "\272"; p2c["273"] = "\273";
+			p2c["274"] = "\274"; p2c["275"] = "\275";
+			p2c["276"] = "\276"; p2c["277"] = "\277";
+			p2c["300"] = "\300"; p2c["301"] = "\301";
+			p2c["302"] = "\302"; p2c["303"] = "\303";
+			p2c["304"] = "\304"; p2c["305"] = "\305";
+			p2c["306"] = "\306"; p2c["307"] = "\307";
+			p2c["310"] = "\310"; p2c["311"] = "\311";
+			p2c["312"] = "\312"; p2c["313"] = "\313";
+			p2c["314"] = "\314"; p2c["315"] = "\315";
+			p2c["316"] = "\316"; p2c["317"] = "\317";
+			p2c["320"] = "\320"; p2c["321"] = "\321";
+			p2c["322"] = "\322"; p2c["323"] = "\323";
+			p2c["324"] = "\324"; p2c["325"] = "\325";
+			p2c["326"] = "\326"; p2c["327"] = "\327";
+			p2c["330"] = "\330"; p2c["331"] = "\331";
+			p2c["332"] = "\332"; p2c["333"] = "\333";
+			p2c["334"] = "\334"; p2c["335"] = "\335";
+			p2c["336"] = "\336"; p2c["337"] = "\337";
+			p2c["340"] = "\340"; p2c["341"] = "\341";
+			p2c["342"] = "\342"; p2c["343"] = "\343";
+			p2c["344"] = "\344"; p2c["345"] = "\345";
+			p2c["346"] = "\346"; p2c["347"] = "\347";
+			p2c["350"] = "\350"; p2c["351"] = "\351";
+			p2c["352"] = "\352"; p2c["353"] = "\353";
+			p2c["354"] = "\354"; p2c["355"] = "\355";
+			p2c["356"] = "\356"; p2c["357"] = "\357";
+			p2c["360"] = "\360"; p2c["361"] = "\361";
+			p2c["362"] = "\362"; p2c["363"] = "\363";
+			p2c["364"] = "\364"; p2c["365"] = "\365";
+			p2c["366"] = "\366"; p2c["367"] = "\367";
+			p2c["370"] = "\370"; p2c["371"] = "\371";
+			p2c["372"] = "\372"; p2c["373"] = "\373";
+			p2c["374"] = "\374"; p2c["375"] = "\375";
+			p2c["376"] = "\376"; p2c["377"] = "\377";
+
+			for(result = ""; match(string, /\\(\\|a|b|f|n|r|t|v|[0-7]{3})/); string = substr(string, RSTART + RLENGTH)) {
+				escape = substr(string, RSTART + 1, RLENGTH - 1)
+
+				if(!(escape in p2c)) {
+					escape = "377"
+				}
+
+				result = result substr(string, 1, RSTART - 1) p2c[escape]
+			}
+
+			return result string
+		}
+
+			BEGIN {
+				FS = "\t"
+
+				for(i = 1; i < ARGC; i += 2) {
+					pattern = ARGV[i]
+					input = ARGV[i + 1]
+
+					while(0 < (getline < config)) {
+						key = backslash_unescape($1)
+
+						if((regexpFlag && key ~ pattern) || (!regexpFlag && key == pattern)) {
+							status = system(sprintf("printf '%%s' '%s' | { %s; } >'%s' 2>'/dev/null'", input, backslash_unescape($2), tmpFile))
+
+							if(!status) {
+								while(0 < (getline line <tmpFile)) {
+									printf("%s\n", line)
+								}
+
+								close(tmpFile)
+
+								exit
+							}
+						}
+					}
+
+					close(config)
+				}
+
+				exit 1
+			}
+	EOF
+)
+
+awkv_escape 'config' "${config}"
+awkv_escape 'tmpFile' "${tmpDir}/file"
+
+awk \
+	-v "config=${config}" \
+	-v "regexpFlag=${regexpFlag}" \
+	-v "tmpFile=${tmpFile}" \
+	-- "${awkScript}" ${@+"${@}"} ||
+	endCall "${?}"

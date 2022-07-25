@@ -210,5 +210,5 @@ for file in ${@+"${@}"}; do
 	| sed -e '/eval .*getoptions/{ s/^/#/; }' \
 	| awk -- "${includeShellscript}" - \
 	| awk -- "${includeAwkscript}" - \
-	| shfmt -mn -ln 'posix' >"${output}/${file##*/}"
+	| shfmt -s -ln 'posix' >"${output}/${file##*/}"
 done

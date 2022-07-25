@@ -1,0 +1,671 @@
+#!/usr/bin/env sh
+
+### Script: uricheck
+##
+## URI を検証する。
+##
+## Metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.3.1
+##   date - 2022-06-28
+##   since - 2020-02-21
+##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+VERSION='uricheck 1.3.1'
+
+set -efu
+umask '0022'
+LC_ALL='C'
+IFS=$(printf ' \t\n_')
+IFS="${IFS%_}"
+PATH="${PATH-}${PATH:+:}$(command -p getconf 'PATH')"
+UNIX_STD='2003'         # HP-UX POSIX mode
+XPG_SUS_ENV='ON'        # AIX POSIX mode
+XPG_UNIX98='OFF'        # AIX UNIX 03 mode
+POSIXLY_CORRECT='1'     # GNU Coreutils POSIX mode
+COMMAND_MODE='unix2003' # macOS UNIX 03 mode
+export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
+
+#!/usr/bin/env sh
+
+### Script: sysexits.sh
+##
+## Exit status codes for system programs.
+##
+## This include file attempts to categorize possible error
+## exit statuses for system programs, notably delivermail
+## and the Berkeley network.
+##
+## Error numbers begin at EX__BASE to reduce the possibility of
+## clashing with other exit statuses that random programs may
+## already return.  The meaning of the codes is approximately
+## as follows:
+##
+## EX_USAGE - The command was used incorrectly, e.g., with
+##   the wrong number of arguments, a bad flag, a bad
+##   syntax in a parameter, or whatever.
+## EX_DATAERR - The input data was incorrect in some way.
+##   This should only be used for user's data & not
+##   system files.
+## EX_NOINPUT - An input file (not a system file) did not
+##   exist or was not readable.  This could also include
+##   errors like "No message" to a mailer (if it cared
+##   to catch it).
+## EX_NOUSER - The user specified did not exist.  This might
+##   be used for mail addresses or remote logins.
+## EX_NOHOST - The host specified did not exist.  This is used
+##   in mail addresses or network requests.
+## EX_UNAVAILABLE - A service is unavailable.  This can occur
+##   if a support program or file does not exist.  This
+##   can also be used as a catchall message when something
+##   you wanted to do doesn't work, but you don't know
+##   why.
+## EX_SOFTWARE - An internal software error has been detected.
+##   This should be limited to non-operating system related
+##   errors as possible.
+## EX_OSERR - An operating system error has been detected.
+##   This is intended to be used for such things as "cannot
+##   fork", "cannot create pipe", or the like.  It includes
+##   things like getuid returning a user that does not
+##   exist in the passwd file.
+## EX_OSFILE - Some system file (e.g., /etc/passwd, /etc/utmp,
+##   etc.) does not exist, cannot be opened, or has some
+##   sort of error (e.g., syntax error).
+## EX_CANTCREAT - A (user specified) output file cannot be
+##   created.
+## EX_IOERR - An error occurred while doing I/O on some file.
+## EX_TEMPFAIL - temporary failure, indicating something that
+##   is not really an error.  In sendmail, this means
+##   that a mailer (e.g.) could not create a connection,
+##   and the request should be reattempted later.
+## EX_PROTOCOL - the remote system returned something that
+##   was "not possible" during a protocol exchange.
+## EX_NOPERM - You did not have sufficient permission to
+##   perform the operation.  This is not intended for
+##   file system problems, which should use NOINPUT or
+##   CANTCREAT, but rather for higher level permissions.
+##
+## metadata:
+##
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   date - 2020-03-05
+##   version - 1.0.0
+##   copyright - Copyright (c) 1987, 1993
+##     The Regents of the University of California.  All rights reserved.
+##   license - BSD-3-Clause
+##   package - w3mplus
+##   source - <sysexits.h at https://github.com/freebsd/freebsd/blob/master/include/sysexits.h>
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions
+#  are met:
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#  3. Neither the name of the University nor the names of its contributors
+#     may be used to endorse or promote products derived from this software
+#     without specific prior written permission.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+#  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+#  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+#  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+#  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+#  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#  SUCH DAMAGE.
+
+readonly 'EX_OK=0' # successful termination
+
+readonly 'EX__BASE=64' # base value for error messages
+
+readonly 'EX_USAGE=64'       # command line usage error
+readonly 'EX_DATAERR=65'     # data format error
+readonly 'EX_NOINPUT=66'     # cannot open input
+readonly 'EX_NOUSER=67'      # addressee unknown
+readonly 'EX_NOHOST=68'      # host name unknown
+readonly 'EX_UNAVAILABLE=69' # service unavailable
+readonly 'EX_SOFTWARE=70'    # internal software error
+readonly 'EX_OSERR=71'       # system error (e.g., can't fork)
+readonly 'EX_OSFILE=72'      # critical OS file missing
+readonly 'EX_CANTCREAT=73'   # can't create (user) output file
+readonly 'EX_IOERR=74'       # input/output error
+readonly 'EX_TEMPFAIL=75'    # temp failure; user is invited to retry
+readonly 'EX_PROTOCOL=76'    # remote error in protocol
+readonly 'EX_NOPERM=77'      # permission denied
+readonly 'EX_CONFIG=78'      # configuration error
+
+readonly 'EX__MAX=78' # maximum listed value
+
+trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'endCall 129' 1                                                    # SIGHUP
+trap 'endCall 130' 2                                                    # SIGINT
+trap 'endCall 131' 3                                                    # SIGQUIT
+trap 'endCall 143' 15                                                   # SIGTERM
+
+endCall() {
+	trap '' 0 # EXIT
+	rm -fr -- ${tmpDir:+"${tmpDir}"}
+	exit "${1:-0}"
+}
+option_error() {
+	printf '%s: %s\n' "${0##*/}" "${1}" >&2
+	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
+
+	endCall "${EX_USAGE}"
+}
+regex_match() {
+	awk -- '
+		BEGIN {
+			for(i = 2; i < ARGC; i++) {
+				if(ARGV[1] !~ ARGV[i]) {
+					exit 1
+				}
+			}
+
+			exit
+		}
+	' ${@+"${@}"} || return 1
+
+	return 0
+}
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:option_error plus:true no:0 help:usage \
+		-- 'Usage:' \
+		"  ${2##*/} [OPTION]... [URI]..." \
+		"  ${2##*/} -V [OPTION]... [NOT_URI]..." \
+		'' 'Options:'
+
+	param field -f --field init:='original' validate:validate_field var:"'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'?" -- '表示する URI のフィールドを指定する'
+	flag normalizeFlag -n --{no-}normalize init:@no -- 'URI を正規化する'
+	flag invertFlag -V --{no-}invert init:@no -- 'URI ではない引数を表示する'
+	flag verboseFlag --{no-}verbose init:@no -- '詳細な表示を行う'
+	disp :usage -h --help -- 'このヘルプを表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'    1 - not URI' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+validate_field() {
+	case "${OPTARG}" in
+	'') return 0 ;;
+	esac
+
+	set -- '(original|scheme!?|authority!?|userinfo!?|host|port!?|path|query!?|fragment!?)'
+	regex_match "${OPTARG}" "^${1}(,${1})*$"
+}
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# Generated by getoptions (BEGIN)
+# URL: https://github.com/ko1nksm/getoptions (v3.3.0)
+field='original'
+normalizeFlag='0'
+invertFlag='0'
+verboseFlag='0'
+REST=''
+parse() {
+	OPTIND=$(($# + 1))
+	while OPTARG= && [ $# -gt 0 ]; do
+		set -- "${1%%\=*}" "${1#*\=}" "$@"
+		while [ ${#1} -gt 2 ]; do
+			case $1 in *[!a-zA-Z0-9_-]*) break ;; esac
+			case '--field' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --field" ;;
+			esac
+			case '--normalize' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --normalize" ;;
+			esac
+			case '--no-normalize' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --no-normalize" ;;
+			esac
+			case '--invert' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --invert" ;;
+			esac
+			case '--no-invert' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --no-invert" ;;
+			esac
+			case '--verbose' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --verbose" ;;
+			esac
+			case '--no-verbose' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --no-verbose" ;;
+			esac
+			case '--help' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --help" ;;
+			esac
+			case '--version' in
+			"$1")
+				OPTARG=
+				break
+				;;
+			$1*) OPTARG="$OPTARG --version" ;;
+			esac
+			break
+		done
+		case ${OPTARG# } in
+		*\ *)
+			eval "set -- $OPTARG $1 $OPTARG"
+			OPTIND=$((($# + 1) / 2)) OPTARG=$1
+			shift
+			while [ $# -gt "$OPTIND" ]; do
+				OPTARG="$OPTARG, $1"
+				shift
+			done
+			set "Ambiguous option: $1 (could be $OPTARG)" ambiguous "$@"
+			option_error "$@" >&2 || exit $?
+			echo "$1" >&2
+			exit 1
+			;;
+		?*)
+			[ "$2" = "$3" ] || OPTARG="$OPTARG=$2"
+			shift 3
+			eval 'set -- "${OPTARG# }"' ${1+'"$@"'}
+			OPTARG=
+			;;
+		*) shift 2 ;;
+		esac
+		case $1 in
+		--?*=*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%%\=*}" "${OPTARG#*\=}"' ${1+'"$@"'}
+			;;
+		--no-* | --without-*) unset OPTARG ;;
+		-[f]?*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%"${OPTARG#??}"}" "${OPTARG#??}"' ${1+'"$@"'}
+			;;
+		-[nVhv]?*)
+			OPTARG=$1
+			shift
+			eval 'set -- "${OPTARG%"${OPTARG#??}"}" -"${OPTARG#??}"' ${1+'"$@"'}
+			OPTARG=
+			;;
+		+*) unset OPTARG ;;
+		esac
+		case $1 in
+		'-f' | '--field')
+			[ $# -le 1 ] && set "required" "$1" && break
+			OPTARG=$2
+			validate_field || {
+				set -- validate_field:$? "$1" validate_field
+				break
+			}
+			field="$OPTARG"
+			shift
+			;;
+		'-n' | '--normalize' | '--no-normalize')
+			[ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+			eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG='0'
+			normalizeFlag="$OPTARG"
+			;;
+		'-V' | '--invert' | '--no-invert')
+			[ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+			eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG='0'
+			invertFlag="$OPTARG"
+			;;
+		'--verbose' | '--no-verbose')
+			[ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
+			eval '[ ${OPTARG+x} ] &&:' && OPTARG='1' || OPTARG='0'
+			verboseFlag="$OPTARG"
+			;;
+		'-h' | '--help')
+			usage
+			exit 0
+			;;
+		'-v' | '--version')
+			echo "${VERSION}"
+			exit 0
+			;;
+		--)
+			shift
+			while [ $# -gt 0 ]; do
+				REST="${REST} \"\${$((OPTIND - $#))}\""
+				shift
+			done
+			break
+			;;
+		[-+]?*)
+			set "unknown" "$1"
+			break
+			;;
+		*)
+			REST="${REST} \"\${$((OPTIND - $#))}\""
+			;;
+		esac
+		shift
+	done
+	[ $# -eq 0 ] && {
+		OPTIND=1
+		unset OPTARG
+		return 0
+	}
+	case $1 in
+	unknown) set "Unrecognized option: $2" "$@" ;;
+	noarg) set "Does not allow an argument: $2" "$@" ;;
+	required) set "Requires an argument: $2" "$@" ;;
+	pattern:*) set "Does not match the pattern (${1#*:}): $2" "$@" ;;
+	notcmd) set "Not a command: $2" "$@" ;;
+	*) set "Validation error ($1): $2" "$@" ;;
+	esac
+	option_error "$@" >&2 || exit $?
+	echo "$1" >&2
+	exit 1
+}
+usage() {
+	cat <<'GETOPTIONSHERE'
+Usage:
+  uricheck [OPTION]... [URI]...
+  uricheck -V [OPTION]... [NOT_URI]...
+
+Options:
+  -f,     --field 'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'? 
+                              表示する URI のフィールドを指定する
+  -n,     --{no-}normalize    URI を正規化する
+  -V,     --{no-}invert       URI ではない引数を表示する
+          --{no-}verbose      詳細な表示を行う
+  -h,     --help              このヘルプを表示して終了する
+  -v,     --version           バージョン情報を表示して終了する
+
+Exit Status:
+    0 - successful termination
+    1 - not URI
+   64 - command line usage error
+   65 - data format error
+   66 - cannot open input
+   67 - addressee unknown
+   68 - host name unknown
+   69 - service unavailable
+   70 - internal software error
+   71 - system error (e.g., can't fork)
+   72 - critical OS file missing
+   73 - can't create (user) output file
+   74 - input/output error
+   75 - temp failure; user is invited to retry
+   76 - remote error in protocol
+   77 - permission denied
+   78 - configuration error
+  129 - received SIGHUP
+  130 - received SIGINT
+  131 - received SIGQUIT
+  143 - received SIGTERM
+GETOPTIONSHERE
+}
+# Generated by getoptions (END)
+# @end
+
+#eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+awkScript=$(
+	cat <<-'EOF'
+		function uri_check(uri, relative) {
+			if(relative) {
+				return (uri ~ /^([A-Za-z][A-Za-z0-9+.-]*:)?(\/\/(([A-Za-z0-9._~!$&'()*+,;=:-]|%[0-9A-Fa-f]{2})*@)?(\[(((([0-9A-F]{1,4}:){6}|::([0-9A-F]{1,4}:){5}|([0-9A-F]{1,4})?::([0-9A-F]{1,4}:){4}|(([0-9A-F]{1,4}:){0,1}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){3}|(([0-9A-F]{1,4}:){0,2}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){2}|(([0-9A-F]{1,4}:){0,3}[0-9A-F]{1,4})?::[0-9A-F]{1,4}:|(([0-9A-F]{1,4}:){0,4}[0-9A-F]{1,4})?::)([0-9A-F]{1,4}:[0-9A-F]{1,4}|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|(([0-9A-F]{1,4}:){0,5}[0-9A-F]{1,4})?::[0-9A-F]{1,4}|(([0-9A-F]{1,4}:){0,6}[0-9A-F]{1,4})?::)|v[0-9A-F]+\.[A-Za-z0-9._~!$&'()*+,;=:-]+)]|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f]{2})*)(:[0-9]*)?(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|\/((([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*)?|(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|)(\?([A-Za-z0-9._~!$&'()*+,;=:@\/?-]|%[0-9A-Fa-f]{2})*)?(#([A-Za-z0-9._~!$&'()*+,;=:@\/?-]|%[0-9A-Fa-f]{2})*)?$/)
+			} else {
+				return (uri ~ /^[A-Za-z][A-Za-z0-9+.-]*:(\/\/(([A-Za-z0-9._~!$&'()*+,;=:-]|%[0-9A-Fa-f]{2})*@)?(\[(((([0-9A-F]{1,4}:){6}|::([0-9A-F]{1,4}:){5}|([0-9A-F]{1,4})?::([0-9A-F]{1,4}:){4}|(([0-9A-F]{1,4}:){0,1}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){3}|(([0-9A-F]{1,4}:){0,2}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){2}|(([0-9A-F]{1,4}:){0,3}[0-9A-F]{1,4})?::[0-9A-F]{1,4}:|(([0-9A-F]{1,4}:){0,4}[0-9A-F]{1,4})?::)([0-9A-F]{1,4}:[0-9A-F]{1,4}|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|(([0-9A-F]{1,4}:){0,5}[0-9A-F]{1,4})?::[0-9A-F]{1,4}|(([0-9A-F]{1,4}:){0,6}[0-9A-F]{1,4})?::)|v[0-9A-F]+\.[A-Za-z0-9._~!$&'()*+,;=:-]+)]|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f]{2})*)(:[0-9]*)?(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|\/((([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*)?|(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|)(\?([A-Za-z0-9._~!$&'()*+,;=:@\/?-]|%[0-9A-Fa-f]{2})*)?(#([A-Za-z0-9._~!$&'()*+,;=:@\/?-]|%[0-9A-Fa-f]{2})*)?$/)
+			}
+		}
+		function url_encode_normalize(string,  p2c,result) {
+			p2c["2D"] = "-"; p2c["2E"] = "."; p2c["30"] = "0";
+			p2c["31"] = "1"; p2c["32"] = "2"; p2c["33"] = "3";
+			p2c["34"] = "4"; p2c["35"] = "5"; p2c["36"] = "6";
+			p2c["37"] = "7"; p2c["38"] = "8"; p2c["39"] = "9";
+			p2c["41"] = "A"; p2c["42"] = "B"; p2c["43"] = "C";
+			p2c["44"] = "D"; p2c["45"] = "E"; p2c["46"] = "F";
+			p2c["47"] = "G"; p2c["48"] = "H"; p2c["49"] = "I";
+			p2c["4A"] = "J"; p2c["4B"] = "K"; p2c["4C"] = "L";
+			p2c["4D"] = "M"; p2c["4E"] = "N"; p2c["4F"] = "O";
+			p2c["50"] = "P"; p2c["51"] = "Q"; p2c["52"] = "R";
+			p2c["53"] = "S"; p2c["54"] = "T"; p2c["55"] = "U";
+			p2c["56"] = "V"; p2c["57"] = "W"; p2c["58"] = "X";
+			p2c["59"] = "Y"; p2c["5A"] = "Z"; p2c["5F"] = "_";
+			p2c["61"] = "a"; p2c["62"] = "b"; p2c["63"] = "c";
+			p2c["64"] = "d"; p2c["65"] = "e"; p2c["66"] = "f";
+			p2c["67"] = "g"; p2c["68"] = "h"; p2c["69"] = "i";
+			p2c["6A"] = "j"; p2c["6B"] = "k"; p2c["6C"] = "l";
+			p2c["6D"] = "m"; p2c["6E"] = "n"; p2c["6F"] = "o";
+			p2c["70"] = "p"; p2c["71"] = "q"; p2c["72"] = "r";
+			p2c["73"] = "s"; p2c["74"] = "t"; p2c["75"] = "u";
+			p2c["76"] = "v"; p2c["77"] = "w"; p2c["78"] = "x";
+			p2c["79"] = "y"; p2c["7A"] = "z"; p2c["7E"] = "z";
+
+			for(result = ""; match(string, /%([0-9A-F][a-f]|[a-f][0-9A-F]|[a-f][a-f])/); string = substr(string, RSTART + RLENGTH)) {
+				result = result substr(string, 1, RSTART - 1) toupper(substr(string, RSTART, RLENGTH))
+			}
+
+			string = result string
+
+			for(result = ""; match(string, /%(2[DE]|3[0-9]|[46][1-9A-F]|5[0-9AF]|7[0-9AE])/); string = substr(string, RSTART + RLENGTH)) {
+				result = result substr(string, 1, RSTART - 1) p2c[substr(string, RSTART + 1, 2)]
+			}
+
+			return result string
+		}
+		function uri_path_remove_dot_segments(path,  result) {
+			if(!index(path, ".")) {
+				return path
+			}
+
+			result = ""
+
+			while(path != "") {
+				if(index(path, "./") == 1) {
+					path = substr(path, 3)
+				} else if(index(path, "../") == 1) {
+					path = substr(path, 4)
+				} else if(index(path, "/./") == 1) {
+					path = substr(path, 3)
+				} else if(path == "/.") {
+						path = "/"
+				} else if(index(path, "/../") == 1) {
+					path = substr(path, 4)
+					gsub(/\/?[^\/]*$/, "", result)
+				} else if(path == "/..") {
+					path = "/"
+					gsub(/\/?[^\/]*$/, "", result)
+				} else if(path == "." || path == "..") {
+					path = ""
+				} else {
+					match(path, /^.[^\/]*/)
+
+					result = result substr(path, RSTART, RLENGTH)
+					path = substr(path, RLENGTH + 1)
+				}
+			}
+
+			return result
+		}
+		function uri_parse(uri, element,  pattern,key,i,auth,result) {
+			split("^[^:/?#]*: ^//[^/?#]* ^[^?#]* ^\\?[^#]* ^#.* ^[^@/?#]*@ ^[^:/?#]* ^:[^/?#]*", pattern, " ")
+			split("scheme authority path query fragment userinfo host port", key, " ")
+			split("", element)
+
+			for(i = 1; i <= 5; i++) {
+				element[key[i]] = ""
+
+				if(match(uri, pattern[i])) {
+					element[key[i]] = substr(uri, RSTART, RLENGTH)
+					uri = substr(uri, RSTART + RLENGTH)
+				}
+			}
+
+			element["userinfo"] = ""
+			element["host"] = ""
+			element["port"] = ""
+
+			if(element["authority"]) {
+				auth = substr(element["authority"], 3)
+
+				for(i = 6; i <= 8; i++) {
+					if(match(auth, pattern[i])) {
+						element[key[i]] = substr(auth, RSTART, RLENGTH)
+						auth = substr(auth, RSTART + RLENGTH)
+					}
+				}
+			}
+		}
+
+			BEGIN {
+				fieldCount = split(field, fields, ",")
+				exitStatus = 0
+
+				for(i = 1; i < ARGC; i++) {
+					uri = ARGV[i]
+
+					if(uri_check(uri)) {
+						if(normalizeFlag) {
+							uri = url_encode_normalize(uri)
+						}
+
+						if(invertFlag) {
+							exitStatus = 1
+
+							if(verboseFlag) {
+								printf("URI: %s\n", uri) | "cat >&2"
+							}
+						} else {
+							uri_parse(uri, element)
+
+							if(normalizeFlag) {
+								element["path"] = uri_path_remove_dot_segments(element["path"])
+							}
+
+							for(fieldIndex = 1; fieldIndex <= fieldCount; fieldIndex++) {
+								if(fields[fieldIndex] == "original") {
+									printf("%s", element["scheme"] element["authority"] element["path"] element["query"] element["fragment"])
+								} else if(fields[fieldIndex] == "scheme") {
+									printf("%s", substr(element["scheme"], 1, length(element["scheme"]) - 1))
+								} else if(fields[fieldIndex] == "scheme!") {
+									printf("%s", element["scheme"])
+								} else if(fields[fieldIndex] == "authority") {
+									printf("%s", substr(element["authority"], 3))
+								} else if(fields[fieldIndex] == "authority!") {
+									printf("%s", element["authority"])
+								} else if(fields[fieldIndex] == "userinfo") {
+									printf("%s", substr(element["userinfo"], 1, length(element["userinfo"]) - 1))
+								} else if(fields[fieldIndex] == "userinfo!") {
+									printf("%s", element["userinfo"])
+								} else if(fields[fieldIndex] == "host") {
+									printf("%s", element["host"])
+								} else if(fields[fieldIndex] == "port") {
+									printf("%s", substr(element["port"], 2))
+								} else if(fields[fieldIndex] == "port!") {
+									printf("%s", element["port"])
+								} else if(fields[fieldIndex] == "path") {
+									printf("%s", element["path"])
+								} else if(fields[fieldIndex] == "query") {
+									printf("%s", substr(element[query], 2))
+								} else if(fields[fieldIndex] == "query!") {
+									printf("%s", element["query"])
+								} else if(fields[fieldIndex] == "fragment") {
+									printf("%s", substr(element["fragment"], 2))
+								} else if(fields[fieldIndex] == "fragment!") {
+									printf("%s", element["fragment"])
+								}
+
+								printf(fieldIndex == fieldCount ? "\n" : "\t")
+							}
+						}
+					} else {
+						if(invertFlag) {
+							printf("%s\n", uri)
+						} else {
+							exitStatus = 1
+
+							if(verboseFlag) {
+								printf("not URI: %s\n", uri) | "cat >&2"
+							}
+						}
+					}
+				}
+
+				exit exitStatus
+			}
+	EOF
+)
+
+awk \
+	-v "field=${field}" \
+	-v "normalizeFlag=${normalizeFlag}" \
+	-v "invertFlag=${invertFlag}" \
+	-v "verboseFlag=${verboseFlag}" \
+	-- "${awkScript}" \
+	${@+"${@}"} ||
+	endCall "${?}"
