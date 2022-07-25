@@ -1,0 +1,10 @@
+/**/.w3m/cookie
+/**/.w3m/history
+/**/.w3m/passwd
+/**/.w3m/pre_form
+/**/.w3m/request.log
+/**/.w3m/w3m*
+/**/.w3mplus/*
+!/**/.w3mplus/bin
+!/**/.w3mplus/cache
+!/**/.w3mplus/lib
