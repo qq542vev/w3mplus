@@ -91,7 +91,7 @@ shellScript=$(
 rm -fr -- "${tmpDir}"
 mkdir -p -- "${tmpDir}"
 
-for value in 'sourceBin:bin' 'sourceW3m:.w3m' 'sourceW3m:.w3mplus'; do
+for value in 'sourceBin:bin' 'sourceW3m:.w3m' 'sourceW3mplus:.w3mplus'; do
 	eval "sourceDir=\"\${${value%%:*}}\""
 
 	if [ '!' -d "${sourceDir}" ]; then
@@ -111,13 +111,13 @@ printf '%s' "${pass}" >"${tmpDir}/.w3mplus/pass"
 find -- "${tmpDir}/.w3m" -type f -exec sh -c "${shellScript}" 'sh' "${pass}" '{}' '+'
 
 for value in 'bin:binDir' '.w3m:w3mDir' '.w3mplus:w3mplusDir'; do
-	eval 'distDir="${value##*:}"'
+	eval "distDir=\"\${${value##*:}}\""
 
 	case "${distDir}" in
 		?*)
 			(
 				mkdir -p -- "${distDir}"
-				cd -- "${tmpDri}/${value%%:*}"
+				cd -- "${tmpDir}/${value%%:*}"
 				find -- . -path './*' -prune -exec cp -fR -- '{}' "${distDir}" ';'
 			)
 			;;
