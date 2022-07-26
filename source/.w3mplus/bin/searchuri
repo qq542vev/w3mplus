@@ -310,6 +310,8 @@ esac
 
 awkScript=$(
 	cat <<-'EOF'
+	@include "sysexits.awk"
+
 	BEGIN {
 		FS = "\t"
 		exitStatus = 0
