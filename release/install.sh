@@ -551,7 +551,7 @@ for value in 'sourceBin:bin' 'sourceW3m:.w3m' 'sourceW3mplus:.w3mplus'; do
 	eval "sourceDir=\"\${${value%%:*}}\""
 
 	case "${silentFlag}" in
-	'1') printf "'%s' を確認中...\\n" "${sourceDir}" >&2 ;;
+	'0') printf "'%s' を確認中...\\n" "${sourceDir}" >&2 ;;
 	esac
 
 	if [ '!' -d "${sourceDir}" ]; then
@@ -569,7 +569,7 @@ done
 printf '%s' "${pass}" >"${tmpDir}/.w3mplus/pass"
 
 case "${silentFlag}" in
-'1') printf "'.w3m' のファイルを設定中...\\n" >&2 ;;
+'0') printf "'.w3m' のファイルを設定中...\\n" >&2 ;;
 esac
 
 find -- "${tmpDir}/.w3m" -type f -exec sh -c "${shellScript}" 'sh' "${pass}" '{}' '+'
@@ -581,7 +581,7 @@ for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
 	?*)
 		(
 			case "${silentFlag}" in
-			'1') printf "'%s' を '%s' にインストール中...\\n" "${value%%:*}" "${distDir}" >&2 ;;
+			'0') printf "'%s' を '%s' にインストール中...\\n" "${value%%:*}" "${distDir}" >&2 ;;
 			esac
 
 			mkdir -p -- "${distDir}"
@@ -593,5 +593,5 @@ for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
 done
 
 case "${silentFlag}" in
-'1') printf 'インストール完了\n' >&2 ;;
+'0') printf 'インストール完了\n' >&2 ;;
 esac
