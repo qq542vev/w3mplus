@@ -6,18 +6,18 @@
 ##
 ## Metadata:
 ##
-##	 author - qq542vev <https://purl.org/meta/me/>
-##	 version - 0.1.0
-##	 date - 2022-07-27
-##	 since - 2022-07-13
-##	 copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
-##	 license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
-##	 package - w3mplus
+##   author - qq542vev <https://purl.org/meta/me/>
+##   version - 0.1.0
+##   date - 2022-07-27
+##   since - 2022-07-13
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
 ##
 ## See Also:
 ##
-##	 * Project homepage - <https://github.com/qq542vev/w3mplus>
-##	 * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * Project homepage - <https://github.com/qq542vev/w3mplus>
+##   * Bag report - <https://github.com/qq542vev/w3mplus/issues>
 
 VERSION='install 0.1.0'
 
@@ -589,7 +589,7 @@ for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
 
 				rm -fr "${destDir}"
 
-				cp -R -- '.' "${destDir}"
+				cp -R -- "${tmpDir}/${value%%:*}" "${destDir}"
 			elif [ -d "${destDir}" ]; then
 				mkdir -p -- "${destDir}"
 
