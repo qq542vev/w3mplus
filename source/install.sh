@@ -120,18 +120,33 @@ esac
 find -- "${tmpDir}/.w3m" -type f -exec sh -c "${shellScript}" 'sh' "${pass}" '{}' '+'
 
 for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
-	eval "distDir=\"\${${value##*:}}\""
+	eval "destDir=\"\${${value##*:}}\""
 
-	case "${distDir}" in
+	case "${destDir}" in
 		?*)
 			(
 				case "${silentFlag}" in
-					'0') printf "'%s' を '%s' にインストール中...\\n" "${value%%:*}" "${distDir}" >&2;;
+					'0') printf "'%s' を '%s' にインストール中...\\n" "${value%%:*}" "${destDir}" >&2;;
 				esac
 
-				mkdir -p -- "${distDir}"
-				cd -- "${tmpDir}/${value%%:*}"
-				find -- . -path './*' -prune -exec cp -fR -- '{}' "${distDir}" ';'
+				if [ '!' -e "${destDir}" ]; then
+					mkdir -p -- "${destDir}"
+
+					rm -fr "${destDir}"
+
+					cp -R -- '.' "${destDir}"
+				elif [ -d "${destDir}" ]; then
+					mkdir -p -- "${destDir}"
+
+					find -- "${tmpDir}/${value%%:*}/" -path '*[!/]' -prune -exec cp -fR -- '{}' "${destDir}" ';'
+				else
+					cat <<-EOF >&2
+						${0##*/}: '${destDir}' はディレクトリではありません。
+						詳細については '${0##*/} --help' を実行してください。
+					EOF
+
+					endCall "${EX_DATAERR}"
+				fi
 			)
 			;;
 	esac
