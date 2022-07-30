@@ -636,15 +636,11 @@ keymap "LEFT" MOVE_LEFT
 keymap "j" MOVE_DOWN
 keymap "DOWN" MOVE_DOWN
 
-keymap "gj" MOVE_DOWN1
-
 keymap "l" MOVE_RIGHT
 keymap "RIGHT" MOVE_RIGHT
 
 keymap "k" MOVE_UP
 keymap "UP" MOVE_UP
-
-keymap "gk" MOVE_UP1
 
 keymap "C-e" UP
 keymap "C-y" DOWN
@@ -1070,6 +1066,7 @@ keymap "^[[L" EDIT_SCREEN
 
 keymap "E" NEXT_WORD
 keymap "B" PREV_WORD
+keymap "K" EXEC_SHELL "${W3MPLUS_KEYWORDPRG:-man} \"${W3M_CURRENT_WORD}\""
 
 keymap "zt" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=scroll-zt"
 keymap "zb" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=scroll-zb"
@@ -1085,6 +1082,8 @@ keymap "zRIGHT" RIGHT
 keymap "zL" SHIFT_RIGHT
 keymap "zH" SHIFT_LEFT
 
+keymap "gj" MOVE_DOWN1
+keymap "gk" MOVE_UP1
 keymap "gx" COMMAND "MARK_URL; GOTO_LINK"
 
 keymap "V" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=visual-mode&subaction=yank"
