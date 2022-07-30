@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.1.1
-##   date - 2022-06-28
+##   version - 1.2.0
+##   date - 2022-07-30
 ##   since - 2020-03-17
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -515,8 +515,8 @@ keymap "M-h" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU MenuHelp"
 
 ## Other ##
 
-keymap "LEFT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_LEFT1"
-keymap "RIGHT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_RIGHT1"
-keymap "UP" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_UP1"
-keymap "DOWN" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_DOWN1"
+keymap "LEFT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_LEFT"
+keymap "RIGHT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_RIGHT"
+keymap "UP" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_UP"
+keymap "DOWN" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_DOWN"
 keymap "M-C-d" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SUSPEND"

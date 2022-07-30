@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.1.1
-##   date - 2022-06-28
+##   version - 1.2.1
+##   date - 2022-07-30
 ##   since - 2020-03-17
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -516,9 +516,9 @@ keymap "M-h" MENU MenuHelp
 
 ## Other ##
 
-keymap "LEFT" MOVE_LEFT1
-keymap "RIGHT" MOVE_RIGHT1
-keymap "UP" MOVE_UP1
-keymap "DOWN" MOVE_DOWN1
+keymap "LEFT" MOVE_LEFT
+keymap "RIGHT" MOVE_RIGHT
+keymap "UP" MOVE_UP
+keymap "DOWN" MOVE_DOWN
 keymap "M-C-d" SUSPEND
 keymap "M-C-v" SET_OPTION "keymap_file=keymap_w3mplus"

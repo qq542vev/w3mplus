@@ -5,8 +5,8 @@
 ## Metadata:
 ##
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.12.2
-##   date - 2022-06-28
+##   version - 1.13.0
+##   date - 2022-07-28
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -517,10 +517,10 @@ keymap "M-h" MENU MenuHelp
 
 ## Other ##
 
-keymap "LEFT" MOVE_LEFT1
-keymap "RIGHT" MOVE_RIGHT1
-keymap "UP" MOVE_UP1
-keymap "DOWN" MOVE_DOWN1
+keymap "LEFT" MOVE_LEFT
+keymap "RIGHT" MOVE_RIGHT
+keymap "UP" MOVE_UP
+keymap "DOWN" MOVE_DOWN
 keymap "M-C-d" SUSPEND
 keymap "M-C-v" SET_OPTION "keymap_file=keymap_w3mplus"
 
@@ -630,17 +630,21 @@ keymap "^[[F" END
 
 keymap "%" MENU Percents
 
-keymap "h" MOVE_LEFT1
-keymap "LEFT" MOVE_LEFT1
+keymap "h" MOVE_LEFT
+keymap "LEFT" MOVE_LEFT
 
-keymap "j" MOVE_DOWN1
-keymap "DOWN" MOVE_DOWN1
+keymap "j" MOVE_DOWN
+keymap "DOWN" MOVE_DOWN
 
-keymap "l" MOVE_RIGHT1
-keymap "RIGHT" MOVE_RIGHT1
+keymap "gj" MOVE_DOWN1
 
-keymap "k" MOVE_UP1
-keymap "UP" MOVE_UP1
+keymap "l" MOVE_RIGHT
+keymap "RIGHT" MOVE_RIGHT
+
+keymap "k" MOVE_UP
+keymap "UP" MOVE_UP
+
+keymap "gk" MOVE_UP1
 
 keymap "C-e" UP
 keymap "C-y" DOWN
