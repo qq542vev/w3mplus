@@ -679,11 +679,9 @@ keymap "}" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=goto-paragraph&numb
 ### Zooming ###
 
 keymap "ZI" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D20"
-keymap "+" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D20"
 keymap "ZM" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=%2B%3D60"
 
 keymap "ZO" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D20"
-keymap "-" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D20"
 keymap "ZR" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=-%3D60"
 
 keymap "zZ" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=zoom&zoom=100"
@@ -1003,9 +1001,9 @@ keymap "`x" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key
 keymap "`y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=y"
 keymap "`z" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key=z"
 
-keymap "`'" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-redo"
-
 keymap ":m" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-local-mark"
+
+keymap "`'" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-redo"
 
 ## Automatic commands ##
 
@@ -1066,7 +1064,9 @@ keymap "^[[L" EDIT_SCREEN
 
 keymap "E" NEXT_WORD
 keymap "B" PREV_WORD
-keymap "K" EXEC_SHELL "${W3MPLUS_KEYWORDPRG:-man} \"${W3M_CURRENT_WORD}\""
+
+keymap "+" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=line-incriment&lineincriment=1&_action=line-begin-non-blake"
+keymap "-" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=line-incriment&lineincriment=-1&_action=line-begin-non-blake"
 
 keymap "zt" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=scroll-zt"
 keymap "zb" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=scroll-zb"
@@ -1079,8 +1079,8 @@ keymap "zLEFT" LEFT
 keymap "zl" RIGHT
 keymap "zRIGHT" RIGHT
 
-keymap "zL" SHIFT_RIGHT
-keymap "zH" SHIFT_LEFT
+keymap "zL" COMMAND "SHIFT_RIGHT; MOVE_LEFT; MOVE_RIGHT1"
+keymap "zH" COMMAND "SHIFT_LEFT; MOVE_RIGHT; MOVE_LEFT1"
 
 keymap "gj" MOVE_DOWN1
 keymap "gk" MOVE_UP1
@@ -1092,6 +1092,7 @@ keymap ":r" PIPE_SHELL
 keymap ":\"" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-register"
 
 keymap "!" MENU "filter"
+keymap "K" EXEC_SHELL "${W3MPLUS_KEYWORDPRG:-man} \"${W3M_CURRENT_WORD}\""
 keymap "g~" MENU "switchcase"
 keymap "g?" MENU "rot13"
 keymap "g@" MENU "operatorFunc"
@@ -1104,8 +1105,6 @@ keymap "C-z" SUSPEND
 keymap "gM" CENTER_H
 keymap ":L" SETENV
 keymap ":S" EXEC_SHELL "${SHELL}"
-
-keymap "|" COMMAND "LINE_BEGIN; MOVE_RIGHT1"
 
 keymap "\"0" MENU "register0"
 keymap "\"1" MENU "register1"

@@ -119,7 +119,7 @@ eval "set -- ${REST}"
 add_printtmp() {
 	if [ ! -f "${query_printtmp-}" ]; then
 		printtmp=$(TMPDIR="${W3MPLUS_CACHE}" mktemp -u)
-		path_to_fileurl.sh 'filepath' "${SCRIPT_NAME}"
+		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
 		httpresponse \
 			-H 'W3m-control: BACK' \
@@ -146,9 +146,12 @@ error_meesage() {
 
 expand() {
 	case "${2}" in
+		'-'*) eval "${1}=\"\${2#*-}\"";;
 		'' | *[!0-9A-Za-z_]*) eval "${1}=";;
 		*) eval "${1}=\${${2}-}";;
 	esac
+
+	eval ": \${${1}:=\"\${3-}\"}"
 }
 
 tmpDir=$(mktemp -d)
@@ -197,21 +200,30 @@ if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${
 fi
 
 case "${query_action-}" in
+	'line-incriment')
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
+		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
+
+		case "${query_lineincriment-}" in
+			?*) line=$((line + query_lineincriment));;
+		esac
+
+		case "${query_colmunincriment-}" in
+			?*) colmun=$((colmun + query_colmunincriment));;
+		esac
+
+		QUERY_STRING="${QUERY_STRING}&action=${query__action}&line=-${line}&colmun=-${colmun}" "${0}"
+	;;
 	'about-uri')
-		w3mabouturi ${query_about+"${query_about}"}
+		w3mabouturi -- ${query_about+"${query_about}"}
 		;;
 	'close-tab')
 		expand 'uri' "${query_uri-W3M_URL}"
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
-		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
+		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
 
 		case "${uri}" in
-			?*)
-				pushuri \
-					${line:+--l1 "${line}"} \
-					${colmun:+--c1 "${colmun}"} \
-					-- "${uri}"
-			;;
+			?*) pushuri --l1 "${line}" --c1 "${colmun}" -- "${uri}";;
 		esac
 
 		httpresponse \
@@ -225,7 +237,7 @@ case "${query_action-}" in
 		;;
 	'cookie-config')
 		expand 'uri' "${query_uri-W3M_URL}"
-		host=$(uricheck -f 'host' "${uri}" || :)
+		host=$(uricheck -f 'host' -- "${uri}" || :)
 
 		case "${host}" in
 			?*)
@@ -233,8 +245,7 @@ case "${query_action-}" in
 					${query_accept+'--accept' "${query_accept}=${host}"} \
 					${query_reject+'--reject' "${query_reject}=${host}"} \
 					${query_subdomain+'--subdomain'} \
-					--in-place \
-					-- "${W3MPLUS_W3M_CONFIG}"
+					--in-place -- "${W3MPLUS_W3M_CONFIG}"
 
 				accept=$(grep -e '^cookie_accept_domains[[:blank:]]' -- "${W3MPLUS_W3M_CONFIG}" | cut -d ' ' -f 2)
 				reject=$(grep -e '^cookie_reject_domains[[:blank:]]' -- "${W3MPLUS_W3M_CONFIG}" | cut -d ' ' -f 2)
@@ -380,9 +391,9 @@ case "${query_action-}" in
 	'goto-line')
 		add_printtmp
 
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 		jump=$(gotoline \
-			${line:+--line "${line}"} \
+			--line "${line}" \
 			${query_number+--number "${query_number}"} \
 			-- "${query_printtmp}"
 		)
@@ -396,10 +407,10 @@ case "${query_action-}" in
 	'goto-paragraph')
 		add_printtmp
 
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 		jump=$(
 			gotoparagraph \
-				${line:+--line "${line}"} \
+				--line "${line}" \
 				${query_number+--number "${query_number}"} \
 				-- "${query_printtmp}"
 		) || case "${?}" in
@@ -415,29 +426,32 @@ case "${query_action-}" in
 	'homepage')
 		w3mredirect ${query_tab+--tab "${query_tab}"} -- "${WWW_HOME-about:home}"
 		;;
-	'line-begin-non-blake')
+	'line-begin-non-blake' | 'line-end-non-blake')
 		add_printtmp
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 
-		count=$(sed -n -e "${line:-1}"'{s/^\([[:blank:]]*\).*$/\1/; p; q}' -- "${query_printtmp}" | tr -d '\n' | wc	-m)
+		if [ '1' -le "${line}" ] && [ "${line}" -le "$(grep -c -e '^' -- "${query_printtmp}")" ]; then
+			case "${query_action}" in
+				'line-begin-non-blake')
+					move1='LINE_BEGIN'
+					move2="MOVE_RIGHT1 $(sed -n -e "${line}"'{s/^\([[:blank:]]*\).*$/\1/; p; q}' -- "${query_printtmp}" | tr -d '\n' | wc	-m)"
+					;;
+				'line-end-non-blake')
+					move1='LINE_END' \
+					move2="MOVE_LEFT1 $(sed -n -e "${line}"'{s/.*[^[:blank:]]\{1,\}\([[:blank:]]*\)$/\1/; p; q}' -- "${query_printtmp}" | tr -d '\n' | wc	-m)"
+					;;
+			esac
 
-		httpresponse \
-			-H 'W3m-control: BACK' \
-			-H "W3m-control: GOTO_LINE ${line:-1}" \
-			-H 'W3m-control: LINE_BEGIN' \
-			-H "W3m-control: MOVE_RIGHT1 ${count}"
-		;;
-	'line-end-non-blake')
-		add_printtmp
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+			rm -f -- "${query_printtmp}"
 
-		count=$(sed -n -e "${line:-1}"'{s/.*[^[:blank:]]\{1,\}\([[:blank:]]*\)$/\1/; p; q}' -- "${query_printtmp}" | tr -d '\n' | wc	-m)
-
-		httpresponse \
-			-H 'W3m-control: BACK' \
-			-H "W3m-control: GOTO_LINE ${line:-1}" \
-			-H 'W3m-control: LINE_END' \
-			-H "W3m-control: MOVE_LEFT1 ${count}"
+			httpresponse \
+				-H 'W3m-control: BACK' \
+				-H "W3m-control: GOTO_LINE ${line}" \
+				-H "W3m-control: ${move1}" \
+				-H "W3m-control: ${move2}"
+		else
+			httpresponse -H 'W3m-control: BACK'
+		fi
 		;;
 	'link-goto' | 'link-tabgoto')
 		case "${query_action}" in
@@ -450,7 +464,7 @@ case "${query_action-}" in
 			${W3M_CURRENT_LINK:+-H 'W3m-control: SET_OPTION default_url=2' -H "W3m-control: ${command}"}
 		;;
 	'scroll-zt' | 'scroll-zb')
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 
 		case "${query_action}" in
 			'scroll-zt') move='NEXT_HALF_PAGE';;
@@ -461,7 +475,7 @@ case "${query_action-}" in
 			-H 'W3m-control: BACK' \
 			-H 'W3m-control: CENTER_V' \
 			-H "W3m-control: ${move}" \
-			-H "W3m-control: GOTO_LINE ${line:-1}"
+			-H "W3m-control: GOTO_LINE ${line}"
 		;;
 	'search' | 'dict-word')
 		case "${query_action}${query_query:+_}" in
@@ -496,7 +510,7 @@ case "${query_action-}" in
 		fi
 		;;
 	'select-line')
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 
 		case "${query_subaction}" in
 			'formatprg') commandArg="${W3MPLUS_FORMATPRG}";;
@@ -505,14 +519,14 @@ case "${query_action-}" in
 		esac
 
 		w3mselectline \
-			${line:+--line "${line}"} \
+			--line "${line}" \
 			${query_number+'--number' "${query_number}"} \
 			"${query_subaction}" \
 			${commandArg+"${commandArg}"}
 			;;
 	'set-local-mark')
 		expand 'uri' "${query_uri-W3M_URL}"
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 		singlequote_escape 'pattern' "${uri%%#*}"
 
 		case "${uri}" in
@@ -524,15 +538,15 @@ case "${query_action-}" in
 				setusercommand \
 					--config "${W3MPLUS_LOCALMARK_FILE}" \
 					-- "${query_key}" \
-					"grep -Fqx -e '${pattern}' && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line:-1}'"
+					"grep -Fqx -e '${pattern}' && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}'"
 				;;
 			*) printf 'This page cannot be registered.\n';;
 		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
 		;;
 	'set-quick-mark')
 		expand 'uri' "${query_uri-W3M_URL}"
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
-		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
+		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
 
 		case "${uri}" in
 			?*)
@@ -542,8 +556,7 @@ case "${query_action-}" in
 
 				setquickmark \
 					--config "${W3MPLUS_QUICKMARK_FILE}" \
-					${line:+--l1 "${line}"} \
-					${colmun:+--c1 "${colmun}"} \
+					--l1 "${line}" --c1 "${colmun}"} \
 					-- "${query_key}" "${uri}"
 				;;
 			*) printf 'This page cannot be registered.\n';;
@@ -564,15 +577,14 @@ case "${query_action-}" in
 		;;
 	'set-url-mark')
 		expand 'uri' "${query_uri-W3M_URL}"
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
-		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
+		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
 
 		case "${uri}" in
 			?*)
 				setquickmark \
 					--config "${W3MPLUS_URLMARK_FILE}" \
-					${line:+--l1 "${line}"} \
-					${colmun:+--c1 "${colmun}"} \
+					--l1 "${line}" --c1 "${colmun}" \
 					-- "${query_key}" "${uri}"
 				;;
 			*) printf 'This page cannot be registered.\n';;
@@ -739,7 +751,7 @@ case "${query_action-}" in
 		;;
 	'visual-mode')
 		expand 'id' "${query_id-W3M_URL}"
-		expand 'line' "${query_line-W3M_CURRENT_LINE}"
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 
 		case "${query_subaction}" in
 			'formatprg') commandArg="${W3MPLUS_FORMATPRG}";;
@@ -748,7 +760,7 @@ case "${query_action-}" in
 		esac
 
 		w3mvisualmode \
-			${line:+--line "${line}"} \
+			--line "${line}" \
 			--timeout "${W3MPLUS_VISUAL_TIMEOUT}" \
 			-- "${id}" "${query_subaction}" \
 			${commandArg+"${commandArg}"}
