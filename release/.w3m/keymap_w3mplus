@@ -1092,7 +1092,7 @@ keymap ":r" PIPE_SHELL
 keymap ":\"" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-register"
 
 keymap "!" MENU "Filter"
-keymap "K" EXEC_SHELL "${W3MPLUS_KEYWORDPRG:-man} \"${W3M_CURRENT_WORD}\""
+keymap "K" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=keywordprg&variable=W3M_CURRENT_WORD"
 keymap "g~" MENU "Switchcase"
 keymap "g?" MENU "ROT13"
 keymap "g@" MENU "Operatorfunc"

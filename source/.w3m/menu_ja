@@ -1271,7 +1271,7 @@ menu Register_0
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=0&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=0&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=0&value=W3M_CURRENT_WORD"
 end
@@ -1282,7 +1282,7 @@ menu Register_1
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=1&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=1&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=1&value=W3M_CURRENT_WORD"
 end
@@ -1293,7 +1293,7 @@ menu Register_2
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=2&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=2&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=2&value=W3M_CURRENT_WORD"
 end
@@ -1304,7 +1304,7 @@ menu Register_3
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=3&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=3&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=3&value=W3M_CURRENT_WORD"
 end
@@ -1315,7 +1315,7 @@ menu Register_4
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=4&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=4&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=4&value=W3M_CURRENT_WORD"
 end
@@ -1326,7 +1326,7 @@ menu Register_5
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=5&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=5&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=5&value=W3M_CURRENT_WORD"
 end
@@ -1337,7 +1337,7 @@ menu Register_6
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=6&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=6&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=6&value=W3M_CURRENT_WORD"
 end
@@ -1348,7 +1348,7 @@ menu Register_7
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=7&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=7&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=7&value=W3M_CURRENT_WORD"
 end
@@ -1359,7 +1359,7 @@ menu Register_8
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=8&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=8&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=8&value=W3M_CURRENT_WORD"
 end
@@ -1370,7 +1370,7 @@ menu Register_9
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=9&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=9&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=9&value=W3M_CURRENT_WORD"
 end
@@ -1381,7 +1381,7 @@ menu Register_A
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Ba&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Ba&value=W3M_CURRENT_WORD"
 end
@@ -1392,7 +1392,7 @@ menu Register_B
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bb&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bb&value=W3M_CURRENT_WORD"
 end
@@ -1403,7 +1403,7 @@ menu Register_C
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bc&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bc&value=W3M_CURRENT_WORD"
 end
@@ -1414,7 +1414,7 @@ menu Register_D
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bd&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bd&value=W3M_CURRENT_WORD"
 end
@@ -1425,7 +1425,7 @@ menu Register_E
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Be&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Be&value=W3M_CURRENT_WORD"
 end
@@ -1436,7 +1436,7 @@ menu Register_F
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bf&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bf&value=W3M_CURRENT_WORD"
 end
@@ -1447,7 +1447,7 @@ menu Register_G
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bg&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bg&value=W3M_CURRENT_WORD"
 end
@@ -1458,7 +1458,7 @@ menu Register_H
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bh&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bh&value=W3M_CURRENT_WORD"
 end
@@ -1469,7 +1469,7 @@ menu Register_I
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bi&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bi&value=W3M_CURRENT_WORD"
 end
@@ -1480,7 +1480,7 @@ menu Register_J
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bj&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bj&value=W3M_CURRENT_WORD"
 end
@@ -1491,7 +1491,7 @@ menu Register_K
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bk&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bk&value=W3M_CURRENT_WORD"
 end
@@ -1502,7 +1502,7 @@ menu Register_L
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bl&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bl&value=W3M_CURRENT_WORD"
 end
@@ -1513,7 +1513,7 @@ menu Register_M
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bm&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bm&value=W3M_CURRENT_WORD"
 end
@@ -1524,7 +1524,7 @@ menu Register_N
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bn&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bn&value=W3M_CURRENT_WORD"
 end
@@ -1535,7 +1535,7 @@ menu Register_O
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bo&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bo&value=W3M_CURRENT_WORD"
 end
@@ -1546,7 +1546,7 @@ menu Register_P
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=p&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bp&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bp&value=W3M_CURRENT_WORD"
 end
@@ -1557,7 +1557,7 @@ menu Register_Q
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bq&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bq&value=W3M_CURRENT_WORD"
 end
@@ -1568,7 +1568,7 @@ menu Register_R
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Br&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Br&value=W3M_CURRENT_WORD"
 end
@@ -1579,7 +1579,7 @@ menu Register_S
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bs&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bs&value=W3M_CURRENT_WORD"
 end
@@ -1590,7 +1590,7 @@ menu Register_T
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bt&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bt&value=W3M_CURRENT_WORD"
 end
@@ -1601,7 +1601,7 @@ menu Register_U
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bu&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bu&value=W3M_CURRENT_WORD"
 end
@@ -1612,7 +1612,7 @@ menu Register_V
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bv&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bv&value=W3M_CURRENT_WORD"
 end
@@ -1623,7 +1623,7 @@ menu Register_W
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bw&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bw&value=W3M_CURRENT_WORD"
 end
@@ -1634,7 +1634,7 @@ menu Register_X
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=X&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2BX&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2BX&value=W3M_CURRENT_WORD"
 end
@@ -1645,7 +1645,7 @@ menu Register_Y
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2By&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2By&value=W3M_CURRENT_WORD"
 end
@@ -1656,7 +1656,7 @@ menu Register_Z
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bz&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=%2Bz&value=W3M_CURRENT_WORD"
 end
@@ -1667,7 +1667,7 @@ menu Register_a
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=a&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=a&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=a&value=W3M_CURRENT_WORD"
 end
@@ -1678,7 +1678,7 @@ menu Register_b
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=b&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=b&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=b&value=W3M_CURRENT_WORD"
 end
@@ -1689,7 +1689,7 @@ menu Register_c
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=c&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=c&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=c&value=W3M_CURRENT_WORD"
 end
@@ -1700,7 +1700,7 @@ menu Register_d
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=d&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=d&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=d&value=W3M_CURRENT_WORD"
 end
@@ -1711,7 +1711,7 @@ menu Register_e
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=e&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=e&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=e&value=W3M_CURRENT_WORD"
 end
@@ -1722,7 +1722,7 @@ menu Register_f
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=f&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=f&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=f&value=W3M_CURRENT_WORD"
 end
@@ -1733,7 +1733,7 @@ menu Register_g
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=g&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=g&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=g&value=W3M_CURRENT_WORD"
 end
@@ -1744,7 +1744,7 @@ menu Register_h
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=h&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=h&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=h&value=W3M_CURRENT_WORD"
 end
@@ -1755,7 +1755,7 @@ menu Register_i
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=i&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=i&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=i&value=W3M_CURRENT_WORD"
 end
@@ -1766,7 +1766,7 @@ menu Register_j
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=j&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=j&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=j&value=W3M_CURRENT_WORD"
 end
@@ -1777,7 +1777,7 @@ menu Register_k
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=k&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=k&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=k&value=W3M_CURRENT_WORD"
 end
@@ -1788,7 +1788,7 @@ menu Register_l
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=l&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=l&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=l&value=W3M_CURRENT_WORD"
 end
@@ -1799,7 +1799,7 @@ menu Register_m
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=m&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=m&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=m&value=W3M_CURRENT_WORD"
 end
@@ -1810,7 +1810,7 @@ menu Register_n
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=n&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=n&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=n&value=W3M_CURRENT_WORD"
 end
@@ -1821,7 +1821,7 @@ menu Register_o
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=o&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=o&value=W3M_CURRENT_WORD"
 end
@@ -1832,7 +1832,7 @@ menu Register_p
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=o&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=o&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=o&value=W3M_CURRENT_WORD"
 end
@@ -1843,7 +1843,7 @@ menu Register_q
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=q&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=q&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=q&value=W3M_CURRENT_WORD"
 end
@@ -1854,7 +1854,7 @@ menu Register_r
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=r&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=r&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=r&value=W3M_CURRENT_WORD"
 end
@@ -1865,7 +1865,7 @@ menu Register_s
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=s&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=s&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=s&value=W3M_CURRENT_WORD"
 end
@@ -1876,7 +1876,7 @@ menu Register_t
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=t&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=t&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=t&value=W3M_CURRENT_WORD"
 end
@@ -1887,7 +1887,7 @@ menu Register_u
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=u&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=u&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=u&value=W3M_CURRENT_WORD"
 end
@@ -1898,7 +1898,7 @@ menu Register_v
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=v&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=v&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=v&value=W3M_CURRENT_WORD"
 end
@@ -1909,7 +1909,7 @@ menu Register_w
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=w&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=w&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=w&value=W3M_CURRENT_WORD"
 end
@@ -1920,7 +1920,7 @@ menu Register_x
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=x&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=x&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=x&value=W3M_CURRENT_WORD"
 end
@@ -1931,7 +1931,7 @@ menu Register_y
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=y&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=y&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=y&value=W3M_CURRENT_WORD"
 end
@@ -1942,7 +1942,7 @@ menu Register_z
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=z&subaction=read-shell"
 	func "y  URLをヤンク" COMMAND "y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=z&value=W3M_URL"
 	func "Y  語句をヤンク" COMMAND "Y" "GOTO file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-register&key=z&value=W3M_CURRENT_WORD"
 end
@@ -1951,7 +1951,7 @@ menu RegisterCurrent
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=show&variable=W3M_URL"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=read-shell&variable=W3M_URL"
 end
 
 menu RegisterSearch
@@ -1960,7 +1960,7 @@ menu RegisterSearch
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=read-shell"
 end
 
 menu RegisterUnnamed
@@ -1969,5 +1969,5 @@ menu RegisterUnnamed
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=redirect"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
-	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=show"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%22&subaction=read-shell"
 end

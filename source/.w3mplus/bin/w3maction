@@ -38,10 +38,11 @@ parser_definition() {
 
 	msg -- '' 'ACTION:'
 
-	cmd goto   -- 'VARIABLE_NAME にアクセスする'
-	cmd setenv -- 'VARIABLE_NAME を別の変数に代入する'
-	cmd show   -- 'VARIABLE_NAME の値を表示する'
-	cmd yank   -- 'VARIABLE_NAME の値をヤンクする'
+	cmd exec-shell -- 'VARIABLE_NAME を基に EXEC_SHELL を実行する'
+	cmd goto       -- 'VARIABLE_NAME にアクセスする'
+	cmd read-shell -- 'VARIABLE_NAME を基に READ_SHELL を実行する'
+	cmd setenv     -- 'VARIABLE_NAME を別の変数に代入する'
+	cmd yank       -- 'VARIABLE_NAME の値をヤンクする'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -139,6 +140,23 @@ case "${value}" in
 esac
 
 case "${action}" in
+	'exec-shell' | 'read-shell')
+		case "${action}" in
+			'exec-shell') w3mcmd='EXEC_SHELL';;
+			'read-shell') w3mcmd='READ_SHELL';;
+		esac
+
+		case "${#}" in
+			'0') set -- 'cat';;
+		esac
+
+		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
+		value=$(printf '%s' "${value}" | base64 | tr -d '\n')
+
+		httpresponse \
+			-H 'W3m-control: BACK' \
+			-H "W3m-control: ${w3mcmd} printf '%s' '${value}' | base64 -d | eval \"\$(printf '%s' '${command}' | base64 -d)\""
+		;;
 	'goto')
 # @gengetoptions parser -i parser_definition_goto parse_goto "${1}"
 # @end
@@ -172,11 +190,6 @@ case "${action}" in
 		httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: SETENV ${1}=${value}"
-		;;
-	'show')
-		httpresponse \
-			-H 'W3m-control: BACK' \
-			-H "W3m-control: READ_SHELL printf '%s' '$(printf '%s' "${value}" | base64 | tr -d '\n')' | base64 -d"
 		;;
 	'yank')
 		printf '%s' "${value}" | sh -c -- "${*}" 'sh' || :

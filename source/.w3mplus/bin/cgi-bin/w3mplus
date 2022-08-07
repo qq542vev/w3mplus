@@ -45,6 +45,7 @@ VERSION='w3mplus 2.0.0'
 : ${W3MPLUS_REGISTER_FILE:="${W3MPLUS_HOME}/register"}
 : ${W3MPLUS_OPERATORFUNC:='cat'}
 : ${W3MPLUS_FORMATPRG:='cat'}
+: ${W3MPLUS_KEYWORDPRG:='man "$(cat)"'}
 : ${W3MPLUS_EQUALPRG:='cat'}
 : ${W3MPLUS_ZOOM_MAX:='300'}
 : ${W3MPLUS_ZOOM_MIN:='30'}
@@ -200,20 +201,6 @@ if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${
 fi
 
 case "${query_action-}" in
-	'line-incriment')
-		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
-		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
-
-		case "${query_lineincriment-}" in
-			?*) line=$((line + query_lineincriment));;
-		esac
-
-		case "${query_colmunincriment-}" in
-			?*) colmun=$((colmun + query_colmunincriment));;
-		esac
-
-		QUERY_STRING="${QUERY_STRING}&action=${query__action}&line=-${line}&colmun=-${colmun}" "${0}"
-	;;
 	'about-uri')
 		w3mabouturi -- ${query_about+"${query_about}"}
 		;;
@@ -278,6 +265,10 @@ case "${query_action-}" in
 		case "${query_subaction}" in
 			'goto' | 'increment-uri' | 'parent-uripath' | 'redirect')
 				commandArg='${query_tab+--tab "${query_tab}"} ${query_before+--b1 "${query_before}"} ${query_after+--a1 "${query_after}"}';;
+			'keywordprg')
+				query_subaction='exec-shell'
+				commandArg='"${W3MPLUS_KEYWORDPRG}"'
+				;;
 			'yank')
 				commandArg='"${W3MPLUS_YANK}"';;
 		esac
@@ -452,6 +443,20 @@ case "${query_action-}" in
 		else
 			httpresponse -H 'W3m-control: BACK'
 		fi
+		;;
+	'line-incriment')
+		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
+		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
+
+		case "${query_lineincriment-}" in
+			?*) line=$((line + query_lineincriment));;
+		esac
+
+		case "${query_colmunincriment-}" in
+			?*) colmun=$((colmun + query_colmunincriment));;
+		esac
+
+		QUERY_STRING="${QUERY_STRING}&action=${query__action}&line=-${line}&colmun=-${colmun}" "${0}"
 		;;
 	'link-goto' | 'link-tabgoto')
 		case "${query_action}" in
@@ -846,6 +851,9 @@ case "${query_action-}" in
 
 				<dt>line-end-non-blake</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-end-non-blake&amp;line={VARIABLE_NAME}</dd>
+
+				<dt>line-incriment</dt>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-incriment&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;_action={ACTION}&amp;lineincriment={INTEGER}&amp;colmunincriment={INTEGER}</dd>
 
 				<dt>link-goto</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=link-goto</dd>
