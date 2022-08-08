@@ -799,34 +799,34 @@ case "${query_action-}" in
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=about-uri&amp;about={ABOUT_URI}</dd>
 
 				<dt>close-tab</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=close-tab&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=close-tab&amp;uri={VARIABLE_NAME | '-' VALUE}&amp;line={VARIABLE_NAME | '-' VALUE}&amp;colmun={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>context-menu</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=context-menu</dd>
 
 				<dt>cookie-config</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=cookie-copnfig&amp;uri={VARIABLE_NAME}&amp;accept={'add' | 'delete' | 'toggle'}&amp;reject={'add' | 'delete' | 'toggle'}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=cookie-copnfig&amp;uri={VARIABLE_NAME | '-' VALUE}&amp;accept={'add' | 'delete' | 'toggle'}&amp;reject={'add' | 'delete' | 'toggle'}</dd>
 
 				<dt>dict-word</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=dict-word&amp;designator={'disable' | 'event' | 'all'}&amp;engine={COMMA_LIST}&amp;query={'?' TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
 				<dt>equalprg</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=equalprg&amp;uri={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=equalprg&amp;uri={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>execute-env-var</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=execute-env-var&amp;subaction={ACTION}&amp;VARIABLE_NAME={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=execute-env-var&amp;subaction={ACTION}&amp;variable={VARIABLE_NAME}</dd>
 
 				<dt>execute-user-command</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=execute-user-command&amp;key={PATTERN}&amp;input={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=execute-user-command&amp;key={PATTERN}&amp;input={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>find-string</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=find-string&amp;word={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=find-string&amp;word={VARIABLE_NAME | '-' VALUE}&amp;number={SIGNED_INTEGER}</dd>
 
 				<dt>find-word</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=find-word&amp;word={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=find-word&amp;word={VARIABLE_NAME | '-' VALUE}&amp;number={SIGNED_INTEGER}</dd>
 
 				<dt>get-local-mark</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=get-local-mark&amp;uri={VARIABLE_NAME}&amp;key={PATTERN}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=get-local-mark&amp;uri={VARIABLE_NAME | '-' VALUE}&amp;key={PATTERN}</dd>
 
 				<dt>get-quick-mark</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=get-quick-mark&amp;key={PATTERN}&amp;tab={TAB_PARAM}</dd>
@@ -838,22 +838,22 @@ case "${query_action-}" in
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=get-url-mark&amp;key={PATTERN}&amp;tab={TAB_PARAM}</dd>
 
 				<dt>goto-line</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=goto-line&amp;line={VARIABLE_NAME}&amp;number={[+*/-]? NUMBER '%'?}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=goto-line&amp;line={VARIABLE_NAME | '-' VALUE}&amp;number={[+*/-]? NUMBER '%'?}</dd>
 
 				<dt>goto-paragraph</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=goto-paragraph&amp;line={VARIABLE_NAME}&amp;number={SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=goto-paragraph&amp;line={VARIABLE_NAME | '-' VALUE}&amp;number={SIGNED_INTEGER}</dd>
 
 				<dt>homepage</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=homepage</dd>
 
 				<dt>line-begin-non-blake</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-begin-non-blake&amp;line={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-begin-non-blake&amp;line={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>line-end-non-blake</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-end-non-blake&amp;line={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-end-non-blake&amp;line={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>line-incriment</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-incriment&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;_action={ACTION}&amp;lineincriment={INTEGER}&amp;colmunincriment={INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=line-incriment&amp;line={VARIABLE_NAME | '-' VALUE}&amp;colmun={VARIABLE_NAME | '-' VALUE}&amp;_action={ACTION}&amp;lineincriment={INTEGER}&amp;colmunincriment={INTEGER}</dd>
 
 				<dt>link-goto</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=link-goto</dd>
@@ -862,28 +862,28 @@ case "${query_action-}" in
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=link-tabgoto</dd>
 
 				<dt>scroll-zb</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=scroll-zb&amp;line={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=scroll-zb&amp;line={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>scroll-zt</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=scroll-zt&amp;line={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=scroll-zt&amp;line={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>search</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=search&amp;designator={'disable' | 'event' | 'all'}&amp;engine={COMMA_LIST}&amp;query={TEXT}&amp;tab={TAB_PARAM}&amp;before={W3M_COMMAND}&amp;after={W3M_COMMAND}</dd>
 
 				<dt>select-line</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=select-line&amp;line={VARIABLE_NAME}&amp;subaction={ACTION}&amp;number={'0' | '$' | SIGNED_INTEGER}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=select-line&amp;line={VARIABLE_NAME | '-' VALUE}&amp;subaction={ACTION}&amp;number={'0' | '$' | SIGNED_INTEGER}</dd>
 
 				<dt>set-local-mark</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-local-mark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;key={KEY}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-local-mark&amp;uri={VARIABLE_NAME | '-' VALUE}&amp;line={VARIABLE_NAME | '-' VALUE}&amp;key={KEY}</dd>
 
 				<dt>set-register</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-register&amp;value={VARIABLE_NAME}&amp;key={KEY}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-register&amp;value={VARIABLE_NAME | '-' VALUE}&amp;key={KEY}</dd>
 
 				<dt>set-quick-mark</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=setQuickMark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;key={KEY}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=setQuickMark&amp;uri={VARIABLE_NAME | '-' VALUE}&amp;line={VARIABLE_NAME | '-' VALUE}&amp;colmun={VARIABLE_NAME | '-' VALUE}&amp;key={KEY}</dd>
 
 				<dt>set-url-mark</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-url-mark&amp;uri={VARIABLE_NAME}&amp;line={VARIABLE_NAME}&amp;colmun={VARIABLE_NAME}&amp;key={KEY}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=set-url-mark&amp;uri={VARIABLE_NAME | '-' VALUE}&amp;line={VARIABLE_NAME | '-' VALUE}&amp;colmun={VARIABLE_NAME | '-' VALUE}&amp;key={KEY}</dd>
 
 				<dt>show-local-mark</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-local-mark</dd>
@@ -907,10 +907,10 @@ case "${query_action-}" in
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=show-user-command</dd>
 
 				<dt>sidebar-bookmark</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=sidebar-bookmark&amp;uri={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=sidebar-bookmark&amp;uri={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>sidebar-history</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=sidebar-history&amp;uri={VARIABLE_NAME}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=sidebar-history&amp;uri={VARIABLE_NAME | '-' VALUE}</dd>
 
 				<dt>toggle-https-everywhere</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=toggle-https-everywhere</dd>
@@ -922,7 +922,7 @@ case "${query_action-}" in
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=undo-tab&amp;number={SIGNED_INTEGER}&amp;count={@INTEGER | SIGNED_INTEGER}</dd>
 
 				<dt>visual-mode</dt>
-				<dd>${filepath}?pass={PASS_VALUE}&amp;action=visual-mode&amp;id={TEXT}&amp;line={VARIABLE_NAME}&amp;subaction={subaction}</dd>
+				<dd>${filepath}?pass={PASS_VALUE}&amp;action=visual-mode&amp;id={TEXT}&amp;line={VARIABLE_NAME | '-' VALUE}&amp;subaction={subaction}</dd>
 
 				<dt>zoom</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=zoom&amp;zoom={([+*/-] '=')? UNSIGNED_INTEGER}</dd>
