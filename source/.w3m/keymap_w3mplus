@@ -885,11 +885,11 @@ keymap ":Q" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-quick-mark"
 
 ### Local marks and URL marks ###
 
-keymap "m'" MARK
+keymap "m`" MARK
 keymap "m@" REG_MARK
 
-keymap "['" PREV_MARK
-keymap "]'" NEXT_MARK
+keymap "[`" PREV_MARK
+keymap "]`" NEXT_MARK
 
 keymap "mA" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=A"
 keymap "mB" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-url-mark&key=B"
@@ -1003,7 +1003,7 @@ keymap "`z" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-local-mark&key
 
 keymap ":m" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-local-mark"
 
-keymap "`'" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-redo"
+keymap "``" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-redo"
 
 ## Automatic commands ##
 
