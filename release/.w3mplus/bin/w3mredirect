@@ -793,6 +793,10 @@ awkScript=$(
 					print_header("GOTO " uri)
 				}
 
+				if(tab == "del-prebuf") {
+					print_header("DELETE_PREVBUF")
+				}
+
 				if(line ~ /^[1-9][0-9]*$/) {
 					print_header("BEGIN")
 
@@ -805,10 +809,6 @@ awkScript=$(
 					if(line < -1) {
 						print_header("MOVE_UP " ((line * -1) - 1))
 					}
-				}
-
-				if(tab == "del-prebuf") {
-					print_header("DELETE_PREVBUF")
 				}
 
 				if(colmun ~ /^[1-9][0-9]*$/) {

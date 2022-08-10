@@ -344,8 +344,12 @@ case "${query_action-}" in
 			*) httpresponse -H 'W3m-control: BACK';;
 		esac
 		;;
-	'get-local-mark')
+	'get-local-mark' | 'get-local-mark-line-begin')
 		expand 'uri' "${query_uri-W3M_URL}"
+
+		case "${query_action}" in
+			'get-local-mark-line-begin') export 'W3MPLUS_LOCALMARK_LINEBEGIN=1';;
+		esac
 
 		executeusercommand \
 			--config "${W3MPLUS_LOCALMARK_FILE}" \
@@ -373,11 +377,36 @@ case "${query_action-}" in
 
 		QUERY_STRING="${QUERY_STRING}&action=execute-env-var&variable=W3MPLUS_REGISTER_TMP" W3MPLUS_REGISTER_TMP="${register%_}" "${0}" ${@+"${@}"}
 		;;
-	'get-url-mark')
+	'get-url-mark' | 'get-url-mark-line-begin')
+		awkScript=$(
+			cat <<-'EOF'
+			BEGIN {
+				FS = "\t"
+			}
+
+			{
+				uri = $2
+				line = $3
+
+				printf("%s\t%s\t\t\t%s\n", uri, line, (moveURL == "" ? "" : "GOTO " moveURL $3))
+			}
+			EOF
+		)
+
+		case "${query_action}" in
+			'get-url-mark-line-begin')
+				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
+
+				moveURL="${filepath}?action=line-begin-non-blake&line=-"
+				;;
+			*) moveURL='';;
+		esac
+
 		getquickmark \
 			--config "${W3MPLUS_URLMARK_FILE}" \
 			-- "${query_key}" \
-		| cut -f '2-3' | w3mredirect ${query_tab+--tab "${query_tab}"}
+		| awk -v "moveURL=${moveURL}" -- "${awkScript}" \
+		| w3mredirect ${query_tab+--tab "${query_tab}"}
 		;;
 	'goto-line')
 		add_printtmp
@@ -532,18 +561,21 @@ case "${query_action-}" in
 	'set-local-mark')
 		expand 'uri' "${query_uri-W3M_URL}"
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
-		singlequote_escape 'pattern' "${uri%%#*}"
+		singlequote_escape 'uri' "${uri%%#*}"
 
 		case "${uri}" in
 			?*)
-				setusercommand \
-					--config "${W3MPLUS_LOCALMARK_FILE}" \
-					-- "${query_key}" >'/dev/null'
+				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
 				setusercommand \
 					--config "${W3MPLUS_LOCALMARK_FILE}" \
 					-- "${query_key}" \
-					"grep -Fqx -e '${pattern}' && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}'"
+				| awk -- '{ lf = 1; print($0); } END { if(lf) { print(""); } }'
+
+				setusercommand \
+					--config "${W3MPLUS_LOCALMARK_FILE}" \
+					-- "${query_key}" \
+					"[ \"\${W3M_URL%%#*}\" = '${uri}' ] && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}' \${W3MPLUS_LOCALMARK_LINEBEGIN:+-H 'W3m-control: GOTO ${filepath}?action=line-begin-non-blake&line=-${line}'}"
 				;;
 			*) printf 'This page cannot be registered.\n';;
 		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
@@ -557,11 +589,12 @@ case "${query_action-}" in
 			?*)
 				setquickmark \
 					--config "${W3MPLUS_QUICKMARK_FILE}" \
-					-- "${query_key}"
+					-- "${query_key}" \
+				| awk -- '{ lf = 1; print($0); } END { if(lf) { print(""); } }'
 
 				setquickmark \
 					--config "${W3MPLUS_QUICKMARK_FILE}" \
-					--l1 "${line}" --c1 "${colmun}"} \
+					--l1 "${line}" --c1 "${colmun}" \
 					-- "${query_key}" "${uri}"
 				;;
 			*) printf 'This page cannot be registered.\n';;
@@ -587,6 +620,11 @@ case "${query_action-}" in
 
 		case "${uri}" in
 			?*)
+				setquickmark \
+					--config "${W3MPLUS_URLMARK_FILE}" \
+					-- "${query_key}" \
+				| awk -- '{ lf = 1; print($0); } END { if(lf) { print(""); } }'
+
 				setquickmark \
 					--config "${W3MPLUS_URLMARK_FILE}" \
 					--l1 "${line}" --c1 "${colmun}" \

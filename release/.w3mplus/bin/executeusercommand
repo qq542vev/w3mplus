@@ -189,7 +189,7 @@ awkv_escape() {
 # @getoptions
 parser_definition() {
 	setup REST abbr:true error:option_error plus:true no:0 help:usage \
-		-- 'Usage:' "  ${2##*/} [OPTION]... [PATTERN CHECK_STRING]..." \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [PATTERN]..." \
 		'' 'Options:'
 
 	param config -c --config init:'config="${HOME}/.w3mplus/autocmd"' var:FILE -- '設定ファイルを指定する'
@@ -371,7 +371,7 @@ parse() {
 usage() {
 	cat <<'GETOPTIONSHERE'
 Usage:
-  executeusercommand [OPTION]... [PATTERN CHECK_STRING]...
+  executeusercommand [OPTION]... [PATTERN]...
 
 Options:
   -c,     --config FILE       設定ファイルを指定する
@@ -598,15 +598,14 @@ awkScript=$(
 			BEGIN {
 				FS = "\t"
 
-				for(i = 1; i < ARGC; i += 2) {
+				for(i = 1; i < ARGC; i++) {
 					pattern = ARGV[i]
-					input = ARGV[i + 1]
 
 					while(0 < (getline < config)) {
 						key = backslash_unescape($1)
 
 						if((regexpFlag && key ~ pattern) || (!regexpFlag && key == pattern)) {
-							status = system(sprintf("printf '%%s' '%s' | { %s; } >'%s' 2>'/dev/null'", input, backslash_unescape($2), tmpFile))
+							status = system(sprintf("( %s ) >'%s' 2>'/dev/null'", backslash_unescape($2), tmpFile))
 
 							if(!status) {
 								while(0 < (getline line <tmpFile)) {
