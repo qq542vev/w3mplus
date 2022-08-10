@@ -878,8 +878,8 @@ keymap "Mx" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key
 keymap "My" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=y"
 keymap "Mz" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=set-quick-mark&key=z"
 
-keymap "go" SET_OPTION "keymap_file=keymap_w3mplus-quickmark"
-keymap "gn" SET_OPTION "keymap_file=keymap_w3mplus-newquickmark"
+keymap "go" SET_OPTION "keymap_file=keymap_w3mplus-quickmark-currenttab"
+keymap "gn" SET_OPTION "keymap_file=keymap_w3mplus-quickmark-newtab"
 
 keymap ":Q" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-quick-mark"
 
