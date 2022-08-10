@@ -169,136 +169,136 @@ keymap "C-?" NULL
 
 ## ESC + ASCII printable characters ##
 
-keymap "M-SPC" NULL
-keymap "M-!" NULL
-keymap "M-\"" NULL
-keymap "M-#" NULL
-keymap "M-$" NULL
-keymap "M-%" NULL
-keymap "M-&" NULL
-keymap "M-'" NULL
-keymap "M-(" NULL
-keymap "M-)" NULL
-keymap "M-*" NULL
-keymap "M-+" NULL
-keymap "M-," NULL
-keymap "M--" NULL
-keymap "M-." NULL
-keymap "M-/" NULL
-keymap "M-0" NULL
-keymap "M-1" NULL
-keymap "M-2" NULL
-keymap "M-3" NULL
-keymap "M-4" NULL
-keymap "M-5" NULL
-keymap "M-6" NULL
-keymap "M-7" NULL
-keymap "M-8" NULL
-keymap "M-9" NULL
-keymap "M-:" NULL
-keymap "M-;" NULL
-keymap "M-<" NULL
-keymap "M-=" NULL
-keymap "M->" NULL
-keymap "M-?" NULL
-keymap "M-@" NULL
-keymap "M-A" NULL
-keymap "M-B" NULL
-keymap "M-C" NULL
-keymap "M-D" NULL
-keymap "M-E" NULL
-keymap "M-F" NULL
-keymap "M-G" NULL
-keymap "M-H" NULL
-keymap "M-I" NULL
-keymap "M-J" NULL
-keymap "M-K" NULL
-keymap "M-L" NULL
-keymap "M-M" NULL
-keymap "M-N" NULL
-#keymap "M-O" NULL
-keymap "M-P" NULL
-keymap "M-Q" NULL
-keymap "M-R" NULL
-keymap "M-S" NULL
-keymap "M-T" NULL
-keymap "M-U" NULL
-keymap "M-V" NULL
-keymap "M-W" NULL
-keymap "M-X" NULL
-keymap "M-Y" NULL
-keymap "M-Z" NULL
-keymap "M-[" NULL
-keymap "M-]" NULL
-keymap "M-\^" NULL
-keymap "M-_" NULL
-keymap "M-`" NULL
-keymap "M-a" NULL
-keymap "M-b" NULL
-keymap "M-c" NULL
-keymap "M-d" NULL
-keymap "M-e" NULL
-keymap "M-f" NULL
-keymap "M-g" NULL
-keymap "M-h" NULL
-keymap "M-i" NULL
-keymap "M-j" NULL
-keymap "M-k" NULL
-keymap "M-l" NULL
-keymap "M-m" NULL
-keymap "M-n" NULL
-keymap "M-o" NULL
-keymap "M-p" NULL
-keymap "M-q" NULL
-keymap "M-r" NULL
-keymap "M-s" NULL
-keymap "M-t" NULL
-keymap "M-u" NULL
-keymap "M-v" NULL
-keymap "M-w" NULL
-keymap "M-x" NULL
-keymap "M-y" NULL
-keymap "M-z" NULL
-keymap "M-{" NULL
-keymap "M-|" NULL
-keymap "M-}" NULL
-keymap "M-~" NULL
+keymap "ESC-SPC" NULL
+keymap "ESC-!" NULL
+keymap "ESC-\"" NULL
+keymap "ESC-#" NULL
+keymap "ESC-$" NULL
+keymap "ESC-%" NULL
+keymap "ESC-&" NULL
+keymap "ESC-'" NULL
+keymap "ESC-(" NULL
+keymap "ESC-)" NULL
+keymap "ESC-*" NULL
+keymap "ESC-+" NULL
+keymap "ESC-," NULL
+keymap "ESC--" NULL
+keymap "ESC-." NULL
+keymap "ESC-/" NULL
+keymap "ESC-0" NULL
+keymap "ESC-1" NULL
+keymap "ESC-2" NULL
+keymap "ESC-3" NULL
+keymap "ESC-4" NULL
+keymap "ESC-5" NULL
+keymap "ESC-6" NULL
+keymap "ESC-7" NULL
+keymap "ESC-8" NULL
+keymap "ESC-9" NULL
+keymap "ESC-:" NULL
+keymap "ESC-;" NULL
+keymap "ESC-<" NULL
+keymap "ESC-=" NULL
+keymap "ESC->" NULL
+keymap "ESC-?" NULL
+keymap "ESC-@" NULL
+keymap "ESC-A" NULL
+keymap "ESC-B" NULL
+keymap "ESC-C" NULL
+keymap "ESC-D" NULL
+keymap "ESC-E" NULL
+keymap "ESC-F" NULL
+keymap "ESC-G" NULL
+keymap "ESC-H" NULL
+keymap "ESC-I" NULL
+keymap "ESC-J" NULL
+keymap "ESC-K" NULL
+keymap "ESC-L" NULL
+keymap "ESC-M" NULL
+keymap "ESC-N" NULL
+keymap "ESC-O" NULL
+keymap "ESC-P" NULL
+keymap "ESC-Q" NULL
+keymap "ESC-R" NULL
+keymap "ESC-S" NULL
+keymap "ESC-T" NULL
+keymap "ESC-U" NULL
+keymap "ESC-V" NULL
+keymap "ESC-W" NULL
+keymap "ESC-X" NULL
+keymap "ESC-Y" NULL
+keymap "ESC-Z" NULL
+keymap "ESC-[" NULL
+keymap "ESC-]" NULL
+keymap "ESC-\^" NULL
+keymap "ESC-_" NULL
+keymap "ESC-`" NULL
+keymap "ESC-a" NULL
+keymap "ESC-b" NULL
+keymap "ESC-c" NULL
+keymap "ESC-d" NULL
+keymap "ESC-e" NULL
+keymap "ESC-f" NULL
+keymap "ESC-g" NULL
+keymap "ESC-h" NULL
+keymap "ESC-i" NULL
+keymap "ESC-j" NULL
+keymap "ESC-k" NULL
+keymap "ESC-l" NULL
+keymap "ESC-m" NULL
+keymap "ESC-n" NULL
+keymap "ESC-o" NULL
+keymap "ESC-p" NULL
+keymap "ESC-q" NULL
+keymap "ESC-r" NULL
+keymap "ESC-s" NULL
+keymap "ESC-t" NULL
+keymap "ESC-u" NULL
+keymap "ESC-v" NULL
+keymap "ESC-w" NULL
+keymap "ESC-x" NULL
+keymap "ESC-y" NULL
+keymap "ESC-z" NULL
+keymap "ESC-{" NULL
+keymap "ESC-|" NULL
+keymap "ESC-}" NULL
+keymap "ESC-~" NULL
 
 ## ESC + ASCII Control characters ##
 
-keymap "M-C-@" NULL
-keymap "M-C-a" NULL
-keymap "M-C-b" NULL
-keymap "M-C-c" NULL
-keymap "M-C-d" NULL
-keymap "M-C-e" NULL
-keymap "M-C-f" NULL
-keymap "M-C-g" NULL
-keymap "M-C-h" NULL
-keymap "M-C-i" NULL
-keymap "M-C-j" NULL
-keymap "M-C-k" NULL
-keymap "M-C-l" NULL
-keymap "M-C-m" NULL
-keymap "M-C-n" NULL
-keymap "M-C-o" NULL
-keymap "M-C-p" NULL
-keymap "M-C-q" NULL
-keymap "M-C-r" NULL
-keymap "M-C-s" NULL
-keymap "M-C-t" NULL
-keymap "M-C-u" NULL
-keymap "M-C-v" NULL
-keymap "M-C-w" NULL
-keymap "M-C-x" NULL
-keymap "M-C-y" NULL
-keymap "M-C-z" NULL
-keymap "M-C-[" NULL
-keymap "M-C-\\" NULL
-keymap "M-C-]" NULL
-keymap "M-C-^" NULL
-keymap "M-C-_" NULL
-keymap "M-C-?" NULL
+keymap "ESC-C-@" NULL
+keymap "ESC-C-a" NULL
+keymap "ESC-C-b" NULL
+keymap "ESC-C-c" NULL
+keymap "ESC-C-d" NULL
+keymap "ESC-C-e" NULL
+keymap "ESC-C-f" NULL
+keymap "ESC-C-g" NULL
+keymap "ESC-C-h" NULL
+keymap "ESC-C-i" NULL
+keymap "ESC-C-j" NULL
+keymap "ESC-C-k" NULL
+keymap "ESC-C-l" NULL
+keymap "ESC-C-m" NULL
+keymap "ESC-C-n" NULL
+keymap "ESC-C-o" NULL
+keymap "ESC-C-p" NULL
+keymap "ESC-C-q" NULL
+keymap "ESC-C-r" NULL
+keymap "ESC-C-s" NULL
+keymap "ESC-C-t" NULL
+keymap "ESC-C-u" NULL
+keymap "ESC-C-v" NULL
+keymap "ESC-C-w" NULL
+keymap "ESC-C-x" NULL
+keymap "ESC-C-y" NULL
+keymap "ESC-C-z" NULL
+keymap "ESC-C-[" NULL
+keymap "ESC-C-\\" NULL
+keymap "ESC-C-]" NULL
+keymap "ESC-C-^" NULL
+keymap "ESC-C-_" NULL
+keymap "ESC-C-?" NULL
 
 ## Special keys ##
 
@@ -476,44 +476,44 @@ keymap "{" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_TAB"
 keymap "|" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PIPE_BUF"
 keymap "}" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_TAB"
 
-keymap "M-TAB" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
-keymap "M-C-j" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_LINK"
-keymap "M-C-m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_LINK"
+keymap "ESC-TAB" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
+keymap "ESC-C-j" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_LINK"
+keymap "ESC-C-m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_LINK"
 
-keymap "M-:" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MARK_MID"
-keymap "M-<" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
-keymap "M->" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
-keymap "M-I" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_IMAGE"
-keymap "M-M" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXTERN_LINK"
-keymap "M-W" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DICT_WORD_AT"
-keymap "M-a" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; ADD_BOOKMARK"
-keymap "M-b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BOOKMARK"
-keymap "M-c" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; COMMAND"
-keymap "M-e" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EDIT_SCREEN"
-keymap "M-g" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINE"
-keymap "M-k" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DEFINE_KEY"
-keymap "M-l" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LIST_MENU"
-keymap "M-m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_LIST_MENU"
-keymap "M-n" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_MARK"
-keymap "M-o" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION"
-keymap "M-p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_MARK"
-keymap "M-s" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE"
-keymap "M-t" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; TAB_MENU"
-keymap "M-u" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_RELATIVE"
-keymap "M-v" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
-keymap "M-w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DICT_WORD"
+keymap "ESC-:" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MARK_MID"
+keymap "ESC-<" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
+keymap "ESC->" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
+keymap "ESC-I" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE_IMAGE"
+keymap "ESC-M" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EXTERN_LINK"
+keymap "ESC-W" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DICT_WORD_AT"
+keymap "ESC-a" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; ADD_BOOKMARK"
+keymap "ESC-b" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BOOKMARK"
+keymap "ESC-c" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; COMMAND"
+keymap "ESC-e" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; EDIT_SCREEN"
+keymap "ESC-g" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINE"
+keymap "ESC-k" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DEFINE_KEY"
+keymap "ESC-l" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; LIST_MENU"
+keymap "ESC-m" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MOVE_LIST_MENU"
+keymap "ESC-n" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_MARK"
+keymap "ESC-o" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION"
+keymap "ESC-p" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_MARK"
+keymap "ESC-s" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SAVE"
+keymap "ESC-t" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; TAB_MENU"
+keymap "ESC-u" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_RELATIVE"
+keymap "ESC-v" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
+keymap "ESC-w" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; DICT_WORD"
 
 keymap "UP" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_LINK"
 keymap "DOWN" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_LINK"
 keymap "RIGHT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; GOTO_LINK"
 keymap "LEFT" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BACK"
 
-keymap "M-[E" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
-keymap "M-[L" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
+keymap "ESC-[E" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
+keymap "ESC-[L" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
 
-keymap "M-[1~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
-keymap "M-[2~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
-keymap "M-[4~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
-keymap "M-[5~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
-keymap "M-[6~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_PAGE"
-keymap "M-[28~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
+keymap "ESC-[1~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; BEGIN"
+keymap "ESC-[2~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
+keymap "ESC-[4~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; END"
+keymap "ESC-[5~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; PREV_PAGE"
+keymap "ESC-[6~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; NEXT_PAGE"
+keymap "ESC-[28~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU"
