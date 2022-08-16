@@ -7,5 +7,6 @@
 /**/.w3mplus/*
 !/**/.w3mplus/bin
 !/**/.w3mplus/cache
+!/**/.w3mplus/doc
 !/**/.w3mplus/lib
 !/**/.w3mplus/search-config
