@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	lang="$lang$"
+	xml:lang="$lang$"
+	about=""
+	typeof="foaf:Document"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="generator" property="dc11:contributor" content="pandoc" />
+		<meta name="robots" content="index,follow" />
+
+		$for(author)$
+			<meta name="author" property="dc11:creator" content="$author.name$" />
+		$endfor$
+
+		$if(copyright)$
+			<meta name="copyright" property="dc11:rights" content="$copyright$" />
+		$endif$
+
+		$if(created)$
+			<meta name="dcterms.created" property="dc:created" datatype="dc:W3CDTF" content="$created$" />
+		$endif$
+
+		$if(modified)$
+			<meta name="dcterms.modified" property="dc:modified" datatype="dc:W3CDTF" content="$modified$" />
+		$endif$
+
+		<title property="dc:title">$title$</title>
+
+		$for(license)$
+			<link rel="license" title="$license.name$" href="$license.url$" />
+		$endfor$
+	</head>
+	<body>
+		<main>$body$</main>
+
+		<footer>
+			<dl>
+				$if(created)$
+					<dt>作成日</dt>
+					<dd>$created$</dd>
+				$endif$
+
+				$if(modified)$
+					<dt>更新日</dt>
+					<dd>$modified$</dd>
+				$endif$
+			</dl>
+		</fotter>
+	</body>
+</html>
