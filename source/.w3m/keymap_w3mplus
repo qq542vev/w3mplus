@@ -1227,6 +1227,7 @@ keymap "\"Z" MENU "Register_Z"
 
 keymap "\"%" MENU "RegisterCurrent"
 keymap "\"/" MENU "RegisterSearch"
+keymap "\"--" MENU "RegisterSmallDelete"
 keymap "\"\"" MENU "RegisterUnnamed"
 
 # w3mplus Key Map #

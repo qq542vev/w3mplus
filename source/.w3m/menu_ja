@@ -1948,6 +1948,8 @@ menu Register_z
 end
 
 menu RegisterCurrent
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&variable=W3M_URL"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&variable=W3M_URL&tab=newtab"
 	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL"
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_URL&redirect=mailto%3A%3Fbody%3D"
@@ -1961,6 +1963,15 @@ menu RegisterSearch
 	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=redirect&tab=open-newtab"
 	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
 	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=%2F&subaction=read-shell"
+end
+
+menu RegisterSmallDelete
+	func "o  移動 (現在のタブ)" GOTO "o" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=-&subaction=goto"
+	func "t  移動 (新しいタブ)" GOTO "t" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=-&subaction=goto&tab=newtab"
+	func "p  検索 (現在のタブ)" GOTO "p" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=-&subaction=redirect"
+	func "P  検索 (新しいタブ)" GOTO "P" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=-&subaction=redirect&tab=open-newtab"
+	func "s  メールで送信" GOTO "s" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=-&subaction=redirect&redirect=mailto%3A%3Fbody%3D"
+	func "S  表示" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=get-register&key=-&subaction=read-shell"
 end
 
 menu RegisterUnnamed

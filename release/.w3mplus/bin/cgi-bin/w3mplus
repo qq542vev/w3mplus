@@ -528,7 +528,15 @@ case "${query_action-}" in
 	expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
 
 	case "${uri}" in
-	?*) pushuri --l1 "${line}" --c1 "${colmun}" -- "${uri}" ;;
+	?*)
+		setregister \
+			--config "${W3MPLUS_REGISTER_FILE}" \
+			-- '-' "${uri}"
+
+		pushuri \
+			--config "${W3MPLUS_UNDO_FILE}" \
+			--l1 "${line}" --c1 "${colmun}" -- "${uri}"
+		;;
 	esac
 
 	httpresponse \
@@ -1275,6 +1283,7 @@ case "${query_action-}" in
 	esac
 
 	popuri \
+		--config "${W3MPLUS_UNDO_FILE}" \
 		${query_number+--number "${query_number}"} \
 		${query_count+--count "${query_count}"} \
 		--timeout "${W3MPLUS_UNDO_TIMEOUT}" |
