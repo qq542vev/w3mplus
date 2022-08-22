@@ -786,6 +786,7 @@ keymap ";O" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-goto"
 keymap ";T" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-tabgoto"
 keymap ";W" EXTERN_LINK
 keymap ";a" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=ADD_BOOKMARK&variable=W3M_CURRENT_LINK"
+keymap ";S" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_CURRENT_LINK"
 keymap ";v" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=VIEW&variable=W3M_CURRENT_LINK"
 keymap ";V" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=COMMAND%20VIEW%3B%20EDIT_SCREEN%3B%20VIEW&variable=W3M_CURRENT_LINK"
 keymap ";y" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"

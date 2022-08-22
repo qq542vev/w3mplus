@@ -292,6 +292,7 @@ menu ExtendedHints
 	func "T  Generate a ':t URL' prompt" GOTO "T" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=link-tabgoto"
 	func "W  Open link in external browser" EXTERN_LINK "W"
 	func "a  Add a bookmark" GOTO "a" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=ADD_BOOKMARK&variable=W3M_CURRENT_LINK"
+	func "S  Search link URL" GOTO "S" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=redirect&variable=W3M_CURRENT_LINK"
 	func "v  View link source" GOTO "v" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=VIEW&variable=W3M_CURRENT_LINK"
 	func "V  View link source in external editor" GOTO "V" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=COMMAND%20VIEW%3B%20EDIT_SCREEN%3B%20VIEW&variable=W3M_CURRENT_LINK"
 	func "y  Yank link location" GOTO "y" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=yank&variable=W3M_CURRENT_LINK"
