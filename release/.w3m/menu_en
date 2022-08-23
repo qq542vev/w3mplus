@@ -305,6 +305,7 @@ end
 
 menu Commands
 	func  "!  Run a shell command" EXEC_SHELL "!"
+	func  "\"  Show register file" GOTO "\"" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-register"
 	func  ":  Run a w3m command" COMMAND ":"
 	func  "b  Open bookmarks" VIEW_BOOKMARK "b"
 	func  "c  Change cookie permissions for sites" COOKIE "c"
@@ -331,7 +332,6 @@ menu Commands
 	func  "S  Start a shell" EXEC_SHELL "S" "${SHELL}"
 	func  "t  Open URL in a new tab" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
 	func  "u  Recently closed tabs" GOTO "u" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-tab-history"
-	popup "U  Change the user agent" MenuUserAgent "U"
 	func  "v  Show version information" VERSION "v"
 	func  "w  Save current document to disk" DOWNLOAD "w"
 	func  "W  Print current document" PRINT "W"

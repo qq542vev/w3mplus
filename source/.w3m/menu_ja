@@ -305,6 +305,7 @@ end
 
 menu Commands
 	func  "!  シェルコマンドを実行" EXEC_SHELL "!"
+	func  "\"  レジスタファイルを表示" GOTO "\"" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-register"
 	func  ":  w3m のコマンドを実行" COMMAND ":"
 	func  "b  ブックマークを開く" VIEW_BOOKMARK "b"
 	func  "c  サイトのCookieアクセス許可を変更" COOKIE "c"
@@ -331,7 +332,6 @@ menu Commands
 	func  "S  シェルを開始" EXEC_SHELL "S" "${SHELL}"
 	func  "t  新しいタブで URL を開く" COMMAND "t" "SET_OPTION default_url=0; TAB_GOTO"
 	func  "u  最近閉じたタブの一覧" GOTO "u" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=show-tab-history"
-	popup "U  ユーザーエージェントを変更" MenuUserAgent "U"
 	func  "v  バージョン情報を表示" VERSION "v"
 	func  "w  現在のページをディスクに保存" DOWNLOAD "w"
 	func  "W  現在のページを印刷" PRINT "W"
