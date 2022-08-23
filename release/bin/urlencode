@@ -1,32 +1,8 @@
 #!/bin/sh
 
-######################################################################
-#
-# URLENCODE - URL Encoder on the Basis of RFC 3986
-#
-# USAGE: urlencode [-r|--raw] <file> ...
-#        -r ...... RAW MODE : when this option is set, all of " " are
-#                  replaced with "%20" instead of "+".
-#        --raw ... same as the "-r" option
-#
-# Written by Shell-Shoccar Japan (@shellshoccarjpn) on 2020-05-06
-#
-# This is a public-domain software (CC0). It means that all of the
-# people can use this for any purposes with no restrictions at all.
-# By the way, We are fed up with the side effects which are brought
-# about by the major licenses.
-#
-# The latest version is distributed at the following page.
-# https://github.com/ShellShoccar-jpn/misc-tools
-#
-######################################################################
 
 urlencode() (
-	######################################################################
-	# Initial Configuration
-	######################################################################
 
-	# === Initialize shell environment ===================================
 	set -eu
 	umask 0022
 	export LC_ALL=C
@@ -34,7 +10,6 @@ urlencode() (
 	case $PATH in :*) PATH=${PATH#?} ;; esac
 	export UNIX_STD=2003 # to make HP-UX conform to POSIX
 
-	# === Define the functions for printing usage ========================
 	print_usage_and_exit() {
 		cat <<-USAGE 1>&2
 			Usage   : ${0##*/} [-r|--raw] <file> ...
@@ -47,16 +22,11 @@ urlencode() (
 		exit 1
 	}
 
-	######################################################################
-	# Parse Options
-	######################################################################
 
-	# === Print help message if required =================================
 	case "${1:-}" in
 	--help | --version | -h) print_usage_and_exit ;;
 	esac
 
-	# === Other options ==================================================
 	instead_of_spc='+'
 	case $# in [!0]*)
 		for arg in ${1+"$@"}; do
@@ -76,9 +46,6 @@ urlencode() (
 		;;
 	esac
 
-	######################################################################
-	# Main
-	######################################################################
 
 	(
 		cat ${1+"$@"}
@@ -86,17 +53,14 @@ urlencode() (
 	) |
 		awk '                                                            #
 BEGIN {                                                          #
-  # --- prepare                                                  #
   OFS = "";                                                      #
   ORS = "";                                                      #
-  # --- prepare encoding                                         #
   for(i= 0;i<256;i++){c2p[sprintf("%c",i)]=sprintf("%%%02X",i);} #
   c2p[" "]="'"$instead_of_spc"'";                                #
   for(i=48;i< 58;i++){c2p[sprintf("%c",i)]=sprintf("%c",i);    } #
   for(i=65;i< 91;i++){c2p[sprintf("%c",i)]=sprintf("%c",i);    } #
   for(i=97;i<123;i++){c2p[sprintf("%c",i)]=sprintf("%c",i);    } #
   c2p["-"]="-"; c2p["."]="."; c2p["_"]="_"; c2p["~"]="~";        #
-  # --- encode                                                   #
   while (getline line) {                                         #
     for (i=1; i<=length(line); i++) {                            #
       print c2p[substr(line,i,1)];                               #

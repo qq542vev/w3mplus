@@ -1,28 +1,7 @@
 #!/bin/sh
 
-######################################################################
-#
-# URLDECODE - URL Decoder on the Basis of RFC 3986
-#
-# USAGE: urldecode <file> ...
-#
-# Written by Shell-Shoccar Japan (@shellshoccarjpn) on 2020-05-06
-#
-# This is a public-domain software (CC0). It means that all of the
-# people can use this for any purposes with no restrictions at all.
-# By the way, We are fed up with the side effects which are brought
-# about by the major licenses.
-#
-# The latest version is distributed at the following page.
-# https://github.com/ShellShoccar-jpn/misc-tools
-#
-######################################################################
 
-######################################################################
-# Initial Configuration
-######################################################################
 
-# === Initialize shell environment ===================================
 set -eu
 umask 0022
 export LC_ALL=C
@@ -30,7 +9,6 @@ export PATH="$(command -p getconf PATH 2>/dev/null)${PATH+:}${PATH-}"
 case $PATH in :*) PATH=${PATH#?} ;; esac
 export UNIX_STD=2003 # to make HP-UX conform to POSIX
 
-# === Define the functions for printing usage ========================
 print_usage_and_exit() {
 	cat <<-USAGE 1>&2
 		Usage   : ${0##*/} <file> ...
@@ -41,18 +19,11 @@ print_usage_and_exit() {
 	exit 1
 }
 
-######################################################################
-# Parse Options
-######################################################################
 
-# === Print help message if required =================================
 case "${1:-}" in
 --help | --version | -h) print_usage_and_exit ;;
 esac
 
-######################################################################
-# Main
-######################################################################
 
 (
 	cat ${1+"$@"}
@@ -60,10 +31,8 @@ esac
 ) |
 	awk '                                                                #
 BEGIN {                                                              #
-  # --- prepare                                                      #
   OFS = "";                                                          #
   ORS = "";                                                          #
-  # --- prepare decoding                                             #
   for (i=0; i<256; i++) {                                            #
     l  = sprintf("%c",i);                                            #
     k1 = sprintf("%02x",i);                                          #
@@ -72,7 +41,6 @@ BEGIN {                                                              #
     k4 = toupper(k1);                                                #
     p2c[k1]=l;p2c[k2]=l;p2c[k3]=l;p2c[k4]=l;                         #
   }                                                                  #
-  # --- decode                                                       #
   while (getline line) {                                             #
     gsub(/\+/, " ", line);                                           #
     while (length(line)) {                                           #

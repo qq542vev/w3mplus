@@ -1,26 +1,5 @@
 #!/usr/bin/env sh
 
-### Script: w3m-cleanup
-##
-## w3m の設定ディレクトリ内を掃除する。
-##
-## w3m の設定ディレクトリ内のキャッシュファイル、テンポラリファイルを削除する。
-## このコマンドは w3m 実行中に実行してはならない。
-##
-## Metadata:
-##
-##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.1.6
-##   date - 2022-06-28
-##   since - 2019-07-23
-##   copyright - Copyright (C) 2019-2020 qq542vev. Some rights reserved.
-##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
-##   package - w3mplus
-##
-## See Also:
-##
-##   * <Project homepage at https://github.com/qq542vev/w3mplus>
-##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
 VERSION='w3m-cleanup 1.1.6'
 
@@ -37,104 +16,8 @@ POSIXLY_CORRECT='1'     # GNU Coreutils POSIX mode
 COMMAND_MODE='unix2003' # macOS UNIX 03 mode
 export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
 
-#!/usr/bin/env sh
 
-### Script: sysexits.sh
-##
-## Exit status codes for system programs.
-##
-## This include file attempts to categorize possible error
-## exit statuses for system programs, notably delivermail
-## and the Berkeley network.
-##
-## Error numbers begin at EX__BASE to reduce the possibility of
-## clashing with other exit statuses that random programs may
-## already return.  The meaning of the codes is approximately
-## as follows:
-##
-## EX_USAGE - The command was used incorrectly, e.g., with
-##   the wrong number of arguments, a bad flag, a bad
-##   syntax in a parameter, or whatever.
-## EX_DATAERR - The input data was incorrect in some way.
-##   This should only be used for user's data & not
-##   system files.
-## EX_NOINPUT - An input file (not a system file) did not
-##   exist or was not readable.  This could also include
-##   errors like "No message" to a mailer (if it cared
-##   to catch it).
-## EX_NOUSER - The user specified did not exist.  This might
-##   be used for mail addresses or remote logins.
-## EX_NOHOST - The host specified did not exist.  This is used
-##   in mail addresses or network requests.
-## EX_UNAVAILABLE - A service is unavailable.  This can occur
-##   if a support program or file does not exist.  This
-##   can also be used as a catchall message when something
-##   you wanted to do doesn't work, but you don't know
-##   why.
-## EX_SOFTWARE - An internal software error has been detected.
-##   This should be limited to non-operating system related
-##   errors as possible.
-## EX_OSERR - An operating system error has been detected.
-##   This is intended to be used for such things as "cannot
-##   fork", "cannot create pipe", or the like.  It includes
-##   things like getuid returning a user that does not
-##   exist in the passwd file.
-## EX_OSFILE - Some system file (e.g., /etc/passwd, /etc/utmp,
-##   etc.) does not exist, cannot be opened, or has some
-##   sort of error (e.g., syntax error).
-## EX_CANTCREAT - A (user specified) output file cannot be
-##   created.
-## EX_IOERR - An error occurred while doing I/O on some file.
-## EX_TEMPFAIL - temporary failure, indicating something that
-##   is not really an error.  In sendmail, this means
-##   that a mailer (e.g.) could not create a connection,
-##   and the request should be reattempted later.
-## EX_PROTOCOL - the remote system returned something that
-##   was "not possible" during a protocol exchange.
-## EX_NOPERM - You did not have sufficient permission to
-##   perform the operation.  This is not intended for
-##   file system problems, which should use NOINPUT or
-##   CANTCREAT, but rather for higher level permissions.
-##
-## metadata:
-##
-##   author - <qq542vev at https://purl.org/meta/me/>
-##   date - 2020-03-05
-##   version - 1.0.0
-##   copyright - Copyright (c) 1987, 1993
-##     The Regents of the University of California.  All rights reserved.
-##   license - BSD-3-Clause
-##   package - w3mplus
-##   source - <sysexits.h at https://github.com/freebsd/freebsd/blob/master/include/sysexits.h>
-##
-## See Also:
-##
-##   * <Project homepage at https://github.com/qq542vev/w3mplus>
-##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
-#  Redistribution and use in source and binary forms, with or without
-#  modification, are permitted provided that the following conditions
-#  are met:
-#  1. Redistributions of source code must retain the above copyright
-#     notice, this list of conditions and the following disclaimer.
-#  2. Redistributions in binary form must reproduce the above copyright
-#     notice, this list of conditions and the following disclaimer in the
-#     documentation and/or other materials provided with the distribution.
-#  3. Neither the name of the University nor the names of its contributors
-#     may be used to endorse or promote products derived from this software
-#     without specific prior written permission.
-#
-#  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
-#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-#  ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
-#  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-#  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-#  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-#  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-#  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-#  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-#  SUCH DAMAGE.
 
 readonly 'EX_OK=0' # successful termination
 
@@ -176,7 +59,6 @@ option_error() {
 	endCall "${EX_USAGE}"
 }
 
-# @getoptions
 parser_definition() {
 	setup REST abbr:true error:option_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [CONFIG_DIRECTORY]..." \
@@ -209,11 +91,7 @@ parser_definition() {
 		'  131 - received SIGQUIT' \
 		'  143 - received SIGTERM'
 }
-# @end
 
-# @gengetoptions parser -i parser_definition parse "${1}"
-# Generated by getoptions (BEGIN)
-# URL: https://github.com/ko1nksm/getoptions (v3.3.0)
 cookieFlag='0'
 historyFlag='0'
 REST=''
@@ -392,10 +270,7 @@ Exit Status:
   143 - received SIGTERM
 GETOPTIONSHERE
 }
-# Generated by getoptions (END)
-# @end
 
-#eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 

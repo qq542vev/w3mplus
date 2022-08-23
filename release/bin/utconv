@@ -1,45 +1,7 @@
 #!/bin/sh
 
-######################################################################
-#
-# UTCONV - A Converter Between UNIX-time and Calendar-time
-#
-# USAGE: utconv [datetime_text_or_file]    # for Real-datetime -> Unixtime
-#        utconv -r [unixtime_text_or_file] # for Unixtime      -> Real-datetime
-#
-# * utconv reads stdin when <datetime_text_or_file> is not given.
-# * datetime text must be one of the following format
-#   - YYMMDD ........... Real Date (2digits-year)
-#   - YYYYMMDD ......... Real Date (4digits-year)
-#   - YYMMDDhhmmss ..... Real DateTime (2digits-year)
-#   - YYYYMMDDhhmmss ... Real DateTime (4digits-year)
-#   - n ................ UNIX time
-# * utconv treats the Real DateTime as a localtime. When you want to be
-#   treated as a UTC. You can use the TZ environment variable, like this
-#     > TZ=UTC+0 utconv -r 1
-#     19700101000001
-#
-# Return: 0 (always except helpmessage)
-#
-# * Any invalid time make me return the text "-1" with the return code 0.
-#
-# Written by Shell-Shoccar Japan (@shellshoccarjpn) on 2020-05-06
-#
-# This is a public-domain software (CC0). It means that all of the
-# people can use this for any purposes with no restrictions at all.
-# By the way, We are fed up with the side effects which are brought
-# about by the major licenses.
-#
-# The latest version is distributed at the following page.
-# https://github.com/ShellShoccar-jpn/misc-tools
-#
-######################################################################
 
-######################################################################
-# Initial Configuration
-######################################################################
 
-# === Initialize shell environment ===================================
 set -u
 umask 0022
 export LC_ALL=C
@@ -47,7 +9,6 @@ export PATH="$(command -p getconf PATH 2>/dev/null)${PATH+:}${PATH-}"
 case $PATH in :*) PATH=${PATH#?} ;; esac
 export UNIX_STD=2003 # to make HP-UX conform to POSIX
 
-# === Define the functions for printing usage ========================
 print_usage_and_exit() {
 	cat <<-USAGE 1>&2
 		USAGE   : ${0##*/} [datetime_text_or_file]    # Cal.-time -> Unixtime
@@ -60,26 +21,16 @@ print_usage_and_exit() {
 	exit 1
 }
 
-######################################################################
-# Parse Arguments
-######################################################################
 
-# === print the usage and exit if required ===========================
 case "${1:-}" in --version | --help | -h) print_usage_and_exit ;; esac
 
-######################################################################
-# Main Routine
-######################################################################
 
-# === Convert ========================================================
 exec awk '
 BEGIN {
-  # 1) initialize
   unixtime2YYYYMMDDhhmmss_init("LOCALTIME"); # initialize with localtime mode
   revmode   = 0;
   fromstdin = 1;
 
-  # 2) parse arguments
   for (i=1; i<ARGC; i++) {
     if (ARGV[i] == "-r") {
       revmode = 1;
@@ -104,7 +55,6 @@ BEGIN {
     }
   }
 
-  # 3) convert data from the stdin if necessary
   if ((fromstdin > 0) && (revmode == 0)) {
     while ("cat" | getline) {
       printf("%d\n",YYYYMMDDhhmmss2unixtime($1));
@@ -133,17 +83,14 @@ function unixtime2YYYYMMDDhhmmss_init(localtime_flag, gm,lo) {
 }
 
 function unixtime2YYYYMMDDhhmmss(ut, Y,M,D,h,m,s,t,i,j) {
-  # 0) timezone adjustment
   ut += offset;
   if (ut < 0) {return -1;}
 
-  # 1) calculate hour,minute,second and number of days from the Epoch
   s = ut % 60;  t = int(ut/60);
   m =  t % 60;  t = int( t/60);
   h =  t % 24;
   days_from_epoch = int( t/24);
 
-  # 2) calculate year
   Y = int(days_from_epoch/365.2425)+1970+1;
   if (Y > max_calced_year) {
      i = days_on_Jan1st_from_epoch[max_calced_year];
@@ -159,7 +106,6 @@ function unixtime2YYYYMMDDhhmmss(ut, Y,M,D,h,m,s,t,i,j) {
     }
   }
 
-  # 3) calculate month,day
   days_of_month[2] = (Y%4!=0)?28:(Y%100!=0)?29:(Y%400!=0)?28:29;
   D = days_from_epoch - days_on_Jan1st_from_epoch[Y] + 1;
   for (M=1; ; M++) {
@@ -174,7 +120,6 @@ function unixtime2YYYYMMDDhhmmss(ut, Y,M,D,h,m,s,t,i,j) {
 }
 
 function YYYYMMDDhhmmss2unixtime(YYYYMMDDhhmmss, Y,M,D,h,m,s,l) {
-  # 1) seperate the units
   l = length(YYYYMMDDhhmmss);
   if        (l <  5) { # invalid
     return -1;
@@ -197,15 +142,12 @@ function YYYYMMDDhhmmss2unixtime(YYYYMMDDhhmmss, Y,M,D,h,m,s,l) {
     s = substr(YYYYMMDDhhmmss,l-1     )*1;
   }
 
-  # 2) validate
   if ((s>60) || (m>59) || (h>23) || (M>12)) {return -1;}
   days_of_month[2] = (Y%4!=0)?28:(Y%100!=0)?29:(Y%400!=0)?28:29;
   if (D > days_of_month[M]                ) {return -1;}
 
-  # 3) adjust the value of year and month
   if (M<3) {M+=12; Y--;}
 
-  # 4) calculate unixtime
   return (365*Y+int(Y/4)-int(Y/100)+int(Y/400)+int(306*(M+1)/10)-428+D-719163)*86400+(h*3600)+(m*60)+s-offset;
 }
 ' ${1+"$@"}

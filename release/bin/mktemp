@@ -1,41 +1,7 @@
 #!/bin/sh
 
-######################################################################
-#
-# MKTEMP - The "mktemp" Command also Works on Just a POSIX Environment
-#
-# USAGE: mktemp [--by-myself] [options] [template [...]]
-#
-#        --by-myself ..... (write as the 1st argument when use)
-#                            Not use the "built-in" mktemp command
-#                            and always do mktemp by myself but it is
-#                            inferior to the built-in in performance
-#        -d .............. Makes a directory instead of a file
-#        -p <DIR> ........ Defines the temporary directory instead of
-#                          $TMPDIR
-#        -q .............. Quiet even if some error occurred
-#        -u .............. Makes a file but remove it immediately
-#        -t .............. Adds the temporary directory as a prefix
-#                          in front of the filepath
-#        --suffix=<suff> . Adds the suffix behind the filename
-#
-# Written by Shell-Shoccar Japan (@shellshoccarjpn) on 2020-05-06
-#
-# This is a public-domain software (CC0). It means that all of the
-# people can use this for any purposes with no restrictions at all.
-# By the way, We are fed up with the side effects which are brought
-# about by the major licenses.
-#
-# The latest version is distributed at the following page.
-# https://github.com/ShellShoccar-jpn/misc-tools
-#
-######################################################################
 
-######################################################################
-# Initial Configuration
-######################################################################
 
-# === Initialize shell environment ===================================
 set -u
 umask 0022
 export LC_ALL=C
@@ -43,7 +9,6 @@ export PATH="$(command -p getconf PATH 2>/dev/null)${PATH+:}${PATH-}"
 case $PATH in :*) PATH=${PATH#?} ;; esac
 export UNIX_STD=2003 # to make HP-UX conform to POSIX
 
-# === Define the functions for printing usage and error message ======
 print_usage_and_exit() {
 	cat <<-USAGE 1>&2
 		Usage   : ${0##*/} [--by-myself] [options] [template [...]]
@@ -62,7 +27,6 @@ error_exit() {
 	exit $1
 }
 
-# === Exec the built-in mktemp command if OK and exists ==============
 by_myself=0
 case "${1:-}" in
 '--by-myself')
@@ -94,7 +58,6 @@ case $by_myself in 0)
 	;;
 esac
 
-# === Investigate the temporary directory if set =====================
 Dir_tmp=$(set | grep ^TMPDIR= | sed 's/^[^=]\{1,\}=//')
 case "$Dir_tmp" in
 '') Dir_tmp='/tmp' ;;
@@ -102,25 +65,17 @@ case "$Dir_tmp" in
 *) Dir_tmp=${Dir_tmp%/} ;;
 esac
 
-# === Misc definitions ===============================================
 chrs='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
 max_retry_when_failed=10
 LFs=$(printf '\\\n_')
 LFs=${LFs%_}
 
-######################################################################
-# Parse Arguments
-######################################################################
 
-# === Get the options and the filepath ===============================
-# --- initialize option parameters -----------------------------------
 optd=0
 optu=0
 optq=0
 optt=0
 opts=''
-#
-# --- get them -------------------------------------------------------
 optmode=''
 while [ $# -gt 0 ]; do
 	case $# in 0) break ;; esac
@@ -203,21 +158,12 @@ while [ $# -gt 0 ]; do
 	break
 done
 
-######################################################################
-# Prepare for the Main Routine
-######################################################################
 
-# ===== FUNC: random string generator ================================
-# arg   : $1=length
-# ret   : 0
-# stdout: generated random string
 random_string() {
-	# calculate the number of words which required
 	nw=$(echo "${1}*l(${#chrs})/11.09+1" | # 11.09=ln(65536)
 		bc -l |
 		sed 's/\..*$//')
 
-	# make a random hexadecimal digit
 	if [ -c /dev/urandom ]; then
 		hstr=$(dd if=/dev/urandom bs=2 count=$nw 2>/dev/null |
 			od -A n -t x2 -v |
@@ -243,7 +189,6 @@ random_string() {
                 }')
 	fi
 
-	# make a random string from the hexadecimal digit
 	echo "obase=${#chrs};ibase=16;$hstr" |
 		bc |
 		tr -d '\\\n' |
@@ -259,9 +204,6 @@ random_string() {
 		tail -c $1
 }
 
-######################################################################
-# Main Routine
-######################################################################
 
 case $# in 0)
 	optt=1
@@ -272,7 +214,6 @@ esac
 err=0
 for arg in "$@"; do
 
-	# --- Make dir string for printing ---------------------------------
 	Dir_trg=${arg%/*}
 	case "$Dir_trg" in
 	"$arg")
@@ -294,9 +235,6 @@ for arg in "$@"; do
 	n=$max_retry_when_failed
 	while [ $n -ge 0 ]; do
 
-		# --- Making the file path ---------------------------------------
-		#
-		# replace the end of "XXX..." string to a random one
 		Path_target=$arg
 		s=$(printf '%s\n' "$Path_target" | sed 's/X*$//')
 		i=$((${#Path_target} - ${#s}))
@@ -304,25 +242,16 @@ for arg in "$@"; do
 		0) : ;;
 		*) Path_target="${s}$(random_string $i)" ;;
 		esac
-		#
-		# add the suffix
 		Path_target="${Path_target}${opts}"
-		#
-		# add the prefix if the option -t is enabled
 		case $optt in 1) Path_target="${Dir_tmp}/${Path_target}" ;; esac
-		#
-		# normalize
 		Path_target=$(printf '%s\n' "$Path_target" |
 			sed 's!//!/!g' |
 			sed 's!/./!/!g')
-		#
-		# for security
 		case "$Path_target" in
 		- | /* | ./* | ../*) : ;;
 		*) Path_target="./$Path_target" ;;
 		esac
 
-		# --- Making the file --------------------------------------------
 		case $optd in
 		0)
 			(
@@ -354,7 +283,6 @@ for arg in "$@"; do
 		break
 	done
 
-	# --- Print error message when failed to make a file ---------------
 	case "${optq}${n}" in
 	'0-1')
 		printf '%s\n' "${0##*/}: failed on $Dir_trg${Path_target##*/}" 1>&2
@@ -367,16 +295,11 @@ for arg in "$@"; do
 		;;
 	esac
 
-	# --- Print the path of the file -----------------------------------
 	printf '%s%s\n' "$Dir_trg" "${Path_target##*/}"
 
-	# --- Remove the file if -u,--dry-run option is set ----------------
 	case $optu in 1) rm -rf "$Path_target" ;; esac
 
 done
 
-######################################################################
-# Finish
-######################################################################
 
 exit $err
