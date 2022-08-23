@@ -6,6 +6,7 @@
 ##
 ## Metadata:
 ##
+##	 id - 58a1cbfd-8bc9-40d5-8013-cb765d3fd182
 ##	 author - qq542vev <https://purl.org/meta/me/>
 ##	 version - 0.1.0
 ##	 date - 2022-07-05
@@ -210,5 +211,6 @@ for file in ${@+"${@}"}; do
 	| sed -e '/eval .*getoptions/{ s/^/#/; }' \
 	| awk -- "${includeShellscript}" - \
 	| awk -- "${includeAwkscript}" - \
-	| shfmt -s -ln 'posix' >"${output}/${file##*/}"
+	| shfmt -s -ln 'posix' \
+	| sed -e '1b; /^[[:blank:]]*#/d' >"${output}/${file##*/}"
 done
