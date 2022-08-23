@@ -1088,12 +1088,6 @@ keymap ":G" MSGS
 
 keymap ":c" COOKIE
 
-## Using Plugins ##
-
-### User Agent Switcher ###
-
-keymap ":U" MENU MenuUserAgent
-
 ## Other ##
 
 ### Various commands ###
