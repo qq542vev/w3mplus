@@ -80,7 +80,7 @@ urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
 editor ${VISUAL:-${EDITOR:-vi}}
 mailto_options 2
 mailer ${MAILER:-mutt --} %s
-extbrowser ${BROWSER:-lynx --} %s
+extbrowser ${BROWSER:-w3m} %s
 extbrowser2 firefox %s &
 extbrowser3 url=%s && ${MAILER:-mutt --} "mailto:?body=$(printf '%s' "${url}" | urlencode)"
 extbrowser4 url=%s && printf '%s' "${url}" | xsel && printf '%s' "${url}" | xsel -b &
