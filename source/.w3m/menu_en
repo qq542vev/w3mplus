@@ -45,7 +45,7 @@ end
 menu ContextMenuLink
 	func "Open Link in New Tab            (t)" TAB_LINK "Tt"
 	func "Open Link in New Window         (w)" EXTERN_LINK "Ww" "w3m %s"
-	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3mplus' -- %s"
+	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3m/bookmark.html' --link './.w3mplus' -- %s"
 	func "Open Link in Current Tab        (o)" GOTO_LINK "Oo"
 	nop  "-----------------------------------"
 	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=ADD_BOOKMARK&variable=W3M_CURRENT_LINK"
@@ -65,7 +65,7 @@ end
 menu ContextMenuLinkImage
 	func "Open Link in New Tab            (t)" TAB_LINK "Tt"
 	func "Open Link in New Window         (w)" EXTERN_LINK "Ww" "w3m %s"
-	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3mplus' -- %s"
+	func "Open Link in New Private Window (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3m/bookmark.html' --link './.w3mplus' -- %s"
 	func "Open Link in Current Tab        (O)" GOTO_LINK "O"
 	nop  "-----------------------------------"
 	func "Bookmark This Link              (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=ADD_BOOKMARK&variable=W3M_CURRENT_LINK"
@@ -137,7 +137,7 @@ end
 menu MenuFile
 	func "New Tab            (t)" NEW_TAB "Tt"
 	func "New Window         (n)" EXTERN "Nn" "w3m ${WWW_HOME-about:home} #"
-	func "New Private Window (w)" EXTERN "Ww" "w3m-private  --link './.w3mplus' -- 'about:private' #"
+	func "New Private Window (w)" EXTERN "Ww" "w3m-private --link './.w3m/bookmark.html' --link './.w3mplus' -- 'about:private' #"
 	func "Open File...       (o)" LOAD "Oo"
 	nop  "----------------------"
 	func "Save Page As...    (a)" DOWNLOAD "Aa"

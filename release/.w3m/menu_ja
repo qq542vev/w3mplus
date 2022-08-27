@@ -45,7 +45,7 @@ end
 menu ContextMenuLink
 	func "リンクを新しいタブで開く                   (t)" TAB_LINK "Tt"
 	func "リンクを新しいウィンドウで開く             (w)" EXTERN_LINK "Ww" "w3m %s"
-	func "リンクを新しいプライベートウィンドウで開く (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3mplus' -- %s"
+	func "リンクを新しいプライベートウィンドウで開く (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3m/bookmark.html' --link './.w3mplus' -- %s"
 	func "選択した URL を開く                        (o)" GOTO_LINK "Oo"
 	nop  "----------------------------------------------"
 	func "このリンクをブックマーク                   (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=ADD_BOOKMARK&variable=W3M_CURRENT_LINK"
@@ -65,7 +65,7 @@ end
 menu ContextMenuLinkImage
 	func "リンクを新しいタブで開く           (t)" TAB_LINK "Tt"
 	func "リンクを新しいウィンドウで開く     (w)" EXTERN_LINK "Ww" "w3m %s"
-	func "新しいプライベートウィンドウで開く (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3mplus' -- %s"
+	func "新しいプライベートウィンドウで開く (p)" EXTERN_LINK "Pp" "w3m-private --link './.w3m/bookmark.html' --link './.w3mplus' -- %s"
 	func "選択した URL をコピー              (O)" GOTO_LINK "O"
 	nop  "--------------------------------------"
 	func "このリンクをブックマーク           (l)" GOTO "Ll" "file:///cgi-bin/w3mplus?pass=$(PASS)&action=execute-env-var&subaction=goto&after=ADD_BOOKMARK&variable=W3M_CURRENT_LINK"
@@ -137,7 +137,7 @@ end
 menu MenuFile
 	func "新しいタブ                     (t)" NEW_TAB "Tt"
 	func "新しいウィンドウ               (n)" EXTERN "Nn" "w3m ${WWW_HOME-about:home} #"
-	func "新しいプライベートウィンドウ   (w)" EXTERN "Ww" "w3m-private --link './.w3mplus' -- 'about:private' #"
+	func "新しいプライベートウィンドウ   (w)" EXTERN "Ww" "w3m-private --link './.w3m/bookmark.html' --link './.w3mplus' -- 'about:private' #"
 	func "ファイルを開く...              (o)" LOAD "Oo"
 	nop  "----------------------------------"
 	func "名前を付けてページを保存...    (a)" DOWNLOAD "Aa"

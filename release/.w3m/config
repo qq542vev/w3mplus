@@ -88,7 +88,7 @@ extbrowser5
 extbrowser6 curl -L -O -sS - %s &
 extbrowser7 wget -b -- %s
 extbrowser8 w3m %s
-extbrowser9 w3m-private %s
+extbrowser9 w3m-private --link './.w3m/bookmark.html' --link './.w3mplus' -- %s
 bgextviewer 1
 use_lessopen 0
 passwd_file ~/.w3m/passwd

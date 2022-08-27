@@ -457,7 +457,7 @@ keymap "ESC-C-w" QUIT
 keymap "C-q" EXIT
 keymap "C-t" TAB_GOTO "about:blank"
 keymap "C-n" EXTERN "w3m ${WWW_HOME-about:home} #"
-keymap "ESC-C-p" EXTERN "w3m-private --link './.w3mplus' -- 'about:private' #"
+keymap "ESC-C-p" EXTERN "w3m-private --link './.w3m/bookmark.html' --link './.w3mplus' -- 'about:private' #"
 keymap "C-j" GOTO_LINK
 keymap "C-m" GOTO_LINK
 keymap "ESC-C-t" GOTO "file:///cgi-bin/w3mplus?pass=$(PASS)&action=undo-tab"

@@ -125,7 +125,7 @@ shellScript=$(
 		case "${#}" in
 			[1-9]*)
 				shift
-				eval "find -- '.' '(' ${*} ')' -exec sh -c \"\${shellScript}\" 'sh' '${type}' \"${tmpDir}\" '{}' '+'"
+				eval "find -L -- '.' '(' ${*} ')' -exec sh -c \"\${shellScript}\" 'sh' '${type}' \"${tmpDir}\" '{}' '+'"
 				;;
 		esac
 	done
