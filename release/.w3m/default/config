@@ -1,0 +1,7 @@
+keymap_file ~/.w3m/default/keymap
+mime_types ~/.w3m/default/mime.types, /etc/mime.types
+mailcap ~/.w3m/default/mailcap, /etc/w3m/mailcap, /etc/mailcap
+urimethodmap ~/.w3m/default/urimethodmap, /etc/w3m/urimethodmap
+passwd_file ~/.w3m/default/passwd
+pre_form_file ~/.w3m/default/pre_form
+siteconf_file ~/.w3m/default/siteconf
