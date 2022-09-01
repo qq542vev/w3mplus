@@ -5,7 +5,7 @@ author:
 - name: qq542vev
   url: https://purl.org/meta/me/
 created: 2022-08-17
-modified: 2022-08-17
+modified: 2022-09-01
 copyright: Copyright (C) 2022 - 2022 qq542vev. Some rights reserved.
 license:
 - name: CC-BY
@@ -782,7 +782,7 @@ w3mplus は、Pale Moon のようなプライベートブラウジングモー�
 
 # バージョン情報 {#version}
 
-## v0.3.0 - 2022-08-26 {#v0.3.0}
+## v0.3.0 - 2022-09-01 {#v0.3.0}
 
  * ヘルプドキュメントを追加。
  * ほぼ全てのファイルに UUID を追加。
@@ -796,7 +796,7 @@ w3mplus は、Pale Moon のようなプライベートブラウジングモー�
    * `M-[` による不具合を修正。
    * `+`, `-` をカーソルの行移動に変更。
    * `;S` でリンク URL を検索する機能を追加。
-   * `'{A-Za-z}` でローカルマーク、URL マークの機能を追加。
+   * `'{A-Za-z}` でローカルマーク、URL マークの非空白先頭行に移動する機能を追加。
    * `` `' `` を ` `` ` に変更。
    * `:U`, `|` を削除。
    * `zH`, `zL` を半ページ左右に移動に変更。
