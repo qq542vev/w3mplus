@@ -45,7 +45,7 @@ w3mplus は [PaleMoon](https://www.palemoon.org/) + [Pentadactyl](https://github
 
 w3mplus を利用するには POSIX 準拠の Shell 環境と AWK が必要です。mawk は拡張正規表現を完全に実装していない、正規表現の長さに制限があるなどの理由で現状利用できません。よって GAWK をお勧めします。また `awk` コマンドで POSIX 準拠の AWK が起動する環境が必要です。
 
-[Releases ページ](https://github.com/qq542vev/w3mplus/release) から最新バージョンをダウンロードして、解凍します。release/install.sh を実行すればインストール完了です。
+[Releases ページ](https://github.com/qq542vev/w3mplus/releases)から最新バージョンをダウンロードして、解凍します。release/install.sh を実行すればインストール完了です。
 
 # 使い方
 
