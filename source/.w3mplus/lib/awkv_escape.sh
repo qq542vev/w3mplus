@@ -2,6 +2,8 @@
 
 ### Script: awkv_escape.sh
 ##
+## AWK 特殊文字をエスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - c4b0dd21-a21f-4aca-8b98-7d9b0caa3f64

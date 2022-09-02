@@ -2,6 +2,8 @@
 
 ### Script: singlequote_escape.sh
 ##
+## シングルクォートをエスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - de6c71d9-3897-4d7f-9e76-3e2bbed4484a

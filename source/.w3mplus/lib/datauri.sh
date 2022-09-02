@@ -2,6 +2,8 @@
 
 ### Script: datauri.sh
 ##
+## Data URI を生成する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 0d689f12-f2f2-4264-8410-c2a341ff02c6

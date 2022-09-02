@@ -2,6 +2,8 @@
 
 ### Script: uri_path_remove_dot_segments.awk
 ##
+## URI のドット区切りを除去する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - b6b08b94-3623-4ace-a0a5-48aa3ad777a8

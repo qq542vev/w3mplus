@@ -2,6 +2,8 @@
 
 ### Script: domain_check.awk
 ##
+## ドメインであるか検査する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - e55d7295-c8f1-4514-bab2-e4a510f31ad6

@@ -2,6 +2,8 @@
 
 ### Script: uri_path_parent.awk
 ##
+## 上位ディレクトリを求める関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 634bb520-4fbf-4468-9076-d77405f82091

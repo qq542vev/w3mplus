@@ -2,6 +2,8 @@
 
 ### Script: append_array_posix.sh
 ##
+## 配列風文字列に要素を追加する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 268058c5-28d0-4645-8308-1ab1a6ad7e7a

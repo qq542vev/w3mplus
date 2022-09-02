@@ -2,6 +2,8 @@
 
 ### Script: url_encode_normalize.awk
 ##
+## URL エンコードを正規化する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - b76e2212-886c-43d7-8c8e-a846325be995

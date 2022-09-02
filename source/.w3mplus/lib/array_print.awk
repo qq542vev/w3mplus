@@ -2,6 +2,8 @@
 
 ### Script: array_print.awk
 ##
+## 配列を文字列に変換する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 7096c7ed-48ce-4c8d-9e6e-84a3986d4c32

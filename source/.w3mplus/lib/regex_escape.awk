@@ -2,6 +2,8 @@
 
 ### Script: regex_escape.awk
 ##
+## 正規表現をエスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 1e5e8b52-1ac9-4d76-8822-561d0cadbd24

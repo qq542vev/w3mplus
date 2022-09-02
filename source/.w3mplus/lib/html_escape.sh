@@ -2,6 +2,8 @@
 
 ### Script: html_escape.sh
 ##
+## HTML エスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - fb308c89-82a5-4363-aa5b-afd0725f8134

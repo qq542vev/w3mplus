@@ -2,6 +2,8 @@
 
 ### Script: regex_match.sh
 ##
+## 正規表現による検査関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 5e34fa84-f22f-401b-9172-5269c481c8aa

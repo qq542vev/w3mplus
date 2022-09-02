@@ -2,6 +2,8 @@
 
 ### Script: option_error.sh
 ##
+## オプションエラー用の関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - e7ead215-bfcb-4727-ace1-9fc6d99b9479

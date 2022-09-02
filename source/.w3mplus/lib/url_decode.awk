@@ -2,6 +2,8 @@
 
 ### Script: url_decode.awk
 ##
+## URL デコードする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 63077be4-ad3a-47ca-8c0a-56c38d1059e9

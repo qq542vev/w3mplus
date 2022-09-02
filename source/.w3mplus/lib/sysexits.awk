@@ -2,6 +2,8 @@
 
 ### Script: sysexits.awk
 ##
+## sysexits の終了コードを返す関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 2b88844d-5c62-43e9-85e4-3f68b88c8ed2
@@ -20,7 +22,7 @@
 
 ### Function: sysexits
 ##
-## sysexits の終了コード。
+## sysexits の終了コードを返す。
 ##
 ## Parameters:
 ##

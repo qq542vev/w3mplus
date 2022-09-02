@@ -2,6 +2,8 @@
 
 ### Script: uri_parse.awk
 ##
+## URI 構成要素を分離する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - cc87746b-4d55-46f9-8a72-067b0c8109c3

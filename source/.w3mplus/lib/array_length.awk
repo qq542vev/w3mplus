@@ -2,6 +2,8 @@
 
 ### Script: array_length.awk
 ##
+## 配列の要素数を求める関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - e6f21357-6315-4445-ab1e-07d3ed30a131

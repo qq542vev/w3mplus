@@ -2,6 +2,8 @@
 
 ### Script: url_encode.awk
 ##
+## URL エンコードする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - e6cf067b-b017-44e3-a6bd-2dc975ef3737

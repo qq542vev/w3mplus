@@ -2,6 +2,8 @@
 
 ### Script: backslash_escape.awk
 ##
+## バックスラッシュでエスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 92149acc-262e-41c6-8fb4-296193ea08a2

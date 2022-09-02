@@ -2,6 +2,8 @@
 
 ### Script: html_escape.awk
 ##
+## HTML エスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 5a18e1a6-f2c9-4239-b2ef-41cb8f647bfb

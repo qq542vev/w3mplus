@@ -2,6 +2,8 @@
 
 ### Script: path_to_fileurl.sh
 ##
+## File URL に変換する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - f3f49375-d530-4a94-863f-6100acde7719

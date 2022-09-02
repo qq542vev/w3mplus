@@ -2,6 +2,8 @@
 
 ### Script: backslash_unescape.awk
 ##
+## バックスラッシュをアンエスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 638dd1f3-1e48-433e-bf94-0f62a5343e8b

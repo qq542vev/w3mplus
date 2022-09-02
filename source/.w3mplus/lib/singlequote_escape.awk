@@ -2,6 +2,8 @@
 
 ### Script: singlequote_escape.awk
 ##
+## シングルクォートをエスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 9ea3d3d8-ffef-4667-b7ab-04a859bb42cd

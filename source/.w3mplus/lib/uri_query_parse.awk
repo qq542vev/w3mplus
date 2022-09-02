@@ -2,6 +2,8 @@
 
 ### Script: uri_query_parse.awk
 ##
+## URI クエリを分離する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 0dd0c8ab-eb71-4574-9f38-068ecea41136

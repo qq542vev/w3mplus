@@ -2,6 +2,8 @@
 
 ### Script: uri_normalize.awk
 ##
+## URI を正規化する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 4d29eba9-eeb7-4ebe-8363-41d979420ee1

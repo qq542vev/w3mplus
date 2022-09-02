@@ -2,6 +2,8 @@
 
 ### Script: regex_escape.sh
 ##
+## 正規表現をエスケープする関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - 54eb1b25-f085-4489-8b71-f37107caa7d7

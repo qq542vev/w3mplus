@@ -2,6 +2,8 @@
 
 ### Script: uri_check.awk
 ##
+## URI であるか検査する関数を定義する。
+##
 ## Metadata:
 ##
 ##   id - a0ec5ae7-9110-4f38-bb20-f97e4c95575e
@@ -20,7 +22,7 @@
 
 ### Function: uri_check
 ##
-## 文字列が URI か検査する。
+## 文字列が URI であるか検査する。
 ##
 ## Parameters:
 ##
