@@ -1,3 +1,35 @@
+#!/usr/bin/awk -f
+
+### Script: backslash_escape.awk
+##
+## Metadata:
+##
+##   id - 92149acc-262e-41c6-8fb4-296193ea08a2
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2022-09-02
+##   since - 2022-07-26
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+### Function: backslash_escape
+##
+## ASCII 制御文字をバックスラッシュでエスケープする。
+##
+## Parameters:
+##
+##   string - エスケープする文字列。
+##
+## Returns:
+##
+##   バックスラッシュでエスケープされた文字列。
+
 function backslash_escape(string) {
 	gsub("\\\\", "\\\\", string)
 	gsub("\\001", "\\001", string)

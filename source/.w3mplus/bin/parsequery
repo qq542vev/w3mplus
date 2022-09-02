@@ -8,8 +8,8 @@
 ##
 ##   id - 87a8adbd-6276-47bb-b575-d9ae07605332
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.0
-##   date - 2022-06-28
+##   version - 2.0.1
+##   date - 2022-09-02
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -71,17 +71,16 @@ eval "set -- ${REST}"
 
 awkScript=$(
 	cat <<-'EOF'
-	@include "url_decode.awk"
 	@include "url_encode.awk"
 	@include "singlequote_escape.awk"
 	@include "uri_query_parse.awk"
 
 	BEGIN {
 		for(i = 1; i < ARGC; i++) {
-			uri_query_parse(ARGV[i], query)
+			count = uri_query_parse(ARGV[i], query)
 
-			for(key in query) {
-				name = key
+			for(i = 0; i <= count; i++) {
+				name = query[i, "name"]
 
 				if(keyType == "underscore") {
 					name = url_encode(name)
@@ -96,7 +95,7 @@ awkScript=$(
 				}
 
 				if(name ~ /^[0-9A-Za-z_]*$/) {
-					printf("%s='%s'\n", prefix name suffix, singlequote_escape(query[key]))
+					printf("%s='%s'\n", prefix name suffix, singlequote_escape(query[i, "value"]))
 				}
 			}
 		}

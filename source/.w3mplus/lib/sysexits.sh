@@ -57,22 +57,23 @@
 ##   file system problems, which should use NOINPUT or
 ##   CANTCREAT, but rather for higher level permissions.
 ##
-## metadata:
+## Metadata:
 ##
 ##   id - 0ef42a95-c6db-43c8-96d0-fafa2237b6c8
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   date - 2020-03-05
 ##   version - 1.0.0
+##   date - 2022-09-02
+##   since - 2020-03-05
 ##   copyright - Copyright (c) 1987, 1993
-##     The Regents of the University of California.  All rights reserved.
+##     The Regents of the University of California. All rights reserved.
 ##   license - BSD-3-Clause
 ##   package - w3mplus
-##   source - <sysexits.h at https://github.com/freebsd/freebsd/blob/master/include/sysexits.h>
 ##
 ## See Also:
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <sysexits(3) at https://www.freebsd.org/cgi/man.cgi?sektion=3&query=sysexits>
 
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted provided that the following conditions

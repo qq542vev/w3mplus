@@ -1,39 +1,73 @@
-function sysexits(code,  status) {
+#!/usr/bin/awk -f
+
+### Script: sysexits.awk
+##
+## Metadata:
+##
+##   id - 2b88844d-5c62-43e9-85e4-3f68b88c8ed2
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2022-09-02
+##   since - 2022-07-26
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+### Function: sysexits
+##
+## sysexits の終了コード。
+##
+## Parameters:
+##
+##   code - sysexits で定義された終了コード。
+##
+## Returns:
+##
+##   終了コードの番号。
+##
+## See Also:
+##
+##   * <sysexits(3) at https://www.freebsd.org/cgi/man.cgi?sektion=3&query=sysexits>
+
+function sysexits(code) {
 	if(code == "EX_OK") {
-		status = 0
+		return 0
 	} else if(code == "EX_USAGE") {
-		status = 64
+		return 64
 	} else if(code == "EX_DATAERR") {
-		status = 65
+		return 65
 	} else if(code == "EX_NOINPUT") {
-		status = 66
+		return 66
 	} else if(code == "EX_NOUSER") {
-		status = 67
+		return 67
 	} else if(code == "EX_NOHOST") {
-		status = 68
+		return 68
 	} else if(code == "EX_UNAVAILABLE") {
-		status = 69
+		return 69
 	} else if(code == "EX_SOFTWARE") {
-		status = 70
+		return 70
 	} else if(code == "EX_OSERR") {
-		status = 71
+		return 71
 	} else if(code == "EX_OSFILE") {
-		status = 72
+		return 72
 	} else if(code == "EX_CANTCREAT") {
-		status = 73
+		return 73
 	} else if(code == "EX_IOERR") {
-		status = 74
+		return 74
 	} else if(code == "EX_TEMPFAIL") {
-		status = 75
+		return 75
 	} else if(code == "EX_PROTOCOL") {
-		status = 76
+		return 76
 	} else if(code == "EX_NOPERM") {
-		status = 77
+		return 77
 	} else if(code == "EX_CONFIG") {
-		status = 78
-	} else {
-		status = 1
+		return 78
 	}
 
-	return status
+	return 1
 }

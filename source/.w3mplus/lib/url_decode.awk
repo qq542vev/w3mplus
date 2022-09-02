@@ -1,3 +1,36 @@
+#!/usr/bin/awk -f
+
+### Script: url_decode.awk
+##
+## Metadata:
+##
+##   id - 63077be4-ad3a-47ca-8c0a-56c38d1059e9
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2022-09-02
+##   since - 2022-07-26
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+### Function: url_decode
+##
+## URL エンコードされた文字列をデコードする。
+##
+## Parameters:
+##
+##   string - デコードする文字列。
+##   httpEncode - '+' をスペースにデコードする。
+##
+## Returns:
+##
+##   デコードされた文字列。
+
 function url_decode(string, httpDecode,  p2c,result) {
 	split("", p2c)
 

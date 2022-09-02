@@ -1,3 +1,35 @@
+#!/usr/bin/awk -f
+
+### Script: url_encode_normalize.awk
+##
+## Metadata:
+##
+##   id - b76e2212-886c-43d7-8c8e-a846325be995
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2022-09-02
+##   since - 2022-07-26
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+### Function: url_encode_normalize
+##
+## URL エンコードされた文字列を正規化する。
+##
+## Parameters:
+##
+##   string - 正規化する文字列。
+##
+## Returns:
+##
+##  正規化された文字列。
+
 function url_encode_normalize(string,  p2c,result) {
 	p2c["2D"] = "-"; p2c["2E"] = "."; p2c["30"] = "0";
 	p2c["31"] = "1"; p2c["32"] = "2"; p2c["33"] = "3";

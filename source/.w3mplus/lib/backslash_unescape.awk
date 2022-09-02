@@ -1,3 +1,35 @@
+#!/usr/bin/awk -f
+
+### Script: backslash_unescape.awk
+##
+## Metadata:
+##
+##   id - 638dd1f3-1e48-433e-bf94-0f62a5343e8b
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2022-09-02
+##   since - 2022-07-26
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+### Function: backslash_unescape
+##
+## バックスラッシュでエスケープされた文字列をアンエスケープする。
+##
+## Parameters:
+##
+##   string - アンエスケープする文字列。
+##
+## Returns:
+##
+##   アンエスケープされた文字列。
+
 function backslash_unescape(string,  p2c,result,escape) {
 	split("", p2c)
 

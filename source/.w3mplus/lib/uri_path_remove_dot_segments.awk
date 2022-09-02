@@ -1,3 +1,39 @@
+#!/usr/bin/awk -f
+
+### Script: uri_path_remove_dot_segments.awk
+##
+## Metadata:
+##
+##   id - b6b08b94-3623-4ace-a0a5-48aa3ad777a8
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 1.0.0
+##   date - 2022-09-02
+##   since - 2022-07-26
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+
+### Function: uri_path_remove_dot_segments
+##
+## パス文字列からドット区切りを除去する。
+##
+## Parameters:
+##
+##   path - パス文字列。
+##
+## Returns:
+##
+##   ドット区切りが除去された文字列。
+##
+## See Also:
+##
+##   * <5.2.4. Remove Dot Segments at https://www.rfc-editor.org/rfc/rfc3986#section-5.2.4>
+
 function uri_path_remove_dot_segments(path,  result) {
 	if(!index(path, ".")) {
 		return path
