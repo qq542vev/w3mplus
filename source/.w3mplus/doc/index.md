@@ -6,7 +6,7 @@ author:
   url: https://purl.org/meta/me/
 created: 2022-08-17
 modified: 2022-09-01
-copyright: Copyright (C) 2022 - 2022 qq542vev. Some rights reserved.
+copyright: Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 license:
 - name: CC-BY
   url: https://creativecommons.org/licenses/by/4.0/

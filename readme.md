@@ -10,7 +10,7 @@
 ##   version - 0.2.1
 ##   date - 2022-09-02
 ##   since - 2019-12-26
-##   copyright - Copyright (C) 2019 - 2022 qq542vev. Some rights reserved.
+##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
 ##
