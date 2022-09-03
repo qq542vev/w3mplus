@@ -1,6 +1,7 @@
 ---
 id: 0e7d351e-f684-45a7-be38-9c552e4d3a53
 title: w3mplus のマニュアル
+description: w3mplus の利用方法及び機能についての解説。
 author:
 - name: qq542vev
   url: https://purl.org/meta/me/
@@ -362,7 +363,7 @@ lang: ja
 コマンドラインモードは、おそらく最も強力なインターフェイスである。このモードでは、ウィンドウの下部にあるコマンド入力バーがキーボードにフォーカスされ、様々な入力が可能になる。コマンドラインは、w3mplus と w3m のほとんどすべての機能を利用可能である。
 
 [`::`]{#key-.3A.3A}
-: w3m コマンドを実行する。
+: 任意の w3m コマンドを実行する。
 
 # 設定 {#options}
 
@@ -386,11 +387,14 @@ w3mplus は、特殊な効果を得るために設定可能な変数やオプシ
 
 w3mplus では以下の環境変数を使用する。環境変数を設定することで w3mplus の動作を変更可能である。
 
+当該環境変数が存在しないか、または空文字列の場合は、デフォルト値が使用される。
+
 | 変数名 | 説明 | デフォルト値 |
 | ------ | ---- | ------------- |
-| [`BROWSER`]{#env-BROWSER} | 使用する Web ブラウザー。この変数が存在しない場合か、値が空文字列の場合には `w3m` を使用する。 | |
-| [`VISUAL`]{#env-VISUAL} | 使用するテキストエディタ。この変数が存在しない場合か、値が空文字列の場合には `${EDITOR}` を使用する。 | |
-| [`EDITOR`]{#env-EDITOR} | 使用するテキストエディタ。この変数が存在しない場合か、値が空文字列の場合には `vi` を使用する。 | |
+| [`BROWSER`]{#env-BROWSER} | 使用する Web ブラウザー。| `'w3m'` |
+| [`VISUAL`]{#env-VISUAL} | 使用するテキストエディタ。 | `"${EDITOR}"` |
+| [`EDITOR`]{#env-EDITOR} | 使用するテキストエディタ。 | `'vi --'` |
+| [`MAILER`]{#env-MAILER} | 使用するメーラー。 | `'mutt --'` |
 | [`W3MPLUS_W3M_HOME`]{#env-W3MPLUS_W3M_HOME} | w3m の設定ディレクトリ。 | `"${HOME}/.w3m"` |
 | [`W3MPLUS_W3M_BOOKMARK`]{#env-W3MPLUS_W3M_BOOKMARK} | w3m のブックマークファイル。 | `"${W3MPLUS_W3M_HOME}/bookmark.html"` |
 | [`W3MPLUS_W3M_CONFIG`]{#env-W3MPLUS_W3M_CONFIG} | w3m の設定ファイル。 | `"${W3MPLUS_W3M_HOME}/config"` |
@@ -412,9 +416,9 @@ w3mplus では以下の環境変数を使用する。環境変数を設定する
 | [`W3MPLUS_SEARCH_HISTFILE`]{#env-W3MPLUS_SEARCH_HISTFILE} | 検索履歴を記録するファイル。 | `"${W3MPLUS_HOME}/search-history"` |
 | [`W3MPLUS_REGISTER_FILE`]{#env-W3MPLUS_REGISTER_FILE} | レジスタを記録するファイル。 | `"${W3MPLUS_HOME}/register"` |
 | [`W3MPLUS_OPERATORFUNC`]{#env-W3MPLUS_OPERATORFUNC} | operatorfunc 用プログラム。 | `'cat'` |
-| [`W3MPLUS_FORMATPRG`]{#env-W3MPLUS_FORMATPRG} | formatprg  用プログラム。 | `'cat'` |
-| [`W3MPLUS_KEYWORDPRG`]{#env-W3MPLUS_KEYWORDPRG} | keywordprg  用プログラム。 | `'man "$(cat)"'` |
-| [`W3MPLUS_EQUALPRG`]{#env-W3MPLUS_EQUALPRG} | equalprg  用プログラム。 | `'cat'` |
+| [`W3MPLUS_FORMATPRG`]{#env-W3MPLUS_FORMATPRG} | formatprg 用プログラム。 | `'cat'` |
+| [`W3MPLUS_KEYWORDPRG`]{#env-W3MPLUS_KEYWORDPRG} | keywordprg 用プログラム。 | `'man "$(cat)"'` |
+| [`W3MPLUS_EQUALPRG`]{#env-W3MPLUS_EQUALPRG} | equalprg 用プログラム。 | `'cat'` |
 | [`W3MPLUS_ZOOM_MAX`]{#env-W3MPLUS_ZOOM_MAX} | 最大画像表示倍率。 | `'300'` |
 | [`W3MPLUS_ZOOM_MIN`]{#env-W3MPLUS_ZOOM_MIN} | 最小画像表示倍率。 | `'30'` |
 | [`W3MPLUS_QUICKMARK_FILE`]{#env-W3MPLUS_QUICKMARK_FILE} | クイックマークを記録するファイル。 | `"${W3MPLUS_HOME}/quickmark"` |
@@ -845,7 +849,7 @@ w3mplus モードは Pentadactyl + Pale Moon 風のキーマップである。w3
 | [`0`](#key-0) | カーソルを現在の行の先頭に移動する。 | `LINE_BEGIN` |
 | [`:!`](#key-.3A.21) | Shell コマンドを実行する。 | `EXEC_SHELL` |
 | [`:"`](#key-.3A.22) | レジスターの一覧を表示する。 | |
-| [`::`](#key-.3A.3A) | w3m コマンドを実行する。 | `COMMAND` |
+| [`::`](#key-.3A.3A) | 任意の w3m コマンドを実行する。 | `COMMAND` |
 | [`:<Tab>`](#key-.3A.3CTab.3E) | ':' で始まるコマンドの一覧を表示する。 | |
 | [`:C`](#key-.3AC) | スタイルメニューを開く。 | |
 | [`:G`](#key-.3AG) | メッセージを表示する。 | `MSGS` |
@@ -1038,7 +1042,7 @@ w3mplus モードは Pentadactyl + Pale Moon 風のキーマップである。w3
 
 ## Pale Moon モード {#palemoon-mode}
 
-Pale Moon モードは Pale Moon 風のキーマップである。
+Pale Moon モードは [Pale Moon](https://www.palemoon.org/) 風のキーマップである。
 
 | キー | 説明 | w3m コマンド |
 | ---- | ---- | ------------ |
@@ -1105,7 +1109,7 @@ Pale Moon モードは Pale Moon 風のキーマップである。
 | `<End>` | カーソルをドキュメントの最下部に移動する。 | `END` |
 | `<F10>` | Pale Moon 風のメニューを開く。 | |
 | `<F12>` | 開発者用メニューを開く。 | |
-| `<F14>` | w3m コマンドを実行する。 | `COMMAND` |
+| `<F14>` | 任意の w3m コマンドを実行する。 | `COMMAND` |
 | `<F15>` | 前のパターンを検索する。 | `SEARCH_PREV` |
 | `<F16>` | Shell コマンドを実行する。 | `EXEC_SHELL` |
 | `<F3>` | 次のパターンを検索する。 | `SEARCH_NEXT` |
@@ -1125,7 +1129,7 @@ Pale Moon モードは Pale Moon 風のキーマップである。
 
 ## w3m モード {#w3m-mode}
 
-w3m モードは w3m 風のキーマップである。
+w3m モードは [w3m](https://github.com/tats/w3m) 風のキーマップである。
 
 | キー | 説明 | w3m コマンド |
 | ---- | ---- | ------------ |
@@ -1185,7 +1189,7 @@ w3m モードは w3m 風のキーマップである。
 | `<ESC-[Z>` | カーソルを前のリンクに移動する。 | `PREV_LINK` |
 | `<ESC-a>` | 現在の URL をブックマークに登録する。 | `ADD_BOOKMARK` |
 | `<ESC-b>` | ブックマークの一覧を開く。 | `BOOKMARK` |
-| `<ESC-c>` | w3m コマンドを実行する。 | `COMMAND` |
+| `<ESC-c>` | 任意の w3m コマンドを実行する。 | `COMMAND` |
 | `<ESC-e>` | バッファの内容を外部テキストエディタで開く。 | `EDIT_SCREEN` |
 | `<ESC-g>` | カーソルを任意の行に移動する。 | `GOTO_LINE` |
 | `<ESC-k>` | キーマップを定義する。 | `DEFINE_KEY` |
@@ -1257,7 +1261,7 @@ w3m モードは w3m 風のキーマップである。
 
 ## lynx モード {#lynx-mode}
 
-lynx モードは lynx 風のキーマップである。
+lynx モードは [lynx](https://lynx.browser.org/) 風のキーマップである。
 
 | キー | 説明 | w3m コマンド |
 | ---- | ---- | ------------ |
@@ -1316,7 +1320,7 @@ lynx モードは lynx 風のキーマップである。
 | `<ESC-[L>` | デフォルトメニューを開く。 | `MENU` |
 | `<ESC-a>` | 現在の URL をブックマークに登録する。 | `ADD_BOOKMARK` |
 | `<ESC-b>` | ブックマークの一覧を開く。 | `BOOKMARK` |
-| `<ESC-c>` | w3m コマンドを実行する。 | `COMMAND` |
+| `<ESC-c>` | 任意の w3m コマンドを実行する。 | `COMMAND` |
 | `<ESC-e>` | バッファの内容を外部テキストエディタで開く。 | `EDIT_SCREEN` |
 | `<ESC-g>` | カーソルを任意の行に移動する。 | `GOTO_LINE` |
 | `<ESC-k>` | キーマップを定義する。 | `DEFINE_KEY` |

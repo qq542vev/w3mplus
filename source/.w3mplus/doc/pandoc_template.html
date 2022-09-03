@@ -27,6 +27,10 @@
 			<meta name="dcterms.modified" property="dc:modified" datatype="dc:W3CDTF" content="$modified$" />
 		$endif$
 
+		$if(description)$
+			<meta name="description" property="dc:description" content="$description$" />
+		$endif$
+
 		<title property="dc:title">$title$</title>
 
 		$for(license)$

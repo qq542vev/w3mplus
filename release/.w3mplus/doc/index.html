@@ -19,6 +19,8 @@
 		
 					<meta name="dcterms.modified" property="dc:modified" datatype="dc:W3CDTF" content="2022-09-01" />
 		
+					<meta name="description" property="dc:description" content="w3mplus の利用方法及び機能についての解説。" />
+		
 		<title property="dc:title">w3mplus のマニュアル</title>
 
 					<link rel="license" title="CC-BY" href="https://creativecommons.org/licenses/by/4.0/" />
@@ -921,7 +923,7 @@
 <p>コマンドラインモードは、おそらく最も強力なインターフェイスである。このモードでは、ウィンドウの下部にあるコマンド入力バーがキーボードにフォーカスされ、様々な入力が可能になる。コマンドラインは、w3mplus と w3m のほとんどすべての機能を利用可能である。</p>
 <dl>
 <dt><span id="key-.3A.3A"><code>::</code></span></dt>
-<dd>w3m コマンドを実行する。
+<dd>任意の w3m コマンドを実行する。
 </dd>
 </dl>
 </section>
@@ -948,6 +950,7 @@
 <section id="list-env" class="level2">
 <h2>環境変数</h2>
 <p>w3mplus では以下の環境変数を使用する。環境変数を設定することで w3mplus の動作を変更可能である。</p>
+<p>当該環境変数が存在しないか、または空文字列の場合は、デフォルト値が使用される。</p>
 <table>
 <colgroup>
 <col style="width: 26%" />
@@ -964,190 +967,195 @@
 <tbody>
 <tr class="odd">
 <td><span id="env-BROWSER"><code>BROWSER</code></span></td>
-<td>使用する Web ブラウザー。この変数が存在しない場合か、値が空文字列の場合には <code>w3m</code> を使用する。</td>
-<td></td>
+<td>使用する Web ブラウザー。</td>
+<td><code>'w3m'</code></td>
 </tr>
 <tr class="even">
 <td><span id="env-VISUAL"><code>VISUAL</code></span></td>
-<td>使用するテキストエディタ。この変数が存在しない場合か、値が空文字列の場合には <code>${EDITOR}</code> を使用する。</td>
-<td></td>
+<td>使用するテキストエディタ。</td>
+<td><code>&quot;${EDITOR}&quot;</code></td>
 </tr>
 <tr class="odd">
 <td><span id="env-EDITOR"><code>EDITOR</code></span></td>
-<td>使用するテキストエディタ。この変数が存在しない場合か、値が空文字列の場合には <code>vi</code> を使用する。</td>
-<td></td>
+<td>使用するテキストエディタ。</td>
+<td><code>'vi --'</code></td>
 </tr>
 <tr class="even">
+<td><span id="env-MAILER"><code>MAILER</code></span></td>
+<td>使用するメーラー。</td>
+<td><code>'mutt --'</code></td>
+</tr>
+<tr class="odd">
 <td><span id="env-W3MPLUS_W3M_HOME"><code>W3MPLUS_W3M_HOME</code></span></td>
 <td>w3m の設定ディレクトリ。</td>
 <td><code>&quot;${HOME}/.w3m&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_W3M_BOOKMARK"><code>W3MPLUS_W3M_BOOKMARK</code></span></td>
 <td>w3m のブックマークファイル。</td>
 <td><code>&quot;${W3MPLUS_W3M_HOME}/bookmark.html&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_W3M_CONFIG"><code>W3MPLUS_W3M_CONFIG</code></span></td>
 <td>w3m の設定ファイル。</td>
 <td><code>&quot;${W3MPLUS_W3M_HOME}/config&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_W3M_HISTORY"><code>W3MPLUS_W3M_HISTORY</code></span></td>
 <td>w3m の閲覧履歴ファイル。</td>
 <td><code>&quot;${W3MPLUS_W3M_HOME}/history&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_W3M_SITECONF"><code>W3MPLUS_W3M_SITECONF</code></span></td>
 <td>w3m の Web サイト毎の設定ファイル。</td>
 <td><code>&quot;${W3MPLUS_W3M_HOME}/siteconf&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_HOME"><code>W3MPLUS_HOME</code></span></td>
 <td>w3mplus の設定ディレクトリ。</td>
 <td><code>&quot;${HOME}/.w3mplus&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_CACHE"><code>W3MPLUS_CACHE</code></span></td>
 <td>w3mplus のキャッシュディレクトリ。</td>
 <td><code>&quot;${W3MPLUS_HOME}/cache&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_PATH"><code>W3MPLUS_PATH</code></span></td>
 <td>w3mplus の実行ファイルのディレクトリ。</td>
 <td><code>&quot;${W3MPLUS_HOME}/bin&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_LIB"><code>W3MPLUS_LIB</code></span></td>
 <td>w3mplus のライブラリのディレクトリ。</td>
 <td><code>&quot;${W3MPLUS_HOME}/lib&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-"><code>W3MPLUS_PASS_FILE</code></span></td>
 <td>w3mplus のパスファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/pass&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_YANK"><code>W3MPLUS_YANK</code></span></td>
 <td>コピーする際に起動するプログラム。</td>
 <td><code>'v=$(cat; printf &quot;_&quot;); v=&quot;${v%_}&quot;; &quot;${HOME}/.w3mplus/bin/setreg&quot; &quot;+&quot; &quot;${v}&quot;; exec 3&gt;&amp;1 &gt;&gt;&quot;${HOME}/w3mplusyank&quot;; date &quot;+# %Y-%m-%d %H:%M:%S %Z&quot;; echo &quot;${v}&quot;; exec 1&gt;&amp;3 3&gt;&amp;-'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_UNDO_TIMEOUT"><code>W3MPLUS_UNDO_TIMEOUT</code></span></td>
 <td>復元するタブのタイムアウト秒数。</td>
 <td><code>'+86400'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_UNDO_HISTSIZE"><code>W3MPLUS_UNDO_HISTSIZE</code></span></td>
 <td>記録する復元するタブの履歴数。</td>
 <td><code>'2000'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_UNDO_FILE"><code>W3MPLUS_UNDO_FILE</code></span></td>
 <td>復元するタブを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/tabrestore&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_VISUAL_TIMEOUT"><code>W3MPLUS_VISUAL_TIMEOUT</code></span></td>
 <td>ビジュアルモードでタイムアウトする秒数。</td>
 <td><code>'+600'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_SEARCH_CONFIGFILE"><code>W3MPLUS_SEARCH_CONFIGFILE</code></span></td>
 <td>検索エンジンの設定ファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/search-config&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_SEARCH_ENGINE"><code>W3MPLUS_SEARCH_ENGINE</code></span></td>
 <td>検索エンジンの設定ファイル。</td>
 <td><code>'google'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_SEARCH_HISTSIZE"><code>W3MPLUS_SEARCH_HISTSIZE</code></span></td>
 <td>記録する検索の履歴数。</td>
 <td><code>'2000'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_SEARCH_HISTFILE"><code>W3MPLUS_SEARCH_HISTFILE</code></span></td>
 <td>検索履歴を記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/search-history&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_REGISTER_FILE"><code>W3MPLUS_REGISTER_FILE</code></span></td>
 <td>レジスタを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/register&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_OPERATORFUNC"><code>W3MPLUS_OPERATORFUNC</code></span></td>
 <td>operatorfunc 用プログラム。</td>
 <td><code>'cat'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_FORMATPRG"><code>W3MPLUS_FORMATPRG</code></span></td>
 <td>formatprg 用プログラム。</td>
 <td><code>'cat'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_KEYWORDPRG"><code>W3MPLUS_KEYWORDPRG</code></span></td>
 <td>keywordprg 用プログラム。</td>
 <td><code>'man &quot;$(cat)&quot;'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_EQUALPRG"><code>W3MPLUS_EQUALPRG</code></span></td>
 <td>equalprg 用プログラム。</td>
 <td><code>'cat'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_ZOOM_MAX"><code>W3MPLUS_ZOOM_MAX</code></span></td>
 <td>最大画像表示倍率。</td>
 <td><code>'300'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_ZOOM_MIN"><code>W3MPLUS_ZOOM_MIN</code></span></td>
 <td>最小画像表示倍率。</td>
 <td><code>'30'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_QUICKMARK_FILE"><code>W3MPLUS_QUICKMARK_FILE</code></span></td>
 <td>クイックマークを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/quickmark&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_LOCALMARK_FILE"><code>W3MPLUS_LOCALMARK_FILE</code></span></td>
 <td>ローカルマークを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/localmark&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_URLMARK_FILE"><code>W3MPLUS_URLMARK_FILE</code></span></td>
 <td>URL マークを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/urlmark&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_USERCOMMAND_FILE"><code>W3MPLUS_USERCOMMAND_FILE</code></span></td>
 <td>ユーザコマンドを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/usercommand&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_SIDEBAR_SIZE"><code>W3MPLUS_SIDEBAR_SIZE</code></span></td>
 <td>サイドバーのサイズ。</td>
 <td><code>'200'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_SIDEBAR_POSITION"><code>W3MPLUS_SIDEBAR_POSITION</code></span></td>
 <td>サイドバーの位置。</td>
 <td><code>'left'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_TEMPLATE_HTTP"><code>W3MPLUS_TEMPLATE_HTTP</code></span></td>
 <td>HTTP レスポンス用テンプレートファイル。</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_TEMPLATE_HTML"><code>W3MPLUS_TEMPLATE_HTML</code></span></td>
 <td>HTML 用テンプレートファイル。</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_TEMPLATE_FRAMESET"><code>W3MPLUS_TEMPLATE_FRAMESET</code></span></td>
 <td>HTML フレーム用テンプレートファイル。</td>
 <td></td>
@@ -1737,7 +1745,7 @@
 </tr>
 <tr class="even">
 <td><a href="#key-.3A.3A"><code>::</code></a></td>
-<td>w3m コマンドを実行する。</td>
+<td>任意の w3m コマンドを実行する。</td>
 <td><code>COMMAND</code></td>
 </tr>
 <tr class="odd">
@@ -2690,7 +2698,7 @@
 </section>
 <section id="palemoon-mode" class="level2">
 <h2>Pale Moon モード</h2>
-<p>Pale Moon モードは Pale Moon 風のキーマップである。</p>
+<p>Pale Moon モードは <a href="https://www.palemoon.org/">Pale Moon</a> 風のキーマップである。</p>
 <table>
 <thead>
 <tr class="header">
@@ -3017,7 +3025,7 @@
 </tr>
 <tr class="even">
 <td><code>&lt;F14&gt;</code></td>
-<td>w3m コマンドを実行する。</td>
+<td>任意の w3m コマンドを実行する。</td>
 <td><code>COMMAND</code></td>
 </tr>
 <tr class="odd">
@@ -3105,7 +3113,7 @@
 </section>
 <section id="w3m-mode" class="level2">
 <h2>w3m モード</h2>
-<p>w3m モードは w3m 風のキーマップである。</p>
+<p>w3m モードは <a href="https://github.com/tats/w3m">w3m</a> 風のキーマップである。</p>
 <table>
 <thead>
 <tr class="header">
@@ -3397,7 +3405,7 @@
 </tr>
 <tr class="odd">
 <td><code>&lt;ESC-c&gt;</code></td>
-<td>w3m コマンドを実行する。</td>
+<td>任意の w3m コマンドを実行する。</td>
 <td><code>COMMAND</code></td>
 </tr>
 <tr class="even">
@@ -3745,7 +3753,7 @@
 </section>
 <section id="lynx-mode" class="level2">
 <h2>lynx モード</h2>
-<p>lynx モードは lynx 風のキーマップである。</p>
+<p>lynx モードは <a href="https://lynx.browser.org/">lynx</a> 風のキーマップである。</p>
 <table>
 <thead>
 <tr class="header">
@@ -4032,7 +4040,7 @@
 </tr>
 <tr class="even">
 <td><code>&lt;ESC-c&gt;</code></td>
-<td>w3m コマンドを実行する。</td>
+<td>任意の w3m コマンドを実行する。</td>
 <td><code>COMMAND</code></td>
 </tr>
 <tr class="odd">

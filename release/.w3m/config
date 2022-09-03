@@ -58,7 +58,7 @@ fixed_wheel_scroll_count 5
 keymap_file ~/.w3m/keymap
 cgi_bin ~/.w3mplus/bin/cgi-bin
 urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
-editor ${VISUAL:-${EDITOR:-vi}}
+editor ${VISUAL:-${EDITOR:-vi --}}
 mailto_options 2
 mailer ${MAILER:-mutt --} %s
 extbrowser ${BROWSER:-w3m} %s
