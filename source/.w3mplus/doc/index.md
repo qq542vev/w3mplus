@@ -17,7 +17,7 @@ lang: ja
 
 [w3mplus](https://github.com/qq542vev/w3mplus) は、[w3m](https://github.com/tats/w3m) 用の無料ブラウザアドオンで、ブラウジングをより効率的に、特にキーボード操作を容易にするために設計されている。[Pentadactyl](https://github.com/pentadactyl/pentadactyl), [Pale Moon](https://www.palemoon.org/), [Vim](https://www.vim.org/) に大きく影響され、指の感触はそれらユーザーには馴染みやすい操作性となっている。
 
-## 機能
+## 機能 {#features}
 
  * Pale Moon の模倣
    * メニューバー
@@ -34,7 +34,7 @@ lang: ja
    * クイックマーク、ローカルマーク、URL マーク
    * レジスタ
 
-## 連絡
+## 連絡 {#contact}
 
 質問、機能追加の要望、不具合の報告等は [Github issue](https://github.com/qq542vev/w3mplus/issues) から受け付けている。
 
