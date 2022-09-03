@@ -22,7 +22,425 @@
 		<title property="dc:title">w3mplus のマニュアル</title>
 
 					<link rel="license" title="CC-BY" href="https://creativecommons.org/licenses/by/4.0/" />
-			</head>
+		
+		<style type="text/css">
+		/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+		/* Document
+		   ========================================================================== */
+
+		/**
+		 * 1. Correct the line height in all browsers.
+		 * 2. Prevent adjustments of font size after orientation changes in iOS.
+		 */
+
+		html {
+		  line-height: 1.15; /* 1 */
+		  -webkit-text-size-adjust: 100%; /* 2 */
+		}
+
+		/* Sections
+		   ========================================================================== */
+
+		/**
+		 * Remove the margin in all browsers.
+		 */
+
+		body {
+		  margin: 0;
+		}
+
+		/**
+		 * Render the `main` element consistently in IE.
+		 */
+
+		main {
+		  display: block;
+		}
+
+		/**
+		 * Correct the font size and margin on `h1` elements within `section` and
+		 * `article` contexts in Chrome, Firefox, and Safari.
+		 */
+
+		h1 {
+		  font-size: 2em;
+		  margin: 0.67em 0;
+		}
+
+		/* Grouping content
+		   ========================================================================== */
+
+		/**
+		 * 1. Add the correct box sizing in Firefox.
+		 * 2. Show the overflow in Edge and IE.
+		 */
+
+		hr {
+		  box-sizing: content-box; /* 1 */
+		  height: 0; /* 1 */
+		  overflow: visible; /* 2 */
+		}
+
+		/**
+		 * 1. Correct the inheritance and scaling of font size in all browsers.
+		 * 2. Correct the odd `em` font sizing in all browsers.
+		 */
+
+		pre {
+		  font-family: monospace, monospace; /* 1 */
+		  font-size: 1em; /* 2 */
+		}
+
+		/* Text-level semantics
+		   ========================================================================== */
+
+		/**
+		 * Remove the gray background on active links in IE 10.
+		 */
+
+		a {
+		  background-color: transparent;
+		}
+
+		/**
+		 * 1. Remove the bottom border in Chrome 57-
+		 * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+		 */
+
+		abbr[title] {
+		  border-bottom: none; /* 1 */
+		  text-decoration: underline; /* 2 */
+		  text-decoration: underline dotted; /* 2 */
+		}
+
+		/**
+		 * Add the correct font weight in Chrome, Edge, and Safari.
+		 */
+
+		b,
+		strong {
+		  font-weight: bolder;
+		}
+
+		/**
+		 * 1. Correct the inheritance and scaling of font size in all browsers.
+		 * 2. Correct the odd `em` font sizing in all browsers.
+		 */
+
+		code,
+		kbd,
+		samp {
+		  font-family: monospace, monospace; /* 1 */
+		  font-size: 1em; /* 2 */
+		}
+
+		/**
+		 * Add the correct font size in all browsers.
+		 */
+
+		small {
+		  font-size: 80%;
+		}
+
+		/**
+		 * Prevent `sub` and `sup` elements from affecting the line height in
+		 * all browsers.
+		 */
+
+		sub,
+		sup {
+		  font-size: 75%;
+		  line-height: 0;
+		  position: relative;
+		  vertical-align: baseline;
+		}
+
+		sub {
+		  bottom: -0.25em;
+		}
+
+		sup {
+		  top: -0.5em;
+		}
+
+		/* Embedded content
+		   ========================================================================== */
+
+		/**
+		 * Remove the border on images inside links in IE 10.
+		 */
+
+		img {
+		  border-style: none;
+		}
+
+		/* Forms
+		   ========================================================================== */
+
+		/**
+		 * 1. Change the font styles in all browsers.
+		 * 2. Remove the margin in Firefox and Safari.
+		 */
+
+		button,
+		input,
+		optgroup,
+		select,
+		textarea {
+		  font-family: inherit; /* 1 */
+		  font-size: 100%; /* 1 */
+		  line-height: 1.15; /* 1 */
+		  margin: 0; /* 2 */
+		}
+
+		/**
+		 * Show the overflow in IE.
+		 * 1. Show the overflow in Edge.
+		 */
+
+		button,
+		input { /* 1 */
+		  overflow: visible;
+		}
+
+		/**
+		 * Remove the inheritance of text transform in Edge, Firefox, and IE.
+		 * 1. Remove the inheritance of text transform in Firefox.
+		 */
+
+		button,
+		select { /* 1 */
+		  text-transform: none;
+		}
+
+		/**
+		 * Correct the inability to style clickable types in iOS and Safari.
+		 */
+
+		button,
+		[type="button"],
+		[type="reset"],
+		[type="submit"] {
+		  -webkit-appearance: button;
+		}
+
+		/**
+		 * Remove the inner border and padding in Firefox.
+		 */
+
+		button::-moz-focus-inner,
+		[type="button"]::-moz-focus-inner,
+		[type="reset"]::-moz-focus-inner,
+		[type="submit"]::-moz-focus-inner {
+		  border-style: none;
+		  padding: 0;
+		}
+
+		/**
+		 * Restore the focus styles unset by the previous rule.
+		 */
+
+		button:-moz-focusring,
+		[type="button"]:-moz-focusring,
+		[type="reset"]:-moz-focusring,
+		[type="submit"]:-moz-focusring {
+		  outline: 1px dotted ButtonText;
+		}
+
+		/**
+		 * Correct the padding in Firefox.
+		 */
+
+		fieldset {
+		  padding: 0.35em 0.75em 0.625em;
+		}
+
+		/**
+		 * 1. Correct the text wrapping in Edge and IE.
+		 * 2. Correct the color inheritance from `fieldset` elements in IE.
+		 * 3. Remove the padding so developers are not caught out when they zero out
+		 *    `fieldset` elements in all browsers.
+		 */
+
+		legend {
+		  box-sizing: border-box; /* 1 */
+		  color: inherit; /* 2 */
+		  display: table; /* 1 */
+		  max-width: 100%; /* 1 */
+		  padding: 0; /* 3 */
+		  white-space: normal; /* 1 */
+		}
+
+		/**
+		 * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+		 */
+
+		progress {
+		  vertical-align: baseline;
+		}
+
+		/**
+		 * Remove the default vertical scrollbar in IE 10+.
+		 */
+
+		textarea {
+		  overflow: auto;
+		}
+
+		/**
+		 * 1. Add the correct box sizing in IE 10.
+		 * 2. Remove the padding in IE 10.
+		 */
+
+		[type="checkbox"],
+		[type="radio"] {
+		  box-sizing: border-box; /* 1 */
+		  padding: 0; /* 2 */
+		}
+
+		/**
+		 * Correct the cursor style of increment and decrement buttons in Chrome.
+		 */
+
+		[type="number"]::-webkit-inner-spin-button,
+		[type="number"]::-webkit-outer-spin-button {
+		  height: auto;
+		}
+
+		/**
+		 * 1. Correct the odd appearance in Chrome and Safari.
+		 * 2. Correct the outline style in Safari.
+		 */
+
+		[type="search"] {
+		  -webkit-appearance: textfield; /* 1 */
+		  outline-offset: -2px; /* 2 */
+		}
+
+		/**
+		 * Remove the inner padding in Chrome and Safari on macOS.
+		 */
+
+		[type="search"]::-webkit-search-decoration {
+		  -webkit-appearance: none;
+		}
+
+		/**
+		 * 1. Correct the inability to style clickable types in iOS and Safari.
+		 * 2. Change font properties to `inherit` in Safari.
+		 */
+
+		::-webkit-file-upload-button {
+		  -webkit-appearance: button; /* 1 */
+		  font: inherit; /* 2 */
+		}
+
+		/* Interactive
+		   ========================================================================== */
+
+		/*
+		 * Add the correct display in Edge, IE 10+, and Firefox.
+		 */
+
+		details {
+		  display: block;
+		}
+
+		/*
+		 * Add the correct display in all browsers.
+		 */
+
+		summary {
+		  display: list-item;
+		}
+
+		/* Misc
+		   ========================================================================== */
+
+		/**
+		 * Add the correct display in IE 10+.
+		 */
+
+		template {
+		  display: none;
+		}
+
+		/**
+		 * Add the correct display in IE 10.
+		 */
+
+		[hidden] {
+		  display: none;
+		}
+		</style>
+		<style type="text/css">
+		body {
+			margin: 0 auto;
+			padding: 1em;
+			max-width: 50em;
+			font-size: 87.5%;
+			line-height: 1.4em;
+		}
+
+		h1 {
+			border-bottom: 1px solid #C0C0C0;
+			padding-bottom: 1px;
+			font-size: 1.4em;
+			color: #527BBD;
+		}
+
+		h2 {
+			border-bottom: 1px solid #C0C0C0;
+			padding-bottom: 1px;
+			font-size: 1.2em;
+			color: #527BBD;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		a:hover, a:active {
+			text-decoration: underline;
+		}
+
+		a[href^="http://"], a[href^="https://"] {
+			padding-right: 13px;
+			background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAUklEQVR4AW3PgQVAMQwA0e7UnbJTdspO9z8pcSScUk/IAdQJWDK6WcSfx1Abr3HDE4UDu4G8EcqazYJGc0RkGWb156CiD+z3QW+CgZ2gZ4V7hh/5wCpLXuPhsAAAAABJRU5ErkJggg==") no-repeat scroll right center;
+		}
+
+		code {
+			color: #527BBD;
+		}
+
+		a[href^="#env-"] code {
+			color: #106326;
+		}
+
+		dl {
+			margin-right: 1em;
+			margin-left: 1em;
+		}
+
+		#toc ul {
+			list-style-type: decimal;
+		}
+
+		#toc ul ul {
+			list-style-type: upper-alpha;
+		}
+
+		#toc ul ul ul {
+			list-style-type: lower-roman;
+		}
+
+		#index td:first-child code {
+			font-weight: bold;
+			color: #102663;
+		}
+		</style>
+	</head>
 	<body>
 		<main>
 			<section id="toc">
@@ -30,8 +448,8 @@
 
 				<ul>
 <li><a href="#intro">初めに</a><ul>
-<li><a href="#機能">機能</a></li>
-<li><a href="#連絡">連絡</a></li>
+<li><a href="#features">機能</a></li>
+<li><a href="#contact">連絡</a></li>
 </ul></li>
 <li><a href="#surfing">ブラウジング</a><ul>
 <li><a href="#opening">ウェブページを開く</a></li>
@@ -108,7 +526,7 @@
 			<section id="intro" class="level1">
 <h1>初めに</h1>
 <p><a href="https://github.com/qq542vev/w3mplus">w3mplus</a> は、<a href="https://github.com/tats/w3m">w3m</a> 用の無料ブラウザアドオンで、ブラウジングをより効率的に、特にキーボード操作を容易にするために設計されている。<a href="https://github.com/pentadactyl/pentadactyl">Pentadactyl</a>, <a href="https://www.palemoon.org/">Pale Moon</a>, <a href="https://www.vim.org/">Vim</a> に大きく影響され、指の感触はそれらユーザーには馴染みやすい操作性となっている。</p>
-<section id="機能" class="level2">
+<section id="features" class="level2">
 <h2>機能</h2>
 <ul>
 <li>Pale Moon の模倣
@@ -131,7 +549,7 @@
 </ul></li>
 </ul>
 </section>
-<section id="連絡" class="level2">
+<section id="contact" class="level2">
 <h2>連絡</h2>
 <p>質問、機能追加の要望、不具合の報告等は <a href="https://github.com/qq542vev/w3mplus/issues">Github issue</a> から受け付けている。</p>
 </section>
@@ -284,10 +702,10 @@
 <dd>現在のドキュメントの各種情報を表示する。
 </dd>
 <dt><span id="key-gf"><code>gf</code></span></dt>
-<dd>レンダリングビューとソースビューを切り替えます。
+<dd>レンダリングビューとソースビューを切り替る。
 </dd>
 <dt><span id="key-gF"><code>gF</code></span></dt>
-<dd>現在のドキュメントのソースを外部テキストエディタで開く。環境変数 <code>EDITOR</code> でテキストエディタを指定できます。
+<dd>現在のドキュメントのソースを外部テキストエディタで開く。環境変数 <a href="#env-EDITOR"><code>EDITOR</code></a> でテキストエディタを指定可能である。
 </dd>
 </dl>
 </section>
@@ -834,8 +1252,10 @@
 <dt><span id="key-U"><code>U</code></span></dt>
 <dd>全ての閉じたタブを復元する。
 </dd>
+<dt><span id="key-.3Au"><code>:u</code></span></dt>
+<dd>閉じたタブの一覧を表示する。
+</dd>
 </dl>
-<p><span id="key-.3Au"><code>:u</code></span> 閉じたタブの一覧を表示する。</p>
 </section>
 </section>
 <section id="hints" class="level1">
@@ -972,7 +1392,7 @@
 </section>
 <section id="quickmarks" class="level2">
 <h2>クイックマーク</h2>
-<p>クイックマークは、よく訪れるページに素早くアクセスするための、無駄を省いたブックマークです。クイックマークは、アルファベットや数字に URL を割り当てただけのものです。そのため、わずか3回のキー操作で保存したり開いたりすることができます。クイックマークはブラウザのセッションをまたいで保持されます。</p>
+<p>クイックマークは、よく訪れるページに素早くアクセスするための、無駄を省いたブックマークで、アルファベットや数字に URL を割り当てただけのものである。そのため、わずか3回のキー操作で保存したり開いたりすること可能である。クイックマークはブラウザのセッションをまたいで保持される。</p>
 <dl>
 <dt><span id="key-M"><code>M{0-9A-Za-z}</code></span></dt>
 <dd>現在の URL をクイックマークに登録する。
@@ -2146,7 +2566,7 @@
 <td></td>
 </tr>
 <tr class="even">
-<td>[<code>m`</code>(#key-m.60)</td>
+<td><a href="#key-m.60"><code>m`</code></a></td>
 <td>現在のカーソル位置をマークする。</td>
 <td><code>MARK</code></td>
 </tr>
@@ -2211,42 +2631,42 @@
 <td><code>RIGHT</code></td>
 </tr>
 <tr class="odd">
-<td><a href="#key-z.2E"><code>z.</code></a></td>
+<td><a href="#key-zH"><code>zH</code></a></td>
 <td>ドキュメントを半ページ左にスクロールする。</td>
 <td></td>
 </tr>
 <tr class="even">
-<td><a href="#key-z.2E"><code>z.</code></a></td>
+<td><a href="#key-zL"><code>zL</code></a></td>
 <td>ドキュメントを半ページ右にスクロールする。</td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><a href="#key-z.2E"><code>z.</code></a></td>
+<td><a href="#key-zZ"><code>zZ</code></a></td>
 <td>画像の表示倍率をリセットする。</td>
 <td></td>
 </tr>
 <tr class="even">
-<td><a href="#key-z.2E"><code>z.</code></a></td>
+<td><a href="#key-zb"><code>zb</code></a></td>
 <td>現在の行を最下部にスクロールする。</td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><a href="#key-z.2E"><code>z.</code></a></td>
+<td><a href="#key-zh"><code>zh</code></a></td>
 <td>ドキュメントを1列左にスクロールする。</td>
 <td><code>LEFT</code></td>
 </tr>
 <tr class="even">
-<td><a href="#key-z.2E"><code>z.</code></a></td>
+<td><a href="#key-zl"><code>zl</code></a></td>
 <td>ドキュメントを1列右にスクロールする。</td>
 <td><code>RIGHT</code></td>
 </tr>
 <tr class="odd">
-<td><a href="#key-z.2E"><code>z.</code></a></td>
+<td><a href="#key-zt"><code>zt</code></a></td>
 <td>現在の行を最上部にスクロールする。</td>
 <td></td>
 </tr>
 <tr class="even">
-<td><a href="#key-z.2E"><code>z.</code></a></td>
+<td><a href="#key-zz"><code>zz</code></a></td>
 <td>現在の行を中央にスクロールする。</td>
 <td><code>CENTER_V</code></td>
 </tr>
