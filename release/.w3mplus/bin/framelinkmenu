@@ -3,6 +3,8 @@
 
 VERSION='framelinkmenu 2.0.0'
 
+
+
 set -efu
 umask '0022'
 LC_ALL='C'
@@ -52,12 +54,18 @@ endCall() {
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
 }
+
+
+
 option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
 	endCall "${EX_USAGE}"
 }
+
+
+
 regex_match() {
 	awk -- '
 		BEGIN {
@@ -73,6 +81,9 @@ regex_match() {
 
 	return 0
 }
+
+
+
 append_array_posix() {
 	while [ 2 -le "${#}" ]; do
 		__append_array_posix "${1}" "${2}"
@@ -89,21 +100,27 @@ __append_array_posix() {
 
 	eval "${1}=\"\${${1}-}\${${1}:+ }'\${3}\${2}'\""
 }
+
+
+
+
+
+
 abspath() {
-	case $2 in
-	/*) set -- "$1" "$2/" "" ;;
-	*) set -- "$1" "${3:-$PWD}/$2/" "" ;;
+	case "${2}" in
+	'/'*) set -- "${1}" "${2}/" '' ;;
+	*) set -- "${1}" "${3:-$PWD}/$2/" '' ;;
 	esac
 
-	while [ "$2" ]; do
-		case ${2%%/*} in
-		"" | .) set -- "$1" "${2#*/}" "$3" ;;
-		..) set -- "$1" "${2#*/}" "${3%/*}" ;;
-		*) set -- "$1" "${2#*/}" "$3/${2%%/*}" ;;
+	while [ -n "${2}" ]; do
+		case "${2%%/*}" in
+		'' | '.') set -- "${1}" "${2#*/}" "${3}" ;;
+		'..') set -- "${1}" "${2#*/}" "${3%/*}" ;;
+		*) set -- "${1}" "${2#*/}" "${3}/${2%%/*}" ;;
 		esac
 	done
 
-	eval "$1=\"/\${3#/}\""
+	eval "${1}=\"/\${3#/}\""
 }
 
 path_to_fileurl() {
@@ -453,6 +470,9 @@ eval "set -- ${REST}"
 tmpDir=$(mktemp -d)
 awkScript=$(
 	cat <<-'EOF'
+
+
+
 		function html_escape(string) {
 			gsub(/&/, "\\&amp;", string)
 			gsub(/</, "\\&lt;", string)
@@ -462,6 +482,9 @@ awkScript=$(
 
 			return string
 		}
+
+
+
 		function url_decode(string, httpDecode,  p2c,result) {
 			split("", p2c)
 

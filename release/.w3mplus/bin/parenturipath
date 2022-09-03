@@ -3,6 +3,8 @@
 
 VERSION='parenturipath 1.3.3'
 
+
+
 set -efu
 umask '0022'
 LC_ALL='C'
@@ -52,12 +54,18 @@ endCall() {
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
 }
+
+
+
 option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
 	endCall "${EX_USAGE}"
 }
+
+
+
 regex_match() {
 	awk -- '
 		BEGIN {
@@ -277,6 +285,12 @@ esac
 
 awkScript=$(
 	cat <<-'EOF'
+
+
+
+
+
+
 		function uri_path_remove_dot_segments(path,  result) {
 			if(!index(path, ".")) {
 				return path
@@ -322,6 +336,9 @@ awkScript=$(
 
 			return path
 		}
+
+
+
 		function url_encode_normalize(string,  p2c,result) {
 			p2c["2D"] = "-"; p2c["2E"] = "."; p2c["30"] = "0";
 			p2c["31"] = "1"; p2c["32"] = "2"; p2c["33"] = "3";
@@ -358,6 +375,9 @@ awkScript=$(
 
 			return result string
 		}
+
+
+
 		function uri_check(uri, relative) {
 			if(relative) {
 				return (uri ~ /^([A-Za-z][A-Za-z0-9+.-]*:)?(\/\/(([A-Za-z0-9._~!$&'()*+,;=:-]|%[0-9A-Fa-f]{2})*@)?(\[(((([0-9A-F]{1,4}:){6}|::([0-9A-F]{1,4}:){5}|([0-9A-F]{1,4})?::([0-9A-F]{1,4}:){4}|(([0-9A-F]{1,4}:){0,1}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){3}|(([0-9A-F]{1,4}:){0,2}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){2}|(([0-9A-F]{1,4}:){0,3}[0-9A-F]{1,4})?::[0-9A-F]{1,4}:|(([0-9A-F]{1,4}:){0,4}[0-9A-F]{1,4})?::)([0-9A-F]{1,4}:[0-9A-F]{1,4}|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|(([0-9A-F]{1,4}:){0,5}[0-9A-F]{1,4})?::[0-9A-F]{1,4}|(([0-9A-F]{1,4}:){0,6}[0-9A-F]{1,4})?::)|v[0-9A-F]+\.[A-Za-z0-9._~!$&'()*+,;=:-]+)]|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f]{2})*)(:[0-9]*)?(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|\/((([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*)?|(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|)(\?([A-Za-z0-9._~!$&'()*+,;=:@\/?-]|%[0-9A-Fa-f]{2})*)?(#([A-Za-z0-9._~!$&'()*+,;=:@\/?-]|%[0-9A-Fa-f]{2})*)?$/)
@@ -365,6 +385,9 @@ awkScript=$(
 				return (uri ~ /^[A-Za-z][A-Za-z0-9+.-]*:(\/\/(([A-Za-z0-9._~!$&'()*+,;=:-]|%[0-9A-Fa-f]{2})*@)?(\[(((([0-9A-F]{1,4}:){6}|::([0-9A-F]{1,4}:){5}|([0-9A-F]{1,4})?::([0-9A-F]{1,4}:){4}|(([0-9A-F]{1,4}:){0,1}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){3}|(([0-9A-F]{1,4}:){0,2}[0-9A-F]{1,4})?::([0-9A-F]{1,4}:){2}|(([0-9A-F]{1,4}:){0,3}[0-9A-F]{1,4})?::[0-9A-F]{1,4}:|(([0-9A-F]{1,4}:){0,4}[0-9A-F]{1,4})?::)([0-9A-F]{1,4}:[0-9A-F]{1,4}|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|(([0-9A-F]{1,4}:){0,5}[0-9A-F]{1,4})?::[0-9A-F]{1,4}|(([0-9A-F]{1,4}:){0,6}[0-9A-F]{1,4})?::)|v[0-9A-F]+\.[A-Za-z0-9._~!$&'()*+,;=:-]+)]|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([A-Za-z0-9._~!$&'()*+,;=-]|%[0-9A-Fa-f]{2})*)(:[0-9]*)?(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|\/((([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*)?|(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))+(\/(([A-Za-z0-9._~!$&'()*+,;=:@-]|%[0-9A-Fa-f]{2}))*)*|)(\?([A-Za-z0-9._~!$&'()*+,;=:@\/?-]|%[0-9A-Fa-f]{2})*)?(#([A-Za-z0-9._~!$&'()*+,;=:@\/?-]|%[0-9A-Fa-f]{2})*)?$/)
 			}
 		}
+
+
+
 		function uri_parse(uri, element,  pattern,key,i,auth,result) {
 			split("^[^:/?#]*: ^//[^/?#]* ^[^?#]* ^\\?[^#]* ^#.* ^[^@/?#]*@ ^[^:/?#]* ^:[^/?#]*", pattern, " ")
 			split("scheme authority path query fragment userinfo host port", key, " ")
@@ -394,44 +417,45 @@ awkScript=$(
 				}
 			}
 		}
-		function sysexits(code,  status) {
+
+
+
+		function sysexits(code) {
 			if(code == "EX_OK") {
-				status = 0
+				return 0
 			} else if(code == "EX_USAGE") {
-				status = 64
+				return 64
 			} else if(code == "EX_DATAERR") {
-				status = 65
+				return 65
 			} else if(code == "EX_NOINPUT") {
-				status = 66
+				return 66
 			} else if(code == "EX_NOUSER") {
-				status = 67
+				return 67
 			} else if(code == "EX_NOHOST") {
-				status = 68
+				return 68
 			} else if(code == "EX_UNAVAILABLE") {
-				status = 69
+				return 69
 			} else if(code == "EX_SOFTWARE") {
-				status = 70
+				return 70
 			} else if(code == "EX_OSERR") {
-				status = 71
+				return 71
 			} else if(code == "EX_OSFILE") {
-				status = 72
+				return 72
 			} else if(code == "EX_CANTCREAT") {
-				status = 73
+				return 73
 			} else if(code == "EX_IOERR") {
-				status = 74
+				return 74
 			} else if(code == "EX_TEMPFAIL") {
-				status = 75
+				return 75
 			} else if(code == "EX_PROTOCOL") {
-				status = 76
+				return 76
 			} else if(code == "EX_NOPERM") {
-				status = 77
+				return 77
 			} else if(code == "EX_CONFIG") {
-				status = 78
-			} else {
-				status = 1
+				return 78
 			}
 
-			return status
+			return 1
 		}
 
 			BEGIN {

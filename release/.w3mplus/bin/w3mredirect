@@ -3,6 +3,8 @@
 
 VERSION='w3mredirect 2.0.0'
 
+
+
 set -efu
 umask '0022'
 LC_ALL='C'
@@ -52,12 +54,16 @@ endCall() {
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
 }
+
+
+
 option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
 	endCall "${EX_USAGE}"
 }
+
 
 readonly CHAR_NUL=''
 readonly CHAR_SOH=''
@@ -94,6 +100,9 @@ readonly CHAR_GS=''
 readonly CHAR_RS=''
 readonly CHAR_US=''
 readonly CHAR_DEL=''
+
+
+
 regex_match() {
 	awk -- '
 		BEGIN {
@@ -631,6 +640,9 @@ eval "set -- ${REST}"
 
 awkScript=$(
 	cat <<-'EOF'
+
+
+
 		function singlequote_escape(string) {
 			gsub(/'+/, "'\"&\"'", string)
 

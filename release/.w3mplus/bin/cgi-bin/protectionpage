@@ -15,6 +15,8 @@ VERSION='protectionpage 1.2.0'
 export PATH="${W3MPLUS_PATH}:${W3MPLUS_LIB}${PATH:+:}${PATH-}"
 export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
 
+
+
 set -efu
 umask '0022'
 LC_ALL='C'
@@ -64,6 +66,9 @@ endCall() {
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
 }
+
+
+
 html_escape() {
 	set -- "${1}" "${2}" ''
 	until [ "${2#*&}" = "${2}" ]; do

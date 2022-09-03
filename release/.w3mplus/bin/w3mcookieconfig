@@ -3,6 +3,8 @@
 
 VERSION='cookiemanager 2.0.0'
 
+
+
 set -efu
 umask '0022'
 LC_ALL='C'
@@ -52,12 +54,18 @@ endCall() {
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
 }
+
+
+
 option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
 	endCall "${EX_USAGE}"
 }
+
+
+
 regex_match() {
 	awk -- '
 		BEGIN {
@@ -73,6 +81,9 @@ regex_match() {
 
 	return 0
 }
+
+
+
 append_array_posix() {
 	while [ 2 -le "${#}" ]; do
 		__append_array_posix "${1}" "${2}"
@@ -92,6 +103,9 @@ __append_array_posix() {
 
 validation_param() {
 	awk -- '
+
+
+
 function domain_check(domain) {
 	return domain ~ /^[0-9A-Za-z]([0-9A-Za-z-]*[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]*[0-9A-Za-z])?)+$/
 }
@@ -396,12 +410,18 @@ eval "set -- ${REST}"
 tmpDir=$(mktemp -d)
 awkScript=$(
 	cat <<-'EOF'
-		function regex_escape(string) {
-			gsub(/[].\\*+?|(){}[^$]/, "\\\\&", string)
+
+
+
+		function regex_escape(string, type) {
+			if(type == "" || type == "BRE") {
+				gsub(/[].\\*[^$]/, "\\\\&", string)
+			} else if(type == "ERE") {
+				gsub(/[].\\*+?|(){}[^$]/, "\\\\&", string)
+			}
 
 			return string
 		}
-
 
 			BEGIN {
 				split("", key)
@@ -430,7 +450,7 @@ awkScript=$(
 				name = key[$1]
 
 				for(i = 1; i <= count; i++) {
-					escaped = regex_escape(value[i, "uri"])
+					escaped = regex_escape(value[i, "uri"], "ERE")
 					flag = $2 ~ "(^|,)" escaped "(,|$)"
 
 					if((value[i, "type"] ==  name "-add" || value[i, "type"] == name "-toggle") && !flag) {

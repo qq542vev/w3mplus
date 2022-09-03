@@ -5,6 +5,8 @@ VERSION='w3m-private 2.0.0'
 
 ORIGINAL_LC_ALL="${LC_ALL-}"
 
+
+
 set -efu
 umask '0022'
 LC_ALL='C'
@@ -54,12 +56,18 @@ endCall() {
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
 }
+
+
+
 option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
 	endCall "${EX_USAGE}"
 }
+
+
+
 append_array_posix() {
 	while [ 2 -le "${#}" ]; do
 		__append_array_posix "${1}" "${2}"

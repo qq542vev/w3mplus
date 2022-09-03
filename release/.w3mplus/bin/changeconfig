@@ -3,6 +3,8 @@
 
 VERSION='changeconfig 3.0.0'
 
+
+
 set -efu
 umask '0022'
 LC_ALL='C'
@@ -52,12 +54,18 @@ endCall() {
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
 }
+
+
+
 option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
 	endCall "${EX_USAGE}"
 }
+
+
+
 regex_match() {
 	awk -- '
 		BEGIN {
@@ -73,6 +81,9 @@ regex_match() {
 
 	return 0
 }
+
+
+
 awkv_escape() {
 	set -- "${1}" "${2}" ''
 	until [ "${2#*\\}" = "${2}" ]; do
@@ -86,6 +97,9 @@ awkv_escape() {
 
 	eval "${1}=\${2}"
 }
+
+
+
 append_array_posix() {
 	while [ 2 -le "${#}" ]; do
 		__append_array_posix "${1}" "${2}"

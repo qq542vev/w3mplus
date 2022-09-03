@@ -3,6 +3,8 @@
 
 VERSION='setusercommand 1.1.3'
 
+
+
 set -efu
 umask '0022'
 LC_ALL='C'
@@ -52,12 +54,18 @@ endCall() {
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
 }
+
+
+
 option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
 	endCall "${EX_USAGE}"
 }
+
+
+
 awkv_escape() {
 	set -- "${1}" "${2}" ''
 	until [ "${2#*\\}" = "${2}" ]; do
@@ -71,6 +79,7 @@ awkv_escape() {
 
 	eval "${1}=\${2}"
 }
+
 
 readonly CHAR_NUL=''
 readonly CHAR_SOH=''
@@ -359,6 +368,9 @@ case "${#}" in
 '0')
 	awkScript=$(
 		cat <<-'EOF'
+
+
+
 			function backslash_escape(string) {
 				gsub("\\\\", "\\\\", string)
 				gsub("\\001", "\\001", string)
@@ -420,6 +432,9 @@ case "${#}" in
 *)
 	awkScript=$(
 		cat <<-'EOF'
+
+
+
 			function backslash_escape(string) {
 				gsub("\\\\", "\\\\", string)
 				gsub("\\001", "\\001", string)
