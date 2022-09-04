@@ -171,6 +171,7 @@ menu MenuView
 	func  "ナビゲーションリンク (n)" LINK_MENU "Nn"
 	func  "すべてのリンクを表示 (l)" LIST_MENU "Ll"
 	nop   "------------------------"
+	func  "ページャーを開く     (p)" COMMAND "Pp" "SET_OPTION editor=\"${PAGER:-less}\"; EDIT_SCREEN; SET_OPTION editor=\"${VISUAL:-${EDITOR:-vi --}}\""
 	func  "すべてのタブを表示   (a)" TAB_MENU "Aa"
 end
 
