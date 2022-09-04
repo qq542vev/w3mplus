@@ -497,7 +497,7 @@ keymap "C-u" VIEW
 ## Miscellaneous ##
 
 # F11 key
-keymap "^[[23~" COMMAND "SET_OPTION editor=\"${PAGER:-less}\"; EDIT_SCREEN; SET_OPTION editor=\"${VISUAL:-${EDITOR:-vi --}}\""
+keymap "^[[23~" COMMAND "SET_OPTION \"editor=${PAGER:-less}\"; EDIT_SCREEN; SET_OPTION \"editor=${VISUAL:-${EDITOR:-vi --}}\""
 # F10 key
 keymap "^[[21~" MENU Menu
 # F7 key
