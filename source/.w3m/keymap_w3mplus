@@ -6,7 +6,7 @@
 ##
 ##   id - 086a6ca3-4634-493b-8916-e7eefe1cba93
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.14.0
+##   version - 1.15.0
 ##   date - 2022-09-03
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
@@ -507,6 +507,9 @@ keymap "^[[18~" EDIT_SCREEN
 keymap "^[[17~" COMMAND "SET_OPTION default_url=1; GOTO"
 keymap "ESC-d" COMMAND "SET_OPTION default_url=1; TAB_GOTO"
 keymap "C-l" COMMAND "SET_OPTION default_url=1; GOTO"
+# F1 key
+keymap "^[OP" HELP
+keymap "^[[11~" HELP
 
 ## Menu Bar ##
 
@@ -1101,8 +1104,7 @@ keymap ":v" VERSION
 
 ## Online help ##
 
-keymap ":h" HELP
-
+keymap ":h" LOAD "~/.w3mplus/doc/index.html"
 keymap ":l" MENU LCommands
 
 ### Uncategorized ###
