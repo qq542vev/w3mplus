@@ -512,6 +512,7 @@
 <li><a href="#uncategorized">未分類ヘルプ</a></li>
 </ul></li>
 <li><a href="#version">バージョン情報</a><ul>
+<li><a href="#v0.4.0">v0.4.0 - 2022-09-xx</a></li>
 <li><a href="#v0.3.0">v0.3.0 - 2022-09-01</a></li>
 <li><a href="#v0.2.0">v0.2.0 - 2022-07-31</a></li>
 <li><a href="#v0.1.0">v0.1.0 - 2019-12-31</a></li>
@@ -986,176 +987,181 @@
 <td><code>'mutt --'</code></td>
 </tr>
 <tr class="odd">
+<td><span id="env-PAGER"><code>PAGER</code></span></td>
+<td>使用するページャー。</td>
+<td><code>'less --'</code></td>
+</tr>
+<tr class="even">
 <td><span id="env-W3MPLUS_W3M_HOME"><code>W3MPLUS_W3M_HOME</code></span></td>
 <td>w3m の設定ディレクトリ。</td>
 <td><code>&quot;${HOME}/.w3m&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_W3M_BOOKMARK"><code>W3MPLUS_W3M_BOOKMARK</code></span></td>
 <td>w3m のブックマークファイル。</td>
 <td><code>&quot;${W3MPLUS_W3M_HOME}/bookmark.html&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_W3M_CONFIG"><code>W3MPLUS_W3M_CONFIG</code></span></td>
 <td>w3m の設定ファイル。</td>
 <td><code>&quot;${W3MPLUS_W3M_HOME}/config&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_W3M_HISTORY"><code>W3MPLUS_W3M_HISTORY</code></span></td>
 <td>w3m の閲覧履歴ファイル。</td>
 <td><code>&quot;${W3MPLUS_W3M_HOME}/history&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_W3M_SITECONF"><code>W3MPLUS_W3M_SITECONF</code></span></td>
 <td>w3m の Web サイト毎の設定ファイル。</td>
 <td><code>&quot;${W3MPLUS_W3M_HOME}/siteconf&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_HOME"><code>W3MPLUS_HOME</code></span></td>
 <td>w3mplus の設定ディレクトリ。</td>
 <td><code>&quot;${HOME}/.w3mplus&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_CACHE"><code>W3MPLUS_CACHE</code></span></td>
 <td>w3mplus のキャッシュディレクトリ。</td>
 <td><code>&quot;${W3MPLUS_HOME}/cache&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_PATH"><code>W3MPLUS_PATH</code></span></td>
 <td>w3mplus の実行ファイルのディレクトリ。</td>
 <td><code>&quot;${W3MPLUS_HOME}/bin&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_LIB"><code>W3MPLUS_LIB</code></span></td>
 <td>w3mplus のライブラリのディレクトリ。</td>
 <td><code>&quot;${W3MPLUS_HOME}/lib&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-"><code>W3MPLUS_PASS_FILE</code></span></td>
 <td>w3mplus のパスファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/pass&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_YANK"><code>W3MPLUS_YANK</code></span></td>
 <td>コピーする際に起動するプログラム。</td>
 <td><code>'v=$(cat; printf &quot;_&quot;); v=&quot;${v%_}&quot;; &quot;${HOME}/.w3mplus/bin/setreg&quot; &quot;+&quot; &quot;${v}&quot;; exec 3&gt;&amp;1 &gt;&gt;&quot;${HOME}/w3mplusyank&quot;; date &quot;+# %Y-%m-%d %H:%M:%S %Z&quot;; echo &quot;${v}&quot;; exec 1&gt;&amp;3 3&gt;&amp;-'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_UNDO_TIMEOUT"><code>W3MPLUS_UNDO_TIMEOUT</code></span></td>
 <td>復元するタブのタイムアウト秒数。</td>
 <td><code>'+86400'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_UNDO_HISTSIZE"><code>W3MPLUS_UNDO_HISTSIZE</code></span></td>
 <td>記録する復元するタブの履歴数。</td>
 <td><code>'2000'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_UNDO_FILE"><code>W3MPLUS_UNDO_FILE</code></span></td>
 <td>復元するタブを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/tabrestore&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_VISUAL_TIMEOUT"><code>W3MPLUS_VISUAL_TIMEOUT</code></span></td>
 <td>ビジュアルモードでタイムアウトする秒数。</td>
 <td><code>'+600'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_SEARCH_CONFIGFILE"><code>W3MPLUS_SEARCH_CONFIGFILE</code></span></td>
 <td>検索エンジンの設定ファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/search-config&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_SEARCH_ENGINE"><code>W3MPLUS_SEARCH_ENGINE</code></span></td>
 <td>検索エンジンの設定ファイル。</td>
 <td><code>'google'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_SEARCH_HISTSIZE"><code>W3MPLUS_SEARCH_HISTSIZE</code></span></td>
 <td>記録する検索の履歴数。</td>
 <td><code>'2000'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_SEARCH_HISTFILE"><code>W3MPLUS_SEARCH_HISTFILE</code></span></td>
 <td>検索履歴を記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/search-history&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_REGISTER_FILE"><code>W3MPLUS_REGISTER_FILE</code></span></td>
 <td>レジスタを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/register&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_OPERATORFUNC"><code>W3MPLUS_OPERATORFUNC</code></span></td>
 <td>operatorfunc 用プログラム。</td>
 <td><code>'cat'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_FORMATPRG"><code>W3MPLUS_FORMATPRG</code></span></td>
 <td>formatprg 用プログラム。</td>
 <td><code>'cat'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_KEYWORDPRG"><code>W3MPLUS_KEYWORDPRG</code></span></td>
 <td>keywordprg 用プログラム。</td>
 <td><code>'man &quot;$(cat)&quot;'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_EQUALPRG"><code>W3MPLUS_EQUALPRG</code></span></td>
 <td>equalprg 用プログラム。</td>
 <td><code>'cat'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_ZOOM_MAX"><code>W3MPLUS_ZOOM_MAX</code></span></td>
 <td>最大画像表示倍率。</td>
 <td><code>'300'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_ZOOM_MIN"><code>W3MPLUS_ZOOM_MIN</code></span></td>
 <td>最小画像表示倍率。</td>
 <td><code>'30'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_QUICKMARK_FILE"><code>W3MPLUS_QUICKMARK_FILE</code></span></td>
 <td>クイックマークを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/quickmark&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_LOCALMARK_FILE"><code>W3MPLUS_LOCALMARK_FILE</code></span></td>
 <td>ローカルマークを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/localmark&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_URLMARK_FILE"><code>W3MPLUS_URLMARK_FILE</code></span></td>
 <td>URL マークを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/urlmark&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_USERCOMMAND_FILE"><code>W3MPLUS_USERCOMMAND_FILE</code></span></td>
 <td>ユーザコマンドを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/usercommand&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_SIDEBAR_SIZE"><code>W3MPLUS_SIDEBAR_SIZE</code></span></td>
 <td>サイドバーのサイズ。</td>
 <td><code>'200'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_SIDEBAR_POSITION"><code>W3MPLUS_SIDEBAR_POSITION</code></span></td>
 <td>サイドバーの位置。</td>
 <td><code>'left'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_TEMPLATE_HTTP"><code>W3MPLUS_TEMPLATE_HTTP</code></span></td>
 <td>HTTP レスポンス用テンプレートファイル。</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span id="env-W3MPLUS_TEMPLATE_HTML"><code>W3MPLUS_TEMPLATE_HTML</code></span></td>
 <td>HTML 用テンプレートファイル。</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span id="env-W3MPLUS_TEMPLATE_FRAMESET"><code>W3MPLUS_TEMPLATE_FRAMESET</code></span></td>
 <td>HTML フレーム用テンプレートファイル。</td>
 <td></td>
@@ -1558,7 +1564,7 @@
 <h2>ヘルプ</h2>
 <dl>
 <dt><span id="key-.3Ah"><code>:h</code></span></dt>
-<dd>ヘルプページを開く。
+<dd>w3mplus のヘルプドキュメントを開く。
 </dd>
 <dt><span id="key-.3Al"><code>:l</code></span></dt>
 <dd>一覧メニューを開く。
@@ -1579,6 +1585,15 @@
 </section>
 <section id="version" class="level1">
 <h1>バージョン情報</h1>
+<section id="v0.4.0" class="level2">
+<h2>v0.4.0 - 2022-09-xx</h2>
+<ul>
+<li>ヘルプドキュメントの改善。CSS の追加。</li>
+<li><code>&lt;F11&gt;</code> でページャーを開く機能を追加。</li>
+<li><code>&lt;F1&gt;</code> でヘルプを開く機能を追加。</li>
+<li><code>:h</code> でヘルプドキュメントを開く機能に変更。</li>
+</ul>
+</section>
 <section id="v0.3.0" class="level2">
 <h2>v0.3.0 - 2022-09-01</h2>
 <ul>
@@ -1820,7 +1835,7 @@
 </tr>
 <tr class="odd">
 <td><a href="#key-.3Ah"><code>:h</code></a></td>
-<td>ヘルプページを開く。</td>
+<td>w3mplus のヘルプドキュメントを開く。</td>
 <td><code>HELP</code></td>
 </tr>
 <tr class="even">
@@ -3019,24 +3034,34 @@
 <td></td>
 </tr>
 <tr class="odd">
+<td><code>&lt;F11&gt;</code></td>
+<td>ページャーで現在のドキュメントを開く。</td>
+<td></td>
+</tr>
+<tr class="even">
 <td><code>&lt;F12&gt;</code></td>
 <td>開発者用メニューを開く。</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>&lt;F14&gt;</code></td>
 <td>任意の w3m コマンドを実行する。</td>
 <td><code>COMMAND</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>&lt;F15&gt;</code></td>
 <td>前のパターンを検索する。</td>
 <td><code>SEARCH_PREV</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>&lt;F16&gt;</code></td>
 <td>Shell コマンドを実行する。</td>
 <td><code>EXEC_SHELL</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;F1&gt;</code></td>
+<td>ヘルプページを開く。</td>
+<td><code>HELP</code></td>
 </tr>
 <tr class="odd">
 <td><code>&lt;F3&gt;</code></td>
