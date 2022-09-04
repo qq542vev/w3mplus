@@ -6,19 +6,19 @@
 ##
 ## Metadata:
 ##
-##	 id - 58a1cbfd-8bc9-40d5-8013-cb765d3fd182
-##	 author - qq542vev <https://purl.org/meta/me/>
-##	 version - 0.1.0
-##	 date - 2022-07-05
-##	 since - 2022-07-05
-##	 copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
-##	 license - CC-BY <https://creativecommons.org/licenses/by/4.0/>
-##	 package - w3mplus
+##   id - 58a1cbfd-8bc9-40d5-8013-cb765d3fd182
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 0.1.0
+##   date - 2022-07-05
+##   since - 2022-07-05
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
 ##
 ## See Also:
 ##
-##	 * Project homepage - <https://github.com/qq542vev/w3mplus>
-##	 * Bag report - <https://github.com/qq542vev/w3mplus/issues>
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
 VERSION='includefile 0.1.0'
 
