@@ -395,6 +395,7 @@ w3mplus では以下の環境変数を使用する。環境変数を設定する
 | [`VISUAL`]{#env-VISUAL} | 使用するテキストエディタ。 | `"${EDITOR}"` |
 | [`EDITOR`]{#env-EDITOR} | 使用するテキストエディタ。 | `'vi --'` |
 | [`MAILER`]{#env-MAILER} | 使用するメーラー。 | `'mutt --'` |
+| [`PAGER`]{#env-PAGER} | 使用するページャー。 | `'less --'` |
 | [`W3MPLUS_W3M_HOME`]{#env-W3MPLUS_W3M_HOME} | w3m の設定ディレクトリ。 | `"${HOME}/.w3m"` |
 | [`W3MPLUS_W3M_BOOKMARK`]{#env-W3MPLUS_W3M_BOOKMARK} | w3m のブックマークファイル。 | `"${W3MPLUS_W3M_HOME}/bookmark.html"` |
 | [`W3MPLUS_W3M_CONFIG`]{#env-W3MPLUS_W3M_CONFIG} | w3m の設定ファイル。 | `"${W3MPLUS_W3M_HOME}/config"` |
@@ -1108,6 +1109,7 @@ Pale Moon モードは [Pale Moon](https://www.palemoon.org/) 風のキーマッ
 | `<ESC-v>` | 表示メニューを開く。 | |
 | `<End>` | カーソルをドキュメントの最下部に移動する。 | `END` |
 | `<F10>` | Pale Moon 風のメニューを開く。 | |
+| `<F11>` | ページャーで現在のドキュメントを開く。 | |
 | `<F12>` | 開発者用メニューを開く。 | |
 | `<F14>` | 任意の w3m コマンドを実行する。 | `COMMAND` |
 | `<F15>` | 前のパターンを検索する。 | `SEARCH_PREV` |

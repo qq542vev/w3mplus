@@ -496,7 +496,7 @@ keymap "C-u" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; VIEW"
 ## Miscellaneous ##
 
 # F11 key
-keymap "^[[23~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION \"editor=${PAGER:-less}\"; EDIT_SCREEN; SET_OPTION \"editor=${VISUAL:-${EDITOR:-vi --}}\""
+keymap "^[[23~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; SET_OPTION \"editor=${PAGER:-less --}\"; EDIT_SCREEN; SET_OPTION \"editor=${VISUAL:-${EDITOR:-vi --}}\""
 # F10 key
 keymap "^[[21~" COMMAND "SET_OPTION keymap_file=keymap_w3mplus; MENU Menu"
 # F7 key
