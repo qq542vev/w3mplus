@@ -60,6 +60,6 @@ function uri_query_parse(string, result, separator,  query,queryCount,i,count,po
 			}
 		}
 	}
-	
+
 	return count
 }
