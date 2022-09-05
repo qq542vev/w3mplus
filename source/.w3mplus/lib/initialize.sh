@@ -34,13 +34,25 @@ export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORR
 
 . 'sysexits.sh'
 
-trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
-trap 'endCall 129' 1  # SIGHUP
-trap 'endCall 130' 2  # SIGINT
-trap 'endCall 131' 3  # SIGQUIT
-trap 'endCall 143' 15 # SIGTERM
+trap 'case "${?}" in 0) endCall;; *) end_call "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'end_call 129' 1  # SIGHUP
+trap 'end_call 130' 2  # SIGINT
+trap 'end_call 131' 3  # SIGQUIT
+trap 'end_call 143' 15 # SIGTERM
 
-endCall() {
+### Function: end_call
+##
+## 一時ディレクトリを削除しスクリプトを終了する。
+##
+## Parameters:
+##
+##   $1 - 終了ステータス。
+##
+## Returns:
+##
+##   $1 の終了ステータス。
+
+end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"

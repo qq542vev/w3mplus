@@ -20,6 +20,8 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
+@include "array_length.awk"
+
 ### Function: array_print
 ##
 ## 番号付き配列を文字列に変換する。
@@ -35,8 +37,6 @@
 ## Returns:
 ##
 ##   変換した文字列。
-
-@include "array_length.awk"
 
 function array_print(array, start, end, separator, format,  result) {
 	if(start == "") {

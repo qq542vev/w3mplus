@@ -92,14 +92,14 @@ if [ '!' -f "${config}" ]; then
 		詳細については '${0##*/} --help' を実行してください。
 	EOF
 
-	endCall "${EX_DATAERR}"
+	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
 	cat <<-EOF >&2
 		${0##*/}: '${config}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
 	EOF
 
-	endCall "${EX_NOINPUT}"
+	end_call "${EX_NOINPUT}"
 fi
 
 if [ '!' -s "${config}" ]; then
@@ -126,14 +126,14 @@ if [ '!' -f "${history}" ]; then
 		詳細については '${0##*/} --help' を実行してください。
 	EOF
 
-	endCall "${EX_DATAERR}"
+	end_call "${EX_DATAERR}"
 elif [ '!' -r "${history}" ]; then
 	cat <<-EOF >&2
 		${0##*/}: '${history}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
 	EOF
 
-	endCall "${EX_NOINPUT}"
+	end_call "${EX_NOINPUT}"
 fi
 
 case "${#}" in
@@ -281,7 +281,7 @@ encoded=$(
 		-v "history=${awkvHistory}" \
 		-v "edFlag=${edFlag}" \
 		"${awkScript}" ${@+"${@}"}
-) || endCall "${?}"
+) || end_call "${?}"
 newNumber=$(
 	cat <<-'EOF'
 	BEGIN {
@@ -349,4 +349,4 @@ awk \
 	-v "engine=${engine}" \
 	-- "${awkScript}" \
 	"${config}" \
-|| endCall "${?}"
+|| end_call "${?}"

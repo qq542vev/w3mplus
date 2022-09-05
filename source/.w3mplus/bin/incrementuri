@@ -179,4 +179,4 @@ awk \
 	-v "position=${position}" \
 	-- "${awkScript}" \
 	${@+"${@}"} \
-|| endCall "${?}"
+|| end_call "${?}"

@@ -20,6 +20,8 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
+@include "url_decode.awk"
+
 ### Function: uri_query_parse
 ##
 ## URI クエリを分離する。
@@ -33,8 +35,6 @@
 ## Returns:
 ##
 ##   分離されたクエリの要素数。
-
-@include "url_decode.awk"
 
 function uri_query_parse(string, result, separator,  query,queryCount,i,count,position) {
 	split("", result)

@@ -106,7 +106,7 @@ for value in 'sourceBin:bin' 'sourceW3m:.w3m' 'sourceW3mplus:.w3mplus'; do
 			詳細については '${0##*/} --help' を実行してください。
 		EOF
 
-		endCall "${EX_DATAERR}"
+		end_call "${EX_DATAERR}"
 	fi
 
 	cp -R -- "${sourceDir}" "${tmpDir}/${value##*:}"
@@ -146,7 +146,7 @@ for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
 						詳細については '${0##*/} --help' を実行してください。
 					EOF
 
-					endCall "${EX_DATAERR}"
+					end_call "${EX_DATAERR}"
 				fi
 			)
 			;;

@@ -103,7 +103,7 @@ case "${#}" in
 			詳細については '${0##*/} --help' を実行してください。
 		EOF
 
-		endCall "${EX_USAGE}"
+		end_call "${EX_USAGE}"
 		;;
 esac
 
@@ -117,7 +117,7 @@ if regex_match "${variableName}" '^[_A-Za-z][_0-9A-Za-z]*$'; then :; else
 		詳細については '${0##*/} --help' を実行してください。
 	EOF
 
-	endCall "${EX_USAGE}"
+	end_call "${EX_USAGE}"
 fi
 
 eval "value=\"\${${variableName}-}\""

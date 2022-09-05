@@ -20,6 +20,8 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
+@include "uri_path_remove_dot_segments.awk"
+
 ### Function: uri_path_parent
 ##
 ## パス文字列から上位ディレクトリのパスを求める。
@@ -32,8 +34,6 @@
 ## Returns:
 ##
 ##   path の上位ディレクトリのパス文字列。
-
-@include "uri_path_remove_dot_segments.awk"
 
 function uri_path_parent(path, count) {
 	path = uri_path_remove_dot_segments(path)

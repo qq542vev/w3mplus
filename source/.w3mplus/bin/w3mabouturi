@@ -351,6 +351,6 @@ case "${1-about:about}" in
 			</ul>
 		EOF
 
-		endCall 1
+		end_call 1
 		;;
 esac

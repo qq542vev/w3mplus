@@ -106,4 +106,4 @@ awk \
 	-v "number=${number}" \
 	-- "${awkScript}" \
 	${@+"${@}"} \
-|| endCall "${?}"
+|| end_call "${?}"

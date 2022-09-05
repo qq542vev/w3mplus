@@ -175,4 +175,4 @@ awk \
 	-v "verboseFlag=${verboseFlag}" \
 	-- "${awkScript}" \
 	${@+"${@}"} \
-|| endCall "${?}"
+|| end_call "${?}"

@@ -20,6 +20,10 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
+@include "uri_parse.awk"
+@include "url_encode_normalize.awk"
+@include "uri_path_remove_dot_segments.awk"
+
 ### Function: uri_normalize
 ##
 ## URI 文字列を正規化する。
@@ -31,10 +35,6 @@
 ## Returns:
 ##
 ##   正規化された URI 文字列。
-
-@include "uri_parse.awk"
-@include "url_encode_normalize.awk"
-@include "uri_path_remove_dot_segments.awk"
 
 function uri_normalize(uri,  element) {
 	uri_parse(url_encode_normalize(uri), element)

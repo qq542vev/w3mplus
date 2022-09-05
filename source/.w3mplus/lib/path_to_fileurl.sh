@@ -20,6 +20,8 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
+. 'abspath.sh'
+
 ### Function: path_to_fileurl
 ##
 ## パス文字列を File URL に変換する。
@@ -28,8 +30,6 @@
 ##
 ##   $1 - 結果を代入する変数名。
 ##   $2 - 変換するパス文字列。
-
-. 'abspath.sh'
 
 path_to_fileurl() {
 	abspath "${1}" "${2}"

@@ -36,6 +36,15 @@ append_array_posix() {
 	done
 }
 
+### Function: __append_array_posix
+##
+## POSXI 準拠の配列風文字列に要素を追加する。
+##
+## Parameters:
+##
+##   $1 - 結果を代入する変数名。
+##   $2 - 追加する要素。
+
 __append_array_posix() {
 	set "${1}" "${2-}" ''
 
