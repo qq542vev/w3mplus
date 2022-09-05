@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/control_character.sh",{60:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">ASCII 制御文字を変数に代入する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/control_character.sh",{59:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">ASCII 制御文字を変数に代入する。</div></div>"});
