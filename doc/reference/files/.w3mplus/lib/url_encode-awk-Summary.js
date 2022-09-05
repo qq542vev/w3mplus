@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/url_encode.awk","url_encode.awk");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/url_encode.awk",[["AWK","AWK"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[61,0,0,"url_encode.awk","url_encode.awk"],[62,0,2,"Functions","Functions"],[63,0,1,"url_encode","url_encode"]]);

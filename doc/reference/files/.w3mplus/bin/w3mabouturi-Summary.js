@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/w3mabouturi","w3mabouturi");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/w3mabouturi",[["ShellScript","ShellScript"]],[["Files","File"]],[[116,0,0,"w3mabouturi","w3mabouturi"]]);

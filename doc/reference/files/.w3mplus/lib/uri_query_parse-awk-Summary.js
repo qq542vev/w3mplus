@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/uri_query_parse.awk","uri_query_parse.awk");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/uri_query_parse.awk",[["AWK","AWK"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[10,0,0,"uri_query_parse.awk","uri_query_parse.awk"],[11,0,2,"Functions","Functions"],[12,0,1,"uri_query_parse","uri_query_parse"]]);

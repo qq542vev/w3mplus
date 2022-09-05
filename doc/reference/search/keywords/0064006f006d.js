@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("dom",["Function","File"],[["domain_check",,[[,,,,0,"File:.w3mplus/lib/domain_check.awk:domain_check"],[,"domain_check.awk",,,1,"File:.w3mplus/lib/domain_check.awk:domain_check.awk"]]]]);

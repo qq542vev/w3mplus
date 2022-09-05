@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/initialize.sh","initialize.sh");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/initialize.sh",[["ShellScript","ShellScript"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[88,0,0,"initialize.sh","initialize.sh"],[89,0,2,"Functions","Functions"],[90,0,1,"end_call","end_call"]]);

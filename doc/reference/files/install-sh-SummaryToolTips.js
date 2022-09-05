@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:install.sh",{127:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">w3mplus をインストールする。</div></div>"});

@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/gotoline","gotoline");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/gotoline",[["ShellScript","ShellScript"]],[["Files","File"]],[[108,0,0,"gotoline","gotoline"]]);

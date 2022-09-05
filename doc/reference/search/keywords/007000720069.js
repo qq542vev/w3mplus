@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("pri",["File"],[["printhtml",,[[,,,,0,"File:.w3mplus/bin/printhtml:printhtml"]]]]);

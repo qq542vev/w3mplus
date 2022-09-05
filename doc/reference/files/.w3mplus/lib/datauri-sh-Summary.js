@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/datauri.sh","datauri.sh");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/datauri.sh",[["ShellScript","ShellScript"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[53,0,0,"datauri.sh","datauri.sh"],[54,0,2,"Functions","Functions"],[55,0,1,"datauri","datauri"]]);

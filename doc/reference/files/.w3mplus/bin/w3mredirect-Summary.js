@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/w3mredirect","w3mredirect");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/w3mredirect",[["ShellScript","ShellScript"]],[["Files","File"]],[[111,0,0,"w3mredirect","w3mredirect"]]);

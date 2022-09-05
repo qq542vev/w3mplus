@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("get",["File"],[["getquickmark",,[[,,,,0,"File:.w3mplus/bin/getquickmark:getquickmark"]]],["getregister",,[[,,,,0,"File:.w3mplus/bin/getregister:getregister"]]]]);

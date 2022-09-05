@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/changeconfig",{120:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">設定ファイルの値を更新する。</div></div>"});

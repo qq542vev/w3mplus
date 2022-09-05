@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/option_error.sh","option_error.sh");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/option_error.sh",[["ShellScript","ShellScript"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[47,0,0,"option_error.sh","option_error.sh"],[48,0,2,"Functions","Functions"],[49,0,1,"option_error","option_error"]]);

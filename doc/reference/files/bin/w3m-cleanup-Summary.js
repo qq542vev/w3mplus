@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:bin/w3m-cleanup","w3m-cleanup");NDSummary.OnSummaryLoaded("File:bin/w3m-cleanup",[["ShellScript","ShellScript"]],[["Files","File"]],[[2,0,0,"w3m-cleanup","w3m-cleanup"]]);

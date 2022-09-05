@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("par",["File"],[["parenturipath",,[[,,,,0,"File:.w3mplus/bin/parenturipath:parenturipath"]]],["parsequery",,[[,,,,0,"File:.w3mplus/bin/parsequery:parsequery"]]]]);

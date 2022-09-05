@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:bin/w3m-private","w3m-private");NDSummary.OnSummaryLoaded("File:bin/w3m-private",[["ShellScript","ShellScript"]],[["Files","File"]],[[3,0,0,"w3m-private","w3m-private"]]);

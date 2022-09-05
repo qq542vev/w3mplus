@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:bin/w3m-updatedenylist",{1:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">w3m のアクセス拒否リストを更新する。</div></div>"});

@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/printhtml","printhtml");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/printhtml",[["ShellScript","ShellScript"]],[["Files","File"]],[[98,0,0,"printhtml","printhtml"]]);

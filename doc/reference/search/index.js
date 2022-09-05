@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixIndexLoaded(["__a","abs","app","arr","awk","bac","cha","con","coo","dat","dom","end","exe","fra","get","got","htm","htt","inc","ini","ins","opt","par","pat","pop","pri","pro","psr","pus","reg","sea","sel","set","sh","sin","sys","uri","url","vie","w3m"]);

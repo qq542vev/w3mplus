@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/getregister","getregister");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/getregister",[["ShellScript","ShellScript"]],[["Files","File"]],[[110,0,0,"getregister","getregister"]]);

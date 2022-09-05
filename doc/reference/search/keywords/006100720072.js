@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("arr",["Function","File"],[["array_length",,[[,,,,0,"File:.w3mplus/lib/array_length.awk:array_length"],[,"array_length.awk",,,1,"File:.w3mplus/lib/array_length.awk:array_length.awk"]]],["array_print",,[[,,,,0,"File:.w3mplus/lib/array_print.awk:array_print"],[,"array_print.awk",,,1,"File:.w3mplus/lib/array_print.awk:array_print.awk"]]]]);

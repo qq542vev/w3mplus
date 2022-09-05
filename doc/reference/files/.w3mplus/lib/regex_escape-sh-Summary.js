@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/regex_escape.sh","regex_escape.sh");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/regex_escape.sh",[["ShellScript","ShellScript"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[76,0,0,"regex_escape.sh","regex_escape.sh"],[77,0,2,"Functions","Functions"],[78,0,1,"regex_escape","regex_escape"]]);

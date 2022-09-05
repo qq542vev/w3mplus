@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/uri_check.awk","uri_check.awk");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/uri_check.awk",[["AWK","AWK"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[82,0,0,"uri_check.awk","uri_check.awk"],[83,0,2,"Functions","Functions"],[84,0,1,"uri_check","uri_check"]]);

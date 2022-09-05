@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/setusercommand","setusercommand");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/setusercommand",[["ShellScript","ShellScript"]],[["Files","File"]],[[123,0,0,"setusercommand","setusercommand"]]);

@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/printhtml",{98:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">HTML ページを作成する。</div></div>"});

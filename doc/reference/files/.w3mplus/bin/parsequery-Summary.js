@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/parsequery","parsequery");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/parsequery",[["ShellScript","ShellScript"]],[["Files","File"]],[[118,0,0,"parsequery","parsequery"]]);

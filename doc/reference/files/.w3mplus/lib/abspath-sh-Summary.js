@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/abspath.sh","abspath.sh");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/abspath.sh",[["ShellScript","ShellScript"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[38,0,0,"abspath.sh","abspath.sh"],[39,0,2,"Functions","Functions"],[40,0,1,"abspath","abspath"]]);

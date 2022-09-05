@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("dat",["Function","File"],[["datauri",,[[,,,,0,"File:.w3mplus/lib/datauri.sh:datauri"],[,"datauri.sh",,,1,"File:.w3mplus/lib/datauri.sh:datauri.sh"]]]]);

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("abs",["Function","File"],[["abspath",,[[,,,,0,"File:.w3mplus/lib/abspath.sh:abspath"],[,"abspath.sh",,,1,"File:.w3mplus/lib/abspath.sh:abspath.sh"]]]]);

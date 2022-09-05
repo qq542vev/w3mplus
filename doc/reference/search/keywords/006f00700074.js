@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("opt",["Function","File"],[["option_error",,[[,,,,0,"File:.w3mplus/lib/option_error.sh:option_error"],[,"option_error.sh",,,1,"File:.w3mplus/lib/option_error.sh:option_error.sh"]]]]);
