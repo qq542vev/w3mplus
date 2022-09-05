@@ -49,4 +49,4 @@ w3mplus を利用するには POSIX 準拠の Shell 環境と AWK が必要で�
 
 # 使い方
 
-インストール後の `.w3mplus/doc/index.html` にマニュアルがあります。Web 上でも[マニュアル](https://qq542vev.github.io/w3mplus/doc/)を公開しています。
+インストール後の `~/.w3mplus/doc/index.html` にマニュアルがあります。Web 上でも[マニュアル](https://qq542vev.github.io/w3mplus/doc/)を公開しています。
