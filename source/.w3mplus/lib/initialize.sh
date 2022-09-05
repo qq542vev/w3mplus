@@ -34,7 +34,7 @@ export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORR
 
 . 'sysexits.sh'
 
-trap 'case "${?}" in 0) endCall;; *) end_call "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'case "${?}" in 0) end_call;; *) end_call "${EX_SOFTWARE}";; esac' 0 # EXIT
 trap 'end_call 129' 1  # SIGHUP
 trap 'end_call 130' 2  # SIGINT
 trap 'end_call 131' 3  # SIGQUIT

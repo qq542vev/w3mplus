@@ -43,13 +43,14 @@ readonly 'EX_CONFIG=78'      # configuration error
 
 readonly 'EX__MAX=78' # maximum listed value
 
-trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
-trap 'endCall 129' 1                                                    # SIGHUP
-trap 'endCall 130' 2                                                    # SIGINT
-trap 'endCall 131' 3                                                    # SIGQUIT
-trap 'endCall 143' 15                                                   # SIGTERM
+trap 'case "${?}" in 0) end_call;; *) end_call "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'end_call 129' 1                                                     # SIGHUP
+trap 'end_call 130' 2                                                     # SIGINT
+trap 'end_call 131' 3                                                     # SIGQUIT
+trap 'end_call 143' 15                                                    # SIGTERM
 
-endCall() {
+
+end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
@@ -61,7 +62,7 @@ option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
-	endCall "${EX_USAGE}"
+	end_call "${EX_USAGE}"
 }
 
 
@@ -348,31 +349,31 @@ if [ '!' -e "${config}" ]; then
 fi
 
 if [ '!' -f "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' は通常ファイルではありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_DATAERR}"
+	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_NOINPUT}"
+	end_call "${EX_NOINPUT}"
 fi
 
 tmpDir=$(mktemp -d)
 
 case "${#}" in
 [!0])
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: 引数が過大です。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_USAGE}"
+	end_call "${EX_USAGE}"
 	;;
 esac
 
@@ -399,7 +400,7 @@ case "${number}" in
 	case "${count}" in
 	'@'*)
 		result=$(awk -v "starttime=${number#@}" -v "endtime=${count#@}" -- "$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 				BEGIN {
 					position = 0
 					count = 0
@@ -439,7 +440,7 @@ case "${number}" in
 
 					printf("%d %d\n", position, count)
 				}
-			EOF
+			__EOF__
 		)" "${tmpDir}/file")
 
 		number="${result% *}"
@@ -447,7 +448,7 @@ case "${number}" in
 		;;
 	*)
 		number=$(awk -v "starttime=${number#@}" -- "$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 				BEGIN {
 					position = 0
 				}
@@ -464,7 +465,7 @@ case "${number}" in
 				END {
 					printf("%d", (position ? position : NR + 1))
 				}
-			EOF
+			__EOF__
 		)" "${tmpDir}/file")
 		;;
 	esac

@@ -43,13 +43,14 @@ readonly 'EX_CONFIG=78'      # configuration error
 
 readonly 'EX__MAX=78' # maximum listed value
 
-trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
-trap 'endCall 129' 1                                                    # SIGHUP
-trap 'endCall 130' 2                                                    # SIGINT
-trap 'endCall 131' 3                                                    # SIGQUIT
-trap 'endCall 143' 15                                                   # SIGTERM
+trap 'case "${?}" in 0) end_call;; *) end_call "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'end_call 129' 1                                                     # SIGHUP
+trap 'end_call 130' 2                                                     # SIGINT
+trap 'end_call 131' 3                                                     # SIGQUIT
+trap 'end_call 143' 15                                                    # SIGTERM
 
-endCall() {
+
+end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
@@ -61,7 +62,7 @@ option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
-	endCall "${EX_USAGE}"
+	end_call "${EX_USAGE}"
 }
 
 
@@ -336,19 +337,19 @@ if [ '!' -e "${config}" ]; then
 fi
 
 if [ '!' -f "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' は通常ファイルではありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_DATAERR}"
+	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_NOINPUT}"
+	end_call "${EX_NOINPUT}"
 fi
 
 case "${#}" in
@@ -367,7 +368,7 @@ tmpDir="$(mktemp -d)"
 case "${#}" in
 '0')
 	awkScript=$(
-		cat <<-'EOF'
+		cat <<-'__EOF__'
 
 
 
@@ -421,7 +422,7 @@ case "${#}" in
 								printf("%s\n", $0)
 							}
 						}
-		EOF
+		__EOF__
 	)
 	awkv_escape 'del' "${tmpDir}/del"
 
@@ -431,63 +432,23 @@ case "${#}" in
 	;;
 *)
 	awkScript=$(
-		cat <<-'EOF'
+		cat <<-'__EOF__'
 
-
-
-			function backslash_escape(string) {
-				gsub("\\\\", "\\\\", string)
-				gsub("\\001", "\\001", string)
-				gsub("\\002", "\\002", string)
-				gsub("\\003", "\\003", string)
-				gsub("\\004", "\\004", string)
-				gsub("\\005", "\\005", string)
-				gsub("\\006", "\\006", string)
-				gsub("\\007", "\\007", string)
-				gsub("\\010", "\\010", string)
-				gsub("\\011", "\\011", string)
-				gsub("\\012", "\\012", string)
-				gsub("\\013", "\\013", string)
-				gsub("\\014", "\\014", string)
-				gsub("\\015", "\\015", string)
-				gsub("\\016", "\\016", string)
-				gsub("\\017", "\\017", string)
-				gsub("\\020", "\\020", string)
-				gsub("\\021", "\\021", string)
-				gsub("\\022", "\\022", string)
-				gsub("\\023", "\\023", string)
-				gsub("\\024", "\\024", string)
-				gsub("\\025", "\\025", string)
-				gsub("\\026", "\\026", string)
-				gsub("\\027", "\\027", string)
-				gsub("\\030", "\\030", string)
-				gsub("\\031", "\\031", string)
-				gsub("\\032", "\\032", string)
-				gsub("\\033", "\\033", string)
-				gsub("\\034", "\\034", string)
-				gsub("\\035", "\\035", string)
-				gsub("\\036", "\\036", string)
-				gsub("\\037", "\\037", string)
-				gsub("\\177", "\\177", string)
-
-				return string
+			BEGIN {
+				FS = "\t"
+				esKey = backslash_escape(key)
+				esCommand = backslash_escape(command)
 			}
 
-						BEGIN {
-							FS = "\t"
-							esKey = backslash_escape(key)
-							esCommand = backslash_escape(command)
-						}
+			$1 != esKey || $2 != esCommand {
+				printf("%s\n", $0)
+			}
 
-						$1 != esKey || $2 != esCommand {
-							printf("%s\n", $0)
-						}
-
-						END {
-							printf("%s\t%s\t%s\n", esKey, esCommand, date)
-							printf("%s\t%s\t%s\n", esKey, esCommand, date) >>add
-						}
-		EOF
+			END {
+				printf("%s\t%s\t%s\n", esKey, esCommand, date)
+				printf("%s\t%s\t%s\n", esKey, esCommand, date) >>add
+			}
+		__EOF__
 	)
 	awkv_escape 'add' "${tmpDir}/add"
 
@@ -499,7 +460,7 @@ case "${#}" in
 esac | sort -k '1,1' -k '3,3' -t "${CHAR_HT}" -o "${config}"
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 
 		BEGIN {
 			FS = "\t"
@@ -518,7 +479,7 @@ awkScript=$(
 			printf("check command: %s\n", command)
 			printf("date: %s\n", date)
 		}
-	EOF
+	__EOF__
 )
 
 if [ -s "${tmpDir}/del" ]; then

@@ -43,13 +43,14 @@ readonly 'EX_CONFIG=78'      # configuration error
 
 readonly 'EX__MAX=78' # maximum listed value
 
-trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
-trap 'endCall 129' 1                                                    # SIGHUP
-trap 'endCall 130' 2                                                    # SIGINT
-trap 'endCall 131' 3                                                    # SIGQUIT
-trap 'endCall 143' 15                                                   # SIGTERM
+trap 'case "${?}" in 0) end_call;; *) end_call "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'end_call 129' 1                                                     # SIGHUP
+trap 'end_call 130' 2                                                     # SIGINT
+trap 'end_call 131' 3                                                     # SIGQUIT
+trap 'end_call 143' 15                                                    # SIGTERM
 
-endCall() {
+
+end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
@@ -61,7 +62,7 @@ option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
-	endCall "${EX_USAGE}"
+	end_call "${EX_USAGE}"
 }
 
 
@@ -389,26 +390,26 @@ if [ '!' -e "${config}" ]; then
 fi
 
 if [ '!' -f "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' は通常ファイルではありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_DATAERR}"
+	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_NOINPUT}"
+	end_call "${EX_NOINPUT}"
 fi
 
 if [ '!' -s "${config}" ]; then
-	cat <<-'EOF' >"${config}"
+	cat <<-'__EOF__' >"${config}"
 		bing   https://www.bing.com/search?q={searchTerms}
 		google https://www.google.com/search?ie=UTF-8&oe=UTF-8&q={searchTerms}
-	EOF
+	__EOF__
 fi
 
 case "${history}" in
@@ -426,19 +427,19 @@ if [ '!' -e "${history}" ]; then
 fi
 
 if [ '!' -f "${history}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${history}' は通常ファイルではありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_DATAERR}"
+	end_call "${EX_DATAERR}"
 elif [ '!' -r "${history}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${history}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
-	endCall "${EX_NOINPUT}"
+	end_call "${EX_NOINPUT}"
 fi
 
 case "${#}" in
@@ -452,7 +453,7 @@ case "${#}" in
 esac
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 
 
 
@@ -546,7 +547,6 @@ awkScript=$(
 
 
 
-
 		function array_length(array,  count,key) {
 			count = 0
 
@@ -556,6 +556,7 @@ awkScript=$(
 
 			return count
 		}
+
 
 		function array_print(array, start, end, separator, format,  result) {
 			if(start == "") {
@@ -741,7 +742,7 @@ awkScript=$(
 
 				return string
 			}
-	EOF
+	__EOF__
 )
 
 awkv_escape 'awkvHistory' "${history}"
@@ -750,9 +751,9 @@ encoded=$(
 		-v "history=${awkvHistory}" \
 		-v "edFlag=${edFlag}" \
 		"${awkScript}" ${@+"${@}"}
-) || endCall "${?}"
+) || end_call "${?}"
 newNumber=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 		BEGIN {
 			number = 1
 		}
@@ -764,7 +765,7 @@ newNumber=$(
 		END {
 			printf("%d", number)
 		}
-	EOF
+	__EOF__
 )
 
 case "${encoded}" in
@@ -779,77 +780,37 @@ case "${encoded}" in
 esac
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 
+		BEGIN {
+			FS = "\t"
+			exitStatus = 0
 
-
-		function sysexits(code) {
-			if(code == "EX_OK") {
-				return 0
-			} else if(code == "EX_USAGE") {
-				return 64
-			} else if(code == "EX_DATAERR") {
-				return 65
-			} else if(code == "EX_NOINPUT") {
-				return 66
-			} else if(code == "EX_NOUSER") {
-				return 67
-			} else if(code == "EX_NOHOST") {
-				return 68
-			} else if(code == "EX_UNAVAILABLE") {
-				return 69
-			} else if(code == "EX_SOFTWARE") {
-				return 70
-			} else if(code == "EX_OSERR") {
-				return 71
-			} else if(code == "EX_OSFILE") {
-				return 72
-			} else if(code == "EX_CANTCREAT") {
-				return 73
-			} else if(code == "EX_IOERR") {
-				return 74
-			} else if(code == "EX_TEMPFAIL") {
-				return 75
-			} else if(code == "EX_PROTOCOL") {
-				return 76
-			} else if(code == "EX_NOPERM") {
-				return 77
-			} else if(code == "EX_CONFIG") {
-				return 78
-			}
-
-			return 1
+			count = split(engine, engines, ",")
+			split("", template)
 		}
 
-			BEGIN {
-				FS = "\t"
-				exitStatus = 0
+		{
+			template[$1] = $2
+		}
 
-				count = split(engine, engines, ",")
-				split("", template)
-			}
+		END {
+			for(i = 1; i <= count; i++) {
+				if(engines[i] in template) {
+					url = template[engines[i]]
+					gsub(/\{searchTerms\}/, terms, url)
 
-			{
-				template[$1] = $2
-			}
+					printf("%s\n", url)
+				} else {
+					printf("search engine '%s' not found.\n", engines[i]) | "cat >&2"
 
-			END {
-				for(i = 1; i <= count; i++) {
-					if(engines[i] in template) {
-						url = template[engines[i]]
-						gsub(/\{searchTerms\}/, terms, url)
-
-						printf("%s\n", url)
-					} else {
-						printf("search engine '%s' not found.\n", engines[i]) | "cat >&2"
-
-						exitStatus = sysexits("EX_UNAVAILABLE")
-					}
+					exitStatus = sysexits("EX_UNAVAILABLE")
 				}
-
-				exit exitStatus
 			}
-	EOF
+
+			exit exitStatus
+		}
+	__EOF__
 )
 
 awk \
@@ -857,4 +818,4 @@ awk \
 	-v "engine=${engine}" \
 	-- "${awkScript}" \
 	"${config}" ||
-	endCall "${?}"
+	end_call "${?}"

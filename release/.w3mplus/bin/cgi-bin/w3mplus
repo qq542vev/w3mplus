@@ -92,13 +92,14 @@ readonly 'EX_CONFIG=78'      # configuration error
 
 readonly 'EX__MAX=78' # maximum listed value
 
-trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
-trap 'endCall 129' 1                                                    # SIGHUP
-trap 'endCall 130' 2                                                    # SIGINT
-trap 'endCall 131' 3                                                    # SIGQUIT
-trap 'endCall 143' 15                                                   # SIGTERM
+trap 'case "${?}" in 0) end_call;; *) end_call "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'end_call 129' 1                                                     # SIGHUP
+trap 'end_call 130' 2                                                     # SIGINT
+trap 'end_call 131' 3                                                     # SIGQUIT
+trap 'end_call 143' 15                                                    # SIGTERM
 
-endCall() {
+
+end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
@@ -128,7 +129,6 @@ singlequote_escape() {
 
 
 
-
 abspath() {
 	case "${2}" in
 	'/'*) set -- "${1}" "${2}/" '' ;;
@@ -145,6 +145,7 @@ abspath() {
 
 	eval "${1}=\"/\${3#/}\""
 }
+
 
 path_to_fileurl() {
 	abspath "${1}" "${2}"
@@ -338,7 +339,7 @@ add_printtmp() {
 }
 
 error_meesage() {
-	httpresponse --status-line 'HTTP/1.1 500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' -- - <<-EOF
+	httpresponse --status-line 'HTTP/1.1 500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' -- - <<-__EOF__
 		An unexpected error occurred during request processing.
 
 
@@ -346,7 +347,7 @@ error_meesage() {
 
 
 		$(env)
-	EOF
+	__EOF__
 }
 
 expand() {
@@ -373,12 +374,12 @@ case "${W3MPLUS_DEBUGMODE}" in
 				0)
 					exec 1>&3 2>&4 3>&- 4>&-
 					cat -- "${tmpDir}/stdout"
-					endCall 0
+					end_call 0
 					;;
 				*)
 					exec 1>&3 2>&4 3>&- 4>&-
 					error_meesage "${tmpDir}/stderr"
-					endCall "${EX_SOFTWARE}"
+					end_call "${EX_SOFTWARE}"
 					;;
 			esac
 		' 0 # EXIT
@@ -398,9 +399,9 @@ if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${
 	httpresponse \
 		--status-line 'HTTP/1.1 400 Bad Request' \
 		-H 'Content-Type: text/plain; charset=UTF-8' \
-		-- - <<-'EOF'
+		-- - <<-'__EOF__'
 			The value of 'pass' is invalid.
-		EOF
+		__EOF__
 
 	exit
 fi
@@ -496,9 +497,9 @@ case "${query_action-}" in
 
 		query_subaction='goto'
 		commandArg="${commandArg}$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 				 -- incrementuri ${query_number+--number "'${query_number}'"}
-			EOF
+			__EOF__
 		)"
 		;;
 	'parent-uripath')
@@ -508,9 +509,9 @@ case "${query_action-}" in
 
 		query_subaction='goto'
 		commandArg="${commandArg}$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 				 -- parenturipath ${query_number+--number "'${query_number}'"}
-			EOF
+			__EOF__
 		)"
 		;;
 	'redirect')
@@ -522,9 +523,9 @@ case "${query_action-}" in
 		pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
 		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 		commandArg="${commandArg}$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 				 -- printf "'%s%s'" "'${query_redirect-${filepath}?pass=${pass}&action=search&tab=del-prebuf&query=}'" '"$(urlencode)"'
-			EOF
+			__EOF__
 		)"
 		;;
 	esac
@@ -594,7 +595,7 @@ case "${query_action-}" in
 	;;
 'get-url-mark' | 'get-url-mark-line-begin')
 	awkScript=$(
-		cat <<-'EOF'
+		cat <<-'__EOF__'
 			BEGIN {
 				FS = "\t"
 			}
@@ -605,7 +606,7 @@ case "${query_action-}" in
 
 				printf("%s\t%s\t\t\t%s\n", uri, line, (moveURL == "" ? "" : "GOTO " moveURL $3))
 			}
-		EOF
+		__EOF__
 	)
 
 	case "${query_action}" in
@@ -871,7 +872,7 @@ case "${query_action-}" in
 	;;
 'show-search-history')
 	awkScript=$(
-		cat <<-'EOF'
+		cat <<-'__EOF__'
 
 
 
@@ -1060,7 +1061,7 @@ case "${query_action-}" in
 						END {
 							printf("</samp></pre>")
 						}
-		EOF
+		__EOF__
 	)
 	pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
 	path_to_fileurl 'filepath' "${SCRIPT_NAME}"
@@ -1218,7 +1219,7 @@ case "${query_action-}" in
 
 	printhtml \
 		--title 'Bad Request' \
-		-- - <<-EOF |
+		-- - <<-__EOF__ |
 			<dl>
 				<dt>about-uri</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=about-uri&amp;about={ABOUT_URI}</dd>
@@ -1352,7 +1353,7 @@ case "${query_action-}" in
 				<dt>zoom</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=zoom&amp;zoom={([+*/-] '=')? UNSIGNED_INTEGER}</dd>
 			</dl>
-		EOF
+		__EOF__
 		httpresponse \
 			--status-line 'HTTP/1.1 400 Bad Request' \
 			-H 'Content-Type: text/html; charset=UTF-8' \

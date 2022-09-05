@@ -67,12 +67,12 @@ eval "set -- ${REST}"
 
 case "${#}" in
 	'0')
-		cat <<-EOF >&2
+		cat <<-__EOF__ >&2
 			${0##*/}: 引数が不足しています。
 			詳細については '${0##*/} --help' を実行してください。
-		EOF
+		__EOF__
 
-		endCall "${EX_USAGE}"
+		end_call "${EX_USAGE}"
 		;;
 esac
 
@@ -82,7 +82,7 @@ shift
 mkdir -p "${output}"
 
 includeShellscript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	BEGIN {
 		for(i = 1; i < ARGC; i++) {
 			read_file(ARGV[i])
@@ -129,11 +129,11 @@ includeShellscript=$(
 
 		close(file)
 	}
-	EOF
+	__EOF__
 )
 
 includeAwkscript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	BEGIN {
 		split("", include)
 
@@ -189,20 +189,20 @@ includeAwkscript=$(
 
 		close(file)
 	}
-	EOF
+	__EOF__
 )
 
 for file in ${@+"${@}"}; do
 	if [ '!' -f "${file}" ]; then
-		cat <<-EOF >&2
+		cat <<-__EOF__ >&2
 			${0##*/}: '${file}' は通常ファイルではありません。
-		EOF
+		__EOF__
 
 		continue
 	elif [ '!' -r "${file}" ]; then
-		cat <<-EOF >&2
+		cat <<-__EOF__ >&2
 			${0##*/}: '${file}' の読み込み許可がありません。
-		EOF
+		__EOF__
 
 		continue
 	fi

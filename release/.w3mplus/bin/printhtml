@@ -43,13 +43,14 @@ readonly 'EX_CONFIG=78'      # configuration error
 
 readonly 'EX__MAX=78' # maximum listed value
 
-trap 'case "${?}" in 0) endCall;; *) endCall "${EX_SOFTWARE}";; esac' 0 # EXIT
-trap 'endCall 129' 1                                                    # SIGHUP
-trap 'endCall 130' 2                                                    # SIGINT
-trap 'endCall 131' 3                                                    # SIGQUIT
-trap 'endCall 143' 15                                                   # SIGTERM
+trap 'case "${?}" in 0) end_call;; *) end_call "${EX_SOFTWARE}";; esac' 0 # EXIT
+trap 'end_call 129' 1                                                     # SIGHUP
+trap 'end_call 130' 2                                                     # SIGINT
+trap 'end_call 131' 3                                                     # SIGQUIT
+trap 'end_call 143' 15                                                    # SIGTERM
 
-endCall() {
+
+end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
@@ -61,7 +62,7 @@ option_error() {
 	printf '%s: %s\n' "${0##*/}" "${1}" >&2
 	printf '%s\n' "詳細については '${0##*/} --help' を実行してください。" >&2
 
-	endCall "${EX_USAGE}"
+	end_call "${EX_USAGE}"
 }
 
 
