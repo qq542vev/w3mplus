@@ -81,11 +81,11 @@ eval "set -- ${REST}"
 
 case "${W3MPLUS_TEMPLATE_HTTP-}" in
 	'')
-		cat <<-EOF
+		cat <<-__EOF__
 		${statusLine}${CHAR_CR}
 		Date: $(date -u '+%a, %d %b %Y %H:%M:%S GMT')${CHAR_CR}
 		${header}${CHAR_CR}
-		EOF
+		__EOF__
 
 		case "${#}" in
 			[!0]) cat -- ${@+"${@}"};;

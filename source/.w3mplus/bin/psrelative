@@ -79,17 +79,17 @@ shift
 case "${axes}" in
 	'ancestor' | 'ancestor-or-self' | 'child' | 'descendant' | 'descendant-or-self' | 'parent' | 'sibling') ;;
 	*)
-		cat <<-EOF >&2
+		cat <<-__EOF__ >&2
 			${0##*/}: '${axes}' -- AXES の値が不正です。
 			詳細については '${0##*/} --help' を実行してください。
-		EOF
+		__EOF__
 
 		end_call "${EX_USAGE}"
 		;;
 esac
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	@include "array_length.awk"
 
 	BEGIN {
@@ -181,7 +181,7 @@ awkScript=$(
 			}
 		}
 	}
-	EOF
+	__EOF__
 )
 
 ps -A -o 'pid=PID,ppid=PPID' -o "${output}" \

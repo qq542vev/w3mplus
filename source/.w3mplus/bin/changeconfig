@@ -75,7 +75,7 @@ eval "set -- ${REST}"
 
 tmpDir=$(mktemp -d)
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	BEGIN {
 		split("", not)
 		split("", param)
@@ -147,7 +147,7 @@ awkScript=$(
 			printf("%s\n", $0)
 		}
 	}
-	EOF
+	__EOF__
 )
 
 command='awk -v "max=${max}" -v "min=${min}" -- "${awkScript}" '"${param} --"

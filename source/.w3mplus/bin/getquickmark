@@ -77,17 +77,17 @@ if [ '!' -e "${config}" ]; then
 fi
 
 if [ '!' -f "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' は通常ファイルではありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
 	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
 	end_call "${EX_NOINPUT}"
 fi
@@ -100,7 +100,7 @@ case "${#}" in
 esac
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	@include "backslash_unescape.awk"
 
 	BEGIN {
@@ -124,7 +124,7 @@ awkScript=$(
 
 		exit exitStatus
 	}
-	EOF
+	__EOF__
 )
 
 awkv_escape 'config' "${config}"

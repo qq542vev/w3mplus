@@ -81,7 +81,7 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	@include "html_escape.awk"
 
 	BEGIN {
@@ -95,7 +95,7 @@ awkScript=$(
 			printf(" %s=\"%s\"", name, html_escape(attribute[name]))
 		}
 	}
-	EOF
+	__EOF__
 )
 
 html_escape 'title' "${title}"

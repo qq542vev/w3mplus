@@ -72,7 +72,7 @@ case "${#}" in
 esac
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	@include "uri_path_parent.awk"
 	@include "url_encode_normalize.awk"
 	@include "uri_check.awk"
@@ -99,7 +99,7 @@ awkScript=$(
 
 		exit exitStatus
 	}
-	EOF
+	__EOF__
 )
 
 awk \

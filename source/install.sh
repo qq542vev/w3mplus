@@ -78,7 +78,7 @@ baseDir=$(dirname -- "${0}"; printf '_')
 baseDir="${baseDir%?_}"
 tmpDir="${baseDir}/tmp"
 shellScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	pass="${1}"
 	shift
 
@@ -87,7 +87,7 @@ shellScript=$(
 
 		mv -f "${file}.tmp" "${file}"
 	done
-	EOF
+	__EOF__
 )
 
 rm -fr -- "${tmpDir}"
@@ -101,10 +101,10 @@ for value in 'sourceBin:bin' 'sourceW3m:.w3m' 'sourceW3mplus:.w3mplus'; do
 	esac
 
 	if [ '!' -d "${sourceDir}" ]; then
-　	cat <<-EOF >&2
+　	cat <<-__EOF__ >&2
 			${0##*/}: '${sourceDir}' はディレクトリではありません。
 			詳細については '${0##*/} --help' を実行してください。
-		EOF
+		__EOF__
 
 		end_call "${EX_DATAERR}"
 	fi
@@ -141,10 +141,10 @@ for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
 
 					find -- "${tmpDir}/${value%%:*}/" -path '*[!/]' -prune -exec cp -fR -- '{}' "${destDir}" ';'
 				else
-					cat <<-EOF >&2
+					cat <<-__EOF__ >&2
 						${0##*/}: '${destDir}' はディレクトリではありません。
 						詳細については '${0##*/} --help' を実行してください。
-					EOF
+					__EOF__
 
 					end_call "${EX_DATAERR}"
 				fi

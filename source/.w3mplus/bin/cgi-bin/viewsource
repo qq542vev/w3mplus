@@ -84,7 +84,7 @@ if uricheck --field '' -- "${url}"; then
 		-H 'W3m-control: DEL_PREBUF' \
 		-H 'W3m-control: VIEW'
 else
-	httpresponse -H 'Content-type: text/palin; charset=UTF-8' - <<-EOF
+	httpresponse -H 'Content-type: text/palin; charset=UTF-8' - <<-__EOF__
 		'${url}' is not URL.
-	EOF
+	__EOF__
 fi

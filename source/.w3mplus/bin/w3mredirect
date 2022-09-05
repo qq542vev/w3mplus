@@ -74,7 +74,7 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	@include "singlequote_escape.awk"
 
 	BEGIN {
@@ -148,7 +148,7 @@ awkScript=$(
 
 		tab = "open-newtab"
 	}
-	EOF
+	__EOF__
 )
 
 option=$(

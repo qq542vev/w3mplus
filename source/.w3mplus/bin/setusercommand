@@ -92,17 +92,17 @@ if [ '!' -e "${config}" ]; then
 fi
 
 if [ '!' -f "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' は通常ファイルではありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
 	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
 	end_call "${EX_NOINPUT}"
 fi
@@ -123,7 +123,7 @@ tmpDir="$(mktemp -d)"
 case "${#}" in
 	'0')
 		awkScript=$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 			@include "backslash_escape.awk"
 
 			BEGIN {
@@ -138,7 +138,7 @@ case "${#}" in
 					printf("%s\n", $0)
 				}
 			}
-			EOF
+			__EOF__
 		)
 		awkv_escape 'del' "${tmpDir}/del"
 
@@ -148,7 +148,7 @@ case "${#}" in
 		;;
 	*)
 		awkScript=$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 			@include "backslash_escape.awk"
 
 			BEGIN {
@@ -165,7 +165,7 @@ case "${#}" in
 				printf("%s\t%s\t%s\n", esKey, esCommand, date)
 				printf("%s\t%s\t%s\n", esKey, esCommand, date) >>add
 			}
-			EOF
+			__EOF__
 		)
 		awkv_escape 'add' "${tmpDir}/add"
 
@@ -177,7 +177,7 @@ case "${#}" in
 esac | sort -k '1,1' -k '3,3' -t "${CHAR_HT}" -o "${config}"
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 
 	BEGIN {
 		FS = "\t"
@@ -196,7 +196,7 @@ awkScript=$(
 		printf("check command: %s\n", command)
 		printf("date: %s\n", date)
 	}
-	EOF
+	__EOF__
 )
 
 if [ -s "${tmpDir}/del" ]; then

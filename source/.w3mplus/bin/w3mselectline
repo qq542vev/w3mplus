@@ -124,10 +124,10 @@ case "${action}" in
 	'filter')
 		displayTmp=$(mktemp -d)
 		filterCommand=$(
-			cat <<-EOF | tr -d '\n'
+			cat <<-__EOF__ | tr -d '\n'
 			head -n '$((startLine - 1))' -- '${displayTmp}/file';
 			cat -- %s;
-			EOF
+			__EOF__
 		)
 
 		case "${endLine}" in
@@ -148,11 +148,11 @@ case "${action}" in
 	'formatprg')
 		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
 		formatCommand=$(
-			cat <<-EOF | tr -d '\n'
+			cat <<-__EOF__ | tr -d '\n'
 			file=%s;
 			head -n '$((startLine - 1))' -- "\${file}";
 			sed -e '${startLine},${endLine}!d' -- "\${file}" | sh -c 'eval "\$(echo "${command}" | base64 -d)"';
-			EOF
+			__EOF__
 		)
 
 		case "${endLine}" in

@@ -78,7 +78,7 @@ esac
 
 tmpDir=$(mktemp -d)
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	@include "uri_check.awk"
 	@include "url_encode.awk"
 	@include "domain_check.awk"
@@ -181,7 +181,7 @@ awkScript=$(
 	{
 		printf("%s\n", $0)
 	}
-	EOF
+	__EOF__
 )
 
 awkv_escape 'beginMsg' "${beginMsg}"

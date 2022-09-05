@@ -87,26 +87,26 @@ if [ '!' -e "${config}" ]; then
 fi
 
 if [ '!' -f "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' は通常ファイルではありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
 	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${config}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
 	end_call "${EX_NOINPUT}"
 fi
 
 if [ '!' -s "${config}" ]; then
-	cat <<-'EOF' >"${config}"
+	cat <<-'__EOF__' >"${config}"
 		bing	https://www.bing.com/search?q={searchTerms}
 		google	https://www.google.com/search?ie=UTF-8&oe=UTF-8&q={searchTerms}
-	EOF
+	__EOF__
 fi
 
 case "${history}" in
@@ -121,17 +121,17 @@ if [ '!' -e "${history}" ]; then
 fi
 
 if [ '!' -f "${history}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${history}' は通常ファイルではありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
 	end_call "${EX_DATAERR}"
 elif [ '!' -r "${history}" ]; then
-	cat <<-EOF >&2
+	cat <<-__EOF__ >&2
 		${0##*/}: '${history}' の読み込み許可がありません。
 		詳細については '${0##*/} --help' を実行してください。
-	EOF
+	__EOF__
 
 	end_call "${EX_NOINPUT}"
 fi
@@ -144,7 +144,7 @@ case "${#}" in
 esac
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	@include "url_encode.awk"
 	@include "singlequote_escape.awk"
 	@include "array_print.awk"
@@ -272,7 +272,7 @@ awkScript=$(
 
 		return string
 	}
-	EOF
+	__EOF__
 )
 
 awkv_escape 'awkvHistory' "${history}"
@@ -283,7 +283,7 @@ encoded=$(
 		"${awkScript}" ${@+"${@}"}
 ) || end_call "${?}"
 newNumber=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	BEGIN {
 		number = 1
 	}
@@ -295,7 +295,7 @@ newNumber=$(
 	END {
 		printf("%d", number)
 	}
-	EOF
+	__EOF__
 )
 
 case "${encoded}" in
@@ -310,7 +310,7 @@ case "${encoded}" in
 esac
 
 awkScript=$(
-	cat <<-'EOF'
+	cat <<-'__EOF__'
 	@include "sysexits.awk"
 
 	BEGIN {
@@ -341,7 +341,7 @@ awkScript=$(
 
 		exit exitStatus
 	}
-	EOF
+	__EOF__
 )
 
 awk \

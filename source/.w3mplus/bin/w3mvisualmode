@@ -91,7 +91,7 @@ esac
 
 if [ "${id}" = "${startId}" ] && [ "${limitTime}" "${operator}" "${startTime}" ]; then
 	awkScript=$(
-		cat <<-'EOF'
+		cat <<-'__EOF__'
 		BEGIN {
 			flag = 0
 		}
@@ -104,7 +104,7 @@ if [ "${id}" = "${startId}" ] && [ "${limitTime}" "${operator}" "${startTime}" ]
 
 			printf("%s\n", $0)
 		}
-		EOF
+		__EOF__
 	)
 
 	w3mselectline -l "${line}" -n "${startLine}" ${@+"${@}"} \

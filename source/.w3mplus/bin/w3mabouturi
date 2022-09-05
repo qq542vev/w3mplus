@@ -77,7 +77,7 @@ case "${1-about:about}" in
 		printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "${version}" | printhtml --title 'About:' -- - | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 		;;
 	'about:about')
-		printhtml --title 'About About' -- - <<-'EOF' | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+		printhtml --title 'About About' -- - <<-'__EOF__' | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 			<section>
 				<h1>About About</h1>
 
@@ -103,7 +103,7 @@ case "${1-about:about}" in
 					<li><a href="about:preferences">about:preferences</a></li>
 				</ul>
 			</section>
-		EOF
+		__EOF__
 		;;
 	'about:blank')
 		printhtml --title 'about:blank' -- - | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
@@ -115,7 +115,7 @@ case "${1-about:about}" in
 		path_to_fileurl 'baseURL' "${W3MPLUS_W3M_HOME}"
 
 		awkScript=$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 			BEGIN {
 				month["Jan"] = 1; month["Feb"] = 2; month["Mar"] = 3;
 				month["Apr"] = 4; month["May"] = 5; month["Jun"] = 6;
@@ -159,10 +159,10 @@ case "${1-about:about}" in
 				printf("</tbody>")
 				printf("<tfoot><tr><th scope=\"row\">Total Item / Total Size</th><td colspan=\"2\" align=\"right\">%d / %d</td></tr></tfoot>", NR, totalSize)
 			}
-			EOF
+			__EOF__
 		)
 
-		printhtml --title 'Network Cache Storage Information' -- - <<-EOF | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+		printhtml --title 'Network Cache Storage Information' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 			<table>
 				<caption>w3m Cache Files in '<a href="${baseURL}">${W3MPLUS_W3M_HOME}</a>'</caption>
 				<thead>
@@ -177,7 +177,7 @@ case "${1-about:about}" in
 					awk -v "baseURL=${baseURL}/" -- "${awkScript}"
 				)
 			</table>
-		EOF
+		__EOF__
 		;;
 	'about:config')
 		path_to_fileurl 'uri' "${W3MPLUS_W3M_CONFIG}"
@@ -201,7 +201,7 @@ case "${1-about:about}" in
 		html_escape 'server' "${SERVER_SOFTWARE:-w3m}"
 		path_to_fileurl 'homeurl' "${HOME}"
 
-		printhtml --title 'w3m Start Page' -- - <<-EOF | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -H 'W3m-control: BEGIN' -H 'W3m-control: NEXT_LINK' -- -
+		printhtml --title 'w3m Start Page' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -H 'W3m-control: BEGIN' -H 'W3m-control: NEXT_LINK' -- -
 			<form action="file:///cgi-bin/w3mplus" method="get" accept-charset="UTF-8">
 				<p align="center">
 					<input type="hidden" name="pass" value="${pass}" />
@@ -225,12 +225,12 @@ case "${1-about:about}" in
 			</p>
 
 			<p align="center"><samp>${server}</samp></p>
-		EOF
+		__EOF__
 		;;
 	'about:memory')
 		header='pid=,ppid=,pcpu=,vsz=,nice=,etime=,time=,args='
 		awkScript=$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 			@include "html_escape.awk"
 
 			BEGIN {
@@ -282,7 +282,7 @@ case "${1-about:about}" in
 
 				printf("</tbody></table>")
 			}
-			EOF
+			__EOF__
 		)
 
 		w3mid=$(
@@ -290,7 +290,7 @@ case "${1-about:about}" in
 			| awk -- '$2 == "w3m" { printf("%d", $1); exit; }'
 		)
 
-		printhtml --title 'w3m processes' -- - <<-EOF | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+		printhtml --title 'w3m processes' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 			<section>
 				<h1>Current w3m process</h1>
 
@@ -310,7 +310,7 @@ case "${1-about:about}" in
 					| awk -- "${awkScript}"
 				)
 			</section>
-		EOF
+		__EOF__
 		;;
 	'about:message')
 		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: MSGS'
@@ -327,7 +327,7 @@ case "${1-about:about}" in
 		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: OPTIONS'
 		;;
 	'about:private')
-		printhtml --title 'Private Browsing' -- - <<-'EOF' | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+		printhtml --title 'Private Browsing' -- - <<-'__EOF__' | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 			<h1>Private Browsing</h1>
 
 			<p>w3m won't remember any history for this window.</p>
@@ -337,10 +337,10 @@ case "${1-about:about}" in
 			<p>To stop Private Browsing, you can close this window.</p>
 
 			<p>While this computer won't have a record of your browsing history, your internet service provider or employer can still track the pages you visit.</p>
-		EOF
+		__EOF__
 		;;
 	*)
-		printhtml --title 'Problem loading page' -- - <<-'EOF' | httpresponse --status-line 'HTTP/1.1 400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -- -
+		printhtml --title 'Problem loading page' -- - <<-'__EOF__' | httpresponse --status-line 'HTTP/1.1 400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -- -
 			<h1>The address isn't valid</h1>
 
 			<p>The URL is not valid and cannot be loaded.</p>
@@ -349,7 +349,7 @@ case "${1-about:about}" in
 				<li>Web addresses are usually written like <strong>http://www.example.com/</strong></li>
 				<li>Make sure that you're using forward slashes (i.e. /).</li>
 			</ul>
-		EOF
+		__EOF__
 
 		end_call 1
 		;;

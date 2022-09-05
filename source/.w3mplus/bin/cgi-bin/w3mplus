@@ -131,7 +131,7 @@ add_printtmp() {
 }
 
 error_meesage() {
-	httpresponse --status-line 'HTTP/1.1 500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' -- - <<-EOF
+	httpresponse --status-line 'HTTP/1.1 500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' -- - <<-__EOF__
 		An unexpected error occurred during request processing.
 
 		# Error message
@@ -141,7 +141,7 @@ error_meesage() {
 		# Environment variable
 
 		$(env)
-	EOF
+	__EOF__
 }
 
 expand() {
@@ -192,9 +192,9 @@ if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${
 	httpresponse \
 		--status-line 'HTTP/1.1 400 Bad Request' \
 		-H 'Content-Type: text/plain; charset=UTF-8' \
-		-- - <<-'EOF'
+		-- - <<-'__EOF__'
 		The value of 'pass' is invalid.
-	EOF
+	__EOF__
 
 	exit
 fi
@@ -288,9 +288,9 @@ case "${query_action-}" in
 
 				query_subaction='goto'
 				commandArg="${commandArg}$(
-					cat <<-'EOF'
+					cat <<-'__EOF__'
 					 -- incrementuri ${query_number+--number "'${query_number}'"}
-					EOF
+					__EOF__
 				)"
 				;;
 			'parent-uripath')
@@ -300,9 +300,9 @@ case "${query_action-}" in
 
 				query_subaction='goto'
 				commandArg="${commandArg}$(
-					cat <<-'EOF'
+					cat <<-'__EOF__'
 					 -- parenturipath ${query_number+--number "'${query_number}'"}
-					EOF
+					__EOF__
 				)"
 				;;
 			'redirect')
@@ -314,9 +314,9 @@ case "${query_action-}" in
 				pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
 				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 				commandArg="${commandArg}$(
-					cat <<-'EOF'
+					cat <<-'__EOF__'
 					 -- printf "'%s%s'" "'${query_redirect-${filepath}?pass=${pass}&action=search&tab=del-prebuf&query=}'" '"$(urlencode)"'
-					EOF
+					__EOF__
 				)"
 				;;
 		esac
@@ -386,7 +386,7 @@ case "${query_action-}" in
 		;;
 	'get-url-mark' | 'get-url-mark-line-begin')
 		awkScript=$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 			BEGIN {
 				FS = "\t"
 			}
@@ -397,7 +397,7 @@ case "${query_action-}" in
 
 				printf("%s\t%s\t\t\t%s\n", uri, line, (moveURL == "" ? "" : "GOTO " moveURL $3))
 			}
-			EOF
+			__EOF__
 		)
 
 		case "${query_action}" in
@@ -661,7 +661,7 @@ case "${query_action-}" in
 		;;
 	'show-search-history')
 		awkScript=$(
-			cat <<-'EOF'
+			cat <<-'__EOF__'
 			@include "html_escape.awk"
 			@include "url_decode.awk"
 
@@ -677,7 +677,7 @@ case "${query_action-}" in
 			END {
 				printf("</samp></pre>")
 			}
-			EOF
+			__EOF__
 		)
 		pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
 		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
@@ -835,7 +835,7 @@ case "${query_action-}" in
 
 		printhtml \
 			--title 'Bad Request' \
-			-- - <<-EOF \
+			-- - <<-__EOF__ \
 		| httpresponse \
 			--status-line 'HTTP/1.1 400 Bad Request' \
 			-H 'Content-Type: text/html; charset=UTF-8' \
@@ -973,6 +973,6 @@ case "${query_action-}" in
 				<dt>zoom</dt>
 				<dd>${filepath}?pass={PASS_VALUE}&amp;action=zoom&amp;zoom={([+*/-] '=')? UNSIGNED_INTEGER}</dd>
 			</dl>
-		EOF
+		__EOF__
 		;;
 esac
