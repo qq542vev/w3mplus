@@ -179,7 +179,7 @@ includeAwkscript=$(
 				if(!(fpath in include)) {
 					read_file(fpath, include)
 				}
-			} else if(fields[1] == "EOF" || fields[1] == "'") {
+			} else if(fields[1] == "__EOF__" || fields[1] == "'") {
 				split("", include)
 				printf("%s\n", record)
 			} else {

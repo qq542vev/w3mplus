@@ -782,34 +782,74 @@ esac
 awkScript=$(
 	cat <<-'__EOF__'
 
-		BEGIN {
-			FS = "\t"
-			exitStatus = 0
 
-			count = split(engine, engines, ",")
-			split("", template)
-		}
 
-		{
-			template[$1] = $2
-		}
-
-		END {
-			for(i = 1; i <= count; i++) {
-				if(engines[i] in template) {
-					url = template[engines[i]]
-					gsub(/\{searchTerms\}/, terms, url)
-
-					printf("%s\n", url)
-				} else {
-					printf("search engine '%s' not found.\n", engines[i]) | "cat >&2"
-
-					exitStatus = sysexits("EX_UNAVAILABLE")
-				}
+		function sysexits(code) {
+			if(code == "EX_OK") {
+				return 0
+			} else if(code == "EX_USAGE") {
+				return 64
+			} else if(code == "EX_DATAERR") {
+				return 65
+			} else if(code == "EX_NOINPUT") {
+				return 66
+			} else if(code == "EX_NOUSER") {
+				return 67
+			} else if(code == "EX_NOHOST") {
+				return 68
+			} else if(code == "EX_UNAVAILABLE") {
+				return 69
+			} else if(code == "EX_SOFTWARE") {
+				return 70
+			} else if(code == "EX_OSERR") {
+				return 71
+			} else if(code == "EX_OSFILE") {
+				return 72
+			} else if(code == "EX_CANTCREAT") {
+				return 73
+			} else if(code == "EX_IOERR") {
+				return 74
+			} else if(code == "EX_TEMPFAIL") {
+				return 75
+			} else if(code == "EX_PROTOCOL") {
+				return 76
+			} else if(code == "EX_NOPERM") {
+				return 77
+			} else if(code == "EX_CONFIG") {
+				return 78
 			}
 
-			exit exitStatus
+			return 1
 		}
+
+			BEGIN {
+				FS = "\t"
+				exitStatus = 0
+
+				count = split(engine, engines, ",")
+				split("", template)
+			}
+
+			{
+				template[$1] = $2
+			}
+
+			END {
+				for(i = 1; i <= count; i++) {
+					if(engines[i] in template) {
+						url = template[engines[i]]
+						gsub(/\{searchTerms\}/, terms, url)
+
+						printf("%s\n", url)
+					} else {
+						printf("search engine '%s' not found.\n", engines[i]) | "cat >&2"
+
+						exitStatus = sysexits("EX_UNAVAILABLE")
+					}
+				}
+
+				exit exitStatus
+			}
 	__EOF__
 )
 
