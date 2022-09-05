@@ -118,11 +118,11 @@ lang: ja
 
 [`gu`]{#key-gu}
 : 現在の URL の上位ディレクトリを開く。
-: 例えば、 http://www.example.com/dir1/dir2/file.htm の `gu` は http://www.example.com/dir1/dir2/ を開く。
+: 例えば、http://www.example.com/dir1/dir2/file.htm の `gu` は http://www.example.com/dir1/dir2/ を開く。
 
 [`gU`]{#key-gU}
 : 現在の URL のルートディレクトリを開く。
-: 例えば、 http://www.example.com/dir1/dir2/file.htm の `gU` は http://www.example.com/ を開く。
+: 例えば、http://www.example.com/dir1/dir2/file.htm の `gU` は http://www.example.com/ を開く。
 
 ## 再読み込み {#reloading}
 
