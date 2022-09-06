@@ -7,8 +7,8 @@
 ##
 ##   id - 7539cc1d-6b5f-44e5-baf7-a66b22b2213f
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 0.2.2
-##   date - 2022-09-02
+##   version - 0.3.0
+##   date - 2022-09-06
 ##   since - 2019-12-26
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -21,6 +21,8 @@
 -->
 
 # w3mplus
+
+[![about:home](images/thumbnails/about-home.png)](images/about-home.png "about:home") [![Context Menu](images/thumbnails/context-menu.png)](images/thumbnails/context-menu.png "Context Menu")
 
 w3mplus はテキストブラウザー w3m の拡張機能です。ほぼ全ての機能を POSIX 準拠の ShellScript と AWK で作成しております。
 
@@ -49,4 +51,4 @@ w3mplus を利用するには POSIX 準拠の Shell 環境と AWK が必要で�
 
 # 使い方
 
-インストール後の `~/.w3mplus/doc/index.html` にマニュアルがあります。Web 上でも[マニュアル](https://qq542vev.github.io/w3mplus/doc/)を公開しています。
+インストール後の `~/.w3mplus/doc/index.html` にマニュアルがあります。Web 上でも[マニュアル](https://qq542vev.github.io/w3mplus/documents/)を公開しています。
