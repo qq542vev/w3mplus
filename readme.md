@@ -22,7 +22,7 @@
 
 # w3mplus
 
-[![about:home](images/thumbnails/about-home.png)](images/about-home.png "about:home") [![Context Menu](images/thumbnails/context-menu.png)](images/thumbnails/context-menu.png "Context Menu")
+[![about:home](images/thumbnails/about-home.png)](images/about-home.png "about:home") [![Context Menu](images/thumbnails/context-menu.png)](images/context-menu.png "Context Menu")
 
 w3mplus はテキストブラウザー w3m の拡張機能です。ほぼ全ての機能を POSIX 準拠の ShellScript と AWK で作成しております。
 
