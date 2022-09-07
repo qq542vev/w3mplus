@@ -160,7 +160,7 @@ Source Folder: ../source
 # Generated Documentation
 # ------------------------------------------------------------------------
 
-HTML Output Folder: ../doc/reference
+HTML Output Folder: ../doc/references
 
 
 # This is where you tell Natural Docs what kind of documentation you want
