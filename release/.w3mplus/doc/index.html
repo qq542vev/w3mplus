@@ -25,6 +25,8 @@
 
 					<link rel="license" title="CC-BY" href="https://creativecommons.org/licenses/by/4.0/" />
 		
+					<link rel="toc" title="目次" href="#toc" />
+		
 		<style type="text/css">
 		/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -443,14 +445,34 @@
 			font-weight: bold;
 			color: #102663;
 		}
+
+		footer {
+			margin-top: 1em;
+			border-top: 1px #C0C0C0 solid;
+		}
+
+		footer dl, footer p {
+			margin: 0.4em 0;
+		}
+
+		footer dt {
+			display: inline;
+			margin: 0;
+		}
+
+		footer dd {
+			display: inline;
+			margin: 0 0.5em 0 0;
+		}
 		</style>
 	</head>
 	<body>
-		<main>
-			<section id="toc">
-				<h1>目次</h1>
+		<main id="main">
+							<nav>
+					<section id="toc">
+						<h1>目次</h1>
 
-				<ul>
+						<ul>
 <li><a href="#intro">初めに</a><ul>
 <li><a href="#features">機能</a></li>
 <li><a href="#contact">連絡</a></li>
@@ -526,8 +548,9 @@
 <li><a href="#lynx-mode">lynx モード</a></li>
 </ul></li>
 </ul>
-			</section>
-
+					</section>
+				</nav>
+			
 			<section id="intro" class="level1">
 <h1>初めに</h1>
 <p><a href="https://github.com/qq542vev/w3mplus">w3mplus</a> は、<a href="https://github.com/tats/w3m">w3m</a> 用の無料ブラウザアドオンで、ブラウジングをより効率的に、特にキーボード操作を容易にするために設計されている。<a href="https://github.com/pentadactyl/pentadactyl">Pentadactyl</a>, <a href="https://www.palemoon.org/">Pale Moon</a>, <a href="https://www.vim.org/">Vim</a> に大きく影響され、指の感触はそれらユーザーには馴染みやすい操作性となっている。</p>
@@ -4434,11 +4457,14 @@
 		<footer>
 			<dl>
 									<dt>作成日</dt>
-					<dd>2022-08-17</dd>
+					<dd><time>2022-08-17</time></dd>
 				
 									<dt>更新日</dt>
-					<dd>2022-09-01</dd>
-							</dl>
+					<dd><time>2022-09-01</time></dd>
+				
+			</dl>
+
+			<p>Copyright (C) 2022-2022 qq542vev. Some rights reserved.</p>
 		</footer>
 	</body>
 </html>

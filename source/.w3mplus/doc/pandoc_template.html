@@ -37,6 +37,10 @@
 			<link rel="license" title="$license.name$" href="$license.url$" />
 		$endfor$
 
+		$if(toc)$
+			<link rel="toc" title="目次" href="#toc" />
+		$endif$
+
 		<style type="text/css">
 		/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -455,15 +459,38 @@
 			font-weight: bold;
 			color: #102663;
 		}
+
+		footer {
+			margin-top: 1em;
+			border-top: 1px #C0C0C0 solid;
+		}
+
+		footer dl, footer p {
+			margin: 0.4em 0;
+		}
+
+		footer dt {
+			display: inline;
+			margin: 0;
+		}
+
+		footer dd {
+			display: inline;
+			margin: 0 0.5em 0 0;
+		}
 		</style>
 	</head>
 	<body>
-		<main>
-			<section id="toc">
-				<h1>目次</h1>
+		<main id="main">
+			$if(toc)$
+				<nav>
+					<section id="toc">
+						<h1>目次</h1>
 
-				$toc$
-			</section>
+						$toc$
+					</section>
+				</nav>
+			$endif$
 
 			$body$
 		</main>
@@ -472,14 +499,17 @@
 			<dl>
 				$if(created)$
 					<dt>作成日</dt>
-					<dd>$created$</dd>
+					<dd><time>$created$</time></dd>
 				$endif$
 
 				$if(modified)$
 					<dt>更新日</dt>
-					<dd>$modified$</dd>
+					<dd><time>$modified$</time></dd>
 				$endif$
+
 			</dl>
+
+			<p>$copyright$</p>
 		</footer>
 	</body>
 </html>
