@@ -26,7 +26,7 @@
 
 w3mplus はテキストブラウザー w3m の拡張機能です。ほぼ全ての機能を POSIX 準拠の ShellScript と AWK で作成しております。
 
-w3mplus は [PaleMoon](https://www.palemoon.org/) + [Pentadactyl](https://github.com/pentadactyl/pentadactyl) の機能を徹底的に模倣しています。主に以下のような機能を利用できます。
+w3mplus は [Pale Moon](https://www.palemoon.org/) + [Pentadactyl](https://github.com/pentadactyl/pentadactyl) の機能を徹底的に模倣しています。主に以下のような機能を利用できます。
 
  * Pale Moon の模倣
    * メニューバー
