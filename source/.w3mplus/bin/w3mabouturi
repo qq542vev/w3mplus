@@ -175,7 +175,7 @@ case "${1-about:about}" in
 					</tr>
 				</thead>
 				$(
-					ls -gko -- "${W3MPLUS_W3M_HOME}" 2>'/dev/null' | \
+					ls -Lgko -- "${W3MPLUS_W3M_HOME}" 2>'/dev/null' | \
 					awk -v "baseURL=${baseURL}/" -- "${awkScript}"
 				)
 			</table>
