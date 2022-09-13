@@ -20,7 +20,7 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
-VERSION='includefile 0.1.0'
+VERSION='includefile 0.2.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -31,7 +31,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... OUTPUT_DIR [FILE]..." \
 		'' 'Options:'
 
-	flag  verbose -V --verbose init:@no -- '冗長な表示を行う'
+	flag  verbose -V --{no-}verbose init:@no -- '冗長な表示を行う'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
 	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
