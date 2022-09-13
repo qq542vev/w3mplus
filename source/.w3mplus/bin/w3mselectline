@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-### Script: selectline
+### Script: w3mselectline
 ##
 ## 選択された行を元に処理を実行する。
 ##

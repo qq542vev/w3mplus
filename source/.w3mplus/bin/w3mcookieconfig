@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-### Script: cookiemanager
+### Script: w3mcookieconfig
 ##
 ## 特定ドメインの Cookie を(許可 / 拒否)する。
 ##
