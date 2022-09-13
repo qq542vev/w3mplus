@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-### Script: install
+### Script: install.sh
 ##
 ## w3mplus をインストールする。
 ##
