@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-VERSION='parsequery 2.0.0'
+VERSION='parsequery 2.0.1'
 
 
 
