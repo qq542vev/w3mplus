@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/searchuri",{113:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">検索結果の URI を表示する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/searchuri",{124:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">検索結果の URI を表示する。</div></div>"});

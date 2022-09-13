@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("saf",["Function"],[["safe_string",,[[,,"AWK",,0,"File:.w3mplus/lib/safe_string.awk:safe_string"],[,,"ShellScript",,0,"File:.w3mplus/lib/safe_string.sh:safe_string"]]]]);

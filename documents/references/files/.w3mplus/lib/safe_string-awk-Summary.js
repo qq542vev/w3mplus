@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/safe_string.awk","safe_string.awk");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/safe_string.awk",[["AWK","AWK"]],[["Functions","Function"],["Groups","Group"]],[[47,0,1,"Functions","Functions"],[48,0,0,"safe_string","safe_string"]]);

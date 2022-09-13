@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/replace_all.sh",{13:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">w3m のためのレスポンスを表示する。</div></div>"});

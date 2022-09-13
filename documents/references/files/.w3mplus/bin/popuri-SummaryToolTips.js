@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/popuri",{125:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">履歴から URI を取り出す。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/popuri",{135:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">履歴から URI を取り出す。</div></div>"});

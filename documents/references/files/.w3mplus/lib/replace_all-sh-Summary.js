@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/replace_all.sh","replace_all.sh");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/replace_all.sh",[["ShellScript","ShellScript"]],[["Files","File"]],[[13,0,0,"replace_all.sh","replace_all.sh"]]);

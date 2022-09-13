@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/cgi-bin/protectionpage",{96:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">アクセス拒否のページを表示する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/cgi-bin/protectionpage",{108:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">アクセス拒否のページを表示する。</div></div>"});

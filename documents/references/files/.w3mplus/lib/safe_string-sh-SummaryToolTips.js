@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/safe_string.sh",{40:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">水平タブ、改行、復帰以外の制御文字を削除する。</div></div>"});
