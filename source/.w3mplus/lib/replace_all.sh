@@ -90,10 +90,10 @@ esac
 
 replace_multiple() {
 	eval "${1}=\"\${2}\""
-	eval "shift 2; set -- '${1}' \"\${@}\""
+	eval "shift 2; set -- '${1}'" '${@+"${@}"}'
 
 	while [ 2 -le "${#}" ]; do
-		eval "replace_all '${1}' \"\${${1}}\" \"\${2}\" \"\${3-}\""
-		eval "shift 2; set -- '${1}' \"\${@}\""
+		eval 'replace_all "${1}"' "\"\${${1}}\"" '"${2}" "${3-}"'
+		eval "shift 3; set -- '${1}'" '${@+"${@}"}'
 	done
 }

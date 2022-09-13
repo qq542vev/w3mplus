@@ -32,7 +32,8 @@
 append_array_posix() {
 	while [ 2 -le "${#}" ]; do
 		__append_array_posix "${1}" "${2}"
-		eval "shift 2; set -- '${1}' \"\${@}\""
+
+		eval "shift 2; set -- '${1}'" '${@+"${@}"}'
 	done
 }
 
