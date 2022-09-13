@@ -20,6 +20,8 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
+VERSION='viewsource 1.0.0'
+
 : ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
 : ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
 : ${W3MPLUS_PATH:="${W3MPLUS_HOME}/bin"}
