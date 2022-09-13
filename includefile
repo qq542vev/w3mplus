@@ -8,8 +8,8 @@
 ##
 ##   id - 58a1cbfd-8bc9-40d5-8013-cb765d3fd182
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 0.1.0
-##   date - 2022-07-05
+##   version - 0.2.0
+##   date - 2022-09-13
 ##   since - 2022-07-05
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -31,6 +31,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... OUTPUT_DIR [FILE]..." \
 		'' 'Options:'
 
+	flag  verbose -V --verbose init:@no -- '冗長な表示を行う'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
 	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -193,6 +194,10 @@ includeAwkscript=$(
 )
 
 for file in ${@+"${@}"}; do
+	case "${verbose}" in
+		'1') printf "Converting '%s'...\\n" "${file}" >&2
+	esac
+
 	if [ '!' -f "${file}" ]; then
 		cat <<-__EOF__ >&2
 			${0##*/}: '${file}' は通常ファイルではありません。
@@ -213,4 +218,8 @@ for file in ${@+"${@}"}; do
 	| awk -- "${includeAwkscript}" - \
 	| shfmt -s -ln 'posix' \
 	| sed -e '1b; /^[[:blank:]]*#/d' >"${output}/${file##*/}"
+
+	case "${verbose}" in
+		'1') printf 'Done\n' >&2
+	esac
 done
