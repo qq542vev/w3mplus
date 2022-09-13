@@ -58,33 +58,79 @@ end_call() {
 
 
 
+
+replace_all_fast() {
+	eval "$1=\${2//\"\$3\"/\"\$4\"}"
+}
+
+replace_all_posix() {
+	set -- "$1" "$2" "$3" "$4" ""
+	until [ _"$2" = _"${2#*"$3"}" ] && eval "$1=\$5\$2"; do
+		set -- "$1" "${2#*"$3"}" "$3" "$4" "$5${2%%"$3"*}$4"
+	done
+}
+
+replace_all_pattern() {
+	set -- "$1" "$2" "$3" "$4" ""
+	until eval "[ _\"\$2\" = _\"\${2#*$3}\" ] && $1=\$5\$2"; do
+		eval "set -- \"\$1\" \"\${2#*$3}\" \"\$3\" \"\$4\" \"\$5\${2%%$3*}\$4\""
+	done
+}
+
+meta_escape() {
+	if [ "${1#*\?}" ]; then # posh <= 0.5.4
+		set -- '\\\\:\\\\\\\\' '\\\[:[[]' '\\\?:[?]' '\\\*:[*]' '\\\$:[$]'
+	elif [ "${2%%\\*}" ]; then # bosh = all (>= 20181007), busybox <= 1.22.0
+		set -- '\\\\:\\\\\\\\' '\[:[[]' '\?:[?]' '\*:[*]' '\$:[$]'
+	else # POSIX compliant
+		set -- '\\:\\\\' '\[:[[]' '\?:[?]' '\*:[*]' '\$:[$]'
+	fi
+
+	set "$@" '\(:\\(' '\):\\)' '\|:\\|' '\":\\\"' '\`:\\\`' \
+		'\{:\\{' '\}:\\}' "\\':\\\\'" '\&:\\&' '\=:\\=' '\>:\\>' "end"
+
+	echo 'meta_escape() { set -- "$1" "$2" ""'
+	until [ "$1" = "end" ] && shift && printf '%s\n' "$@"; do
+		set -- "${1%:*}" "${1#*:}" "$@"
+		set -- "$@" 'until [ _"$2" = _"${2#*'"$1"'}" ] && set -- "$1" "$3$2" ""; do'
+		set -- "$@" '  set -- "$1" "${2#*'"$1"'}" "$3${2%%'"$1"'*}'"$2"'"'
+		set -- "$@" 'done'
+		shift 3
+	done
+	echo 'eval "$1=\"\$3\$2\""; }'
+}
+eval "$(meta_escape "a?" '\')"
+
+replace_all() {
+	(eval 'v="*#*/" p="#*/"; [ "${v//"$p"/-}" = "*-" ]') 2>/dev/null && return 0
+	[ "${1#"$2"}" = "a*b" ] && return 1 || return 2
+}
+eval 'replace_all "a*b" "a[*]" &&:' && :
+case $? in
+0) # Fast version (Not POSIX compliant)
+	replace_all() { replace_all_fast "$@"; } ;;
+1) # POSIX version (POSIX compliant)
+	replace_all() { replace_all_posix "$@"; } ;;
+2) # Pattern version
+	replace_all() {
+		meta_escape "$1" "$3"
+		eval "replace_all_pattern \"\$1\" \"\$2\" \"\${$1}\" \"\$4\""
+	} ;;
+esac
+
+replace_multiple() {
+	eval "${1}=\"\${2}\""
+	eval "shift 2; set -- '${1}'" '${@+"${@}"}'
+
+	while [ 2 -le "${#}" ]; do
+		eval 'replace_all "${1}"' "\"\${${1}}\"" '"${2}" "${3-}"'
+		eval "shift 3; set -- '${1}'" '${@+"${@}"}'
+	done
+}
+
+
 html_escape() {
-	set -- "${1}" "${2}" ''
-	until [ "${2#*&}" = "${2}" ]; do
-		set -- "${1}" "${2#*&}" "${3}${2%%&*}&amp;"
-	done
-
-	set -- "${1}" "${3}${2}" ''
-	until [ "${2#*<}" = "${2}" ]; do
-		set -- "${1}" "${2#*<}" "${3}${2%%<*}&lt;"
-	done
-
-	set -- "${1}" "${3}${2}" ''
-	until [ "${2#*>}" = "${2}" ]; do
-		set -- "${1}" "${2#*>}" "${3}${2%%>*}&gt;"
-	done
-
-	set -- "${1}" "${3}${2}" ''
-	until [ "${2#*\'}" = "${2}" ]; do
-		set -- "${1}" "${2#*\'}" "${3}${2%%\'*}&#39;"
-	done
-
-	set -- "${1}" "${3}${2}" ''
-	until [ "${2#*\"}" = "${2}" ]; do
-		set -- "${1}" "${2#*\"}" "${3}${2%%\"*}&quot;"
-	done
-
-	eval "${1}=\"\${3}\${2}\""
+	replace_multiple "${1}" "${2}" '&' '&amp;' '<' '&lt;' '>' '&gt;' "'" '&#39;' '"' '&quot;'
 }
 
 
@@ -113,6 +159,105 @@ path_to_fileurl() {
 	abspath "${1}" "${2}"
 
 	eval "${1}=\"file://\$(printf '%s' \"\${${1}}\" | urlencode | sed -e 's/%2F/\//g')\""
+}
+
+
+
+
+
+
+replace_all_fast() {
+	eval "$1=\${2//\"\$3\"/\"\$4\"}"
+}
+
+replace_all_posix() {
+	set -- "$1" "$2" "$3" "$4" ""
+	until [ _"$2" = _"${2#*"$3"}" ] && eval "$1=\$5\$2"; do
+		set -- "$1" "${2#*"$3"}" "$3" "$4" "$5${2%%"$3"*}$4"
+	done
+}
+
+replace_all_pattern() {
+	set -- "$1" "$2" "$3" "$4" ""
+	until eval "[ _\"\$2\" = _\"\${2#*$3}\" ] && $1=\$5\$2"; do
+		eval "set -- \"\$1\" \"\${2#*$3}\" \"\$3\" \"\$4\" \"\$5\${2%%$3*}\$4\""
+	done
+}
+
+meta_escape() {
+	if [ "${1#*\?}" ]; then # posh <= 0.5.4
+		set -- '\\\\:\\\\\\\\' '\\\[:[[]' '\\\?:[?]' '\\\*:[*]' '\\\$:[$]'
+	elif [ "${2%%\\*}" ]; then # bosh = all (>= 20181007), busybox <= 1.22.0
+		set -- '\\\\:\\\\\\\\' '\[:[[]' '\?:[?]' '\*:[*]' '\$:[$]'
+	else # POSIX compliant
+		set -- '\\:\\\\' '\[:[[]' '\?:[?]' '\*:[*]' '\$:[$]'
+	fi
+
+	set "$@" '\(:\\(' '\):\\)' '\|:\\|' '\":\\\"' '\`:\\\`' \
+		'\{:\\{' '\}:\\}' "\\':\\\\'" '\&:\\&' '\=:\\=' '\>:\\>' "end"
+
+	echo 'meta_escape() { set -- "$1" "$2" ""'
+	until [ "$1" = "end" ] && shift && printf '%s\n' "$@"; do
+		set -- "${1%:*}" "${1#*:}" "$@"
+		set -- "$@" 'until [ _"$2" = _"${2#*'"$1"'}" ] && set -- "$1" "$3$2" ""; do'
+		set -- "$@" '  set -- "$1" "${2#*'"$1"'}" "$3${2%%'"$1"'*}'"$2"'"'
+		set -- "$@" 'done'
+		shift 3
+	done
+	echo 'eval "$1=\"\$3\$2\""; }'
+}
+eval "$(meta_escape "a?" '\')"
+
+replace_all() {
+	(eval 'v="*#*/" p="#*/"; [ "${v//"$p"/-}" = "*-" ]') 2>/dev/null && return 0
+	[ "${1#"$2"}" = "a*b" ] && return 1 || return 2
+}
+eval 'replace_all "a*b" "a[*]" &&:' && :
+case $? in
+0) # Fast version (Not POSIX compliant)
+	replace_all() { replace_all_fast "$@"; } ;;
+1) # POSIX version (POSIX compliant)
+	replace_all() { replace_all_posix "$@"; } ;;
+2) # Pattern version
+	replace_all() {
+		meta_escape "$1" "$3"
+		eval "replace_all_pattern \"\$1\" \"\$2\" \"\${$1}\" \"\$4\""
+	} ;;
+esac
+
+replace_multiple() {
+	eval "${1}=\"\${2}\""
+	eval "shift 2; set -- '${1}'" '${@+"${@}"}'
+
+	while [ 2 -le "${#}" ]; do
+		eval 'replace_all "${1}"' "\"\${${1}}\"" '"${2}" "${3-}"'
+		eval "shift 3; set -- '${1}'" '${@+"${@}"}'
+	done
+}
+
+
+remove_control_character() {
+	set -- "${1}" "${2}" "${3}" "$(printf '\000\001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\028\029\030\031\032\033\034\035\036\037\177\200\201\202\203\204\205\206\207\210\211\212\213\214')"
+
+	while [ -n "${3}" ]; do
+		replace_all "${1}" "${4}" "${3%%${3#?}}" ''
+
+		eval 'set -- "${1}" "${2}" "${3#?}"' "\"\${${1}}\""
+	done
+
+	set -- "${1}" "${2}" "${4}" ''
+
+	while [ -n "${3}" ]; do
+		set -- "${1}" "${2}" "${3#?}" "${4} '${3%%${3#?}}'"
+	done
+
+	eval 'replace_multiple "${1}" "${2}"' "${4}"
+}
+
+
+safe_string() {
+	remove_control_character "${1}" "${2}" '	
+'
 }
 
 : "${W3MPLUS_W3M_HOME:=${HOME}/.w3m}"
@@ -292,7 +437,8 @@ eval "set -- ${REST}"
 
 case "${1-about:about}" in
 'about:')
-	html_escape 'version' "$(w3m -version)"
+	safe_string 'version' "$(w3m -version)"
+	html_escape 'version' "${version}"
 
 	printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "${version}" | printhtml --title 'About:' -- - | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 	;;
@@ -393,7 +539,7 @@ case "${1-about:about}" in
 				</tr>
 			</thead>
 			$(
-				ls -gko -- "${W3MPLUS_W3M_HOME}" 2>'/dev/null' |
+				ls -Lgko -- "${W3MPLUS_W3M_HOME}" 2>'/dev/null' |
 					awk -v "baseURL=${baseURL}/" -- "${awkScript}"
 			)
 		</table>
@@ -417,8 +563,12 @@ case "${1-about:about}" in
 	httpresponse -H 'W3m-control: BACK' -H 'W3m-control: HISTORY'
 	;;
 'about:home')
-	html_escape 'pass' "${W3MPLUS_PASS_VALUE-}"
-	html_escape 'server' "${SERVER_SOFTWARE:-w3m}"
+	safe_string 'pass' "${W3MPLUS_PASS_VALUE-}"
+	html_escape 'pass' "${pass}"
+
+	safe_string 'server' "${SERVER_SOFTWARE:-w3m}"
+	html_escape 'server' "${server}"
+
 	path_to_fileurl 'homeurl' "${HOME}"
 
 	printhtml --title 'w3m Start Page' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -H 'W3m-control: BEGIN' -H 'W3m-control: NEXT_LINK' -- -
@@ -464,6 +614,27 @@ case "${1-about:about}" in
 				return string
 			}
 
+
+
+
+
+			function remove_control_character(string, except,  cc,char) {
+				cc = "\000\001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\028\029\030\031\032\033\034\035\036\037\177\200\201\202\203\204\205\206\207\210\211\212\213\214"
+
+				gsub(except, "", cc)
+
+				for(char = ""; cc != ""; cc = substr(cc, 2)) {
+					gsub(substr(cc, 1, 1), "", string)
+				}
+
+				return string
+			}
+
+
+			function safe_string(string) {
+				return remove_control_character(string, "\011\012\015")
+			}
+
 						BEGIN {
 							hCount = split("", headers)
 
@@ -502,7 +673,7 @@ case "${1-about:about}" in
 									printf("%s", $i)
 
 									for(j = hCount + 1; j <= NF; j++) {
-										printf(" %s", html_escape($j))
+										printf(" %s", html_escape(safe_string($j)))
 									}
 								} else {
 									printf("%s", $i)

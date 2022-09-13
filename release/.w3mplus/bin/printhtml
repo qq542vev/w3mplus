@@ -67,33 +67,178 @@ option_error() {
 
 
 
+
+replace_all_fast() {
+	eval "$1=\${2//\"\$3\"/\"\$4\"}"
+}
+
+replace_all_posix() {
+	set -- "$1" "$2" "$3" "$4" ""
+	until [ _"$2" = _"${2#*"$3"}" ] && eval "$1=\$5\$2"; do
+		set -- "$1" "${2#*"$3"}" "$3" "$4" "$5${2%%"$3"*}$4"
+	done
+}
+
+replace_all_pattern() {
+	set -- "$1" "$2" "$3" "$4" ""
+	until eval "[ _\"\$2\" = _\"\${2#*$3}\" ] && $1=\$5\$2"; do
+		eval "set -- \"\$1\" \"\${2#*$3}\" \"\$3\" \"\$4\" \"\$5\${2%%$3*}\$4\""
+	done
+}
+
+meta_escape() {
+	if [ "${1#*\?}" ]; then # posh <= 0.5.4
+		set -- '\\\\:\\\\\\\\' '\\\[:[[]' '\\\?:[?]' '\\\*:[*]' '\\\$:[$]'
+	elif [ "${2%%\\*}" ]; then # bosh = all (>= 20181007), busybox <= 1.22.0
+		set -- '\\\\:\\\\\\\\' '\[:[[]' '\?:[?]' '\*:[*]' '\$:[$]'
+	else # POSIX compliant
+		set -- '\\:\\\\' '\[:[[]' '\?:[?]' '\*:[*]' '\$:[$]'
+	fi
+
+	set "$@" '\(:\\(' '\):\\)' '\|:\\|' '\":\\\"' '\`:\\\`' \
+		'\{:\\{' '\}:\\}' "\\':\\\\'" '\&:\\&' '\=:\\=' '\>:\\>' "end"
+
+	echo 'meta_escape() { set -- "$1" "$2" ""'
+	until [ "$1" = "end" ] && shift && printf '%s\n' "$@"; do
+		set -- "${1%:*}" "${1#*:}" "$@"
+		set -- "$@" 'until [ _"$2" = _"${2#*'"$1"'}" ] && set -- "$1" "$3$2" ""; do'
+		set -- "$@" '  set -- "$1" "${2#*'"$1"'}" "$3${2%%'"$1"'*}'"$2"'"'
+		set -- "$@" 'done'
+		shift 3
+	done
+	echo 'eval "$1=\"\$3\$2\""; }'
+}
+eval "$(meta_escape "a?" '\')"
+
+replace_all() {
+	(eval 'v="*#*/" p="#*/"; [ "${v//"$p"/-}" = "*-" ]') 2>/dev/null && return 0
+	[ "${1#"$2"}" = "a*b" ] && return 1 || return 2
+}
+eval 'replace_all "a*b" "a[*]" &&:' && :
+case $? in
+0) # Fast version (Not POSIX compliant)
+	replace_all() { replace_all_fast "$@"; } ;;
+1) # POSIX version (POSIX compliant)
+	replace_all() { replace_all_posix "$@"; } ;;
+2) # Pattern version
+	replace_all() {
+		meta_escape "$1" "$3"
+		eval "replace_all_pattern \"\$1\" \"\$2\" \"\${$1}\" \"\$4\""
+	} ;;
+esac
+
+replace_multiple() {
+	eval "${1}=\"\${2}\""
+	eval "shift 2; set -- '${1}'" '${@+"${@}"}'
+
+	while [ 2 -le "${#}" ]; do
+		eval 'replace_all "${1}"' "\"\${${1}}\"" '"${2}" "${3-}"'
+		eval "shift 3; set -- '${1}'" '${@+"${@}"}'
+	done
+}
+
+
 html_escape() {
-	set -- "${1}" "${2}" ''
-	until [ "${2#*&}" = "${2}" ]; do
-		set -- "${1}" "${2#*&}" "${3}${2%%&*}&amp;"
+	replace_multiple "${1}" "${2}" '&' '&amp;' '<' '&lt;' '>' '&gt;' "'" '&#39;' '"' '&quot;'
+}
+
+
+
+
+
+
+replace_all_fast() {
+	eval "$1=\${2//\"\$3\"/\"\$4\"}"
+}
+
+replace_all_posix() {
+	set -- "$1" "$2" "$3" "$4" ""
+	until [ _"$2" = _"${2#*"$3"}" ] && eval "$1=\$5\$2"; do
+		set -- "$1" "${2#*"$3"}" "$3" "$4" "$5${2%%"$3"*}$4"
+	done
+}
+
+replace_all_pattern() {
+	set -- "$1" "$2" "$3" "$4" ""
+	until eval "[ _\"\$2\" = _\"\${2#*$3}\" ] && $1=\$5\$2"; do
+		eval "set -- \"\$1\" \"\${2#*$3}\" \"\$3\" \"\$4\" \"\$5\${2%%$3*}\$4\""
+	done
+}
+
+meta_escape() {
+	if [ "${1#*\?}" ]; then # posh <= 0.5.4
+		set -- '\\\\:\\\\\\\\' '\\\[:[[]' '\\\?:[?]' '\\\*:[*]' '\\\$:[$]'
+	elif [ "${2%%\\*}" ]; then # bosh = all (>= 20181007), busybox <= 1.22.0
+		set -- '\\\\:\\\\\\\\' '\[:[[]' '\?:[?]' '\*:[*]' '\$:[$]'
+	else # POSIX compliant
+		set -- '\\:\\\\' '\[:[[]' '\?:[?]' '\*:[*]' '\$:[$]'
+	fi
+
+	set "$@" '\(:\\(' '\):\\)' '\|:\\|' '\":\\\"' '\`:\\\`' \
+		'\{:\\{' '\}:\\}' "\\':\\\\'" '\&:\\&' '\=:\\=' '\>:\\>' "end"
+
+	echo 'meta_escape() { set -- "$1" "$2" ""'
+	until [ "$1" = "end" ] && shift && printf '%s\n' "$@"; do
+		set -- "${1%:*}" "${1#*:}" "$@"
+		set -- "$@" 'until [ _"$2" = _"${2#*'"$1"'}" ] && set -- "$1" "$3$2" ""; do'
+		set -- "$@" '  set -- "$1" "${2#*'"$1"'}" "$3${2%%'"$1"'*}'"$2"'"'
+		set -- "$@" 'done'
+		shift 3
+	done
+	echo 'eval "$1=\"\$3\$2\""; }'
+}
+eval "$(meta_escape "a?" '\')"
+
+replace_all() {
+	(eval 'v="*#*/" p="#*/"; [ "${v//"$p"/-}" = "*-" ]') 2>/dev/null && return 0
+	[ "${1#"$2"}" = "a*b" ] && return 1 || return 2
+}
+eval 'replace_all "a*b" "a[*]" &&:' && :
+case $? in
+0) # Fast version (Not POSIX compliant)
+	replace_all() { replace_all_fast "$@"; } ;;
+1) # POSIX version (POSIX compliant)
+	replace_all() { replace_all_posix "$@"; } ;;
+2) # Pattern version
+	replace_all() {
+		meta_escape "$1" "$3"
+		eval "replace_all_pattern \"\$1\" \"\$2\" \"\${$1}\" \"\$4\""
+	} ;;
+esac
+
+replace_multiple() {
+	eval "${1}=\"\${2}\""
+	eval "shift 2; set -- '${1}'" '${@+"${@}"}'
+
+	while [ 2 -le "${#}" ]; do
+		eval 'replace_all "${1}"' "\"\${${1}}\"" '"${2}" "${3-}"'
+		eval "shift 3; set -- '${1}'" '${@+"${@}"}'
+	done
+}
+
+
+remove_control_character() {
+	set -- "${1}" "${2}" "${3}" "$(printf '\000\001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\028\029\030\031\032\033\034\035\036\037\177\200\201\202\203\204\205\206\207\210\211\212\213\214')"
+
+	while [ -n "${3}" ]; do
+		replace_all "${1}" "${4}" "${3%%${3#?}}" ''
+
+		eval 'set -- "${1}" "${2}" "${3#?}"' "\"\${${1}}\""
 	done
 
-	set -- "${1}" "${3}${2}" ''
-	until [ "${2#*<}" = "${2}" ]; do
-		set -- "${1}" "${2#*<}" "${3}${2%%<*}&lt;"
+	set -- "${1}" "${2}" "${4}" ''
+
+	while [ -n "${3}" ]; do
+		set -- "${1}" "${2}" "${3#?}" "${4} '${3%%${3#?}}'"
 	done
 
-	set -- "${1}" "${3}${2}" ''
-	until [ "${2#*>}" = "${2}" ]; do
-		set -- "${1}" "${2#*>}" "${3}${2%%>*}&gt;"
-	done
+	eval 'replace_multiple "${1}" "${2}"' "${4}"
+}
 
-	set -- "${1}" "${3}${2}" ''
-	until [ "${2#*\'}" = "${2}" ]; do
-		set -- "${1}" "${2#*\'}" "${3}${2%%\'*}&#39;"
-	done
 
-	set -- "${1}" "${3}${2}" ''
-	until [ "${2#*\"}" = "${2}" ]; do
-		set -- "${1}" "${2#*\"}" "${3}${2%%\"*}&quot;"
-	done
-
-	eval "${1}=\"\${3}\${2}\""
+safe_string() {
+	remove_control_character "${1}" "${2}" '	
+'
 }
 
 option_set() {
@@ -337,6 +482,7 @@ GETOPTIONSHERE
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
+safe_string 'title' "${title}"
 html_escape 'title' "${title}"
 
 case "${W3MPLUS_TEMPLATE_HTML-}" in
@@ -344,7 +490,7 @@ case "${W3MPLUS_TEMPLATE_HTML-}" in
 	printf '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8" /><title>%s</title>%s</head><body><main>' "${title}" "${head}"
 
 	case "${#}" in
-	[!0]) cat -- ${@+"${@}"} ;;
+	[!0]) cat -- ${@+"${@}"} | tr -d '\000-\010\013\014\016-\037\177-\214' ;;
 	esac
 
 	printf '</main></body></html>'

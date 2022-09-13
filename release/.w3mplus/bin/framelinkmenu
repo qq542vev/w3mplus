@@ -88,7 +88,8 @@ regex_match() {
 append_array_posix() {
 	while [ 2 -le "${#}" ]; do
 		__append_array_posix "${1}" "${2}"
-		eval "shift 2; set -- '${1}' \"\${@}\""
+
+		eval "shift 2; set -- '${1}'" '${@+"${@}"}'
 	done
 }
 
@@ -129,6 +130,14 @@ path_to_fileurl() {
 	abspath "${1}" "${2}"
 
 	eval "${1}=\"file://\$(printf '%s' \"\${${1}}\" | urlencode | sed -e 's/%2F/\//g')\""
+}
+
+
+
+datauri() {
+	printf 'data:%s;base64,' "${1}"
+	shift
+	base64 -- ${@+"${@}"} | tr -d '\n'
 }
 
 option_category() {
@@ -487,6 +496,27 @@ awkScript=$(
 
 
 
+
+
+		function remove_control_character(string, except,  cc,char) {
+			cc = "\000\001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\028\029\030\031\032\033\034\035\036\037\177\200\201\202\203\204\205\206\207\210\211\212\213\214"
+
+			gsub(except, "", cc)
+
+			for(char = ""; cc != ""; cc = substr(cc, 2)) {
+				gsub(substr(cc, 1, 1), "", string)
+			}
+
+			return string
+		}
+
+
+		function safe_string(string) {
+			return remove_control_character(string, "\011\012\015")
+		}
+
+
+
 		function url_decode(string, httpDecode,  p2c,result) {
 			split("", p2c)
 
@@ -675,7 +705,7 @@ awkScript=$(
 							printf("</li>")
 						}
 
-						printf("<li><a title=\"%s\" target=\"main\" href=\"%s\">%s%s</a>", html_escape(url_decode(segment)), html_escape(uri), html_escape(substr(segment, 1, size)), size < length(segment) ? "..." : "")
+						printf("<li><a title=\"%s\" target=\"main\" href=\"%s\">%s%s</a>", html_escape(safe_string(url_decode(segment))), html_escape(safe_string(uri)), html_escape(substr(safe_string(segment), 1, size)), size < length(segment) ? "..." : "")
 
 						previous[i] = segment
 					}
@@ -699,7 +729,7 @@ sed -e '/["[:blank:]]/d; s/^/"/; s/$/"/' -- ${@+"${@}"} |
 
 case "${output}" in
 '')
-	output="data:text/html;charset=UTF-8;base64,$(base64 -- "${tmpDir}/file")"
+	output=$(datauri 'text/html;charset=UTF-8' "${tmpDir}/file")
 	;;
 *)
 	if [ '!' -e "${output}" ]; then
@@ -714,6 +744,8 @@ case "${output}" in
 
 	if [ -d "${output}" ]; then
 		output="${output}/menu-$(cksum "${tmpDir}/file" | cut -d ' ' -f '1-2' | tr ' ' '-').html"
+
+		cat -- "${tmpDir}/file" >"${output}"
 	elif [ -f "${output}" ]; then
 		cat -- "${tmpDir}/file" >"${output}"
 	else

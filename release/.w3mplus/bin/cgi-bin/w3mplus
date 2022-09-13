@@ -888,6 +888,27 @@ case "${query_action-}" in
 
 
 
+
+
+			function remove_control_character(string, except,  cc,char) {
+				cc = "\000\001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\028\029\030\031\032\033\034\035\036\037\177\200\201\202\203\204\205\206\207\210\211\212\213\214"
+
+				gsub(except, "", cc)
+
+				for(char = ""; cc != ""; cc = substr(cc, 2)) {
+					gsub(substr(cc, 1, 1), "", string)
+				}
+
+				return string
+			}
+
+
+			function safe_string(string) {
+				return remove_control_character(string, "\011\012\015")
+			}
+
+
+
 			function url_decode(string, httpDecode,  p2c,result) {
 				split("", p2c)
 
@@ -1055,7 +1076,7 @@ case "${query_action-}" in
 						}
 
 						{
-							printf("<span id=\"search-%d\">%6d %s <a href=\"%s\">%s</a></span>\n", $1, $1, $4, html_escape(url "&query=" $2 "&engine=" $3), html_escape(url_decode($2)))
+							printf("<span id=\"search-%d\">%6d %s <a href=\"%s\">%s</a></span>\n", $1, $1, $4, html_escape(safe_string(url "&query=" $2 "&engine=" $3)), html_escape(safe_string(url_decode($2))))
 						}
 
 						END {
