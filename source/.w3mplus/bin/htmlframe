@@ -27,6 +27,7 @@ VERSION='htmlframe 1.0.0'
 . 'regex_match.sh'
 . 'append_array_posix.sh'
 . 'html_escape.sh'
+. 'safe_string.sh'
 
 option_set() {
 	eval "${1}=\${${1}-}\${${1}:+\${3-}}\${2-}"
@@ -83,6 +84,7 @@ eval "set -- ${REST}"
 awkScript=$(
 	cat <<-'__EOF__'
 	@include "html_escape.awk"
+	@include "safe_string.awk"
 
 	BEGIN {
 		split("", attribute)
@@ -92,17 +94,19 @@ awkScript=$(
 		}
 
 		for(name in attribute) {
-			printf(" %s=\"%s\"", name, html_escape(attribute[name]))
+			printf(" %s=\"%s\"", name, html_escape(safe_string(attribute[name])))
 		}
 	}
 	__EOF__
 )
 
+safe_string 'title' "${title}"
 html_escape 'title' "${title}"
 
 for uri in ${@+"${@}"}; do
 	i=$((${i-0} + 1))
 
+	safe_string 'uri' "${uri}"
 	html_escape 'uri' "${uri}"
 
 	eval "name=\${n${i}-}"
@@ -110,6 +114,7 @@ for uri in ${@+"${@}"}; do
 
 	case "${name}" in
 		?*)
+			safe_string 'name' "${name}"
 			html_escape 'name' "${name}"
 			nameAttr=" name=\"${name}\""
 			;;
@@ -117,6 +122,7 @@ for uri in ${@+"${@}"}; do
 
 	case "${ftitle}" in
 		?*)
+			safe_string 'ftitle' "${ftitle}"
 			html_escape 'ftitle' "${ftitle}"
 			titleAttr=" title=\"${ftitle}\""
 			list="${list-}<li><a href=\"${uri}\">${ftitle}</a></li>"

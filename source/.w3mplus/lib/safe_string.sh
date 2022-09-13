@@ -1,16 +1,16 @@
 #!/usr/bin/env sh
 
-### Script: html_escape.sh
+### Script safe_string.sh
 ##
-## HTML エスケープする関数を定義する。
+## 制御文字を削除する関数を定義する。
 ##
 ## Metadata:
 ##
-##   id - fb308c89-82a5-4363-aa5b-afd0725f8134
+##   id - 4ca4ce14-c456-4f42-b545-28d9575c0aa9
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.0.1
-##   date - 2022-09-10
-##   since - 2022-07-26
+##   version - 1.0.0
+##   date - 2022-09-12
+##   since - 2022-09-12
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
 ##   package - w3mplus
@@ -20,17 +20,18 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 
-. 'replace_all.sh'
+. 'remove_control_character.sh'
 
-### Function: html_escape
+### Function: safe_string
 ##
-## HTML の特殊文字をエスケープする。
+## 水平タブ、改行、復帰以外の制御文字を削除する。
 ##
 ## Parameters:
 ##
 ##   $1 - 結果を代入する変数名。
-##   $2 - エスケープする文字列。
+##   $2 - 対象の文字列。
 
-html_escape() {
-	replace_multiple "${1}" "${2}" '&' '&amp;' '<' '&lt;' '>' '&gt;' "'" '&#39;' '"' '&quot;'
+safe_string() {
+	remove_control_character "${1}" "${2}" '	
+'
 }

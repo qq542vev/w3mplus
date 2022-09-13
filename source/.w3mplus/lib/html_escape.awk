@@ -30,7 +30,7 @@
 ##
 ## Returns:
 ##
-##  エスケープされた文字列。
+##   エスケープされた文字列。
 
 function html_escape(string) {
 	gsub(/&/, "\\&amp;", string)

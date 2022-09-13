@@ -37,6 +37,7 @@ export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
 
 . 'initialize.sh'
 . 'html_escape.sh'
+. 'safe_string.sh'
 
 # @getoptions
 parser_definition() {
@@ -80,9 +81,14 @@ eval "set -- ${REST}"
 
 eval "$(parsequery --prefix 'query_' "${QUERY_STRING%%url=*}")"
 
-html_escape 'url' "${QUERY_STRING#*url=}"
-html_escape 'source' "${query_source-}"
-html_escape 'name' "${query_name-${query_source-}}"
+safe_string 'url' "${QUERY_STRING#*url=}"
+html_escape 'url' "${url}"
+
+safe_string 'source' "${query_source-}"
+html_escape 'source' "${source}"
+
+safe_string 'name' "${query_name-${query_source-}}"
+html_escape 'name' "${name}"
 
 case "${query_category-}" in
 	'phishing')

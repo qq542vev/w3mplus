@@ -663,6 +663,7 @@ case "${query_action-}" in
 		awkScript=$(
 			cat <<-'__EOF__'
 			@include "html_escape.awk"
+			@include "safe_string.awk"
 			@include "url_decode.awk"
 
 			BEGIN {
@@ -671,7 +672,7 @@ case "${query_action-}" in
 			}
 
 			{
-				printf("<span id=\"search-%d\">%6d %s <a href=\"%s\">%s</a></span>\n", $1, $1, $4, html_escape(url "&query=" $2 "&engine=" $3), html_escape(url_decode($2)))
+				printf("<span id=\"search-%d\">%6d %s <a href=\"%s\">%s</a></span>\n", $1, $1, $4, html_escape(safe_string(url "&query=" $2 "&engine=" $3)), html_escape(safe_string(url_decode($2))))
 			}
 
 			END {

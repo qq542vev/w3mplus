@@ -90,6 +90,7 @@ tmpDir=$(mktemp -d)
 awkScript=$(
 	cat <<-'__EOF__'
 	@include "html_escape.awk"
+	@include "safe_string.awk"
 	@include "url_decode.awk"
 
 	BEGIN {
@@ -119,7 +120,7 @@ awkScript=$(
 					printf("</li>")
 				}
 
-				printf("<li><a title=\"%s\" target=\"main\" href=\"%s\">%s%s</a>", html_escape(url_decode(segment)), html_escape(uri), html_escape(substr(segment, 1, size)), size < length(segment) ? "..." : "")
+				printf("<li><a title=\"%s\" target=\"main\" href=\"%s\">%s%s</a>", html_escape(safe_string(url_decode(segment))), html_escape(safe_string(uri)), html_escape(substr(safe_string(segment), 1, size)), size < length(segment) ? "..." : "")
 
 				previous[i] = segment
 			}

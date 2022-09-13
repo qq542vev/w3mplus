@@ -25,6 +25,7 @@ VERSION='w3mabouturi 1.4.4'
 . 'initialize.sh'
 . 'html_escape.sh'
 . 'path_to_fileurl.sh'
+. 'safe_string.sh'
 
 : "${W3MPLUS_W3M_HOME:=${HOME}/.w3m}"
 : "${W3MPLUS_W3M_CONFIG:=${W3MPLUS_W3M_HOME}/config}"
@@ -72,7 +73,8 @@ eval "set -- ${REST}"
 
 case "${1-about:about}" in
 	'about:')
-		html_escape 'version' "$(w3m -version)"
+		safe_string 'version' "$(w3m -version)"
+		html_escape 'version' "${version}"
 
 		printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "${version}" | printhtml --title 'About:' -- - | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 		;;
@@ -197,8 +199,12 @@ case "${1-about:about}" in
 		httpresponse -H 'W3m-control: BACK' -H 'W3m-control: HISTORY'
 		;;
 	'about:home')
-		html_escape 'pass' "${W3MPLUS_PASS_VALUE-}"
-		html_escape 'server' "${SERVER_SOFTWARE:-w3m}"
+		safe_string 'pass' "${W3MPLUS_PASS_VALUE-}"
+		html_escape 'pass' "${pass}"
+
+		safe_string 'server' "${SERVER_SOFTWARE:-w3m}"
+		html_escape 'server' "${server}"
+
 		path_to_fileurl 'homeurl' "${HOME}"
 
 		printhtml --title 'w3m Start Page' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -H 'W3m-control: BEGIN' -H 'W3m-control: NEXT_LINK' -- -
@@ -232,6 +238,7 @@ case "${1-about:about}" in
 		awkScript=$(
 			cat <<-'__EOF__'
 			@include "html_escape.awk"
+			@include "safe_string.awk"
 
 			BEGIN {
 				hCount = split("", headers)
@@ -271,7 +278,7 @@ case "${1-about:about}" in
 						printf("%s", $i)
 
 						for(j = hCount + 1; j <= NF; j++) {
-							printf(" %s", html_escape($j))
+							printf(" %s", html_escape(safe_string($j)))
 						}
 					} else {
 						printf("%s", $i)

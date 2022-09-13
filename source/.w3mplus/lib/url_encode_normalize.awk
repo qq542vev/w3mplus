@@ -30,7 +30,7 @@
 ##
 ## Returns:
 ##
-##  正規化された文字列。
+##   正規化された文字列。
 
 function url_encode_normalize(string,  p2c,result) {
 	p2c["2D"] = "-"; p2c["2E"] = "."; p2c["30"] = "0";
