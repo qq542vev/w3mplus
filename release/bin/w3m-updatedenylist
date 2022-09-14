@@ -354,6 +354,7 @@ case "${#}" in
 esac
 
 tmpDir=$(mktemp -d)
+tmpFile="${tmpDir}/file"
 awkScript=$(
 	cat <<-'__EOF__'
 
@@ -579,8 +580,16 @@ case "${placeFlag}" in
 '0') eval "${command}" '${@+"${@}"}' ;;
 *)
 	for file in ${@+"${@}"}; do
-		eval "${command}" '"${file}"' >"${tmpDir}/file"
-		cat -- "${tmpDir}/file" >"${file}"
+		case "${file}" in
+		'-')
+			printf "%s: '-i', '--in-place' オプションでは標準入力は使用できません。無視します。\\n" "${0##*/}" >&2
+
+			continue
+			;;
+		esac
+
+		eval "${command}" '"${file}"' >"${tmpFile}"
+		cat -- "${tmpFile}" >"${file}"
 	done
 	;;
 esac
