@@ -476,7 +476,7 @@ case "${placeFlag}" in
 '0') eval "${command}" '${@+"${@}"}' ;;
 *)
 	for config in ${@+"${@}"}; do
-		eval "${command}" '"${config}"' >"${tmpDir}/configa"
+		eval "${command}" '"${config}"' >"${tmpDir}/config"
 		cat -- "${tmpDir}/config" >"${config}"
 	done
 	;;
