@@ -8,8 +8,8 @@
 ##
 ##   id - 2b272551-3000-430e-bfd8-ece408d26c75
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 5.0.0
-##   date - 2022-06-28
+##   version - 5.0.1
+##   date - 2022-09-15
 ##   since - 2019-10-31
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -77,6 +77,7 @@ case "${#}" in
 esac
 
 tmpDir=$(mktemp -d)
+tmpFile="${tmpDir}/file"
 awkScript=$(
 	cat <<-'__EOF__'
 	@include "uri_check.awk"
@@ -202,8 +203,16 @@ case "${placeFlag}" in
 	'0') eval "${command}" '${@+"${@}"}';;
 	*)
 		for file in ${@+"${@}"}; do
-			eval "${command}" '"${file}"' >"${tmpDir}/file"
-			cat -- "${tmpDir}/file" >"${file}"
+			case "${file}" in
+				'-')
+					printf "%s: '-i', '--in-place' オプションでは標準入力は使用できません。無視します。\\n" "${0##*/}" >&2
+
+					continue
+					;;
+			esac
+
+			eval "${command}" '"${file}"' >"${tmpFile}"
+			cat -- "${tmpFile}" >"${file}"
 		done
 		;;
 esac

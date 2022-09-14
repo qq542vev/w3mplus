@@ -8,8 +8,8 @@
 ##
 ##   id - 2ebc6d1a-8fb6-4b40-b43f-599a971189bd
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.0
-##   date - 2022-09-01
+##   version - 2.0.1
+##   date - 2022-09-15
 ##   since - 2020-01-27
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -85,6 +85,7 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 tmpDir=$(mktemp -d)
+tmpConfig="${tmpDir}/config"
 awkScript=$(
 	cat <<-'__EOF__'
 	@include "regex_escape.awk"
@@ -144,8 +145,17 @@ case "${placeFlag}" in
 	'0') eval "${command}" '${@+"${@}"}';;
 	*)
 		for config in ${@+"${@}"}; do
-			eval "${command}" '"${config}"' >"${tmpDir}/config"
-			cat -- "${tmpDir}/config" >"${config}"
+			case "${config}" in
+				'-')
+					printf "%s: '-i', '--in-place' オプションでは標準入力は使用できません。無視します。\\n" "${0##*/}" >&2
+
+					continue
+					;;
+			esac
+
+
+			eval "${command}" '"${config}"' >"${tmpConfig}"
+			cat -- "${tmpConfig}" >"${config}"
 		done
 		;;
 esac
