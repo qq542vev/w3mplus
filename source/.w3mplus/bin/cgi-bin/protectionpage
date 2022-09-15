@@ -21,7 +21,7 @@
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 ##   * <about:blocked at about:blocked>
 ##
-## Help output:
+## Help Output:
 ##
 ## ------ Text ------
 ## Usage:
@@ -53,7 +53,6 @@
 ##   131 - received SIGQUIT
 ##   143 - received SIGTERM
 ## ------------------
-###
 
 VERSION='protectionpage 1.2.0'
 

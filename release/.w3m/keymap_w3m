@@ -20,7 +20,6 @@
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 ##   * <README.keymap at https://github.com/tats/w3m/blob/master/doc-jp/README.keymap>
 ##   * <Table of function-keys for XTerm and other Terminal Emulators at https://invisible-island.net/xterm/xterm-function-keys.html>
-###
 
 # Ctrl  : C-, ^
 # Escape: ESC-, M-, ^[

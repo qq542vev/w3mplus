@@ -18,7 +18,6 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 ##   * <README.siteconf at https://github.com/tats/w3m/blob/master/doc-jp/README.siteconf>
-###
 
 url /^bing:/
 substitute_url "file:///cgi-bin/w3mplus?pass=$(PASS)&action=search&engine=bing&tab=del-prebuf&query="

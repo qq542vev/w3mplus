@@ -23,7 +23,7 @@
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
 ##
-## Help output:
+## Help Output:
 ##
 ## ------ Text ------
 ## Usage:
@@ -57,7 +57,6 @@
 ##   131 - received SIGQUIT
 ##   143 - received SIGTERM
 ## ------------------
-###
 
 VERSION='w3m-cleanup 1.1.6'
 
