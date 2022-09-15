@@ -1,0 +1,153 @@
+#!/usr/bin/env sh
+
+### Script: includehelp
+##
+## コマンドのヘルプをコメントに追加する。
+##
+## Metadata:
+##
+##   id - 377d59eb-09df-4db7-8afa-e6eeaffc928c
+##   author - <qq542vev at https://purl.org/meta/me/>
+##   version - 0.1.0
+##   date - 2022-09-13
+##   since - 2022-09-13
+##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
+##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+##   package - w3mplus
+##
+## See Also:
+##
+##   * <Project homepage at https://github.com/qq542vev/w3mplus>
+##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##
+## Help output:
+##
+## ------ Text ------
+## Usage:
+##   includehelp [OPTION]... [FILE]...
+## 
+## Options:
+##   -i,     --{no-}in-place     FILE を更新して保存する
+##   -h,     --help              このヘルプを表示して終了する
+##   -v,     --version           バージョン情報を表示して終了する
+## 
+## Exit Status:
+##     0 - successful termination
+##    64 - command line usage error
+##    65 - data format error
+##    66 - cannot open input
+##    67 - addressee unknown
+##    68 - host name unknown
+##    69 - service unavailable
+##    70 - internal software error
+##    71 - system error (e.g., can't fork)
+##    72 - critical OS file missing
+##    73 - can't create (user) output file
+##    74 - input/output error
+##    75 - temp failure; user is invited to retry
+##    76 - remote error in protocol
+##    77 - permission denied
+##    78 - configuration error
+##   129 - received SIGHUP
+##   130 - received SIGINT
+##   131 - received SIGQUIT
+##   143 - received SIGTERM
+## ------------------
+###
+
+VERSION='includehelp 0.1.0'
+
+. 'initialize.sh'
+. 'option_error.sh'
+
+# @getoptions
+parser_definition() {
+	setup REST abbr:true error:optuon_error plus:true no:0 help:usage \
+		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
+		'' 'Options:'
+
+	flag  placeFlag -i --{no-}in-place init:@no -- 'FILE を更新して保存する'
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+
+	msg -- '' 'Exit Status:' \
+		'    0 - successful termination' \
+		'   64 - command line usage error' \
+		'   65 - data format error' \
+		'   66 - cannot open input' \
+		'   67 - addressee unknown' \
+		'   68 - host name unknown' \
+		'   69 - service unavailable' \
+		'   70 - internal software error' \
+		"   71 - system error (e.g., can't fork)" \
+		'   72 - critical OS file missing' \
+		"   73 - can't create (user) output file" \
+		'   74 - input/output error' \
+		'   75 - temp failure; user is invited to retry' \
+		'   76 - remote error in protocol' \
+		'   77 - permission denied' \
+		'   78 - configuration error' \
+		'  129 - received SIGHUP' \
+		'  130 - received SIGINT' \
+		'  131 - received SIGQUIT' \
+		'  143 - received SIGTERM'
+}
+# @end
+
+# @gengetoptions parser -i parser_definition parse "${1}"
+# @end
+
+eval "$(getoptions parser_definition parse "${0}")"
+parse ${@+"${@}"}
+eval "set -- ${REST}"
+
+tmpDir=$(mktemp -d)
+tmpFile="${tmpDir}/file"
+awkScript=$(
+	cat <<-'__EOF__'
+	$0 == "## Help output:", $0 == "###" {
+		if($0 == "## ------ Text ------" && FILENAME != "-") {
+			printf("%s\n", $0)
+
+			command = sprintf("'%s' --help", (index(FILENAME, "/") ? "" : "./") FILENAME)
+
+			while(0 < (command | getline recode)) {
+				printf("## %s\n", recode)
+			}
+
+			close(command)
+
+			while(0 < getline) {
+				if($0 == "## ------------------") {
+					printf("%s\n", $0)
+					break
+				}
+			}
+
+			next
+		}
+	}
+
+	{
+		printf("%s\n", $0)
+	}
+	__EOF__
+)
+
+case "${placeFlag}" in
+  '0') awk -- "${awkScript}" ${@+"${@}"};;
+  *)
+    for file in ${@+"${@}"}; do
+			case "${file}" in
+				'-')
+					printf "%s: '-i', '--in-place' オプションでは標準入力は使用できません。無視します。\\n" "${0##*/}" >&2
+
+					continue
+					;;
+			esac
+
+      awk -- "${awkScript}" "${file}" >"${tmpFile}"
+      cat -- "${tmpFile}" >"${file}"
+    done
+    ;;
+esac
