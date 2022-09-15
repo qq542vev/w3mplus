@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 
-### Script safe_string.awk
+### Script: safe_string.awk
 ##
 ## 制御文字を削除する関数を定義する。
 ##

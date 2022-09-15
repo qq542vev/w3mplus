@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-### Script safe_string.sh
+### Script: safe_string.sh
 ##
 ## 制御文字を削除する関数を定義する。
 ##
