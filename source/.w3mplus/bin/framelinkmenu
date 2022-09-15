@@ -19,6 +19,52 @@
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##
+## Help output:
+##
+## ------ Text ------
+## Usage:
+##   framelinkmenu [OPTION]... [FILE]...
+## 
+## Options:
+##   -a,     --attribute NANE '=' VALUE 
+##                               frameset要素に属性を追加する
+##           --no-attribute      --attribute をリセットする
+##   -c,     --category 'scheme' | 'authority' | 'path' | 'query' | 'fragment' 
+##                               サイドバーの URI を分類する
+##   -m,     --main URI          メインページの URI を指定する
+##   -o,     --menu-output PATH  サイドバーの内容を PATH に出力する
+##   -p,     --position 'left' | 'right' 
+##                               サイドバーの位置を指定する
+##   -s,     --size UNSIGNED_INTEGER 
+##                               サイドバーの文字列を切り詰める
+##   -t,     --title TEXT        フレームページのタイトルを指定する
+##   -h,     --help              このヘルプを表示して終了する
+##   -v,     --version           バージョン情報を表示して終了する
+## 
+## Exit Status:
+##     0 - successful termination
+##    64 - command line usage error
+##    65 - data format error
+##    66 - cannot open input
+##    67 - addressee unknown
+##    68 - host name unknown
+##    69 - service unavailable
+##    70 - internal software error
+##    71 - system error (e.g., can't fork)
+##    72 - critical OS file missing
+##    73 - can't create (user) output file
+##    74 - input/output error
+##    75 - temp failure; user is invited to retry
+##    76 - remote error in protocol
+##    77 - permission denied
+##    78 - configuration error
+##   129 - received SIGHUP
+##   130 - received SIGINT
+##   131 - received SIGQUIT
+##   143 - received SIGTERM
+## ------------------
+###
 
 VERSION='framelinkmenu 2.0.1'
 

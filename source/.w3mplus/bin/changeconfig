@@ -19,6 +19,46 @@
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##
+## Help output:
+##
+## ------ Text ------
+## Usage:
+##   changeconfig [OPTION]... [FILE]...
+## 
+## Options:
+##   -i,     --{no-}in-place     FILE を更新して保存する
+##           --max NUMBER        計算結果の最大値を指定する
+##           --min NUMBER        計算結果の最小値を指定する
+##   -p,     --param NAME '=' VALUE | NAME '=' [+*/%^-] '=' UNSIGNED_NUMBER | NAME '=!' 
+##                               NAME の値を更新する
+##           --no-param          --param をリセットする
+##   -h,     --help              このヘルプを表示して終了する
+##   -v,     --version           バージョン情報を表示して終了する
+## 
+## Exit Status:
+##     0 - successful termination
+##    64 - command line usage error
+##    65 - data format error
+##    66 - cannot open input
+##    67 - addressee unknown
+##    68 - host name unknown
+##    69 - service unavailable
+##    70 - internal software error
+##    71 - system error (e.g., can't fork)
+##    72 - critical OS file missing
+##    73 - can't create (user) output file
+##    74 - input/output error
+##    75 - temp failure; user is invited to retry
+##    76 - remote error in protocol
+##    77 - permission denied
+##    78 - configuration error
+##   129 - received SIGHUP
+##   130 - received SIGINT
+##   131 - received SIGQUIT
+##   143 - received SIGTERM
+## ------------------
+###
 
 VERSION='changeconfig 3.0.1'
 

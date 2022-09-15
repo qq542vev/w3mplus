@@ -20,6 +20,7 @@
 ##   * <README.keymap at https://github.com/tats/w3m/blob/master/doc-jp/README.keymap>
 ##   * <Table of function-keys for XTerm and other Terminal Emulators at https://invisible-island.net/xterm/xterm-function-keys.html>
 ##   * <Keyboard shortcuts - Perform common Firefox tasks quickly at https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly>
+###
 
 # Ctrl  : C-, ^
 # Escape: ESC-, M-, ^[

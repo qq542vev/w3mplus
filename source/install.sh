@@ -19,6 +19,51 @@
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##
+## Help output:
+##
+## ------ Text ------
+## Usage:
+##   install.sh [OPTION]...
+## 
+## Options:
+##           --dest-bin PATH     PATH に bin をインストールする
+##           --dest-w3m PATH     PATH に .w3m をインストールする
+##           --dest-w3mplus PATH PATH に .w3mplus をインストールする
+##   -p,     --pass ALPHANUM     pass のための文字列を指定する
+##   -s,     --{no-}silent       処理中の表示を行わない
+##           --source-bin DIRECTORY 
+##                               インストールする bin を指定する
+##           --source-w3m DIRECTORY 
+##                               インストールする .w3m を指定する
+##           --source-w3mplus DIRECTORY 
+##                               インストールする .w3mplus を指定する
+##   -h,     --help              このヘルプを表示して終了する
+##   -v,     --version           バージョン情報を表示して終了する
+## 
+## Exit Status:
+##     0 - successful termination
+##    64 - command line usage error
+##    65 - data format error
+##    66 - cannot open input
+##    67 - addressee unknown
+##    68 - host name unknown
+##    69 - service unavailable
+##    70 - internal software error
+##    71 - system error (e.g., can't fork)
+##    72 - critical OS file missing
+##    73 - can't create (user) output file
+##    74 - input/output error
+##    75 - temp failure; user is invited to retry
+##    76 - remote error in protocol
+##    77 - permission denied
+##    78 - configuration error
+##   129 - received SIGHUP
+##   130 - received SIGINT
+##   131 - received SIGQUIT
+##   143 - received SIGTERM
+## ------------------
+###
 
 VERSION='install 0.1.0'
 

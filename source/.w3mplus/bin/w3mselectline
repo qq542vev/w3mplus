@@ -19,6 +19,57 @@
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##
+## Help output:
+##
+## ------ Text ------
+## Usage:
+##   w3mselectline [OPTION]... [ACTION] [COMMAND_ARG]...
+## 
+## Options:
+##   -l,     --line UNSIGNED_INTEGER 
+##                               行番号を指定する
+##   -n,     --number '0' | '$' | SIGNED_INTEGER 
+##                               選択範囲を指定する
+##   -h,     --help              このヘルプを表示して終了する
+##   -v,     --version           バージョン情報を表示して終了する
+## 
+## ACTION:
+##   display   選択範囲を表示する
+##   filter    選択範囲を任意のコマンドで実行する
+##   formatprg 選択範囲を PIPE_BUF で実行する
+##   lowercase 選択範囲をアルファベットを小文字に変換する
+##   operatorfunc 
+##             選択範囲を EXEC_SHELL で実行する
+##   rot13     選択範囲のアルファベットを ROT13 で変換する
+##   switchcase 
+##             選択範囲のアルファベットを大文字と小文字に変換する
+##   uppercase 選択範囲をアルファベットを大文字に変換する
+##   yank      選択範囲をヤンクする
+## 
+## Exit Status:
+##     0 - successful termination
+##    64 - command line usage error
+##    65 - data format error
+##    66 - cannot open input
+##    67 - addressee unknown
+##    68 - host name unknown
+##    69 - service unavailable
+##    70 - internal software error
+##    71 - system error (e.g., can't fork)
+##    72 - critical OS file missing
+##    73 - can't create (user) output file
+##    74 - input/output error
+##    75 - temp failure; user is invited to retry
+##    76 - remote error in protocol
+##    77 - permission denied
+##    78 - configuration error
+##   129 - received SIGHUP
+##   130 - received SIGINT
+##   131 - received SIGQUIT
+##   143 - received SIGTERM
+## ------------------
+###
 
 VERSION='w3mselectline 2.0.1'
 

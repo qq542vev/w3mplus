@@ -19,6 +19,44 @@
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##
+## Help output:
+##
+## ------ Text ------
+## Usage:
+##   executeusercommand [OPTION]... [PATTERN]...
+## 
+## Options:
+##   -c,     --config FILE       設定ファイルを指定する
+##   -E,     --{no-}extended-regexp 
+##                               拡張正規表現を使用する
+##   -h,     --help              このヘルプを表示して終了する
+##   -v,     --version           バージョン情報を表示して終了する
+## 
+## Exit Status:
+##     0 - successful termination
+##     1 - empty result
+##    64 - command line usage error
+##    65 - data format error
+##    66 - cannot open input
+##    67 - addressee unknown
+##    68 - host name unknown
+##    69 - service unavailable
+##    70 - internal software error
+##    71 - system error (e.g., can't fork)
+##    72 - critical OS file missing
+##    73 - can't create (user) output file
+##    74 - input/output error
+##    75 - temp failure; user is invited to retry
+##    76 - remote error in protocol
+##    77 - permission denied
+##    78 - configuration error
+##   129 - received SIGHUP
+##   130 - received SIGINT
+##   131 - received SIGQUIT
+##   143 - received SIGTERM
+## ------------------
+###
 
 VERSION='executeusercommand 1.5.0'
 

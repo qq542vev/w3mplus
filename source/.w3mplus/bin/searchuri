@@ -19,6 +19,48 @@
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
 ##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##
+## Help output:
+##
+## ------ Text ------
+## Usage:
+##   searchuri [OPTION]... [KEYWORD]...
+## 
+## Options:
+##   -c,     --config FILE       設定ファイルを指定する
+##   -d,     --designator 'disable' | 'event' | 'all' 
+##                               イベント指示子を有効にする
+##   -e,     --engine NAME       検索エンジンを指定する
+##   -H,     --history FILE      検索履歴をログファイルを指定する
+##   -s,     --size UNSIGNED_INTEGER 
+##                               記録する検索履歴数を指定する
+##   -h,     --help              このヘルプを表示して終了する
+##   -v,     --version           バージョン情報を表示して終了する
+## 
+## Exit Status:
+##     0 - successful termination
+##     1 - search engine not found
+##    64 - command line usage error
+##    65 - data format error
+##    66 - cannot open input
+##    67 - addressee unknown
+##    68 - host name unknown
+##    69 - service unavailable
+##    70 - internal software error
+##    71 - system error (e.g., can't fork)
+##    72 - critical OS file missing
+##    73 - can't create (user) output file
+##    74 - input/output error
+##    75 - temp failure; user is invited to retry
+##    76 - remote error in protocol
+##    77 - permission denied
+##    78 - configuration error
+##   129 - received SIGHUP
+##   130 - received SIGINT
+##   131 - received SIGQUIT
+##   143 - received SIGTERM
+## ------------------
+###
 
 VERSION='searchuri 2.1.0'
 
