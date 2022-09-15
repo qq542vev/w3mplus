@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/pushuri",{110:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">URI を記録する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/pushuri",{109:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">URI を記録する。</div></div>"});

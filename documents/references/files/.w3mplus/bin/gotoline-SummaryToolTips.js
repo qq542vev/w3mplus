@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/gotoline",{118:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">行を移動を行う。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/gotoline",{117:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">行を移動を行う。</div></div>"});

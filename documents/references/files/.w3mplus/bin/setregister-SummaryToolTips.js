@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/setregister",{135:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">レジスタに値を登録する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/setregister",{138:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">レジスタに値を登録する。</div></div>"});
