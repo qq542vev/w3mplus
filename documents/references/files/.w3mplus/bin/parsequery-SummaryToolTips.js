@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/parsequery",{129:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">HTTP クエリを解析する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/parsequery",{128:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">HTTP クエリを解析する。</div></div>"});

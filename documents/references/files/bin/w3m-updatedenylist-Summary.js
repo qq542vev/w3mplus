@@ -1,1 +1,1 @@
-﻿NDFramePage.OnPageTitleLoaded("File:bin/w3m-updatedenylist","w3m-updatedenylist");NDSummary.OnSummaryLoaded("File:bin/w3m-updatedenylist",[["ShellScript","ShellScript"]],[["Files","File"]],[[1,0,0,"w3m-updatedenylist","w3m-updatedenylist"]]);
+﻿NDFramePage.OnPageTitleLoaded("File:bin/w3m-updatedenylist","w3m-updatedenylist");NDSummary.OnSummaryLoaded("File:bin/w3m-updatedenylist",[["ShellScript","ShellScript"]],[["Files","File"]],[[2,0,0,"w3m-updatedenylist","w3m-updatedenylist"]]);

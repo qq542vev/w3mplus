@@ -1,1 +1,1 @@
-﻿NDSearch.OnPrefixDataLoaded("ins",["File"],[["install",,[[,,,,0,"File:install.sh:install"]]]]);
+﻿NDSearch.OnPrefixDataLoaded("ins",["File"],[["install",,[[,"install.sh",,,0,"File:install.sh:install.sh"]]]]);

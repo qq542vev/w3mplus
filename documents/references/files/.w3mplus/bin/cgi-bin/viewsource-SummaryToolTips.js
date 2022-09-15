@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/cgi-bin/viewsource",{106:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">ソースを表示する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/cgi-bin/viewsource",{105:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">ソースを表示する。</div></div>"});

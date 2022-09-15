@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/gotoparagraph",{126:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">次の段落に移動する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/gotoparagraph",{125:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">次の段落に移動する。</div></div>"});

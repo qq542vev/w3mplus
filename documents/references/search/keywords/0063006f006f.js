@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("coo",["File"],[["cookiemanager",,[[,,,,0,"File:.w3mplus/bin/w3mcookieconfig:cookiemanager"]]]]);
