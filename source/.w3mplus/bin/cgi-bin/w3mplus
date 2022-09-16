@@ -8,8 +8,8 @@
 ##
 ##   id - 3296825b-de82-4452-9f8e-202793be28f6
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.0
-##   date - 2022-07-12
+##   version - 2.0.1
+##   date - 2022-09-16
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -106,7 +106,7 @@ export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
 
 . 'initialize.sh'
 . 'datauri.sh'
-. 'singlequote_escape.sh'
+. 'shell_argument.sh'
 . 'path_to_fileurl.sh'
 
 # @getoptions
@@ -293,11 +293,11 @@ case "${query_action-}" in
 			'') httpresponse -H 'W3m-control: BACK';;
 			*)
 				equalprg=$(printf '%s' "${W3MPLUS_EQUALPRG}" | base64 | tr -d '\n')
-				singlequote_escape 'escapedUri' "${uri}"
+				shell_argument 'argUri' "${uri}"
 
 				httpresponse \
 					-H 'W3m-control: BACK' \
-					-H "W3m-control: EXEC_SHELL w3m -o 'auto_uncompress=1' -dump_source '${escapedUri}' | sh -c 'eval \"\$(echo \"${equalprg}\" | base64 -d)\"'"
+					-H "W3m-control: EXEC_SHELL w3m -o 'auto_uncompress=1' -dump_source ${argUri} | sh -c 'eval \"\$(echo \"${equalprg}\" | base64 -d)\"'"
 				;;
 		esac
 		;;
@@ -315,40 +315,42 @@ case "${query_action-}" in
 
 		case "${query_subaction}" in
 			'increment-uri')
-				case "${query_number+1}" in
-					'1') singlequote_escape 'query_number' "${query_number}";;
+				case "${query_number:+1}" in
+					'1') shell_argument 'query_number' "${query_number}";;
 				esac
 
 				query_subaction='goto'
 				commandArg="${commandArg}$(
 					cat <<-'__EOF__'
-					 -- incrementuri ${query_number+--number "'${query_number}'"}
+					 -- incrementuri ${query_number+--number "${query_number}"}
 					__EOF__
 				)"
 				;;
 			'parent-uripath')
-				case "${query_number+1}" in
-					'1') singlequote_escape 'query_number' "${query_number}";;
+				case "${query_number:+1}" in
+					'1') shell_argument 'query_number' "${query_number}";;
 				esac
 
 				query_subaction='goto'
 				commandArg="${commandArg}$(
 					cat <<-'__EOF__'
-					 -- parenturipath ${query_number+--number "'${query_number}'"}
+					 -- parenturipath ${query_number+--number "${query_number}"}
 					__EOF__
 				)"
 				;;
 			'redirect')
-				case "${query_redirect+1}" in
-					'1') singlequote_escape 'query_redirect' "${query_redirect}";;
+				case "${query_redirect:+1}" in
+					'1') shell_argument 'query_redirect' "${query_redirect}";;
+					*)
+						path_to_fileurl 'filepath' "${SCRIPT_NAME}"
+						shell_argument 'query_redirect' "${filepath}?pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)&action=search&tab=del-prebuf&query="
+						;;
 				esac
 
 				query_subaction='goto'
-				pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
-				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 				commandArg="${commandArg}$(
 					cat <<-'__EOF__'
-					 -- printf "'%s%s'" "'${query_redirect-${filepath}?pass=${pass}&action=search&tab=del-prebuf&query=}'" '"$(urlencode)"'
+					 -- printf "'%s%s'" "${query_redirect}" '"$(urlencode)"'
 					__EOF__
 				)"
 				;;
@@ -601,10 +603,10 @@ case "${query_action-}" in
 	'set-local-mark')
 		expand 'uri' "${query_uri-W3M_URL}"
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
-		singlequote_escape 'uri' "${uri%%#*}"
 
 		case "${uri}" in
 			?*)
+				shell_argument 'uri' "${uri%%#*}"
 				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
 				setusercommand \
@@ -615,7 +617,7 @@ case "${query_action-}" in
 				setusercommand \
 					--config "${W3MPLUS_LOCALMARK_FILE}" \
 					-- "${query_key}" \
-					"[ \"\${W3M_URL%%#*}\" = '${uri}' ] && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}' \${W3MPLUS_LOCALMARK_LINEBEGIN:+-H 'W3m-control: GOTO ${filepath}?action=line-begin-non-blake&line=-${line}'}"
+					"[ \"\${W3M_URL%%#*}\" = ${uri} ] && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}' \${W3MPLUS_LOCALMARK_LINEBEGIN:+-H 'W3m-control: GOTO ${filepath}?action=line-begin-non-blake&line=-${line}'}"
 				;;
 			*) printf 'This page cannot be registered.\n';;
 		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect

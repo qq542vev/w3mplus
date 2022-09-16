@@ -75,7 +75,6 @@ VERSION='w3mselectline 2.0.1'
 . 'initialize.sh'
 . 'option_error.sh'
 . 'regex_match.sh'
-. 'singlequote_escape.sh'
 
 # @getoptions
 parser_definition() {
@@ -137,8 +136,6 @@ case "${#}" in
 	'1') shift; set -- 'cat';;
 	[!0]) shift;;
 esac
-
-singlequote_escape 'command' "${*}"
 
 case "${number}" in
 	'+-'* | '+'* | '-'* | '0')

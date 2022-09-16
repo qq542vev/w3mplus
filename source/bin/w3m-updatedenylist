@@ -8,8 +8,8 @@
 ##
 ##   id - 2b272551-3000-430e-bfd8-ece408d26c75
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 5.0.1
-##   date - 2022-09-15
+##   version - 5.0.2
+##   date - 2022-09-16
 ##   since - 2019-10-31
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -121,7 +121,7 @@ awkScript=$(
 	@include "uri_check.awk"
 	@include "url_encode.awk"
 	@include "domain_check.awk"
-	@include "singlequote_escape.awk"
+	@include "shell_argument.awk"
 
 	BEGIN {
 		split("http https", protocols, " ")
@@ -171,10 +171,10 @@ awkScript=$(
 
 		status = system( \
 			sprintf( \
-				"w3m -dump_source -o 'auto_uncompress=1' '%s' | tr -- '\\r' '\\n' >'%s' && [ -s '%s' ]", \
-				singlequote_escape(properties["source"]), \
-				singlequote_escape(tmpFile), \
-				singlequote_escape(tmpFile) \
+				"w3m -dump_source -o 'auto_uncompress=1' %s | tr -- '\\r' '\\n' >%s && [ -s %s ]", \
+				shell_argument(properties["source"]), \
+				shell_argument(tmpFile), \
+				shell_argument(tmpFile) \
 			) \
 		)
 

@@ -8,8 +8,8 @@
 ##
 ##   id - 02feebd7-0acc-48af-a945-0a741fae700b
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.0
-##   date - 2022-06-28
+##   version - 2.0.1
+##   date - 2022-09-16
 ##   since - 2019-07-13
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -119,7 +119,7 @@ eval "set -- ${REST}"
 
 awkScript=$(
 	cat <<-'__EOF__'
-	@include "singlequote_escape.awk"
+	@include "shell_argument.awk"
 
 	BEGIN {
 		FS = "\t"
@@ -130,7 +130,7 @@ awkScript=$(
 	}
 
 	function print_header(field) {
-		printf(" -H 'W3m-control: %s'", singlequote_escape(field))
+		printf(" -H %s", shell_argument("W3m-control: " field))
 	}
 
 	{

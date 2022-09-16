@@ -8,8 +8,8 @@
 ##
 ##   id - a34ac2da-d3d1-469d-a7ef-074cbd9cc49d
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2022-07-23
+##   version - 1.0.1
+##   date - 2022-09-16
 ##   since - 2022-07-23
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -69,7 +69,6 @@ export PATH="${W3MPLUS_PATH}:${W3MPLUS_LIB}${PATH:+:}${PATH-}"
 export AWKPATH="${W3MPLUS_LIB}${AWKPATH:+:}${AWKPATH-}"
 
 . 'initialize.sh'
-. 'singlequote_escape.sh'
 
 # @getoptions
 parser_definition() {
