@@ -598,13 +598,13 @@ w3m モードではなく、lynx モードに切り替える事も可能であ�
 : キーマップを一時的に [w3m モード](#w3m-mode)に切り替える。キー入力後 w3mplus モードに戻る。
 
 [`<ESC-C-b>`]{#key-.3CESC-C-b.3E}
-: キーマップを[w3m モード](#w3m-mode)に切り替える。
+: キーマップを [w3m モード](#w3m-mode)に切り替える。
 
 [`<C-v>`]{#key-.3CC-v.3E}
 : キーマップを一時的に [Pale Moon モード](#palemopon-mode)に切り替える。キー入力後 w3mplus モードに戻る。
 
 [`<ESC-C-v>`]{#key-.3CESC-C-v.3E}
-: キーマップを[Pale Moon モード](#palemopon-mode)に切り替える。
+: キーマップを [Pale Moon モード](#palemopon-mode)に切り替える。
 
 # マーク {#marks}
 
