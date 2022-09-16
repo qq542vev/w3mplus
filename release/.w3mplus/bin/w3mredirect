@@ -644,10 +644,10 @@ awkScript=$(
 
 
 
-		function singlequote_escape(string) {
+		function shell_argument(string) {
 			gsub(/'+/, "'\"&\"'", string)
 
-			return string
+			return "'" string "'"
 		}
 
 			BEGIN {
@@ -659,7 +659,7 @@ awkScript=$(
 			}
 
 			function print_header(field) {
-				printf(" -H 'W3m-control: %s'", singlequote_escape(field))
+				printf(" -H %s", shell_argument("W3m-control: " field))
 			}
 
 			{

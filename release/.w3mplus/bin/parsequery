@@ -409,10 +409,10 @@ awkScript=$(
 
 
 
-		function singlequote_escape(string) {
+		function shell_argument(string) {
 			gsub(/'+/, "'\"&\"'", string)
 
-			return string
+			return "'" string "'"
 		}
 
 
@@ -629,7 +629,7 @@ awkScript=$(
 						}
 
 						if(name ~ /^[0-9A-Za-z_]*$/) {
-							printf("%s='%s'\n", prefix name suffix, singlequote_escape(query[i, "value"]))
+							printf("%s=%s\n", prefix name suffix, shell_argument(query[i, "value"]))
 						}
 					}
 				}

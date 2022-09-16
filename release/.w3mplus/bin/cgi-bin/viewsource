@@ -69,18 +69,6 @@ end_call() {
 	exit "${1:-0}"
 }
 
-
-
-singlequote_escape() {
-	set "${1}" "${2-}" ''
-
-	until [ "${2#*\'}" = "${2}" ]; do
-		set -- "${1}" "${2#*\'}" "${3}${2%%\'*}'\"'\"'"
-	done
-
-	eval "${1}=\"\${3}\${2}\""
-}
-
 parser_definition() {
 	setup REST plus:true abbr:true error:option_error no:0 help:usage \
 		-- 'Usage:' "  QUERY_STRING=URL ${2##*/}" \

@@ -456,10 +456,10 @@ awkScript=$(
 
 
 
-		function singlequote_escape(string) {
+		function shell_argument(string) {
 			gsub(/'+/, "'\"&\"'", string)
 
-			return string
+			return "'" string "'"
 		}
 
 			BEGIN {
@@ -510,10 +510,10 @@ awkScript=$(
 
 				status = system( \
 					sprintf( \
-						"w3m -dump_source -o 'auto_uncompress=1' '%s' | tr -- '\\r' '\\n' >'%s' && [ -s '%s' ]", \
-						singlequote_escape(properties["source"]), \
-						singlequote_escape(tmpFile), \
-						singlequote_escape(tmpFile) \
+						"w3m -dump_source -o 'auto_uncompress=1' %s | tr -- '\\r' '\\n' >%s && [ -s %s ]", \
+						shell_argument(properties["source"]), \
+						shell_argument(tmpFile), \
+						shell_argument(tmpFile) \
 					) \
 				)
 
