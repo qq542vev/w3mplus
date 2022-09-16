@@ -22,7 +22,7 @@
 
 ### Function: append_array_posix
 ##
-## POSXI 準拠の配列風文字列に要素を追加する。
+## 配列風文字列に要素を追加する。
 ##
 ## Parameters:
 ##
@@ -39,7 +39,7 @@ append_array_posix() {
 
 ### Function: __append_array_posix
 ##
-## POSXI 準拠の配列風文字列に要素を追加する。
+## 配列風文字列に要素を追加する。
 ##
 ## Parameters:
 ##

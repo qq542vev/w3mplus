@@ -2,7 +2,7 @@
 
 ### Script: uri_normalize.awk
 ##
-## URI を正規化する関数を定義する。
+## URI の正規化を行う関数を定義する。
 ##
 ## Metadata:
 ##
@@ -26,15 +26,15 @@
 
 ### Function: uri_normalize
 ##
-## URI 文字列を正規化する。
+## URI 文字列の正規化を行う。
 ##
 ## Parameters:
 ##
-##   uri - 正規化する URI 文字列。
+##   uri - 正規化を行う URI 文字列。
 ##
 ## Returns:
 ##
-##   正規化された URI 文字列。
+##   正規化が行われた URI 文字列。
 
 function uri_normalize(uri,  element) {
 	uri_parse(url_encode_normalize(uri), element)

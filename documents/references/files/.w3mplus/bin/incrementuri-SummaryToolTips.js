@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/incrementuri",{116:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">URI の数値部分を増分する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/incrementuri",{99:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">URI の数値部分の増分を行う。</div></div>"});

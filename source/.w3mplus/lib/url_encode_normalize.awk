@@ -2,7 +2,7 @@
 
 ### Script: url_encode_normalize.awk
 ##
-## URL エンコードを正規化する関数を定義する。
+## URL エンコードの正規化を行う関数を定義する。
 ##
 ## Metadata:
 ##
@@ -22,15 +22,15 @@
 
 ### Function: url_encode_normalize
 ##
-## URL エンコードされた文字列を正規化する。
+## URL エンコードされた文字列の正規化を行う。
 ##
 ## Parameters:
 ##
-##   string - 正規化する文字列。
+##   string - 正規化を行う文字列。
 ##
 ## Returns:
 ##
-##   正規化された文字列。
+##   正規化が行われた文字列。
 
 function url_encode_normalize(string,  p2c,result) {
 	p2c["2D"] = "-"; p2c["2E"] = "."; p2c["30"] = "0";

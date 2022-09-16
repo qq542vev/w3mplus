@@ -2,7 +2,7 @@
 
 ### Script: uri_path_remove_dot_segments.awk
 ##
-## URI のドット区切りを除去する関数を定義する。
+## ドットセグメントを除去する関数を定義する。
 ##
 ## Metadata:
 ##
@@ -22,7 +22,7 @@
 
 ### Function: uri_path_remove_dot_segments
 ##
-## パス文字列からドット区切りを除去する。
+## パス文字列内からドットセグメントを除去する。
 ##
 ## Parameters:
 ##
@@ -30,7 +30,7 @@
 ##
 ## Returns:
 ##
-##   ドット区切りが除去された文字列。
+##   ドットセグメントが除去された文字列。
 ##
 ## See Also:
 ##

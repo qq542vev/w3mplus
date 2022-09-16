@@ -30,7 +30,7 @@
 ## Options:
 ##   -f,     --field 'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'? 
 ##                               表示する URI のフィールドを指定する
-##   -n,     --{no-}normalize    URI を正規化する
+##   -n,     --{no-}normalize    URI の正規化を行う
 ##   -V,     --{no-}invert       URI ではない引数を表示する
 ##           --{no-}verbose      詳細な表示を行う
 ##   -h,     --help              このヘルプを表示して終了する
@@ -75,7 +75,7 @@ parser_definition() {
 		'' 'Options:'
 
 	param field         -f --field          init:='original' validate:validate_field var:"'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'?" -- '表示する URI のフィールドを指定する'
-	flag  normalizeFlag -n --{no-}normalize init:@no -- 'URI を正規化する'
+	flag  normalizeFlag -n --{no-}normalize init:@no -- 'URI の正規化を行う'
 	flag  invertFlag    -V --{no-}invert    init:@no -- 'URI ではない引数を表示する'
 	flag  verboseFlag   --{no-}verbose      init:@no -- '詳細な表示を行う'
 	disp  :usage        -h --help    -- 'このヘルプを表示して終了する'
