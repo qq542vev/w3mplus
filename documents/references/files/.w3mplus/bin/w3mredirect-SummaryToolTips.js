@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/w3mredirect",{120:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">w3m のリダイレクトを行う。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/w3mredirect",{1:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">w3m のリダイレクトを行う。</div></div>"});

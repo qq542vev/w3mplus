@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/singlequote_escape.sh",{52:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">シングルクォートをエスケープする関数を定義する。</div></div>",54:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">文字列内のシングルクォートをエスケープする。</div></div>"});
