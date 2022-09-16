@@ -535,6 +535,7 @@
 <li><a href="#uncategorized">未分類ヘルプ</a></li>
 </ul></li>
 <li><a href="#version">バージョン情報</a><ul>
+<li><a href="#v0.4.1">v0.4.1 - 2022-09-XX</a></li>
 <li><a href="#v0.4.0">v0.4.0 - 2022-09-07</a></li>
 <li><a href="#v0.3.0">v0.3.0 - 2022-09-01</a></li>
 <li><a href="#v0.2.0">v0.2.0 - 2022-07-31</a></li>
@@ -551,7 +552,7 @@
 			
 			<section id="intro" class="level1">
 <h1>初めに</h1>
-<p><a href="https://github.com/qq542vev/w3mplus">w3mplus</a> は、<a href="https://github.com/tats/w3m">w3m</a> 用の無料ブラウザアドオンで、ブラウジングをより効率的に、特にキーボード操作を容易にするために設計されている。<a href="https://github.com/pentadactyl/pentadactyl">Pentadactyl</a>, <a href="https://www.palemoon.org/">Pale Moon</a>, <a href="https://www.vim.org/">Vim</a> に大きく影響され、指の感触はそれらユーザーには馴染みやすい操作性となっている。</p>
+<p><a href="https://github.com/qq542vev/w3mplus">w3mplus</a> は、<a href="https://github.com/tats/w3m">w3m</a> 用の無料ブラウザーアドオンで、ブラウジングをより効率的に、特にキーボード操作を容易にするために設計されている。<a href="https://github.com/pentadactyl/pentadactyl">Pentadactyl</a>, <a href="https://www.palemoon.org/">Pale Moon</a>, <a href="https://www.vim.org/">Vim</a> に大きく影響され、指の感触はそれらユーザーには馴染みやすい操作性となっている。</p>
 <section id="features" class="level2">
 <h2>機能</h2>
 <ul>
@@ -561,7 +562,7 @@
 <li>ロケーションバー</li>
 <li>コンテキストメニュー</li>
 <li>Denylist</li>
-<li>その他細かなUI関連</li>
+<li>その他の細かなUI関連</li>
 </ul></li>
 <li>Pentadactyl の模倣
 <ul>
@@ -633,19 +634,19 @@
 <h2>履歴</h2>
 <dl>
 <dt><span id="key-.3CC-o.3E"><code>[count]&lt;C-o&gt;</code></span></dt>
-<dd>カーソルの移動履歴を遡る。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>カーソルの移動履歴を遡る。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3CESC-C-o.3E"><code>[count]&lt;ESC-C-o&gt;</code></span></dt>
-<dd>カーソルの移動履歴を進める。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>カーソルの移動履歴を進める。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3Aj"><code>:j</code></span></dt>
 <dd>現在のタブの閲覧履歴のメニューを開く。
 </dd>
 <dt><span id="key-H"><code>[count]H</code></span></dt>
-<dd>現在のタブの閲覧履歴を遡る。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>現在のタブの閲覧履歴を遡る。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-L"><code>[count]L</code></span></dt>
-<dd>現在のタブの閲覧履歴を進める。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>現在のタブの閲覧履歴を進める。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3AH"><code>:H</code></span></dt>
 <dd>w3m の閲覧履歴を開く。
@@ -707,7 +708,7 @@
 <h2>終了</h2>
 <dl>
 <dt><span id="key-.3Ax"><code>:x</code></span>, <span id="key-ZQ"><code>ZQ</code></span></dt>
-<dd>確認なしに w3m を終了する。
+<dd>確認をなしに w3m を終了する。
 </dd>
 <dt><span id="key-.3Aq"><code>:q</code></span>, <span id="key-ZZ"><code>ZZ</code></span></dt>
 <dd>w3m を終了する。
@@ -717,7 +718,7 @@
 </section>
 <section id="buffer" class="level1">
 <h1>バッファ</h1>
-<p>バッファとは、Web ページとその履歴やフレームをすべて保持するコンテナである。各タブは正確に1つのバッファを含み、この2つの用語は殆どの用途で互換性がある。</p>
+<p>バッファとは、Web ページとその履歴やフレームを全て保持するコンテナである。各タブは正確に1つのバッファを含み、この2つの用語は殆どの用途で互換性がある。</p>
 <section id="buffer-information" class="level2">
 <h2>バッファ情報</h2>
 <dl>
@@ -731,7 +732,7 @@
 <dd>レンダリングビューとソースビューを切り替る。
 </dd>
 <dt><span id="key-gF"><code>gF</code></span></dt>
-<dd>現在のドキュメントのソースを外部テキストエディタで開く。環境変数 <a href="#env-EDITOR"><code>EDITOR</code></a> でテキストエディタを指定可能である。
+<dd>現在のドキュメントのソースを外部テキストエディタで開く。環境変数 <a href="#env-EDITOR"><code>EDITOR</code></a> でテキストエディタの変更が可能である。
 </dd>
 </dl>
 </section>
@@ -769,16 +770,16 @@
 <dd>パーセントメニューを開く。任意のパーセント分カーソルを移動する。
 </dd>
 <dt><span id="key-h"><code>[count]h</code></span>, <span id="key-.3CLeft.3E"><code>[count]&lt;Left&gt;</code></span></dt>
-<dd>カーソルを1列左に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>カーソルを1列左に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-j"><code>[count]j</code></span>, <span id="key-.3CDown.3E"><code>[count]&lt;Down&gt;</code></span></dt>
-<dd>カーソルを1行下に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>カーソルを1行下に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-k"><code>[count]k</code></span>, <span id="key-.3CUp.3E"><code>[count]&lt;Up&gt;</code></span></dt>
-<dd>カーソルを1行上に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>カーソルを1行上に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-l"><code>[count]l</code></span>, <span id="key-.3CRight.3E"><code>[count]&lt;Right&gt;</code></span></dt>
-<dd>カーソルを1列右に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>カーソルを1列右に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-gj"><code>[count]gj</code></span></dt>
 <dd>カーソルを1行下に移動する。
@@ -787,10 +788,10 @@
 <dd>カーソルを1行上に移動する。
 </dd>
 <dt><span id="key-.3CC-d.3E"><code>[count]&lt;C-d&gt;</code></span></dt>
-<dd>ドキュメントを半ページ下にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>ドキュメントを半ページ下にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3CC-u.3E"><code>[count]&lt;C-u&gt;</code></span></dt>
-<dd>ドキュメントを半ページ上にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>ドキュメントを半ページ上にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-zH"><code>zH</code></span></dt>
 <dd>ドキュメントを半ページ左にスクロールする。
@@ -799,10 +800,10 @@
 <dd>ドキュメントを半ページ右にスクロールする。
 </dd>
 <dt><span id="key-.3CESC-Space.3E"><code>[count]&lt;ESC-Space&gt;</code></span>, <span id="key-.3CPageUp.3E"><code>[count]&lt;PageUp&gt;</code></span>, <span id="key-.3CC-b.3E"><code>[count]&lt;C-b&gt;</code></span></dt>
-<dd>前のページにスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>前のページにスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3CSpace.3E"><code>[count]&lt;Space&gt;</code></span>, <span id="key-.3CPageDown.3E"><code>[count]&lt;PageDown&gt;</code></span>, <span id="key-.3CC-f.3E"><code>[count]&lt;C-f&gt;</code></span></dt>
-<dd>次のページにスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>次のページにスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-B"><code>B</code></span></dt>
 <dd>カーソルを前の単語に移動する。
@@ -811,16 +812,16 @@
 <dd>カーソルを次の単語に移動する。
 </dd>
 <dt><span id="key-.3CC-e.3E"><code>[count]&lt;C-e&gt;</code></span></dt>
-<dd>ドキュメントを1行下にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>ドキュメントを1行下にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3CC-y.3E"><code>[count]&lt;C-y&gt;</code></span></dt>
-<dd>ドキュメントを1行上にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>ドキュメントを1行上にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-zh"><code>[count]zh</code></span>, <span id="key-z.3CLeft.3E"><code>[count]z&lt;Left&gt;</code></span></dt>
-<dd>ドキュメントを1列左にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>ドキュメントを1列左にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-zl"><code>[count]zl</code></span>, <span id="key-z.3CRight.3E"><code>[count]z&lt;Right&gt;</code></span></dt>
-<dd>ドキュメントを1列右にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>ドキュメントを1列右にスクロールする。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-zb"><code>zb</code></span></dt>
 <dd>現在の行を最下部にスクロールする。
@@ -843,10 +844,10 @@
 <h2>ジャンプ</h2>
 <dl>
 <dt><span id="key-.3CTab.3E"><code>[count]&lt;Tab&gt;</code></span></dt>
-<dd>カーソルを次のリンクに移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>カーソルを次のリンクに移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3CESC-Tab.3E"><code>[count]&lt;ESC-Tab&gt;</code></span></dt>
-<dd>カーソルを前のリンクに移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>カーソルを前のリンクに移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-gi"><code>gi</code></span></dt>
 <dd>カーソルをインプットフィールドに移動する。
@@ -868,7 +869,7 @@
 </section>
 <section id="zooming" class="level1">
 <h1>ズーム</h1>
-<p>使用可能なズーム範囲は、環境変数 <a href="#env-W3MPLUS_ZOOM_MIN"><code>W3MPLUS_ZOOM_MIN</code></a>, <a href="#env-W3MPLUS_ZOOM_MAX"><code>W3MPLUS_ZOOM_MAX</code></a> を設定することで変更可能である。デフォルトのズーム範囲は30%から300%までである。</p>
+<p>使用可能なズーム範囲は、環境変数 <a href="#env-W3MPLUS_ZOOM_MIN"><code>W3MPLUS_ZOOM_MIN</code></a>, <a href="#env-W3MPLUS_ZOOM_MAX"><code>W3MPLUS_ZOOM_MAX</code></a> を設定することで変更が可能である。デフォルトのズーム範囲は30%から300%までである。</p>
 <dl>
 <dt><span id="key-ZI"><code>ZI</code></span></dt>
 <dd>画像の表示倍率を拡大する。
@@ -899,7 +900,7 @@
 </section>
 <section id="copying" class="level2">
 <h2>テキストコピー</h2>
-<p>テキストコピーの際に使用するプログラムは環境変数 <a href="#env-W3MPLUS_YANK"><code>W3MPLUS_YANK</code></a> を設定することで変更可能である。</p>
+<p>テキストコピーの際に使用するプログラムは環境変数 <a href="#env-W3MPLUS_YANK"><code>W3MPLUS_YANK</code></a> を設定することで変更が可能である。</p>
 <dl>
 <dt><span id="key-y"><code>y</code></span></dt>
 <dd>現在の URL をコピーする。
@@ -944,7 +945,7 @@
 </section>
 <section id="command-line-mode" class="level1">
 <h1>コマンドラインモード</h1>
-<p>コマンドラインモードは、おそらく最も強力なインターフェイスである。このモードでは、ウィンドウの下部にあるコマンド入力バーがキーボードにフォーカスされ、様々な入力が可能になる。コマンドラインは、w3mplus と w3m のほとんどすべての機能を利用可能である。</p>
+<p>コマンドラインモードは、恐らく最も強力なインターフェースである。このモードでは、ウィンドウの下部にあるコマンド入力バーがキーボードにフォーカスされ、様々な入力が可能になる。コマンドラインは、w3mplus と w3m の殆ど全ての機能を利用することが可能である。</p>
 <dl>
 <dt><span id="key-.3A.3A"><code>::</code></span></dt>
 <dd>任意の w3m コマンドを実行する。
@@ -973,7 +974,7 @@
 </section>
 <section id="list-env" class="level2">
 <h2>環境変数</h2>
-<p>w3mplus では以下の環境変数を使用する。環境変数を設定することで w3mplus の動作を変更可能である。</p>
+<p>w3mplus では以下の環境変数を使用する。環境変数を設定することで w3mplus の動作を変更が可能である。</p>
 <p>当該環境変数が存在しないか、または空文字列の場合は、デフォルト値が使用される。</p>
 <table>
 <colgroup>
@@ -1161,7 +1162,7 @@
 </tr>
 <tr class="odd">
 <td><span id="env-W3MPLUS_USERCOMMAND_FILE"><code>W3MPLUS_USERCOMMAND_FILE</code></span></td>
-<td>ユーザコマンドを記録するファイル。</td>
+<td>ユーザーコマンドを記録するファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/usercommand&quot;</code></td>
 </tr>
 <tr class="even">
@@ -1195,7 +1196,7 @@
 </section>
 <section id="text-find-commands" class="level1">
 <h1>ページ内検索</h1>
-<p>w3mplus は、Vim 風なインクリメンタル検索インターフェイスを提供する。</p>
+<p>w3mplus は、Vim 風なインクリメンタル検索インターフェースを提供する。</p>
 <dl>
 <dt><span id="key-.2F"><code>/</code></span></dt>
 <dd>任意のパターンを後方インクリメント検索する。
@@ -1238,10 +1239,10 @@
 <h2>タブの変更</h2>
 <dl>
 <dt><span id="key-gt"><code>[count]gt</code></span>, <span id="key-.3CC-n.3E"><code>[count]&lt;C-n&gt;</code></span></dt>
-<dd>次のタブに移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>次のタブに移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-gT"><code>[count]gT</code></span>, <span id="key-.3CC-p.3E"><code>[count]&lt;C-p&gt;</code></span></dt>
-<dd>前のタブに移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>前のタブに移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-b"><code>b</code></span></dt>
 <dd>タブの選択メニューを開く。
@@ -1258,10 +1259,10 @@
 <h2>タブの並び替え</h2>
 <dl>
 <dt><span id="key-.3CC-t.3EH"><code>[count]&lt;C-t&gt;H</code></span></dt>
-<dd>現在のタブを左に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>現在のタブを左に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3CC-t.3EL"><code>[count]&lt;C-t&gt;L</code></span></dt>
-<dd>現在のタブを右に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数繰り返す。
+<dd>現在のタブを右に移動する。<code>[count]</code> を指定した場合、<code>[count]</code> の回数分繰り返す。
 </dd>
 <dt><span id="key-.3CC-t.3E0"><code>&lt;C-t&gt;0</code></span></dt>
 <dd>現在のタブを左端に移動する。
@@ -1297,7 +1298,7 @@
 </section>
 <section id="hints" class="level1">
 <h1>ヒント</h1>
-<p>ヒントは、マウスを使わずにウェブページを操作するための簡単な方法である。ヒントモードではクリック可能なすべてのリンクをリストアップし、番号を表示する。</p>
+<p>ヒントは、マウスを使わずにウェブページを操作するための簡単な方法である。ヒントモードではクリックが可能な全てのリンクをリストアップし、番号を表示する。</p>
 <dl>
 <dt><span id="key-f"><code>f</code></span></dt>
 <dd>リンク一覧のメニューを開く。
@@ -1370,20 +1371,20 @@
 <h1>キーボードショートカット</h1>
 <section id="bypassing-w3mplus" class="level2">
 <h2>w3mplus を回避する</h2>
-<p>w3mplus は、Vim ユーザが快適にブラウジングが可能なように、w3m のほぼ全てのキーを上書きする。w3mplus のキー操作をバイパスして、w3m モードや Pale Moon モードを利用するにはいくつかの選択肢がある。</p>
+<p>w3mplus は、Vim ユーザーが快適にブラウジングが可能なように、w3m のほぼ全てのキーを上書きする。w3mplus のキー操作をバイパスして、w3m モードや Pale Moon モードを利用するにはいくつかの選択肢がある。</p>
 <p>w3m モードではなく、lynx モードに切り替える事も可能である。その場合、<code>~/.w3m/keymap_builtin</code> に <code>~/.w3m/keymap_lynx</code> への、<code>~/.w3m/keymap_builtin-onetime</code> に <code>~/.w3m/keymap_lynx-onetime</code> へのシンボリックリンクを作成する。</p>
 <dl>
 <dt><span id="key-.3CESC-b.3E"><code>&lt;ESC-b&gt;</code></span></dt>
 <dd>キーマップを一時的に <a href="#w3m-mode">w3m モード</a>に切り替える。キー入力後 w3mplus モードに戻る。
 </dd>
 <dt><span id="key-.3CESC-C-b.3E"><code>&lt;ESC-C-b&gt;</code></span></dt>
-<dd>キーマップを<a href="#w3m-mode">w3m モード</a>に切り替える。
+<dd>キーマップを <a href="#w3m-mode">w3m モード</a>に切り替える。
 </dd>
 <dt><span id="key-.3CC-v.3E"><code>&lt;C-v&gt;</code></span></dt>
 <dd>キーマップを一時的に <a href="#palemopon-mode">Pale Moon モード</a>に切り替える。キー入力後 w3mplus モードに戻る。
 </dd>
 <dt><span id="key-.3CESC-C-v.3E"><code>&lt;ESC-C-v&gt;</code></span></dt>
-<dd>キーマップを<a href="#palemopon-mode">Pale Moon モード</a>に切り替える。
+<dd>キーマップを <a href="#palemopon-mode">Pale Moon モード</a>に切り替える。
 </dd>
 </dl>
 </section>
@@ -1429,7 +1430,7 @@
 </section>
 <section id="quickmarks" class="level2">
 <h2>クイックマーク</h2>
-<p>クイックマークは、よく訪れるページに素早くアクセスするための、無駄を省いたブックマークで、アルファベットや数字に URL を割り当てただけのものである。そのため、わずか3回のキー操作で保存したり開いたりすること可能である。クイックマークはブラウザのセッションをまたいで保持される。</p>
+<p>クイックマークは、よく訪れるページに素早くアクセスするための、無駄を省いたブックマークで、アルファベットや数字に URL を割り当てただけのものである。そのため、わずか3回のキー操作で保存したり開いたりすることが可能である。クイックマークはブラウザーのセッションをまたいで保持される。</p>
 <dl>
 <dt><span id="key-M"><code>M{0-9A-Za-z}</code></span></dt>
 <dd>現在の URL をクイックマークに登録する。
@@ -1447,7 +1448,7 @@
 </section>
 <section id="urlmarks" class="level2">
 <h2>ローカルマークと URL マーク</h2>
-<p>ローカルマークと URL マークは、現在のカーソル位置をマークして、後ですぐに戻れるようにするためのものである。マークにはそれぞれ文字が割り当てられており、小文字はローカルマークとして、大文字は URL マークとして動作する。この2つの違いは、ローカルマークが各ページに一意的に適用されるのに対し、URLマークは特定のページの特定の位置をマークする。つまり、サイト1では <strong>m</strong> というマークがページの一番上に来るかもしれないが、サイト2では真ん中に来るかもしれない。一方、マーク <strong>M</strong> は常にサイト1に戻る。すべてのマークは、ブラウザのセッションを越えて永続的に保持される。</p>
+<p>ローカルマークと URL マークは、現在のカーソル位置をマークして、後ですぐに戻れるようにするためのものである。マークには其々の文字が割り当てられており、小文字はローカルマークとして、大文字は URL マークとして動作する。この2つの違いは、ローカルマークが各ページに一意的に適用されるのに対し、URLマークは特定のページの特定の位置をマークする。つまり、サイト1では <strong>m</strong> というマークがページの一番上に来るかもしれないが、サイト2では真ん中に来るかもしれない。一方、マーク <strong>M</strong> は常にサイト1に戻る。全てのマークは、ブラウザのセッションを越えて永続的に保持される。</p>
 <dl>
 <dt><span id="key-m.7Ba-z.7D"><code>m{a-z}</code></span></dt>
 <dd>現在のカーソル位置を Local Mark に登録する。
@@ -1518,7 +1519,7 @@
 <h1>プライバシーと機密情報</h1>
 <section id="private-mode" class="level2">
 <h2>プライベートブラウジング</h2>
-<p>w3mplus は、Pale Moon のようなプライベートブラウジングモードに対応している。プライベートブラウジングモードでは、ブックマークと w3mplus 固有の機能(各種マーク、レジスタ、検索履歴等)以外は同期されない。プライベートブラウジングモード用のデータは一時的に環境変数 <code>TMP</code> で指定されたディレクトリ内に配置され、終了すると、閲覧履歴、キャッシュ、Cookie などの蓄積されたデータはすべて消去される。</p>
+<p>w3mplus は、Pale Moon のようなプライベートブラウジングモードに対応している。プライベートブラウジングモードでは、ブックマークと w3mplus 固有の機能(各種マーク、レジスタ、検索履歴等)以外は同期されない。プライベートブラウジングモード用のデータは一時的に環境変数 <code>TMP</code> で指定されたディレクトリ内に配置され、終了すると、閲覧履歴、キャッシュ、Cookie などの蓄積されたデータは全て消去される。</p>
 </section>
 <section id="cookie-settings" class="level2">
 <h2>Cookie の設定</h2>
@@ -1608,6 +1609,15 @@
 </section>
 <section id="version" class="level1">
 <h1>バージョン情報</h1>
+<section id="v0.4.1" class="level2">
+<h2>v0.4.1 - 2022-09-XX</h2>
+<ul>
+<li>w3mplus が HTML を生成する際に自動的に制御文字を削除するように変更。</li>
+<li><code>~/.w3m</code> がシンボリックリンクの際に <a href="about:cache" class="uri">about:cache</a> が動作しなくなるバグを修正。</li>
+<li>閲覧履歴のサイドバーが動作しないのを修正。</li>
+<li><code>includefile</code> に <code>--verbose</code> オプションを追加。</li>
+</ul>
+</section>
 <section id="v0.4.0" class="level2">
 <h2>v0.4.0 - 2022-09-07</h2>
 <ul>
@@ -1649,13 +1659,13 @@
 </ul></li>
 <li>w3maction
 <ul>
-<li><code>exec-shell</code>, <code>read-shell</code> が利用可能に。</li>
+<li><code>exec-shell</code>, <code>read-shell</code> の利用が可能に。</li>
 </ul></li>
 </ul>
 </section>
 <section id="v0.2.0" class="level2">
 <h2>v0.2.0 - 2022-07-31</h2>
-<p>ほぼ一から全てを書き直したバージョン。インストールファイルが追加されインストール容易に。</p>
+<p>ほぼ一から全てを書き直したバージョン。インストールファイルが追加されインストールが容易に。</p>
 </section>
 <section id="v0.1.0" class="level2">
 <h2>v0.1.0 - 2019-12-31</h2>
@@ -1666,7 +1676,7 @@
 <h1>索引</h1>
 <section id="w3mplus-mode" class="level2">
 <h2>w3mplus モード</h2>
-<p>w3mplus モードは Pentadactyl + Pale Moon 風のキーマップである。w3mplus モードは <a href="#palemoon-mode">Pale Moon モード</a>の上に構築されており、上書きされていない Pale Moon モードのキーも利用可能である。</p>
+<p>w3mplus モードは Pentadactyl + Pale Moon 風のキーマップである。w3mplus モードは <a href="#palemoon-mode">Pale Moon モード</a>の上に構築されており、上書きされていない Pale Moon モードのキーも利用が可能である。</p>
 <table>
 <thead>
 <tr class="header">
@@ -1923,7 +1933,7 @@
 </tr>
 <tr class="even">
 <td><a href="#key-.3Ax"><code>:x</code></a></td>
-<td>確認なしに w3m を終了する。</td>
+<td>確認をなしに w3m を終了する。</td>
 <td><code>EXIT</code></td>
 </tr>
 <tr class="odd">
@@ -2353,7 +2363,7 @@
 </tr>
 <tr class="even">
 <td><a href="#key-ZQ"><code>ZQ</code></a></td>
-<td>確認なしに w3m を終了する。</td>
+<td>確認をなしに w3m を終了する。</td>
 <td><code>EXIT</code></td>
 </tr>
 <tr class="odd">
@@ -2828,7 +2838,7 @@
 </tr>
 <tr class="odd">
 <td><code>&lt;C-q&gt;</code></td>
-<td>確認なしに w3m を終了する。</td>
+<td>確認をなしに w3m を終了する。</td>
 <td><code>EXIT</code></td>
 </tr>
 <tr class="even">
@@ -3633,7 +3643,7 @@
 </tr>
 <tr class="odd">
 <td><code>Q</code></td>
-<td>確認なしに w3m を終了する。</td>
+<td>確認をなしに w3m を終了する。</td>
 <td><code>EXIT</code></td>
 </tr>
 <tr class="even">
@@ -4273,7 +4283,7 @@
 </tr>
 <tr class="odd">
 <td><code>Q</code></td>
-<td>確認なしに w3m を終了する。</td>
+<td>確認をなしに w3m を終了する。</td>
 <td><code>EXIT</code></td>
 </tr>
 <tr class="even">

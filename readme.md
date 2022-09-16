@@ -33,7 +33,7 @@ w3mplus は [Pale Moon](https://www.palemoon.org/) + [Pentadactyl](https://githu
    * ロケーションバー
    * コンテキストメニュー
    * Denylist
-   * その他細かなUI関連
+   * その他の細かな UI 関連
  * Pentadactyl の模倣
    * `o`, `t`, `O`, `T`, `gh`, `gu` などのリソースへのアクセス
    * `h`, `j`, `k`, `l`, `gg`, `G`, `0`, `$` などのページ内の移動
