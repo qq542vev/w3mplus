@@ -1,23 +1,22 @@
-<!--
-### Document: readme.md
-##
-## w3mplus のマニュアル
-##
-## Metadata:
-##
-##   id - 7539cc1d-6b5f-44e5-baf7-a66b22b2213f
-##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 0.4.0
-##   date - 2022-09-17
-##   since - 2019-12-26
-##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
-##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
-##   package - w3mplus
-##
-## See Also:
-##
-##   * <Project homepage at https://github.com/qq542vev/w3mplus>
-##   * <Bag report at https://github.com/qq542vev/w3mplus>
+<!-- Document: readme.md
+
+	w3mplus のマニュアル
+
+	Metadata:
+
+		id - 7539cc1d-6b5f-44e5-baf7-a66b22b2213f
+		author - <qq542vev at https://purl.org/meta/me/>
+		version - 0.4.0
+		date - 2022-09-17
+		since - 2019-12-26
+		copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
+		license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
+		package - w3mplus
+
+	See Also:
+
+		* <Project homepage at https://github.com/qq542vev/w3mplus>
+		* <Bag report at https://github.com/qq542vev/w3mplus>
 -->
 
 # w3mplus
@@ -38,7 +37,7 @@ w3mplus はテキストブラウザー [w3m](https://github.com/tats/w3m "GitHub
    * `y`, `Y` などのヤンク
    * `d`, `u` などのタブを閉じる、タブの復元
    * ヒント及び拡張ヒント
-   * クイッマーク、ローカルマーク、URL マーク
+   * クイックマーク、ローカルマーク、URL マーク
    * レジスタ
 
 可能な限り w3m 固有の機能を使用していますが、一部の再現が難しい機能は w3m の Local CGI 機能を使用しています。Local CGI はほぼ全て [POSIX コマンド](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html "Utilities") による Shell Script で作成されており、それらは [POSIX 環境](https://pubs.opengroup.org/onlinepubs/9699919799/)に準拠しています。
