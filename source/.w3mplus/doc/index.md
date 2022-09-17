@@ -16,7 +16,7 @@ lang: ja
 
 # 初めに {#intro}
 
-[w3mplus](https://github.com/qq542vev/w3mplus) は、[w3m](https://github.com/tats/w3m) 用の無料ブラウザーアドオンで、ブラウジングをより効率的に、特にキーボード操作を容易にするために設計されている。[Pentadactyl](https://github.com/pentadactyl/pentadactyl), [Pale Moon](https://www.palemoon.org/), [Vim](https://www.vim.org/) に大きく影響され、指の感触はそれらユーザーには馴染み易い操作性となっている。
+[w3mplus](https://github.com/qq542vev/w3mplus) は、[w3m](https://github.com/tats/w3m "GitHub - tats/w3m: Debian's w3m: WWW browsable pager") 用の無料ブラウザーアドオンで、ブラウジングをより効率的に、特にキーボード操作を容易にするために設計されている。[Pentadactyl](https://github.com/pentadactyl/pentadactyl "GitHub - pentadactyl/pentadactyl: Pentadactyl for Pale Moon (community maintained)"), [Pale Moon](https://www.palemoon.org/ "The Pale Moon Project homepage"), [Vim](https://www.vim.org/ "welcome home : vim online") に大きく影響され、指の感触はそれらユーザーには馴染み易い操作性となっている。
 
 ## 機能 {#features}
 
@@ -37,7 +37,7 @@ lang: ja
 
 ## 連絡 {#contact}
 
-質問、機能追加の要望、不具合の報告などは [Github issue](https://github.com/qq542vev/w3mplus/issues) から受け付けている。
+質問、機能追加の要望、不具合の報告などは [Github issue](https://github.com/qq542vev/w3mplus/issues "Issues · qq542vev/w3mplus · GitHub") から受け付けている。
 
 # ブラウジング {#surfing}
 
@@ -1061,7 +1061,7 @@ w3mplus モードは Pentadactyl + Pale Moon 風のキーマップである。w3
 
 ## Pale Moon モード {#palemoon-mode}
 
-Pale Moon モードは [Pale Moon](https://www.palemoon.org/) 風のキーマップである。
+Pale Moon モードは [Pale Moon](https://www.palemoon.org/ "The Pale Moon Project homepage") 風のキーマップである。
 
 | キー | 説明 | w3m コマンド |
 | ---- | ---- | ------------ |
@@ -1150,7 +1150,7 @@ Pale Moon モードは [Pale Moon](https://www.palemoon.org/) 風のキーマッ
 
 ## w3m モード {#w3m-mode}
 
-w3m モードは [w3m](https://github.com/tats/w3m) 風のキーマップである。
+w3m モードは [w3m](https://github.com/tats/w3m "GitHub - tats/w3m: Debian's w3m: WWW browsable pager") 風のキーマップである。
 
 | キー | 説明 | w3m コマンド |
 | ---- | ---- | ------------ |
@@ -1282,7 +1282,7 @@ w3m モードは [w3m](https://github.com/tats/w3m) 風のキーマップであ�
 
 ## lynx モード {#lynx-mode}
 
-lynx モードは [lynx](https://lynx.browser.org/) 風のキーマップである。
+lynx モードは [lynx](https://lynx.browser.org/ "Lynx Information") 風のキーマップである。
 
 | キー | 説明 | w3m コマンド |
 | ---- | ---- | ------------ |

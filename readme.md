@@ -23,7 +23,7 @@
 
 [![about:home](images/thumbnails/about-home.png)](images/about-home.png "about:home") [![Context Menu](images/thumbnails/context-menu.png)](images/context-menu.png "Context Menu")
 
-w3mplus はテキストブラウザー [w3m](https://github.com/tats/w3m "GitHub - tats/w3m: Debian's w3m: WWW browsable pager") の拡張機能です。[Pale Moon](https://www.palemoon.org/ "The Pale Moon Project homepage") + [Pentadactyl](https://github.com/pentadactyl/pentadactyl "GitHub - pentadactyl/pentadactyl: Pentadactyl for Pale Moon (community maintained)") + [Vim](https://www.vim.org/ "welcome home : vim online") の機能を模倣し、w3m 上で可能な限り再現することを目的としています。また [Mozilla Firefox](https://www.mozilla.org/firefox/new/) と [Vimperator](http://vimperator.org/ "Vimperator // Projects") の情報も参考にしています。主に以下のような機能を利用できます。
+w3mplus はテキストブラウザー [w3m](https://github.com/tats/w3m "GitHub - tats/w3m: Debian's w3m: WWW browsable pager") の無料の拡張機能です。[Pale Moon](https://www.palemoon.org/ "The Pale Moon Project homepage") + [Pentadactyl](https://github.com/pentadactyl/pentadactyl "GitHub - pentadactyl/pentadactyl: Pentadactyl for Pale Moon (community maintained)") + [Vim](https://www.vim.org/ "welcome home : vim online") の機能を模倣し、w3m 上で可能な限り再現することを目的としています。また [Mozilla Firefox](https://www.mozilla.org/firefox/new/) と [Vimperator](http://vimperator.org/ "Vimperator // Projects") の情報も参考にしています。主に以下のような機能を利用できます。
 
  * Pale Moon の模倣
    * メニューバー
