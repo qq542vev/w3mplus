@@ -103,7 +103,7 @@ parser_definition() {
 	cmd rot13 -- '選択範囲のアルファベットを ROT13 で変換する'
 	cmd switchcase -- '選択範囲のアルファベットを大文字と小文字に変換する'
 	cmd uppercase -- '選択範囲をアルファベットを大文字に変換する'
-	cmd yank -- '選択範囲をヤンクする'
+	cmd yank -- '選択範囲のヤンクを行う'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -306,7 +306,7 @@ ACTION:
   switchcase 
             選択範囲のアルファベットを大文字と小文字に変換する
   uppercase 選択範囲をアルファベットを大文字に変換する
-  yank      選択範囲をヤンクする
+  yank      選択範囲のヤンクを行う
 
 Exit Status:
     0 - successful termination

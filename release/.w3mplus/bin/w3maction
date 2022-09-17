@@ -119,7 +119,7 @@ parser_definition() {
 	cmd goto -- 'VARIABLE_NAME にアクセスする'
 	cmd read-shell -- 'VARIABLE_NAME を基に READ_SHELL を実行する'
 	cmd setenv -- 'VARIABLE_NAME を別の変数に代入する'
-	cmd yank -- 'VARIABLE_NAME の値をヤンクする'
+	cmd yank -- 'VARIABLE_NAME の値のヤンクを行う'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -320,7 +320,7 @@ ACTION:
   read-shell 
             VARIABLE_NAME を基に READ_SHELL を実行する
   setenv    VARIABLE_NAME を別の変数に代入する
-  yank      VARIABLE_NAME の値をヤンクする
+  yank      VARIABLE_NAME の値のヤンクを行う
 
 Exit Status:
     0 - successful termination
