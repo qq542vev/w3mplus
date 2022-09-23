@@ -8,8 +8,8 @@
 ##
 ##   id - b9583a4a-8da3-4527-8e49-31ce2dd5252a
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2022-09-10
+##   version - 1.0.1
+##   date - 2022-09-23
 ##   since - 2022-09-10
 ##   copyright - Public Domain.
 ##   license - <CC0 at https://creativecommons.org/publicdomain/zero/1.0/>
@@ -94,6 +94,10 @@ replace_multiple() {
 
 	while [ 2 -le "${#}" ]; do
 		eval 'replace_all "${1}"' "\"\${${1}}\"" '"${2}" "${3-}"'
-		eval "shift 3; set -- '${1}'" '${@+"${@}"}'
+
+		case "${#}" in
+			'2') set --;;
+			*) eval "shift 3; set -- '${1}'" '${@+"${@}"}';;
+		esac
 	done
 }

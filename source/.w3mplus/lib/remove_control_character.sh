@@ -8,8 +8,8 @@
 ##
 ##   id - ad45ec88-2f89-4831-a123-ad246982f09f
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2022-09-10
+##   version - 1.0.1
+##   date - 2022-09-23
 ##   since - 2022-09-10
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -44,7 +44,7 @@ remove_control_character() {
 	set -- "${1}" "${2}" "${4}" ''
 
 	while [ -n "${3}" ]; do
-		set -- "${1}" "${2}" "${3#?}" "${4} '${3%%${3#?}}'"
+		set -- "${1}" "${2}" "${3#?}" "${4} '${3%%${3#?}}' ''"
 	done
 
 	eval 'replace_multiple "${1}" "${2}"' "${4}"

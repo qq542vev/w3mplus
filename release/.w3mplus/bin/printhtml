@@ -133,7 +133,11 @@ replace_multiple() {
 
 	while [ 2 -le "${#}" ]; do
 		eval 'replace_all "${1}"' "\"\${${1}}\"" '"${2}" "${3-}"'
-		eval "shift 3; set -- '${1}'" '${@+"${@}"}'
+
+		case "${#}" in
+		'2') set -- ;;
+		*) eval "shift 3; set -- '${1}'" '${@+"${@}"}' ;;
+		esac
 	done
 }
 
@@ -212,7 +216,11 @@ replace_multiple() {
 
 	while [ 2 -le "${#}" ]; do
 		eval 'replace_all "${1}"' "\"\${${1}}\"" '"${2}" "${3-}"'
-		eval "shift 3; set -- '${1}'" '${@+"${@}"}'
+
+		case "${#}" in
+		'2') set -- ;;
+		*) eval "shift 3; set -- '${1}'" '${@+"${@}"}' ;;
+		esac
 	done
 }
 
@@ -229,7 +237,7 @@ remove_control_character() {
 	set -- "${1}" "${2}" "${4}" ''
 
 	while [ -n "${3}" ]; do
-		set -- "${1}" "${2}" "${3#?}" "${4} '${3%%${3#?}}'"
+		set -- "${1}" "${2}" "${3#?}" "${4} '${3%%${3#?}}' ''"
 	done
 
 	eval 'replace_multiple "${1}" "${2}"' "${4}"
