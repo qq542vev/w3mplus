@@ -284,8 +284,7 @@ remove_control_character() {
 
 
 safe_string() {
-	remove_control_character "${1}" "${2}" '	
-'
+	remove_control_character "${1}" "${2}" "$(printf '\t\n\r')"
 }
 
 option_set() {

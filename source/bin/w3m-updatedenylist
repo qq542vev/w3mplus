@@ -74,7 +74,7 @@ parser_definition() {
 	param endMsg      -e --end           init:='^# END - Denylist$' var:ERE_PATTERN -- 'リストの終了テキストを指定する'
 	flag  placeFlag   -i --{no-}in-place init:@no -- 'FILE を更新する'
 	param redirect    -r --redirect      init:='file:///cgi-bin/protectionpage?' var:URI -- 'リダイレクト先の URI を指定する'
-	flag  verboseFlag -V --{no-}verbose       init:@no -- '冗長な表示を行う'
+	flag  verboseFlag -V --{no-}verbose  init:@no -- '冗長な表示を行う'
 	disp  :usage      -h --help          -- 'このヘルプを表示して終了する'
 	disp  VERSION     -v --version       -- 'バージョン情報を表示して終了する'
 

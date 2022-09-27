@@ -264,8 +264,7 @@ remove_control_character() {
 
 
 safe_string() {
-	remove_control_character "${1}" "${2}" '	
-'
+	remove_control_character "${1}" "${2}" "$(printf '\t\n\r')"
 }
 
 : "${W3MPLUS_W3M_HOME:=${HOME}/.w3m}"

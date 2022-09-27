@@ -32,6 +32,5 @@
 ##   $2 - 対象の文字列。
 
 safe_string() {
-	remove_control_character "${1}" "${2}" '	
-'
+	remove_control_character "${1}" "${2}" "$(printf '\t\n\r')"
 }
