@@ -25,12 +25,12 @@
 ## ------ Text ------
 ## Usage:
 ##   setusercommand [OPTION]... [CALL] [COMMAND_ARG]...
-## 
+##
 ## Options:
 ##   -c,     --config FILE       設定ファイルを指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

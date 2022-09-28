@@ -25,7 +25,7 @@
 ## ------ Text ------
 ## Usage:
 ##   w3mredirect [OPTION]... [KEYWORD]...
-## 
+##
 ## Options:
 ##           --a1, --a2, --a3, --a4, --a5, --a6, --a7, --a8, --a9 W3M_COMMAND 
 ##                               n個目の URI アクセス後に W3M_COMMAND を実行する
@@ -40,7 +40,7 @@
 ##   -T,     --template FILE     テンプレートファイルを指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

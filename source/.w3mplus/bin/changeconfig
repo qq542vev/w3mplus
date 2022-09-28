@@ -25,7 +25,7 @@
 ## ------ Text ------
 ## Usage:
 ##   changeconfig [OPTION]... [FILE]...
-## 
+##
 ## Options:
 ##   -i,     --{no-}in-place     FILE を更新して保存する
 ##           --max NUMBER        計算結果の最大値を指定する
@@ -35,7 +35,7 @@
 ##           --no-param          --param をリセットする
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

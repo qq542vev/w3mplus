@@ -25,14 +25,14 @@
 ## ------ Text ------
 ## Usage:
 ##   getquickmark [OPTION]... [PATTERN]...
-## 
+##
 ## Options:
 ##   -c,     --config FILE       設定ファイルを指定する
 ##   -E,     --{no-}extended-regexp 
 ##                               拡張正規表現を使用する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##     1 - empty result

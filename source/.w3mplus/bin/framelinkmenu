@@ -25,7 +25,7 @@
 ## ------ Text ------
 ## Usage:
 ##   framelinkmenu [OPTION]... [FILE]...
-## 
+##
 ## Options:
 ##   -a,     --attribute NANE '=' VALUE 
 ##                               frameset要素に属性を追加する
@@ -41,7 +41,7 @@
 ##   -t,     --title TEXT        フレームページのタイトルを指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

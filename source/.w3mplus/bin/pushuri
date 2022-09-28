@@ -25,7 +25,7 @@
 ## ------ Text ------
 ## Usage:
 ##   pushuri [OPTION]... [URI]...
-## 
+##
 ## Options:
 ##   -c,     --config FILE       設定ファイルを指定する
 ##           --c1, --c2, --c3, --c4, --c5, --c6, --c7, --c8, --c9 INTEGER 
@@ -36,7 +36,7 @@
 ##                               URI の履歴数を指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

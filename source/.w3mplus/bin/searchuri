@@ -25,7 +25,7 @@
 ## ------ Text ------
 ## Usage:
 ##   searchuri [OPTION]... [KEYWORD]...
-## 
+##
 ## Options:
 ##   -c,     --config FILE       設定ファイルを指定する
 ##   -d,     --designator 'disable' | 'event' | 'all' 
@@ -36,7 +36,7 @@
 ##                               記録する検索履歴数を指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##     1 - search engine not found

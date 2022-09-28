@@ -26,11 +26,11 @@
 ## ------ Text ------
 ## Usage:
 ##   QUERY_STRING='type={malware|phishing|spam}&source={url}&url={url}' protectionpage
-## 
+##
 ## Options:
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

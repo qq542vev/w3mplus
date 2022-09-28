@@ -26,7 +26,7 @@
 ## Usage:
 ##   uricheck [OPTION]... [URI]...
 ##   uricheck -V [OPTION]... [NOT_URI]...
-## 
+##
 ## Options:
 ##   -f,     --field 'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'? 
 ##                               表示する URI のフィールドを指定する
@@ -35,7 +35,7 @@
 ##           --{no-}verbose      詳細な表示を行う
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##     1 - not URI

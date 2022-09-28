@@ -25,7 +25,7 @@
 ## ------ Text ------
 ## Usage:
 ##   incrementuri [OPTION]... [URI]...
-## 
+##
 ## Options:
 ##   -n,     --number [+*/%^-]? UNSIGNED_INTEGER 
 ##                               演算を指定する
@@ -33,7 +33,7 @@
 ##                               URI の被演算子の位置を指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

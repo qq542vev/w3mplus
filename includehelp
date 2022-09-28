@@ -8,8 +8,8 @@
 ##
 ##   id - 377d59eb-09df-4db7-8afa-e6eeaffc928c
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 0.1.0
-##   date - 2022-09-13
+##   version - 0.1.1
+##   date - 2022-09-28
 ##   since - 2022-09-13
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -25,12 +25,12 @@
 ## ------ Text ------
 ## Usage:
 ##   includehelp [OPTION]... [FILE]...
-## 
+##
 ## Options:
 ##   -i,     --{no-}in-place     FILE を更新して保存する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error
@@ -111,7 +111,11 @@ awkScript=$(
 			command = sprintf("'%s' --help", (index(FILENAME, "/") ? "" : "./") FILENAME)
 
 			while(0 < (command | getline recode)) {
-				printf("## %s\n", recode)
+				if(recode == "") {
+					printf("##\n")
+				} else {
+					printf("## %s\n", recode)
+				}
 			}
 
 			close(command)

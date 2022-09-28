@@ -25,14 +25,14 @@
 ## ------ Text ------
 ## Usage:
 ##   w3mfindinpage [OPTION]... [TEXT]...
-## 
+##
 ## Options:
 ##   -e,     --{no-}exact        単語ごとに検索を行う
 ##   -n,     --number SIGNED_INTEGER 
 ##                               指定回数検索を行う
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

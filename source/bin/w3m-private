@@ -27,7 +27,7 @@
 ## ------ Text ------
 ## Usage:
 ##   w3m-private [OPTION]... -- [W3M_ARG]
-## 
+##
 ## Options:
 ##   -c,     --copy PATTERN      PATTERN に一致するファイルをコピーする
 ##           --no-copy           --copy をリセットする
@@ -35,7 +35,7 @@
 ##           --no-link           --link をリセットする
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

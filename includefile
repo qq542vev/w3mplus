@@ -25,12 +25,12 @@
 ## ------ Text ------
 ## Usage:
 ##   includefile [OPTION]... OUTPUT_DIR [FILE]...
-## 
+##
 ## Options:
 ##   -V,     --{no-}verbose      冗長な表示を行う
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

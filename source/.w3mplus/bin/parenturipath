@@ -25,13 +25,13 @@
 ## ------ Text ------
 ## Usage:
 ##   parenturipath [OPTION]... [URI]...
-## 
+##
 ## Options:
 ##   -n,     --number UNSIGNED_INTEGER 
 ##                               指定した回数上昇する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

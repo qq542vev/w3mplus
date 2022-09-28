@@ -25,7 +25,7 @@
 ## ------ Text ------
 ## Usage:
 ##   httpresponse [OPTION]... [FILE]...
-## 
+##
 ## Options:
 ##   -H,     --header HEADER_FIELD 
 ##                               HTTP ヘッダフィールドを追加する
@@ -35,7 +35,7 @@
 ##   -T,     --template FILE     テンプレートファイルを指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

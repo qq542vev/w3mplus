@@ -25,7 +25,7 @@
 ## ------ Text ------
 ## Usage:
 ##   install.sh [OPTION]...
-## 
+##
 ## Options:
 ##           --dest-bin PATH     PATH に bin をインストールする
 ##           --dest-w3m PATH     PATH に .w3m をインストールする
@@ -40,7 +40,7 @@
 ##                               インストールする .w3mplus を指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error

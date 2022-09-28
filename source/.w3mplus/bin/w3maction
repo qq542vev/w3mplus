@@ -25,13 +25,13 @@
 ## ------ Text ------
 ## Usage:
 ##   w3maction [OPTION]... ACTION VARIABLE_NAME
-## 
+##
 ## Options:
 ##   -d,     --data-type 'raw' | 'base64' | 'urlencode' 
 ##                               変数のエンコードタイプを指定する
 ##   -h,     --help              このヘルプを表示して終了する
 ##   -v,     --version           バージョン情報を表示して終了する
-## 
+##
 ## ACTION:
 ##   exec-shell 
 ##             VARIABLE_NAME を基に EXEC_SHELL を実行する
@@ -40,7 +40,7 @@
 ##             VARIABLE_NAME を基に READ_SHELL を実行する
 ##   setenv    VARIABLE_NAME を別の変数に代入する
 ##   yank      VARIABLE_NAME の値のヤンクを行う
-## 
+##
 ## Exit Status:
 ##     0 - successful termination
 ##    64 - command line usage error
