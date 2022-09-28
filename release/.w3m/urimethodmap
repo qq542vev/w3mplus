@@ -2,6 +2,12 @@
 ##
 ## URI method configuration.
 ##
+## Usage:
+##
+## ------ Text ------
+## w3m -o urimethodmap=~/.w3m/urimethodmap
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 4bc627cf-3c04-4447-ac03-5dea11227ada

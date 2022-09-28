@@ -2,6 +2,12 @@
 ##
 ## Keymap for QuickMark.
 ##
+## Usage:
+##
+## ------ Text ------
+## w3m -o keymap_file=~/.w3m/keymap_w3mplus-quickmark-currenttab
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 5c2f5f39-9d90-49ed-be96-916e7a05ea32

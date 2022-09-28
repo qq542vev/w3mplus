@@ -2,6 +2,12 @@
 ##
 ## Webpage configuration.
 ##
+## Usage:
+##
+## ------ Text ------
+## w3m -o siteconf_file=~/.w3m/siteconf
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 62ae0369-58bc-4ac5-b892-7abff21fc703

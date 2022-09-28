@@ -2,6 +2,12 @@
 ##
 ## Lynx like keymap (one time).
 ##
+## Usage:
+##
+## ------ Text ------
+## w3m -o keymap_file=~/.w3m/keymap_lynx-onetime
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 7fc397b5-3b40-4e93-b836-c6d0011f2260

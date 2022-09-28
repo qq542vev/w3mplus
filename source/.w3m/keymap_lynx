@@ -2,6 +2,12 @@
 ##
 ## Lynx like keymap.
 ##
+## Usage:
+##
+## ------ Text ------
+## w3m -o keymap_file=~/.w3m/keymap_lynx
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 52a93022-402a-439e-a7c3-a792278ac91b

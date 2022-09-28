@@ -2,6 +2,12 @@
 ##
 ## Default w3m keymap (one time).
 ##
+## Usage:
+##
+## ------ Text ------
+## w3m -o keymap_file=~/.w3m/keymap_w3m-onetime
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 9834328e-3d2e-4c98-99c9-f245916bcb40

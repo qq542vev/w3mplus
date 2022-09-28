@@ -2,6 +2,12 @@
 ##
 ## Default w3m keymap.
 ##
+## Usage:
+##
+## ------ Text ------
+## w3m -o keymap_file=~/.w3m/keymap_w3m
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 06b6f41b-a518-4767-b5ee-9ee095d2cf53

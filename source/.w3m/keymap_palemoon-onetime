@@ -2,6 +2,12 @@
 ##
 ## Pale Moon like keymap (one time).
 ##
+## Usage:
+##
+## ------ Text ------
+## w3m -o keymap_file=~/.w3m/keymap_palemoon-onetime
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 85eea8ea-7a4e-4a41-9fd1-bab26b5583dd
