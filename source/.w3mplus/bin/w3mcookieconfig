@@ -61,7 +61,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='w3mcookieconfig 2.0.2'
+version='w3mcookieconfig 2.0.2'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -92,7 +92,7 @@ parser_definition() {
 	flag  reject    --no-reject         init:@no on: no: -- '--reject をリセットする'
 	flag  subdomain -s --{no-}subdomain init:@no -- 'サブドメインを有効にする'
 	disp  :usage     -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION    -v --version -- 'バージョン情報を表示して終了する'
+	disp  version    -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='parsequery 2.0.2'
+version='parsequery 2.0.2'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -75,7 +75,7 @@ parser_definition() {
 	param prefix   -p --prefix   validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_]*$"' var:VARIABLE_NAME -- '変数名の接頭辞を指定する'
 	param suffix   -s --suffix   validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_]*$"' var:VARIABLE_NAME -- '変数名の接尾辞を指定する'
 	disp  :usage   -h --help     -- 'このヘルプを表示して終了する'
-	disp  VERSION  -v --version  -- 'バージョン情報を表示して終了する'
+	disp  version  -v --version  -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

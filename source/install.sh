@@ -64,7 +64,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='install.sh 0.1.0'
+version='install.sh 0.1.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -85,7 +85,7 @@ parser_definition() {
 	param sourceW3m     --source-w3m     init:'sourceW3m=$(dirname -- "${0}"; printf "_"); sourceW3m="${sourceW3m%?_}/.w3m"' var:DIRECTORY -- 'インストールする .w3m を指定する'
 	param sourceW3mplus --source-w3mplus init:'sourceW3mplus=$(dirname -- "${0}"; printf "_"); sourceW3mplus="${sourceW3mplus%?_}/.w3mplus"' var:DIRECTORY -- 'インストールする .w3mplus を指定する'
 	disp  :usage      -h --help      -- 'このヘルプを表示して終了する'
-	disp  VERSION     -v --version   -- 'バージョン情報を表示して終了する'
+	disp  version     -v --version   -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='httpresponse 2.0.0'
+version='httpresponse 2.0.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -81,7 +81,7 @@ parser_definition() {
 	param statusLine  -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
 	param W3MPLUS_TEMPLATE_HTTP -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp  :usage      -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION     -v --version -- 'バージョン情報を表示して終了する'
+	disp  version     -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

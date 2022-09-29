@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='changeconfig 3.0.1'
+version='changeconfig 3.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -79,7 +79,7 @@ parser_definition() {
 	param :'append_array_posix param "${OPTARG}"' -p --param validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_-]+="' var:"NAME '=' VALUE | NAME '=' [+*/%^-] '=' UNSIGNED_NUMBER | NAME '=!'" -- 'NAME の値を更新する'
 	flag  param   --no-param   init:@no on: no: -- '--param をリセットする'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
+	disp  version -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

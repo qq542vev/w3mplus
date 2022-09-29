@@ -64,7 +64,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='w3mredirect 2.0.1'
+version='w3mredirect 2.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -84,7 +84,7 @@ parser_definition() {
 	param tab      -t --tab      init:='current' pattern:'current | del-prebuf | newtab | open-newtab' var:"'current' | 'del-prebuf' | 'newtab' | 'open-newtab'" -- 'タブの動作を指定する'
 	param template -T --template init:='' var:FILE -- 'テンプレートファイルを指定する'
 	disp  :usage   -h --help     -- 'このヘルプを表示して終了する'
-	disp  VERSION  -v --version  -- 'バージョン情報を表示して終了する'
+	disp  version  -v --version  -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

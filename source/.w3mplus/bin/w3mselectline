@@ -70,7 +70,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='w3mselectline 2.0.1'
+version='w3mselectline 2.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -85,7 +85,7 @@ parser_definition() {
 	param line    -l --line    init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:UNSIGNED_INTEGER -- '行番号を指定する'
 	param number  -n --number  init:='0' validate:'regex_match "${OPTARG}" "^([0$]|[+]?-?[1-9][0-9]*)$"' var:"'0' | '$' | SIGNED_INTEGER" -- '選択範囲を指定する'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
+	disp  version -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'ACTION:'
 

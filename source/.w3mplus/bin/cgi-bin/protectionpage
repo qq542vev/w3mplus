@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='protectionpage 1.2.0'
+version='protectionpage 1.2.0'
 
 : ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
 : ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
@@ -79,7 +79,7 @@ parser_definition() {
 		'' 'Options:'
 
 	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
+	disp  version   -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

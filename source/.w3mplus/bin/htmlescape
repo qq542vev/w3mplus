@@ -55,7 +55,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='htmlescape 1.0.3'
+version='htmlescape 1.0.3'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -68,7 +68,7 @@ parser_definition() {
 
 	param escape  -e --escape init:='special' pattern:'special | single | double' var:"'special' | 'single' | 'double'" -- 'エスケープする種類を指定する'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
+	disp  version -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

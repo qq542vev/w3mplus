@@ -58,7 +58,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='w3m-cleanup 1.1.6'
+version='w3m-cleanup 1.1.6'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -72,7 +72,7 @@ parser_definition() {
 	flag  cookieFlag  -c --{no-}cookie  init:@no -- 'Cookie を削除する'
 	flag  historyFlag -H --{no-}history init:@no -- '閲覧履歴を削除をする'
 	disp  :usage      -h --help -- 'このヘルプを表示して終了する'
-	disp  VERSION     -v --version -- 'バージョン情報を表示して終了する'
+	disp  version     -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

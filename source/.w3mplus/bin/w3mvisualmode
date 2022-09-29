@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='w3mvisualmode 2.0.0'
+version='w3mvisualmode 2.0.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -75,7 +75,7 @@ parser_definition() {
 	param variable -V --variable init:='W3MPLUS_VISUALMODE_START' validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_]+$"' var:VARIABLE_NAME -- '一時的に使用する変数名を指定する'
 	param timeout  -t --timeout  init:='+600' validate:'regex_match "${OPTARG}" "^(@|[+-])(0|[1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- 'タイムアウトする秒数または時間を指定する'
 	disp  :usage   -h --help     -- 'このヘルプを表示して終了する'
-	disp  VERSION  -v --version  -- 'バージョン情報を表示して終了する'
+	disp  version  -v --version  -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
