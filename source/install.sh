@@ -64,7 +64,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-VERSION='install 0.1.0'
+VERSION='install.sh 0.1.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
