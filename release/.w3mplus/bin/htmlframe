@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-VERSION='htmlframe 1.0.0'
+version='htmlframe 1.0.0'
 
 
 
@@ -305,7 +305,7 @@ parser_definition() {
 	param :'eval "${1#--}=\"\${OPTARG}\""' --n1 --n2 --n3 --n4 --n5 --n6 --n7 --n8 --n9 validate:'regex_match "${OPTARG}" "^([A-Za-z][0-9A-Za-z\\-_:.]*)?$"' var:NAME -- 'n個目の URI に対応するname属性を指定する'
 	param :'eval "${1#--}=\"\${OPTARG}\""' --t1 --t2 --t3 --t4 --t5 --t6 --t7 --t8 --t9 var:TEXT -- 'n個目の URI に対応するタイトルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+	disp version -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -626,7 +626,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${VERSION}"
+			echo "${version}"
 			exit 0
 			;;
 		--)

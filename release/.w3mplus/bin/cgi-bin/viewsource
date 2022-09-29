@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-VERSION='viewsource 1.0.0'
+version='viewsource 1.0.1'
 
 : ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
 : ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
@@ -75,7 +75,7 @@ parser_definition() {
 		'' 'Options:'
 
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+	disp version -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -166,7 +166,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${VERSION}"
+			echo "${version}"
 			exit 0
 			;;
 		--)

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-VERSION='psrelative 1.0.0'
+version='psrelative 1.0.0'
 
 
 
@@ -72,7 +72,7 @@ parser_definition() {
 
 	param output -o init:='pid,ppid,tty,time,comm' var:FORMAT -- 'ps コマンドの出力カラムを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+	disp version -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -175,7 +175,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${VERSION}"
+			echo "${version}"
 			exit 0
 			;;
 		--)

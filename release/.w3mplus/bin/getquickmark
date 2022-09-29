@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-VERSION='getquickmark 2.2.1'
+version='getquickmark 2.2.1'
 
 
 
@@ -89,7 +89,7 @@ parser_definition() {
 	param config -c --config init:'config="${HOME}/.w3mplus/quickmark"' var:FILE -- '設定ファイルを指定する'
 	flag regexpFlag -E --{no-}extended-regexp init:@no -- '拡張正規表現を使用する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+	disp version -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -220,7 +220,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${VERSION}"
+			echo "${version}"
 			exit 0
 			;;
 		--)

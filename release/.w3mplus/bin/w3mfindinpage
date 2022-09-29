@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-VERSION='w3mfindinpage 1.1.4'
+version='w3mfindinpage 1.1.4'
 
 
 
@@ -207,7 +207,7 @@ parser_definition() {
 	flag exactFlag -e --{no-}exact init:@no -- '単語ごとに検索を行う'
 	param :'number=$((OPTARG))' -n --number init:='+1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"' var:SIGNED_INTEGER -- "指定回数検索を行う"
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
+	disp version -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -342,7 +342,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${VERSION}"
+			echo "${version}"
 			exit 0
 			;;
 		--)
