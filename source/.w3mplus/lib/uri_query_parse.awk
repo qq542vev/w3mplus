@@ -4,6 +4,16 @@
 ##
 ## URI クエリを分離する関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'uri_query_parse.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "uri_query_parse.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 0dd0c8ab-eb71-4574-9f38-068ecea41136

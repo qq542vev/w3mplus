@@ -4,6 +4,12 @@
 ##
 ## Shell Script 用の引数を生成する関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## . 'shell_argument.sh'
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - de6c71d9-3897-4d7f-9e76-3e2bbed4484a

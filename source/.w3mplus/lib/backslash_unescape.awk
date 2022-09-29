@@ -4,6 +4,16 @@
 ##
 ## バックスラッシュをアンエスケープする関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'backslash_unescape.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "backslash_unescape.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 638dd1f3-1e48-433e-bf94-0f62a5343e8b

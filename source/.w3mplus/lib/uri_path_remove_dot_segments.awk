@@ -4,6 +4,16 @@
 ##
 ## ドットセグメントを除去する関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'uri_path_remove_dot_segments.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "uri_path_remove_dot_segments.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - b6b08b94-3623-4ace-a0a5-48aa3ad777a8

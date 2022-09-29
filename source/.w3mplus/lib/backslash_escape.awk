@@ -4,6 +4,16 @@
 ##
 ## バックスラッシュでエスケープする関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'backslash_escape.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "backslash_escape.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 92149acc-262e-41c6-8fb4-296193ea08a2

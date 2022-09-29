@@ -4,6 +4,16 @@
 ##
 ## URL エンコードする関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'url_encode.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "url_encode.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - e6cf067b-b017-44e3-a6bd-2dc975ef3737

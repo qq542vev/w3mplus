@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/abspath.sh",{49:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">相対パスを絶対パスに変換する関数を定義する。</div></div>",51:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">相対パスを絶対パスに変換する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/abspath.sh",{44:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">相対パスを絶対パスに変換する関数を定義する。</div></div>",51:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">相対パスを絶対パスに変換する。</div></div>"});

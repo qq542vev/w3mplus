@@ -57,6 +57,12 @@
 ##   file system problems, which should use NOINPUT or
 ##   CANTCREAT, but rather for higher level permissions.
 ##
+## Usage:
+##
+## ------ Text ------
+## . 'sysexits.sh'
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 0ef42a95-c6db-43c8-96d0-fafa2237b6c8

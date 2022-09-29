@@ -4,6 +4,16 @@
 ##
 ## sysexits の終了コードを返す関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'sysexits.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "sysexits.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 2b88844d-5c62-43e9-85e4-3f68b88c8ed2

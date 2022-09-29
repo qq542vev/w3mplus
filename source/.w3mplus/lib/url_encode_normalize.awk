@@ -4,6 +4,16 @@
 ##
 ## URL エンコードの正規化を行う関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'url_encode_normalize.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "url_encode_normalize.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - b76e2212-886c-43d7-8c8e-a846325be995

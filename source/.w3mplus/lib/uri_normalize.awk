@@ -4,6 +4,16 @@
 ##
 ## URI の正規化を行う関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'uri_normalize.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "uri_normalize.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 4d29eba9-eeb7-4ebe-8363-41d979420ee1

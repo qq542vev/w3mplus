@@ -4,6 +4,16 @@
 ##
 ## URL デコードする関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'url_decode.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "url_decode.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 63077be4-ad3a-47ca-8c0a-56c38d1059e9

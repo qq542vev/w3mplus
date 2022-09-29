@@ -4,6 +4,16 @@
 ##
 ## 制御文字を削除する関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'remove_control_character.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "remove_control_character.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 174f7d3a-4105-49b0-9262-a78e0603114c

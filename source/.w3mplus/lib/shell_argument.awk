@@ -4,6 +4,16 @@
 ##
 ## Shell Script 用の引数を生成する関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'shell_argument.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "shell_argument.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 9ea3d3d8-ffef-4667-b7ab-04a859bb42cd

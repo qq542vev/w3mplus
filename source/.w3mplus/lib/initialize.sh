@@ -4,6 +4,12 @@
 ##
 ## Shell Script の初期設定を行う。
 ##
+## Usage:
+##
+## ------ Text ------
+## . 'initialize.sh'
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - c64bc63a-9c95-4270-82b5-50b57df02fb4

@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/regex_match.sh",{81:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">正規表現による検査関数を定義する。</div></div>",83:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">文字列が正規表現に一致するか検査する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/regex_match.sh",{78:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">正規表現による検査関数を定義する。</div></div>",83:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">文字列が正規表現に一致するか検査する。</div></div>"});

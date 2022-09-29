@@ -4,6 +4,16 @@
 ##
 ## HTML エスケープする関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'html_escape.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "html_escape.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 5a18e1a6-f2c9-4239-b2ef-41cb8f647bfb

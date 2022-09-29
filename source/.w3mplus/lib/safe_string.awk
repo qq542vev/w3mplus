@@ -4,6 +4,16 @@
 ##
 ## 制御文字を削除する関数を定義する。
 ##
+## Usage:
+##
+## ------ Text ------
+## awk -f 'safe_string.awk'
+## ------------------
+##
+## ------ Text ------
+## @include "safe_string.awk"
+## ------------------
+##
 ## Metadata:
 ##
 ##   id - 8e4e67d2-eb12-4d17-aa03-b9253c5fa9a6
