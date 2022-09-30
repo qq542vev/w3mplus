@@ -61,7 +61,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-version='w3mcookieconfig 2.0.2'
+readonly VERSION='w3mcookieconfig 2.0.2'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -91,8 +91,8 @@ parser_definition() {
 	param :'append_array_posix reject "reject-${OPTARG}"' -r --reject validate:'validation_param "${OPTARG}"' var:"('add' | 'reject' | 'toggle') '=' DOMAIN" -- 'cookie_reject_domains に DOMAIN をセットする'
 	flag  reject    --no-reject         init:@no on: no: -- '--reject をリセットする'
 	flag  subdomain -s --{no-}subdomain init:@no -- 'サブドメインを有効にする'
-	disp  :usage     -h --help    -- 'このヘルプを表示して終了する'
-	disp  version    -v --version -- 'バージョン情報を表示して終了する'
+	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

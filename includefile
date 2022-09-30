@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-version='includefile 0.2.0'
+readonly VERSION='includefile 0.2.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -67,7 +67,7 @@ parser_definition() {
 
 	flag  verbose -V --{no-}verbose init:@no -- '冗長な表示を行う'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
-	disp  version -v --version -- 'バージョン情報を表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

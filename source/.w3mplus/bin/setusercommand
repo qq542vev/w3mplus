@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-version='setusercommand 1.1.3'
+readonly VERSION='setusercommand 1.1.3'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -85,7 +85,7 @@ parser_definition() {
 
 	param config  -c --config  init:'config="${HOME}/.w3mplus/autocmd"' var:FILE -- '設定ファイルを指定する'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
-	disp  version -v --version -- 'バージョン情報を表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-version='w3m-private 2.0.0'
+readonly VERSION='w3m-private 2.0.0'
 
 ORIGINAL_LC_ALL="${LC_ALL-}"
 
@@ -78,7 +78,7 @@ parser_definition() {
 	param :'append_array_posix link "-o" "-path" "${OPTARG}"' -l --link var:PATTERN -- 'PATTERN に一致するファイルへのシンボリックリンクを作成する'
 	flag  link    --no-link    init:@no on: no: -- '--link をリセットする'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
-	disp  version -v --version -- 'バージョン情報を表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

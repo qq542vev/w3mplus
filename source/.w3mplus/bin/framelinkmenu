@@ -65,7 +65,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-version='framelinkmenu 2.0.1'
+readonly VERSION='framelinkmenu 2.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -91,7 +91,7 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_array_posix attribute -a "${OPTARG}"' -a --attribute init:='cols=200,*' validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:"NANE '=' VALUE" -- 'frameset要素に属性を追加する'
-	flag  attribute --no-attribute init:@none on: no: -- '--attribute をリセットする'
+	flag  attribute --no-attribute   init:@none on: no: -- '--attribute をリセットする'
 	param :option_category -c --category init:='scheme' pattern:'scheme | authority | path | query | fragment' var:"'scheme' | 'authority' | 'path' | 'query' | 'fragment'" -- 'サイドバーの URI を分類する'
 	param main      -m --main        init:='data:text/plain,' var:URI -- 'メインページの URI を指定する'
 	param output    -o --menu-output init:'output="${HOME}/.w3mplus/cache"' var:PATH -- 'サイドバーの内容を PATH に出力する'
@@ -99,7 +99,7 @@ parser_definition() {
 	param size      -s --size        init:='20'   validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- 'サイドバーの文字列を切り詰める'
 	param title     -t --title       init:='Links' var:TEXT -- 'フレームページのタイトルを指定する'
 	disp  :usage    -h --help        -- 'このヘルプを表示して終了する'
-	disp  version   -v --version     -- 'バージョン情報を表示して終了する'
+	disp  VERSION   -v --version     -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

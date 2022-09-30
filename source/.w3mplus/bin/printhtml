@@ -57,7 +57,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-version='printhtml 3.0.0'
+readonly VERSION='printhtml 3.0.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -75,11 +75,11 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'option_set "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
-	flag  head     --no-head    init:@no on: no: -- '--head をリセットする'
-	param title    -t --title   init:='No Title' var:TEXT -- 'ページのタイトルを指定する'
+	flag  head    --no-head    init:@no on: no: -- '--head をリセットする'
+	param title   -t --title   init:='No Title' var:TEXT -- 'ページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_HTML -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
-	disp  :usage   -h --help    -- 'このヘルプを表示して終了する'
-	disp  version  -v --version -- 'バージョン情報を表示して終了する'
+	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \

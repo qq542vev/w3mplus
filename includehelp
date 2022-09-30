@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-version='includehelp 0.1.1'
+readonly VERSION='includehelp 0.1.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -67,7 +67,7 @@ parser_definition() {
 
 	flag  placeFlag -i --{no-}in-place init:@no -- 'FILE を更新して保存する'
 	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'
-	disp  version   -v --version -- 'バージョン情報を表示して終了する'
+	disp  VERSION   -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
