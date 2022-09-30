@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='w3mplus 2.0.1'
+readonly VERSION='w3mplus 2.0.1'
 
 : ${W3MPLUS_W3M_HOME:="${HOME}/.w3m"}
 : ${W3MPLUS_W3M_BOOKMARK:="${W3MPLUS_W3M_HOME}/bookmark.html"}
@@ -159,7 +159,7 @@ parser_definition() {
 		'' 'Options:'
 
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -250,7 +250,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)

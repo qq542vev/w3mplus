@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='pushuri 4.0.0'
+readonly VERSION='pushuri 4.0.0'
 
 
 
@@ -93,7 +93,7 @@ parser_definition() {
 	param :'eval "${1#--}=\"\${OPTARG}\""' --l1 --l2 --l3 --l4 --l5 --l6 --l7 --l8 --l9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:INTEGER -- 'n個目の URI に対応する行番号を指定する'
 	param size -s --size init:='50000' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- 'URI の履歴数を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -367,7 +367,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)

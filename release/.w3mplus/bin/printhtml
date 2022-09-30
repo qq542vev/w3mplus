@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='printhtml 3.0.0'
+readonly VERSION='printhtml 3.0.0'
 
 
 
@@ -262,7 +262,7 @@ parser_definition() {
 	param title -t --title init:='No Title' var:TEXT -- 'ページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_HTML -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -411,7 +411,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)

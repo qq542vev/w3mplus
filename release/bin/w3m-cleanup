@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='w3m-cleanup 1.1.6'
+readonly VERSION='w3m-cleanup 1.1.6'
 
 
 
@@ -73,7 +73,7 @@ parser_definition() {
 	flag cookieFlag -c --{no-}cookie init:@no -- 'Cookie を削除する'
 	flag historyFlag -H --{no-}history init:@no -- '閲覧履歴を削除をする'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -204,7 +204,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)

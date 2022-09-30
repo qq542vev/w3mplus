@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='getregister 1.3.3'
+readonly VERSION='getregister 1.3.3'
 
 
 
@@ -86,12 +86,11 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [PATTERN]..." \
 		'' 'Options:'
 
-	setup REST abbr:true error:option_error plus:true no:0
 	param config -c --config init:'config="${HOME}/.w3mplus/register"' var:FILE -- '設定ファイル'
 	flag regexpFlag -E --{no-}extended-regexp init:@no -- '拡張正規表現を使用する'
 	flag rowFlag -r --{no-}row init:@no -- 'デコードせず行のまま表示する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -242,7 +241,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)
@@ -286,7 +285,6 @@ Usage:
   getregister [OPTION]... [PATTERN]...
 
 Options:
-
   -c,     --config FILE       設定ファイル
   -E,     --{no-}extended-regexp 
                               拡張正規表現を使用する

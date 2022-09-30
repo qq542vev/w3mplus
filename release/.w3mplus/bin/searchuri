@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='searchuri 2.1.1'
+readonly VERSION='searchuri 2.1.1'
 
 
 
@@ -110,7 +110,7 @@ parser_definition() {
 	param history -H --history init:'history="${HOME}/.w3mplus/search-history"' var:FILE -- '検索履歴をログファイルを指定する'
 	param size -s --size init:='50000' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- '記録する検索履歴数を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -291,7 +291,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)

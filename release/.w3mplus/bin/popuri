@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='popuri 3.1.0'
+readonly VERSION='popuri 3.1.0'
 
 
 
@@ -93,7 +93,7 @@ parser_definition() {
 	param number -n --number init:='-1' validate:'regex_match "${OPTARG}" "^(@(0|[1-9][0-9]*)|[+-][1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- '開始する秒数または行を指定する'
 	param timeout -t --timeout init:='+86400' validate:'regex_match "${OPTARG}" "^(@|[+-])(0|[1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- 'タイムアウトする秒数または時間を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -257,7 +257,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)

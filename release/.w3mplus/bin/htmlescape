@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='htmlescape 1.0.3'
+readonly VERSION='htmlescape 1.0.3'
 
 
 
@@ -72,7 +72,7 @@ parser_definition() {
 
 	param escape -e --escape init:='special' pattern:'special | single | double' var:"'special' | 'single' | 'double'" -- 'エスケープする種類を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -188,7 +188,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)

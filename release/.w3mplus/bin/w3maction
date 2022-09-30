@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='w3maction 2.3.0'
+readonly VERSION='w3maction 2.3.0'
 
 
 
@@ -111,7 +111,7 @@ parser_definition() {
 
 	param data -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:"'raw' | 'base64' | 'urlencode'" -- '変数のエンコードタイプを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'ACTION:'
 
@@ -255,7 +255,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)

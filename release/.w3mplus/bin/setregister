@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-version='setregister 2.0.0'
+readonly VERSION='setregister 2.0.0'
 
 
 
@@ -88,7 +88,7 @@ parser_definition() {
 
 	param config -c --config init:'config="${HOME}/.w3mplus/register"' var:FILE -- '設定ファイルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
-	disp version -v --version -- 'バージョン情報を表示して終了する'
+	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -198,7 +198,7 @@ parse() {
 			exit 0
 			;;
 		'-v' | '--version')
-			echo "${version}"
+			echo "${VERSION}"
 			exit 0
 			;;
 		--)
