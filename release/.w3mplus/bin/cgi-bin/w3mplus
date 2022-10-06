@@ -118,7 +118,7 @@ datauri() {
 shell_argument() {
 	set "${1}" "${2-}" ''
 
-	until [ "${2#*\'}" = "${2}" ]; do
+	until [ "${2#*\'}" '=' "${2}" ]; do
 		set -- "${1}" "${2#*\'}" "${3}${2%%\'*}'\"'\"'"
 	done
 
@@ -795,7 +795,7 @@ case "${query_action-}" in
 		setusercommand \
 			--config "${W3MPLUS_LOCALMARK_FILE}" \
 			-- "${query_key}" \
-			"[ \"\${W3M_URL%%#*}\" = ${uri} ] && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}' \${W3MPLUS_LOCALMARK_LINEBEGIN:+-H 'W3m-control: GOTO ${filepath}?action=line-begin-non-blake&line=-${line}'}"
+			"[ \"\${W3M_URL%%#*}\" '=' ${uri} ] && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}' \${W3MPLUS_LOCALMARK_LINEBEGIN:+-H 'W3m-control: GOTO ${filepath}?action=line-begin-non-blake&line=-${line}'}"
 		;;
 	*) printf 'This page cannot be registered.\n' ;;
 	esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect

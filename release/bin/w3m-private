@@ -81,7 +81,7 @@ append_array_posix() {
 __append_array_posix() {
 	set "${1}" "${2-}" ''
 
-	until [ "${2#*\'}" = "${2}" ]; do
+	until [ "${2#*\'}" '=' "${2}" ]; do
 		set -- "${1}" "${2#*\'}" "${3}${2%%\'*}'\"'\"'"
 	done
 
