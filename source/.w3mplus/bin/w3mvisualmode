@@ -128,7 +128,7 @@ case "${timeout}" in
 		;;
 esac
 
-if [ "${id}" = "${startId}" ] && [ "${limitTime}" "${operator}" "${startTime}" ]; then
+if [ "${id}" '=' "${startId}" ] && [ "${limitTime}" "${operator}" "${startTime}" ]; then
 	awkScript=$(
 		cat <<-'__EOF__'
 		BEGIN {

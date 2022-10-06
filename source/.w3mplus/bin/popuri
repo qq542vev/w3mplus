@@ -247,7 +247,7 @@ case "${number}" in
 		number=$((lineCount + number + 2))
 
 		if [ "${number}" -lt '1' ]; then
-			if [ "${count}" = '+0' ]; then
+			if [ "${count}" '=' '+0' ]; then
 				number='1'
 			elif [ '1' -lt "$((number + count))" ]; then
 				count="$((number + count - 1))"

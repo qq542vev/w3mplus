@@ -154,7 +154,7 @@ case "${number}" in
 		;;
 esac
 
-if [ "${number}" = '$' ] || [ "${line}" -le "${number}" ]; then
+if [ "${number}" '=' '$' ] || [ "${line}" -le "${number}" ]; then
 	startLine="${line}"
 	endLine="${number}"
 else
