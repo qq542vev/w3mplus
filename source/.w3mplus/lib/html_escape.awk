@@ -2,7 +2,7 @@
 
 ### Script: html_escape.awk
 ##
-## HTML エスケープする関数を定義する。
+## HTML の特殊文字を変換する関数を定義する。
 ##
 ## Usage:
 ##
@@ -32,15 +32,15 @@
 
 ### Function: html_escape
 ##
-## HTML の特殊文字をエスケープする。
+## 文字列内の HTML 特殊文字を実態参照に変換する。
 ##
 ## Parameters:
 ##
-##   string - エスケープする文字列。
+##   string - 実態参照に変換する文字列。
 ##
 ## Returns:
 ##
-##   エスケープされた文字列。
+##   変換された文字列。
 
 function html_escape(string) {
 	gsub(/&/, "\\&amp;", string)
