@@ -57,7 +57,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='getquickmark 2.2.1'
+readonly 'VERSION=getquickmark 2.2.1'
 
 . 'initialize.sh'
 . 'option_error.sh'

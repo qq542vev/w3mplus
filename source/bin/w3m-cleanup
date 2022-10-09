@@ -58,7 +58,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='w3m-cleanup 1.1.6'
+readonly 'VERSION=w3m-cleanup 1.1.6'
 
 . 'initialize.sh'
 . 'option_error.sh'

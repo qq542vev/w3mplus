@@ -56,7 +56,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='w3mfindinpage 1.1.4'
+readonly 'VERSION=w3mfindinpage 1.1.4'
 
 . 'initialize.sh'
 . 'option_error.sh'

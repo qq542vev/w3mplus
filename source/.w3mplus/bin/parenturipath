@@ -55,7 +55,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='parenturipath 1.3.3'
+readonly 'VERSION=parenturipath 1.3.3'
 
 . 'initialize.sh'
 . 'option_error.sh'

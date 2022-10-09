@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='parsequery 2.0.2'
+readonly 'VERSION=parsequery 2.0.2'
 
 . 'initialize.sh'
 . 'option_error.sh'

@@ -58,7 +58,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='gotoparagraph 1.1.7'
+readonly 'VERSION=gotoparagraph 1.1.7'
 
 . 'initialize.sh'
 . 'option_error.sh'

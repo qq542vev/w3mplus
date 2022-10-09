@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='setregister 2.0.0'
+readonly 'VERSION=setregister 2.0.0'
 
 . 'initialize.sh'
 . 'option_error.sh'

@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='getregister 1.3.3'
+readonly 'VERSION=getregister 1.3.3'
 
 . 'initialize.sh'
 . 'option_error.sh'

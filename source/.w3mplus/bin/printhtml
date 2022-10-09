@@ -57,7 +57,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='printhtml 3.0.0'
+readonly 'VERSION=printhtml 3.0.0'
 
 . 'initialize.sh'
 . 'option_error.sh'

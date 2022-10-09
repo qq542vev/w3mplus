@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='psrelative 1.0.0'
+readonly 'VERSION=psrelative 1.0.0'
 
 . 'initialize.sh'
 . 'option_error.sh'

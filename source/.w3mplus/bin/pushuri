@@ -60,7 +60,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='pushuri 4.0.0'
+readonly 'VERSION=pushuri 4.0.0'
 
 . 'initialize.sh'
 . 'option_error.sh'

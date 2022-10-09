@@ -58,7 +58,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='w3m-updatedenylist 5.0.2'
+readonly 'VERSION=w3m-updatedenylist 5.0.2'
 
 . 'initialize.sh'
 . 'option_error.sh'

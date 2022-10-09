@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='changeconfig 3.0.1'
+readonly 'VERSION=changeconfig 3.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'

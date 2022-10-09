@@ -61,7 +61,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='w3mcookieconfig 2.0.2'
+readonly 'VERSION=w3mcookieconfig 2.0.2'
 
 . 'initialize.sh'
 . 'option_error.sh'

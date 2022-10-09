@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='includehelp 0.1.1'
+readonly 'VERSION=includehelp 0.1.1'
 
 . 'initialize.sh'
 . 'option_error.sh'

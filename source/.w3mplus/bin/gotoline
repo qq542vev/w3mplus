@@ -57,7 +57,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='gotoline 2.0.0'
+readonly 'VERSION=gotoline 2.0.0'
 
 . 'initialize.sh'
 . 'option_error.sh'

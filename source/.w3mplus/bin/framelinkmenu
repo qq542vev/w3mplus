@@ -65,7 +65,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='framelinkmenu 2.0.1'
+readonly 'VERSION=framelinkmenu 2.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'

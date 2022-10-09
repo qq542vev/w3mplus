@@ -61,7 +61,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='searchuri 2.1.1'
+readonly 'VERSION=searchuri 2.1.1'
 
 . 'initialize.sh'
 . 'option_error.sh'

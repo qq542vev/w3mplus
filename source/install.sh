@@ -64,7 +64,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='install.sh 0.1.0'
+readonly 'VERSION=install.sh 0.1.0'
 
 . 'initialize.sh'
 . 'option_error.sh'

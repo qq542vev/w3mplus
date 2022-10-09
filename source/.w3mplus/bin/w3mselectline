@@ -70,7 +70,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly VERSION='w3mselectline 2.0.1'
+readonly 'VERSION=w3mselectline 2.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
