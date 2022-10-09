@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='htmlescape 1.0.3'
+readonly 'VERSION=htmlescape 1.0.3'
 
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='contextmenu 1.1.0'
+readonly 'VERSION=contextmenu 1.1.0'
 
 
 

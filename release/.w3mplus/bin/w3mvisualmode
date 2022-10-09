@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='w3mvisualmode 2.0.0'
+readonly 'VERSION=w3mvisualmode 2.0.0'
 
 
 

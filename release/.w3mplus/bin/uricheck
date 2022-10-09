@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='uricheck 1.3.1'
+readonly 'VERSION=uricheck 1.3.1'
 
 
 

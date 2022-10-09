@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='psrelative 1.0.0'
+readonly 'VERSION=psrelative 1.0.0'
 
 
 

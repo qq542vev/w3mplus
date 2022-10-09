@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='htmlframe 1.0.0'
+readonly 'VERSION=htmlframe 1.0.0'
 
 
 

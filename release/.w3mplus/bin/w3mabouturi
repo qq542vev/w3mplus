@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='w3mabouturi 1.4.4'
+readonly 'VERSION=w3mabouturi 1.4.4'
 
 
 

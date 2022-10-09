@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='popuri 3.1.0'
+readonly 'VERSION=popuri 3.1.0'
 
 
 

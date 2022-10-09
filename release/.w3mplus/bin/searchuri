@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='searchuri 2.1.1'
+readonly 'VERSION=searchuri 2.1.1'
 
 
 

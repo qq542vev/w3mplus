@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='viewsource 1.0.1'
+readonly 'VERSION=viewsource 1.0.1'
 
 : ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
 : ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='w3m-private 2.0.0'
+readonly 'VERSION=w3m-private 2.0.0'
 
 ORIGINAL_LC_ALL="${LC_ALL-}"
 

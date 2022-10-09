@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='incrementuri 1.4.0'
+readonly 'VERSION=incrementuri 1.4.0'
 
 
 

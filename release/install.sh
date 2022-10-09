@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='install.sh 0.1.0'
+readonly 'VERSION=install.sh 0.1.0'
 
 
 

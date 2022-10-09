@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='parenturipath 1.3.3'
+readonly 'VERSION=parenturipath 1.3.3'
 
 
 

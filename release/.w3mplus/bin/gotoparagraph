@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='gotoparagraph 1.1.7'
+readonly 'VERSION=gotoparagraph 1.1.7'
 
 
 

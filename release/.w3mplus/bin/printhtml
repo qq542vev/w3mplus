@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='printhtml 3.0.0'
+readonly 'VERSION=printhtml 3.0.0'
 
 
 

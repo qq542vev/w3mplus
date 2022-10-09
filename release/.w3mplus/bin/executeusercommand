@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='executeusercommand 1.5.0'
+readonly 'VERSION=executeusercommand 1.5.0'
 
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='pushuri 4.0.0'
+readonly 'VERSION=pushuri 4.0.0'
 
 
 

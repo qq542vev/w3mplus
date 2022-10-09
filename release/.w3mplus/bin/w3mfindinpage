@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='w3mfindinpage 1.1.4'
+readonly 'VERSION=w3mfindinpage 1.1.4'
 
 
 

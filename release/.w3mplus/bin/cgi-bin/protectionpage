@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='protectionpage 1.2.0'
+readonly 'VERSION=protectionpage 1.2.0'
 
 : ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
 : ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}

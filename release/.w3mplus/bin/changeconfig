@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='changeconfig 3.0.1'
+readonly 'VERSION=changeconfig 3.0.1'
 
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly VERSION='w3mplus 2.0.1'
+readonly 'VERSION=w3mplus 2.0.1'
 
 : ${W3MPLUS_W3M_HOME:="${HOME}/.w3m"}
 : ${W3MPLUS_W3M_BOOKMARK:="${W3MPLUS_W3M_HOME}/bookmark.html"}
