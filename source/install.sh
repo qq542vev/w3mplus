@@ -8,8 +8,8 @@
 ##
 ##   id - 1cd3c307-ff93-487a-ac7d-dc21901fec47
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 0.1.0
-##   date - 2022-07-27
+##   version - 0.1.1
+##   date - 2022-10-09
 ##   since - 2022-07-13
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -183,7 +183,7 @@ for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
 				elif [ -d "${destDir}" ]; then
 					mkdir -p -- "${destDir}"
 
-					find -- "${tmpDir}/${value%%:*}/" -path '*[!/]' -prune -exec cp -fR -- '{}' "${destDir}" ';'
+					find -- "${tmpDir}/${value%%:*}/" -path '*[!/]' -prune -exec cp -fRP -- '{}' "${destDir}" ';'
 				else
 					cat <<-__EOF__ >&2
 						${0##*/}: '${destDir}' はディレクトリではありません。
