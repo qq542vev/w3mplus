@@ -1,1 +1,1 @@
-﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/pushuri","pushuri");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/pushuri",[["ShellScript","ShellScript"]],[["Files","File"]],[[109,0,0,"pushuri","pushuri"]]);
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/pushuri","pushuri");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/pushuri",[["ShellScript","ShellScript"]],[["Files","File"]],[[107,0,0,"pushuri","pushuri"]]);

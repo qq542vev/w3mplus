@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/uricheck",{116:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">URI を検証する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/uricheck",{131:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">URI を検証する。</div></div>"});

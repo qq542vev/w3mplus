@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/framelinkmenu",{114:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">サイドバー付きの HTML フレームページを作成する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/framelinkmenu",{109:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">サイドバー付きの HTML フレームページを作成する。</div></div>"});
