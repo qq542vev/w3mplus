@@ -27,7 +27,6 @@
 ##   getregister [OPTION]... [PATTERN]...
 ##
 ## Options:
-##
 ##   -c,     --config FILE       設定ファイル
 ##   -E,     --{no-}extended-regexp 
 ##                               拡張正規表現を使用する

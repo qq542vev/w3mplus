@@ -8,8 +8,8 @@
 ##
 ##   id - 389e2c50-477c-4e4e-b999-a6459ca96e46
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2022-06-28
+##   version - 1.0.1
+##   date - 2022-10-12
 ##   since - 2022-06-28
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -27,7 +27,7 @@
 ##   htmlframe [OPTION]... [URI]...
 ##
 ## Options:
-##   -a,     --attribute NANE '=' VALUE 
+##   -a,     --attribute NANE=VALUE 
 ##                               frameset要素に属性を追加する
 ##           --no-attribute      --attribute をリセットする
 ##   -H,     --head ELEMENT      head要素内に ELEMENT を追加する
@@ -64,7 +64,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=htmlframe 1.0.0'
+readonly 'VERSION=htmlframe 1.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -83,7 +83,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 
-	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:"NANE '=' VALUE" -- 'frameset要素に属性を追加する'
+	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:'NANE=VALUE' -- 'frameset要素に属性を追加する'
 	flag  attribute --no-attribute init:@no on: no: -- '--attribute をリセットする'
 	param :'option_set "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
 	flag  head      --no-head      init:@no on: no: --  '--head をリセットする'

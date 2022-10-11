@@ -8,8 +8,8 @@
 ##
 ##   id - 2ebc6d1a-8fb6-4b40-b43f-599a971189bd
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.2
-##   date - 2022-09-15
+##   version - 2.0.3
+##   date - 2022-10-12
 ##   since - 2020-01-27
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -27,11 +27,11 @@
 ##   w3mcookieconfig [OPTION]... [FILE]...
 ##
 ## Options:
-##   -a,     --accept ('add' | 'reject' | 'toggle') '=' DOMAIN 
+##   -a,     --accept add=DOMAIN | reject=DOMAIN | toggle=DOMAIN 
 ##                               cookie_accept_domains に DOMAIN をセットする
 ##           --no-accept         --accept をリセットする
 ##   -i,     --{no-}in-place     FILE を更新して保存する
-##   -r,     --reject ('add' | 'reject' | 'toggle') '=' DOMAIN 
+##   -r,     --reject add=DOMAIN | reject=DOMAIN | toggle=DOMAIN 
 ##                               cookie_reject_domains に DOMAIN をセットする
 ##           --no-reject         --reject をリセットする
 ##   -s,     --{no-}subdomain    サブドメインを有効にする
@@ -61,7 +61,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=w3mcookieconfig 2.0.2'
+readonly 'VERSION=w3mcookieconfig 2.0.3'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -85,10 +85,10 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param :'append_array_posix accept "accept-${OPTARG}"' -a --accept validate:'validation_param "${OPTARG}"' var:"('add' | 'reject' | 'toggle') '=' DOMAIN" -- 'cookie_accept_domains に DOMAIN をセットする'
+	param :'append_array_posix accept "accept-${OPTARG}"' -a --accept validate:'validation_param "${OPTARG}"' var:'add=DOMAIN | reject=DOMAIN | toggle=DOMAIN' -- 'cookie_accept_domains に DOMAIN をセットする'
 	flag  accept    --no-accept         init:@no on: no: -- '--accept をリセットする'
 	flag  placeFlag -i --{no-}in-place  init:@no -- 'FILE を更新して保存する'
-	param :'append_array_posix reject "reject-${OPTARG}"' -r --reject validate:'validation_param "${OPTARG}"' var:"('add' | 'reject' | 'toggle') '=' DOMAIN" -- 'cookie_reject_domains に DOMAIN をセットする'
+	param :'append_array_posix reject "reject-${OPTARG}"' -r --reject validate:'validation_param "${OPTARG}"' var:'add=DOMAIN | reject=DOMAIN | toggle=DOMAIN' -- 'cookie_reject_domains に DOMAIN をセットする'
 	flag  reject    --no-reject         init:@no on: no: -- '--reject をリセットする'
 	flag  subdomain -s --{no-}subdomain init:@no -- 'サブドメインを有効にする'
 	disp  :usage    -h --help    -- 'このヘルプを表示して終了する'

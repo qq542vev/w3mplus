@@ -8,8 +8,8 @@
 ##
 ##   id - 3869c46c-0eec-4d0a-8d31-ddc3af9be2d4
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 3.0.1
-##   date - 2022-09-15
+##   version - 3.0.2
+##   date - 2022-10-12
 ##   since - 2019-08-02
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -30,7 +30,7 @@
 ##   -i,     --{no-}in-place     FILE を更新して保存する
 ##           --max NUMBER        計算結果の最大値を指定する
 ##           --min NUMBER        計算結果の最小値を指定する
-##   -p,     --param NAME '=' VALUE | NAME '=' [+*/%^-] '=' UNSIGNED_NUMBER | NAME '=!' 
+##   -p,     --param NAME=VALUE | NAME=OPERATOR=UNSIGNED_NUMBER | NAME=! 
 ##                               NAME の値を更新する
 ##           --no-param          --param をリセットする
 ##   -h,     --help              このヘルプを表示して終了する
@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=changeconfig 3.0.1'
+readonly 'VERSION=changeconfig 3.0.2'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -74,9 +74,9 @@ parser_definition() {
 		'' 'Options:'
 
 	flag  placeFlag -i --{no-}in-place init:@no -- 'FILE を更新して保存する'
-	param max     --max        validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$"' var:NUMBER -- '計算結果の最大値を指定する'
-	param min     --min        validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$"' var:NUMBER -- '計算結果の最小値を指定する'
-	param :'append_array_posix param "${OPTARG}"' -p --param validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_-]+="' var:"NAME '=' VALUE | NAME '=' [+*/%^-] '=' UNSIGNED_NUMBER | NAME '=!'" -- 'NAME の値を更新する'
+	param max     --max        validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)(\\.[0-9]+)?$"' var:NUMBER -- '計算結果の最大値を指定する'
+	param min     --min        validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)(\\.[0-9]+)?$"' var:NUMBER -- '計算結果の最小値を指定する'
+	param :'append_array_posix param "${OPTARG}"' -p --param validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_-]+="' var:'NAME=VALUE | NAME=OPERATOR=UNSIGNED_NUMBER | NAME=!' -- 'NAME の値を更新する'
 	flag  param   --no-param   init:@no on: no: -- '--param をリセットする'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
 	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
