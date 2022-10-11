@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=gotoline 2.0.0'
+readonly 'VERSION=gotoline 2.0.1'
 
 
 
@@ -88,8 +88,8 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param line -l --line init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:UNSIGNED_INTEGER -- '行番号を指定する'
-	param number -n --number init:='1' validate:'regex_match "${OPTARG}" "^([1-9][0-9]*|[+*/%^-][1-9][0-9]*(\\\\.[0-9]+)?|[+-]?(0|[1-9][0-9]?)(\\\\.[0-9]+)?%|[+-]?100(\\\\.0+)?%)$"' var:"UNSIGNED_INTEGER | [+*/%^-] NUMBER | [+-]? NUMBER '%'" -- '指定した行数移動する'
+	param line -l --line init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:LINE_NUMBER -- '行番号を指定する'
+	param number -n --number init:='1' validate:'regex_match "${OPTARG}" "^([1-9][0-9]*|[+*/%^-][1-9][0-9]*(\\\\.[0-9]+)?|[+-]?(0|[1-9][0-9]?)(\\\\.[0-9]+)?%|[+-]?100(\\\\.0+)?%)$"' var:'UNSIGNED_INTEGER | OPERATOR_AND_UNSIGNED_NUMBER | [SIGN]PERCENT%' -- '指定した行数移動する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -267,9 +267,8 @@ Usage:
   gotoline [OPTION]... [FILE]...
 
 Options:
-  -l,     --line UNSIGNED_INTEGER 
-                              行番号を指定する
-  -n,     --number UNSIGNED_INTEGER | [+*/%^-] NUMBER | [+-]? NUMBER '%' 
+  -l,     --line LINE_NUMBER  行番号を指定する
+  -n,     --number UNSIGNED_INTEGER | OPERATOR_AND_UNSIGNED_NUMBER | [SIGN]PERCENT% 
                               指定した行数移動する
   -h,     --help              このヘルプを表示して終了する
   -v,     --version           バージョン情報を表示して終了する

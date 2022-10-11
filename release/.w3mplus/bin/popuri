@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=popuri 3.1.0'
+readonly 'VERSION=popuri 3.1.1'
 
 
 
@@ -89,9 +89,9 @@ parser_definition() {
 		'' 'Options:'
 
 	param config -c --config init:'config="${HOME}/.w3mplus/tabrestore"' var:FILE -- '設定ファイルを指定する'
-	param count -C --count init:='-1' validate:'regex_match "${OPTARG}" "^(@[+-]?|[+-])(0|[1-9][0-9]*)$"' var:'@SIGNED_INTEGER | SIGNED_INTEGER' -- '範囲の秒数または行数を指定する'
+	param count -C --count init:='-1' validate:'regex_match "${OPTARG}" "^(@[+-]?|[+-])(0|[1-9][0-9]*)$"' var:'@[SIGN]SECOND | SIGNED_INTEGER' -- '範囲の秒数または行数を指定する'
 	param number -n --number init:='-1' validate:'regex_match "${OPTARG}" "^(@(0|[1-9][0-9]*)|[+-][1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- '開始する秒数または行を指定する'
-	param timeout -t --timeout init:='+86400' validate:'regex_match "${OPTARG}" "^(@|[+-])(0|[1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- 'タイムアウトする秒数または時間を指定する'
+	param timeout -t --timeout init:='+86400' validate:'regex_match "${OPTARG}" "^(@|[+-])(0|[1-9][0-9]*)$"' var:'@UNIX_TIME | +SECOND | -SECOND' -- 'タイムアウトする秒数または時間を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -302,11 +302,11 @@ Usage:
 
 Options:
   -c,     --config FILE       設定ファイルを指定する
-  -C,     --count @SIGNED_INTEGER | SIGNED_INTEGER 
+  -C,     --count @[SIGN]SECOND | SIGNED_INTEGER 
                               範囲の秒数または行数を指定する
   -n,     --number @UNIX_TIME | SIGNED_INTEGER 
                               開始する秒数または行を指定する
-  -t,     --timeout @UNIX_TIME | SIGNED_INTEGER 
+  -t,     --timeout @UNIX_TIME | +SECOND | -SECOND 
                               タイムアウトする秒数または時間を指定する
   -h,     --help              このヘルプを表示して終了する
   -v,     --version           バージョン情報を表示して終了する

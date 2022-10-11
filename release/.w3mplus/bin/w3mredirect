@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3mredirect 2.0.1'
+readonly 'VERSION=w3mredirect 2.0.2'
 
 
 
@@ -127,9 +127,9 @@ parser_definition() {
 
 	param :'eval "${1#--}=\"\${OPTARG}\""' --a1 --a2 --a3 --a4 --a5 --a6 --a7 --a8 --a9 validate:'regex_match "${OPTARG}" "^[A-Z]+[^${CHAR_HT}${CHAR_LF}]*$"' var:W3M_COMMAND -- 'n個目の URI アクセス後に W3M_COMMAND を実行する'
 	param :'eval "${1#--}=\"\${OPTARG}\""' --b1 --b2 --b3 --b4 --b5 --b6 --b7 --b8 --b9 validate:'regex_match "${OPTARG}" "^[A-Z]+[^${CHAR_HT}${CHAR_LF}]*$"' var:W3M_COMMAND -- 'n個目の URI アクセス前に W3M_COMMAND を実行する'
-	param :'eval "${1#--}=\"\${OPTARG}\""' --c1 --c2 --c3 --c4 --c5 --c6 --c7 --c8 --c9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:INTEGER -- '指定列に移動する'
-	param :'eval "${1#--}=\"\${OPTARG}\""' --l1 --l2 --l3 --l4 --l5 --l6 --l7 --l8 --l9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:INTEGER -- '指定行に移動する'
-	param tab -t --tab init:='current' pattern:'current | del-prebuf | newtab | open-newtab' var:"'current' | 'del-prebuf' | 'newtab' | 'open-newtab'" -- 'タブの動作を指定する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --c1 --c2 --c3 --c4 --c5 --c6 --c7 --c8 --c9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:'[-]COLUMN_NUMBER' -- '指定列に移動する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --l1 --l2 --l3 --l4 --l5 --l6 --l7 --l8 --l9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:'[-]LINE_NUMBER' -- '指定行に移動する'
+	param tab -t --tab init:='current' pattern:'current | del-prebuf | newtab | open-newtab' var:'current | del-prebuf | newtab | open-newtab' -- 'タブの動作を指定する'
 	param template -T --template init:='' var:FILE -- 'テンプレートファイルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
@@ -602,11 +602,11 @@ Options:
                               n個目の URI アクセス後に W3M_COMMAND を実行する
           --b1, --b2, --b3, --b4, --b5, --b6, --b7, --b8, --b9 W3M_COMMAND 
                               n個目の URI アクセス前に W3M_COMMAND を実行する
-          --c1, --c2, --c3, --c4, --c5, --c6, --c7, --c8, --c9 INTEGER 
+          --c1, --c2, --c3, --c4, --c5, --c6, --c7, --c8, --c9 [-]COLUMN_NUMBER 
                               指定列に移動する
-          --l1, --l2, --l3, --l4, --l5, --l6, --l7, --l8, --l9 INTEGER 
+          --l1, --l2, --l3, --l4, --l5, --l6, --l7, --l8, --l9 [-]LINE_NUMBER 
                               指定行に移動する
-  -t,     --tab 'current' | 'del-prebuf' | 'newtab' | 'open-newtab' 
+  -t,     --tab current | del-prebuf | newtab | open-newtab 
                               タブの動作を指定する
   -T,     --template FILE     テンプレートファイルを指定する
   -h,     --help              このヘルプを表示して終了する

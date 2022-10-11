@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=framelinkmenu 2.0.1'
+readonly 'VERSION=framelinkmenu 2.0.2'
 
 
 
@@ -155,12 +155,12 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param :'append_array_posix attribute -a "${OPTARG}"' -a --attribute init:='cols=200,*' validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:"NANE '=' VALUE" -- 'frameset要素に属性を追加する'
+	param :'append_array_posix attribute -a "${OPTARG}"' -a --attribute init:='cols=200,*' validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:'NANE=VALUE' -- 'frameset要素に属性を追加する'
 	flag attribute --no-attribute init:@none on: no: -- '--attribute をリセットする'
-	param :option_category -c --category init:='scheme' pattern:'scheme | authority | path | query | fragment' var:"'scheme' | 'authority' | 'path' | 'query' | 'fragment'" -- 'サイドバーの URI を分類する'
+	param :option_category -c --category init:='scheme' pattern:'scheme | authority | path | query | fragment' var:'scheme | authority | path | query | fragment' -- 'サイドバーの URI を分類する'
 	param main -m --main init:='data:text/plain,' var:URI -- 'メインページの URI を指定する'
 	param output -o --menu-output init:'output="${HOME}/.w3mplus/cache"' var:PATH -- 'サイドバーの内容を PATH に出力する'
-	param position -p --position init:='left' pattern:'left | right' var:"'left' | 'right'" -- 'サイドバーの位置を指定する'
+	param position -p --position init:='left' pattern:'left | right' var:'left | right' -- 'サイドバーの位置を指定する'
 	param size -s --size init:='20' validate:'regex_match "${OPTARG}" "^(0|[1-9][0-9]*)$"' var:UNSIGNED_INTEGER -- 'サイドバーの文字列を切り詰める'
 	param title -t --title init:='Links' var:TEXT -- 'フレームページのタイトルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
@@ -436,14 +436,14 @@ Usage:
   framelinkmenu [OPTION]... [FILE]...
 
 Options:
-  -a,     --attribute NANE '=' VALUE 
+  -a,     --attribute NANE=VALUE 
                               frameset要素に属性を追加する
           --no-attribute      --attribute をリセットする
-  -c,     --category 'scheme' | 'authority' | 'path' | 'query' | 'fragment' 
+  -c,     --category scheme | authority | path | query | fragment 
                               サイドバーの URI を分類する
   -m,     --main URI          メインページの URI を指定する
   -o,     --menu-output PATH  サイドバーの内容を PATH に出力する
-  -p,     --position 'left' | 'right' 
+  -p,     --position left | right 
                               サイドバーの位置を指定する
   -s,     --size UNSIGNED_INTEGER 
                               サイドバーの文字列を切り詰める

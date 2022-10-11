@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=changeconfig 3.0.1'
+readonly 'VERSION=changeconfig 3.0.2'
 
 
 
@@ -126,9 +126,9 @@ parser_definition() {
 		'' 'Options:'
 
 	flag placeFlag -i --{no-}in-place init:@no -- 'FILE を更新して保存する'
-	param max --max validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$"' var:NUMBER -- '計算結果の最大値を指定する'
-	param min --min validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$"' var:NUMBER -- '計算結果の最小値を指定する'
-	param :'append_array_posix param "${OPTARG}"' -p --param validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_-]+="' var:"NAME '=' VALUE | NAME '=' [+*/%^-] '=' UNSIGNED_NUMBER | NAME '=!'" -- 'NAME の値を更新する'
+	param max --max validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)(\\.[0-9]+)?$"' var:NUMBER -- '計算結果の最大値を指定する'
+	param min --min validate:'regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)(\\.[0-9]+)?$"' var:NUMBER -- '計算結果の最小値を指定する'
+	param :'append_array_posix param "${OPTARG}"' -p --param validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_-]+="' var:'NAME=VALUE | NAME=OPERATOR=UNSIGNED_NUMBER | NAME=!' -- 'NAME の値を更新する'
 	flag param --no-param init:@no on: no: -- '--param をリセットする'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
@@ -276,8 +276,8 @@ parse() {
 		'--max')
 			[ $# -le 1 ] && set "required" "$1" && break
 			OPTARG=$2
-			regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$" || {
-				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$"
+			regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)(\.[0-9]+)?$" || {
+				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)(\.[0-9]+)?$"
 				break
 			}
 			max="$OPTARG"
@@ -286,8 +286,8 @@ parse() {
 		'--min')
 			[ $# -le 1 ] && set "required" "$1" && break
 			OPTARG=$2
-			regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$" || {
-				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)$"
+			regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)(\.[0-9]+)?$" || {
+				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^[+-]?(0|[1-9][0-9]*)(\.[0-9]+)?$"
 				break
 			}
 			min="$OPTARG"
@@ -360,7 +360,7 @@ Options:
   -i,     --{no-}in-place     FILE を更新して保存する
           --max NUMBER        計算結果の最大値を指定する
           --min NUMBER        計算結果の最小値を指定する
-  -p,     --param NAME '=' VALUE | NAME '=' [+*/%^-] '=' UNSIGNED_NUMBER | NAME '=!' 
+  -p,     --param NAME=VALUE | NAME=OPERATOR=UNSIGNED_NUMBER | NAME=! 
                               NAME の値を更新する
           --no-param          --param をリセットする
   -h,     --help              このヘルプを表示して終了する

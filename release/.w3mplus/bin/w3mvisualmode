@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3mvisualmode 2.0.0'
+readonly 'VERSION=w3mvisualmode 2.0.1'
 
 
 
@@ -88,9 +88,9 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... ID" \
 		'' 'Options:'
 
-	param line -l --line init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:UNSIGNED_INTEGER -- '行番号を指定する'
+	param line -l --line init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:LINE_NUMBER -- '行番号を指定する'
 	param variable -V --variable init:='W3MPLUS_VISUALMODE_START' validate:'regex_match "${OPTARG}" "^[0-9A-Za-z_]+$"' var:VARIABLE_NAME -- '一時的に使用する変数名を指定する'
-	param timeout -t --timeout init:='+600' validate:'regex_match "${OPTARG}" "^(@|[+-])(0|[1-9][0-9]*)$"' var:'@UNIX_TIME | SIGNED_INTEGER' -- 'タイムアウトする秒数または時間を指定する'
+	param timeout -t --timeout init:='+600' validate:'regex_match "${OPTARG}" "^(@|[+-])(0|[1-9][0-9]*)$"' var:'@UNIX_TIME | +SECOND | -SECOND' -- 'タイムアウトする秒数または時間を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -286,11 +286,10 @@ Usage:
   w3mvisualmode [OPTION]... ID
 
 Options:
-  -l,     --line UNSIGNED_INTEGER 
-                              行番号を指定する
+  -l,     --line LINE_NUMBER  行番号を指定する
   -V,     --variable VARIABLE_NAME 
                               一時的に使用する変数名を指定する
-  -t,     --timeout @UNIX_TIME | SIGNED_INTEGER 
+  -t,     --timeout @UNIX_TIME | +SECOND | -SECOND 
                               タイムアウトする秒数または時間を指定する
   -h,     --help              このヘルプを表示して終了する
   -v,     --version           バージョン情報を表示して終了する

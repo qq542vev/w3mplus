@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3maction 2.3.0'
+readonly 'VERSION=w3maction 2.3.1'
 
 
 
@@ -109,7 +109,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... ACTION VARIABLE_NAME" \
 		'' 'Options:'
 
-	param data -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:"'raw' | 'base64' | 'urlencode'" -- '変数のエンコードタイプを指定する'
+	param data -d --data-type init:='raw' pattern:'raw | base64 | urlencode' var:'raw | base64 | urlencode' -- '変数のエンコードタイプを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -151,7 +151,7 @@ parser_definition_goto() {
 
 	param :'append_array_posix "option" "${1}" "${OPTARG}"' --a1 --a2 --a3 --a4 --a5 --a6 --a7 --a8 --a9 var:W3M_COMMAND -- 'n個目の URI アクセス後に W3M_COMMAND を実行する'
 	param :'append_array_posix "option" "${1}" "${OPTARG}"' --b1 --b2 --b3 --b4 --b5 --b6 --b7 --b8 --b9 var:W3M_COMMAND -- 'n個目の URI アクセス前に W3M_COMMAND を実行する'
-	param :'append_array_posix "option" "${1}" "${OPTARG}"' -t --tab var:"'current' | 'del-prebuf' | 'newtab' | 'open-newtab'" -- 'タブの動作を指定する'
+	param :'append_array_posix "option" "${1}" "${OPTARG}"' -t --tab var:'current | del-prebuf | newtab | open-newtab' -- 'タブの動作を指定する'
 	disp :usage_goto -h --help -- 'このヘルプを表示して終了する'
 }
 
@@ -308,7 +308,7 @@ Usage:
   w3maction [OPTION]... ACTION VARIABLE_NAME
 
 Options:
-  -d,     --data-type 'raw' | 'base64' | 'urlencode' 
+  -d,     --data-type raw | base64 | urlencode 
                               変数のエンコードタイプを指定する
   -h,     --help              このヘルプを表示して終了する
   -v,     --version           バージョン情報を表示して終了する
@@ -677,7 +677,7 @@ Sub options:
                               n個目の URI アクセス後に W3M_COMMAND を実行する
           --b1, --b2, --b3, --b4, --b5, --b6, --b7, --b8, --b9 W3M_COMMAND 
                               n個目の URI アクセス前に W3M_COMMAND を実行する
-  -t,     --tab 'current' | 'del-prebuf' | 'newtab' | 'open-newtab' 
+  -t,     --tab current | del-prebuf | newtab | open-newtab 
                               タブの動作を指定する
   -h,     --help              このヘルプを表示して終了する
 GETOPTIONSHERE

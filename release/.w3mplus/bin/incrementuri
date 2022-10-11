@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=incrementuri 1.4.0'
+readonly 'VERSION=incrementuri 1.4.1'
 
 
 
@@ -88,7 +88,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 
-	param number -n --number init:='+1' validate:'regex_match "${OPTARG}" "^(0|[+*/%^-]?[1-9][0-9]*)$"' var:"[+*/%^-]? UNSIGNED_INTEGER" -- '演算を指定する'
+	param number -n --number init:='+1' validate:'regex_match "${OPTARG}" "^(0|[+*/%^-]?[1-9][0-9]*)$"' var:'[OPERATOR]UNSIGNED_INTEGER' -- '演算を指定する'
 	param position -p --position init:='-1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"' var:SIGNED_INTEGER -- 'URI の被演算子の位置を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
@@ -267,7 +267,7 @@ Usage:
   incrementuri [OPTION]... [URI]...
 
 Options:
-  -n,     --number [+*/%^-]? UNSIGNED_INTEGER 
+  -n,     --number [OPERATOR]UNSIGNED_INTEGER 
                               演算を指定する
   -p,     --position SIGNED_INTEGER 
                               URI の被演算子の位置を指定する

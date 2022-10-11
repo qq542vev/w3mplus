@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=htmlescape 1.0.3'
+readonly 'VERSION=htmlescape 1.0.4'
 
 
 
@@ -70,7 +70,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param escape -e --escape init:='special' pattern:'special | single | double' var:"'special' | 'single' | 'double'" -- 'エスケープする種類を指定する'
+	param escape -e --escape init:='special' pattern:'special | single | double' var:'special | single | double' -- 'エスケープする種類を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -232,7 +232,7 @@ Usage:
   htmlescape [OPTION]... [FILE]...
 
 Options:
-  -e,     --escape 'special' | 'single' | 'double' 
+  -e,     --escape special | single | double 
                               エスケープする種類を指定する
   -h,     --help              このヘルプを表示して終了する
   -v,     --version           バージョン情報を表示して終了する

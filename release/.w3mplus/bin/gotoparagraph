@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=gotoparagraph 1.1.7'
+readonly 'VERSION=gotoparagraph 1.1.8'
 
 
 
@@ -88,7 +88,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 
-	param line -l --line init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:UNSIGNED_INTEGER -- '行番号を指定する'
+	param line -l --line init:='1' validate:'regex_match "${OPTARG}" "^[1-9][0-9]*$"' var:LINE_NUMBER -- '行番号を指定する'
 	param number -n --number init:='+1' validate:'regex_match "${OPTARG}" "^[+-][1-9][0-9]*$"' var:SIGNED_INTEGER -- '指定した回数段落を移動する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
@@ -268,8 +268,7 @@ Usage:
   gotoparagraph [OPTION]... [URI]...
 
 Options:
-  -l,     --line UNSIGNED_INTEGER 
-                              行番号を指定する
+  -l,     --line LINE_NUMBER  行番号を指定する
   -n,     --number SIGNED_INTEGER 
                               指定した回数段落を移動する
   -h,     --help              このヘルプを表示して終了する

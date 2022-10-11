@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=uricheck 1.3.1'
+readonly 'VERSION=uricheck 1.3.2'
 
 
 
@@ -90,7 +90,7 @@ parser_definition() {
 		"  ${2##*/} -V [OPTION]... [NOT_URI]..." \
 		'' 'Options:'
 
-	param field -f --field init:='original' validate:validate_field var:"'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'?" -- '表示する URI のフィールドを指定する'
+	param field -f --field init:='original' validate:validate_field var:'original | scheme[!] | authority[!] | userinfo[!] | host | port[!] | path | query[!] | fragment[!]' -- '表示する URI のフィールドを指定する'
 	flag normalizeFlag -n --{no-}normalize init:@no -- 'URI の正規化を行う'
 	flag invertFlag -V --{no-}invert init:@no -- 'URI ではない引数を表示する'
 	flag verboseFlag --{no-}verbose init:@no -- '詳細な表示を行う'
@@ -324,7 +324,7 @@ Usage:
   uricheck -V [OPTION]... [NOT_URI]...
 
 Options:
-  -f,     --field 'original' | 'scheme' '!'? | 'authority' '!'? | 'userinfo' '!'? | 'host' | 'port' '!'? | 'path' | 'query' '!'? | 'fragment' '!'? 
+  -f,     --field original | scheme[!] | authority[!] | userinfo[!] | host | port[!] | path | query[!] | fragment[!] 
                               表示する URI のフィールドを指定する
   -n,     --{no-}normalize    URI の正規化を行う
   -V,     --{no-}invert       URI ではない引数を表示する

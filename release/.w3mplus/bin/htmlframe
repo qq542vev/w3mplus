@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=htmlframe 1.0.0'
+readonly 'VERSION=htmlframe 1.0.1'
 
 
 
@@ -296,7 +296,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [URI]..." \
 		'' 'Options:'
 
-	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:"NANE '=' VALUE" -- 'frameset要素に属性を追加する'
+	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:'NANE=VALUE' -- 'frameset要素に属性を追加する'
 	flag attribute --no-attribute init:@no on: no: -- '--attribute をリセットする'
 	param :'option_set "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
 	flag head --no-head init:@no on: no: -- '--head をリセットする'
@@ -670,7 +670,7 @@ Usage:
   htmlframe [OPTION]... [URI]...
 
 Options:
-  -a,     --attribute NANE '=' VALUE 
+  -a,     --attribute NANE=VALUE 
                               frameset要素に属性を追加する
           --no-attribute      --attribute をリセットする
   -H,     --head ELEMENT      head要素内に ELEMENT を追加する

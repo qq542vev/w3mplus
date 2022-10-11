@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=setquickmark 2.0.0'
+readonly 'VERSION=setquickmark 2.0.1'
 
 
 
@@ -142,8 +142,8 @@ parser_definition() {
 		'' 'Options:'
 
 	param config -c --config init:'config="${HOME}/.w3mplus/quickmark"' var:FILE -- '設定ファイルを指定する'
-	param :'eval "${1#--}=\"\${OPTARG}\""' --c1 --c2 --c3 --c4 --c5 --c6 --c7 --c8 --c9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:INTEGER -- 'n個目の URI に対応する列番号を指定する'
-	param :'eval "${1#--}=\"\${OPTARG}\""' --l1 --l2 --l3 --l4 --l5 --l6 --l7 --l8 --l9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:INTEGER -- 'n個目の URI に対応する行番号を指定する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --c1 --c2 --c3 --c4 --c5 --c6 --c7 --c8 --c9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:'[-]COLUMN_NUMBER' -- 'n個目の URI に対応する列番号を指定する'
+	param :'eval "${1#--}=\"\${OPTARG}\""' --l1 --l2 --l3 --l4 --l5 --l6 --l7 --l8 --l9 validate:'regex_match "${OPTARG}" "^-?[1-9][0-9]*$"' var:'[-]LINE_NUMBER' -- 'n個目の URI に対応する行番号を指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -446,9 +446,9 @@ Usage:
 
 Options:
   -c,     --config FILE       設定ファイルを指定する
-          --c1, --c2, --c3, --c4, --c5, --c6, --c7, --c8, --c9 INTEGER 
+          --c1, --c2, --c3, --c4, --c5, --c6, --c7, --c8, --c9 [-]COLUMN_NUMBER 
                               n個目の URI に対応する列番号を指定する
-          --l1, --l2, --l3, --l4, --l5, --l6, --l7, --l8, --l9 INTEGER 
+          --l1, --l2, --l3, --l4, --l5, --l6, --l7, --l8, --l9 [-]LINE_NUMBER 
                               n個目の URI に対応する行番号を指定する
   -h,     --help              このヘルプを表示して終了する
   -v,     --version           バージョン情報を表示して終了する
