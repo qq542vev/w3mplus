@@ -16,7 +16,7 @@
 	See Also:
 
 		* <Project homepage at https://github.com/qq542vev/w3mplus>
-		* <Bag report at https://github.com/qq542vev/w3mplus>
+		* <Bug report at https://github.com/qq542vev/w3mplus>
 -->
 
 # w3mplus

@@ -24,7 +24,7 @@
 ## See Also:
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
-##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <Bug report at https://github.com/qq542vev/w3mplus/issues>
 
 ### Function: awkv_escape
 ##

@@ -24,7 +24,7 @@
 ## See Also:
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
-##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <Bug report at https://github.com/qq542vev/w3mplus/issues>
 ##   * <シェルスクリプトで文字列を置換するreplace_all関数を作りました（実はコーディングスタイルの解説） at https://qiita.com/ko1nksm/items/f2a41ee309dcd3b82e41>
 
 # $1: ret, $2: value, $3: from, $4: to

@@ -78,7 +78,7 @@
 ## See Also:
 ##
 ##   * <Project homepage at https://github.com/qq542vev/w3mplus>
-##   * <Bag report at https://github.com/qq542vev/w3mplus/issues>
+##   * <Bug report at https://github.com/qq542vev/w3mplus/issues>
 ##   * <sysexits(3) at https://www.freebsd.org/cgi/man.cgi?sektion=3&query=sysexits>
 
 #  Redistribution and use in source and binary forms, with or without
