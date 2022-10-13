@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/w3mcookieconfig",{117:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">特定ドメインの Cookie を(許可 / 拒否)する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/w3mcookieconfig",{99:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">特定ドメインの Cookie を(許可 / 拒否)する。</div></div>"});

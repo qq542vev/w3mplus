@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/safe_string.sh",{17:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">制御文字を削除する関数を定義する。</div></div>",55:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">文字列内の水平タブ、改行、復帰以外の制御文字を削除する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/safe_string.sh",{49:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">制御文字を削除する関数を定義する。</div></div>",55:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">文字列内の水平タブ、改行、復帰以外の制御文字を削除する。</div></div>"});

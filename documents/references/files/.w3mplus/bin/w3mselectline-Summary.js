@@ -1,1 +1,1 @@
-﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/w3mselectline","w3mselectline");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/w3mselectline",[["ShellScript","ShellScript"]],[["Files","File"]],[[120,0,0,"w3mselectline","w3mselectline"]]);
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/w3mselectline","w3mselectline");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/w3mselectline",[["ShellScript","ShellScript"]],[["Files","File"]],[[1,0,0,"w3mselectline","w3mselectline"]]);
