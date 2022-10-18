@@ -518,7 +518,7 @@ case "${1-about:about}" in
 			}
 
 						BEGIN {
-							command = "date '+%Y %m'"
+							command = "date -- '+%Y %m'"
 							command | getline
 							close(command)
 

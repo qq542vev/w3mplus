@@ -383,7 +383,7 @@ case "${timeout}" in
 	awkScript='$NF <= limitTime { printf("%s\n", $0) }'
 	;;
 *)
-	limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - (timeout)))
+	limitTime=$(($(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - (timeout)))
 	awkScript='limitTime < $NF { printf("%s\n", $0) }'
 	;;
 esac

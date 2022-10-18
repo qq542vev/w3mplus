@@ -120,8 +120,10 @@ regex_match() {
 	return 0
 }
 
-option_set() {
-	eval "${1}=\${${1}-}\${${1}:+\${3-}}\${2-}"
+
+
+append_string() {
+	eval "${1}=\"\${${1}-}\${${1}:+\${3-}}\${2}\""
 }
 
 parser_definition() {
@@ -129,7 +131,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param :'option_set "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
+	param :'append_string "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
 	flag header --no-header init:@no on: no: -- '--header をリセットする'
 	param statusLine -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
 	param W3MPLUS_TEMPLATE_HTTP -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
@@ -266,7 +268,7 @@ parse() {
 				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^[!#-'*+.0-9A-Z/^_\`a-z|~-]+:[\\t -~]+$"
 				break
 			}
-			option_set "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"
+			append_string "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"
 			shift
 			;;
 		'--no-header')
@@ -379,7 +381,7 @@ case "${W3MPLUS_TEMPLATE_HTTP-}" in
 '')
 	cat <<-__EOF__
 		${statusLine}${CHAR_CR}
-		Date: $(date -u '+%a, %d %b %Y %H:%M:%S GMT')${CHAR_CR}
+		Date: $(date -u -- '+%a, %d %b %Y %H:%M:%S GMT')${CHAR_CR}
 		${header}${CHAR_CR}
 	__EOF__
 

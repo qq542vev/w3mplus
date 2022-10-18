@@ -635,7 +635,7 @@ case "${#}" in
 		__EOF__
 	)
 	key=$(awk -v "key=${key}" -- "${keyEscape}")
-	date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+	date=$(date -u -- '+%Y-%m-%dT%H:%M:%SZ')
 
 	cat -- "${config}"
 

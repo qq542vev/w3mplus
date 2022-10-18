@@ -772,7 +772,7 @@ case "${encoded}" in
 ?*)
 	{
 		cat -- "${history}"
-		printf '%d\t%s\t%s\t%s\n' "$(tail -n 1 -- "${history}" | awk -- "${newNumber}")" "${encoded}" "${engine}" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+		printf '%d\t%s\t%s\t%s\n' "$(tail -n 1 -- "${history}" | awk -- "${newNumber}")" "${encoded}" "${engine}" "$(date -u -- '+%Y-%m-%dT%H:%M:%SZ')"
 	} | tail -n "${size}" >"${tmpDir}/history"
 
 	cat -- "${tmpDir}/history" >"${history}"

@@ -494,7 +494,7 @@ case "${#}" in
 
 	awk \
 		-v "key=${key}" -v "command=${command}" \
-		-v "date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')" -v "add=${add}" \
+		-v "date=$(date -u -- '+%Y-%m-%dT%H:%M:%SZ')" -v "add=${add}" \
 		-- "${awkScript}" "${config}"
 	;;
 esac | sort -k '1,1' -k '3,3' -t "${CHAR_HT}" -o "${config}"

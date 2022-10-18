@@ -449,7 +449,7 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 tmpDir=$(mktemp -d)
-unixtime=$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)
+unixtime=$(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)
 awkScript=$(
 	cat <<-'__EOF__'
 

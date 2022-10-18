@@ -337,7 +337,7 @@ case "${timeout}" in
 	operator='-ge'
 	;;
 '+'* | '-'*)
-	limitTime=$(($(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - (timeout)))
+	limitTime=$(($(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv) - (timeout)))
 	operator='-lt'
 	;;
 esac
@@ -365,6 +365,6 @@ if [ "${id}" '=' "${startId}" ] && [ "${limitTime}" "${operator}" "${startTime}"
 else
 	httpresponse \
 		-H 'W3m-control: BACK' \
-		-H "W3m-control: SETENV ${variable}=${id} ${line} $(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)" \
+		-H "W3m-control: SETENV ${variable}=${id} ${line} $(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)" \
 		-H "W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'"
 fi

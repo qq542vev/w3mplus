@@ -67,6 +67,12 @@ option_error() {
 
 
 
+append_string() {
+	eval "${1}=\"\${${1}-}\${${1}:+\${3-}}\${2}\""
+}
+
+
+
 
 replace_all_fast() {
 	eval "$1=\${2//\"\$3\"/\"\$4\"}"
@@ -248,16 +254,12 @@ safe_string() {
 	remove_control_character "${1}" "${2}" "$(printf '\t\n\r')"
 }
 
-option_set() {
-	eval "${1}=\${${1}-}\${${1}:+\${3-}}\${2-}"
-}
-
 parser_definition() {
 	setup REST abbr:true error:option_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param :'option_set "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
+	param :'append_string "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
 	flag head --no-head init:@no on: no: -- '--head をリセットする'
 	param title -t --title init:='No Title' var:TEXT -- 'ページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_HTML -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
@@ -386,7 +388,7 @@ parse() {
 		'-H' | '--head')
 			[ $# -le 1 ] && set "required" "$1" && break
 			OPTARG=$2
-			option_set "head" "${OPTARG}"
+			append_string "head" "${OPTARG}"
 			shift
 			;;
 		'--no-head')

@@ -70,12 +70,9 @@ readonly 'VERSION=htmlframe 1.0.1'
 . 'option_error.sh'
 . 'regex_match.sh'
 . 'append_array_posix.sh'
+. 'append_string.sh'
 . 'html_escape.sh'
 . 'safe_string.sh'
-
-option_set() {
-	eval "${1}=\${${1}-}\${${1}:+\${3-}}\${2-}"
-}
 
 # @getoptions
 parser_definition() {
@@ -85,7 +82,7 @@ parser_definition() {
 
 	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:'NANE=VALUE' -- 'frameset要素に属性を追加する'
 	flag  attribute --no-attribute init:@no on: no: -- '--attribute をリセットする'
-	param :'option_set "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
+	param :'append_string "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
 	flag  head      --no-head      init:@no on: no: --  '--head をリセットする'
 	param title     -t --title     init:='No Title' var:TEXT -- 'フレームページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_FRAMESET -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
