@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("lsd",["Function","File"],[["lsdate_to_isodate",,[[,,,,0,"File:.w3mplus/lib/lsdate_to_isodate.awk:lsdate_to_isodate"],[,"lsdate_to_isodate.awk",,,1,"File:.w3mplus/lib/lsdate_to_isodate.awk:lsdate_to_isodate.awk"]]]]);

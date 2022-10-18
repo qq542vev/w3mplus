@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/lib/append_string.sh",{75:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">文字列を追加する関数を定義する。</div></div>",146:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">終端に文字列を追加する。</div></div>"});
