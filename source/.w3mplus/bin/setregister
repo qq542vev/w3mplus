@@ -131,7 +131,7 @@ case "${#}" in
 		;;
 esac
 
-date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+date=$(date -u -- '+%Y-%m-%dT%H:%M:%SZ')
 awkScript=$(
 	cat <<-'__EOF__'
 	@include "backslash_escape.awk"

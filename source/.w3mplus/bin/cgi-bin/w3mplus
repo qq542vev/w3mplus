@@ -67,7 +67,7 @@ readonly 'VERSION=w3mplus 2.0.1'
 : ${W3MPLUS_LIB:="${W3MPLUS_HOME}/lib"}
 : ${W3MPLUS_PASS_FILE:="${W3MPLUS_HOME}/pass"}
 
-: ${W3MPLUS_YANK:='v=$(cat; printf "_"); v="${v%_}"; "${HOME}/.w3mplus/bin/setreg" "+" "${v}"; exec 3>&1 >>"${HOME}/w3mplusyank"; date "+# %Y-%m-%d %H:%M:%S %Z"; echo "${v}"; exec 1>&3 3>&-'}
+: ${W3MPLUS_YANK:='v=$(cat; printf "_"); v="${v%_}"; "${HOME}/.w3mplus/bin/setreg" "+" "${v}"; exec 3>&1 >>"${HOME}/w3mplusyank"; date -- "+# %Y-%m-%d %H:%M:%S %Z"; echo "${v}"; exec 1>&3 3>&-'}
 : ${W3MPLUS_UNDO_TIMEOUT:='+86400'}
 : ${W3MPLUS_UNDO_HISTSIZE:='2000'}
 : ${W3MPLUS_UNDO_FILE:="${W3MPLUS_HOME}/tabrestore"}
@@ -825,7 +825,7 @@ case "${query_action-}" in
 		;;
 	'undo-tab')
 		case "${query_count-}" in
-			'@'*) query_number="@$(date -u '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)";;
+			'@'*) query_number="@$(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)";;
 		esac
 
 		popuri \
