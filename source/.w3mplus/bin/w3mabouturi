@@ -8,8 +8,8 @@
 ##
 ##   id - 822add58-c1a4-4ca3-822a-dda430cc607e
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.4.4
-##   date - 2022-06-28
+##   version - 1.4.5
+##   date - 2022-10-18
 ##   since - 2019-05-28
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -151,12 +151,9 @@ case "${1-about:about}" in
 
 		awkScript=$(
 			cat <<-'__EOF__'
-			BEGIN {
-				month["Jan"] = 1; month["Feb"] = 2; month["Mar"] = 3;
-				month["Apr"] = 4; month["May"] = 5; month["Jun"] = 6;
-				month["Jul"] = 7; month["Aug"] = 8; month["Sep"] = 9;
-				month["Oct"] = 10; month["Nov"] = 11; month["Dec"] =12;
+			@include "lsdate_to_isodate.awk"
 
+			BEGIN {
 				command = "date '+%Y %m'"
 				command | getline
 				close(command)
@@ -164,35 +161,30 @@ case "${1-about:about}" in
 				currentYear = $1
 				currentMonth = $2
 
-				totalSize = 0
+				itemCount = totalSize  = 0
 
 				printf("<tbody>")
 			}
 
 			$0 ~ /^-/ && $7 ~ /^w3m(cache|cookie|frame|src|tmp)[.0-9A-Z_a-z-]*$/ {
-				fileSize = $3
-				fileMonth = month[$4]
-				fileDay = $5
-				fileTime = $6
-				fileName = $7
+				size = $3
+				month = $4
+				day = $5
+				year = $6
+				name = $7
 
-				totalSize += fileSize
+				itemCount++
+				totalSize += size
 
-				if(index(fileTime, ":")) {
-					fileYear = currentYear - (currentMonth < fileMonth)
-				} else {
-					fileYear = fileTime
-					fileTime = ""
-				}
+				date = lsdate_to_isodate(month, day, year, currentYear, currentMonth)
+				gsub(/T/, " ", date)
 
-				fileDate = sprintf("%04d-%02d-%02d", fileYear, fileMonth, fileDay)
-
-				printf("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%s</td><td align=\"right\"><time datetime=\"%s\">%s</time></td></tr>", baseURL fileName, fileName, fileSize, fileDate, fileDate (fileTime ? " " fileTime : ""))
+				printf("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%s</td><td align=\"right\"><time datetime=\"%s\">%s</time></td></tr>", baseURL name, name, size, substr(date, 1, 10), date)
 			}
 
 			END {
 				printf("</tbody>")
-				printf("<tfoot><tr><th scope=\"row\">Total Item / Total Size</th><td colspan=\"2\" align=\"right\">%d / %d</td></tr></tfoot>", NR, totalSize)
+				printf("<tfoot><tr><th scope=\"row\">Total Item / Total Size</th><td colspan=\"2\" align=\"right\">%d / %d</td></tr></tfoot>", itemCount, totalSize)
 			}
 			__EOF__
 		)

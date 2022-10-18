@@ -489,49 +489,67 @@ case "${1-about:about}" in
 
 	awkScript=$(
 		cat <<-'__EOF__'
-			BEGIN {
-				month["Jan"] = 1; month["Feb"] = 2; month["Mar"] = 3;
-				month["Apr"] = 4; month["May"] = 5; month["Jun"] = 6;
-				month["Jul"] = 7; month["Aug"] = 8; month["Sep"] = 9;
-				month["Oct"] = 10; month["Nov"] = 11; month["Dec"] =12;
 
-				command = "date '+%Y %m'"
-				command | getline
-				close(command)
 
-				currentYear = $1
-				currentMonth = $2
 
-				totalSize = 0
+			function lsdate_to_isodate(month, day, year, currentYear, currentMonth,  months) {
+				split("", months)
 
-				printf("<tbody>")
-			}
+				months["Jan"] = 1; months["Feb"] = 2; months["Mar"] = 3;
+				months["Apr"] = 4; months["May"] = 5; months["Jun"] = 6;
+				months["Jul"] = 7; months["Aug"] = 8; months["Sep"] = 9;
+				months["Oct"] = 10; months["Nov"] = 11; months["Dec"] = 12;
 
-			$0 ~ /^-/ && $7 ~ /^w3m(cache|cookie|frame|src|tmp)[.0-9A-Z_a-z-]*$/ {
-				fileSize = $3
-				fileMonth = month[$4]
-				fileDay = $5
-				fileTime = $6
-				fileName = $7
-
-				totalSize += fileSize
-
-				if(index(fileTime, ":")) {
-					fileYear = currentYear - (currentMonth < fileMonth)
-				} else {
-					fileYear = fileTime
-					fileTime = ""
+				if(currentYear == "") {
+					"date -- '+%Y'" | getline currentYear
+					close("date -- '+%Y'")
 				}
 
-				fileDate = sprintf("%04d-%02d-%02d", fileYear, fileMonth, fileDay)
+				if(currentMonth == "") {
+					"date -- '+%m'" | getline currentMonth
+					close("date -- '+%m'")
+				}
 
-				printf("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%s</td><td align=\"right\"><time datetime=\"%s\">%s</time></td></tr>", baseURL fileName, fileName, fileSize, fileDate, fileDate (fileTime ? " " fileTime : ""))
+				if(index(year, ":")) {
+					return sprintf("%04d-%02d-%02dT%s", currentYear - (currentMonth < months[month]), months[month], day, year)
+				}
+
+				return sprintf("%04d-%02d-%02d", year, months[month], day)
 			}
 
-			END {
-				printf("</tbody>")
-				printf("<tfoot><tr><th scope=\"row\">Total Item / Total Size</th><td colspan=\"2\" align=\"right\">%d / %d</td></tr></tfoot>", NR, totalSize)
-			}
+						BEGIN {
+							command = "date '+%Y %m'"
+							command | getline
+							close(command)
+
+							currentYear = $1
+							currentMonth = $2
+
+							itemCount = totalSize  = 0
+
+							printf("<tbody>")
+						}
+
+						$0 ~ /^-/ && $7 ~ /^w3m(cache|cookie|frame|src|tmp)[.0-9A-Z_a-z-]*$/ {
+							size = $3
+							month = $4
+							day = $5
+							year = $6
+							name = $7
+
+							itemCount++
+							totalSize += size
+
+							date = lsdate_to_isodate(month, day, year, currentYear, currentMonth)
+							gsub(/T/, " ", date)
+
+							printf("<tr><td><a href=\"%s\">%s</a></td><td align=\"right\">%s</td><td align=\"right\"><time datetime=\"%s\">%s</time></td></tr>", baseURL name, name, size, substr(date, 1, 10), date)
+						}
+
+						END {
+							printf("</tbody>")
+							printf("<tfoot><tr><th scope=\"row\">Total Item / Total Size</th><td colspan=\"2\" align=\"right\">%d / %d</td></tr></tfoot>", itemCount, totalSize)
+						}
 		__EOF__
 	)
 
