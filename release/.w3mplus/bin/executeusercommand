@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=executeusercommand 1.5.0'
+readonly 'VERSION=executeusercommand 1.5.1'
 
 
 
@@ -331,7 +331,6 @@ case "${#}" in
 	;;
 esac
 
-tmpDir=$(mktemp -d)
 awkScript=$(
 	cat <<-'__EOF__'
 
@@ -485,6 +484,26 @@ awkScript=$(
 			return result string
 		}
 
+
+
+		function getline_exec(command, result,  tmpvar,i) {
+			split("", result)
+
+			result["stdout"] = ""
+			command = sprintf("(\n%s\n)\n%s", command, "printf '%3d' \"${?}\"")
+
+			for(i = 1; 0 < (command | getline tmpvar); i++) {
+				result["stdout"] = result["stdout"] (i == 1 ? "" : "\n") tmpvar
+			}
+
+			close(command)
+
+			result["status"] = substr(result["stdout"], length(result["stdout"]) - 2)
+			gsub(/ /, "", result["status"])
+
+			result["stdout"] = substr(result["stdout"], 1, length(result["stdout"]) - 3)
+		}
+
 			BEGIN {
 				FS = "\t"
 
@@ -495,14 +514,10 @@ awkScript=$(
 						key = backslash_unescape($1)
 
 						if((regexpFlag && key ~ pattern) || (!regexpFlag && key == pattern)) {
-							status = system(sprintf("( %s ) >'%s' 2>'/dev/null'", backslash_unescape($2), tmpFile))
+							getline_exec(sprintf("( %s ) 2>'/dev/null'", backslash_unescape($2)), result)
 
-							if(!status) {
-								while(0 < (getline line <tmpFile)) {
-									printf("%s\n", line)
-								}
-
-								close(tmpFile)
+							if(result["status"] == 0) {
+								printf("%s", result["stdout"])
 
 								exit
 							}
@@ -518,11 +533,9 @@ awkScript=$(
 )
 
 awkv_escape 'config' "${config}"
-awkv_escape 'tmpFile' "${tmpDir}/file"
 
 awk \
 	-v "config=${config}" \
 	-v "regexpFlag=${regexpFlag}" \
-	-v "tmpFile=${tmpFile}" \
 	-- "${awkScript}" ${@+"${@}"} ||
 	end_call "${?}"

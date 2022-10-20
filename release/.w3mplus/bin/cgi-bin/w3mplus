@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3mplus 2.0.1'
+readonly 'VERSION=w3mplus 2.0.2'
 
 : ${W3MPLUS_W3M_HOME:="${HOME}/.w3m"}
 : ${W3MPLUS_W3M_BOOKMARK:="${W3MPLUS_W3M_HOME}/bookmark.html"}
@@ -571,7 +571,7 @@ case "${query_action-}" in
 
 	executeusercommand \
 		--config "${W3MPLUS_LOCALMARK_FILE}" \
-		-- "${query_key}" "${uri%%#*}" ||
+		-- "${query_key}|${uri%%#*}" "${uri%%#*}" ||
 		case "${?}" in
 		'1') httpresponse -H 'W3m-control: BACK' ;;
 		*) exit "${?}" ;;
@@ -784,18 +784,18 @@ case "${query_action-}" in
 
 	case "${uri}" in
 	?*)
-		shell_argument 'uri' "${uri%%#*}"
+		shell_argument 'argURI' "${uri%%#*}"
 		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
 		setusercommand \
 			--config "${W3MPLUS_LOCALMARK_FILE}" \
-			-- "${query_key}" |
+			-- "${query_key}|${uri%%#*}" |
 			awk -- '{ lf = 1; print($0); } END { if(lf) { print(""); } }'
 
 		setusercommand \
 			--config "${W3MPLUS_LOCALMARK_FILE}" \
-			-- "${query_key}" \
-			"[ \"\${W3M_URL%%#*}\" '=' ${uri} ] && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}' \${W3MPLUS_LOCALMARK_LINEBEGIN:+-H 'W3m-control: GOTO ${filepath}?action=line-begin-non-blake&line=-${line}'}"
+			-- "${query_key}|${uri%%#*}" \
+			"[ \"\${W3M_URL%%#*}\" '=' ${argURI} ] && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}' \${W3MPLUS_LOCALMARK_LINEBEGIN:+-H 'W3m-control: GOTO ${filepath}?action=line-begin-non-blake&line=-${line}'}"
 		;;
 	*) printf 'This page cannot be registered.\n' ;;
 	esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
