@@ -1,1 +1,1 @@
-﻿NDSearch.OnPrefixDataLoaded("get",["File"],[["getquickmark",,[[,,,,0,"File:.w3mplus/bin/getquickmark:getquickmark"]]],["getregister",,[[,,,,0,"File:.w3mplus/bin/getregister:getregister"]]]]);
+﻿NDSearch.OnPrefixDataLoaded("get",["Function","File"],[["getline_exec",,[[,,,,0,"File:.w3mplus/lib/getline_exec.awk:getline_exec"],[,"getline_exec.awk",,,1,"File:.w3mplus/lib/getline_exec.awk:getline_exec.awk"]]],["getquickmark",,[[,,,,1,"File:.w3mplus/bin/getquickmark:getquickmark"]]],["getregister",,[[,,,,1,"File:.w3mplus/bin/getregister:getregister"]]]]);

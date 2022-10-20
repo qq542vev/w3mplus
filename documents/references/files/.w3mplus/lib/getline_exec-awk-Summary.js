@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/lib/getline_exec.awk","getline_exec.awk");NDSummary.OnSummaryLoaded("File:.w3mplus/lib/getline_exec.awk",[["AWK","AWK"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[105,0,0,"getline_exec.awk","getline_exec.awk"],[151,0,2,"Functions","Functions"],[152,0,1,"getline_exec","getline_exec"]]);
