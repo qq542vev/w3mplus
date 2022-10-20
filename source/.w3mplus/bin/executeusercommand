@@ -8,8 +8,8 @@
 ##
 ##   id - d26cec5e-b3b4-4a5b-a072-1c188a095dc5
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.5.0
-##   date - 2022-07-13
+##   version - 1.5.1
+##   date - 2022-10-20
 ##   since - 2019-07-31
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -57,7 +57,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=executeusercommand 1.5.0'
+readonly 'VERSION=executeusercommand 1.5.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -136,10 +136,10 @@ case "${#}" in
 		;;
 esac
 
-tmpDir=$(mktemp -d)
 awkScript=$(
 	cat <<-'__EOF__'
 	@include "backslash_unescape.awk"
+	@include "getline_exec.awk"
 
 	BEGIN {
 		FS = "\t"
@@ -151,14 +151,10 @@ awkScript=$(
 				key = backslash_unescape($1)
 
 				if((regexpFlag && key ~ pattern) || (!regexpFlag && key == pattern)) {
-					status = system(sprintf("( %s ) >'%s' 2>'/dev/null'", backslash_unescape($2), tmpFile))
+					getline_exec(sprintf("( %s ) 2>'/dev/null'", backslash_unescape($2)), result)
 
-					if(!status) {
-						while(0 < (getline line <tmpFile)) {
-							printf("%s\n", line)
-						}
-
-						close(tmpFile)
+					if(result["status"] == 0) {
+						printf("%s", result["stdout"])
 
 						exit
 					}
@@ -174,11 +170,9 @@ awkScript=$(
 )
 
 awkv_escape 'config' "${config}"
-awkv_escape 'tmpFile' "${tmpDir}/file"
 
 awk \
 	-v "config=${config}" \
 	-v "regexpFlag=${regexpFlag}" \
-	-v "tmpFile=${tmpFile}" \
 	-- "${awkScript}" ${@+"${@}"} \
 || end_call "${?}"
