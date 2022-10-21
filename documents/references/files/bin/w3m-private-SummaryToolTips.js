@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:bin/w3m-private",{10:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">プライベートモードの w3m を実行する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:bin/w3m-private",{125:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">プライベートモードの w3m を実行する。</div></div>"});
