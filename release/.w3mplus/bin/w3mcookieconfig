@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3mcookieconfig 2.0.3'
+readonly 'VERSION=w3mcookieconfig 2.0.4'
 
 
 
@@ -126,10 +126,10 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_array_posix accept "accept-${OPTARG}"' -a --accept validate:'validation_param "${OPTARG}"' var:'add=DOMAIN | reject=DOMAIN | toggle=DOMAIN' -- 'cookie_accept_domains に DOMAIN をセットする'
-	flag accept --no-accept init:@no on: no: -- '--accept をリセットする'
+	flag accept --no-accept init:@no on: no: -- '-a, --accept をリセットする'
 	flag placeFlag -i --{no-}in-place init:@no -- 'FILE を更新して保存する'
 	param :'append_array_posix reject "reject-${OPTARG}"' -r --reject validate:'validation_param "${OPTARG}"' var:'add=DOMAIN | reject=DOMAIN | toggle=DOMAIN' -- 'cookie_reject_domains に DOMAIN をセットする'
-	flag reject --no-reject init:@no on: no: -- '--reject をリセットする'
+	flag reject --no-reject init:@no on: no: -- '-r, --reject をリセットする'
 	flag subdomain -s --{no-}subdomain init:@no -- 'サブドメインを有効にする'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
@@ -374,11 +374,11 @@ Usage:
 Options:
   -a,     --accept add=DOMAIN | reject=DOMAIN | toggle=DOMAIN 
                               cookie_accept_domains に DOMAIN をセットする
-          --no-accept         --accept をリセットする
+          --no-accept         -a, --accept をリセットする
   -i,     --{no-}in-place     FILE を更新して保存する
   -r,     --reject add=DOMAIN | reject=DOMAIN | toggle=DOMAIN 
                               cookie_reject_domains に DOMAIN をセットする
-          --no-reject         --reject をリセットする
+          --no-reject         -r, --reject をリセットする
   -s,     --{no-}subdomain    サブドメインを有効にする
   -h,     --help              このヘルプを表示して終了する
   -v,     --version           バージョン情報を表示して終了する

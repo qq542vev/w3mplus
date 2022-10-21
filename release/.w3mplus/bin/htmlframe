@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=htmlframe 1.0.1'
+readonly 'VERSION=htmlframe 1.0.2'
 
 
 
@@ -299,9 +299,9 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:'NANE=VALUE' -- 'frameset要素に属性を追加する'
-	flag attribute --no-attribute init:@no on: no: -- '--attribute をリセットする'
+	flag attribute --no-attribute init:@no on: no: -- '-a, --attribute をリセットする'
 	param :'append_string "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
-	flag head --no-head init:@no on: no: -- '--head をリセットする'
+	flag head --no-head init:@no on: no: -- '-H, --head をリセットする'
 	param title -t --title init:='No Title' var:TEXT -- 'フレームページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_FRAMESET -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	param :'eval "${1#--}=\"\${OPTARG}\""' --n1 --n2 --n3 --n4 --n5 --n6 --n7 --n8 --n9 validate:'regex_match "${OPTARG}" "^([A-Za-z][0-9A-Za-z\\-_:.]*)?$"' var:NAME -- 'n個目の URI に対応するname属性を指定する'
@@ -674,9 +674,9 @@ Usage:
 Options:
   -a,     --attribute NANE=VALUE 
                               frameset要素に属性を追加する
-          --no-attribute      --attribute をリセットする
+          --no-attribute      -a, --attribute をリセットする
   -H,     --head ELEMENT      head要素内に ELEMENT を追加する
-          --no-head           --head をリセットする
+          --no-head           -H, --head をリセットする
   -t,     --title TEXT        フレームページのタイトルを指定する
   -T,     --template FILE     テンプレートファイルを指定する
           --n1, --n2, --n3, --n4, --n5, --n6, --n7, --n8, --n9 NAME 

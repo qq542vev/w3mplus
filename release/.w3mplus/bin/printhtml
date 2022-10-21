@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=printhtml 3.0.0'
+readonly 'VERSION=printhtml 3.0.1'
 
 
 
@@ -260,7 +260,7 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_string "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
-	flag head --no-head init:@no on: no: -- '--head をリセットする'
+	flag head --no-head init:@no on: no: -- '-H, --head をリセットする'
 	param title -t --title init:='No Title' var:TEXT -- 'ページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_HTML -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
@@ -458,7 +458,7 @@ Usage:
 
 Options:
   -H,     --head ELEMENT      head要素内に ELEMENT を追加する
-          --no-head           --head をリセットする
+          --no-head           -H, --head をリセットする
   -t,     --title TEXT        ページのタイトルを指定する
   -T,     --template FILE     テンプレートファイルを指定する
   -h,     --help              このヘルプを表示して終了する

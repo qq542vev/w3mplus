@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3m-private 2.0.0'
+readonly 'VERSION=w3m-private 2.0.1'
 
 ORIGINAL_LC_ALL="${LC_ALL-}"
 
@@ -94,9 +94,9 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_array_posix copy "-o" "-path" "${OPTARG}"' -c --copy var:PATTERN -- 'PATTERN に一致するファイルをコピーする'
-	flag copy --no-copy init:@no on: no: -- '--copy をリセットする'
+	flag copy --no-copy init:@no on: no: -- '-c, --copy をリセットする'
 	param :'append_array_posix link "-o" "-path" "${OPTARG}"' -l --link var:PATTERN -- 'PATTERN に一致するファイルへのシンボリックリンクを作成する'
-	flag link --no-link init:@no on: no: -- '--link をリセットする'
+	flag link --no-link init:@no on: no: -- '-l, --link をリセットする'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -291,9 +291,9 @@ Usage:
 
 Options:
   -c,     --copy PATTERN      PATTERN に一致するファイルをコピーする
-          --no-copy           --copy をリセットする
+          --no-copy           -c, --copy をリセットする
   -l,     --link PATTERN      PATTERN に一致するファイルへのシンボリックリンクを作成する
-          --no-link           --link をリセットする
+          --no-link           -l, --link をリセットする
   -h,     --help              このヘルプを表示して終了する
   -v,     --version           バージョン情報を表示して終了する
 

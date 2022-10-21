@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=framelinkmenu 2.0.2'
+readonly 'VERSION=framelinkmenu 2.0.3'
 
 
 
@@ -156,7 +156,7 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_array_posix attribute -a "${OPTARG}"' -a --attribute init:='cols=200,*' validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:'NANE=VALUE' -- 'frameset要素に属性を追加する'
-	flag attribute --no-attribute init:@none on: no: -- '--attribute をリセットする'
+	flag attribute --no-attribute init:@none on: no: -- '-a, --attribute をリセットする'
 	param :option_category -c --category init:='scheme' pattern:'scheme | authority | path | query | fragment' var:'scheme | authority | path | query | fragment' -- 'サイドバーの URI を分類する'
 	param main -m --main init:='data:text/plain,' var:URI -- 'メインページの URI を指定する'
 	param output -o --menu-output init:'output="${HOME}/.w3mplus/cache"' var:PATH -- 'サイドバーの内容を PATH に出力する'
@@ -438,7 +438,7 @@ Usage:
 Options:
   -a,     --attribute NANE=VALUE 
                               frameset要素に属性を追加する
-          --no-attribute      --attribute をリセットする
+          --no-attribute      -a, --attribute をリセットする
   -c,     --category scheme | authority | path | query | fragment 
                               サイドバーの URI を分類する
   -m,     --main URI          メインページの URI を指定する

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=httpresponse 2.0.0'
+readonly 'VERSION=httpresponse 2.0.1'
 
 
 
@@ -132,7 +132,7 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_string "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
-	flag header --no-header init:@no on: no: -- '--header をリセットする'
+	flag header --no-header init:@no on: no: -- '-H, --header をリセットする'
 	param statusLine -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
 	param W3MPLUS_TEMPLATE_HTTP -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
@@ -343,7 +343,7 @@ Usage:
 Options:
   -H,     --header HEADER_FIELD 
                               HTTP ヘッダフィールドを追加する
-          --no-header         --header をリセットする
+          --no-header         -H, --header をリセットする
   -s,     --status-line STATUS_LINE 
                               HTTP のステータスラインを指定する
   -T,     --template FILE     テンプレートファイルを指定する
