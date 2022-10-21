@@ -200,8 +200,8 @@ case "${1-about:about}" in
 					</tr>
 				</thead>
 				$(
-					ls -Lgko -- "${W3MPLUS_W3M_HOME}" 2>'/dev/null' | \
-					awk -v "baseURL=${baseURL}/" -- "${awkScript}"
+					ls -Lgko -- "${W3MPLUS_W3M_HOME}" 2>'/dev/null' \
+					| awk -v "baseURL=${baseURL}/" -- "${awkScript}"
 				)
 			</table>
 		__EOF__

@@ -8,8 +8,8 @@
 ##
 ##   id - 5ab6e89a-d4eb-4c8d-b1bc-02bab2962639
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 3.0.0
-##   date - 2022-10-18
+##   version - 3.0.1
+##   date - 2022-10-20
 ##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -28,7 +28,7 @@
 ##
 ## Options:
 ##   -H,     --head ELEMENT      head要素内に ELEMENT を追加する
-##           --no-head           --head をリセットする
+##           --no-head           -H, --head をリセットする
 ##   -t,     --title TEXT        ページのタイトルを指定する
 ##   -T,     --template FILE     テンプレートファイルを指定する
 ##   -h,     --help              このヘルプを表示して終了する
@@ -57,7 +57,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=printhtml 3.0.0'
+readonly 'VERSION=printhtml 3.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -72,7 +72,7 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_string "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
-	flag  head    --no-head    init:@no on: no: -- '--head をリセットする'
+	flag  head    --no-head    init:@no on: no: -- '-H, --head をリセットする'
 	param title   -t --title   init:='No Title' var:TEXT -- 'ページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_HTML -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'

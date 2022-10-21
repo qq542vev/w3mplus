@@ -8,8 +8,8 @@
 ##
 ##   id - c1098c4b-f92d-40a2-bf99-dcfae2c9bed8
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.0
-##   date - 2022-10-18
+##   version - 2.0.1
+##   date - 2022-10-20
 ##   since - 2019-07-15
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -29,7 +29,7 @@
 ## Options:
 ##   -H,     --header HEADER_FIELD 
 ##                               HTTP ヘッダフィールドを追加する
-##           --no-header         --header をリセットする
+##           --no-header         -H, --header をリセットする
 ##   -s,     --status-line STATUS_LINE 
 ##                               HTTP のステータスラインを指定する
 ##   -T,     --template FILE     テンプレートファイルを指定する
@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=httpresponse 2.0.0'
+readonly 'VERSION=httpresponse 2.0.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -74,7 +74,7 @@ parser_definition() {
 		'' 'Options:'
 
 	param :'append_string "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
-	flag  header     --no-header      init:@no on: no: -- '--header をリセットする'
+	flag  header     --no-header      init:@no on: no: -- '-H, --header をリセットする'
 	param statusLine -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
 	param W3MPLUS_TEMPLATE_HTTP -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp  :usage     -h --help    -- 'このヘルプを表示して終了する'
