@@ -1019,7 +1019,7 @@
 </tr>
 <tr class="even">
 <td><span id="env-W3MPLUS_W3M_HOME"><code>W3MPLUS_W3M_HOME</code></span></td>
-<td>w3m の設定ディレクトリ。</td>
+<td>w3m の設定ファイルのディレクトリ。</td>
 <td><code>&quot;${HOME}/.w3m&quot;</code></td>
 </tr>
 <tr class="odd">
@@ -1044,12 +1044,12 @@
 </tr>
 <tr class="odd">
 <td><span id="env-W3MPLUS_HOME"><code>W3MPLUS_HOME</code></span></td>
-<td>w3mplus の設定ディレクトリ。</td>
+<td>w3mplus の設定ファイルのディレクトリ。</td>
 <td><code>&quot;${HOME}/.w3mplus&quot;</code></td>
 </tr>
 <tr class="even">
 <td><span id="env-W3MPLUS_CACHE"><code>W3MPLUS_CACHE</code></span></td>
-<td>w3mplus のキャッシュディレクトリ。</td>
+<td>w3mplus のキャッシュを保存するディレクトリ。</td>
 <td><code>&quot;${W3MPLUS_HOME}/cache&quot;</code></td>
 </tr>
 <tr class="odd">
@@ -1059,11 +1059,11 @@
 </tr>
 <tr class="even">
 <td><span id="env-W3MPLUS_LIB"><code>W3MPLUS_LIB</code></span></td>
-<td>w3mplus のライブラリのディレクトリ。</td>
+<td>w3mplus のライブラリファイルのディレクトリ。</td>
 <td><code>&quot;${W3MPLUS_HOME}/lib&quot;</code></td>
 </tr>
 <tr class="odd">
-<td><span id="env-"><code>W3MPLUS_PASS_FILE</code></span></td>
+<td><span id="env-W3MPLUS_PASS_FILE"><code>W3MPLUS_PASS_FILE</code></span></td>
 <td>w3mplus のパスファイル。</td>
 <td><code>&quot;${W3MPLUS_HOME}/pass&quot;</code></td>
 </tr>
@@ -1079,7 +1079,7 @@
 </tr>
 <tr class="even">
 <td><span id="env-W3MPLUS_UNDO_HISTSIZE"><code>W3MPLUS_UNDO_HISTSIZE</code></span></td>
-<td>記録する復元するタブの履歴数。</td>
+<td>復元するタブの最大保存数。</td>
 <td><code>'2000'</code></td>
 </tr>
 <tr class="odd">
@@ -1099,12 +1099,12 @@
 </tr>
 <tr class="even">
 <td><span id="env-W3MPLUS_SEARCH_ENGINE"><code>W3MPLUS_SEARCH_ENGINE</code></span></td>
-<td>検索エンジンの設定ファイル。</td>
+<td>使用する検索エンジン名</td>
 <td><code>'google'</code></td>
 </tr>
 <tr class="odd">
 <td><span id="env-W3MPLUS_SEARCH_HISTSIZE"><code>W3MPLUS_SEARCH_HISTSIZE</code></span></td>
-<td>記録する検索の履歴数。</td>
+<td>検索履歴の最大保存数。</td>
 <td><code>'2000'</code></td>
 </tr>
 <tr class="even">
@@ -1139,12 +1139,12 @@
 </tr>
 <tr class="even">
 <td><span id="env-W3MPLUS_ZOOM_MAX"><code>W3MPLUS_ZOOM_MAX</code></span></td>
-<td>最大画像表示倍率。</td>
+<td>画像表示の最大倍率。</td>
 <td><code>'300'</code></td>
 </tr>
 <tr class="odd">
 <td><span id="env-W3MPLUS_ZOOM_MIN"><code>W3MPLUS_ZOOM_MIN</code></span></td>
-<td>最小画像表示倍率。</td>
+<td>画像表示の最小倍率。</td>
 <td><code>'30'</code></td>
 </tr>
 <tr class="even">
@@ -1470,9 +1470,9 @@
 <dt><span id="key-.27.7BA-Z.7D"><code>'{A-Z}</code></span></dt>
 <dd>任意の URL マークを開き、カーソルを先頭の非空白文字に移動する。
 </dd>
-</dl>
-<p><span id="key-.3Am"><code>:m</code></span> :ローカルマークの一覧を表示する。</p>
-<dl>
+<dt><span id="key-.3Am"><code>:m</code></span></dt>
+<dd>ローカルマークの一覧を表示する。
+</dd>
 <dt><span id="key-.3AM"><code>:M</code></span></dt>
 <dd>URL マークの一覧を表示する。
 </dd>

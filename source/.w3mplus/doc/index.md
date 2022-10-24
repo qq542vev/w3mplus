@@ -396,32 +396,32 @@ w3mplus では以下の環境変数を使用する。環境変数を設定する
 | [`EDITOR`]{#env-EDITOR} | 使用するテキストエディタ。 | `'vi --'` |
 | [`MAILER`]{#env-MAILER} | 使用するメーラー。 | `'mutt --'` |
 | [`PAGER`]{#env-PAGER} | 使用するページャー。 | `'less --'` |
-| [`W3MPLUS_W3M_HOME`]{#env-W3MPLUS_W3M_HOME} | w3m の設定ディレクトリ。 | `"${HOME}/.w3m"` |
+| [`W3MPLUS_W3M_HOME`]{#env-W3MPLUS_W3M_HOME} | w3m の設定ファイルのディレクトリ。 | `"${HOME}/.w3m"` |
 | [`W3MPLUS_W3M_BOOKMARK`]{#env-W3MPLUS_W3M_BOOKMARK} | w3m のブックマークファイル。 | `"${W3MPLUS_W3M_HOME}/bookmark.html"` |
 | [`W3MPLUS_W3M_CONFIG`]{#env-W3MPLUS_W3M_CONFIG} | w3m の設定ファイル。 | `"${W3MPLUS_W3M_HOME}/config"` |
 | [`W3MPLUS_W3M_HISTORY`]{#env-W3MPLUS_W3M_HISTORY} | w3m の閲覧履歴ファイル。 | `"${W3MPLUS_W3M_HOME}/history"` |
 | [`W3MPLUS_W3M_SITECONF`]{#env-W3MPLUS_W3M_SITECONF} | w3m の Web サイト毎の設定ファイル。 | `"${W3MPLUS_W3M_HOME}/siteconf"` |
-| [`W3MPLUS_HOME`]{#env-W3MPLUS_HOME} | w3mplus の設定ディレクトリ。 | `"${HOME}/.w3mplus"` |
-| [`W3MPLUS_CACHE`]{#env-W3MPLUS_CACHE} | w3mplus のキャッシュディレクトリ。 | `"${W3MPLUS_HOME}/cache"` |
+| [`W3MPLUS_HOME`]{#env-W3MPLUS_HOME} | w3mplus の設定ファイルのディレクトリ。 | `"${HOME}/.w3mplus"` |
+| [`W3MPLUS_CACHE`]{#env-W3MPLUS_CACHE} | w3mplus のキャッシュを保存するディレクトリ。 | `"${W3MPLUS_HOME}/cache"` |
 | [`W3MPLUS_PATH`]{#env-W3MPLUS_PATH} | w3mplus の実行ファイルのディレクトリ。 | `"${W3MPLUS_HOME}/bin"` |
-| [`W3MPLUS_LIB`]{#env-W3MPLUS_LIB} | w3mplus のライブラリのディレクトリ。 | `"${W3MPLUS_HOME}/lib"` |
-| [`W3MPLUS_PASS_FILE`]{#env-} | w3mplus のパスファイル。 | `"${W3MPLUS_HOME}/pass"` |
+| [`W3MPLUS_LIB`]{#env-W3MPLUS_LIB} | w3mplus のライブラリファイルのディレクトリ。 | `"${W3MPLUS_HOME}/lib"` |
+| [`W3MPLUS_PASS_FILE`]{#env-W3MPLUS_PASS_FILE} | w3mplus のパスファイル。 | `"${W3MPLUS_HOME}/pass"` |
 | [`W3MPLUS_YANK`]{#env-W3MPLUS_YANK} | コピーする際に起動するプログラム。 | `'v=$(cat; printf "_"); v="${v%_}"; "${HOME}/.w3mplus/bin/setreg" "+" "${v}"; exec 3>&1 >>"${HOME}/w3mplusyank"; date "+# %Y-%m-%d %H:%M:%S %Z"; echo "${v}"; exec 1>&3 3>&-'` |
 | [`W3MPLUS_UNDO_TIMEOUT`]{#env-W3MPLUS_UNDO_TIMEOUT} | 復元するタブのタイムアウト秒数。 | `'+86400'` |
-| [`W3MPLUS_UNDO_HISTSIZE`]{#env-W3MPLUS_UNDO_HISTSIZE} | 記録する復元するタブの履歴数。 | `'2000'` |
+| [`W3MPLUS_UNDO_HISTSIZE`]{#env-W3MPLUS_UNDO_HISTSIZE} | 復元するタブの最大保存数。 | `'2000'` |
 | [`W3MPLUS_UNDO_FILE`]{#env-W3MPLUS_UNDO_FILE} | 復元するタブを記録するファイル。 | `"${W3MPLUS_HOME}/tabrestore"` |
 | [`W3MPLUS_VISUAL_TIMEOUT`]{#env-W3MPLUS_VISUAL_TIMEOUT} | ビジュアルモードでタイムアウトする秒数。 | `'+600'` |
 | [`W3MPLUS_SEARCH_CONFIGFILE`]{#env-W3MPLUS_SEARCH_CONFIGFILE} | 検索エンジンの設定ファイル。 | `"${W3MPLUS_HOME}/search-config"` |
-| [`W3MPLUS_SEARCH_ENGINE`]{#env-W3MPLUS_SEARCH_ENGINE} | 検索エンジンの設定ファイル。 | `'google'` |
-| [`W3MPLUS_SEARCH_HISTSIZE`]{#env-W3MPLUS_SEARCH_HISTSIZE} | 記録する検索の履歴数。 | `'2000'` |
+| [`W3MPLUS_SEARCH_ENGINE`]{#env-W3MPLUS_SEARCH_ENGINE} | 使用する検索エンジン名 | `'google'` |
+| [`W3MPLUS_SEARCH_HISTSIZE`]{#env-W3MPLUS_SEARCH_HISTSIZE} | 検索履歴の最大保存数。 | `'2000'` |
 | [`W3MPLUS_SEARCH_HISTFILE`]{#env-W3MPLUS_SEARCH_HISTFILE} | 検索履歴を記録するファイル。 | `"${W3MPLUS_HOME}/search-history"` |
 | [`W3MPLUS_REGISTER_FILE`]{#env-W3MPLUS_REGISTER_FILE} | レジスタを記録するファイル。 | `"${W3MPLUS_HOME}/register"` |
 | [`W3MPLUS_OPERATORFUNC`]{#env-W3MPLUS_OPERATORFUNC} | operatorfunc 用プログラム。 | `'cat'` |
 | [`W3MPLUS_FORMATPRG`]{#env-W3MPLUS_FORMATPRG} | formatprg 用プログラム。 | `'cat'` |
 | [`W3MPLUS_KEYWORDPRG`]{#env-W3MPLUS_KEYWORDPRG} | keywordprg 用プログラム。 | `'man "$(cat)"'` |
 | [`W3MPLUS_EQUALPRG`]{#env-W3MPLUS_EQUALPRG} | equalprg 用プログラム。 | `'cat'` |
-| [`W3MPLUS_ZOOM_MAX`]{#env-W3MPLUS_ZOOM_MAX} | 最大画像表示倍率。 | `'300'` |
-| [`W3MPLUS_ZOOM_MIN`]{#env-W3MPLUS_ZOOM_MIN} | 最小画像表示倍率。 | `'30'` |
+| [`W3MPLUS_ZOOM_MAX`]{#env-W3MPLUS_ZOOM_MAX} | 画像表示の最大倍率。 | `'300'` |
+| [`W3MPLUS_ZOOM_MIN`]{#env-W3MPLUS_ZOOM_MIN} | 画像表示の最小倍率。 | `'30'` |
 | [`W3MPLUS_QUICKMARK_FILE`]{#env-W3MPLUS_QUICKMARK_FILE} | クイックマークを記録するファイル。 | `"${W3MPLUS_HOME}/quickmark"` |
 | [`W3MPLUS_LOCALMARK_FILE`]{#env-W3MPLUS_LOCALMARK_FILE} | ローカルマークを記録するファイル。 | `"${W3MPLUS_HOME}/localmark"` |
 | [`W3MPLUS_URLMARK_FILE`]{#env-W3MPLUS_URLMARK_FILE} | URL マークを記録するファイル。 | `"${W3MPLUS_HOME}/urlmark"` |
@@ -680,7 +680,7 @@ w3m マークは w3m よってサポートされている機能である。ド�
 : 任意の URL マークを開き、カーソルを先頭の非空白文字に移動する。
 
 [`:m`]{#key-.3Am}
-:ローカルマークの一覧を表示する。
+: ローカルマークの一覧を表示する。
 
 [`:M`]{#key-.3AM}
 : URL マークの一覧を表示する。
