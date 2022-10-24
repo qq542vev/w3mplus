@@ -51,6 +51,40 @@
 ##   130 - received SIGINT
 ##   131 - received SIGQUIT
 ##   143 - received SIGTERM
+##
+## Environment Variables:
+##   W3MPLUS_W3M_HOME          - w3m の設定ファイルのディレクトリ
+##   W3MPLUS_W3M_BOOKMARK      - w3m のブックマークファイル
+##   W3MPLUS_W3M_CONFIG        - w3m の設定ファイル
+##   W3MPLUS_W3M_HISTORY       - w3m の閲覧履歴ファイル
+##   W3MPLUS_W3M_SITECONF      - w3m の Web サイト毎の設定ファイル
+##   W3MPLUS_HOME              - w3mplus の設定ファイルのディレクトリ
+##   W3MPLUS_CACHE             - w3mplus のキャッシュを保存するディレクトリ
+##   W3MPLUS_PATH              - w3mplus の実行ファイルのディレクトリ
+##   W3MPLUS_LIB               - w3mplus のライブラリファイルのディレクトリ
+##   W3MPLUS_PASS_FILE         - w3mplus のパスファイル
+##   W3MPLUS_YANK              - コピーする際に起動するプログラム
+##   W3MPLUS_UNDO_TIMEOUT      - 復元するタブのタイムアウト秒数
+##   W3MPLUS_UNDO_HISTSIZE     - 復元するタブの最大保存数
+##   W3MPLUS_UNDO_FILE         - 復元するタブを記録するファイル
+##   W3MPLUS_VISUAL_TIMEOUT    - ビジュアルモードでタイムアウトする秒数
+##   W3MPLUS_SEARCH_CONFIGFILE - 検索エンジンの設定ファイル
+##   W3MPLUS_SEARCH_ENGINE     - 使用する検索エンジン名
+##   W3MPLUS_SEARCH_HISTSIZE   - 検索履歴の最大保存数
+##   W3MPLUS_SEARCH_HISTFILE   - 検索履歴を記録するファイル
+##   W3MPLUS_REGISTER_FILE     - レジスタを記録するファイル
+##   W3MPLUS_OPERATORFUNC      - operatorfunc 用プログラム
+##   W3MPLUS_FORMATPRG         - formatprg 用プログラム
+##   W3MPLUS_KEYWORDPRG        - keywordprg 用プログラム
+##   W3MPLUS_EQUALPRG          - equalprg 用プログラム
+##   W3MPLUS_ZOOM_MAX          - 画像表示の最大倍率
+##   W3MPLUS_ZOOM_MIN          - 画像表示の最小倍率
+##   W3MPLUS_QUICKMARK_FILE    - クイックマークを記録するファイル
+##   W3MPLUS_LOCALMARK_FILE    - ローカルマークを記録するファイル
+##   W3MPLUS_URLMARK_FILE      - URL マークを記録するファイル
+##   W3MPLUS_USERCOMMAND_FILE  - ユーザーコマンドを記録するファイル
+##   W3MPLUS_SIDEBAR_SIZE      - サイドバーのサイズ
+##   W3MPLUS_SIDEBAR_POSITION  - サイドバーの位置
 ## ------------------
 
 readonly 'VERSION=w3mplus 2.0.2'

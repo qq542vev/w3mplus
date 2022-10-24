@@ -51,6 +51,12 @@
 ##   130 - received SIGINT
 ##   131 - received SIGQUIT
 ##   143 - received SIGTERM
+##
+## Environment Variables:
+##   W3MPLUS_HOME  - w3mplus の設定ファイルのディレクトリ
+##   W3MPLUS_CACHE - w3mplus のキャッシュを保存するディレクトリ
+##   W3MPLUS_PATH  - w3mplus の実行ファイルのディレクトリ
+##   W3MPLUS_LIB   - w3mplus のライブラリファイルのディレクトリ
 ## ------------------
 
 readonly 'VERSION=viewsource 1.0.1'
