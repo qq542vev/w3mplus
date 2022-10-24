@@ -100,6 +100,12 @@ parser_definition() {
 		'  130 - received SIGINT' \
 		'  131 - received SIGQUIT' \
 		'  143 - received SIGTERM'
+
+	msg -- '' 'Environment Variables:' \
+		'  W3MPLUS_HOME  - w3mplus の設定ファイルのディレクトリ' \
+		'  W3MPLUS_CACHE - w3mplus のキャッシュを保存するディレクトリ' \
+		'  W3MPLUS_PATH  - w3mplus の実行ファイルのディレクトリ' \
+		'  W3MPLUS_LIB   - w3mplus のライブラリファイルのディレクトリ'
 }
 # @end
 
