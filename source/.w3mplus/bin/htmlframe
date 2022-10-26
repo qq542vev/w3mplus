@@ -164,7 +164,6 @@ uricheck -f '' --verbose -- ${@+"${@}"} || end_call "${EX_USAGE}"
 for uri in ${@+"${@}"}; do
 	i=$((${i-0} + 1))
 
-	safe_string 'uri' "${uri}"
 	html_escape 'uri' "${uri}"
 
 	eval "name=\${n${i}-}"
