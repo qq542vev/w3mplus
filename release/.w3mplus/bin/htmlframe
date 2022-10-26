@@ -778,6 +778,8 @@ awkScript=$(
 	__EOF__
 )
 
+uricheck -f '' --verbose -- ${@+"${@}"} || end_call "${EX_USAGE}"
+
 for uri in ${@+"${@}"}; do
 	i=$((${i-0} + 1))
 
