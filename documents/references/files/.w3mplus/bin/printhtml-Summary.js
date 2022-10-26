@@ -1,1 +1,1 @@
-﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/printhtml","printhtml");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/printhtml",[["ShellScript","ShellScript"]],[["Files","File"]],[[150,0,0,"printhtml","printhtml"]]);
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/printhtml","printhtml");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/printhtml",[["ShellScript","ShellScript"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[10,0,0,"printhtml","printhtml"],[156,0,2,"Functions","Functions"],[157,0,1,"html_safetext","html_safetext"]]);

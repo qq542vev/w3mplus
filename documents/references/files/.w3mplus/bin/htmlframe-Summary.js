@@ -1,1 +1,1 @@
-﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/htmlframe","htmlframe");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/htmlframe",[["ShellScript","ShellScript"]],[["Files","File"]],[[10,0,0,"htmlframe","htmlframe"]]);
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/htmlframe","htmlframe");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/htmlframe",[["ShellScript","ShellScript"]],[["Files","File"],["Functions","Function"],["Groups","Group"]],[[86,0,0,"htmlframe","htmlframe"],[154,0,2,"Functions","Functions"],[155,0,1,"html_safetext","html_safetext"]]);

@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/htmlframe",{10:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">HTML のフレームページを作成する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/htmlframe",{86:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">HTML のフレームページを作成する。</div></div>",155:"<div class=\"NDToolTip TFunction LShellScript\"><div class=\"TTSummary\">HTML での安全な文字列に変換する。</div></div>"});
