@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=httpresponse 2.0.1'
+readonly 'VERSION=httpresponse 2.1.0'
 
 
 
@@ -131,9 +131,9 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param :'append_string "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
-	flag header --no-header init:@no on: no: -- '-H, --header をリセットする'
-	param statusLine -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
+	param :'append_string "HEADER_FIELDS" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header-field validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
+	flag HEADER_FIELDS --no-header-field init:@no on: no: -- '-H, --header-field をリセットする'
+	param STATUS_LINE -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
 	param W3MPLUS_TEMPLATE_HTTP -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
@@ -159,14 +159,13 @@ parser_definition() {
 		'  130 - received SIGINT' \
 		'  131 - received SIGQUIT' \
 		'  143 - received SIGTERM'
+
+	msg -- '' 'Environment Variables:' \
+		'  W3MPLUS_HTTP_PROGRAM - HTTP レスポンス用の呼び出しコマンド'
 }
 
-option_header() {
-	header="${header-}${OPTARG}${CHAR_CR}${CHAR_LF}"
-}
-
-header=''
-statusLine='HTTP/1.1 200 OK'
+HEADER_FIELDS=''
+STATUS_LINE='HTTP/1.1 200 OK'
 REST=''
 parse() {
 	OPTIND=$(($# + 1))
@@ -174,19 +173,19 @@ parse() {
 		set -- "${1%%\=*}" "${1#*\=}" "$@"
 		while [ ${#1} -gt 2 ]; do
 			case $1 in *[!a-zA-Z0-9_-]*) break ;; esac
-			case '--header' in
+			case '--header-field' in
 			"$1")
 				OPTARG=
 				break
 				;;
-			$1*) OPTARG="$OPTARG --header" ;;
+			$1*) OPTARG="$OPTARG --header-field" ;;
 			esac
-			case '--no-header' in
+			case '--no-header-field' in
 			"$1")
 				OPTARG=
 				break
 				;;
-			$1*) OPTARG="$OPTARG --no-header" ;;
+			$1*) OPTARG="$OPTARG --no-header-field" ;;
 			esac
 			case '--status-line' in
 			"$1")
@@ -261,20 +260,20 @@ parse() {
 		+*) unset OPTARG ;;
 		esac
 		case $1 in
-		'-H' | '--header')
+		'-H' | '--header-field')
 			[ $# -le 1 ] && set "required" "$1" && break
 			OPTARG=$2
 			regex_match "${OPTARG}" "^[!#-'*+.0-9A-Z/^_\`a-z|~-]+:[\\t -~]+$" || {
 				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^[!#-'*+.0-9A-Z/^_\`a-z|~-]+:[\\t -~]+$"
 				break
 			}
-			append_string "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"
+			append_string "HEADER_FIELDS" "${OPTARG}${CHAR_CR}${CHAR_LF}"
 			shift
 			;;
-		'--no-header')
+		'--no-header-field')
 			[ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
 			eval '[ ${OPTARG+x} ] &&:' && OPTARG='' || OPTARG=''
-			header="$OPTARG"
+			HEADER_FIELDS="$OPTARG"
 			;;
 		'-s' | '--status-line')
 			[ $# -le 1 ] && set "required" "$1" && break
@@ -283,7 +282,7 @@ parse() {
 				set -- regex_match:$? "$1" regex_match "${OPTARG}" "^HTTP/[0-9]\.[0-9] [0-9]{3} [ -~]*$"
 				break
 			}
-			statusLine="$OPTARG"
+			STATUS_LINE="$OPTARG"
 			shift
 			;;
 		'-T' | '--template')
@@ -341,9 +340,9 @@ Usage:
   httpresponse [OPTION]... [FILE]...
 
 Options:
-  -H,     --header HEADER_FIELD 
+  -H,     --header-field HEADER_FIELD 
                               HTTP ヘッダフィールドを追加する
-          --no-header         -H, --header をリセットする
+          --no-header-field   -H, --header-field をリセットする
   -s,     --status-line STATUS_LINE 
                               HTTP のステータスラインを指定する
   -T,     --template FILE     テンプレートファイルを指定する
@@ -371,23 +370,28 @@ Exit Status:
   130 - received SIGINT
   131 - received SIGQUIT
   143 - received SIGTERM
+
+Environment Variables:
+  W3MPLUS_HTTP_PROGRAM - HTTP レスポンス用の呼び出しコマンド
 GETOPTIONSHERE
 }
 
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
+export 'HEADER_FIELDS' 'STATUS_LINE' 'W3MPLUS_TEMPLATE_HTTP'
+
 case "${W3MPLUS_TEMPLATE_HTTP-}" in
 '')
 	cat <<-__EOF__
-		${statusLine}${CHAR_CR}
+		${STATUS_LINE}${CHAR_CR}
 		Date: $(date -u -- '+%a, %d %b %Y %H:%M:%S GMT')${CHAR_CR}
-		${header}${CHAR_CR}
+		${HEADER_FIELDS}${CHAR_CR}
 	__EOF__
 
 	case "${#}" in
 	[!0]) cat -- ${@+"${@}"} ;;
 	esac
 	;;
-*) . "${W3MPLUS_TEMPLATE_HTTP}" ;;
+*) sh -c "${W3MPLUS_HTTP_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
 esac

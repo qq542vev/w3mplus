@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=setquickmark 2.0.1'
+readonly 'VERSION=setquickmark 2.0.2'
 
 
 
@@ -508,7 +508,7 @@ fi
 
 case "${#}" in
 '0')
-	${VISUAL:-${EDITOR:-vi --}} "${config}"
+	sh -c "${VISUAL:-${EDITOR:-vi --}} \"\${1}\"" 'sh' "${config}"
 	exit
 	;;
 esac

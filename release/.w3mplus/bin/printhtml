@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=printhtml 3.0.1'
+readonly 'VERSION=printhtml 3.1.0'
 
 
 
@@ -254,14 +254,21 @@ safe_string() {
 	remove_control_character "${1}" "${2}" "$(printf '\t\n\r')"
 }
 
+
+html_safetext() {
+	eval "${1}=\"\${2}\""
+	eval 'safe_string "${1}"' "\"\${${1}}\""
+	eval 'html_escape "${1}"' "\"\${${1}}\""
+}
+
 parser_definition() {
 	setup REST abbr:true error:option_error plus:true no:0 help:usage \
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param :'append_string "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
-	flag head --no-head init:@no on: no: -- '-H, --head をリセットする'
-	param title -t --title init:='No Title' var:TEXT -- 'ページのタイトルを指定する'
+	param :'append_string "HEAD_CONTENT" "${OPTARG}"' -H --head-content var:ELEMENT -- 'head要素内に ELEMENT を追加する'
+	flag HEAD_CONTENT --no-head-content init:@no on: no: -- '-H, --head-content をリセットする'
+	param :'html_safetext "TITLE" "${OPTARG}"' -t --title init:='No Title' var:TEXT -- 'ページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_HTML -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
 	disp :usage -h --help -- 'このヘルプを表示して終了する'
 	disp VERSION -v --version -- 'バージョン情報を表示して終了する'
@@ -287,10 +294,14 @@ parser_definition() {
 		'  130 - received SIGINT' \
 		'  131 - received SIGQUIT' \
 		'  143 - received SIGTERM'
+
+	msg -- '' 'Environment Variables:' \
+		'  W3MPLUS_HTML_PROGRAM - HTML 用の呼び出しコマンド'
 }
 
-head=''
-title='No Title'
+HEAD_CONTENT=''
+OPTARG='No Title'
+html_safetext "TITLE" "${OPTARG}"
 REST=''
 parse() {
 	OPTIND=$(($# + 1))
@@ -298,19 +309,19 @@ parse() {
 		set -- "${1%%\=*}" "${1#*\=}" "$@"
 		while [ ${#1} -gt 2 ]; do
 			case $1 in *[!a-zA-Z0-9_-]*) break ;; esac
-			case '--head' in
+			case '--head-content' in
 			"$1")
 				OPTARG=
 				break
 				;;
-			$1*) OPTARG="$OPTARG --head" ;;
+			$1*) OPTARG="$OPTARG --head-content" ;;
 			esac
-			case '--no-head' in
+			case '--no-head-content' in
 			"$1")
 				OPTARG=
 				break
 				;;
-			$1*) OPTARG="$OPTARG --no-head" ;;
+			$1*) OPTARG="$OPTARG --no-head-content" ;;
 			esac
 			case '--title' in
 			"$1")
@@ -385,21 +396,21 @@ parse() {
 		+*) unset OPTARG ;;
 		esac
 		case $1 in
-		'-H' | '--head')
+		'-H' | '--head-content')
 			[ $# -le 1 ] && set "required" "$1" && break
 			OPTARG=$2
-			append_string "head" "${OPTARG}"
+			append_string "HEAD_CONTENT" "${OPTARG}"
 			shift
 			;;
-		'--no-head')
+		'--no-head-content')
 			[ "${OPTARG:-}" ] && OPTARG=${OPTARG#*\=} && set "noarg" "$1" && break
 			eval '[ ${OPTARG+x} ] &&:' && OPTARG='' || OPTARG=''
-			head="$OPTARG"
+			HEAD_CONTENT="$OPTARG"
 			;;
 		'-t' | '--title')
 			[ $# -le 1 ] && set "required" "$1" && break
 			OPTARG=$2
-			title="$OPTARG"
+			html_safetext "TITLE" "${OPTARG}"
 			shift
 			;;
 		'-T' | '--template')
@@ -457,8 +468,9 @@ Usage:
   printhtml [OPTION]... [FILE]...
 
 Options:
-  -H,     --head ELEMENT      head要素内に ELEMENT を追加する
-          --no-head           -H, --head をリセットする
+  -H,     --head-content ELEMENT 
+                              head要素内に ELEMENT を追加する
+          --no-head-content   -H, --head-content をリセットする
   -t,     --title TEXT        ページのタイトルを指定する
   -T,     --template FILE     テンプレートファイルを指定する
   -h,     --help              このヘルプを表示して終了する
@@ -485,18 +497,20 @@ Exit Status:
   130 - received SIGINT
   131 - received SIGQUIT
   143 - received SIGTERM
+
+Environment Variables:
+  W3MPLUS_HTML_PROGRAM - HTML 用の呼び出しコマンド
 GETOPTIONSHERE
 }
 
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-safe_string 'title' "${title}"
-html_escape 'title' "${title}"
+export 'HEAD' 'TITLE' 'W3MPLUS_TEMPLATE_HTML'
 
 case "${W3MPLUS_TEMPLATE_HTML-}" in
 '')
-	printf '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8" /><title>%s</title>%s</head><body><main>' "${title}" "${head}"
+	printf '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8" /><title>%s</title>%s</head><body><main>' "${TITLE}" "${HEAD_CONTENT}"
 
 	case "${#}" in
 	[!0]) cat -- ${@+"${@}"} | tr -d '\000-\010\013\014\016-\037\177-\214' ;;
@@ -504,5 +518,5 @@ case "${W3MPLUS_TEMPLATE_HTML-}" in
 
 	printf '</main></body></html>'
 	;;
-*) . "${W3MPLUS_TEMPLATE_HTML}" ;;
+*) sh -c "${W3MPLUS_HTML_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
 esac
