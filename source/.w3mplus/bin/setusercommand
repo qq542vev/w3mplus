@@ -8,8 +8,8 @@
 ##
 ##   id - bc9554d8-7a8a-4e78-91f2-4aa37f12a21e
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.1.3
-##   date - 2022-07-13
+##   version - 1.2.0
+##   date - 2022-10-26
 ##   since - 2019-12-15
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=setusercommand 1.1.3'
+readonly 'VERSION=setusercommand 1.2.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -83,7 +83,7 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [CALL] [COMMAND_ARG]..." \
 		'' 'Options:'
 
-	param config  -c --config  init:'config="${HOME}/.w3mplus/autocmd"' var:FILE -- '設定ファイルを指定する'
+	param config  -c --config  init:'config="${HOME}/.w3mplus/usercommand"' var:FILE -- '設定ファイルを指定する'
 	disp  :usage  -h --help    -- 'このヘルプを表示して終了する'
 	disp  VERSION -v --version -- 'バージョン情報を表示して終了する'
 
@@ -143,7 +143,7 @@ fi
 
 case "${#}" in
 	'0')
-		${VISUAL:-${EDITOR:-vi --}} "${config}"
+		sh -c "${VISUAL:-${EDITOR:-vi --}} \"\${1}\"" 'sh' "${config}"
 		exit
 		;;
 esac

@@ -428,9 +428,9 @@ w3mplus では以下の環境変数を使用する。環境変数を設定する
 | [`W3MPLUS_USERCOMMAND_FILE`]{#env-W3MPLUS_USERCOMMAND_FILE} | ユーザーコマンドを記録するファイル。 | `"${W3MPLUS_HOME}/usercommand"` |
 | [`W3MPLUS_SIDEBAR_SIZE`]{#env-W3MPLUS_SIDEBAR_SIZE} | サイドバーのサイズ。 | `'200'` |
 | [`W3MPLUS_SIDEBAR_POSITION`]{#env-W3MPLUS_SIDEBAR_POSITION} | サイドバーの位置。 | `'left'` |
-| [`W3MPLUS_TEMPLATE_HTTP`]{#env-W3MPLUS_TEMPLATE_HTTP} | HTTP レスポンス用テンプレートファイル。 | |
-| [`W3MPLUS_TEMPLATE_HTML`]{#env-W3MPLUS_TEMPLATE_HTML} | HTML 用テンプレートファイル。 | |
-| [`W3MPLUS_TEMPLATE_FRAMESET`]{#env-W3MPLUS_TEMPLATE_FRAMESET} | HTML フレーム用テンプレートファイル。 | |
+| [`W3MPLUS_HTTP_PROGRAM`]{#env-W3MPLUS_HTTP_PROGRAM} | HTTP レスポンス用の呼び出しコマンド。 | |
+| [`W3MPLUS_HTML_PROGRAM`]{#env-W3MPLUS_HTML_PROGRAM} | HTML 用の呼び出しコマンド。 | |
+| [`W3MPLUS_FRAMESET_PROGRAM`]{#env-W3MPLUS_FRAMESET_PROGRAM} | HTML フレーム用の呼び出しコマンド。 | |
 
 # ページ内検索 {#text-find-commands}
 

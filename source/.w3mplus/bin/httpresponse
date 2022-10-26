@@ -8,8 +8,8 @@
 ##
 ##   id - c1098c4b-f92d-40a2-bf99-dcfae2c9bed8
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.1
-##   date - 2022-10-20
+##   version - 2.1.0
+##   date - 2022-10-26
 ##   since - 2019-07-15
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -59,7 +59,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=httpresponse 2.0.1'
+readonly 'VERSION=httpresponse 2.1.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -73,12 +73,12 @@ parser_definition() {
 		-- 'Usage:' "  ${2##*/} [OPTION]... [FILE]..." \
 		'' 'Options:'
 
-	param :'append_string "header" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
-	flag  header     --no-header      init:@no on: no: -- '-H, --header をリセットする'
-	param statusLine -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
+	param :'append_string "HEADER_FIELDS" "${OPTARG}${CHAR_CR}${CHAR_LF}"' -H --header-field validate:'regex_match "${OPTARG}" "^[!#-'"'"'*+.0-9A-Z/^_\\`a-z|~-]+:[\\\\t -~]+$"' var:HEADER_FIELD -- 'HTTP ヘッダフィールドを追加する'
+	flag  HEADER_FIELDS --no-header-field init:@no on: no: -- '-H, --header-field をリセットする'
+	param STATUS_LINE   -s --status-line init:='HTTP/1.1 200 OK' validate:'regex_match "${OPTARG}" "^HTTP/[0-9]\\.[0-9] [0-9]{3} [ -~]*$"' var:STATUS_LINE -- 'HTTP のステータスラインを指定する'
 	param W3MPLUS_TEMPLATE_HTTP -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
-	disp  :usage     -h --help    -- 'このヘルプを表示して終了する'
-	disp  VERSION    -v --version -- 'バージョン情報を表示して終了する'
+	disp  :usage        -h --help    -- 'このヘルプを表示して終了する'
+	disp  VERSION       -v --version -- 'バージョン情報を表示して終了する'
 
 	msg -- '' 'Exit Status:' \
 		'    0 - successful termination' \
@@ -101,12 +101,11 @@ parser_definition() {
 		'  130 - received SIGINT' \
 		'  131 - received SIGQUIT' \
 		'  143 - received SIGTERM'
+
+	msg -- '' 'Environment Variables:' \
+		'  W3MPLUS_HTTP_PROGRAM - HTTP レスポンス用の呼び出しコマンド'
 }
 # @end
-
-option_header() {
-	header="${header-}${OPTARG}${CHAR_CR}${CHAR_LF}"
-}
 
 # @gengetoptions parser -i parser_definition parse "${1}"
 # @end
@@ -115,17 +114,19 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
+export 'HEADER_FIELDS' 'STATUS_LINE' 'W3MPLUS_TEMPLATE_HTTP'
+
 case "${W3MPLUS_TEMPLATE_HTTP-}" in
 	'')
 		cat <<-__EOF__
-		${statusLine}${CHAR_CR}
+		${STATUS_LINE}${CHAR_CR}
 		Date: $(date -u -- '+%a, %d %b %Y %H:%M:%S GMT')${CHAR_CR}
-		${header}${CHAR_CR}
+		${HEADER_FIELDS}${CHAR_CR}
 		__EOF__
 
 		case "${#}" in
 			[!0]) cat -- ${@+"${@}"};;
 		esac
 		;;
-	*) . "${W3MPLUS_TEMPLATE_HTTP}";;
+	*) sh -c "${W3MPLUS_HTTP_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"};;
 esac

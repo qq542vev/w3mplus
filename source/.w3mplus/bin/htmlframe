@@ -8,8 +8,8 @@
 ##
 ##   id - 389e2c50-477c-4e4e-b999-a6459ca96e46
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.0.2
-##   date - 2022-10-20
+##   version - 1.2.0
+##   date - 2022-10-23
 ##   since - 2022-06-28
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -64,7 +64,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=htmlframe 1.0.2'
+readonly 'VERSION=htmlframe 1.2.0'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -74,6 +74,21 @@ readonly 'VERSION=htmlframe 1.0.2'
 . 'html_escape.sh'
 . 'safe_string.sh'
 
+### Function: html_safetext
+##
+## HTML での安全な文字列に変換する。
+##
+## Parameters:
+##
+##   $1 - 結果を代入する変数名。
+##   $2 - 対象の文字列。
+
+html_safetext() {
+	eval "${1}=\"\${2}\""
+	eval 'safe_string "${1}"' "\"\${${1}}\""
+	eval 'html_escape "${1}"' "\"\${${1}}\""
+}
+
 # @getoptions
 parser_definition() {
 	setup REST plus:true abbr:true error:option_error no:0 help:usage \
@@ -82,12 +97,12 @@ parser_definition() {
 
 	param :'append_array_posix attribute "${OPTARG%%=*}" "${OPTARG#*=}"' -a --attribute validate:'regex_match "${OPTARG}" "^[A-Za-z-]+="' var:'NANE=VALUE' -- 'frameset要素に属性を追加する'
 	flag  attribute --no-attribute init:@no on: no: -- '-a, --attribute をリセットする'
-	param :'append_string "head" "${OPTARG}"' -H --head var:ELEMENT -- 'head要素内に ELEMENT を追加する'
-	flag  head      --no-head      init:@no on: no: --  '-H, --head をリセットする'
-	param title     -t --title     init:='No Title' var:TEXT -- 'フレームページのタイトルを指定する'
+	param :'append_string "HEAD_CONTENT" "${OPTARG}"' -H --head-content var:ELEMENT -- 'head要素内に ELEMENT を追加する'
+	flag  HEAD_CONTENT    --no-head-content init:@no on: no: -- '-H, --head-content をリセットする'
+	param :'html_safetext "TITLE" "${OPTARG}"' -t --title init:='No Title' var:TEXT -- 'フレームページのタイトルを指定する'
 	param W3MPLUS_TEMPLATE_FRAMESET -T --template init:@none var:FILE -- 'テンプレートファイルを指定する'
-	param :'eval "${1#--}=\"\${OPTARG}\""' --n1 --n2 --n3 --n4 --n5 --n6 --n7 --n8 --n9 validate:'regex_match "${OPTARG}" "^([A-Za-z][0-9A-Za-z\\-_:.]*)?$"' var:NAME -- 'n個目の URI に対応するname属性を指定する'
-	param :'eval "${1#--}=\"\${OPTARG}\""' --t1 --t2 --t3 --t4 --t5 --t6 --t7 --t8 --t9 var:TEXT -- 'n個目の URI に対応するタイトルを指定する'
+	param :'eval "${1#--}=\"\${OPTARG}\""'       --n1 --n2 --n3 --n4 --n5 --n6 --n7 --n8 --n9 validate:'regex_match "${OPTARG}" "^([A-Za-z][0-9A-Za-z\\-_:.]*)?$"' var:NAME -- 'n個目の URI に対応するname属性を指定する'
+	param :'html_safetext "${1#--}" "${OPTARG}"' --t1 --t2 --t3 --t4 --t5 --t6 --t7 --t8 --t9 var:TEXT -- 'n個目の URI に対応するタイトルを指定する'
 	disp  :usage    -h --help      -- 'このヘルプを表示して終了する'
 	disp  VERSION   -v --version   -- 'バージョン情報を表示して終了する'
 
@@ -112,6 +127,9 @@ parser_definition() {
 		'  130 - received SIGINT' \
 		'  131 - received SIGQUIT' \
 		'  143 - received SIGTERM'
+
+	msg -- '' 'Environment Variables:' \
+		'  W3MPLUS_FRAMESET_PROGRAM - HTML フレーム用の呼び出しコマンド'
 }
 # @end
 
@@ -141,9 +159,6 @@ awkScript=$(
 	__EOF__
 )
 
-safe_string 'title' "${title}"
-html_escape 'title' "${title}"
-
 for uri in ${@+"${@}"}; do
 	i=$((${i-0} + 1))
 
@@ -155,16 +170,14 @@ for uri in ${@+"${@}"}; do
 
 	case "${name}" in
 		?*)
-			safe_string 'name' "${name}"
-			html_escape 'name' "${name}"
+			eval export '"FRAME${i}_NAME=${name}"'
 			nameAttr=" name=\"${name}\""
 			;;
 	esac
 
 	case "${ftitle}" in
 		?*)
-			safe_string 'ftitle' "${ftitle}"
-			html_escape 'ftitle' "${ftitle}"
+			eval export '"FRAME${i}_TITLE=${ftitle}"'
 			titleAttr=" title=\"${ftitle}\""
 			list="${list-}<li><a href=\"${uri}\">${ftitle}</a></li>"
 			;;
@@ -174,13 +187,15 @@ for uri in ${@+"${@}"}; do
 	frame="${frame-}<frame${nameAttr-}${titleAttr-} src=\"${uri}\" />"
 done
 
-attribute=$(eval "awk -- \"\${awkScript}\" ${attribute}")
+ATTRIBUTES=$(eval "awk -- \"\${awkScript}\" ${attribute}")
 
-frameset="<frameset${attribute}>${frame-}<noframes><body><p>The frame cannot be displayed on your Web browser.</p><p>Please enable HTML Frame.</p><p>Frame page list</p><ul>${list-}</ul></body></noframes></frameset>"
+export 'ATTRIBUTES' 'HEAD_CONTENT' 'TITLE' 'W3MPLUS_TEMPLATE_FRAMESET'
+
+frameset="<frameset${ATTRIBUTES}>${frame-}<noframes><body><p>The frame cannot be displayed on your Web browser.</p><p>Please enable HTML Frame.</p><p>Frame page list</p><ul>${list-}</ul></body></noframes></frameset>"
 
 case "${W3MPLUS_TEMPLATE_FRAMESET-}" in
 	'')
-		printf '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>%s</title>%s</head>%s</html>' "${title}" "${head}" "${frameset}"
+		printf '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>%s</title>%s</head>%s</html>' "${TITLE}" "${HEAD_CONTENT}" "${frameset}"
 		;;
-	*) . "${W3MPLUS_TEMPLATE_FRAMESET}";;
+	*) sh -c "${W3MPLUS_FRAMESET_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"};;
 esac
