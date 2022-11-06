@@ -478,8 +478,6 @@ for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
 
 				cp -R -- "${tmpDir}/${value%%:*}" "${destDir}"
 			elif [ -d "${destDir}" ]; then
-				mkdir -p -- "${destDir}"
-
 				find -- "${tmpDir}/${value%%:*}/" -path '*[!/]' -prune -exec cp -fRP -- '{}' "${destDir}" ';'
 			else
 				cat <<-__EOF__ >&2
