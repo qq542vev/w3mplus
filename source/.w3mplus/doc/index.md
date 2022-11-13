@@ -6,7 +6,7 @@ author:
 - name: qq542vev
   url: https://purl.org/meta/me/
 created: 2022-08-17
-modified: 2022-10-26
+modified: 2022-11-12
 copyright: Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 license:
 - name: CC-BY
@@ -793,6 +793,7 @@ w3mplus は、Pale Moon のようなプライベートブラウジングモー�
  * Local Mark のバグを修正。
  * 一部の環境変数名を変更。
  * 制御文字の除去に関するバグを修正。
+ * URI の検査を高速化。
 
 ## v0.4.2 - 2022-09-27 {#v0.4.2}
 
