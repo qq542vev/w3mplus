@@ -136,15 +136,13 @@ fi
 tmpDir=$(mktemp -d)
 
 # 引数の個数が過大である
-case "${#}" in
-	[!0])
-		cat <<-__EOF__ >&2
-			${0##*/}: 引数が過大です。
-			詳細については '${0##*/} --help' を実行してください。
-		__EOF__
+case "${#}" in [!0])
+	cat <<-__EOF__ >&2
+		${0##*/}: 引数が過大です。
+		詳細については '${0##*/} --help' を実行してください。
+	__EOF__
 
-		end_call "${EX_USAGE}"
-		;;
+	end_call "${EX_USAGE}"
 esac
 
 case "${timeout}" in
@@ -240,9 +238,7 @@ case "${number}" in
 				;;
 		esac
 		;;
-	'+'*)
-		number=$((number))
-		;;
+	'+'*) number=$((number));;
 	'-'*)
 		number=$((lineCount + number + 2))
 
@@ -261,9 +257,7 @@ case "${number}" in
 esac
 
 case "${count}" in
-	'+0')
-		count="${lineCount}"
-		;;
+	'+0') count="${lineCount}";;
 	'+'*)
 		if [ "${number}" -lt '1' ]; then
 			number='1'

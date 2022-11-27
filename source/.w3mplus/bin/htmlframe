@@ -169,11 +169,9 @@ for uri in ${@+"${@}"}; do
 	eval "name=\${n${i}-}"
 	eval "ftitle=\${t${i}-}"
 
-	case "${name}" in
-		?*)
-			eval export '"FRAME${i}_NAME=${name}"'
-			nameAttr=" name=\"${name}\""
-			;;
+	case "${name}" in ?*)
+		eval export '"FRAME${i}_NAME=${name}"'
+		nameAttr=" name=\"${name}\""
 	esac
 
 	case "${ftitle}" in
@@ -195,8 +193,6 @@ export 'ATTRIBUTES' 'HEAD_CONTENT' 'TITLE' 'W3MPLUS_TEMPLATE_FRAMESET'
 frameset="<frameset${ATTRIBUTES}>${frame-}<noframes><body><p>The frame cannot be displayed on your Web browser.</p><p>Please enable HTML Frame.</p><p>Frame page list</p><ul>${list-}</ul></body></noframes></frameset>"
 
 case "${W3MPLUS_TEMPLATE_FRAMESET-}" in
-	'')
-		printf '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>%s</title>%s</head>%s</html>' "${TITLE}" "${HEAD_CONTENT}" "${frameset}"
-		;;
+	'') printf '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>%s</title>%s</head>%s</html>' "${TITLE}" "${HEAD_CONTENT}" "${frameset}";;
 	*) sh -c "${W3MPLUS_FRAMESET_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"};;
 esac

@@ -132,11 +132,9 @@ elif [ '!' -r "${config}" ]; then
 	end_call "${EX_NOINPUT}"
 fi
 
-case "${#}" in
-	'0')
-		sh -c "${VISUAL:-${EDITOR:-vi --}} \"\${1}\"" 'sh' "${config}"
-		exit
-		;;
+case "${#}" in '0')
+	sh -c "${VISUAL:-${EDITOR:-vi --}} \"\${1}\"" 'sh' "${config}"
+	exit
 esac
 
 awkv_escape 'key' "${1}"

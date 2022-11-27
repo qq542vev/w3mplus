@@ -100,15 +100,13 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-case "${#}" in
-	'0')
-		cat <<-__EOF__ >&2
-			${0##*/}: 引数が不足しています。
-			詳細については '${0##*/} --help' を実行してください。
-		__EOF__
+case "${#}" in '0')
+	cat <<-__EOF__ >&2
+		${0##*/}: 引数が不足しています。
+		詳細については '${0##*/} --help' を実行してください。
+	__EOF__
 
-		end_call "${EX_USAGE}"
-		;;
+	end_call "${EX_USAGE}"
 esac
 
 output="${1}"
