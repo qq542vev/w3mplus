@@ -207,7 +207,7 @@ case "${action}" in
 			value="${value%_}"
 		esac
 
-		org_lc eval "w3mredirect ${option-} -- \${value}"
+		eval org_lc "w3mredirect ${option-} -- \${value}"
 		;;
 	'setenv')
 # @gengetoptions parser -i parser_definition_setenv parse_setenv "${1}"

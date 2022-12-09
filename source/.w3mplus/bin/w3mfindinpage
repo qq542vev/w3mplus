@@ -140,4 +140,4 @@ case "${search}" in ?*)
 	done
 esac
 
-org_lc eval "httpresponse -H 'W3m-control: BACK' ${header}"
+eval org_lc "httpresponse -H 'W3m-control: BACK' ${header}"

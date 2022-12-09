@@ -695,7 +695,7 @@ GETOPTIONSHERE
 		;;
 	esac
 
-	org_lc eval "w3mredirect ${option-} -- \${value}"
+	eval org_lc "w3mredirect ${option-} -- \${value}"
 	;;
 'setenv')
 	encode='raw'

@@ -763,6 +763,6 @@ esac
 path_to_fileurl 'menu' "${output}"
 
 case "${position}" in
-'left') org_lc eval "htmlframe ${attribute} --title \"\${title}\" --n1 'menu' --n2 'main' --t1 'Menu page' --t2 'Main page' -- \"\${menu}\" \"\${main}\"" ;;
-'right') org_lc eval "htmlframe ${attribute} --title \"\${title}\" --n1 'main' --n2 'menu' --t1 'Main page' --t2 'Menu page' -- \"\${main}\" \"\${menu}\"" ;;
+'left') eval org_lc "htmlframe ${attribute} --title \"\${title}\" --n1 'menu' --n2 'main' --t1 'Menu page' --t2 'Main page' -- \"\${menu}\" \"\${main}\"" ;;
+'right') eval org_lc "htmlframe ${attribute} --title \"\${title}\" --n1 'main' --n2 'menu' --t1 'Main page' --t2 'Menu page' -- \"\${main}\" \"\${menu}\"" ;;
 esac

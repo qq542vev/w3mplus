@@ -480,7 +480,11 @@ if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${
 fi
 
 case "${query_action-}" in
-'about-uri') org_lc w3mabouturi -- ${query_about+"${query_about}"} ;;
+'about-uri') org_lc w3mabouturi -- ${query_about+"${query_about}"} ||
+	case "${?}" in [!1] | 1?*)
+		exit "${?}"
+		;;
+	esac ;;
 'close-tab')
 	expand 'uri' "${query_uri-W3M_URL}"
 	expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
@@ -598,7 +602,7 @@ case "${query_action-}" in
 		;;
 	esac
 
-	org_lc eval w3maction \
+	eval org_lc w3maction \
 		'"${query_subaction}"' \
 		'"${query_variable-W3M_URL}"' \
 		"${commandArg-}"
