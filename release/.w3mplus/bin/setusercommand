@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=setusercommand 1.2.0'
+readonly 'VERSION=setusercommand 1.2.1'
 
 
 
@@ -55,6 +55,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -338,24 +342,19 @@ if [ '!' -e "${config}" ]; then
 fi
 
 if [ '!' -f "${config}" ]; then
-	cat <<-__EOF__ >&2
-		${0##*/}: '${config}' は通常ファイルではありません。
-		詳細については '${0##*/} --help' を実行してください。
-	__EOF__
+	printf "%s: '%s' は通常ファイルではありません。\\n" "${0##*/}" "${config}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
-	cat <<-__EOF__ >&2
-		${0##*/}: '${config}' の読み込み許可がありません。
-		詳細については '${0##*/} --help' を実行してください。
-	__EOF__
+	printf "%s: '%s' の読み込み許可がありません。\\n" "${0##*/}" "${config}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 	end_call "${EX_NOINPUT}"
 fi
 
-case "${#}" in
-'0')
-	sh -c "${VISUAL:-${EDITOR:-vi --}} \"\${1}\"" 'sh' "${config}"
+case "${#}" in '0')
+	org_lc sh -c "${VISUAL:-${EDITOR:-vi --}} \"\${1}\"" 'sh' "${config}"
 	exit
 	;;
 esac

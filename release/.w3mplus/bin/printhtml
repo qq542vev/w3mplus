@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=printhtml 3.1.0'
+readonly 'VERSION=printhtml 3.1.1'
 
 
 
@@ -55,6 +55,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -513,11 +517,12 @@ case "${W3MPLUS_TEMPLATE_HTML-}" in
 '')
 	printf '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8" /><title>%s</title>%s</head><body><main>' "${TITLE}" "${HEAD_CONTENT}"
 
-	case "${#}" in
-	[!0]) cat -- ${@+"${@}"} | tr -d '\000-\010\013\014\016-\037\177-\214' ;;
+	case "${#}" in [!0]*)
+		cat -- ${@+"${@}"} | tr -d '\000-\010\013\014\016-\037\177-\214'
+		;;
 	esac
 
 	printf '</main></body></html>'
 	;;
-*) sh -c "${W3MPLUS_HTML_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
+*) org_lc sh -c "${W3MPLUS_HTML_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
 esac

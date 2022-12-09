@@ -57,6 +57,10 @@ end_call() {
 	exit "${1:-0}"
 }
 
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
+}
+
 
 
 option_error() {
@@ -281,8 +285,9 @@ GETOPTIONSHERE
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-case "${#}" in
-'0') set -- $(cat) ;;
+case "${#}" in '0')
+	set -- $(cat)
+	;;
 esac
 
 awkScript=$(

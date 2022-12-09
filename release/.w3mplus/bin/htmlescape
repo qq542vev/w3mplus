@@ -57,6 +57,10 @@ end_call() {
 	exit "${1:-0}"
 }
 
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
+}
+
 
 
 option_error() {
@@ -268,15 +272,9 @@ eval "set -- ${REST}"
 sedScript='s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g;'
 
 case "${escape}" in
-'special')
-	sedScript="${sedScript} s/\"/\\&quot;/g; s/'/\\&#39;/g"
-	;;
-'single')
-	sedScript="${sedScript} s/'/\\&#39;/g"
-	;;
-'double')
-	sedScript="${sedScript} s/\"/\\&quot;/g"
-	;;
+'special') sedScript="${sedScript} s/\"/\\&quot;/g; s/'/\\&#39;/g" ;;
+'single') sedScript="${sedScript} s/'/\\&#39;/g" ;;
+'double') sedScript="${sedScript} s/\"/\\&quot;/g" ;;
 esac
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3mvisualmode 2.0.1'
+readonly 'VERSION=w3mvisualmode 2.0.2'
 
 
 
@@ -55,6 +55,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -361,10 +365,10 @@ if [ "${id}" '=' "${startId}" ] && [ "${limitTime}" "${operator}" "${startTime}"
 		__EOF__
 	)
 
-	w3mselectline -l "${line}" -n "${startLine}" ${@+"${@}"} |
+	org_lc w3mselectline -l "${line}" -n "${startLine}" ${@+"${@}"} |
 		awk -v "variable=${variable}" -- "${awkScript}"
 else
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: SETENV ${variable}=${id} ${line} $(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)" \
 		-H "W3m-control: EXEC_SHELL printf 'Start visual mode from line %d\\n' '${line}'"

@@ -57,6 +57,10 @@ end_call() {
 	exit "${1:-0}"
 }
 
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
+}
+
 
 
 option_error() {
@@ -123,8 +127,9 @@ parser_definition() {
 }
 
 validate_field() {
-	case "${OPTARG}" in
-	'') return 0 ;;
+	case "${OPTARG}" in '')
+		return '0'
+		;;
 	esac
 
 	set -- '(original|scheme!?|authority!?|userinfo!?|host|port!?|path|query!?|fragment!?)'

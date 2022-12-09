@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=htmlframe 1.2.0'
+readonly 'VERSION=htmlframe 1.2.1'
 
 
 
@@ -55,6 +55,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -779,7 +783,7 @@ awkScript=$(
 	__EOF__
 )
 
-uricheck -f '' --verbose -- ${@+"${@}"} || end_call "${EX_USAGE}"
+org_lc uricheck --field '' --verbose -- ${@+"${@}"} || end_call "${EX_USAGE}"
 
 for uri in ${@+"${@}"}; do
 	i=$((${i-0} + 1))
@@ -815,5 +819,5 @@ frameset="<frameset${ATTRIBUTES}>${frame-}<noframes><body><p>The frame cannot be
 
 case "${W3MPLUS_TEMPLATE_FRAMESET-}" in
 '') printf '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>%s</title>%s</head>%s</html>' "${TITLE}" "${HEAD_CONTENT}" "${frameset}" ;;
-*) sh -c "${W3MPLUS_FRAMESET_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
+*) org_lc sh -c "${W3MPLUS_FRAMESET_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
 esac

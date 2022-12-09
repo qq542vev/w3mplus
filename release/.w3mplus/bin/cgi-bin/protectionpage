@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=protectionpage 1.2.0'
+readonly 'VERSION=protectionpage 1.2.1'
 
 : ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
 : ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
@@ -67,6 +67,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -435,7 +439,7 @@ GETOPTIONSHERE
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-eval "$(parsequery --prefix 'query_' "${QUERY_STRING%%url=*}")"
+eval "$(org_lc parsequery --prefix 'query_' "${QUERY_STRING%%url=*}")"
 
 safe_string 'url' "${QUERY_STRING#*url=}"
 html_escape 'url' "${url}"
@@ -477,7 +481,7 @@ case "${query_category-}" in
 	;;
 esac
 
-printhtml --title 'Forbidden Site' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+org_lc printhtml --title 'Forbidden Site' -- - <<-__EOF__ | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 	<h1>${title}</h1>
 
 	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${name}</a></p>

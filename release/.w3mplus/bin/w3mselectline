@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3mselectline 2.0.2'
+readonly 'VERSION=w3mselectline 2.0.3'
 
 
 
@@ -55,6 +55,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -347,8 +351,7 @@ esac
 
 case "${number}" in
 '+-'* | '+'* | '-'* | '0')
-	case "${number}" in
-	'+-'*)
+	case "${number}" in '+-'*)
 		line=$((line + ${number#??}))
 		number=$((${number#??} * -2))
 		;;
@@ -372,7 +375,7 @@ fi
 
 case "${action}" in
 'display')
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d'"
 	;;
@@ -385,13 +388,14 @@ case "${action}" in
 		__EOF__
 	)
 
-	case "${endLine}" in
-	[1-9]*) filterCommand="${filterCommand} tail -n '+$((endLine + 1))' -- '${displayTmp}/file';" ;;
+	case "${endLine}" in [1-9]*)
+		filterCommand="${filterCommand} tail -n '+$((endLine + 1))' -- '${displayTmp}/file';"
+		;;
 	esac
 
 	filterCommand="${filterCommand} rm -fr -- '${displayTmp}';"
 
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PRINT ${displayTmp}/file" \
 		-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d'" \
@@ -410,17 +414,18 @@ case "${action}" in
 		__EOF__
 	)
 
-	case "${endLine}" in
-	[1-9]*) formatCommand="${formatCommand} tail -n '+$((endLine + 1))' -- \"\${file}\";" ;;
+	case "${endLine}" in [1-9]*)
+		formatCommand="${formatCommand} tail -n '+$((endLine + 1))' -- \"\${file}\";"
+		;;
 	esac
 
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PIPE_BUF ${formatCommand}" \
 		-H "W3m-control: GOTO_LINE ${startLine}"
 	;;
 'lowercase')
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'" \
 		-H "W3m-control: GOTO_LINE ${startLine}"
@@ -429,25 +434,25 @@ case "${action}" in
 	displayTmp=$(mktemp -d)
 	command=$(printf '%s' "${*}" | base64 | tr -d '\n')
 
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PRINT ${displayTmp}/file" \
 		-H "W3m-control: EXEC_SHELL sed -e '${startLine},${endLine}!d' -- '${displayTmp}/file' | sh -c 'eval \"\$(echo \"${command}\" | base64 -d)\"'; rm -fr -- '${displayTmp}'"
 	;;
 'rot13')
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm/'" \
 		-H "W3m-control: GOTO_LINE ${startLine}"
 	;;
 'switchcase')
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/'" \
 		-H "W3m-control: GOTO_LINE ${startLine}"
 	;;
 'uppercase')
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/'" \
 		-H "W3m-control: GOTO_LINE ${startLine}"
@@ -455,7 +460,7 @@ case "${action}" in
 'yank')
 	command=$(printf '%s' "${*}" | base64 | tr -d '\n')
 
-	httpresponse \
+	org_lc httpresponse \
 		-H 'W3m-control: BACK' \
 		-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d' | sh -c 'eval \"\$(echo \"${command}\" | base64 -d)\"'" \
 		-H 'W3m-control: BACK'

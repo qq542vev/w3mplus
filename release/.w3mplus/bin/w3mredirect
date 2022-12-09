@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3mredirect 2.0.2'
+readonly 'VERSION=w3mredirect 2.0.3'
 
 
 
@@ -55,6 +55,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -742,6 +746,6 @@ option=$(
 	esac | awk -v "tab=${tab}" -- "${awkScript}"
 )
 
-eval httpresponse \
+org_lc eval httpresponse \
 	'${template:+--template "${template}"}' \
 	"${option}"

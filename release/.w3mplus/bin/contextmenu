@@ -57,6 +57,10 @@ end_call() {
 	exit "${1:-0}"
 }
 
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
+}
+
 parser_definition() {
 	setup REST plus:true abbr:true error:option_error no:0 help:usage \
 		-- 'Usage:' "  ${2##*/}" \

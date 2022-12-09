@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=w3mabouturi 1.4.5'
+readonly 'VERSION=w3mabouturi 1.4.6'
 
 
 
@@ -55,6 +55,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -448,10 +452,10 @@ case "${1-about:about}" in
 	safe_string 'version' "$(w3m -version)"
 	html_escape 'version' "${version}"
 
-	printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "${version}" | printhtml --title 'About:' -- - | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+	printf '<pre title="w3m Version Information"><samp>%s</samp></pre>' "${version}" | org_lc printhtml --title 'About:' -- - | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 	;;
 'about:about')
-	printhtml --title 'About About' -- - <<-'__EOF__' | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+	org_lc printhtml --title 'About About' -- - <<-'__EOF__' | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 		<section>
 			<h1>About About</h1>
 
@@ -480,10 +484,10 @@ case "${1-about:about}" in
 	__EOF__
 	;;
 'about:blank')
-	printhtml --title 'about:blank' -- - | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+	org_lc printhtml --title 'about:blank' -- - | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 	;;
 'about:bookmark')
-	httpresponse -H 'W3m-control: BACK' -H 'W3m-control: VIEW_BOOKMARK'
+	org_lc httpresponse -H 'W3m-control: BACK' -H 'W3m-control: VIEW_BOOKMARK'
 	;;
 'about:cache')
 	path_to_fileurl 'baseURL' "${W3MPLUS_W3M_HOME}"
@@ -554,7 +558,7 @@ case "${1-about:about}" in
 		__EOF__
 	)
 
-	printhtml --title 'Network Cache Storage Information' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+	org_lc printhtml --title 'Network Cache Storage Information' -- - <<-__EOF__ | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 		<table>
 			<caption>w3m Cache Files in '<a href="${baseURL}">${W3MPLUS_W3M_HOME}</a>'</caption>
 			<thead>
@@ -574,19 +578,19 @@ case "${1-about:about}" in
 'about:config')
 	path_to_fileurl 'uri' "${W3MPLUS_W3M_CONFIG}"
 
-	w3mredirect "${uri}"
+	org_lc w3mredirect "${uri}"
 	;;
 'about:cookie')
-	httpresponse -H 'W3m-control: BACK' -H 'W3m-control: COOKIE'
+	org_lc httpresponse -H 'W3m-control: BACK' -H 'W3m-control: COOKIE'
 	;;
 'about:downloads')
-	httpresponse -H 'W3m-control: BACK' -H 'W3m-control: DOWNLOAD_LIST'
+	org_lc httpresponse -H 'W3m-control: BACK' -H 'W3m-control: DOWNLOAD_LIST'
 	;;
 'about:help')
-	httpresponse -H 'W3m-control: BACK' -H 'W3m-control: HELP'
+	org_lc httpresponse -H 'W3m-control: BACK' -H 'W3m-control: HELP'
 	;;
 'about:history')
-	httpresponse -H 'W3m-control: BACK' -H 'W3m-control: HISTORY'
+	org_lc httpresponse -H 'W3m-control: BACK' -H 'W3m-control: HISTORY'
 	;;
 'about:home')
 	safe_string 'pass' "${W3MPLUS_PASS_VALUE-}"
@@ -597,7 +601,7 @@ case "${1-about:about}" in
 
 	path_to_fileurl 'homeurl' "${HOME}"
 
-	printhtml --title 'w3m Start Page' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -H 'W3m-control: BEGIN' -H 'W3m-control: NEXT_LINK' -- -
+	org_lc printhtml --title 'w3m Start Page' -- - <<-__EOF__ | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -H 'W3m-control: BEGIN' -H 'W3m-control: NEXT_LINK' -- -
 		<form action="file:///cgi-bin/w3mplus" method="get" accept-charset="UTF-8">
 			<p align="center">
 				<input type="hidden" name="pass" value="${pass}" />
@@ -718,13 +722,14 @@ case "${1-about:about}" in
 			awk -- '$2 == "w3m" { printf("%d", $1); exit; }'
 	)
 
-	printhtml --title 'w3m processes' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+	org_lc printhtml --title 'w3m processes' -- - <<-__EOF__ | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 		<section>
 			<h1>Current w3m process</h1>
 
 			$(
-				case "${w3mid}" in
-				[0-9]*) ps -o "${header}" -p "${w3mid}" | awk -- "${awkScript}" ;;
+				case "${w3mid}" in [0-9]*)
+					ps -o "${header}" -p "${w3mid}" | awk -- "${awkScript}"
+					;;
 				esac
 			)
 		</section>
@@ -741,21 +746,21 @@ case "${1-about:about}" in
 	__EOF__
 	;;
 'about:message')
-	httpresponse -H 'W3m-control: BACK' -H 'W3m-control: MSGS'
+	org_lc httpresponse -H 'W3m-control: BACK' -H 'W3m-control: MSGS'
 	;;
 'about:newtab')
-	w3mredirect -t 'newtab' 'about:blank'
+	org_lc w3mredirect -t 'newtab' 'about:blank'
 	;;
 'about:permissions')
 	path_to_fileurl 'uri' "${W3MPLUS_W3M_SITECONF}"
 
-	w3mredirect "${url}"
+	org_lc w3mredirect "${url}"
 	;;
 'about:preferences')
-	httpresponse -H 'W3m-control: BACK' -H 'W3m-control: OPTIONS'
+	org_lc httpresponse -H 'W3m-control: BACK' -H 'W3m-control: OPTIONS'
 	;;
 'about:private')
-	printhtml --title 'Private Browsing' -- - <<-'__EOF__' | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+	org_lc printhtml --title 'Private Browsing' -- - <<-'__EOF__' | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 		<h1>Private Browsing</h1>
 
 		<p>w3m won't remember any history for this window.</p>
@@ -768,7 +773,7 @@ case "${1-about:about}" in
 	__EOF__
 	;;
 *)
-	printhtml --title 'Problem loading page' -- - <<-'__EOF__' | httpresponse --status-line 'HTTP/1.1 400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -- -
+	org_lc printhtml --title 'Problem loading page' -- - <<-'__EOF__' | org_lc httpresponse --status-line 'HTTP/1.1 400 Bad Request' -H 'Content-Type: text/html; charset=UTF-8' -- -
 		<h1>The address isn't valid</h1>
 
 		<p>The URL is not valid and cannot be loaded.</p>

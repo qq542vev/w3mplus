@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-readonly 'VERSION=httpresponse 2.1.0'
+readonly 'VERSION=httpresponse 2.1.1'
 
 
 
@@ -55,6 +55,10 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
 
 
@@ -390,9 +394,10 @@ case "${W3MPLUS_TEMPLATE_HTTP-}" in
 		${HEADER_FIELDS}${CHAR_CR}
 	__EOF__
 
-	case "${#}" in
-	[!0]) cat -- ${@+"${@}"} ;;
+	case "${#}" in [!0]*)
+		cat -- ${@+"${@}"}
+		;;
 	esac
 	;;
-*) sh -c "${W3MPLUS_HTTP_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
+*) org_lc sh -c "${W3MPLUS_HTTP_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
 esac

@@ -164,4 +164,4 @@ shellScript=$(
 	done
 )
 
-org_lc HOME="${tmpDir}" w3m ${@+"${@}"}
+LC_ALL="${LC_ALL_ORG}" HOME="${tmpDir}" w3m ${@+"${@}"}
