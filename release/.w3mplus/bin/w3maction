@@ -7,6 +7,7 @@ readonly 'VERSION=w3maction 2.3.1'
 
 set -efu
 umask '0022'
+readonly "LC_ALL_ORG=${LC_ALL-}"
 LC_ALL='C'
 IFS=$(printf ' \t\n_')
 IFS="${IFS%_}"
@@ -16,7 +17,7 @@ XPG_SUS_ENV='ON'        # AIX POSIX mode
 XPG_UNIX98='OFF'        # AIX UNIX 03 mode
 POSIXLY_CORRECT='1'     # GNU Coreutils POSIX mode
 COMMAND_MODE='unix2003' # macOS UNIX 03 mode
-export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
+export 'LC_ALL' 'IFS' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
 
 
 
@@ -364,7 +365,7 @@ action="${1}"
 variableName="${2}"
 shift 2
 
-if regex_match "${variableName}" '^[_A-Za-z][_0-9A-Za-z]*$'; then :; else
+if ! regex_match "${variableName}" '^[_A-Za-z][_0-9A-Za-z]*$'; then
 	cat <<-__EOF__ >&2
 		${0##*/}: '${variableName}' -- VARIABLE_NAME の値が不正です。
 		詳細については '${0##*/} --help' を実行してください。

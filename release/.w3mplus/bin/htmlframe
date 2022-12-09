@@ -7,6 +7,7 @@ readonly 'VERSION=htmlframe 1.2.0'
 
 set -efu
 umask '0022'
+readonly "LC_ALL_ORG=${LC_ALL-}"
 LC_ALL='C'
 IFS=$(printf ' \t\n_')
 IFS="${IFS%_}"
@@ -16,7 +17,7 @@ XPG_SUS_ENV='ON'        # AIX POSIX mode
 XPG_UNIX98='OFF'        # AIX UNIX 03 mode
 POSIXLY_CORRECT='1'     # GNU Coreutils POSIX mode
 COMMAND_MODE='unix2003' # macOS UNIX 03 mode
-export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
+export 'LC_ALL' 'IFS' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
 
 
 
@@ -788,8 +789,7 @@ for uri in ${@+"${@}"}; do
 	eval "name=\${n${i}-}"
 	eval "ftitle=\${t${i}-}"
 
-	case "${name}" in
-	?*)
+	case "${name}" in ?*)
 		eval export '"FRAME${i}_NAME=${name}"'
 		nameAttr=" name=\"${name}\""
 		;;
@@ -814,8 +814,6 @@ export 'ATTRIBUTES' 'HEAD_CONTENT' 'TITLE' 'W3MPLUS_TEMPLATE_FRAMESET'
 frameset="<frameset${ATTRIBUTES}>${frame-}<noframes><body><p>The frame cannot be displayed on your Web browser.</p><p>Please enable HTML Frame.</p><p>Frame page list</p><ul>${list-}</ul></body></noframes></frameset>"
 
 case "${W3MPLUS_TEMPLATE_FRAMESET-}" in
-'')
-	printf '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>%s</title>%s</head>%s</html>' "${TITLE}" "${HEAD_CONTENT}" "${frameset}"
-	;;
+'') printf '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>%s</title>%s</head>%s</html>' "${TITLE}" "${HEAD_CONTENT}" "${frameset}" ;;
 *) sh -c "${W3MPLUS_FRAMESET_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"} ;;
 esac

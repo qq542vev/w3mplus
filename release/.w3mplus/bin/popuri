@@ -7,6 +7,7 @@ readonly 'VERSION=popuri 3.1.1'
 
 set -efu
 umask '0022'
+readonly "LC_ALL_ORG=${LC_ALL-}"
 LC_ALL='C'
 IFS=$(printf ' \t\n_')
 IFS="${IFS%_}"
@@ -16,7 +17,7 @@ XPG_SUS_ENV='ON'        # AIX POSIX mode
 XPG_UNIX98='OFF'        # AIX UNIX 03 mode
 POSIXLY_CORRECT='1'     # GNU Coreutils POSIX mode
 COMMAND_MODE='unix2003' # macOS UNIX 03 mode
-export 'IFS' 'LC_ALL' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
+export 'LC_ALL' 'IFS' 'PATH' 'UNIX_STD' 'XPG_SUS_ENV' 'XPG_UNIX98' 'POSIXLY_CORRECT' 'COMMAND_MODE'
 
 
 
@@ -366,8 +367,7 @@ fi
 
 tmpDir=$(mktemp -d)
 
-case "${#}" in
-[!0])
+case "${#}" in [!0])
 	cat <<-__EOF__ >&2
 		${0##*/}: 引数が過大です。
 		詳細については '${0##*/} --help' を実行してください。
@@ -470,9 +470,7 @@ case "${number}" in
 		;;
 	esac
 	;;
-'+'*)
-	number=$((number))
-	;;
+'+'*) number=$((number)) ;;
 '-'*)
 	number=$((lineCount + number + 2))
 
@@ -491,9 +489,7 @@ case "${number}" in
 esac
 
 case "${count}" in
-'+0')
-	count="${lineCount}"
-	;;
+'+0') count="${lineCount}" ;;
 '+'*)
 	if [ "${number}" -lt '1' ]; then
 		number='1'
