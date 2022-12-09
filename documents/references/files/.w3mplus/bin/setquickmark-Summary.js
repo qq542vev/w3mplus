@@ -1,1 +1,1 @@
-﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/setquickmark","setquickmark");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/setquickmark",[["ShellScript","ShellScript"]],[["Files","File"]],[[150,0,0,"setquickmark","setquickmark"]]);
+﻿NDFramePage.OnPageTitleLoaded("File:.w3mplus/bin/setquickmark","setquickmark");NDSummary.OnSummaryLoaded("File:.w3mplus/bin/setquickmark",[["ShellScript","ShellScript"]],[["Files","File"]],[[124,0,0,"setquickmark","setquickmark"]]);

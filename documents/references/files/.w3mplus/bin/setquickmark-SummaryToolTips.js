@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/setquickmark",{150:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">クイックマークを登録する。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/setquickmark",{124:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">クイックマークを登録する。</div></div>"});

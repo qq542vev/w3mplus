@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/w3mabouturi",{112:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">w3m のための about URI を処理する</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/w3mabouturi",{1:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">w3m のための about URI を処理する</div></div>"});

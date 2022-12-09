@@ -1,1 +1,1 @@
-﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/w3mfindinpage",{111:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">ページ内の検索を行う。</div></div>"});
+﻿NDSummary.OnToolTipsLoaded("File:.w3mplus/bin/w3mfindinpage",{106:"<div class=\"NDToolTip TFile LShellScript\"><div class=\"TTSummary\">ページ内の検索を行う。</div></div>"});
