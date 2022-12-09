@@ -110,17 +110,15 @@ search=''
 header=''
 
 for keyword in ${@+"${@}"}; do
-	case "${keyword}" in
-		?*)
-			regex_escape 'keyword' "${keyword}" 'ERE'
-			search="${search}${search:+|}$(printf '%s' "${keyword}" | tr -- '\n' ' ' | tr -d -- '\r')"
-			;;
+	case "${keyword}" in ?*)
+		regex_escape 'keyword' "${keyword}" 'ERE'
+		search="${search}${search:+|}$(printf '%s' "${keyword}" | tr -- '\n' ' ' | tr -d -- '\r')"
 	esac
 done
 
 case "${search}" in ?*)
-	case "${exactFlag}" in
-		'1') search="(^|[${CHAR_HT} ])(${search})([${CHAR_HT} ]|\$)";;
+	case "${exactFlag}" in '1')
+		search="(^|[${CHAR_HT} ])(${search})([${CHAR_HT} ]|\$)"
 	esac
 
 	while [ "${number}" -ne 0 ]; do

@@ -104,15 +104,9 @@ eval "set -- ${REST}"
 sedScript='s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g;'
 
 case "${escape}" in
-	'special')
-		sedScript="${sedScript} s/\"/\\&quot;/g; s/'/\\&#39;/g"
-		;;
-	'single')
-		sedScript="${sedScript} s/'/\\&#39;/g"
-		;;
-	'double')
-		sedScript="${sedScript} s/\"/\\&quot;/g"
-		;;
+	'special') sedScript="${sedScript} s/\"/\\&quot;/g; s/'/\\&#39;/g";;
+	'single') sedScript="${sedScript} s/'/\\&#39;/g";;
+	'double') sedScript="${sedScript} s/\"/\\&quot;/g";;
 esac
 
 # https://qiita.com/richmikan@github/items/5158eac47467d8a29056

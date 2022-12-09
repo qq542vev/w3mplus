@@ -124,8 +124,8 @@ case "${W3MPLUS_TEMPLATE_HTTP-}" in
 		${HEADER_FIELDS}${CHAR_CR}
 		__EOF__
 
-		case "${#}" in
-			[!0]) cat -- ${@+"${@}"};;
+		case "${#}" in [!0]*)
+			cat -- ${@+"${@}"}
 		esac
 		;;
 	*) sh -c "${W3MPLUS_HTTP_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"};;

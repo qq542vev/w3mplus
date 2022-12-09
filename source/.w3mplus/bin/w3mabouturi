@@ -327,8 +327,8 @@ case "${1-about:about}" in
 				<h1>Current w3m process</h1>
 
 				$(
-					case "${w3mid}" in
-						[0-9]*) ps -o "${header}" -p "${w3mid}" | awk -- "${awkScript}";;
+					case "${w3mid}" in [0-9]*)
+						ps -o "${header}" -p "${w3mid}" | awk -- "${awkScript}"
 					esac
 				)
 			</section>

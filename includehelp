@@ -138,19 +138,16 @@ awkScript=$(
 )
 
 case "${placeFlag}" in
-  '0') awk -- "${awkScript}" ${@+"${@}"};;
-  *)
-    for file in ${@+"${@}"}; do
-			case "${file}" in
-				'-')
-					printf "%s: '-i', '--in-place' オプションでは標準入力は使用できません。無視します。\\n" "${0##*/}" >&2
-
-					continue
-					;;
+	'0') awk -- "${awkScript}" ${@+"${@}"};;
+	*)
+		for file in ${@+"${@}"}; do
+			case "${file}" in '-')
+				printf "%s: '-i', '--in-place' オプションでは標準入力は使用できません。無視します。\\n" "${0##*/}" >&2
+				continue
 			esac
 
-      awk -- "${awkScript}" "${file}" >"${tmpFile}"
-      cat -- "${tmpFile}" >"${file}"
-    done
-    ;;
+			awk -- "${awkScript}" "${file}" >"${tmpFile}"
+			cat -- "${tmpFile}" >"${file}"
+		done
+		;;
 esac

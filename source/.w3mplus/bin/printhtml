@@ -133,8 +133,8 @@ case "${W3MPLUS_TEMPLATE_HTML-}" in
 	'')
 		printf '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8" /><title>%s</title>%s</head><body><main>' "${TITLE}" "${HEAD_CONTENT}"
 
-		case "${#}" in
-			[!0]) cat -- ${@+"${@}"} | tr -d '\000-\010\013\014\016-\037\177-\214';;
+		case "${#}" in [!0]*)
+			cat -- ${@+"${@}"} | tr -d '\000-\010\013\014\016-\037\177-\214'
 		esac
 
 		printf '</main></body></html>'

@@ -101,10 +101,8 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 case "${#}" in '0')
-	cat <<-__EOF__ >&2
-		${0##*/}: 引数が不足しています。
-		詳細については '${0##*/} --help' を実行してください。
-	__EOF__
+	printf "%s: 引数が不足しています。\\n" "${0##*/}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 	end_call "${EX_USAGE}"
 esac
@@ -226,21 +224,15 @@ includeAwkscript=$(
 )
 
 for file in ${@+"${@}"}; do
-	case "${verbose}" in
-		'1') printf "Converting '%s'...\\n" "${file}" >&2
+	case "${verbose}" in '1')
+		printf "Converting '%s'...\\n" "${file}" >&2
 	esac
 
 	if [ '!' -f "${file}" ]; then
-		cat <<-__EOF__ >&2
-			${0##*/}: '${file}' は通常ファイルではありません。
-		__EOF__
-
+		printf "%s: '%s' は通常ファイルではありません。\\n" "${0##*/}" "${file}" >&2
 		continue
 	elif [ '!' -r "${file}" ]; then
-		cat <<-__EOF__ >&2
-			${0##*/}: '${file}' の読み込み許可がありません。
-		__EOF__
-
+		printf "%s: '%s' の読み込み許可がありません。\\n" "${0##*/}" "${file}" >&2
 		continue
 	fi
 
@@ -251,7 +243,7 @@ for file in ${@+"${@}"}; do
 	| shfmt -s -ln 'posix' \
 	| sed -e '1b; /^[[:blank:]]*#/d' >"${output}/${file##*/}"
 
-	case "${verbose}" in
-		'1') printf 'Done\n' >&2
+	case "${verbose}" in '1')
+		printf 'Done\n' >&2
 	esac
 done

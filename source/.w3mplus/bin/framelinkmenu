@@ -189,9 +189,7 @@ sed -e '/["[:blank:]]/d; s/^/"/; s/$/"/' -- ${@+"${@}"} \
 | printhtml --title 'Menu page' -- - >"${tmpDir}/file"
 
 case "${output}" in
-	'')
-		output=$(datauri 'text/html;charset=UTF-8' "${tmpDir}/file")
-		;;
+	'') output=$(datauri 'text/html;charset=UTF-8' "${tmpDir}/file");;
 	*)
 		if [ '!' -e "${output}" ]; then
 			outputDir=$(dirname -- "${output}"; printf '_')
@@ -207,10 +205,8 @@ case "${output}" in
 		elif [ -f "${output}" ]; then
 			cat -- "${tmpDir}/file" >"${output}"
 		else
-			cat <<-__EOF__ >&2
-				${0##*/}: '${output}' は通常ファイルではありません。
-				詳細については '${0##*/} --help' を実行してください。
-			__EOF__
+			printf "%s: '%s' は通常ファイルではありません。\\n" "${0##*/}" "${output}" >&2
+			printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 			end_call "${EX_DATAERR}"
 		fi
@@ -220,10 +216,6 @@ esac
 path_to_fileurl 'menu' "${output}"
 
 case "${position}" in
-	'left')
-		eval "htmlframe ${attribute} --title \"\${title}\" --n1 'menu' --n2 'main' --t1 'Menu page' --t2 'Main page' -- \"\${menu}\" \"\${main}\""
-		;;
-	'right')
-		eval "htmlframe ${attribute} --title \"\${title}\" --n1 'main' --n2 'menu' --t1 'Main page' --t2 'Menu page' -- \"\${main}\" \"\${menu}\""
-		;;
+	'left') eval "htmlframe ${attribute} --title \"\${title}\" --n1 'menu' --n2 'main' --t1 'Menu page' --t2 'Main page' -- \"\${menu}\" \"\${main}\"";;
+	'right') eval "htmlframe ${attribute} --title \"\${title}\" --n1 'main' --n2 'menu' --t1 'Main page' --t2 'Menu page' -- \"\${main}\" \"\${menu}\"";;
 esac

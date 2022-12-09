@@ -110,8 +110,8 @@ parse ${@+"${@}"}
 eval "set -- ${REST}"
 
 # 引数の個数が過小である
-case "${#}" in
-	'0') set -- "${HOME}/.w3m/siteconf";;
+case "${#}" in '0')
+	set -- "${HOME}/.w3m/siteconf"
 esac
 
 tmpDir=$(mktemp -d)
@@ -241,12 +241,9 @@ case "${placeFlag}" in
 	'0') eval "${command}" '${@+"${@}"}';;
 	*)
 		for file in ${@+"${@}"}; do
-			case "${file}" in
-				'-')
-					printf "%s: '-i', '--in-place' オプションでは標準入力は使用できません。無視します。\\n" "${0##*/}" >&2
-
-					continue
-					;;
+			case "${file}" in '-')
+				printf "%s: '-i', '--in-place' オプションでは標準入力は使用できません。無視します。\\n" "${0##*/}" >&2
+				continue
 			esac
 
 			eval "${command}" '"${file}"' >"${tmpFile}"

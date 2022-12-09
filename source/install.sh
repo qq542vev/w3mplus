@@ -140,15 +140,13 @@ mkdir -p -- "${tmpDir}"
 for value in 'sourceBin:bin' 'sourceW3m:.w3m' 'sourceW3mplus:.w3mplus'; do
 	eval "sourceDir=\"\${${value%%:*}}\""
 
-	case "${silentFlag}" in
-		'0') printf "'%s' を確認中...\\n" "${sourceDir}" >&2;;
+	case "${silentFlag}" in '0')
+		printf "'%s' を確認中...\\n" "${sourceDir}" >&2
 	esac
 
 	if [ '!' -d "${sourceDir}" ]; then
-　	cat <<-__EOF__ >&2
-			${0##*/}: '${sourceDir}' はディレクトリではありません。
-			詳細については '${0##*/} --help' を実行してください。
-		__EOF__
+		printf "%s: '%s' はディレクトリではありません。\\n" "${0##*/}" "${sourceDir}" >&2
+		printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 		end_call "${EX_DATAERR}"
 	fi
@@ -158,8 +156,8 @@ done
 
 printf '%s' "${pass}" >"${tmpDir}/.w3mplus/pass"
 
-case "${silentFlag}" in
-	'0') printf "'.w3m' のファイルを設定中...\\n" >&2;;
+case "${silentFlag}" in '0')
+	printf "'.w3m' のファイルを設定中...\\n" >&2
 esac
 
 find -- "${tmpDir}/.w3m" -type f -exec sh -c "${shellScript}" 'sh' "${pass}" '{}' '+'
@@ -167,34 +165,30 @@ find -- "${tmpDir}/.w3m" -type f -exec sh -c "${shellScript}" 'sh' "${pass}" '{}
 for value in 'bin:destBin' '.w3m:destW3m' '.w3mplus:destW3mplus'; do
 	eval "destDir=\"\${${value##*:}}\""
 
-	case "${destDir}" in
-		?*)
-			(
-				case "${silentFlag}" in
-					'0') printf "'%s' を '%s' にインストール中...\\n" "${value%%:*}" "${destDir}" >&2;;
-				esac
+	case "${destDir}" in ?*)
+		(
+			case "${silentFlag}" in '0')
+				printf "'%s' を '%s' にインストール中...\\n" "${value%%:*}" "${destDir}" >&2
+			esac
 
-				if [ '!' -e "${destDir}" ]; then
-					mkdir -p -- "${destDir}"
+			if [ '!' -e "${destDir}" ]; then
+				mkdir -p -- "${destDir}"
 
-					rm -fr "${destDir}"
+				rm -fr "${destDir}"
 
-					cp -R -- "${tmpDir}/${value%%:*}" "${destDir}"
-				elif [ -d "${destDir}" ]; then
-					find -- "${tmpDir}/${value%%:*}/" -path '*[!/]' -prune -exec cp -fRP -- '{}' "${destDir}" ';'
-				else
-					cat <<-__EOF__ >&2
-						${0##*/}: '${destDir}' はディレクトリではありません。
-						詳細については '${0##*/} --help' を実行してください。
-					__EOF__
+				cp -R -- "${tmpDir}/${value%%:*}" "${destDir}"
+			elif [ -d "${destDir}" ]; then
+				find -- "${tmpDir}/${value%%:*}/" -path '*[!/]' -prune -exec cp -fRP -- '{}' "${destDir}" ';'
+			else
+				printf "%s: '%s' はディレクトリではありません。\\n" "${0##*/}" "${destDir}" >&2
+				printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
-					end_call "${EX_DATAERR}"
-				fi
-			)
-			;;
+				end_call "${EX_DATAERR}"
+			fi
+		)
 	esac
 done
 
-case "${silentFlag}" in
-	'0') printf 'インストール完了\n' >&2;;
+case "${silentFlag}" in '0')
+	printf 'インストール完了\n' >&2
 esac

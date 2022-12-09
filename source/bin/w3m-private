@@ -159,16 +159,11 @@ shellScript=$(
 		eval "oprands=\${${type}}"
 		eval set -- "${oprands}"
 
-		case "${#}" in
-			[1-9]*)
-				shift
-				eval "find -L -- '.' '(' ${*} ')' -exec sh -c \"\${shellScript}\" 'sh' '${type}' \"${tmpDir}\" '{}' '+'"
-				;;
+		case "${#}" in [1-9]*)
+			shift
+			eval "find -L -- '.' '(' ${*} ')' -exec sh -c \"\${shellScript}\" 'sh' '${type}' \"${tmpDir}\" '{}' '+'"
 		esac
 	done
 )
 
-env \
-	HOME="${tmpDir}" \
-	LC_ALL="${ORIGINAL_LC_ALL}" \
-	w3m ${@+"${@}"}
+env HOME="${tmpDir}" LC_ALL="${ORIGINAL_LC_ALL}" w3m ${@+"${@}"}

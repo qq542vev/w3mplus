@@ -106,7 +106,7 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-if [ 0 -lt "${number}" ]; then
+if [ '0' -lt "${number}" ]; then
 	line=$(sed -n -e "${line},\$!d; /^\$/,/./{/./=}" -- ${@+"${@}"} | head -n "$((number))" | tail -n 1)
 else
 	line=$(sed -n -e "1,${line}!d; 1{/./=; d}; /^$/,/./{/./=}" -- ${@+"${@}"} | tail -n "$(((number * -1) + 1))" | head -n 1)

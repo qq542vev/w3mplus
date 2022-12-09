@@ -128,17 +128,13 @@ if [ '!' -e "${config}" ]; then
 fi
 
 if [ '!' -f "${config}" ]; then
-	cat <<-__EOF__ >&2
-		${0##*/}: '${config}' は通常ファイルではありません。
-		詳細については '${0##*/} --help' を実行してください。
-	__EOF__
+	printf "%s: '%s' は通常ファイルではありません。\\n" "${0##*/}" "${config}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 	end_call "${EX_DATAERR}"
 elif [ '!' -r "${config}" ]; then
-	cat <<-__EOF__ >&2
-		${0##*/}: '${config}' の読み込み許可がありません。
-		詳細については '${0##*/} --help' を実行してください。
-	__EOF__
+	printf "%s: '%s' の読み込み許可がありません。\\n" "${0##*/}" "${config}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 	end_call "${EX_NOINPUT}"
 fi
@@ -162,26 +158,20 @@ if [ '!' -e "${history}" ]; then
 fi
 
 if [ '!' -f "${history}" ]; then
-	cat <<-__EOF__ >&2
-		${0##*/}: '${history}' は通常ファイルではありません。
-		詳細については '${0##*/} --help' を実行してください。
-	__EOF__
+	printf "%s: '%s' は通常ファイルではありません。\\n" "${0##*/}" "${history}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 	end_call "${EX_DATAERR}"
 elif [ '!' -r "${history}" ]; then
-	cat <<-__EOF__ >&2
-		${0##*/}: '${history}' の読み込み許可がありません。
-		詳細については '${0##*/} --help' を実行してください。
-	__EOF__
+	printf "%s: '%s' の読み込み許可がありません。\\n" "${0##*/}" "${history}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 	end_call "${EX_NOINPUT}"
 fi
 
-case "${#}" in
-	'0')
-		set -- "$(cat; printf '_')"
-		set -- "${1%_}"
-		;;
+case "${#}" in '0')
+	set -- "$(cat; printf '_')"
+	set -- "${1%_}"
 esac
 
 awkScript=$(
@@ -339,15 +329,13 @@ newNumber=$(
 	__EOF__
 )
 
-case "${encoded}" in
-	?*)
-		{
-			cat -- "${history}"
-			printf '%d\t%s\t%s\t%s\n' "$(tail -n 1 -- "${history}" | awk -- "${newNumber}")" "${encoded}" "${engine}" "$(date -u -- '+%Y-%m-%dT%H:%M:%SZ')"
-		} | tail -n "${size}" >"${tmpDir}/history"
+case "${encoded}" in ?*)
+	{
+		cat -- "${history}"
+		printf '%d\t%s\t%s\t%s\n' "$(tail -n 1 -- "${history}" | awk -- "${newNumber}")" "${encoded}" "${engine}" "$(date -u -- '+%Y-%m-%dT%H:%M:%SZ')"
+	} | tail -n "${size}" >"${tmpDir}/history"
 
-		cat -- "${tmpDir}/history" >"${history}"
-		;;
+	cat -- "${tmpDir}/history" >"${history}"
 esac
 
 awkScript=$(

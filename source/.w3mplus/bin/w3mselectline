@@ -138,11 +138,9 @@ esac
 
 case "${number}" in
 	'+-'* | '+'* | '-'* | '0')
-		case "${number}" in
-			'+-'*)
-				line=$((line + ${number#??}))
-				number=$((${number#??} * -2))
-				;;
+		case "${number}" in '+-'*)
+			line=$((line + ${number#??}))
+			number=$((${number#??} * -2))
 		esac
 
 		number=$((line + number))
@@ -165,8 +163,7 @@ case "${action}" in
 	'display')
 		httpresponse \
 			-H 'W3m-control: BACK' \
-			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d'"
-		;;
+			-H "W3m-control: PIPE_BUF sed -e '${startLine},${endLine}!d'";;
 	'filter')
 		displayTmp=$(mktemp -d)
 		filterCommand=$(
@@ -176,8 +173,8 @@ case "${action}" in
 			__EOF__
 		)
 
-		case "${endLine}" in
-			[1-9]*) filterCommand="${filterCommand} tail -n '+$((endLine + 1))' -- '${displayTmp}/file';";;
+		case "${endLine}" in [1-9]*)
+			filterCommand="${filterCommand} tail -n '+$((endLine + 1))' -- '${displayTmp}/file';"
 		esac
 
 		filterCommand="${filterCommand} rm -fr -- '${displayTmp}';"
@@ -201,8 +198,8 @@ case "${action}" in
 			__EOF__
 		)
 
-		case "${endLine}" in
-			[1-9]*) formatCommand="${formatCommand} tail -n '+$((endLine + 1))' -- \"\${file}\";";;
+		case "${endLine}" in [1-9]*)
+			formatCommand="${formatCommand} tail -n '+$((endLine + 1))' -- \"\${file}\";"
 		esac
 
 		httpresponse \

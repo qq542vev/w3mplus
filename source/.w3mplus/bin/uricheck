@@ -107,8 +107,8 @@ parser_definition() {
 # @end
 
 validate_field() {
-	case "${OPTARG}" in
-		'') return 0;;
+	case "${OPTARG}" in '')
+		return '0'
 	esac
 
 	set -- '(original|scheme!?|authority!?|userinfo!?|host|port!?|path|query!?|fragment!?)'

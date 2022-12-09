@@ -105,8 +105,8 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-case "${#}" in
-	'0') set -- "${HOME}/.w3m";;
+case "${#}" in '0')
+	set -- "${HOME}/.w3m"
 esac
 
 for directory in ${@+"${@}"}; do
@@ -121,11 +121,11 @@ for directory in ${@+"${@}"}; do
 		')' \
 		-prune -exec 'rm' '-fr' '--' '{}' '+'
 
-	case "${cookieFlag}" in
-		'1') rm -fr -- "${directory}/cookie";;
+	case "${cookieFlag}" in '1')
+		rm -fr -- "${directory}/cookie"
 	esac
 
-	case "${historyFlag}" in
-		'1') rm -fr -- "${directory}/history" "${directory}/request.log";;
+	case "${historyFlag}" in '1')
+		rm -fr -- "${directory}/history" "${directory}/request.log"
 	esac
 done

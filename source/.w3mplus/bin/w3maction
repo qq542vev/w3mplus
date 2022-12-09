@@ -140,15 +140,11 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-case "${#}" in
-	'0' | '1')
-		cat <<-__EOF__ >&2
-			${0##*/}: 引数が不足しています。
-			詳細については '${0##*/} --help' を実行してください。
-		__EOF__
+case "${#}" in '0' | '1')
+	printf "%s: 引数が不足しています。\\n" "${0##*/}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
-		end_call "${EX_USAGE}"
-		;;
+	end_call "${EX_USAGE}"
 esac
 
 action="${1}"
@@ -156,10 +152,8 @@ variableName="${2}"
 shift 2
 
 if ! regex_match "${variableName}" '^[_A-Za-z][_0-9A-Za-z]*$'; then
-	cat <<-__EOF__ >&2
-		${0##*/}: '${variableName}' -- VARIABLE_NAME の値が不正です。
-		詳細については '${0##*/} --help' を実行してください。
-	__EOF__
+	printf "%s: '%s' -- VARIABLE_NAME の値が不正です。\\n" "${0##*/}" "${variableName}" >&2
+	printf "詳細については '%s' を実行してください。\\n" "${0##*/} --help" >&2
 
 	end_call "${EX_USAGE}"
 fi
@@ -177,11 +171,9 @@ case "${data}" in
 		;;
 esac
 
-case "${value}" in
-	'')
-		httpresponse -H 'W3m-control: BACK'
-		exit
-		;;
+case "${value}" in '')
+	httpresponse -H 'W3m-control: BACK'
+	exit
 esac
 
 case "${action}" in
@@ -191,8 +183,8 @@ case "${action}" in
 			'read-shell') w3mcmd='READ_SHELL';;
 		esac
 
-		case "${#}" in
-			'0') set -- 'cat';;
+		case "${#}" in '0')
+			set -- 'cat'
 		esac
 
 		command=$(printf '%s' "${*}" | base64 | tr -d '\n')
@@ -210,11 +202,9 @@ case "${action}" in
 		parse_goto ${@+"${@}"}
 		eval "set -- ${REST}"
 
-		case "${#}" in
-			*[1-9]*)
-				value=$(printf '%s' "${value}" | sh -c "${*}" 'sh' || :; printf '_')
-				value="${value%_}"
-				;;
+		case "${#}" in [1-9]*)
+			value=$(printf '%s' "${value}" | sh -c "${*}" 'sh' || :; printf '_')
+			value="${value%_}"
 		esac
 
 		eval "w3mredirect ${option-} -- \${value}"

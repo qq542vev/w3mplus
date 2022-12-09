@@ -283,6 +283,7 @@ case "${W3MPLUS_DEBUGMODE}" in
 		exec 2>&1
 		printf 'Content-Type: text/plain; charset=UTF-8\r\n\r\n'
 		set -x
+		;;
 esac
 
 eval "$(parsequery --prefix 'query_' "${QUERY_STRING-}")"
@@ -301,24 +302,16 @@ if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${
 fi
 
 case "${query_action-}" in
-	'about-uri')
-		w3mabouturi -- ${query_about+"${query_about}"}
-		;;
+	'about-uri') w3mabouturi -- ${query_about+"${query_about}"};;
 	'close-tab')
 		expand 'uri' "${query_uri-W3M_URL}"
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
 
-		case "${uri}" in
-			?*)
-				setregister \
-					--config "${W3MPLUS_REGISTER_FILE}" \
-					-- '-' "${uri}"
+		case "${uri}" in ?*)
+			setregister --config "${W3MPLUS_REGISTER_FILE}" -- '-' "${uri}"
 
-				pushuri \
-					--config "${W3MPLUS_UNDO_FILE}" \
-					--l1 "${line}" --c1 "${colmun}" -- "${uri}"
-				;;
+			pushuri --config "${W3MPLUS_UNDO_FILE}" --l1 "${line}" --c1 "${colmun}" -- "${uri}"
 		esac
 
 		httpresponse \
@@ -377,14 +370,13 @@ case "${query_action-}" in
 				query_subaction='exec-shell'
 				commandArg='"${W3MPLUS_KEYWORDPRG}"'
 				;;
-			'yank')
-				commandArg='"${W3MPLUS_YANK}"';;
+			'yank') commandArg='"${W3MPLUS_YANK}"';;
 		esac
 
 		case "${query_subaction}" in
 			'increment-uri')
-				case "${query_number:+1}" in
-					'1') shell_argument 'query_number' "${query_number}";;
+				case "${query_number:+1}" in '1')
+					shell_argument 'query_number' "${query_number}"
 				esac
 
 				query_subaction='goto'
@@ -395,8 +387,8 @@ case "${query_action-}" in
 				)"
 				;;
 			'parent-uripath')
-				case "${query_number:+1}" in
-					'1') shell_argument 'query_number' "${query_number}";;
+				case "${query_number:+1}" in '1')
+					shell_argument 'query_number' "${query_number}"
 				esac
 
 				query_subaction='goto'
@@ -440,8 +432,8 @@ case "${query_action-}" in
 	'find-string' | 'find-word')
 		expand 'word' "${query_word-W3M_CURRENT_WORD}"
 
-		case "${query_action}" in
-			'find-word') exact='--exact';;
+		case "${query_action}" in 'find-word')
+			exact='--exact'
 		esac
 
 		case "${word}" in
@@ -457,8 +449,8 @@ case "${query_action-}" in
 	'get-local-mark' | 'get-local-mark-line-begin')
 		expand 'uri' "${query_uri-W3M_URL}"
 
-		case "${query_action}" in
-			'get-local-mark-line-begin') export 'W3MPLUS_LOCALMARK_LINEBEGIN=1';;
+		case "${query_action}" in 'get-local-mark-line-begin')
+			export 'W3MPLUS_LOCALMARK_LINEBEGIN=1'
 		esac
 
 		executeusercommand \
@@ -543,8 +535,8 @@ case "${query_action-}" in
 				--line "${line}" \
 				${query_number+--number "${query_number}"} \
 				-- "${query_printtmp}"
-		) || case "${?}" in
-			[!1]* | 1?*) exit "${?}";;
+		) || case "${?}" in [!1]* | 1?*)
+			exit "${?}"
 		esac
 
 		rm -f -- "${query_printtmp}"
@@ -553,9 +545,7 @@ case "${query_action-}" in
 			-H 'W3m-control: BACK' \
 			${jump:+-H "W3m-control: GOTO_LINE ${jump}"}
 		;;
-	'homepage')
-		w3mredirect ${query_tab+--tab "${query_tab}"} -- "${WWW_HOME-about:home}"
-		;;
+	'homepage') w3mredirect ${query_tab+--tab "${query_tab}"} -- "${WWW_HOME-about:home}";;
 	'line-begin-non-blake' | 'line-end-non-blake')
 		add_printtmp
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
@@ -587,12 +577,12 @@ case "${query_action-}" in
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
 
-		case "${query_lineincriment-}" in
-			?*) line=$((line + query_lineincriment));;
+		case "${query_lineincriment-}" in ?*)
+			line=$((line + query_lineincriment))
 		esac
 
-		case "${query_colmunincriment-}" in
-			?*) colmun=$((colmun + query_colmunincriment));;
+		case "${query_colmunincriment-}" in ?*)
+			colmun=$((colmun + query_colmunincriment))
 		esac
 
 		QUERY_STRING="${QUERY_STRING}&action=${query__action}&line=-${line}&colmun=-${colmun}" "${0}"
@@ -622,10 +612,8 @@ case "${query_action-}" in
 			-H "W3m-control: GOTO_LINE ${line}"
 		;;
 	'search' | 'dict-word')
-		case "${query_action}${query_query:+_}" in
-			'dict-word_')
-				query_query="${query_query#?}"
-				;;
+		case "${query_action}${query_query:+_}" in 'dict-word_')
+			query_query="${query_query#?}";;
 		esac
 
 		if [ -n "${query_designator-}" ] && [ "${query_query}" '=' '!' ]; then
@@ -713,12 +701,8 @@ case "${query_action-}" in
 	'set-register')
 		expand 'value' "${query_value-W3M_URL}"
 
-		case "${value}" in
-			?*)
-				setregister \
-					--config "${W3MPLUS_REGISTER_FILE}" \
-					-- "${query_key-+}" "${value}"
-				;;
+		case "${value}" in ?*)
+			setregister --config "${W3MPLUS_REGISTER_FILE}" -- "${query_key-+}" "${value}"
 		esac
 
 		httpresponse -H 'W3m-control: BACK'
@@ -892,8 +876,8 @@ case "${query_action-}" in
 			-H "W3m-control: SETENV W3MPLUS_UNDOREDO=${setenv}"
 		;;
 	'undo-tab')
-		case "${query_count-}" in
-			'@'*) query_number="@$(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)";;
+		case "${query_count-}" in '@'*)
+			query_number="@$(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)"
 		esac
 
 		popuri \
@@ -937,9 +921,7 @@ case "${query_action-}" in
 	*)
 		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
-		printhtml \
-			--title 'Bad Request' \
-			-- - <<-__EOF__ \
+		printhtml --title 'Bad Request' -- - <<-__EOF__ \
 		| httpresponse \
 			--status-line 'HTTP/1.1 400 Bad Request' \
 			-H 'Content-Type: text/html; charset=UTF-8' \
