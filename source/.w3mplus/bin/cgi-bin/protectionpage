@@ -8,8 +8,8 @@
 ##
 ##   id - 21c5f611-ae47-4288-b1f2-1d94e2040920
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.2.0
-##   date - 2022-06-28
+##   version - 1.2.1
+##   date - 2022-12-10
 ##   since - 2019-10-31
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -60,7 +60,7 @@
 ##   W3MPLUS_LIB   - w3mplus のライブラリファイルのディレクトリ
 ## ------------------
 
-readonly 'VERSION=protectionpage 1.2.0'
+readonly 'VERSION=protectionpage 1.2.1'
 
 : ${W3MPLUS_HOME:="${HOME}/.w3mplus"}
 : ${W3MPLUS_CACHE:="${W3MPLUS_HOME}/cache"}
@@ -124,7 +124,7 @@ eval "$(getoptions parser_definition parse "${0}")"
 parse ${@+"${@}"}
 eval "set -- ${REST}"
 
-eval "$(parsequery --prefix 'query_' "${QUERY_STRING%%url=*}")"
+eval "$(org_lc parsequery --prefix 'query_' "${QUERY_STRING%%url=*}")"
 
 safe_string 'url' "${QUERY_STRING#*url=}"
 html_escape 'url' "${url}"
@@ -166,7 +166,7 @@ case "${query_category-}" in
 		;;
 esac
 
-printhtml --title 'Forbidden Site' -- - <<-__EOF__ | httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
+org_lc printhtml --title 'Forbidden Site' -- - <<-__EOF__ | org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -- -
 	<h1>${title}</h1>
 
 	<p>This Web page at <a href="${url}">${url}</a> has been blocked based on <a href="${source}">${name}</a></p>

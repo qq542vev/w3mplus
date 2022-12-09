@@ -14,8 +14,8 @@
 ##
 ##   id - c64bc63a-9c95-4270-82b5-50b57df02fb4
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.0.0
-##   date - 2022-09-02
+##   version - 1.1.0
+##   date - 2022-12-10
 ##   since - 2022-07-26
 ##   copyright - Copyright (C) 2022-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -63,4 +63,8 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
+}
+
+org_lc() {
+	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }

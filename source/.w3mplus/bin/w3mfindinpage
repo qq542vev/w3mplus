@@ -8,8 +8,8 @@
 ##
 ##   id - e6169622-46d1-40c5-ba23-706834284474
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 1.1.4
-##   date - 2022-06-28
+##   version - 1.1.5
+##   date - 2022-12-10
 ##   since - 2019-08-10
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -56,7 +56,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=w3mfindinpage 1.1.4'
+readonly 'VERSION=w3mfindinpage 1.1.5'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -140,4 +140,4 @@ case "${search}" in ?*)
 	done
 esac
 
-eval "httpresponse -H 'W3m-control: BACK' ${header}"
+org_lc eval "httpresponse -H 'W3m-control: BACK' ${header}"

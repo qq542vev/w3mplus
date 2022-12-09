@@ -8,8 +8,8 @@
 ##
 ##   id - d9bf1ef3-3e53-4b44-bfe0-3ba4620016b5
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.1
-##   date - 2022-10-26
+##   version - 2.0.2
+##   date - 2022-12-10
 ##   since - 2020-04-06
 ##   copyright - Copyright (C) 2020-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -54,7 +54,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=setregister 2.0.1'
+readonly 'VERSION=setregister 2.0.2'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -121,7 +121,7 @@ elif [ '!' -r "${config}" ]; then
 fi
 
 case "${#}" in '0')
-	sh -c "${VISUAL:-${EDITOR:-vi --}} \"\${1}\"" 'sh' "${config}"
+	org_lc sh -c "${VISUAL:-${EDITOR:-vi --}} \"\${1}\"" 'sh' "${config}"
 	exit
 esac
 

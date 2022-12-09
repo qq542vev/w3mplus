@@ -8,8 +8,8 @@
 ##
 ##   id - 5ab6e89a-d4eb-4c8d-b1bc-02bab2962639
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 3.1.0
-##   date - 2022-10-23
+##   version - 3.1.1
+##   date - 2022-12-10
 ##   since - 2019-07-29
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -57,7 +57,7 @@
 ##   143 - received SIGTERM
 ## ------------------
 
-readonly 'VERSION=printhtml 3.1.0'
+readonly 'VERSION=printhtml 3.1.1'
 
 . 'initialize.sh'
 . 'option_error.sh'
@@ -139,5 +139,5 @@ case "${W3MPLUS_TEMPLATE_HTML-}" in
 
 		printf '</main></body></html>'
 		;;
-	*) sh -c "${W3MPLUS_HTML_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"};;
+	*) org_lc sh -c "${W3MPLUS_HTML_PROGRAM} \${@+\"\${@}\"}" 'sh' ${@+"${@}"};;
 esac

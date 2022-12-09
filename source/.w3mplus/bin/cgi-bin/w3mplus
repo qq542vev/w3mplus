@@ -8,8 +8,8 @@
 ##
 ##   id - 3296825b-de82-4452-9f8e-202793be28f6
 ##   author - <qq542vev at https://purl.org/meta/me/>
-##   version - 2.0.2
-##   date - 2022-10-20
+##   version - 2.0.3
+##   date - 2022-12-10
 ##   since - 2019-05-25
 ##   copyright - Copyright (C) 2019-2022 qq542vev. Some rights reserved.
 ##   license - <CC-BY at https://creativecommons.org/licenses/by/4.0/>
@@ -87,7 +87,7 @@
 ##   W3MPLUS_SIDEBAR_POSITION  - サイドバーの位置
 ## ------------------
 
-readonly 'VERSION=w3mplus 2.0.2'
+readonly 'VERSION=w3mplus 2.0.3'
 
 : ${W3MPLUS_W3M_HOME:="${HOME}/.w3m"}
 : ${W3MPLUS_W3M_BOOKMARK:="${W3MPLUS_W3M_HOME}/bookmark.html"}
@@ -222,7 +222,7 @@ add_printtmp() {
 		printtmp=$(TMPDIR="${W3MPLUS_CACHE}" mktemp -u)
 		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: PRINT ${printtmp}" \
 			-H "W3m-control: GOTO ${filepath}?${QUERY_STRING}&printtmp=$(printf '%s' "${printtmp}" | urlencode)"
@@ -232,7 +232,7 @@ add_printtmp() {
 }
 
 error_meesage() {
-	httpresponse --status-line 'HTTP/1.1 500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' -- - <<-__EOF__
+	org_lc httpresponse --status-line 'HTTP/1.1 500 Internal Server Error' -H 'Content-Type: text/plain; charset=UTF-8' -- - <<-__EOF__
 		An unexpected error occurred during request processing.
 
 		# Error message
@@ -286,12 +286,12 @@ case "${W3MPLUS_DEBUGMODE}" in
 		;;
 esac
 
-eval "$(parsequery --prefix 'query_' "${QUERY_STRING-}")"
+eval "$(org_lc parsequery --prefix 'query_' "${QUERY_STRING-}")"
 
 export "W3MPLUS_PASS_VALUE=${query_pass-}"
 
 if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${W3MPLUS_PASS_FILE}")" ]; then
-	httpresponse \
+	org_lc httpresponse \
 		--status-line 'HTTP/1.1 400 Bad Request' \
 		-H 'Content-Type: text/plain; charset=UTF-8' \
 		-- - <<-'__EOF__'
@@ -302,34 +302,34 @@ if [ -f "${W3MPLUS_PASS_FILE}" ] && [ "${W3MPLUS_PASS_VALUE}" '!=' "$(cat -- "${
 fi
 
 case "${query_action-}" in
-	'about-uri') w3mabouturi -- ${query_about+"${query_about}"};;
+	'about-uri') org_lc w3mabouturi -- ${query_about+"${query_about}"};;
 	'close-tab')
 		expand 'uri' "${query_uri-W3M_URL}"
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 		expand 'colmun' "${query_colmun-W3M_CURRENT_COLMUN}" '1'
 
 		case "${uri}" in ?*)
-			setregister --config "${W3MPLUS_REGISTER_FILE}" -- '-' "${uri}"
+			org_lc setregister --config "${W3MPLUS_REGISTER_FILE}" -- '-' "${uri}"
 
-			pushuri --config "${W3MPLUS_UNDO_FILE}" --l1 "${line}" --c1 "${colmun}" -- "${uri}"
+			org_lc pushuri --config "${W3MPLUS_UNDO_FILE}" --l1 "${line}" --c1 "${colmun}" -- "${uri}"
 		esac
 
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			-H 'W3m-control: CLOSE_TAB'
 		;;
 	'context-menu')
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: MENU $(contextmenu)"
 		;;
 	'cookie-config')
 		expand 'uri' "${query_uri-W3M_URL}"
-		host=$(uricheck -f 'host' -- "${uri}" || :)
+		host=$(org_lc uricheck --field 'host' -- "${uri}" || :)
 
 		case "${host}" in
 			?*)
-				w3mcookieconfig \
+				org_lc w3mcookieconfig \
 					${query_accept+'--accept' "${query_accept}=${host}"} \
 					${query_reject+'--reject' "${query_reject}=${host}"} \
 					${query_subdomain+'--subdomain'} \
@@ -338,25 +338,25 @@ case "${query_action-}" in
 				accept=$(grep -e '^cookie_accept_domains[[:blank:]]' -- "${W3MPLUS_W3M_CONFIG}" | cut -d ' ' -f 2)
 				reject=$(grep -e '^cookie_reject_domains[[:blank:]]' -- "${W3MPLUS_W3M_CONFIG}" | cut -d ' ' -f 2)
 
-				httpresponse \
+				org_lc httpresponse \
 					${query_accept+-H "W3m-control: SET_OPTION cookie_accept_domains=${accept}"} \
 					${query_rejrct+-H "W3m-control: SET_OPTION cookie_reject_domains=${rejrct}"} \
 					-H 'W3m-control: BACK' \
 					-H "W3m-control: EXEC_SHELL grep -Ee '^cookie_(accept|reject)_domains[[:blank:]]' '${W3MPLUS_W3M_CONFIG}'"
 				;;
-			*) httpresponse -H 'W3m-control: BACK';;
+			*) org_lc httpresponse -H 'W3m-control: BACK';;
 		esac
 		;;
 	'equalprg')
 		expand 'uri' "${query_uri-W3M_URL}"
 
 		case "${uri}" in
-			'') httpresponse -H 'W3m-control: BACK';;
+			'') org_lc httpresponse -H 'W3m-control: BACK';;
 			*)
 				equalprg=$(printf '%s' "${W3MPLUS_EQUALPRG}" | base64 | tr -d '\n')
 				shell_argument 'argUri' "${uri}"
 
-				httpresponse \
+				org_lc httpresponse \
 					-H 'W3m-control: BACK' \
 					-H "W3m-control: EXEC_SHELL w3m -o 'auto_uncompress=1' -dump_source ${argUri} | sh -c 'eval \"\$(echo \"${equalprg}\" | base64 -d)\"'"
 				;;
@@ -416,7 +416,7 @@ case "${query_action-}" in
 				;;
 		esac
 
-		eval w3maction \
+		org_lc eval w3maction \
 			'"${query_subaction}"' \
 			'"${query_variable-W3M_URL}"' \
 			"${commandArg-}"
@@ -424,8 +424,8 @@ case "${query_action-}" in
 	'execute-user-command')
 		expand 'input' "${query_string-W3M_URL}"
 
-		executeusercommand --config "${W3MPLUS_USERCOMMAND_FILE}" -- "${query_key-manual}" "${input}" || case "${?}" in
-			'1') httpresponse -H 'W3m-control: BACK';;
+		org_lc executeusercommand --config "${W3MPLUS_USERCOMMAND_FILE}" -- "${query_key-manual}" "${input}" || case "${?}" in
+			'1') org_lc httpresponse -H 'W3m-control: BACK';;
 			*) exit "${?}";;
 		esac
 		;;
@@ -437,13 +437,11 @@ case "${query_action-}" in
 		esac
 
 		case "${word}" in
-			?*)
-				w3mfindinpage \
+			?*) org_lc w3mfindinpage \
 					${exact-} \
 					${query_number+--number "${query_number}"} \
-					-- "${word}"
-				;;
-			*) httpresponse -H 'W3m-control: BACK';;
+					-- "${word}";;
+			*) org_lc httpresponse -H 'W3m-control: BACK';;
 		esac
 		;;
 	'get-local-mark' | 'get-local-mark-line-begin')
@@ -453,25 +451,25 @@ case "${query_action-}" in
 			export 'W3MPLUS_LOCALMARK_LINEBEGIN=1'
 		esac
 
-		executeusercommand \
+		org_lc executeusercommand \
 			--config "${W3MPLUS_LOCALMARK_FILE}" \
 			-- "${query_key}|${uri%%#*}" "${uri%%#*}" \
 		|| case "${?}" in
-			'1') httpresponse -H 'W3m-control: BACK';;
+			'1') org_lc httpresponse -H 'W3m-control: BACK';;
 			*) exit "${?}";;
 		esac
 		;;
 	'get-quick-mark')
-		getquickmark \
+		org_lc getquickmark \
 			--config "${W3MPLUS_QUICKMARK_FILE}" \
 			-- "${query_key}" \
 		| cut -f '2' \
-		| w3mredirect ${query_tab+--tab "${query_tab}"}
+		| org_lc w3mredirect ${query_tab+--tab "${query_tab}"}
 		;;
 	'get-register')
 		register=$(getregister --config "${W3MPLUS_REGISTER_FILE}" -- "${query_key-0}" && printf '_') || case "${?}" in
 			'1')
-				httpresponse -H 'W3m-control: BACK'
+				org_lc httpresponse -H 'W3m-control: BACK'
 				exit
 				;;
 			*) exit "${?}";;
@@ -504,17 +502,17 @@ case "${query_action-}" in
 			*) moveURL='';;
 		esac
 
-		getquickmark \
+		org_lc getquickmark \
 			--config "${W3MPLUS_URLMARK_FILE}" \
 			-- "${query_key}" \
 		| awk -v "moveURL=${moveURL}" -- "${awkScript}" \
-		| w3mredirect ${query_tab+--tab "${query_tab}"}
+		| org_lc w3mredirect ${query_tab+--tab "${query_tab}"}
 		;;
 	'goto-line')
 		add_printtmp
 
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
-		jump=$(gotoline \
+		jump=$(org_lc gotoline \
 			--line "${line}" \
 			${query_number+--number "${query_number}"} \
 			-- "${query_printtmp}"
@@ -522,7 +520,7 @@ case "${query_action-}" in
 
 		rm -f -- "${query_printtmp}"
 
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: GOTO_LINE ${jump}"
 		;;
@@ -531,7 +529,7 @@ case "${query_action-}" in
 
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
 		jump=$(
-			gotoparagraph \
+			org_lc gotoparagraph \
 				--line "${line}" \
 				${query_number+--number "${query_number}"} \
 				-- "${query_printtmp}"
@@ -541,11 +539,11 @@ case "${query_action-}" in
 
 		rm -f -- "${query_printtmp}"
 
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			${jump:+-H "W3m-control: GOTO_LINE ${jump}"}
 		;;
-	'homepage') w3mredirect ${query_tab+--tab "${query_tab}"} -- "${WWW_HOME-about:home}";;
+	'homepage') org_lc w3mredirect ${query_tab+--tab "${query_tab}"} -- "${WWW_HOME-about:home}";;
 	'line-begin-non-blake' | 'line-end-non-blake')
 		add_printtmp
 		expand 'line' "${query_line-W3M_CURRENT_LINE}" '1'
@@ -564,13 +562,13 @@ case "${query_action-}" in
 
 			rm -f -- "${query_printtmp}"
 
-			httpresponse \
+			org_lc httpresponse \
 				-H 'W3m-control: BACK' \
 				-H "W3m-control: GOTO_LINE ${line}" \
 				-H "W3m-control: ${move1}" \
 				-H "W3m-control: ${move2}"
 		else
-			httpresponse -H 'W3m-control: BACK'
+			org_lc httpresponse -H 'W3m-control: BACK'
 		fi
 		;;
 	'line-incriment')
@@ -593,7 +591,7 @@ case "${query_action-}" in
 			'link-tabgoto') command='TAB_GOTO';;
 		esac
 
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			${W3M_CURRENT_LINK:+-H 'W3m-control: SET_OPTION default_url=2' -H "W3m-control: ${command}"}
 		;;
@@ -605,7 +603,7 @@ case "${query_action-}" in
 			'scroll-zb') move='PREV_HALF_PAGE';;
 		esac
 
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			-H 'W3m-control: CENTER_V' \
 			-H "W3m-control: ${move}" \
@@ -620,9 +618,9 @@ case "${query_action-}" in
 			pass=$(printf '%s' "${W3MPLUS_PASS_VALUE}" | urlencode)
 			path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
-			w3mredirect -- "${filepath}?pass=${pass}&action=show-search-history"
+			org_lc w3mredirect -- "${filepath}?pass=${pass}&action=show-search-history"
 		else
-			url=$(searchuri \
+			url=$(org_lc searchuri \
 				${query_designator+--designator "${query_designator}"} \
 				--engine "${query_engine-${W3MPLUS_SEARCH_ENGINE}}" \
 				--config "${W3MPLUS_SEARCH_CONFIGFILE}" \
@@ -630,11 +628,11 @@ case "${query_action-}" in
 				-- ${query_query-}
 			)
 
-			setregister \
+			org_lc setregister \
 				--config "${W3MPLUS_REGISTER_FILE}" \
 				-- '/' "${query_query-}"
 
-			w3mredirect \
+			org_lc w3mredirect \
 				${query_tab+--tab "${query_tab}"} \
 				${query_before+--b1 "${query_before}"} \
 				${query_after+--a1 "${query_after}"} \
@@ -650,7 +648,7 @@ case "${query_action-}" in
 			'yank') commandArg="${W3MPLUS_YANK}";;
 		esac
 
-		w3mselectline \
+		org_lc w3mselectline \
 			--line "${line}" \
 			${query_number+'--number' "${query_number}"} \
 			"${query_subaction}" \
@@ -665,18 +663,18 @@ case "${query_action-}" in
 				shell_argument 'argURI' "${uri%%#*}"
 				path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
-				setusercommand \
+				org_lc setusercommand \
 					--config "${W3MPLUS_LOCALMARK_FILE}" \
 					-- "${query_key}|${uri%%#*}" \
 				| awk -- '{ lf = 1; print($0); } END { if(lf) { print(""); } }'
 
-				setusercommand \
+				org_lc setusercommand \
 					--config "${W3MPLUS_LOCALMARK_FILE}" \
 					-- "${query_key}|${uri%%#*}" \
 					"[ \"\${W3M_URL%%#*}\" '=' ${argURI} ] && httpresponse -H 'W3m-control: BACK' -H 'W3m-control: GOTO_LINE ${line}' \${W3MPLUS_LOCALMARK_LINEBEGIN:+-H 'W3m-control: GOTO ${filepath}?action=line-begin-non-blake&line=-${line}'}"
 				;;
 			*) printf 'This page cannot be registered.\n';;
-		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
+		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | org_lc w3mredirect
 		;;
 	'set-quick-mark')
 		expand 'uri' "${query_uri-W3M_URL}"
@@ -685,27 +683,27 @@ case "${query_action-}" in
 
 		case "${uri}" in
 			?*)
-				setquickmark \
+				org_lc setquickmark \
 					--config "${W3MPLUS_QUICKMARK_FILE}" \
 					-- "${query_key}" \
 				| awk -- '{ lf = 1; print($0); } END { if(lf) { print(""); } }'
 
-				setquickmark \
+				org_lc setquickmark \
 					--config "${W3MPLUS_QUICKMARK_FILE}" \
 					--l1 "${line}" --c1 "${colmun}" \
 					-- "${query_key}" "${uri}"
 				;;
 			*) printf 'This page cannot be registered.\n';;
-		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
+		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | org_lc w3mredirect
 		;;
 	'set-register')
 		expand 'value' "${query_value-W3M_URL}"
 
 		case "${value}" in ?*)
-			setregister --config "${W3MPLUS_REGISTER_FILE}" -- "${query_key-+}" "${value}"
+			org_lc setregister --config "${W3MPLUS_REGISTER_FILE}" -- "${query_key-+}" "${value}"
 		esac
 
-		httpresponse -H 'W3m-control: BACK'
+		org_lc httpresponse -H 'W3m-control: BACK'
 		;;
 	'set-url-mark')
 		expand 'uri' "${query_uri-W3M_URL}"
@@ -714,37 +712,37 @@ case "${query_action-}" in
 
 		case "${uri}" in
 			?*)
-				setquickmark \
+				org_lc setquickmark \
 					--config "${W3MPLUS_URLMARK_FILE}" \
 					-- "${query_key}" \
 				| awk -- '{ lf = 1; print($0); } END { if(lf) { print(""); } }'
 
-				setquickmark \
+				org_lc setquickmark \
 					--config "${W3MPLUS_URLMARK_FILE}" \
 					--l1 "${line}" --c1 "${colmun}" \
 					-- "${query_key}" "${uri}"
 				;;
 			*) printf 'This page cannot be registered.\n';;
-		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | w3mredirect
+		esac 2>&1 | datauri 'text/plain;charset=UTF-8' | org_lc w3mredirect
 		;;
 	'show-local-mark')
 		: >>"${W3MPLUS_LOCALMARK_FILE}"
 
 		path_to_fileurl 'mark' "${W3MPLUS_LOCALMARK_FILE}"
 
-		w3mredirect -- "${mark}"
+		org_lc w3mredirect -- "${mark}"
 		;;
 	'show-quick-mark')
 		: >>"${W3MPLUS_QUICKMARK_FILE}"
 		path_to_fileurl 'uri' "${W3MPLUS_QUICKMARK_FILE}"
 
-		w3mredirect -- "${uri}"
+		org_lc w3mredirect -- "${uri}"
 		;;
 	'show-register')
 		: >>"${W3MPLUS_REGISTER_FILE}"
 		path_to_fileurl 'uri' "${W3MPLUS_REGISTER_FILE}"
 
-		w3mredirect -- "${uri}"
+		org_lc w3mredirect -- "${uri}"
 		;;
 	'show-search-history')
 		awkScript=$(
@@ -773,27 +771,27 @@ case "${query_action-}" in
 		awk \
 			-v "url=${filepath}?pass=${pass}&action=search" \
 			-- "${awkScript}" "${W3MPLUS_SEARCH_HISTFILE}" \
-		| printhtml --title 'Search History' -- - \
-		| httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
+		| org_lc printhtml --title 'Search History' -- - \
+		| org_lc httpresponse -H 'Content-Type: text/html; charset=UTF-8' -
 		;;
 	'show-tab-history')
 		: >>"${W3MPLUS_UNDO_FILE}"
 		path_to_fileurl 'uri' "${W3MPLUS_UNDO_FILE}"
 
-		w3mredirect -- "${uri}"
+		org_lc w3mredirect -- "${uri}"
 		;;
 	'show-url-mark')
 		: >>"${W3MPLUS_URLMARK_FILE}"
 
 		path_to_fileurl 'mark' "${W3MPLUS_URLMARK_FILE}"
 
-		w3mredirect -- "${mark}"
+		org_lc w3mredirect -- "${mark}"
 		;;
 	'show-user-command')
 		: >>"${W3MPLUS_USERCOMMAND_FILE}"
 		path_to_fileurl 'uri' "${W3MPLUS_USERCOMMAND_FILE}"
 
-		w3mredirect -- "${uri}"
+		org_lc w3mredirect -- "${uri}"
 		;;
 	'sidebar-bookmark')
 		expand 'uri' "${query_uri-W3M_URL}"
@@ -810,7 +808,7 @@ case "${query_action-}" in
 
 		case "${W3MPLUS_SIDEBAR_POSITION}" in
 			'right')
-				htmlframe \
+				org_lc htmlframe \
 					--attribute "cols=*,${W3MPLUS_SIDEBAR_SIZE}" \
 					--n1 'main' --n2 'menu' \
 					--t1 'Main page' --t2 'Menu page' \
@@ -818,44 +816,44 @@ case "${query_action-}" in
 					-- "${uri:-data:text/plain,}" "${menu}"
 				;;
 			'left')
-				htmlframe \
+				org_lc htmlframe \
 					--attribute "cols=${W3MPLUS_SIDEBAR_SIZE},*" \
 					--n1 'menu' --n2 'main' \
 					--t1 'Menu page' --t2 'Main page' \
 					--title 'Bookmark' \
 					-- "${menu}" "${uri:-data:text/plain,}"
 			;;
-		esac | datauri 'text/html' | w3mredirect
+		esac | datauri 'text/html' | org_lc w3mredirect
 		;;
 	'sidebar-history')
 		expand 'uri' "${query_uri-W3M_URL}"
 		: >>"${W3MPLUS_W3M_HISTORY}"
 
 		grep -v -e '^data:' -e '^file:///cgi-bin/' -- "${W3MPLUS_W3M_HISTORY}" \
-		| framelinkmenu \
+		| org_lc framelinkmenu \
 			${uri:+'--main' "${uri}"} \
 			--position "${W3MPLUS_SIDEBAR_POSITION}" \
 			--title 'History' \
 		| datauri 'text/html' \
-		| w3mredirect
+		| org_lc w3mredirect
 		;;
 	'toggle-https-everywhere')
 		if sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${W3MPLUS_W3M_SITECONF}" | grep -Fqx '# url m@^http://@'; then
 			sed -e '/^# HTTPS Everywhere$/,/^$/{s/^# url/url/; s/^# substitute_url/substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" >"${tmpDir}/siteconf"
 			cat -- "${tmpDir}/siteconf" >"${W3MPLUS_W3M_SITECONF}"
 
-			httpresponse \
+			org_lc httpresponse \
 				-H 'W3m-control: BACK' \
 				-H 'W3m-control: REINIT'
 		elif sed -n -e '/^# HTTPS Everywhere$/,/^$/p' -- "${W3MPLUS_W3M_SITECONF}" | grep -Fqx 'url m@^http://@'; then
 			sed -e '/^# HTTPS Everywhere$/,/^$/{s/^url/# url/; s/^substitute_url/# substitute_url/}' -- "${W3MPLUS_W3M_SITECONF}" >"${tmpDir}/siteconf"
 			cat -- "${tmpDir}/siteconf" >"${W3MPLUS_W3M_SITECONF}"
 
-			httpresponse \
+			org_lc httpresponse \
 				-H 'W3m-control: BACK' \
 				-H 'W3m-control: REINIT'
 		else
-			httpresponse -H 'W3m-control: BACK'
+			org_lc httpresponse -H 'W3m-control: BACK'
 		fi
 		;;
 	'undo-redo')
@@ -870,7 +868,7 @@ case "${query_action-}" in
 				;;
 		esac
 
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: ${w3mcomm}" \
 			-H "W3m-control: SETENV W3MPLUS_UNDOREDO=${setenv}"
@@ -880,13 +878,13 @@ case "${query_action-}" in
 			query_number="@$(date -u -- '+%Y%m%d%H%M%S' | TZ='UTC+0' utconv)"
 		esac
 
-		popuri \
+		org_lc popuri \
 			--config "${W3MPLUS_UNDO_FILE}" \
 			${query_number+--number "${query_number}"} \
 			${query_count+--count "${query_count}"} \
 			--timeout "${W3MPLUS_UNDO_TIMEOUT}" \
 		| cut -f '1-2' \
-		| w3mredirect --tab 'open-newtab'
+		| org_lc w3mredirect --tab 'open-newtab'
 		;;
 	'visual-mode')
 		expand 'id' "${query_id-W3M_URL}"
@@ -898,14 +896,14 @@ case "${query_action-}" in
 			'yank') commandArg="${W3MPLUS_YANK}";;
 		esac
 
-		w3mvisualmode \
+		org_lc w3mvisualmode \
 			--line "${line}" \
 			--timeout "${W3MPLUS_VISUAL_TIMEOUT}" \
 			-- "${id}" "${query_subaction}" \
 			${commandArg+"${commandArg}"}
 		;;
 	'zoom')
-		changeconfig \
+		org_lc changeconfig \
 			--max "${W3MPLUS_ZOOM_MAX}" \
 			--min "${W3MPLUS_ZOOM_MIN}" \
 			--param "image_scale=${query_zoom-100}" \
@@ -913,7 +911,7 @@ case "${query_action-}" in
 			-- "${W3MPLUS_W3M_CONFIG}"
 		zoom=$(grep -e '^image_scale ' -- "${W3MPLUS_W3M_CONFIG}" | cut -d ' ' -f 2)
 
-		httpresponse \
+		org_lc httpresponse \
 			-H 'W3m-control: BACK' \
 			-H "W3m-control: SET_OPTION image_scale=${zoom}" \
 			-H 'W3m-control: RESHAPE'
@@ -921,8 +919,8 @@ case "${query_action-}" in
 	*)
 		path_to_fileurl 'filepath' "${SCRIPT_NAME}"
 
-		printhtml --title 'Bad Request' -- - <<-__EOF__ \
-		| httpresponse \
+		org_lc printhtml --title 'Bad Request' -- - <<-__EOF__ \
+		| org_lc httpresponse \
 			--status-line 'HTTP/1.1 400 Bad Request' \
 			-H 'Content-Type: text/html; charset=UTF-8' \
 			-- -
