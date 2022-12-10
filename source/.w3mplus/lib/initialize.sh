@@ -47,6 +47,8 @@ trap 'end_call 130' 2  # SIGINT
 trap 'end_call 131' 3  # SIGQUIT
 trap 'end_call 143' 15 # SIGTERM
 
+alias org_lc='LC_ALL="${LC_ALL_ORG}"'
+
 ### Function: end_call
 ##
 ## 一時ディレクトリを削除しスクリプトを終了する。
@@ -63,8 +65,4 @@ end_call() {
 	trap '' 0 # EXIT
 	rm -fr -- ${tmpDir:+"${tmpDir}"}
 	exit "${1:-0}"
-}
-
-org_lc() {
-	LC_ALL="${LC_ALL_ORG}" ${@+"${@}"}
 }
